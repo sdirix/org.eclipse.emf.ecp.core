@@ -12,10 +12,12 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * @author Eike Stepper
  */
-public interface ECPProvider extends ECPElement
+public interface ECPProvider extends ECPElement, IAdaptable
 {
   public String getLabel();
 

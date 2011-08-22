@@ -18,10 +18,12 @@ import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * @author Eike Stepper
  */
 public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAware, ECPPropertiesAware, ECPCloseable,
-    ECPDeletable, IEditingDomainProvider
+    ECPDeletable, IEditingDomainProvider, IAdaptable
 {
 }

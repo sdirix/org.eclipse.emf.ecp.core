@@ -182,6 +182,12 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
       return getResolvedElement().getOpenProjects();
     }
 
+    @SuppressWarnings("rawtypes")
+    public Object getAdapter(Class adapter)
+    {
+      return getResolvedElement().getAdapter(adapter);
+    }
+
     public EditingDomain createEditingDomain(InternalProject project)
     {
       return getResolvedElement().createEditingDomain(project);

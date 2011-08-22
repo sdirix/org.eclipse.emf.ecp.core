@@ -16,10 +16,13 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * @author Eike Stepper
  */
-public interface ECPRepository extends ECPElement, ECPModelContext, ECPCheckoutSource, ECPPropertiesAware, ECPDeletable
+public interface ECPRepository extends ECPElement, ECPModelContext, ECPCheckoutSource, ECPPropertiesAware,
+    ECPDeletable, IAdaptable
 {
   public String getLabel();
 

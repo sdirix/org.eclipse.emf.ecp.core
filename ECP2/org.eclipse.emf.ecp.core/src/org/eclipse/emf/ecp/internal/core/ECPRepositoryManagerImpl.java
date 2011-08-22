@@ -235,6 +235,17 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
       getResolvedElement().setProviderSpecificData(data);
     }
 
+    public ECPProject[] getOpenProjects()
+    {
+      return getResolvedElement().getOpenProjects();
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Object getAdapter(Class adapter)
+    {
+      return getResolvedElement().getAdapter(adapter);
+    }
+
     public ECPModelContext getContext()
     {
       return this;
@@ -253,11 +264,6 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
     public void notifyObjectsChanged(Object[] objects)
     {
       getResolvedElement().notifyObjectsChanged(objects);
-    }
-
-    public ECPProject[] getOpenProjects()
-    {
-      return getResolvedElement().getOpenProjects();
     }
 
     public String getDefaultCheckoutName()
