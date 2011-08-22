@@ -52,4 +52,14 @@ public final class CDORepositoryData implements CDOSessionConfigurationFactory
     configuration.setRepositoryName(repositoryName);
     return configuration;
   }
+
+  @Override
+  public String toString()
+  {
+    ECPProperties properties = repository.getProperties();
+    String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);
+    String connectorDescription = properties.getValue(CDOProvider.PROP_CONNECTOR_DESCRIPTION);
+    String repositoryName = properties.getValue(CDOProvider.PROP_REPOSITORY_NAME);
+    return connectorType + "://" + connectorDescription + "/" + repositoryName;
+  }
 }
