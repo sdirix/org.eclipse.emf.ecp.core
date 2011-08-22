@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="org.eclipse.emf.ecp.workspace.provider"
+         name="Eclipse Workspace"
+         point="org.eclipse.emf.ecp.ui.uiProviders">
+      <uiProvider
+            class="org.eclipse.emf.ecp.workspace.internal.ui.WorkspaceUIProvider"
+            provider="org.eclipse.emf.ecp.workspace.provider">
+      </uiProvider>
+   </extension>
+
+</plugin>

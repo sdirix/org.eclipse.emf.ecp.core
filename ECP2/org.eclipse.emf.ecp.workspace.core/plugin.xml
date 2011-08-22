@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="org.eclipse.emf.ecp.workspace.provider"
+         name="Eclipse Workspace"
+         point="org.eclipse.emf.ecp.core.providers">
+      <provider
+            class="org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider"
+            description="Integrates ECP with the Eclipse workspace.">
+      </provider>
+   </extension>
+   
+   <extension
+         id="org.eclipse.emf.ecp.workspace.repository"
+         name="Eclipse Workspace"
+         point="org.eclipse.emf.ecp.core.repositories">
+      <repository
+            description="Provides access to the resources of the Eclipse workspace."
+            provider="org.eclipse.emf.ecp.workspace.provider">
+      </repository>
+   </extension>
+
+</plugin>

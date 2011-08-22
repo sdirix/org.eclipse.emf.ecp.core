@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension-point id="providers" name="ECP Providers" schema="schema/providers.exsd"/>
+   <extension-point id="repositories" name="ECP Repositories" schema="schema/repositories.exsd"/>
+
+  <extension point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+      id="org.eclipse.emf.ecp.core.projectTester"
+      type="org.eclipse.emf.ecp.core.ECPProject"
+      namespace="org.eclipse.emf.ecp.core.project"
+      properties="name,repositoryName,repositoryLabel,repositoryDescription,providerName"
+      class="org.eclipse.emf.ecp.internal.core.properties.ECPProjectPropertyTester"/>
+    <propertyTester
+      id="org.eclipse.emf.ecp.core.closeableTester"
+      type="org.eclipse.emf.ecp.core.util.ECPCloseable"
+      namespace="org.eclipse.emf.ecp.core.closeable"
+      properties="open,closed"
+      class="org.eclipse.emf.ecp.internal.core.properties.ECPCloseablePropertyTester"/>
+  </extension>
+
+</plugin>

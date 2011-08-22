@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension-point id="uiProviders" name="ECP UI Providers" schema="schema/uiProviders.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.emf.ecp.ui"
+            name="ECP">
+      </category>
+      <view
+            category="org.eclipse.emf.ecp.ui"
+            class="org.eclipse.emf.ecp.ui.views.ModelExplorerView"
+            icon="icons/sample.gif"
+            id="org.eclipse.emf.ecp.ui.ModelExplorerView"
+            name="Model Explorer">
+      </view>
+      <view
+            category="org.eclipse.emf.ecp.ui"
+            class="org.eclipse.emf.ecp.ui.views.ModelRepositoriesView"
+            icon="icons/repositories.gif"
+            id="org.eclipse.emf.ecp.ui.ModelRepositoriesView"
+            name="Model Repositories">
+      </view>
+      <view
+            category="org.eclipse.emf.ecp.ui"
+            class="org.eclipse.emf.ecp.ui.views.ECPProvidersView"
+            icon="icons/providers.gif"
+            id="org.eclipse.emf.ecp.ui.ECPProvidersView"
+            name="ECP Providers">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.ecp.ui.contribution.closedCloseables"
+            objectClass="org.eclipse.emf.ecp.core.util.ECPCloseable">
+         <action
+               class="org.eclipse.emf.ecp.ui.actions.CloseableAction$Open"
+               enablesFor="multiple"
+               id="org.eclipse.emf.ecp.ui.openAction"
+               label="Open"
+               state="true"
+               style="push">
+         </action>
+         <enablement>
+    	         <test property="org.eclipse.emf.ecp.core.closeable.closed" value="true"/>
+         </enablement>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.ecp.ui.contribution.openCloseables"
+            objectClass="org.eclipse.emf.ecp.core.util.ECPCloseable">
+         <action
+               class="org.eclipse.emf.ecp.ui.actions.CloseableAction$Close"
+               enablesFor="multiple"
+               id="org.eclipse.emf.ecp.ui.closeAction"
+               label="Close"
+               state="true"
+               style="push">
+         </action>
+         <enablement>
+            <test property="org.eclipse.emf.ecp.core.closeable.open" value="true"/>
+         </enablement>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.ecp.ui.contribution.deletables"
+            objectClass="org.eclipse.emf.ecp.core.util.ECPDeletable">
+         <action
+               class="org.eclipse.emf.ecp.ui.actions.DeleteAction"
+               enablesFor="multiple"
+               icon="icons/delete.gif"
+               id="org.eclipse.emf.ecp.ui.deleteAction"
+               label="Delete"
+               state="true"
+               style="push">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.ecp.ui.contribution.checkoutSources"
+            objectClass="org.eclipse.emf.ecp.core.util.ECPCheckoutSource">
+         <action
+               class="org.eclipse.emf.ecp.ui.actions.CheckoutAction"
+               enablesFor="multiple"
+               icon="icons/checkout_project.gif"
+               id="org.eclipse.emf.ecp.ui.checkoutAction"
+               label="Checkout..."
+               state="true"
+               style="push">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.ecp.ui.contribution.repositories"
+            objectClass="org.eclipse.emf.ecp.core.ECPRepository">
+         <action
+               class="org.eclipse.emf.ecp.ui.actions.RepositoryPropertiesAction"
+               enablesFor="1"
+               id="org.eclipse.emf.ecp.ui.repositoryPropertiesAction"
+               label="Properties"
+               state="true"
+               style="push">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.ecp.ui.contribution.projects"
+            objectClass="org.eclipse.emf.ecp.core.ECPProject">
+         <action
+               class="org.eclipse.emf.ecp.ui.actions.ProjectPropertiesAction"
+               enablesFor="1"
+               id="org.eclipse.emf.ecp.ui.projectPropertiesAction"
+               label="Properties"
+               state="true"
+               style="push">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>
