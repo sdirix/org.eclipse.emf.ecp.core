@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
@@ -28,6 +29,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -125,6 +127,37 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
     }
   }
 
+  public Object getElement(InternalProject project, URI uri)
+  {
+    if (uri == null)
+    {
+      return WORKSPACE_ROOT;
+    }
+
+    if (uri.hasFragment())
+    {
+      ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+      return resourceSet.getEObject(uri, true);
+    }
+
+    String path = uri.toPlatformString(true);
+    return WORKSPACE_ROOT.findMember(path);
+  }
+
+  public Object getRootElement(InternalProject project)
+  {
+    String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
+    URI uri = rootURI == null ? null : URI.createURI(rootURI);
+    return getElement(project, uri);
+  }
+
+  public IResource getRootResource(InternalProject project)
+  {
+    String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
+    URI uri = rootURI == null ? null : URI.createURI(rootURI).trimFragment();
+    return (IResource)getElement(project, uri);
+  }
+
   public void resourceChanged(IResourceChangeEvent event)
   {
     IResourceDelta delta = event.getDelta();
@@ -133,17 +166,23 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
       InternalRepository repository = getAllRepositories()[0];
       Object[] objects = getChangedObjects(delta, repository);
       repository.notifyObjectsChanged(objects);
+
+      for (InternalProject project : getOpenProjects())
+      {
+        objects = getChangedObjects(delta, project);
+        project.notifyObjectsChanged(objects);
+      }
     }
   }
 
   private Object[] getChangedObjects(IResourceDelta delta, InternalRepository repository)
   {
     Set<Object> objects = new HashSet<Object>();
-    getChangedObjects(delta, repository, objects);
+    collectChangedObjects(delta, repository, objects);
     return objects.toArray(new Object[objects.size()]);
   }
 
-  private void getChangedObjects(IResourceDelta delta, InternalRepository repository, Set<Object> objects)
+  private void collectChangedObjects(IResourceDelta delta, InternalRepository repository, Set<Object> objects)
   {
     switch (delta.getKind())
     {
@@ -164,7 +203,43 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 
     for (IResourceDelta child : delta.getAffectedChildren())
     {
-      getChangedObjects(child, repository, objects);
+      collectChangedObjects(child, repository, objects);
+    }
+  }
+
+  private Object[] getChangedObjects(IResourceDelta delta, InternalProject project)
+  {
+    IPath rootPath = getRootResource(project).getFullPath();
+    IPath deltaPath = delta.getResource().getFullPath();
+    if (rootPath.equals(deltaPath))
+    {
+      return new Object[] { project };
+    }
+
+    if (rootPath.isPrefixOf(deltaPath))
+    {
+      Set<Object> objects = new HashSet<Object>();
+      collectChangedObjects(delta, project, objects);
+      return objects.toArray(new Object[objects.size()]);
+    }
+
+    return null;
+  }
+
+  private void collectChangedObjects(IResourceDelta delta, InternalProject project, Set<Object> objects)
+  {
+    switch (delta.getKind())
+    {
+    case IResourceDelta.ADDED:
+    case IResourceDelta.REMOVED:
+      IResource resource = delta.getResource();
+      objects.add(new ProjectResourceWrapper(project, resource.getParent()));
+      return;
+    }
+
+    for (IResourceDelta child : delta.getAffectedChildren())
+    {
+      collectChangedObjects(child, project, objects);
     }
   }
 }

@@ -11,7 +11,6 @@
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
@@ -136,6 +135,14 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     this.providerSpecificData = providerSpecificData;
   }
 
+  public void notifyObjectsChanged(Object[] objects)
+  {
+    if (objects != null && objects.length != 0)
+    {
+      ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+    }
+  }
+
   public synchronized EditingDomain getEditingDomain()
   {
     if (editingDomain == null)
@@ -170,11 +177,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   public ECPModelContext getContext()
   {
     return this;
-  }
-
-  public ECPProjectManager getParent()
-  {
-    return ECPProjectManager.INSTANCE;
   }
 
   public boolean canDelete()

@@ -37,5 +37,7 @@ public interface ECPProjectManager
     public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception;
 
     public void projectChanged(ECPProject project, boolean opened) throws Exception;
+
+    public void objectsChanged(ECPProject project, Object[] objects) throws Exception;
   }
 }

@@ -72,4 +72,9 @@ public class ModelLabelProvider extends ECPLabelProvider implements ECPProjectMa
   {
     fireEvent(new LabelProviderChangedEvent(this, project));
   }
+
+  public void objectsChanged(ECPProject project, Object[] objects) throws Exception
+  {
+    // Do nothing
+  }
 }

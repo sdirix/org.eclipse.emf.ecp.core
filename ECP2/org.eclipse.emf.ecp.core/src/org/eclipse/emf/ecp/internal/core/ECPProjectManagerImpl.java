@@ -90,6 +90,25 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
     }
   }
 
+  public void notifyObjectsChanged(ECPProject project, Object[] objects)
+  {
+    Listener[] listeners = getRegistryListeners();
+    if (listeners != null)
+    {
+      for (Listener listener : listeners)
+      {
+        try
+        {
+          listener.objectsChanged(project, objects);
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
+      }
+    }
+  }
+
   public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception
   {
     Set<ECPRepository> addedRepositories = ECPUtil.getAddedElements(oldRepositories, newRepositories);

@@ -27,5 +27,7 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 
   public void setProviderSpecificData(Object data);
 
+  public void notifyObjectsChanged(Object[] objects);
+
   public void undispose(InternalRepository repository);
 }

@@ -224,7 +224,10 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 
   public void notifyObjectsChanged(Object[] objects)
   {
-    ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+    if (objects != null && objects.length != 0)
+    {
+      ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+    }
   }
 
   public InternalProject[] getOpenProjects()

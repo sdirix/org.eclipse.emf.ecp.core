@@ -33,7 +33,7 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 
   public void objectsChanged(ECPRepository repository, Object[] objects) throws Exception
   {
-    refreshViewer();
+    refreshViewer(objects);
   }
 
   @Override
