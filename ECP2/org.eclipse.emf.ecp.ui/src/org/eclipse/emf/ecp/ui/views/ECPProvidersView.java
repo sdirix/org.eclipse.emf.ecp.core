@@ -16,8 +16,6 @@ import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Eike Stepper
@@ -31,13 +29,11 @@ public class ECPProvidersView extends TreeView
   }
 
   @Override
-  protected void doCreatePartControl(Composite parent)
+  protected void configureViewer(TreeViewer viewer)
   {
-    TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(new ProvidersContentProvider());
     viewer.setLabelProvider(new ProvidersLabelProvider());
     viewer.setSorter(new ViewerSorter());
     viewer.setInput(ECPProviderRegistry.INSTANCE);
-    setViewer(viewer);
   }
 }

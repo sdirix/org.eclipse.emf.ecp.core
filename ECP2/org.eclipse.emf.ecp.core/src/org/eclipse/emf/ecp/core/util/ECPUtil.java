@@ -27,6 +27,33 @@ public final class ECPUtil
   {
   }
 
+  public static ECPModelContext getModelContext(ECPModelContextProvider contextProvider, Object[] elements)
+  {
+    ECPModelContext commonContext = null;
+    for (Object element : elements)
+    {
+      ECPModelContext elementContext = contextProvider.getModelContext(element);
+      if (elementContext == null)
+      {
+        return null;
+      }
+  
+      if (elementContext != commonContext)
+      {
+        if (commonContext == null)
+        {
+          commonContext = elementContext;
+        }
+        else
+        {
+          return null;
+        }
+      }
+    }
+  
+    return commonContext;
+  }
+
   public static ECPProperties createProperties()
   {
     return new Properties();

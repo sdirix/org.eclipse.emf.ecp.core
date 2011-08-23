@@ -21,8 +21,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Eike Stepper
@@ -70,14 +68,12 @@ public class ModelRepositoriesView extends TreeView implements ECPProviderRegist
   }
 
   @Override
-  protected void doCreatePartControl(Composite parent)
+  protected void configureViewer(TreeViewer viewer)
   {
-    TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(contentProvider);
     viewer.setLabelProvider(new RepositoriesLabelProvider(contentProvider));
     viewer.setSorter(new ViewerSorter());
     viewer.setInput(ECPRepositoryManager.INSTANCE);
-    setViewer(viewer);
 
     addRepositoryAction = new AddRepositoryAction(getSite().getShell());
     setEnablements();

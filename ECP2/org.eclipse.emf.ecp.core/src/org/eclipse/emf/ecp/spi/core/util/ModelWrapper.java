@@ -40,7 +40,7 @@ public abstract class ModelWrapper<CONTEXT extends ECPModelContext, DELEGATE> im
     return context;
   }
 
-  public final DELEGATE getDelegate()
+  public DELEGATE getDelegate()
   {
     return delegate;
   }

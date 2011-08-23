@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -59,17 +60,6 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
     return viewer;
   }
 
-  public final void setViewer(TreeViewer viewer)
-  {
-    if (this.viewer != null)
-    {
-      throw new IllegalStateException("Viewer may be set only once");
-    }
-
-    this.viewer = viewer;
-    refreshAction = new RefreshViewerAction(viewer);
-  }
-
   public final Action getRefreshAction()
   {
     return refreshAction;
@@ -87,12 +77,13 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   {
     try
     {
-      doCreatePartControl(parent);
+      viewer = createViewer(parent);
       if (viewer == null)
       {
-        throw new IllegalStateException("Viewer has not been set");
+        throw new IllegalStateException("Viewer has not been created");
       }
 
+      refreshAction = new RefreshViewerAction(viewer);
       drillDownAdapter = new DrillDownAdapter(viewer);
 
       hookContextMenu();
@@ -167,7 +158,14 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
     MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
   }
 
-  protected abstract void doCreatePartControl(Composite parent);
+  protected TreeViewer createViewer(Composite parent)
+  {
+    TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    configureViewer(viewer);
+    return viewer;
+  }
+
+  protected abstract void configureViewer(TreeViewer viewer);
 
   protected void fillLocalPullDown(IMenuManager manager)
   {

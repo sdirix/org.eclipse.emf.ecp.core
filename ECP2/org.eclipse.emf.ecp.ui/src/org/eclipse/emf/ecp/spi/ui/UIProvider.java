@@ -38,7 +38,7 @@ public interface UIProvider extends InternalRegistryElement
 
   public Image getImage(Object element);
 
-  public void fillContextMenu(ECPModelContext context, Object element, IMenuManager manager);
+  public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements);
 
   public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
       Text repositoryLabelText, Text repositoryDescriptionText);

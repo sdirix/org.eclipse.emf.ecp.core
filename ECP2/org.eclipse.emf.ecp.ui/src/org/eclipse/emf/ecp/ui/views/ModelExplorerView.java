@@ -12,17 +12,15 @@ package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
 
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Eike Stepper
@@ -38,31 +36,26 @@ public class ModelExplorerView extends TreeView
   }
 
   @Override
-  protected void doCreatePartControl(Composite parent)
+  protected void configureViewer(TreeViewer viewer)
   {
-    TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(contentProvider);
     viewer.setLabelProvider(new ModelLabelProvider(contentProvider));
     viewer.setSorter(new ViewerSorter());
     viewer.setInput(ECPProjectManager.INSTANCE);
-    setViewer(viewer);
   }
 
   @Override
   protected void fillContextMenu(IMenuManager manager)
   {
-    IStructuredSelection selection = getSelection();
-    if (selection.size() == 1)
+    Object[] elements = getSelection().toArray();
+
+    ECPModelContext context = ECPUtil.getModelContext(contentProvider, elements);
+    if (context != null)
     {
-      Object element = selection.getFirstElement();
-      ECPModelContext context = contentProvider.getModelContext(element);
-      if (context != null)
+      UIProvider provider = UIProviderRegistry.INSTANCE.getUIProvider(context);
+      if (provider != null)
       {
-        UIProvider provider = UIProviderRegistry.INSTANCE.getUIProvider(context);
-        if (provider != null)
-        {
-          provider.fillContextMenu(context, element, manager);
-        }
+        provider.fillContextMenu(manager, context, elements);
       }
     }
 

@@ -145,43 +145,47 @@ public class DefaultUIProvider extends Element implements UIProvider
     return UIProvider.EMF_LABEL_PROVIDER.getImage(element);
   }
 
-  public void fillContextMenu(ECPModelContext context, Object element, IMenuManager manager)
+  public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements)
   {
-    if (context instanceof ECPProject)
+    if (elements.length == 1)
     {
-      ECPProject project = (ECPProject)context;
+      Object element = elements[0];
+      if (context instanceof ECPProject)
+      {
+        ECPProject project = (ECPProject)context;
 
-      if (element instanceof Resource)
-      {
-        Resource resource = (Resource)element;
-        populateNewRoot(resource, manager);
-      }
-      else if (element instanceof EObject)
-      {
-        final EObject object = (EObject)element;
-        EditingDomain domain = project.getEditingDomain();
-        Collection<?> descriptors = domain.getNewChildDescriptors(object, null);
-        if (descriptors != null)
+        if (element instanceof Resource)
         {
-          for (Object descriptor : descriptors)
+          Resource resource = (Resource)element;
+          populateNewRoot(resource, manager);
+        }
+        else if (element instanceof EObject)
+        {
+          final EObject object = (EObject)element;
+          EditingDomain domain = project.getEditingDomain();
+          Collection<?> descriptors = domain.getNewChildDescriptors(object, null);
+          if (descriptors != null)
           {
-            manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor)
+            for (Object descriptor : descriptors)
             {
-              @Override
-              public void run()
+              manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor)
               {
-                super.run();
+                @Override
+                public void run()
+                {
+                  super.run();
 
-                try
-                {
-                  object.eResource().save(null);
+                  try
+                  {
+                    object.eResource().save(null);
+                  }
+                  catch (IOException ex)
+                  {
+                    Activator.log(ex);
+                  }
                 }
-                catch (IOException ex)
-                {
-                  Activator.log(ex);
-                }
-              }
-            });
+              });
+            }
           }
         }
       }

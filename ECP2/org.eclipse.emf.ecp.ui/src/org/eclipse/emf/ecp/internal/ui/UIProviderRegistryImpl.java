@@ -198,9 +198,9 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, Ob
       return getResolvedElement().getImage(element);
     }
 
-    public void fillContextMenu(ECPModelContext context, Object element, IMenuManager manager)
+    public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements)
     {
-      getResolvedElement().fillContextMenu(context, element, manager);
+      getResolvedElement().fillContextMenu(manager, context, elements);
     }
 
     public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
