@@ -10,13 +10,14 @@
  */
 package org.eclipse.emf.ecp.spi.core.util;
 
+import org.eclipse.emf.ecp.core.util.ECPDelegating;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 
 /**
  * @author Eike Stepper
  */
-public class ModelContextWrapper<DELEGATE extends ECPModelContext> implements ECPModelContext
+public class ModelContextWrapper<DELEGATE extends ECPModelContext> implements ECPModelContext, ECPDelegating<DELEGATE>
 {
   private final DELEGATE delegate;
 

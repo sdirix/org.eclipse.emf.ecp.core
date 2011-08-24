@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.spi.core.util;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.util.ECPDelegating;
 import org.eclipse.emf.ecp.core.util.ECPModel;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 
@@ -18,7 +19,7 @@ import org.eclipse.emf.ecp.core.util.ECPModelContext;
  * @author Eike Stepper
  */
 public abstract class ModelWrapper<CONTEXT extends ECPModelContext, DELEGATE> implements ECPModel,
-    Comparable<ModelWrapper<CONTEXT, DELEGATE>>
+    ECPDelegating<DELEGATE>, Comparable<ModelWrapper<CONTEXT, DELEGATE>>
 {
   private final CONTEXT context;
 
