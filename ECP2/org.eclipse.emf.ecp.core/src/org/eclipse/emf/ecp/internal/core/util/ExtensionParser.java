@@ -170,7 +170,9 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
         if (location.startsWith(prefix))
         {
           location = location.substring(prefix.length());
-          System.err.println(getClass().getSimpleName() + ": " + bundleName + " [" + bundle.getBundleId()
+
+          // TODO Trace properly
+          System.out.println(getClass().getSimpleName() + ": " + bundleName + " [" + bundle.getBundleId()
               + "] --> file:" + new File(location).getCanonicalPath());
         }
       }
