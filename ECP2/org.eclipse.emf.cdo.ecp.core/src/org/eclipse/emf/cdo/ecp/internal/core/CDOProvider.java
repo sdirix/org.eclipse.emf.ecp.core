@@ -99,7 +99,6 @@ public class CDOProvider extends DefaultProvider
     {
       InternalProject project = (InternalProject)parent;
       CDOProjectData projectData = getProjectData(project);
-      childrenList.addChild(projectData.getWorkspace());
       childrenList.addChildren(projectData.getRootResource().getContents());
     }
     else if (parent instanceof InternalRepository)

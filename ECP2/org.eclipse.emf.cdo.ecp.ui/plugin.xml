@@ -12,4 +12,13 @@
       </uiProvider>
    </extension>
 
+  <extension
+        point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="org.eclipse.emf.ecp.spi.core.InternalProject"
+           class="org.eclipse.emf.cdo.ecp.internal.ui.WorkspacePropertyAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
+     </factory>
+  </extension>
+
 </plugin>
