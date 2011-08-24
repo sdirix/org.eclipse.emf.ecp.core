@@ -127,37 +127,6 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
     }
   }
 
-  public Object getElement(InternalProject project, URI uri)
-  {
-    if (uri == null)
-    {
-      return WORKSPACE_ROOT;
-    }
-
-    if (uri.hasFragment())
-    {
-      ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-      return resourceSet.getEObject(uri, true);
-    }
-
-    String path = uri.toPlatformString(true);
-    return WORKSPACE_ROOT.findMember(path);
-  }
-
-  public Object getRootElement(InternalProject project)
-  {
-    String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
-    URI uri = rootURI == null ? null : URI.createURI(rootURI);
-    return getElement(project, uri);
-  }
-
-  public IResource getRootResource(InternalProject project)
-  {
-    String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
-    URI uri = rootURI == null ? null : URI.createURI(rootURI).trimFragment();
-    return (IResource)getElement(project, uri);
-  }
-
   public void resourceChanged(IResourceChangeEvent event)
   {
     IResourceDelta delta = event.getDelta();
@@ -241,5 +210,50 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
     {
       collectChangedObjects(child, project, objects);
     }
+  }
+
+  public static Object getElement(ECPProject project, URI uri)
+  {
+    if (uri == null)
+    {
+      return WORKSPACE_ROOT;
+    }
+
+    if (uri.hasFragment())
+    {
+      ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+      return resourceSet.getEObject(uri, true);
+    }
+
+    String path = uri.toPlatformString(true);
+    return WORKSPACE_ROOT.findMember(path);
+  }
+
+  public static IResource getResource(ECPProject project, URI uri)
+  {
+    if (uri != null)
+    {
+      uri = uri.trimFragment();
+    }
+
+    return (IResource)getElement(project, uri);
+  }
+
+  public static Object getRootElement(ECPProject project)
+  {
+    URI uri = getRootURI(project);
+    return getElement(project, uri);
+  }
+
+  public static IResource getRootResource(ECPProject project)
+  {
+    URI uri = getRootURI(project);
+    return getResource(project, uri);
+  }
+
+  public static URI getRootURI(ECPProject project)
+  {
+    String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
+    return rootURI == null ? null : URI.createURI(rootURI);
   }
 }

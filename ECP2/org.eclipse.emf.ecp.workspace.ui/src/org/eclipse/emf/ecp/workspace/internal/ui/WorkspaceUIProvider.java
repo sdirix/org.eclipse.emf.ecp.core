@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.workspace.internal.ui;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.ecp.workspace.internal.core.ResourceWrapper;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
@@ -72,6 +73,12 @@ public class WorkspaceUIProvider extends DefaultUIProvider
     if (elements.length == 1)
     {
       Object element = elements[0];
+      if (element instanceof InternalProject)
+      {
+        InternalProject project = (InternalProject)element;
+        element = WorkspaceProvider.getRootElement(project);
+      }
+
       if (element instanceof IWorkspaceRoot)
       {
         NewProjectAction action = new NewProjectAction(PlatformUI.getWorkbench().getActiveWorkbenchWindow());
