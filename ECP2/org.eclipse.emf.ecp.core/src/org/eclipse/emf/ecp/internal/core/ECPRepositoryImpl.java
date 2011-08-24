@@ -152,8 +152,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
    * @return the adapted object or <code>null</code>
    * @see IAdaptable#getAdapter(Class)
    */
-  @SuppressWarnings("rawtypes")
-  public Object getAdapter(Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);
   }

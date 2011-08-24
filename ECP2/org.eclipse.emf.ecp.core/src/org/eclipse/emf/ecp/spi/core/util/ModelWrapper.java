@@ -11,14 +11,14 @@
 package org.eclipse.emf.ecp.spi.core.util;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPModel;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ModelWrapper<CONTEXT extends ECPModelContext, DELEGATE> implements ECPModel
+public abstract class ModelWrapper<CONTEXT extends ECPModelContext, DELEGATE> implements ECPModel,
+    Comparable<ModelWrapper<CONTEXT, DELEGATE>>
 {
   private final CONTEXT context;
 
@@ -45,7 +45,7 @@ public abstract class ModelWrapper<CONTEXT extends ECPModelContext, DELEGATE> im
     return delegate;
   }
 
-  public int compareTo(ECPElement o)
+  public int compareTo(ModelWrapper<CONTEXT, DELEGATE> o)
   {
     return getName().compareTo(o.getName());
   }

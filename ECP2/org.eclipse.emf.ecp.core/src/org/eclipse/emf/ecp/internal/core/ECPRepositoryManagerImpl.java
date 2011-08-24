@@ -240,8 +240,7 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
       return getResolvedElement().getOpenProjects();
     }
 
-    @SuppressWarnings("rawtypes")
-    public Object getAdapter(Class adapter)
+    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
     {
       return getResolvedElement().getAdapter(adapter);
     }

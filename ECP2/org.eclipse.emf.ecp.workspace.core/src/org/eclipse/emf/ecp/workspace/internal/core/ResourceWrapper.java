@@ -42,25 +42,12 @@ import java.util.Map;
  * @author Eike Stepper
  */
 public abstract class ResourceWrapper<CONTEXT extends ECPModelContext> extends ModelWrapper<CONTEXT, IResource>
-// implements IAdaptable
     implements IResource
 {
   public ResourceWrapper(CONTEXT context, IResource delegate)
   {
     super(context, delegate);
   }
-
-  // @SuppressWarnings("rawtypes")
-  // public Object getAdapter(Class adapter)
-  // {
-  // if (adapter == IResource.class || adapter == IContainer.class || adapter == IWorkspaceRoot.class
-  // || adapter == IProject.class || adapter == IFolder.class || adapter == IFile.class)
-  // {
-  // return getDelegate();
-  // }
-  //
-  // return null;
-  // }
 
   public final URI getURI()
   {
@@ -141,8 +128,7 @@ public abstract class ResourceWrapper<CONTEXT extends ECPModelContext> extends M
 
   protected abstract Object createChild(CONTEXT context, IResource member);
 
-  @SuppressWarnings("rawtypes")
-  public Object getAdapter(Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
   {
     return getDelegate().getAdapter(adapter);
   }

@@ -168,8 +168,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
    * @return the adapted object or <code>null</code>
    * @see IAdaptable#getAdapter(Class)
    */
-  @SuppressWarnings("rawtypes")
-  public Object getAdapter(Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);
   }
@@ -300,8 +299,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
       return true;
     }
 
-    @SuppressWarnings("rawtypes")
-    public Object getAdapter(Class adapter)
+    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
     {
       return null;
     }

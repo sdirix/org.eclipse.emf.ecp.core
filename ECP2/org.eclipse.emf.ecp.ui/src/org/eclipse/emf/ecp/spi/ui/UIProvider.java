@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -27,7 +28,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @author Eike Stepper
  */
-public interface UIProvider extends InternalRegistryElement
+public interface UIProvider extends InternalRegistryElement, IAdaptable
 {
   public static final ILabelProvider EMF_LABEL_PROVIDER = new AdapterFactoryLabelProvider(
       InternalProvider.EMF_ADAPTER_FACTORY);

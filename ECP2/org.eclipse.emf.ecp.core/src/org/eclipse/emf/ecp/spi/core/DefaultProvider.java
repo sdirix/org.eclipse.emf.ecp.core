@@ -169,8 +169,7 @@ public class DefaultProvider extends Element implements InternalProvider
    * @return the adapted object or <code>null</code>
    * @see IAdaptable#getAdapter(Class)
    */
-  @SuppressWarnings("rawtypes")
-  public Object getAdapter(Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
   {
     return Platform.getAdapterManager().getAdapter(this, adapter);
   }
