@@ -188,9 +188,14 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, Ob
       return (InternalProvider)ECPProviderRegistry.INSTANCE.getProvider(providerName);
     }
 
-    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+    public Object getAdapter(Object adaptable, Class<?> adapterType)
     {
-      return getResolvedElement().getAdapter(adapter);
+      return getResolvedElement().getAdapter(adaptable, adapterType);
+    }
+
+    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
+    {
+      return getResolvedElement().getAdapter(adapterType);
     }
 
     public String getText(Object element)

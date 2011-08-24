@@ -20,8 +20,12 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelDecorator;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -36,6 +40,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
@@ -158,10 +163,26 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
     MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
   }
 
+  protected ILabelDecorator createLabelDecorator()
+  {
+    return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
+  }
+
   protected TreeViewer createViewer(Composite parent)
   {
     TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     configureViewer(viewer);
+
+    ILabelDecorator labelDecorator = createLabelDecorator();
+    if (labelDecorator != null)
+    {
+      IBaseLabelProvider labelProvider = viewer.getLabelProvider();
+      if (labelProvider instanceof ILabelProvider && !(labelProvider instanceof DecoratingLabelProvider))
+      {
+        viewer.setLabelProvider(new DecoratingLabelProvider((ILabelProvider)labelProvider, labelDecorator));
+      }
+    }
+
     return viewer;
   }
 

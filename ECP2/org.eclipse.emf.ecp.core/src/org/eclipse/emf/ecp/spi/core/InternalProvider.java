@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.spi.core;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
+import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -21,7 +22,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 /**
  * @author Eike Stepper
  */
-public interface InternalProvider extends ECPProvider, ECPProviderAware, InternalRegistryElement
+public interface InternalProvider extends ECPProvider, ECPProviderAware, InternalRegistryElement, AdapterProvider
 {
   public static final ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
       ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
@@ -30,9 +31,9 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, Interna
 
   public void setDescription(String description);
 
-  public Object getUIProvider();
+  public AdapterProvider getUIProvider();
 
-  public void setUIProvider(Object uiProvider);
+  public void setUIProvider(AdapterProvider uiProvider);
 
   public EditingDomain createEditingDomain(InternalProject project);
 

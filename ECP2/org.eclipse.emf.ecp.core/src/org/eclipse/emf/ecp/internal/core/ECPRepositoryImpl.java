@@ -147,14 +147,24 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
    * Platform's adapter manager is consulted).
    * </p>
    * 
-   * @param adapter
+   * @param adapterType
    *          the class to adapt to
    * @return the adapted object or <code>null</code>
    * @see IAdaptable#getAdapter(Class)
    */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    InternalProvider provider = getProvider();
+    if (!provider.isDisposed())
+    {
+      Object result = provider.getAdapter(this, adapterType);
+      if (result != null)
+      {
+        return result;
+      }
+    }
+
+    return Platform.getAdapterManager().getAdapter(this, adapterType);
   }
 
   public final void dispose()

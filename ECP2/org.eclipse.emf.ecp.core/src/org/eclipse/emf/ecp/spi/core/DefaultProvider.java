@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
+import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -69,7 +70,7 @@ public class DefaultProvider extends Element implements InternalProvider
 
   private String description;
 
-  private Object uiProvider;
+  private AdapterProvider uiProvider;
 
   protected DefaultProvider(String name)
   {
@@ -103,14 +104,44 @@ public class DefaultProvider extends Element implements InternalProvider
     this.description = description;
   }
 
-  public final Object getUIProvider()
+  public final AdapterProvider getUIProvider()
   {
     return uiProvider;
   }
 
-  public final void setUIProvider(Object uiProvider)
+  public final void setUIProvider(AdapterProvider uiProvider)
   {
     this.uiProvider = uiProvider;
+  }
+
+  public Object getAdapter(Object adaptable, Class<?> adapterType)
+  {
+    if (uiProvider != null)
+    {
+      return uiProvider.getAdapter(adaptable, adapterType);
+    }
+
+    return null;
+  }
+
+  /**
+   * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code> if
+   * no such object can be found.
+   * <p>
+   * This implementation of the method declared by <code>IAdaptable</code> passes the request along to the platform's
+   * adapter manager; roughly <code>Platform.getAdapterManager().getAdapter(this, adapter)</code>. Subclasses may
+   * override this method (however, if they do so, they should invoke the method on their superclass to ensure that the
+   * Platform's adapter manager is consulted).
+   * </p>
+   * 
+   * @param adapterType
+   *          the class to adapt to
+   * @return the adapted object or <code>null</code>
+   * @see IAdaptable#getAdapter(Class)
+   */
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapterType);
   }
 
   public final InternalRepository[] getAllRepositories()
@@ -152,26 +183,6 @@ public class DefaultProvider extends Element implements InternalProvider
 
     // TODO Consider to cache the result
     return result.toArray(new InternalProject[result.size()]);
-  }
-
-  /**
-   * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code> if
-   * no such object can be found.
-   * <p>
-   * This implementation of the method declared by <code>IAdaptable</code> passes the request along to the platform's
-   * adapter manager; roughly <code>Platform.getAdapterManager().getAdapter(this, adapter)</code>. Subclasses may
-   * override this method (however, if they do so, they should invoke the method on their superclass to ensure that the
-   * Platform's adapter manager is consulted).
-   * </p>
-   * 
-   * @param adapter
-   *          the class to adapt to
-   * @return the adapted object or <code>null</code>
-   * @see IAdaptable#getAdapter(Class)
-   */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
-  {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
   }
 
   public final boolean isDisposed()

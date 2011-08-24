@@ -14,6 +14,7 @@ import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -28,7 +29,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @author Eike Stepper
  */
-public interface UIProvider extends InternalRegistryElement, IAdaptable
+public interface UIProvider extends InternalRegistryElement, IAdaptable, AdapterProvider
 {
   public static final ILabelProvider EMF_LABEL_PROVIDER = new AdapterFactoryLabelProvider(
       InternalProvider.EMF_ADAPTER_FACTORY);

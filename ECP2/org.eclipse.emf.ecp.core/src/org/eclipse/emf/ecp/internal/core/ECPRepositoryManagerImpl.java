@@ -240,9 +240,9 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
       return getResolvedElement().getOpenProjects();
     }
 
-    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
     {
-      return getResolvedElement().getAdapter(adapter);
+      return getResolvedElement().getAdapter(adapterType);
     }
 
     public ECPModelContext getContext()

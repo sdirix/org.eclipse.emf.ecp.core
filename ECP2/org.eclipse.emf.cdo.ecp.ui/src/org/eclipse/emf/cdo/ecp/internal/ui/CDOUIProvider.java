@@ -11,16 +11,21 @@
 package org.eclipse.emf.cdo.ecp.internal.ui;
 
 import org.eclipse.emf.cdo.ecp.internal.core.CDOBranchWrapper;
+import org.eclipse.emf.cdo.ecp.internal.core.CDOProjectData;
 import org.eclipse.emf.cdo.ecp.internal.core.CDOProvider;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.DefaultPropertySource;
 import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 
 import org.eclipse.swt.SWT;
@@ -33,6 +38,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
 /**
  * @author Eike Stepper
@@ -75,6 +82,29 @@ public class CDOUIProvider extends DefaultUIProvider
     }
 
     return super.getImage(element);
+  }
+
+  @Override
+  public Object getAdapter(Object adaptable, Class<?> adapterType)
+  {
+    if (adapterType == IPropertySourceProvider.class && adaptable instanceof InternalProject)
+    {
+      final InternalProject project = (InternalProject)adaptable;
+      if (project.getProvider().getName().equals(CDOProvider.NAME))
+      {
+        return new IPropertySourceProvider()
+        {
+          public IPropertySource getPropertySource(Object object)
+          {
+            CDOProjectData data = CDOProvider.getProjectData(project);
+            CDOWorkspace workspace = data.getWorkspace();
+            return new DefaultPropertySource<CDOWorkspace>(workspace, CDOWorkspaceUtil.PROPERTIES);
+          }
+        };
+      }
+    }
+
+    return super.getAdapter(adaptable, adapterType);
   }
 
   @Override

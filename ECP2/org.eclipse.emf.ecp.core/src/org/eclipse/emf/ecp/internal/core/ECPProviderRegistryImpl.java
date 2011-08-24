@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -146,7 +147,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
    */
   private final class ProviderDescriptor extends ExtensionDescriptor<InternalProvider> implements InternalProvider
   {
-    private Object uiProvider;
+    private AdapterProvider uiProvider;
 
     public ProviderDescriptor(String name, IConfigurationElement configurationElement)
     {
@@ -158,18 +159,28 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
       return this;
     }
 
-    public Object getUIProvider()
+    public AdapterProvider getUIProvider()
     {
       return uiProvider;
     }
 
-    public void setUIProvider(Object uiProvider)
+    public void setUIProvider(AdapterProvider uiProvider)
     {
       this.uiProvider = uiProvider;
       if (isResolved())
       {
         getResolvedElement().setUIProvider(uiProvider);
       }
+    }
+
+    public Object getAdapter(Object adaptable, Class<?> adapterType)
+    {
+      return getResolvedElement().getAdapter(adaptable, adapterType);
+    }
+
+    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
+    {
+      return getResolvedElement().getAdapter(adapterType);
     }
 
     public ECPRepository[] getAllRepositories()
@@ -180,11 +191,6 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
     public ECPProject[] getOpenProjects()
     {
       return getResolvedElement().getOpenProjects();
-    }
-
-    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
-    {
-      return getResolvedElement().getAdapter(adapter);
     }
 
     public EditingDomain createEditingDomain(InternalProject project)

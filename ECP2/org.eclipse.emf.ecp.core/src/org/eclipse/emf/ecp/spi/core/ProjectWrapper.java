@@ -99,9 +99,9 @@ public class ProjectWrapper extends ModelContextWrapper<InternalProject> impleme
     getDelegate().undispose(repository);
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
   {
-    return getDelegate().getAdapter(adapter);
+    return getDelegate().getAdapter(adapterType);
   }
 
   public int compareTo(ECPElement o)

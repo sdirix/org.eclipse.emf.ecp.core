@@ -106,6 +106,11 @@ public class DefaultUIProvider extends Element implements UIProvider
     this.description = description;
   }
 
+  public Object getAdapter(Object adaptable, Class<?> adapterType)
+  {
+    return null;
+  }
+
   /**
    * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code> if
    * no such object can be found.
@@ -116,14 +121,14 @@ public class DefaultUIProvider extends Element implements UIProvider
    * Platform's adapter manager is consulted).
    * </p>
    * 
-   * @param adapter
+   * @param adapterType
    *          the class to adapt to
    * @return the adapted object or <code>null</code>
    * @see IAdaptable#getAdapter(Class)
    */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return Platform.getAdapterManager().getAdapter(this, adapterType);
   }
 
   public final boolean isDisposed()
