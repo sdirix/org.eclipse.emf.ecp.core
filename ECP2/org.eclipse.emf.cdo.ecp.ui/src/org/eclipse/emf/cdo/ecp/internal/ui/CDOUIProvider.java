@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.ecp.internal.ui;
 
 import org.eclipse.emf.cdo.ecp.internal.core.CDOBranchWrapper;
-import org.eclipse.emf.cdo.ecp.internal.core.CDOProjectData;
 import org.eclipse.emf.cdo.ecp.internal.core.CDOProvider;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -85,19 +84,18 @@ public class CDOUIProvider extends DefaultUIProvider
   }
 
   @Override
-  public Object getAdapter(Object adaptable, Class<?> adapterType)
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Object adaptable, Class<T> adapterType)
   {
     if (adapterType == IPropertySourceProvider.class && adaptable instanceof InternalProject)
     {
-      final InternalProject project = (InternalProject)adaptable;
-      if (project.getProvider().getName().equals(CDOProvider.NAME))
+      final CDOWorkspace workspace = CDOProvider.INSTANCE.getAdapter(adaptable, CDOWorkspace.class);
+      if (workspace != null)
       {
-        return new IPropertySourceProvider()
+        return (T)new IPropertySourceProvider()
         {
           public IPropertySource getPropertySource(Object object)
           {
-            CDOProjectData data = CDOProvider.getProjectData(project);
-            CDOWorkspace workspace = data.getWorkspace();
             return new DefaultPropertySource<CDOWorkspace>(workspace, CDOWorkspaceUtil.PROPERTIES);
           }
         };

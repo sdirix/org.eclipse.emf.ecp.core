@@ -168,7 +168,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
    * @return the adapted object or <code>null</code>
    * @see IAdaptable#getAdapter(Class)
    */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapterType)
   {
     InternalProvider provider = getProvider();
     if (!provider.isDisposed())

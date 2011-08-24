@@ -114,7 +114,7 @@ public class DefaultProvider extends Element implements InternalProvider
     this.uiProvider = uiProvider;
   }
 
-  public Object getAdapter(Object adaptable, Class<?> adapterType)
+  public <T> T getAdapter(Object adaptable, Class<T> adapterType)
   {
     if (uiProvider != null)
     {

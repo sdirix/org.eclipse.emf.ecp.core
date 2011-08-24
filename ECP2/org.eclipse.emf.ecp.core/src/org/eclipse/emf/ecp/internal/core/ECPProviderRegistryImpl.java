@@ -173,7 +173,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
       }
     }
 
-    public Object getAdapter(Object adaptable, Class<?> adapterType)
+    public <T> T getAdapter(Object adaptable, Class<T> adapterType)
     {
       return getResolvedElement().getAdapter(adaptable, adapterType);
     }

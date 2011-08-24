@@ -106,7 +106,7 @@ public class DefaultUIProvider extends Element implements UIProvider
     this.description = description;
   }
 
-  public Object getAdapter(Object adaptable, Class<?> adapterType)
+  public <T> T getAdapter(Object adaptable, Class<T> adapterType)
   {
     return null;
   }
