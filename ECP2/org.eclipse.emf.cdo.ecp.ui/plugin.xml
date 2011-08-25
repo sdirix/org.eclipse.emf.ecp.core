@@ -31,7 +31,9 @@
             class="org.eclipse.emf.cdo.ecp.internal.ui.handlers.CheckinHandler"
             commandId="org.eclipse.emf.cdo.ecp.ui.checkinCommand">
          <activeWhen>
-            <iterate>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
 		            <adapt
 		                  type="org.eclipse.emf.cdo.workspace.CDOWorkspace">
 		               <test

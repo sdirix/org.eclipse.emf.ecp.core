@@ -10,11 +10,16 @@
  */
 package org.eclipse.emf.cdo.ecp.internal.ui.handlers;
 
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+
+import org.eclipse.net4j.util.AdapterUtil;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -28,8 +33,24 @@ public class CheckinHandler extends AbstractHandler
 
   public Object execute(ExecutionEvent event) throws ExecutionException
   {
-    IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-    MessageDialog.openInformation(window.getShell(), "CDO Model Repository ECP UI", "Hello, Eclipse world");
+    ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
+    if (selection instanceof IStructuredSelection)
+    {
+      Object element = ((IStructuredSelection)selection).getFirstElement();
+      CDOWorkspace workspace = AdapterUtil.adapt(element, CDOWorkspace.class);
+      if (workspace != null)
+      {
+        try
+        {
+          workspace.checkin();
+        }
+        catch (CommitException ex)
+        {
+          throw new ExecutionException("Problem while checking in " + element, ex);
+        }
+      }
+    }
+
     return null;
   }
 }
