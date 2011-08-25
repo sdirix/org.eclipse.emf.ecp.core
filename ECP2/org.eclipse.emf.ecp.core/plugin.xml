@@ -5,19 +5,19 @@
    <extension-point id="providers" name="ECP Providers" schema="schema/providers.exsd"/>
    <extension-point id="repositories" name="ECP Repositories" schema="schema/repositories.exsd"/>
 
-  <extension point="org.eclipse.core.expressions.propertyTesters">
-    <propertyTester
-      id="org.eclipse.emf.ecp.core.projectTester"
-      type="org.eclipse.emf.ecp.core.ECPProject"
-      namespace="org.eclipse.emf.ecp.core.project"
-      properties="name,repositoryName,repositoryLabel,repositoryDescription,providerName"
-      class="org.eclipse.emf.ecp.internal.core.properties.ECPProjectPropertyTester"/>
-    <propertyTester
-      id="org.eclipse.emf.ecp.core.closeableTester"
-      type="org.eclipse.emf.ecp.core.util.ECPCloseable"
-      namespace="org.eclipse.emf.ecp.core.closeable"
-      properties="open,closed"
-      class="org.eclipse.emf.ecp.internal.core.properties.ECPCloseablePropertyTester"/>
-  </extension>
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+         id="org.eclipse.emf.ecp.internal.core.properties.ECPCloseableProperties$Tester"
+         type="org.eclipse.emf.ecp.core.util.ECPCloseable"
+         namespace="org.eclipse.emf.ecp.core.closeable"
+         properties="open,closed"
+         class="org.eclipse.emf.ecp.internal.core.properties.ECPCloseableProperties$Tester"/>
+      <propertyTester
+         id="org.eclipse.emf.ecp.internal.core.properties.ECPProjectProperties$Tester"
+         type="org.eclipse.emf.ecp.core.ECPProject"
+         namespace="org.eclipse.emf.ecp.core.project"
+         properties="name,repositoryName,repositoryLabel,providerName,providerLabel"
+         class="org.eclipse.emf.ecp.internal.core.properties.ECPProjectProperties$Tester"/>
+   </extension>
 
 </plugin>
