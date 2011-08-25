@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Text;
  */
 public interface UIProvider extends InternalRegistryElement, IAdaptable, AdapterProvider
 {
+  public static final String TYPE = "UIProvider";
+
   public static final ILabelProvider EMF_LABEL_PROVIDER = new AdapterFactoryLabelProvider(
       InternalProvider.EMF_ADAPTER_FACTORY);
 

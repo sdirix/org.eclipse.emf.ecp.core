@@ -35,6 +35,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProviderRegist
 
   public ModelRepositoriesView()
   {
+    super(ID);
   }
 
   @Override

@@ -50,14 +50,22 @@ import org.eclipse.ui.part.ViewPart;
  */
 public abstract class TreeView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
+  private final String id;
+
   private TreeViewer viewer;
 
   private DrillDownAdapter drillDownAdapter;
 
   private Action refreshAction;
 
-  public TreeView()
+  public TreeView(String id)
   {
+    this.id = id;
+  }
+
+  public final String getID()
+  {
+    return id;
   }
 
   public final TreeViewer getViewer()
@@ -202,7 +210,9 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
   protected void fillContextMenu(IMenuManager manager)
   {
+    manager.add(new Separator());
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    manager.add(new Separator());
   }
 
   protected void doubleClicked(DoubleClickEvent event)
@@ -243,6 +253,6 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
     Menu menu = manager.createContextMenu(control);
     control.setMenu(menu);
-    getSite().registerContextMenu(manager, viewer);
+    getSite().registerContextMenu(getID() + ".popup", manager, viewer);
   }
 }

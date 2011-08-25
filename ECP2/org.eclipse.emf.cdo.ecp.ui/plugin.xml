@@ -11,6 +11,7 @@
             provider="org.eclipse.emf.cdo.ecp.provider">
       </uiProvider>
    </extension>
+   
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -23,19 +24,26 @@
             name="Checkin">
       </command>
    </extension>
+   
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.emf.cdo.ecp.internal.ui.handlers.CheckinHandler"
             commandId="org.eclipse.emf.cdo.ecp.ui.checkinCommand">
          <activeWhen>
-            <test
-                  property="org.eclipse.emf.cdo.ecp.ui.test1">
-            </test>
+            <iterate>
+		            <adapt
+		                  type="org.eclipse.emf.cdo.workspace.CDOWorkspace">
+		               <test
+                       property="org.eclipse.emf.cdo.workspace.dirty"
+                       value="true">
+		               </test>
+		            </adapt>
+            </iterate>
          </activeWhen>
-         <enabledWhen></enabledWhen>
       </handler>
    </extension>
+   
    <extension
          point="org.eclipse.ui.bindings">
       <key
@@ -45,33 +53,33 @@
             sequence="M1+6">
       </key>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="org.eclipse.emf.cdo.ecp.ui.menus.sampleMenu"
-               label="Sample Menu"
-               mnemonic="M">
-            <command
-                  commandId="org.eclipse.emf.cdo.ecp.ui.checkinCommand"
-                  id="org.eclipse.emf.cdo.ecp.ui.menus.sampleCommand"
-                  mnemonic="S">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="org.eclipse.emf.cdo.ecp.ui.toolbars.sampleToolbar">
-            <command
-                  commandId="org.eclipse.emf.cdo.ecp.ui.checkinCommand"
-                  icon="icons/sample.gif"
-                  id="org.eclipse.emf.cdo.ecp.ui.toolbars.sampleCommand"
-                  tooltip="Say hello world">
-            </command>
-         </toolbar>
-      </menuContribution>
-   </extension>
+   
+	<extension point="org.eclipse.ui.menus">
+	    <menuContribution locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView.popup">
+	        <command
+	            commandId="org.eclipse.emf.cdo.ecp.ui.checkinCommand"
+	            icon="icons/checkin.gif"
+	            style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.cdo.ecp.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+	        </command>
+	    </menuContribution>
+	</extension>
+
 
 </plugin>

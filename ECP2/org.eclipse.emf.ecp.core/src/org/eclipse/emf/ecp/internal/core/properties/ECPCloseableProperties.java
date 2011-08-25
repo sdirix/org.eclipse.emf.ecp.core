@@ -57,9 +57,11 @@ public class ECPCloseableProperties extends Properties<ECPCloseable>
    */
   public static final class Tester extends DefaultPropertyTester<ECPCloseable>
   {
+    public static final String NAMESPACE = "org.eclipse.emf.ecp.core.closeable";
+
     public Tester()
     {
-      super(INSTANCE);
+      super(NAMESPACE, INSTANCE);
     }
   }
 }

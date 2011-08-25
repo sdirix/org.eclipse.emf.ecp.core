@@ -26,6 +26,7 @@ public class ECPProvidersView extends TreeView
 
   public ECPProvidersView()
   {
+    super(ID);
   }
 
   @Override

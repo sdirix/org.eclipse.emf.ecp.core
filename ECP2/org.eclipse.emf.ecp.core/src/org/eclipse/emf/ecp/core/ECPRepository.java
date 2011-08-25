@@ -24,6 +24,8 @@ import org.eclipse.core.runtime.IAdaptable;
 public interface ECPRepository extends ECPElement, ECPModelContext, ECPCheckoutSource, ECPPropertiesAware,
     ECPDeletable, IAdaptable
 {
+  public static final String TYPE = "Repository";
+
   public String getLabel();
 
   public String getDescription();

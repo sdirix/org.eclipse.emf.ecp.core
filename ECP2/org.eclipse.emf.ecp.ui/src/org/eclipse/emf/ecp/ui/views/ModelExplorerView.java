@@ -33,6 +33,7 @@ public class ModelExplorerView extends TreeView
 
   public ModelExplorerView()
   {
+    super(ID);
   }
 
   @Override

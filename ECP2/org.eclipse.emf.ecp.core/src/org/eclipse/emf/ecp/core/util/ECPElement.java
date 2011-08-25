@@ -16,4 +16,6 @@ package org.eclipse.emf.ecp.core.util;
 public interface ECPElement extends Comparable<ECPElement>
 {
   public String getName();
+
+  public String getType();
 }

@@ -44,7 +44,8 @@ public abstract class Element implements ECPElement
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (name == null ? 0 : name.hashCode());
+    result = prime * result + name.hashCode();
+    result = prime * result + getType().hashCode();
     return result;
   }
 
@@ -64,7 +65,7 @@ public abstract class Element implements ECPElement
     if (obj instanceof ECPElement)
     {
       ECPElement that = (ECPElement)obj;
-      return name.equals(that.getName());
+      return getType().equals(that.getType()) && name.equals(that.getName());
     }
 
     return false;

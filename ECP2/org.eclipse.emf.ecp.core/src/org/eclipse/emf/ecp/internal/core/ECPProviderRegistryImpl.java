@@ -151,7 +151,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 
     public ProviderDescriptor(String name, IConfigurationElement configurationElement)
     {
-      super(ECPProviderRegistryImpl.this, name, configurationElement);
+      super(ECPProviderRegistryImpl.this, name, TYPE, configurationElement);
     }
 
     public ECPProvider getProvider()

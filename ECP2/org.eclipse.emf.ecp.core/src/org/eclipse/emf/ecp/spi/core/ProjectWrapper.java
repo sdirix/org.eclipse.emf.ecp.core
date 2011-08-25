@@ -22,11 +22,17 @@ import java.io.ObjectOutput;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public class ProjectWrapper extends ModelContextWrapper<InternalProject> implements InternalProject
 {
   public ProjectWrapper(InternalProject delegate)
   {
     super(delegate);
+  }
+
+  public String getType()
+  {
+    return TYPE;
   }
 
   public boolean canDelete()

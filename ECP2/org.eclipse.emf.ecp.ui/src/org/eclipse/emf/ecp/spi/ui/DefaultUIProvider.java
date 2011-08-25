@@ -81,6 +81,11 @@ public class DefaultUIProvider extends Element implements UIProvider
     description = "";
   }
 
+  public String getType()
+  {
+    return TYPE;
+  }
+
   public InternalProvider getProvider()
   {
     return (InternalProvider)ECPProviderRegistry.INSTANCE.getProvider(getName());

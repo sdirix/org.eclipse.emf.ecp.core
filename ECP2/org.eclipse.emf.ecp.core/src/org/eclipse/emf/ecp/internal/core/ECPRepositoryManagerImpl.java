@@ -190,7 +190,7 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
 
     public RepositoryDescriptor(String name, IConfigurationElement configurationElement)
     {
-      super(ECPRepositoryManagerImpl.this, name, configurationElement);
+      super(ECPRepositoryManagerImpl.this, name, TYPE, configurationElement);
       for (IConfigurationElement property : configurationElement.getChildren("property"))
       {
         String key = property.getAttribute("key");

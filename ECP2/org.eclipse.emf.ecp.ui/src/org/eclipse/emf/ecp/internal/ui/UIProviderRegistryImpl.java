@@ -179,7 +179,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, Ob
   {
     public UIProviderDescriptor(String name, IConfigurationElement configurationElement)
     {
-      super(UIProviderRegistryImpl.this, name, configurationElement);
+      super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
     }
 
     public InternalProvider getProvider()

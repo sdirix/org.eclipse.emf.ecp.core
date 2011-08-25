@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
@@ -78,21 +77,26 @@ public class CDOProvider extends DefaultProvider
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public <T> T getAdapter(Object adaptable, Class<T> adapterType)
   {
-    if (adapterType == CDOWorkspace.class)
+    T adapter = ECPProjectAdapterFactory.adapt(adaptable, adapterType);
+    if (adapter != null)
     {
-      if (adaptable instanceof InternalProject)
-      {
-        InternalProject project = (InternalProject)adaptable;
-        if (project.isOpen() && project.getProvider().getName().equals(CDOProvider.NAME))
-        {
-          CDOProjectData data = CDOProvider.getProjectData(project);
-          return (T)data.getWorkspace();
-        }
-      }
+      return adapter;
     }
+
+    // if (adapterType == CDOWorkspace.class)
+    // {
+    // if (adaptable instanceof InternalProject)
+    // {
+    // InternalProject project = (InternalProject)adaptable;
+    // if (project.isOpen() && project.getProvider().getName().equals(CDOProvider.NAME))
+    // {
+    // CDOProjectData data = CDOProvider.getProjectData(project);
+    // return (T)data.getWorkspace();
+    // }
+    // }
+    // }
 
     return super.getAdapter(adaptable, adapterType);
   }

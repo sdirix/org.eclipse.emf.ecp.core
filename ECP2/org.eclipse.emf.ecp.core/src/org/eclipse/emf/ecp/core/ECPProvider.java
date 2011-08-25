@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.IAdaptable;
  */
 public interface ECPProvider extends ECPElement, IAdaptable
 {
+  public static final String TYPE = "Provider";
+
   public String getLabel();
 
   public String getDescription();

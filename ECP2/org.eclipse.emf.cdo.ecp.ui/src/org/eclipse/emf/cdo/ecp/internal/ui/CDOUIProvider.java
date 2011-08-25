@@ -96,7 +96,7 @@ public class CDOUIProvider extends DefaultUIProvider
         {
           public IPropertySource getPropertySource(Object object)
           {
-            return new DefaultPropertySource<CDOWorkspace>(workspace, CDOWorkspaceUtil.PROPERTIES);
+            return new DefaultPropertySource<CDOWorkspace>(workspace, CDOWorkspaceUtil.getProperties());
           }
         };
       }

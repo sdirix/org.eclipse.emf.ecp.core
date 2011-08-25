@@ -74,6 +74,11 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     open = in.readBoolean();
   }
 
+  public String getType()
+  {
+    return TYPE;
+  }
+
   public void disposed(ECPDisposable disposable)
   {
     if (disposable == repository)
@@ -298,6 +303,11 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     public Disposed(String name)
     {
       this.name = name;
+    }
+
+    public String getType()
+    {
+      return TYPE;
     }
 
     public String getName()

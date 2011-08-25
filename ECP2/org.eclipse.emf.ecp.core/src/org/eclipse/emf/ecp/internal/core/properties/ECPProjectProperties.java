@@ -84,9 +84,11 @@ public class ECPProjectProperties extends Properties<ECPProject>
    */
   public static final class Tester extends DefaultPropertyTester<ECPProject>
   {
+    public static final String NAMESPACE = "org.eclipse.emf.ecp.core.project";
+
     public Tester()
     {
-      super(INSTANCE);
+      super(NAMESPACE, INSTANCE);
     }
   }
 }

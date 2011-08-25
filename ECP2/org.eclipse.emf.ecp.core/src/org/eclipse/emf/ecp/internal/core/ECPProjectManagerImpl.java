@@ -132,6 +132,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
   }
 
   @Override
+  protected void elementsChanged(InternalProject[] oldElements, InternalProject[] newElements)
+  {
+    super.elementsChanged(oldElements, newElements);
+  }
+
+  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();

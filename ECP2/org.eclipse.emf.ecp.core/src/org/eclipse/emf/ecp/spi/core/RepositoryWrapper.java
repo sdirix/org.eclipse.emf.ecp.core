@@ -22,11 +22,17 @@ import java.io.ObjectOutput;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public class RepositoryWrapper extends ModelContextWrapper<InternalRepository> implements InternalRepository
 {
   public RepositoryWrapper(InternalRepository delegate)
   {
     super(delegate);
+  }
+
+  public String getType()
+  {
+    return TYPE;
   }
 
   public boolean canDelete()

@@ -26,4 +26,5 @@ import org.eclipse.core.runtime.IAdaptable;
 public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAware, ECPPropertiesAware, ECPCloseable,
     ECPDeletable, IEditingDomainProvider, IAdaptable
 {
+  public static final String TYPE = "Project";
 }

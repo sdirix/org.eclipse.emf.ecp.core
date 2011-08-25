@@ -14,6 +14,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -88,6 +89,11 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
     }
 
     provider.addDisposeListener(this);
+  }
+
+  public String getType()
+  {
+    return ECPRepository.TYPE;
   }
 
   public void disposed(ECPDisposable disposable) throws Exception

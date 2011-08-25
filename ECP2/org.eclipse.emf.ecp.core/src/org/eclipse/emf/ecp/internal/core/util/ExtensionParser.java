@@ -147,12 +147,15 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
    */
   public static class ExtensionDescriptor<ELEMENT extends ECPRegistryElement> extends ElementDescriptor<ELEMENT>
   {
+    private final String type;
+
     private final IConfigurationElement configurationElement;
 
-    public ExtensionDescriptor(ElementRegistry<ELEMENT, ?> registry, String name,
+    public ExtensionDescriptor(ElementRegistry<ELEMENT, ?> registry, String name, String type,
         IConfigurationElement configurationElement)
     {
       super(registry, name);
+      this.type = type;
       this.configurationElement = configurationElement;
 
       try
@@ -180,6 +183,11 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
       {
         ex.printStackTrace();
       }
+    }
+
+    public String getType()
+    {
+      return type;
     }
 
     public final IConfigurationElement getConfigurationElement()

@@ -79,6 +79,11 @@ public class DefaultProvider extends Element implements InternalProvider
     description = "";
   }
 
+  public String getType()
+  {
+    return TYPE;
+  }
+
   public final InternalProvider getProvider()
   {
     return this;

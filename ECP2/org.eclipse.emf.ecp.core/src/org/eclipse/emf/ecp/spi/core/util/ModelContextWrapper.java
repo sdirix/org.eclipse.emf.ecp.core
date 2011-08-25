@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public class ModelContextWrapper<DELEGATE extends ECPModelContext> implements ECPModelContext, ECPDelegating<DELEGATE>
 {
   private final DELEGATE delegate;
