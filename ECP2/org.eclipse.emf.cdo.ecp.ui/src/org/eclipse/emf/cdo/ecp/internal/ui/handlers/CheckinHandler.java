@@ -20,7 +20,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * @author Eike Stepper
@@ -43,6 +45,13 @@ public class CheckinHandler extends AbstractHandler
         try
         {
           workspace.checkin();
+
+          IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+          IEvaluationService service = (IEvaluationService)ww.getService(IEvaluationService.class);
+          if (service != null)
+          {
+            service.requestEvaluation("org.eclipse.emf.cdo.workspace.dirty");
+          }
         }
         catch (CommitException ex)
         {
