@@ -85,19 +85,6 @@ public class CDOProvider extends DefaultProvider
       return adapter;
     }
 
-    // if (adapterType == CDOWorkspace.class)
-    // {
-    // if (adaptable instanceof InternalProject)
-    // {
-    // InternalProject project = (InternalProject)adaptable;
-    // if (project.isOpen() && project.getProvider().getName().equals(CDOProvider.NAME))
-    // {
-    // CDOProjectData data = CDOProvider.getProjectData(project);
-    // return (T)data.getWorkspace();
-    // }
-    // }
-    // }
-
     return super.getAdapter(adaptable, adapterType);
   }
 

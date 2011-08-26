@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.ui.model;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -58,20 +59,27 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 
   public void refreshViewer()
   {
-    Display display = viewer.getControl().getDisplay();
-    if (display.getSyncThread() != Thread.currentThread())
+    final Control control = viewer.getControl();
+    if (!control.isDisposed())
     {
-      display.asyncExec(new Runnable()
+      Display display = control.getDisplay();
+      if (display.getSyncThread() != Thread.currentThread())
       {
-        public void run()
+        display.asyncExec(new Runnable()
         {
-          viewer.refresh();
-        }
-      });
-    }
-    else
-    {
-      viewer.refresh();
+          public void run()
+          {
+            if (!control.isDisposed())
+            {
+              viewer.refresh();
+            }
+          }
+        });
+      }
+      else
+      {
+        viewer.refresh();
+      }
     }
   }
 

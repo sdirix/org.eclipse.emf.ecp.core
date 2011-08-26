@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 import java.util.Map;
@@ -118,20 +119,27 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     }
 
     final TreeViewer viewer = getViewer();
-    Display display = viewer.getControl().getDisplay();
-    if (display.getSyncThread() != Thread.currentThread())
+    final Control control = viewer.getControl();
+    if (!control.isDisposed())
     {
-      display.asyncExec(new Runnable()
+      Display display = control.getDisplay();
+      if (display.getSyncThread() != Thread.currentThread())
       {
-        public void run()
+        display.asyncExec(new Runnable()
         {
-          refresh(viewer, objects);
-        }
-      });
-    }
-    else
-    {
-      refresh(viewer, objects);
+          public void run()
+          {
+            if (!control.isDisposed())
+            {
+              refresh(viewer, objects);
+            }
+          }
+        });
+      }
+      else
+      {
+        refresh(viewer, objects);
+      }
     }
   }
 
