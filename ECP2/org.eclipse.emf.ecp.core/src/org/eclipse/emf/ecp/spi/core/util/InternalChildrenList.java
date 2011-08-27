@@ -19,9 +19,13 @@ import java.util.Collection;
  */
 public interface InternalChildrenList extends ECPChildrenList
 {
+  public void addChildWithoutRefresh(Object child);
+
   public void addChild(Object child);
 
   public <T> void addChildren(T... children);
 
   public <T> void addChildren(Collection<T> children);
+
+  public void setComplete();
 }

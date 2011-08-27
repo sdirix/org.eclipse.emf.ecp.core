@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -32,6 +33,8 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
   private static final Object[] NO_CHILDREN = new Object[0];
 
   private final Map<Object, Object> parentsCache = new WeakHashMap<Object, Object>();
+
+  private final Map<Object, InternalChildrenList> slowLists = new HashMap<Object, InternalChildrenList>();
 
   public TreeContentProvider()
   {
@@ -94,7 +97,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     {
       Object[] withPending = new Object[result.length + 1];
       System.arraycopy(result, 0, withPending, 0, result.length);
-      withPending[result.length] = new LazyElement(parent);
+      withPending[result.length] = new SlowElement(parent);
       result = withPending;
     }
 
@@ -153,7 +156,24 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     InternalChildrenList childrenList;
     if (isSlow(parent))
     {
-      childrenList = new LazyChildrenList(parent);
+      SlowChildrenList newList = null;
+      synchronized (slowLists)
+      {
+        System.out.println(slowLists);
+
+        childrenList = slowLists.get(parent);
+        if (childrenList == null)
+        {
+          newList = new SlowChildrenList(parent);
+          childrenList = newList;
+          slowLists.put(parent, childrenList);
+        }
+      }
+
+      if (newList != null)
+      {
+        newList.startThread();
+      }
     }
     else
     {
@@ -174,66 +194,20 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     {
       Activator.log(t);
       ErrorElement errorElement = new ErrorElement(parent, t);
-      childrenList.addChild(errorElement);
+      childrenList.addChildWithoutRefresh(errorElement);
     }
   }
 
   protected abstract void fillChildren(Object parent, InternalChildrenList childrenList);
 
-  private static void refresh(TreeViewer viewer, Object[] objects)
+  public static void refresh(TreeViewer viewer, Object... objects)
   {
-    for (Object object : objects)
+    if (!viewer.getControl().isDisposed())
     {
-      viewer.refresh(object);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class LazyChildrenList extends ChildrenListImpl implements Runnable
-  {
-    private static final long serialVersionUID = 1L;
-
-    private boolean complete;
-
-    public LazyChildrenList(Object parent)
-    {
-      super(parent);
-
-      Thread thread = new Thread(this);
-      thread.setDaemon(true);
-      thread.start();
-    }
-
-    public void run()
-    {
-      fillChildrenDetectError(getParent(), this);
-      setComplete();
-    }
-
-    @Override
-    public boolean isLazy()
-    {
-      return true;
-    }
-
-    @Override
-    public synchronized boolean isComplete()
-    {
-      return complete;
-    }
-
-    private synchronized void setComplete()
-    {
-      complete = true;
-      refreshViewer(false, getParent());
-    }
-
-    @Override
-    protected void childrenAdded()
-    {
-      refreshViewer(false, getParent());
+      for (Object object : objects)
+      {
+        viewer.refresh(object);
+      }
     }
   }
 
@@ -252,23 +226,6 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     public final Object getParent()
     {
       return parent;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class LazyElement extends SyntheticElement
-  {
-    public LazyElement(Object parent)
-    {
-      super(parent);
-    }
-
-    @Override
-    public String toString()
-    {
-      return "Pending...";
     }
   }
 
@@ -295,5 +252,118 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     {
       return "Error";
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class SlowElement extends SyntheticElement
+  {
+    public SlowElement(Object parent)
+    {
+      super(parent);
+    }
+
+    @Override
+    public String toString()
+    {
+      return "Pending...";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SlowChildrenList extends ChildrenListImpl implements Runnable
+  {
+    private static final long serialVersionUID = 1L;
+
+    private boolean complete;
+
+    public SlowChildrenList(Object parent)
+    {
+      super(parent);
+    }
+
+    public void startThread()
+    {
+      Thread thread = new Thread(this, "SlowChildrenList");
+      thread.setDaemon(true);
+      thread.start();
+    }
+
+    public void run()
+    {
+      fillChildrenDetectError(getParent(), this);
+      setComplete();
+    }
+
+    @Override
+    public boolean isSlow()
+    {
+      return true;
+    }
+
+    @Override
+    public boolean isComplete()
+    {
+      return complete;
+    }
+
+    @Override
+    public void setComplete()
+    {
+      if (!complete)
+      {
+        try
+        {
+          complete = true;
+          childrenAdded();
+        }
+        finally
+        {
+          synchronized (slowLists)
+          {
+            slowLists.remove(getParent());
+          }
+        }
+      }
+    }
+
+    @Override
+    protected void childrenAdded()
+    {
+      final TreeViewer viewer = getViewer();
+      final Control control = viewer.getControl();
+      if (!control.isDisposed())
+      {
+        Display display = control.getDisplay();
+
+        // asyncExec() would lead to infinite recursion in setComplete()
+        display.syncExec(new Runnable()
+        {
+          public void run()
+          {
+            if (!control.isDisposed())
+            {
+              refresh(viewer, getParent());
+            }
+          }
+        });
+      }
+    }
+
+    // private void dumpStack(String msg)
+    // {
+    // try
+    // {
+    // Object parent = getParent();
+    // throw new RuntimeException(msg + " for " + parent + " (" + System.identityHashCode(parent) + ")");
+    // }
+    // catch (Exception ex)
+    // {
+    // ex.printStackTrace();
+    // }
+    // }
   }
 }

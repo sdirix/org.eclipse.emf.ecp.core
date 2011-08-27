@@ -49,30 +49,45 @@ public class ChildrenListImpl extends BasicEList<Object> implements InternalChil
     return get(index);
   }
 
-  public synchronized final void addChild(Object child)
+  public void addChildWithoutRefresh(Object child)
   {
-    add(child);
+    synchronized (this)
+    {
+      add(child);
+    }
+  }
+
+  public final void addChild(Object child)
+  {
+    addChildWithoutRefresh(child);
     childrenAdded();
   }
 
-  public synchronized final <T> void addChildren(T... children)
+  public final <T> void addChildren(T... children)
   {
-    for (int i = 0; i < children.length; i++)
+    synchronized (this)
     {
-      Object child = children[i];
-      add(child);
+      for (int i = 0; i < children.length; i++)
+      {
+        Object child = children[i];
+        add(child);
+      }
     }
 
     childrenAdded();
   }
 
-  public synchronized final <T> void addChildren(Collection<T> children)
+  public final <T> void addChildren(Collection<T> children)
   {
-    addAll(children);
+    synchronized (this)
+    {
+      addAll(children);
+    }
+
     childrenAdded();
   }
 
-  public boolean isLazy()
+  public boolean isSlow()
   {
     return false;
   }
@@ -80,6 +95,11 @@ public class ChildrenListImpl extends BasicEList<Object> implements InternalChil
   public boolean isComplete()
   {
     return true;
+  }
+
+  public void setComplete()
+  {
+    // Do nothing
   }
 
   protected void childrenAdded()

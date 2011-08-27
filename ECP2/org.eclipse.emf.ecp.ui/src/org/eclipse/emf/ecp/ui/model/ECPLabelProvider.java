@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.TreeContentProvider.ErrorElement;
-import org.eclipse.emf.ecp.ui.model.TreeContentProvider.LazyElement;
+import org.eclipse.emf.ecp.ui.model.TreeContentProvider.SlowElement;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
@@ -54,7 +54,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
   @Override
   public Image getImage(Object element)
   {
-    if (element instanceof LazyElement)
+    if (element instanceof SlowElement)
     {
       return Activator.getImage("icons/pending.gif");
     }

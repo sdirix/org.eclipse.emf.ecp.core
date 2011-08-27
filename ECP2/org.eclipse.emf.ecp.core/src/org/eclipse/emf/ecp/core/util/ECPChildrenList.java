@@ -25,7 +25,7 @@ public interface ECPChildrenList
 
   public Object getParent();
 
-  public boolean isLazy();
+  public boolean isSlow();
 
   public boolean isComplete();
 }
