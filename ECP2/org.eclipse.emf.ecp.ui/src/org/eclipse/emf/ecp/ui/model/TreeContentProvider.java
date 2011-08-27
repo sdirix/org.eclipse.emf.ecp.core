@@ -159,8 +159,6 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
       SlowChildrenList newList = null;
       synchronized (slowLists)
       {
-        System.out.println(slowLists);
-
         childrenList = slowLists.get(parent);
         if (childrenList == null)
         {
