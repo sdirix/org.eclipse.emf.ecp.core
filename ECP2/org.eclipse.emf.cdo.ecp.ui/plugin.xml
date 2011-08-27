@@ -23,6 +23,11 @@
             id="org.eclipse.emf.cdo.ecp.ui.checkinCommand"
             name="Checkin">
       </command>
+      <command
+            categoryId="org.eclipse.emf.cdo.ecp.ui.commands"
+            id="org.eclipse.emf.cdo.ecp.ui.updateCommand"
+            name="Update">
+      </command>
    </extension>
    
    <extension
@@ -43,6 +48,10 @@
 		            </adapt>
             </iterate>
          </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.cdo.ecp.internal.ui.handlers.UpdateHandler"
+            commandId="org.eclipse.emf.cdo.ecp.ui.updateCommand">
       </handler>
    </extension>
    
@@ -81,7 +90,30 @@
             </visibleWhen>
 	        </command>
 	    </menuContribution>
+	    <menuContribution locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView.popup">
+	        <command
+	            commandId="org.eclipse.emf.cdo.ecp.ui.updateCommand"
+	            icon="icons/update.gif"
+	            style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.cdo.ecp.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+	        </command>
+	    </menuContribution>
 	</extension>
-
 
 </plugin>

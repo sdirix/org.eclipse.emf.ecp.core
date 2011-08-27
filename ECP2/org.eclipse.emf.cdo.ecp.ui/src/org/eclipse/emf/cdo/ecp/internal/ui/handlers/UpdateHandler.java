@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.ecp.internal.ui.handlers;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -18,17 +21,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * @author Eike Stepper
  */
-public class CheckinHandler extends AbstractWorkspaceHandler
+public class UpdateHandler extends AbstractWorkspaceHandler
 {
-  public CheckinHandler()
+  public UpdateHandler()
   {
-    super("Updating...");
+    super("Checking in...");
   }
 
   @Override
   protected void execute(ExecutionEvent event, CDOWorkspace workspace, IProgressMonitor monitor) throws Exception
   {
-    workspace.checkin("Workspace checkin");
+    CDOTransaction transaction = workspace.update(new DefaultCDOMerger.PerFeature.ManyValued());
+    transaction.setCommitComment("Updated from remote");
+    transaction.commit();
     refreshDirtyState(event);
   }
 }
