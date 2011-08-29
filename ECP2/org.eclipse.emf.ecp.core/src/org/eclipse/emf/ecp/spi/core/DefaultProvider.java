@@ -248,8 +248,8 @@ public class DefaultProvider extends Element implements InternalProvider
     else
     {
       // Get the adapter from the factory.
-      ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider)InternalProvider.EMF_ADAPTER_FACTORY
-          .adapt(parent, ITreeItemContentProvider.class);
+      ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider)EMF_ADAPTER_FACTORY.adapt(parent,
+          ITreeItemContentProvider.class);
 
       // Either delegate the call or return nothing.
       if (treeItemContentProvider != null)
