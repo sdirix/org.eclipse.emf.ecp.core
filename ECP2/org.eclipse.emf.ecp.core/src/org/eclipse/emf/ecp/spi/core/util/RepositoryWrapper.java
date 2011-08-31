@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.ecp.spi.core;
+package org.eclipse.emf.ecp.spi.core.util;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.spi.core.util.ModelContextWrapper;
+import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import java.io.IOException;
 import java.io.ObjectOutput;
