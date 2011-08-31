@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.spi.core;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -22,6 +23,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
@@ -29,7 +31,6 @@ import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
-import org.eclipse.emf.ecp.spi.core.util.ResourceSetContextAdapter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -225,7 +226,7 @@ public class DefaultProvider extends Element implements InternalProvider
   {
     CommandStack commandStack = createCommandStack(project);
     EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY, commandStack);
-    editingDomain.getResourceSet().eAdapters().add(new ResourceSetContextAdapter(project));
+    editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
     return editingDomain;
   }
 
@@ -264,24 +265,47 @@ public class DefaultProvider extends Element implements InternalProvider
     if (element instanceof EObject)
     {
       EObject eObject = (EObject)element;
+      ECPModelContext context = getModelContextFromAdapter(eObject);
+      if (context != null)
+      {
+        return context;
+      }
+
       element = eObject.eResource();
     }
 
     if (element instanceof Resource)
     {
       Resource resource = (Resource)element;
+      ECPModelContext context = getModelContextFromAdapter(resource);
+      if (context != null)
+      {
+        return context;
+      }
+
       element = resource.getResourceSet();
     }
 
     if (element instanceof ResourceSet)
     {
       ResourceSet resourceSet = (ResourceSet)element;
-      ResourceSetContextAdapter adapter = (ResourceSetContextAdapter)EcoreUtil.getAdapter(resourceSet.eAdapters(),
-          ResourceSetContextAdapter.class);
-      if (adapter != null)
+      ECPModelContext context = getModelContextFromAdapter(resourceSet);
+      if (context != null)
       {
-        return adapter.getContext();
+        return context;
       }
+    }
+
+    return null;
+  }
+
+  private ECPModelContext getModelContextFromAdapter(Notifier notifier)
+  {
+    ECPModelContextAdapter adapter = (ECPModelContextAdapter)EcoreUtil.getAdapter(notifier.eAdapters(),
+        ECPModelContextAdapter.class);
+    if (adapter != null)
+    {
+      return adapter.getContext();
     }
 
     return null;

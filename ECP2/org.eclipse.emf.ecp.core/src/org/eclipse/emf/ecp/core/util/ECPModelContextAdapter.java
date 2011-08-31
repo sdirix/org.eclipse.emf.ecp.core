@@ -8,19 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.ecp.spi.core.util;
+package org.eclipse.emf.ecp.core.util;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
 
 /**
  * @author Eike Stepper
  */
-public class ResourceSetContextAdapter extends AdapterImpl
+public class ECPModelContextAdapter extends AdapterImpl
 {
   private final ECPModelContext context;
 
-  public ResourceSetContextAdapter(ECPModelContext context)
+  public ECPModelContextAdapter(ECPModelContext context)
   {
     this.context = context;
   }
