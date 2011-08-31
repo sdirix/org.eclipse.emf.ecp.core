@@ -127,36 +127,6 @@ public class DefaultProvider extends Element implements InternalProvider
     this.uiProvider = uiProvider;
   }
 
-  public <T> T getAdapter(Object adaptable, Class<T> adapterType)
-  {
-    if (uiProvider != null)
-    {
-      return uiProvider.getAdapter(adaptable, adapterType);
-    }
-
-    return null;
-  }
-
-  /**
-   * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code> if
-   * no such object can be found.
-   * <p>
-   * This implementation of the method declared by <code>IAdaptable</code> passes the request along to the platform's
-   * adapter manager; roughly <code>Platform.getAdapterManager().getAdapter(this, adapter)</code>. Subclasses may
-   * override this method (however, if they do so, they should invoke the method on their superclass to ensure that the
-   * Platform's adapter manager is consulted).
-   * </p>
-   * 
-   * @param adapterType
-   *          the class to adapt to
-   * @return the adapted object or <code>null</code>
-   * @see IAdaptable#getAdapter(Class)
-   */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
-  {
-    return Platform.getAdapterManager().getAdapter(this, adapterType);
-  }
-
   public final InternalRepository[] getAllRepositories()
   {
     List<InternalRepository> result = new ArrayList<InternalRepository>();
@@ -220,6 +190,36 @@ public class DefaultProvider extends Element implements InternalProvider
 
   protected void doDispose()
   {
+  }
+
+  public <T> T getAdapter(Object adaptable, Class<T> adapterType)
+  {
+    if (uiProvider != null)
+    {
+      return uiProvider.getAdapter(adaptable, adapterType);
+    }
+  
+    return null;
+  }
+
+  /**
+   * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code> if
+   * no such object can be found.
+   * <p>
+   * This implementation of the method declared by <code>IAdaptable</code> passes the request along to the platform's
+   * adapter manager; roughly <code>Platform.getAdapterManager().getAdapter(this, adapter)</code>. Subclasses may
+   * override this method (however, if they do so, they should invoke the method on their superclass to ensure that the
+   * Platform's adapter manager is consulted).
+   * </p>
+   * 
+   * @param adapterType
+   *          the class to adapt to
+   * @return the adapted object or <code>null</code>
+   * @see IAdaptable#getAdapter(Class)
+   */
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType)
+  {
+    return Platform.getAdapterManager().getAdapter(this, adapterType);
   }
 
   public EditingDomain createEditingDomain(InternalProject project)
