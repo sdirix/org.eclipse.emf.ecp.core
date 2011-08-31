@@ -12,17 +12,24 @@ package org.eclipse.emf.ecp.spi.core;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
+import org.eclipse.emf.ecp.spi.core.util.ResourceSetContextAdapter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -217,7 +224,9 @@ public class DefaultProvider extends Element implements InternalProvider
   public EditingDomain createEditingDomain(InternalProject project)
   {
     CommandStack commandStack = createCommandStack(project);
-    return new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY, commandStack);
+    EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY, commandStack);
+    editingDomain.getResourceSet().eAdapters().add(new ResourceSetContextAdapter(project));
+    return editingDomain;
   }
 
   protected CommandStack createCommandStack(InternalProject project)
@@ -233,6 +242,49 @@ public class DefaultProvider extends Element implements InternalProvider
   public boolean isSlow(Object parent)
   {
     return false;
+  }
+
+  public ECPModelContext getModelContext(Object element)
+  {
+    if (element instanceof ECPModelContext)
+    {
+      return (ECPModelContext)element;
+    }
+
+    if (element instanceof ECPModelContextProvider)
+    {
+      return ((ECPModelContextProvider)element).getModelContext(element);
+    }
+
+    if (element instanceof ModelWrapper)
+    {
+      return ((ModelWrapper<?, ?>)element).getContext();
+    }
+
+    if (element instanceof EObject)
+    {
+      EObject eObject = (EObject)element;
+      element = eObject.eResource();
+    }
+
+    if (element instanceof Resource)
+    {
+      Resource resource = (Resource)element;
+      element = resource.getResourceSet();
+    }
+
+    if (element instanceof ResourceSet)
+    {
+      ResourceSet resourceSet = (ResourceSet)element;
+      ResourceSetContextAdapter adapter = (ResourceSetContextAdapter)EcoreUtil.getAdapter(resourceSet.eAdapters(),
+          ResourceSetContextAdapter.class);
+      if (adapter != null)
+      {
+        return adapter.getContext();
+      }
+    }
+
+    return null;
   }
 
   public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList)

@@ -208,6 +208,11 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
       return getResolvedElement().isSlow(parent);
     }
 
+    public ECPModelContext getModelContext(Object element)
+    {
+      return getResolvedElement().getModelContext(element);
+    }
+
     public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList)
     {
       getResolvedElement().fillChildren(context, parent, childrenList);
