@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
+	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0"
+	xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
+	
+	<!-- Properties -->
+	
+	<rm:property key="platform.version" mutable="true" value="3.8"/>
+	<rm:property key="emf.version" mutable="true" value="2.8"/>
+	<rm:property key="orbit.version" mutable="true" value="S20110907174232"/>
+
+	<rm:property key="checkout" mutable="true" value="/replaced/by/hudson/builds"/>
+	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo.git"/>
+	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
+	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
+	<rm:property key="build.type" mutable="true" value="N"/>
+	
+	<!-- Locators -->
+	
+	<rm:locator pattern="^org\.eclipse\.emf\.ecp(?:\..+)?$" searchPathRef="local" failOnError="false"/>
+	<rm:locator pattern="^org\.eclipse\.emf\.ecp(?:\..+)?$" searchPathRef="git"/>
+	
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.ecp(?:\..+)?$" searchPathRef="local" failOnError="false"/>
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.ecp(?:\..+)?$" searchPathRef="git"/>
+	
+	<rm:locator searchPathRef="p2"/>
+	
+	<!-- Search Paths -->
+	
+	<rm:searchPath name="local">
+		<rm:provider componentTypes="osgi.bundle" readerType="local">
+			<rm:uri format="file://{0}/plugins/{1}">
+				<bc:propertyRef key="checkout"/>
+				<bc:propertyRef key="buckminster.component"/>
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="local">
+			<rm:uri format="file://{0}/features/{1}-feature">
+				<bc:propertyRef key="checkout"/>
+				<bc:propertyRef key="buckminster.component"/>
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+	
+	<rm:searchPath name="git">
+		<rm:provider componentTypes="osgi.bundle" readerType="git">
+			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.other.git"/>
+			<rm:uri format="{0},plugins/{1}">
+				<bc:propertyRef key="git.clone"/>
+				<bc:propertyRef key="buckminster.component"/>
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="git">
+			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.other.git"/>
+			<rm:uri format="{0},features/{1}-feature">
+				<bc:propertyRef key="git.clone"/>
+				<bc:propertyRef key="buckminster.component"/>
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+	
+	<rm:searchPath name="p2">
+		
+		<!-- EMF -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/modeling/emf/emf/updates/{1}milestones">
+				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="emf.version"/>
+			</rm:uri>
+		</rm:provider>
+
+		<!-- CDO -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/modeling/emf/cdo/updates/integration/stable">
+				<bc:propertyRef key="eclipse.downloads"/>
+			</rm:uri>
+		</rm:provider>
+
+		<!-- ORBIT -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
+				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="orbit.version"/>
+			</rm:uri>
+		</rm:provider>
+
+		<!-- PLATFORM -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/eclipse/updates/{1}milestones">
+				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="platform.version"/>
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+	
+</rm:rmap>

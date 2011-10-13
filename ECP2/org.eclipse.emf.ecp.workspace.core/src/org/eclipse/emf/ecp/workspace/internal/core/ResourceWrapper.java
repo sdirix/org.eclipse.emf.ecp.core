@@ -148,6 +148,14 @@ public abstract class ResourceWrapper<CONTEXT extends ECPModelContext> extends M
     getDelegate().accept(visitor, memberFlags);
   }
 
+  /*
+   * This method has been added in 3.8!
+   */
+  public void accept(IResourceProxyVisitor visitor, int depth, int memberFlags) throws CoreException
+  {
+    getDelegate().accept(visitor, depth, memberFlags);
+  }
+
   public void accept(IResourceVisitor visitor) throws CoreException
   {
     getDelegate().accept(visitor);
