@@ -55,6 +55,7 @@
 			<eclipse.launch app="buckminster">
 				<properties>
 					<sysproperty key="bugfix.288796" value="true" />
+					<sysproperty key="git.clone" value="${git.clone}" />
 					<sysproperties />
 				</properties>
 				<args>
@@ -334,9 +335,6 @@
 
 		<mkdir dir="${tp}" />
 		<buckminster command="import">
-			<sysproperties>
-				<property name="git.clone" value="${git.clone}"/>
-			</sysproperties>
 			<cmdargs>
 				<arg value="-B" />
 				<arg value="${hudson.WORKSPACE}/bom.xml" />
