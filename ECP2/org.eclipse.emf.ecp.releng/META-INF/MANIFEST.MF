@@ -6,3 +6,4 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
+Export-Package: org.eclipse.emf.ecp.releng;version="2.0.0";x-internal:=true
