@@ -70,7 +70,7 @@
 		<!-- CDO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/cdo/updates/integration/stable">
+			<rm:uri format="{0}/modeling/emf/cdo/drops/S20110927-0522">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
