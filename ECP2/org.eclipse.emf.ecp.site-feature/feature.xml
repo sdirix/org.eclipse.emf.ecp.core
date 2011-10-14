@@ -15,7 +15,7 @@
       version="2.0.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
-      license-feature="org.eclipse.emf.cdo.license"
+      license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="2.0.0.qualifier">
 
    <description>
