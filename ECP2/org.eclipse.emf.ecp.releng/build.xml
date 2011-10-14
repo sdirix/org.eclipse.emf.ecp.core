@@ -55,13 +55,13 @@
 			<eclipse.launch app="buckminster">
 				<properties>
 					<sysproperty key="bugfix.288796" value="true" />
-					<sysproperty key="git.clone" value="${git.clone}" />
 					<sysproperties />
 				</properties>
 				<args>
 					<jvmarg value="-Xmx4096m" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
+					<jvmarg value="-Dgit.clone=${git.clone}" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
