@@ -29,13 +29,13 @@
 	
 	<rm:searchPath name="local">
 		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="file://{0}/plugins/{1}">
+			<rm:uri format="file://{0}/{1}">
 				<bc:propertyRef key="checkout"/>
 				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="file://{0}/features/{1}-feature">
+			<rm:uri format="file://{0}/{1}-feature">
 				<bc:propertyRef key="checkout"/>
 				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
