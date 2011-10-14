@@ -9,7 +9,6 @@
 	<rm:property key="emf.version" mutable="true" value="2.8"/>
 	<rm:property key="orbit.version" mutable="true" value="S20110907174232"/>
 
-	<rm:property key="checkout" mutable="true" value="/replaced/by/hudson/builds"/>
 	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo.git"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
 	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
@@ -17,27 +16,10 @@
 	
 	<!-- Locators -->
 	
-	<rm:locator pattern="^org\.eclipse\.emf\.ecp(?:\..+)?$" searchPathRef="local" failOnError="false"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.ecp(?:\..+)?$" searchPathRef="git"/>
-	
 	<rm:locator searchPathRef="p2"/>
 	
 	<!-- Search Paths -->
-	
-	<rm:searchPath name="local">
-		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="file://{0}/{1}">
-				<bc:propertyRef key="checkout"/>
-				<bc:propertyRef key="buckminster.component"/>
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="file://{0}/{1}-feature">
-				<bc:propertyRef key="checkout"/>
-				<bc:propertyRef key="buckminster.component"/>
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
 	
 	<rm:searchPath name="git">
 		<rm:provider componentTypes="osgi.bundle" readerType="git">
