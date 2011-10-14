@@ -89,7 +89,8 @@
 			<isset property="hudson.no_proxy" />
 		</condition>
 
-		<property name="releng" location="${hudson.WORKSPACE}/git/ECP2/org.eclipse.emf.ecp.releng" />
+		<property name="git.clone" location="${hudson.WORKSPACE}/git" />
+		<property name="releng" location="${git.clone}/ECP2/org.eclipse.emf.ecp.releng" />
 		<property name="test.report" location="${hudson.WORKSPACE}/test-report.xml" />
 
 		<property name="tools" location="${hudson.WORKSPACE}/tools" />
@@ -333,6 +334,9 @@
 
 		<mkdir dir="${tp}" />
 		<buckminster command="import">
+			<sysproperties>
+				<property name="git.clone" value="${git.clone}"/>
+			</sysproperties>
 			<cmdargs>
 				<arg value="-B" />
 				<arg value="${hudson.WORKSPACE}/bom.xml" />
