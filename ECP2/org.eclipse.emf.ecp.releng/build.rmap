@@ -20,9 +20,6 @@
 	<rm:locator pattern="^org\.eclipse\.emf\.ecp(?:\..+)?$" searchPathRef="local" failOnError="false"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.ecp(?:\..+)?$" searchPathRef="git"/>
 	
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.ecp(?:\..+)?$" searchPathRef="local" failOnError="false"/>
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.ecp(?:\..+)?$" searchPathRef="git"/>
-	
 	<rm:locator searchPathRef="p2"/>
 	
 	<!-- Search Paths -->

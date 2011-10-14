@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="org.eclipse.emf.ecp.cdo.provider"
+         name="CDO Model Repository"
+         point="org.eclipse.emf.ecp.ui.uiProviders">
+      <uiProvider
+            class="org.eclipse.emf.ecp.cdo.internal.ui.CDOUIProvider"
+            provider="org.eclipse.emf.ecp.cdo.provider">
+      </uiProvider>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.eclipse.emf.ecp.cdo.ui.commands"
+            name="ECP CDO Provider">
+      </category>
+      <command
+            categoryId="org.eclipse.emf.ecp.cdo.ui.commands"
+            id="org.eclipse.emf.ecp.cdo.ui.checkinCommand"
+            name="Checkin">
+      </command>
+      <command
+            categoryId="org.eclipse.emf.ecp.cdo.ui.commands"
+            id="org.eclipse.emf.ecp.cdo.ui.updateCommand"
+            name="Update">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.ecp.cdo.internal.ui.handlers.CheckinHandler"
+            commandId="org.eclipse.emf.ecp.cdo.ui.checkinCommand">
+         <activeWhen>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+		            <adapt
+		                  type="org.eclipse.emf.cdo.workspace.CDOWorkspace">
+		               <test
+                       property="org.eclipse.emf.cdo.workspace.dirty"
+                       value="true">
+		               </test>
+		            </adapt>
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.cdo.internal.ui.handlers.UpdateHandler"
+            commandId="org.eclipse.emf.ecp.cdo.ui.updateCommand">
+      </handler>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.emf.ecp.cdo.ui.checkinCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension>
+   
+	<extension point="org.eclipse.ui.menus">
+	    <menuContribution locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView.popup">
+	        <command
+	            commandId="org.eclipse.emf.ecp.cdo.ui.checkinCommand"
+	            icon="icons/checkin.gif"
+	            style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.cdo.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+	        </command>
+	    </menuContribution>
+	    <menuContribution locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView.popup">
+	        <command
+	            commandId="org.eclipse.emf.ecp.cdo.ui.updateCommand"
+	            icon="icons/update.gif"
+	            style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.cdo.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+	        </command>
+	    </menuContribution>
+	</extension>
+
+</plugin>
