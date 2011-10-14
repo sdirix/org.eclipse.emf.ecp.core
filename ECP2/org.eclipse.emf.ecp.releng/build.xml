@@ -61,7 +61,6 @@
 					<jvmarg value="-Xmx4096m" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
-					<jvmarg value="-Dsvnkit.ssh2.persistent=false" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -257,7 +256,7 @@
 			       qualifier="${build.qualifier}"
 			       trigger="${build.trigger}"
 			       hudson="${hudson.HUDSON_URL}"
-			       revision="${hudson.SVN_REVISION}"
+			       revision="${hudson.GIT_COMMIT}"
 			       job="${hudson.JOB_NAME}"
 			       number="${hudson.BUILD_NUMBER}" />
 		</echoxml>
