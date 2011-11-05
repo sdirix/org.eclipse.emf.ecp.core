@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.ui.views;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -17,8 +18,12 @@ import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
+import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 
@@ -27,6 +32,30 @@ import org.eclipse.jface.viewers.ViewerSorter;
  */
 public class ModelExplorerView extends TreeView
 {
+  /**
+   * @author Jonas
+   */
+  public class DoubleClickListener implements IDoubleClickListener
+  {
+
+    /**
+     * Opens an EObject using the ActionHelper
+     */
+    public void doubleClick(DoubleClickEvent event)
+    {
+      if (event.getSelection() instanceof IStructuredSelection)
+      {
+        IStructuredSelection structuredSelection = (IStructuredSelection)event.getSelection();
+        Object firstElement = structuredSelection.getFirstElement();
+        if (firstElement instanceof EObject)
+        {
+          ActionHelper.openModelElement((EObject)firstElement, "modelexplorer");
+        }
+      }
+
+    }
+  }
+
   public static final String ID = "org.eclipse.emf.ecp.ui.ModelExplorerView";
 
   private ModelContentProvider contentProvider = new ModelContentProvider();
@@ -43,6 +72,7 @@ public class ModelExplorerView extends TreeView
     viewer.setLabelProvider(new ModelLabelProvider(contentProvider));
     viewer.setSorter(new ViewerSorter());
     viewer.setInput(ECPProjectManager.INSTANCE);
+    viewer.addDoubleClickListener(new DoubleClickListener());
   }
 
   @Override

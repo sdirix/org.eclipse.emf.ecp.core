@@ -3,6 +3,7 @@
 <plugin>
 
    <extension-point id="uiProviders" name="ECP UI Providers" schema="schema/uiProviders.exsd"/>
+   <extension-point id="modelelementOpener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
 
    <extension
          point="org.eclipse.ui.views">
