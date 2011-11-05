@@ -42,4 +42,8 @@
          id="org.eclipse.emf.ecp.workspace"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.emfstore"
+         version="0.0.0"/>
+
 </feature>
