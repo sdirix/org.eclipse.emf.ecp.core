@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.eclipse.emf.ecp.emfstore.provider"
+         name="EMFStore Provider"
+         point="org.eclipse.emf.ecp.ui.uiProviders">
+      <uiProvider
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.EMFStoreUIProvider"
+            provider="org.eclipse.emf.ecp.emfstore.provider">
+      </uiProvider>
+   </extension>
+
+</plugin>
