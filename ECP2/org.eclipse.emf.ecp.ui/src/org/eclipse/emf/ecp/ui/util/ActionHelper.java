@@ -70,7 +70,6 @@ public final class ActionHelper
         "org.eclipse.emf.ecp.common.modelelementopener");
     ModelElementOpener bestCandidate = null;
     int bestValue = -1;
-    String name = "";
     for (IConfigurationElement element : modelelementopener)
     {
       modelelementopener = null;
@@ -82,7 +81,6 @@ public final class ActionHelper
         {
           bestCandidate = modelelementOpener;
           bestValue = value;
-          name = element.getAttribute("name");
         }
       }
       catch (CoreException e)
