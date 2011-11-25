@@ -1,16 +1,13 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
-import org.eclipse.emf.emfstore.client.model.impl.ServerInfoImpl;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
 public class EMFStoreProvider extends DefaultProvider {

@@ -4,7 +4,6 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -73,7 +72,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		
 		Label cert = new Label(composite, 0);
 		cert.setText("Certificate:");
-		Text certText = new Text(composite, SWT.BORDER);
+		new Text(composite, SWT.BORDER);
 
 		
 		return composite;

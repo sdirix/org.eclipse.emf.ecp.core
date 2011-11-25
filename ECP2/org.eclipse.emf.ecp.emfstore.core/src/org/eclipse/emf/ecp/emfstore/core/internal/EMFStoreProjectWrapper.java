@@ -1,9 +1,6 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
-import java.rmi.activation.Activator;
-
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -32,24 +29,20 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 		this.serverInfo = serverInfo;
 	}
 
-	@Override
 	public ECPRepository getRepository() {
 		// TODO Auto-generated method stub
 		return repository;
 	}
 
-	@Override
 	public ECPProvider getProvider() {
 		return repository.getProvider();
 	}
 
-	@Override
 	public String getDefaultCheckoutName() {
 		// TODO Auto-generated method stub
 		return projectInfo.getName();
 	}
 
-	@Override
 	public ECPProject checkout(String projectName,
 			ECPProperties projectProperties) {
 		final ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(PlatformUI.getWorkbench()
