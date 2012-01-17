@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.emf.ecp.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.emf.ecp.editor" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.emf.ecp.ui" id="modelelementopener" name="Open Handler for Modelelements"/>
+         <meta.schema plugin="org.eclipse.emf.ecp.editor" id="org.eclipse.emf.ecp.editor.referencecontrols" name="org.eclipse.emf.ecp.editor.referencecontrols"/>
       </appinfo>
       <documentation>
-         A model element opener is responsible to handle the double click action in the navigator on a model element.
+         Allows to add new or replace existing controls in the MEEditor, which render reference attributes, single or multi.
       </documentation>
    </annotation>
 
@@ -17,8 +17,8 @@
          </appinfo>
       </annotation>
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="ModelElementOpener"/>
+         <sequence>
+            <element ref="widget" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="ModelElementOpener">
+   <element name="widget">
       <complexType>
          <attribute name="name" type="string" use="required">
             <annotation>
@@ -62,8 +62,25 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ModelElementOpener"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl:"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The type of the opposite element of a reference.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecore.EObject"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="showLabel" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -74,10 +91,18 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         0.4
+         0.4.0
       </documentation>
    </annotation>
 
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
 
    <annotation>
       <appinfo>
