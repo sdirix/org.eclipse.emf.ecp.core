@@ -3,7 +3,7 @@
 <plugin>
 
    <extension-point id="uiProviders" name="ECP UI Providers" schema="schema/uiProviders.exsd"/>
-   <extension-point id="modelelementOpener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
+   <extension-point id="modelelementopener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
 
    <extension
          point="org.eclipse.ui.views">
@@ -122,6 +122,24 @@
                style="push">
          </action>
       </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
+         <dynamic
+               class="org.eclipse.emf.ecp.ui.commands.DynamicContainmentCommands"
+               id="org.eclipse.emf.ecp.ui.commands.dynamicMECreationCommands">
+         </dynamic>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
+            id="org.eclipse.emf.ecp.ui.wiards.newModelElementWizard"
+            name="New Modelelement">
+      </command>
    </extension>
 
 </plugin>

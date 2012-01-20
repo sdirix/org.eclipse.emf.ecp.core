@@ -67,7 +67,7 @@ public final class ActionHelper
       return;
     }
     IConfigurationElement[] modelelementopener = Platform.getExtensionRegistry().getConfigurationElementsFor(
-        "org.eclipse.emf.ecp.common.modelelementopener");
+        "org.eclipse.emf.ecp.ui.modelelementopener");
     ModelElementOpener bestCandidate = null;
     int bestValue = -1;
     for (IConfigurationElement element : modelelementopener)

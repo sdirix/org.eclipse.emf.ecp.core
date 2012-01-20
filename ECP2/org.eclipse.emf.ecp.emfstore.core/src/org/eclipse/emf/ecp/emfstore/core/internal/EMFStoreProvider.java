@@ -1,6 +1,8 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -12,7 +14,7 @@ import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
 public class EMFStoreProvider extends DefaultProvider {
 	public static final String NAME = "org.eclipse.emf.ecp.cdo.provider";
-	public static EMFStoreProvider INSTANCE;
+	public static EMFStoreProvider INSTANCE = new EMFStoreProvider();
 
 	public static final String PROP_REPOSITORY_URL = "repositoryUrl";
 	public static final String PROP_PORT = "port";
@@ -55,5 +57,18 @@ public class EMFStoreProvider extends DefaultProvider {
 		}
 		super.fillChildren(context, parent, childrenList);
 	}
+
+	public void addToRoot(EObject newMEInstance, InternalProject ecpProject) {
+		String id = ecpProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
+		EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
+		 for(ProjectSpace projectSpace: projectSpaces){
+	    	  if(projectSpace.getIdentifier().equals(id)){
+	    		  projectSpace.getProject().addModelElement(newMEInstance);
+	    	  }
+	      }
+		
+	}
+
+	
 
 }

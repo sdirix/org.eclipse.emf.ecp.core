@@ -20,14 +20,12 @@ public class EditorContext implements EditorModelelementContext {
 		metaModeElementContext = new MetaModeElementContext();
 	}
 
-	@Override
 	public void addModelElementContextListener(
 			EditorModelelementContextListener modelElementContextListener) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void removeModelElementContextListener(
 			EditorModelelementContextListener modelElementContextListener) {
 		// TODO Auto-generated method stub
@@ -36,32 +34,27 @@ public class EditorContext implements EditorModelelementContext {
 
 
 
-	@Override
 	public Collection<EObject> getAllModelElementsbyClass(EClass clazz,
 			boolean association) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public EditingDomain getEditingDomain() {
 		// TODO Auto-generated method stub
 		return AdapterFactoryEditingDomain.getEditingDomainFor(modelElement);
 	}
 
-	@Override
 	public EditorMetamodelContext getMetaModelElementContext() {
 		// TODO Auto-generated method stub
 		return metaModeElementContext;
 	}
 
-	@Override
 	public boolean contains(EObject eObject) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 

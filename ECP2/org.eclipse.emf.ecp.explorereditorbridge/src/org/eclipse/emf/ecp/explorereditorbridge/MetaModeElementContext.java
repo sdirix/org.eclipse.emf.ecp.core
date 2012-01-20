@@ -12,19 +12,16 @@ public class MetaModeElementContext implements EditorMetamodelContext {
 
 	
 
-	@Override
 	public Set<EClass> getAllSubEClasses(EClass eClass, boolean association) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public boolean isNonDomainElement(EClass clazz) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean isAssociationClassElement(EObject eObject) {
 		// TODO Auto-generated method stub
 		return false;
@@ -32,14 +29,12 @@ public class MetaModeElementContext implements EditorMetamodelContext {
 
 	
 
-	@Override
 	public EReference getPossibleContainingReference(EObject newMEInstance,
 			EObject parent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ECPAssociationClassElement getAssociationClassElement(EObject link) {
 		// TODO Auto-generated method stub
 		return null;
