@@ -53,7 +53,6 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 				serverInfo.getLastUsersession().logIn();
 				ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace().checkout(serverInfo.getLastUsersession(), projectInfo);
 				WorkspaceManager.getInstance().getCurrentWorkspace().save();
-				WorkspaceUtil.logCheckout(projectSpace, projectSpace.getBaseVersion());
 				WorkspaceManager.getObserverBus().notify(CheckoutObserver.class).checkoutDone(projectSpace);
 				projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getIdentifier());
 				return repository.checkout(projectName, projectProperties);
