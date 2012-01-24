@@ -1,8 +1,6 @@
 package org.eclipse.emf.ecp.ui.commands;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.viewers.ISelection;
@@ -19,10 +17,10 @@ import java.util.List;
 //TODO: Revise
 public class DynamicContainmentCommands extends CompoundContributionItem
 {
-  private static AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-      new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-
-  private static final String COMMAND_ID = "org.eclipse.emf.ecp.navigator.createContaiment";
+  // private static AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+  // new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+  //
+  // private static final String COMMAND_ID = "org.eclipse.emf.ecp.navigator.createContaiment";
 
   /**
    * . {@inheritDoc}

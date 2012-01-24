@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.wizards;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
@@ -70,7 +69,7 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
       // 1.create ME
       EPackage ePackage = newMEType.getEPackage();
       newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
-      ECPProject tryProject = null;
+
       ecpProject.addToRoot(newMEInstance);
 
       // 3.open the newly created ME
@@ -108,7 +107,6 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
   }
 
   /**
-   * @see newMEType
    * @param newMEType
    *          The ME type that was in ModelTreePage selected.
    */
@@ -118,7 +116,6 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
   }
 
   /**
-   * @see treePageCompeleted
    * @param treePageCompleted
    *          If ModelTreePage is complete (i.e. its selection is a ME)
    */

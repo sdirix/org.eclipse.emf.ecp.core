@@ -130,12 +130,10 @@ public class ModelTreeContentProvider extends AdapterFactoryContentProvider
       return ret.toArray();
 
     }
-    else
-    {
-      // for Children that are EClass, show nothing
-      // Otherwise the EAttributes of EClass would be shown in tree
-      return null;
-    }
+
+    // for Children that are EClass, show nothing
+    // Otherwise the EAttributes of EClass would be shown in tree
+    return null;
 
   }
 
@@ -164,18 +162,14 @@ public class ModelTreeContentProvider extends AdapterFactoryContentProvider
     {
       return false;
     }
-    else
+
+    Object[] children = getChildren(object);
+    if (children != null)
     {
-      Object[] children = getChildren(object);
-      if (children != null)
-      {
-        return children.length > 0;
-      }
-      else
-      {
-        return false;
-      }
+      return children.length > 0;
     }
+
+    return false;
 
   }
 

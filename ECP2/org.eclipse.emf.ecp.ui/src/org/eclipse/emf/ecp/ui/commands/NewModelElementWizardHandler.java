@@ -15,7 +15,6 @@ import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -26,7 +25,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author Hodaie This is the handler for "Add new model element" context menu command. The command is only shown on
  *         LeafSections. The handler initializes and shows the AddNewModelElementWizard
  */
-public class NewModelElementWizardHandler extends AbstractHandler implements IHandler
+public class NewModelElementWizardHandler extends AbstractHandler
 {
 
   private static final String WIZARD_TITLE = "Add new model element";
