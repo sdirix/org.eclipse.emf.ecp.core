@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.wizards;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
@@ -42,7 +43,7 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
    */
   private boolean treePageCompleted;
 
-  private InternalProject ecpProject;
+  private ECPProject ecpProject;
 
   /**
    * . ({@inheritDoc})
