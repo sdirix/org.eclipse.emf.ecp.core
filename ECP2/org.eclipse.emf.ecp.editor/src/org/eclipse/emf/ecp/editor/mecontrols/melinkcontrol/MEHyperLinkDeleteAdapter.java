@@ -24,10 +24,10 @@ import org.eclipse.swt.events.MouseEvent;
  */
 public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 
-	private EObject modelElement;
-	private EReference reference;
-	private EObject opposite;
-	private final EditorModelelementContext context;
+//	private EObject modelElement;
+//	private EReference reference;
+//	private EObject opposite;
+//	private final EditorModelelementContext context;
 
 	/**
 	 * Default constructor.
@@ -39,10 +39,10 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 	 */
 	public MEHyperLinkDeleteAdapter(EObject modelElement, EReference reference, EObject opposite,
 		EditorModelelementContext context) {
-		this.modelElement = modelElement;
-		this.reference = reference;
-		this.opposite = opposite;
-		this.context = context;
+//		this.modelElement = modelElement;
+//		this.reference = reference;
+//		this.opposite = opposite;
+//		this.context = context;
 	}
 
 	/**

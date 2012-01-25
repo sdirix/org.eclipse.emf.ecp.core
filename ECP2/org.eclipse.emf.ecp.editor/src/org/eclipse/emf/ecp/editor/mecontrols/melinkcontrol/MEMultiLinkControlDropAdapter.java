@@ -33,7 +33,7 @@ public class MEMultiLinkControlDropAdapter implements DropTargetListener {
 	private EObject dropee;
 	private EObject target;
 	private EReference reference;
-	private final EditorModelelementContext modelElementContext;
+//	private final EditorModelelementContext modelElementContext;
 
 	/**
 	 * @param me MEEditor input
@@ -45,7 +45,7 @@ public class MEMultiLinkControlDropAdapter implements DropTargetListener {
 		this.reference = reference;
 
 		target = me;
-		this.modelElementContext = modelElementContext;
+//		this.modelElementContext = modelElementContext;
 
 	}
 
@@ -226,7 +226,6 @@ public class MEMultiLinkControlDropAdapter implements DropTargetListener {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	private boolean extractDnDSourceAndTarget() {
 		boolean result = false;
 		if (target == null) {
