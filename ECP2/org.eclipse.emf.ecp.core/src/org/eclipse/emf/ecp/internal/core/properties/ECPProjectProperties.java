@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProvider;
 
 /**
  * @author Eike Stepper
@@ -60,7 +61,13 @@ public class ECPProjectProperties extends Properties<ECPProject>
       @Override
       protected Object eval(ECPProject project)
       {
-        return project.getProvider().getName();
+        ECPProvider provider = project.getProvider();
+        if (provider != null)
+        {
+          return provider.getName();
+        }
+
+        return "<unknown provider>";
       }
     });
 
@@ -69,7 +76,13 @@ public class ECPProjectProperties extends Properties<ECPProject>
       @Override
       protected Object eval(ECPProject project)
       {
-        return project.getProvider().getLabel();
+        ECPProvider provider = project.getProvider();
+        if (provider != null)
+        {
+          return provider.getLabel();
+        }
+
+        return "<unknown provider>";
       }
     });
   }

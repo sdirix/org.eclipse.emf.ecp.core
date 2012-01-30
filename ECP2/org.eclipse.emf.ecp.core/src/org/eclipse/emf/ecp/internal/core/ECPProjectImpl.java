@@ -177,7 +177,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   public Object getAdapter(Class adapterType)
   {
     InternalProvider provider = getProvider();
-    if (!provider.isDisposed())
+    if (provider != null && !provider.isDisposed())
     {
       Object result = provider.getAdapter(this, adapterType);
       if (result != null)

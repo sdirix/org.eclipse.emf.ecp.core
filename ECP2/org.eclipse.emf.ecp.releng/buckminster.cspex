@@ -17,5 +17,6 @@
 		<cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
 		
 		<cs:dependency name="org.eclipse.emf.cdo.sdk" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.net4j.sdk" componentType="eclipse.feature"/>
 	</cs:dependencies>
 </cs:cspecExtension>

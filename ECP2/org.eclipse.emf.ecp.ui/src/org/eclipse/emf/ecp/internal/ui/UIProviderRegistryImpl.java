@@ -50,7 +50,11 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, Ob
   {
     if (adaptable instanceof ECPProviderAware)
     {
-      return getUIProvider(((ECPProviderAware)adaptable).getProvider());
+      ECPProvider provider = ((ECPProviderAware)adaptable).getProvider();
+      if (provider != null)
+      {
+        return getUIProvider(provider);
+      }
     }
 
     return AdapterUtil.adapt(adaptable, UIProvider.class);
