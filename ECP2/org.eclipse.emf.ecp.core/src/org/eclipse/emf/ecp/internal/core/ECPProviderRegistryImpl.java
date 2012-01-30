@@ -12,6 +12,8 @@ package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
@@ -237,6 +239,28 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
     {
       uiProvider = null;
       super.doDispose();
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getMetamodelContext(org.eclipse.emf.ecp.core.ECPProject)
+     */
+    public ECPMetamodelContext getMetamodelContext(ECPProject ecpProject)
+    {
+      // TODO Auto-generated method stub
+      return getResolvedElement().getMetamodelContext(ecpProject);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addToRoot(org.eclipse.emf.ecore.EObject,
+     * org.eclipse.emf.ecp.core.ECPProject)
+     */
+    public void addToRoot(EObject newMEInstance, ECPProject ecpProject)
+    {
+      // TODO Auto-generated method stub
+      getResolvedElement().addToRoot(newMEInstance, ecpProject);
+
     }
   }
 }

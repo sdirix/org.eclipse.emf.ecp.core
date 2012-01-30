@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPMetamodelContext;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
@@ -52,4 +55,17 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
   {
     CREATE, INIT, DISPOSE, REMOVE;
   }
+
+  /**
+   * @param ecpProject
+   *          the project to retrieve the meta context for
+   * @return the meta model context
+   */
+  public ECPMetamodelContext getMetamodelContext(ECPProject ecpProject);
+
+  /**
+   * @param newMEInstance
+   * @param ecpProject
+   */
+  public void addToRoot(EObject newMEInstance, ECPProject ecpProject);
 }

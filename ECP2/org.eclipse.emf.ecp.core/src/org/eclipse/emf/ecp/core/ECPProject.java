@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
 import org.eclipse.emf.ecp.core.util.ECPElement;
@@ -27,4 +28,14 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
     ECPDeletable, IEditingDomainProvider, IAdaptable
 {
   public static final String TYPE = "Project";
+
+  /**
+   * @return the metamodel context of this project
+   */
+  ECPMetamodelContext getMetamodelContext();
+
+  /**
+   * @param newMEInstance
+   */
+  void addToRoot(EObject newMEInstance);
 }

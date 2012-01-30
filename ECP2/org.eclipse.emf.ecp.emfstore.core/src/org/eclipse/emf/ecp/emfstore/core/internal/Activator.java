@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecp.emfstore.core;
+package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

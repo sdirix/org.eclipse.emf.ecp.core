@@ -11,7 +11,6 @@ import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.observers.CheckoutObserver;
-import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -53,7 +52,6 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 				serverInfo.getLastUsersession().logIn();
 				ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace().checkout(serverInfo.getLastUsersession(), projectInfo);
 				WorkspaceManager.getInstance().getCurrentWorkspace().save();
-				WorkspaceUtil.logCheckout(projectSpace, projectSpace.getBaseVersion());
 				WorkspaceManager.getObserverBus().notify(CheckoutObserver.class).checkoutDone(projectSpace);
 				projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getIdentifier());
 				return repository.checkout(projectName, projectProperties);

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.ecp.internal.core;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -425,5 +427,25 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     public void notifyObjectsChanged(Object[] objects)
     {
     }
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.core.ECPProject#getMetamodelContext()
+   */
+  public ECPMetamodelContext getMetamodelContext()
+  {
+    // TODO Auto-generated method stub
+    return getProvider().getMetamodelContext(this);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.core.ECPProject#addToRoot(org.eclipse.emf.ecore.EObject)
+   */
+  public void addToRoot(EObject newMEInstance)
+  {
+    getProvider().addToRoot(newMEInstance, this);
+
   }
 }

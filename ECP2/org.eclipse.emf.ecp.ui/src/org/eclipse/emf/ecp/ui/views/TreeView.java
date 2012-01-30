@@ -253,6 +253,6 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
     Menu menu = manager.createContextMenu(control);
     control.setMenu(menu);
-    getSite().registerContextMenu(getID() + ".popup", manager, viewer);
+    getSite().registerContextMenu(getID(), manager, viewer);
   }
 }
