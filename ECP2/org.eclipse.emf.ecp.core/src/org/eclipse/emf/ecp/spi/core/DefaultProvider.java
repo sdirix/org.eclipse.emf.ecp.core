@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DefaultProvider extends Element implements InternalProvider
+public abstract class DefaultProvider extends Element implements InternalProvider
 {
   private final Disposable disposable = new Disposable(this)
   {

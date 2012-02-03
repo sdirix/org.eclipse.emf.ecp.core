@@ -32,10 +32,20 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
   /**
    * @return the metamodel context of this project
    */
-  ECPMetamodelContext getMetamodelContext();
+  public ECPMetamodelContext getMetamodelContext();
 
   /**
    * @param newMEInstance
    */
-  void addToRoot(EObject newMEInstance);
+  public void addToRoot(EObject newMEInstance);
+
+  /**
+   * Returns <code>true</code> if this project is shared with a {@link ECPRepository repository}, <code>false</code>
+   * otherwise. Same as calling <code>getRepository() != null</code>.
+   */
+  public boolean isShared();
+
+  public void share(ECPRepository repository);
+
+  public ECPRepository unshare();
 }

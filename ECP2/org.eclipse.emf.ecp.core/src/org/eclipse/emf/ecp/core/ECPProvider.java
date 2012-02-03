@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 
 import org.eclipse.core.runtime.IAdaptable;
 
@@ -30,4 +31,12 @@ public interface ECPProvider extends ECPElement, IAdaptable
   public ECPProject[] getOpenProjects();
 
   public boolean canAddRepositories();
+
+  public boolean hasUnsharedProjectSupport();
+
+  public ECPProject createProject(String name, ECPProperties properties);
+
+  public void shareProject(ECPProject project, ECPRepository repository);
+
+  public ECPRepository unshareProject(ECPProject project);
 }

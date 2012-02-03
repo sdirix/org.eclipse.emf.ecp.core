@@ -32,10 +32,6 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
   public static final ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
       ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-  public void setLabel(String label);
-
-  public void setDescription(String description);
-
   public AdapterProvider getUIProvider();
 
   public void setUIProvider(AdapterProvider uiProvider);

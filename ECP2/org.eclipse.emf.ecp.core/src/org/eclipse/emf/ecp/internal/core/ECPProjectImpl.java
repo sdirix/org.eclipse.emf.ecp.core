@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.internal.core;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
@@ -42,11 +43,20 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 {
   private InternalRepository repository;
 
+  private InternalProvider provider;
+
   private Object providerSpecificData;
 
   private EditingDomain editingDomain;
 
   private boolean open;
+
+  public ECPProjectImpl(InternalProvider provider, String name, ECPProperties properties)
+  {
+    super(name, properties);
+    this.provider = provider;
+    open = true;
+  }
 
   public ECPProjectImpl(ECPRepository repository, String name, ECPProperties properties)
   {
@@ -65,15 +75,48 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   {
     super(in);
 
-    String repositoryName = in.readUTF();
-    InternalRepository repository = (InternalRepository)ECPRepositoryManager.INSTANCE.getRepository(repositoryName);
-    if (repository == null)
+    boolean shared = in.readBoolean();
+    if (shared)
     {
-      repository = new Disposed(repositoryName);
+      String repositoryName = in.readUTF();
+      InternalRepository repository = (InternalRepository)ECPRepositoryManager.INSTANCE.getRepository(repositoryName);
+      if (repository == null)
+      {
+        repository = new Disposed(repositoryName);
+      }
+
+      setRepository(repository);
+      provider = repository.getProvider();
+    }
+    else
+    {
+      String providerName = in.readUTF();
+      provider = (InternalProvider)ECPProviderRegistry.INSTANCE.getProvider(providerName);
+      if (provider == null)
+      {
+        throw new IllegalStateException("Provider not found: " + providerName);
+      }
     }
 
-    setRepository(repository);
     open = in.readBoolean();
+  }
+
+  @Override
+  public void write(ObjectOutput out) throws IOException
+  {
+    super.write(out);
+    if (isShared())
+    {
+      out.writeBoolean(true);
+      out.writeUTF(repository.getName());
+    }
+    else
+    {
+      out.writeBoolean(false);
+      out.writeUTF(provider.getName());
+    }
+
+    out.writeBoolean(open);
   }
 
   public String getType()
@@ -94,14 +137,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     return true;
   }
 
-  @Override
-  public void write(ObjectOutput out) throws IOException
-  {
-    super.write(out);
-    out.writeUTF(repository.getName());
-    out.writeBoolean(open);
-  }
-
   public InternalProject getProject()
   {
     return this;
@@ -110,6 +145,24 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   public InternalRepository getRepository()
   {
     return repository;
+  }
+
+  public boolean isShared()
+  {
+    return repository != null;
+  }
+
+  public void share(ECPRepository repository)
+  {
+    InternalProvider provider = getProvider();
+    provider.shareProject(this, repository);
+    setRepository((InternalRepository)repository);
+  }
+
+  public ECPRepository unshare()
+  {
+    InternalProvider provider = getProvider();
+    return provider.unshareProject(this);
   }
 
   private void setRepository(InternalRepository repository)
@@ -129,7 +182,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
   public InternalProvider getProvider()
   {
-    return getRepository().getProvider();
+    return provider;
   }
 
   public Object getProviderSpecificData()
@@ -217,12 +270,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
   public synchronized boolean isOpen()
   {
-    return !isDisposed() && open;
+    return !isRepositoryDisposed() && open;
   }
 
   public synchronized void open()
   {
-    if (!isDisposed())
+    if (!isRepositoryDisposed())
     {
       setOpen(true);
     }
@@ -230,10 +283,15 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
   public synchronized void close()
   {
-    if (!isDisposed())
+    if (!isRepositoryDisposed())
     {
       setOpen(false);
     }
+  }
+
+  private boolean isRepositoryDisposed()
+  {
+    return repository != null && repository.isDisposed();
   }
 
   private void setOpen(boolean open)
@@ -282,17 +340,15 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   private void dispose()
   {
     notifyProvider(LifecycleEvent.DISPOSE);
-    setRepository(new Disposed(repository.getName()));
+    if (repository != null)
+    {
+      setRepository(new Disposed(repository.getName()));
+    }
 
     providerSpecificData = null;
     editingDomain = null;
 
     ECPProjectManagerImpl.INSTANCE.changeProject(this, false, false);
-  }
-
-  private boolean isDisposed()
-  {
-    return repository.isDisposed();
   }
 
   /**

@@ -30,6 +30,8 @@ import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
@@ -149,6 +151,27 @@ public class CDOProvider extends DefaultProvider
     {
       super.fillChildren(context, parent, childrenList);
     }
+  }
+
+  public ECPProject createProject(String name, ECPProperties properties)
+  {
+    // TODO: implement WorkspaceProvider.createProject(name, properties)
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean hasUnsharedProjectSupport()
+  {
+    return false;
+  }
+
+  public void shareProject(ECPProject project, ECPRepository repository)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public ECPRepository unshareProject(ECPProject project)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

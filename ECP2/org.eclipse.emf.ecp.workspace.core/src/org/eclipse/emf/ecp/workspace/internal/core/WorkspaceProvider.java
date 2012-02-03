@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -125,6 +126,27 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
     {
       super.fillChildren(context, parent, childrenList);
     }
+  }
+
+  public ECPProject createProject(String name, ECPProperties properties)
+  {
+    // TODO: implement WorkspaceProvider.createProject(name, properties)
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean hasUnsharedProjectSupport()
+  {
+    return false;
+  }
+
+  public void shareProject(ECPProject project, ECPRepository repository)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public ECPRepository unshareProject(ECPProject project)
+  {
+    throw new UnsupportedOperationException();
   }
 
   public void resourceChanged(IResourceChangeEvent event)
