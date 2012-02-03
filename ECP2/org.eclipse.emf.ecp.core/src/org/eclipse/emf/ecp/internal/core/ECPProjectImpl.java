@@ -485,23 +485,14 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.core.ECPProject#getMetamodelContext()
-   */
   public ECPMetamodelContext getMetamodelContext()
   {
     // TODO Auto-generated method stub
-    return getProvider().getMetamodelContext(this);
+    return provider.getMetamodelContext(this);
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.core.ECPProject#addToRoot(org.eclipse.emf.ecore.EObject)
-   */
-  public void addToRoot(EObject newMEInstance)
+  public void addRootElement(EObject rootElement)
   {
-    getProvider().addToRoot(newMEInstance, this);
-
+    provider.addRootElement(this, rootElement);
   }
 }

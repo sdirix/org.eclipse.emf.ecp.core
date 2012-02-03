@@ -15,9 +15,11 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.Listener;
+import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -37,6 +39,11 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 
   private ECPProjectManagerImpl()
   {
+  }
+
+  public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
+  {
+    return provider.createProject(name, properties);
   }
 
   public InternalProject getProject(Object adaptable)

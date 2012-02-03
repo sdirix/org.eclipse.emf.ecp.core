@@ -52,16 +52,12 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
     CREATE, INIT, DISPOSE, REMOVE;
   }
 
+  public void addRootElement(ECPProject project, EObject rootElement);
+
   /**
-   * @param ecpProject
+   * @param project
    *          the project to retrieve the meta context for
    * @return the meta model context
    */
-  public ECPMetamodelContext getMetamodelContext(ECPProject ecpProject);
-
-  /**
-   * @param newMEInstance
-   * @param ecpProject
-   */
-  public void addToRoot(EObject newMEInstance, ECPProject ecpProject);
+  public ECPMetamodelContext getMetamodelContext(ECPProject project);
 }

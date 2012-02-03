@@ -71,7 +71,7 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
       EPackage ePackage = newMEType.getEPackage();
       newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
 
-      ecpProject.addToRoot(newMEInstance);
+      ecpProject.addRootElement(newMEInstance);
 
       // 3.open the newly created ME
       ActionHelper.openModelElement(newMEInstance, this.getClass().getName());

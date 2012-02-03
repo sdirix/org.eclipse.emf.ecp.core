@@ -149,6 +149,12 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
     throw new UnsupportedOperationException();
   }
 
+  public void addRootElement(ECPProject project, EObject rootElement)
+  {
+    // TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
+    throw new UnsupportedOperationException();
+  }
+
   public void resourceChanged(IResourceChangeEvent event)
   {
     IResourceDelta delta = event.getDelta();

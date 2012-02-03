@@ -34,10 +34,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
    */
   public ECPMetamodelContext getMetamodelContext();
 
-  /**
-   * @param newMEInstance
-   */
-  public void addToRoot(EObject newMEInstance);
+  public void addRootElement(EObject rootElement);
 
   /**
    * Returns <code>true</code> if this project is shared with a {@link ECPRepository repository}, <code>false</code>

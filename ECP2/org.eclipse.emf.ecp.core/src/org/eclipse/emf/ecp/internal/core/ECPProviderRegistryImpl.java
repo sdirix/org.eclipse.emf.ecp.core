@@ -277,10 +277,10 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
      * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addToRoot(org.eclipse.emf.ecore.EObject,
      * org.eclipse.emf.ecp.core.ECPProject)
      */
-    public void addToRoot(EObject newMEInstance, ECPProject ecpProject)
+    public void addRootElement(ECPProject ecpProject, EObject newMEInstance)
     {
       // TODO Auto-generated method stub
-      getResolvedElement().addToRoot(newMEInstance, ecpProject);
+      getResolvedElement().addRootElement(ecpProject, newMEInstance);
 
     }
   }

@@ -91,18 +91,16 @@ public class EMFStoreProvider extends DefaultProvider
     throw new UnsupportedOperationException();
   }
 
-  public void addToRoot(EObject newMEInstance, InternalProject ecpProject)
+  public void addRootElement(ECPProject project, EObject rootElement)
   {
-    String id = ecpProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
+    String id = project.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
     EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
     for (ProjectSpace projectSpace : projectSpaces)
     {
       if (projectSpace.getIdentifier().equals(id))
       {
-        projectSpace.getProject().addModelElement(newMEInstance);
+        projectSpace.getProject().addModelElement(rootElement);
       }
     }
-
   }
-
 }

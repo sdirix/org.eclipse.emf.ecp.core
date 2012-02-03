@@ -10,12 +10,16 @@
  */
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.ecp.core.util.ECPProperties;
+
 /**
  * @author Eike Stepper
  */
 public interface ECPProjectManager
 {
   public static final ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
+
+  public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
 
   public ECPProject getProject(Object adaptable);
 

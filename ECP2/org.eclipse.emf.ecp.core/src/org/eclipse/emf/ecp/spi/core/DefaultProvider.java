@@ -345,24 +345,9 @@ public abstract class DefaultProvider extends Element implements InternalProvide
     System.out.println(providerClass + " received " + event + " for " + contextClass + " " + context);
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getMetamodelContext(org.eclipse.emf.ecp.core.ECPProject)
-   */
   public ECPMetamodelContext getMetamodelContext(ECPProject ecpProject)
   {
     // TODO Auto-generated method stub
     return null;
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addToRoot(org.eclipse.emf.ecore.EObject,
-   * org.eclipse.emf.ecp.core.ECPProject)
-   */
-  public void addToRoot(EObject newMEInstance, ECPProject ecpProject)
-  {
-    // TODO Auto-generated method stub
-
   }
 }

@@ -174,6 +174,12 @@ public class CDOProvider extends DefaultProvider
     throw new UnsupportedOperationException();
   }
 
+  public void addRootElement(ECPProject project, EObject rootElement)
+  {
+    // TODO: implement CDOProvider.addRootElement(project, rootElement)
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   public void handleLifecycle(ECPModelContext context, LifecycleEvent event)
   {
