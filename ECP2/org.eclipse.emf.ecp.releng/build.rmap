@@ -3,7 +3,7 @@
 	
   <rm:property key="platform.version" value="3.8"/>
   <rm:property key="emf.version" value="2.8"/>
-  <rm:property key="orbit.version" value="S20110907174232"/>
+  <rm:property key="orbit.version" value="S20120123151124"/>
   
 	<rm:property key="git.clone" value="${user.home}/git/ecp.other"/>
   <rm:property key="eclipse.downloads" value="http://download.eclipse.org"/>
