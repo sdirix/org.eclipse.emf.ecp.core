@@ -49,7 +49,7 @@
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" resolutionFilter="(resolve.target.platform=true)" readerType="p2" source="false" mutable="false">
       <rm:property key="buckminster.source" value="false"/>
       <rm:property key="buckminster.mutable" value="false"/>
-      <rm:uri format="{0}/modeling/emf/cdo/updates/integration/weekly">
+      <rm:uri format="{0}/modeling/emf/cdo/updates/integration/stable">
         <bc:propertyRef key="eclipse.downloads"/>
       </rm:uri>
     </rm:provider>
