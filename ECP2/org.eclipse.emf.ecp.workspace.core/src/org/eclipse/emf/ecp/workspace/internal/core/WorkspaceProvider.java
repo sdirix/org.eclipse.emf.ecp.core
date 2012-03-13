@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.core;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -149,7 +150,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
     throw new UnsupportedOperationException();
   }
 
-  public void addRootElement(ECPProject project, EObject rootElement)
+  public EList<EObject> getElements(ECPProject ecpProject)
   {
     // TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
     throw new UnsupportedOperationException();

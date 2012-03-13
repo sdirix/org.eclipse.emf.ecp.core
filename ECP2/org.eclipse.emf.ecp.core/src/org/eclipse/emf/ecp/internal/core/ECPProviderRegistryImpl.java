@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -274,14 +275,12 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 
     /*
      * (non-Javadoc)
-     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addToRoot(org.eclipse.emf.ecore.EObject,
-     * org.eclipse.emf.ecp.core.ECPProject)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getElements(org.eclipse.emf.ecp.internal.core.ECPProjectImpl)
      */
-    public void addRootElement(ECPProject ecpProject, EObject newMEInstance)
+    public EList<EObject> getElements(ECPProject ecpProject)
     {
       // TODO Auto-generated method stub
-      getResolvedElement().addRootElement(ecpProject, newMEInstance);
-
+      return getResolvedElement().getElements(ecpProject);
     }
   }
 }

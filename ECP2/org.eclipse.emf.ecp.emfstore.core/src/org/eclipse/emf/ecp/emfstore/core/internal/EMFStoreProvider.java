@@ -1,5 +1,8 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotifyingList;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -14,6 +17,9 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EMFStoreProvider extends DefaultProvider
 {
@@ -46,15 +52,12 @@ public class EMFStoreProvider extends DefaultProvider
     if (parent instanceof InternalProject)
     {
       InternalProject project = (InternalProject)parent;
-      String projectSpaceID = project.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
-      EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
-      for (ProjectSpace projectSpace : projectSpaces)
-      {
-        if (projectSpace.getIdentifier().equals(projectSpaceID))
-        {
-          childrenList.addChildren(projectSpace.getProject().getModelElements());
-        }
-      }
+      ProjectSpace projectSpace = getProjectSpace(project);
+
+      childrenList.addChildren(projectSpace.getProject().getModelElements());
+      // TODO: provide interface at emfstore
+      NotifyingList<EObject> modelElements = (NotifyingList<EObject>)projectSpace.getProject().getModelElements();
+      modelElements.getNotifier();
 
     }
     if (parent instanceof InternalRepository)
@@ -91,16 +94,95 @@ public class EMFStoreProvider extends DefaultProvider
     throw new UnsupportedOperationException();
   }
 
-  public void addRootElement(ECPProject project, EObject rootElement)
+  public EList<EObject> getElements(ECPProject ecpProject)
   {
-    String id = project.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
-    EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
-    for (ProjectSpace projectSpace : projectSpaces)
+    ProjectSpace projectSpace = getProjectSpace(ecpProject);
+    return projectSpace.getProject().getModelElements();
+  }
+
+  private Map<ECPProject, ProjectSpace> cachedProjectSpaces = new HashMap<ECPProject, ProjectSpace>();
+
+  private AdapterImpl adapter;
+
+  /**
+   * Method for caching the loading of {@link ProjectSpace}
+   * 
+   * @return {@link EList} of {@link ProjectSpace}
+   */
+  private ProjectSpace getProjectSpace(ECPProject ecpProject)
+  {
+    if (!cachedProjectSpaces.containsKey(ecpProject))
     {
-      if (projectSpace.getIdentifier().equals(id))
+
+      EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
+      for (ProjectSpace projectSpace : projectSpaces)
       {
-        projectSpace.getProject().addModelElement(rootElement);
+        String projectSpaceID = ecpProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
+        if (projectSpace.getIdentifier().equals(projectSpaceID))
+        {
+          cachedProjectSpaces.put(ecpProject, projectSpace);
+        }
       }
     }
+    return cachedProjectSpaces.get(ecpProject);
+
+  }
+
+  @Override
+  public void handleLifecycle(ECPModelContext context, LifecycleEvent event)
+  {
+    switch (event)
+    {
+    case INIT:
+      handleInit(context);
+      break;
+    case DISPOSE:
+      handelDispose(context);
+    default:
+      break;
+    }
+    // TODO Trace properly
+    String providerClass = getClass().getSimpleName();
+    String contextClass = context.getClass().getSimpleName();
+    System.out.println(providerClass + " received " + event + " for " + contextClass + " " + context);
+  }
+
+  /**
+   * @param context
+   */
+  private void handelDispose(ECPModelContext context)
+  {
+    if (context instanceof InternalProject)
+    {
+      ProjectSpace projectSpace = getProjectSpace((ECPProject)context);
+
+      projectSpace.getProject().eAdapters().remove(adapter);
+
+    }
+
+  }
+
+  /**
+   * @param context
+   */
+  private void handleInit(final ECPModelContext context)
+  {
+    if (context instanceof InternalProject)
+    {
+      ProjectSpace projectSpace = getProjectSpace((ECPProject)context);
+
+      adapter = new AdapterImpl()
+      {
+        @Override
+        public void notifyChanged(Notification notification)
+        {
+          ((InternalProject)context).notifyObjectsChanged(new Object[] { context });
+        }
+      };
+
+      projectSpace.getProject().eAdapters().add(adapter);
+
+    }
+
   }
 }

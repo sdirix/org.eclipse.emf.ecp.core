@@ -112,7 +112,7 @@ public class ModelTreePage extends WizardPage implements Listener
     treeViewer = new TreeViewer(tree);
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).minSize(0, 150).span(2, 1)
         .applyTo(treeViewer.getControl());
-    treeViewer.setContentProvider(new ModelTreeContentProvider(project.getMetamodelContext()));
+    treeViewer.setContentProvider(new ModelTreeContentProvider(metaContext));
     treeViewer.setLabelProvider(new MEClassLabelProvider());
     treeViewer.setComparator(new ViewerComparator());
     treeViewer.addFilter(filter);

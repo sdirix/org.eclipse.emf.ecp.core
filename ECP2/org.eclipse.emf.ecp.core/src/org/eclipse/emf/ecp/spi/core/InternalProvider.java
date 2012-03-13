@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -52,12 +53,16 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
     CREATE, INIT, DISPOSE, REMOVE;
   }
 
-  public void addRootElement(ECPProject project, EObject rootElement);
-
   /**
    * @param project
    *          the project to retrieve the meta context for
    * @return the meta model context
    */
   public ECPMetamodelContext getMetamodelContext(ECPProject project);
+
+  /**
+   * @param ecpProject
+   * @return list of Elements of this project
+   */
+  public EList<EObject> getElements(ECPProject ecpProject);
 }

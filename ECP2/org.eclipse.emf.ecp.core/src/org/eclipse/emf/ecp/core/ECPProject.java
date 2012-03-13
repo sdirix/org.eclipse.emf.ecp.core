@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
@@ -34,7 +35,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
    */
   public ECPMetamodelContext getMetamodelContext();
 
-  public void addRootElement(EObject rootElement);
+  public EList<EObject> getElements();
 
   /**
    * Returns <code>true</code> if this project is shared with a {@link ECPRepository repository}, <code>false</code>

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.internal.core;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -56,6 +57,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     super(name, properties);
     this.provider = provider;
     open = true;
+    notifyProvider(LifecycleEvent.INIT);
   }
 
   public ECPProjectImpl(ECPRepository repository, String name, ECPProperties properties)
@@ -69,6 +71,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
     setRepository((InternalRepository)repository);
     open = true;
+    notifyProvider(LifecycleEvent.INIT);
   }
 
   public ECPProjectImpl(ObjectInput in) throws IOException
@@ -99,6 +102,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
 
     open = in.readBoolean();
+    if (open)
+    {
+      notifyProvider(LifecycleEvent.INIT);
+    }
   }
 
   @Override
@@ -491,8 +498,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     return provider.getMetamodelContext(this);
   }
 
-  public void addRootElement(EObject rootElement)
+  public EList<EObject> getElements()
   {
-    provider.addRootElement(this, rootElement);
+    return provider.getElements(this);
   }
 }
