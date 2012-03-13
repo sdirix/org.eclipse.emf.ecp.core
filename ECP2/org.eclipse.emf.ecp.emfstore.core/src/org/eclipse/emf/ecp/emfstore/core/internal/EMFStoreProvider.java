@@ -6,6 +6,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.internal.core.ECPProjectImpl;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -16,7 +17,7 @@ import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
 public class EMFStoreProvider extends DefaultProvider
 {
-  public static final String NAME = "org.eclipse.emf.ecp.cdo.provider";
+  public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider";
 
   public static EMFStoreProvider INSTANCE = new EMFStoreProvider();
 
@@ -72,8 +73,7 @@ public class EMFStoreProvider extends DefaultProvider
 
   public ECPProject createProject(String name, ECPProperties properties)
   {
-    // TODO: implement WorkspaceProvider.createProject(name, properties)
-    throw new UnsupportedOperationException();
+    return new ECPProjectImpl(this, name, properties);
   }
 
   public boolean hasUnsharedProjectSupport()

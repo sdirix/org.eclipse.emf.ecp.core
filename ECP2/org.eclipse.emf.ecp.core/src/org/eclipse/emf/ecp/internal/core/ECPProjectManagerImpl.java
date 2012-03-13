@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import java.io.IOException;
 import java.io.ObjectInput;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -43,7 +44,10 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 
   public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
   {
-    return provider.createProject(name, properties);
+    InternalProject project = (InternalProject)provider.createProject(name, properties);
+    changeElements(null, Collections.singleton(project));
+    return project;
+
   }
 
   public InternalProject getProject(Object adaptable)
