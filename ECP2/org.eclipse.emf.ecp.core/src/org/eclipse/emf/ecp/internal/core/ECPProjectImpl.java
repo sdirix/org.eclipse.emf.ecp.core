@@ -70,8 +70,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
 
     setRepository((InternalRepository)repository);
+    // TODO ugly
+    provider = getRepository().getProvider();
     open = true;
-    notifyProvider(LifecycleEvent.INIT);
   }
 
   public ECPProjectImpl(ObjectInput in) throws IOException

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Point;
@@ -44,6 +45,8 @@ public class CheckoutDialog extends TitleAreaDialog
   private ECPProperties projectProperties = ECPUtil.createProperties();
 
   private Text projectNameText;
+
+  private Composite providerStack;
 
   public CheckoutDialog(Shell parentShell, ECPCheckoutSource checkoutSource)
   {
@@ -120,11 +123,16 @@ public class CheckoutDialog extends TitleAreaDialog
         projectName = projectNameText.getText();
       }
     });
-
-    Control checkoutUI = uiProvider.createCheckoutUI(container, checkoutSource, projectProperties);
+    StackLayout providerStackLayout = new StackLayout();
+    providerStack = new Composite(composite, SWT.NONE);
+    providerStack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+    providerStack.setLayout(providerStackLayout);
+    Control checkoutUI = uiProvider.createCheckoutUI(providerStack, checkoutSource, projectProperties);
     if (checkoutUI != null)
     {
-      checkoutUI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+      // checkoutUI.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+      providerStackLayout.topControl = checkoutUI;
+      providerStack.layout();
     }
 
     return area;

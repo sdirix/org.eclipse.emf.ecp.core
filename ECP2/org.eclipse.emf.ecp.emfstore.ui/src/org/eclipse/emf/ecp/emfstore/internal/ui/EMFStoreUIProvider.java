@@ -1,105 +1,262 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
+import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
+import org.eclipse.emf.emfstore.client.model.exceptions.CertificateStoreException;
+import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
+import org.eclipse.emf.emfstore.server.model.ProjectInfo;
+
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class EMFStoreUIProvider extends DefaultUIProvider {
-	public EMFStoreUIProvider() {
-		super(EMFStoreProvider.NAME);
-	}
+import java.util.ArrayList;
 
-	@Override
-	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
-		return super.getAdapter(adaptable, adapterType);
-	}
+public class EMFStoreUIProvider extends DefaultUIProvider
+{
+  public EMFStoreUIProvider()
+  {
+    super(EMFStoreProvider.NAME);
+  }
 
-	@Override
-	public Control createAddRepositoryUI(Composite parent,
-			final ECPProperties repositoryProperties,
-			final Text repositoryNameText, Text repositoryLabelText,
-			Text repositoryDescriptionText) {
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Object adaptable, Class<T> adapterType)
+  {
+    return super.getAdapter(adaptable, adapterType);
+  }
 
-		GridLayout mainLayout = new GridLayout(2, false);
-		mainLayout.marginWidth = 0;
-		mainLayout.marginHeight = 0;
+  @Override
+  public Control createAddRepositoryUI(Composite parent, final ECPProperties repositoryProperties,
+      final Text repositoryNameText, Text repositoryLabelText, Text repositoryDescriptionText)
+  {
 
-		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setLayout(mainLayout);
-	    
-		Label url = new Label(composite, 0);
-		url.setText("Url:");
-		final Text urlText = new Text(composite, SWT.BORDER);
-		urlText.addModifyListener(new ModifyListener()
-	    {
-	      private String oldText = "";
+    GridLayout mainLayout = new GridLayout(3, false);
+    mainLayout.marginWidth = 0;
+    mainLayout.marginHeight = 0;
 
-	      public void modifyText(ModifyEvent e)
-	      {
-	        if (oldText.equals(repositoryNameText.getText()))
-	        {
-	          oldText = urlText.getText();
-	          repositoryNameText.setText(oldText);
-	          repositoryProperties.addProperty(EMFStoreProvider.PROP_REPOSITORY_URL, oldText);
-	        }
-	      }
-	    });
-		
-		Label port = new Label(composite, 0);
-		port.setText("Port:");
-		final Text portText = new Text(composite, SWT.BORDER);
-		
-		portText.addModifyListener(new ModifyListener()
-	    {
-	      
+    Composite composite = new Composite(parent, SWT.NONE);
+    composite.setLayout(mainLayout);
+    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-	      public void modifyText(ModifyEvent e)
-	      {
-	          repositoryProperties.addProperty(EMFStoreProvider.PROP_PORT, portText.getText());
-	        }
-	      
-	    });
-		
-		Label cert = new Label(composite, 0);
-		cert.setText("Certificate:");
-		new Text(composite, SWT.BORDER);
+    Label url = new Label(composite, 0);
+    url.setText("Url:");
+    final Text urlText = new Text(composite, SWT.BORDER);
+    urlText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+    urlText.addModifyListener(new ModifyListener()
+    {
+      private String oldText = "";
 
-		
-		return composite;
-	}
-	
-	 @Override
-	  public String getText(Object element)
-	  {
-	    if (element instanceof EMFStoreProjectWrapper)
-	    {
-	    	EMFStoreProjectWrapper emfStoreProjectWrapper = (EMFStoreProjectWrapper) element;
-	    	return emfStoreProjectWrapper.getDefaultCheckoutName();
-	    }
+      public void modifyText(ModifyEvent e)
+      {
+        if (oldText.equals(repositoryNameText.getText()))
+        {
+          oldText = urlText.getText();
+          repositoryNameText.setText(oldText);
+          repositoryProperties.addProperty(EMFStoreProvider.PROP_REPOSITORY_URL, oldText);
+        }
+      }
+    });
 
-	    return super.getText(element);
-	  }
+    Label port = new Label(composite, 0);
+    port.setText("Port:");
+    final Text portText = new Text(composite, SWT.BORDER);
+    portText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+    portText.addModifyListener(new ModifyListener()
+    {
 
-	  @Override
-	  public Image getImage(Object element)
-	  {
-	    if (element instanceof EMFStoreProjectWrapper)
-	    {
-	      return Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "icons/projectinfo.png").createImage();
-	    }
+      public void modifyText(ModifyEvent e)
+      {
+        repositoryProperties.addProperty(EMFStoreProvider.PROP_PORT, portText.getText());
+      }
 
-	    
+    });
 
-	    return super.getImage(element);
-	  }
+    Label cert = new Label(composite, 0);
+    cert.setText("Certificate:");
+    final Text certificateText = new Text(composite, SWT.BORDER);
+    certificateText.setEditable(false);
+    certificateText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+
+    Button bSelectCertificate = new Button(composite, SWT.PUSH);
+    // TODO change text
+    bSelectCertificate.setText("Select Certificate");
+    bSelectCertificate.addSelectionListener(new SelectionListener()
+    {
+
+      public void widgetSelected(SelectionEvent e)
+      {
+        // open dialog
+        String certificate = selectCertificate();
+        certificateText.setText(certificate);
+        repositoryProperties.addProperty(EMFStoreProvider.PROP_CERTIFICATE, certificateText.getText());
+
+      }
+
+      public void widgetDefaultSelected(SelectionEvent e)
+      {
+        widgetSelected(e);
+      }
+    });
+    return composite;
+  }
+
+  @Override
+  public Control createCheckoutUI(Composite parent, final ECPCheckoutSource checkoutSource,
+      final ECPProperties projectProperties)
+  {
+    Composite composite = new Composite(parent, SWT.NONE);
+    composite.setLayout(new GridLayout(2, false));
+
+    new Label(composite, SWT.NONE).setText("User");
+    final Text tUser = new Text(composite, SWT.SINGLE | SWT.BORDER);
+    tUser.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+
+    new Label(composite, SWT.NONE).setText("Password");
+    final Text tPassword = new Text(composite, SWT.SINGLE | SWT.BORDER);
+    tPassword.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+
+    Button bConnect = new Button(composite, SWT.PUSH);
+    bConnect.setText("Connect");
+    bConnect.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+
+    new Label(composite, SWT.NONE).setText("Select Project:");
+    final ComboViewer cvProjectInfos = new ComboViewer(composite, SWT.READ_ONLY);
+    cvProjectInfos.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+    cvProjectInfos.setLabelProvider(new LabelProvider()
+    {
+      @Override
+      public String getText(Object object)
+      {
+        if (object instanceof ProjectInfo)
+        {
+          ProjectInfo projectInfo = (ProjectInfo)object;
+          return projectInfo.getName();
+        }
+        return "";
+      }
+    });
+    cvProjectInfos.setContentProvider(new ArrayContentProvider());
+
+    cvProjectInfos.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        ProjectInfo projectInfo = (ProjectInfo)((IStructuredSelection)event.getSelection()).getFirstElement();
+        projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectInfo.getProjectId().getId());
+      }
+    });
+
+    bConnect.addSelectionListener(new SelectionListener()
+    {
+
+      public void widgetSelected(SelectionEvent e)
+      {
+        EList<ProjectInfo> projectInfos = EMFStoreProvider.INSTANCE.getAllProjects(checkoutSource.getRepository(),
+            tUser.getText(), tPassword.getText());
+        cvProjectInfos.setInput(projectInfos);
+        if (projectInfos.size() > 0)
+        {
+          cvProjectInfos.setSelection(new StructuredSelection(projectInfos.get(0)));
+        }
+      }
+
+      public void widgetDefaultSelected(SelectionEvent e)
+      {
+        widgetSelected(e);
+      }
+    });
+
+    tUser.setText("super");
+    tPassword.setText("super");
+    return composite;
+  }
+
+  /**
+   * @return
+   */
+  private String selectCertificate()
+  {
+    CertificateSelectionDialog csd = new CertificateSelectionDialog(Display.getCurrent().getActiveShell(),
+        new LabelProvider()
+        {
+          @Override
+          public String getText(Object element)
+          {
+            if (element instanceof String)
+            {
+              return element.toString();
+            }
+
+            return "";
+
+          }
+        });
+    ArrayList<String> certificates;
+    try
+    {
+      certificates = KeyStoreManager.getInstance().getCertificates();
+      csd.setElements(certificates.toArray());
+    }
+    catch (CertificateStoreException e1)
+    {
+      csd.setErrorMessage(e1.getMessage());
+    }
+    csd.setBlockOnOpen(true);
+    csd.setTitle("Certificate Selection Dialog");
+    csd.open();
+    if (csd.getReturnCode() == Window.OK)
+    {
+      return csd.getCertificateAlias();
+    }
+    return "";
+  }
+
+  @Override
+  public String getText(Object element)
+  {
+    if (element instanceof EMFStoreProjectWrapper)
+    {
+      EMFStoreProjectWrapper emfStoreProjectWrapper = (EMFStoreProjectWrapper)element;
+      return emfStoreProjectWrapper.getDefaultCheckoutName();
+    }
+
+    return super.getText(element);
+  }
+
+  @Override
+  public Image getImage(Object element)
+  {
+    if (element instanceof EMFStoreProjectWrapper)
+    {
+      return Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "icons/projectinfo.png").createImage();
+    }
+
+    return super.getImage(element);
+  }
 }
