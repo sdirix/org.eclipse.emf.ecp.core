@@ -36,8 +36,12 @@ import org.eclipse.swt.widgets.Text;
 
 import java.util.ArrayList;
 
+/**
+ * @author Eugen Neufeld
+ */
 public class EMFStoreUIProvider extends DefaultUIProvider
 {
+
   public EMFStoreUIProvider()
   {
     super(EMFStoreProvider.NAME);
@@ -259,4 +263,5 @@ public class EMFStoreUIProvider extends DefaultUIProvider
 
     return super.getImage(element);
   }
+
 }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -19,21 +20,34 @@ import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
+import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
+import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.Transfer;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public class ModelExplorerView extends TreeView
 {
   /**
    * @author Jonas
+   * @author Eugen Neufeld
    */
   public class DoubleClickListener implements IDoubleClickListener
   {
@@ -49,7 +63,8 @@ public class ModelExplorerView extends TreeView
         Object firstElement = structuredSelection.getFirstElement();
         if (firstElement instanceof EObject)
         {
-          ActionHelper.openModelElement((EObject)firstElement, "modelexplorer");
+          ECPModelContext context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
+          ActionHelper.openModelElement((EObject)firstElement, "modelexplorer", (ECPProject)context);
         }
       }
 
@@ -73,6 +88,39 @@ public class ModelExplorerView extends TreeView
     viewer.setSorter(new ViewerSorter());
     viewer.setInput(ECPProjectManager.INSTANCE);
     viewer.addDoubleClickListener(new DoubleClickListener());
+
+    final MyEditingDomainViewerDropAdapter dropAdapter = new MyEditingDomainViewerDropAdapter(viewer);
+    int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
+    viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
+    viewer.addDropSupport(dndOperations, transfers, dropAdapter);
+    viewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        Object[] elements = getSelection().toArray();
+        if (elements == null || elements.length == 0)
+        {
+          return;
+        }
+        EditingDomain domain = null;
+        if (elements[0] instanceof ECPProject)
+        {
+          ECPModelContext context = ECPUtil.getModelContext(contentProvider, elements);
+          if (context != null && context instanceof ECPProject)
+          {
+            ECPProject project = (ECPProject)context;
+            domain = project.getEditingDomain();
+          }
+        }
+        else
+        {
+          domain = AdapterFactoryEditingDomain.getEditingDomainFor((EObject)elements[0]);
+        }
+        dropAdapter.setEditingDomain(domain);
+      }
+    });
   }
 
   @Override
@@ -91,5 +139,97 @@ public class ModelExplorerView extends TreeView
     }
 
     super.fillContextMenu(manager);
+  }
+
+  /**
+   * @author Eugen Neufeld
+   */
+  private class MyEditingDomainViewerDropAdapter extends EditingDomainViewerDropAdapter
+  {
+    /*
+     * @param viewer
+     */
+    public MyEditingDomainViewerDropAdapter(Viewer viewer)
+    {
+      super(null, viewer);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter#dragOver(org.eclipse.swt.dnd.DropTargetEvent)
+     */
+    @Override
+    public void dragOver(DropTargetEvent event)
+    {
+      Object target = extractDropTarget(event.item);
+      if (target instanceof ECPProject)
+      {
+
+        source = getDragSource(event);
+
+        ECPProject project = (ECPProject)target;
+        if (project.getElements().contains(source.iterator().next()))
+        {
+          event.detail = DND.DROP_NONE;
+        }
+        else
+        {
+          event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
+        }
+      }
+      else
+      {
+        super.dragOver(event);
+      }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter#drop(org.eclipse.swt.dnd.DropTargetEvent)
+     */
+    @Override
+    public void drop(DropTargetEvent event)
+    {
+      Object target = extractDropTarget(event.item);
+
+      if (target instanceof ECPProject)
+      {
+        ECPProject project = (ECPProject)target;
+
+        source = getDragSource(event);
+
+        project.getElements().add((EObject)source.iterator().next());
+      }
+      else
+      {
+        super.drop(event);
+      }
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter#dropAccept(org.eclipse.swt.dnd.DropTargetEvent)
+     */
+    @Override
+    public void dropAccept(DropTargetEvent event)
+    {
+      Object target = extractDropTarget(event.item);
+      if (target instanceof ECPProject)
+      {
+        event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
+
+      }
+      else
+      {
+        super.dropAccept(event);
+      }
+    }
+
+    void setEditingDomain(EditingDomain editingDomain)
+    {
+      domain = editingDomain;
+
+    }
+
   }
 }

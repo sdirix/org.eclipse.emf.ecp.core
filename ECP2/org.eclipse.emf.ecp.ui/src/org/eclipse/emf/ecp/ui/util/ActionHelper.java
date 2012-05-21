@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.ui.util;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 
 import org.eclipse.core.runtime.CoreException;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * @author helming
+ * @author Eugen Neufeld
  */
 public final class ActionHelper
 {
@@ -58,7 +60,7 @@ public final class ActionHelper
    * @param sourceView
    *          the view that requested the open model element
    */
-  public static void openModelElement(final EObject me, final String sourceView)
+  public static void openModelElement(final EObject me, final String sourceView, ECPProject ecpProject)
   {
     if (me == null)
     {
@@ -94,7 +96,7 @@ public final class ActionHelper
     // BEGIN SUPRESS CATCH EXCEPTION
     try
     {
-      bestCandidate.openModelElement(me);
+      bestCandidate.openModelElement(me, ecpProject);
     }
     catch (RuntimeException e)
     {

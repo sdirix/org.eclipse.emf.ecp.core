@@ -47,9 +47,12 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public abstract class TreeView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
+  public static final String GLOBAL_ADDITIONS = "global_additions";
+
   private final String id;
 
   private TreeViewer viewer;
@@ -204,13 +207,14 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(new Separator());
-    drillDownAdapter.addNavigationActions(manager);
+    manager.add(refreshAction);
+    // manager.add(new Separator());
+    // drillDownAdapter.addNavigationActions(manager);
   }
 
   protected void fillContextMenu(IMenuManager manager)
   {
-    manager.add(new Separator());
+    manager.add(new Separator(GLOBAL_ADDITIONS));
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(new Separator());
   }
@@ -222,7 +226,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   private void contributeToActionBars()
   {
     IActionBars bars = getViewSite().getActionBars();
-    fillLocalPullDown(bars.getMenuManager());
+    // fillLocalPullDown(bars.getMenuManager());
     fillLocalToolBar(bars.getToolBarManager());
   }
 

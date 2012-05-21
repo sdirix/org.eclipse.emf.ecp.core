@@ -12,7 +12,8 @@ package org.eclipse.emf.ecp.spi.core;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPMetamodelContext;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -23,6 +24,9 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author Eike Stepper
@@ -54,15 +58,31 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
   }
 
   /**
-   * @param project
-   *          the project to retrieve the meta context for
-   * @return the meta model context
-   */
-  public ECPMetamodelContext getMetamodelContext(ECPProject project);
-
-  /**
    * @param ecpProject
    * @return list of Elements of this project
    */
   public EList<EObject> getElements(ECPProject ecpProject);
+
+  /**
+   * filter packages that are not supported by this provider
+   * 
+   * @param ePackages
+   *          packages to filter from
+   * @return a {@link Collection} of {@link EPackage}s that are not supported
+   */
+  public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages);
+
+  /**
+   * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
+   * eReference.
+   * 
+   * @param ecpProject
+   *          - the project the call is from
+   * @param modelElement
+   *          - {@link EObject} to add the {@link EReference} to
+   * @param eReference
+   *          - the {@link EReference} to add
+   * @return {@link Iterator} of {@link EObject} that can be linked
+   */
+  public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference);
 }

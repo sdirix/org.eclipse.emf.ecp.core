@@ -12,8 +12,8 @@ package org.eclipse.emf.ecp.wizards;
 
 //TODO: Revise
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.ui.util.MEClassLabelProvider;
 
 import org.eclipse.jface.layout.GridDataFactory;
@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Tree;
  * @author Hodaie This is the first page of NewModelElementWizard. On this page the model packages and their class (only
  *         those who inherit ModelElement and are not abstract) are shown in a TreeViewer. If user selects a class in
  *         this tree, the wizard can finish.
+ * @author Eugen Neufeld
  */
 public class ModelTreePage extends WizardPage implements Listener
 {
@@ -83,14 +84,6 @@ public class ModelTreePage extends WizardPage implements Listener
     final Text filterInput = new Text(composite, SWT.SEARCH);
     filterInput.setMessage("Model Element class");
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(filterInput);
-    ECPMetamodelContext metaContext = project.getMetamodelContext();
-    if (metaContext.isGuessed())
-    {
-      Label label = new Label(composite, SWT.None);
-      label.setText("No registered Package found. EMF Client Platform has tried to guess your model package." + "\n"
-          + "Please register your package explicitly.");
-      GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).span(2, 1).applyTo(label);
-    }
 
     Tree tree = new Tree(composite, SWT.SINGLE);
     final ModelClassFilter filter = new ModelClassFilter();
@@ -112,7 +105,9 @@ public class ModelTreePage extends WizardPage implements Listener
     treeViewer = new TreeViewer(tree);
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).minSize(0, 150).span(2, 1)
         .applyTo(treeViewer.getControl());
-    treeViewer.setContentProvider(new ModelTreeContentProvider(metaContext));
+
+    treeViewer.setContentProvider(new ModelTreeContentProvider(ECPUtil.getAllRegisteredEPackages(), project
+        .getUnsupportedEPackages(), project.getFilteredPackages(), project.getFilteredEClasses()));
     treeViewer.setLabelProvider(new MEClassLabelProvider());
     treeViewer.setComparator(new ViewerComparator());
     treeViewer.addFilter(filter);

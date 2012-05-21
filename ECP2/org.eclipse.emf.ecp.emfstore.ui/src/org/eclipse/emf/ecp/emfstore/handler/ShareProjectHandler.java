@@ -5,7 +5,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.util.WorkspaceUtil;
-import org.eclipse.emf.emfstore.client.ui.controller.UIUpdateProjectController;
+import org.eclipse.emf.emfstore.client.ui.controller.UIShareProjectController;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -18,12 +18,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eugen Neufeld
  */
-public class UpdateProjectHandler extends AbstractHandler
+public class ShareProjectHandler extends AbstractHandler
 {
 
   public Object execute(ExecutionEvent event) throws ExecutionException
   {
-
     InternalProject project = (InternalProject)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
         .getFirstElement();
     ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
@@ -35,8 +34,7 @@ public class UpdateProjectHandler extends AbstractHandler
     }
     try
     {
-      new UIUpdateProjectController(HandlerUtil.getActiveShell(event)).update(projectSpace);
-      project.notifyObjectsChanged(new Object[] { project });
+      new UIShareProjectController(HandlerUtil.getActiveShell(event)).share(projectSpace);
     }
     catch (EmfStoreException ex)
     {

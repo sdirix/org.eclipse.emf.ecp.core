@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public class ProjectPropertiesDialog extends PropertiesDialog
 {
@@ -71,7 +72,8 @@ public class ProjectPropertiesDialog extends PropertiesDialog
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
 
-    repositoryText = addTextProperty(composite, "Repository:", project.getRepository().getLabel());
+    repositoryText = addTextProperty(composite, "Repository:", project.getRepository() != null ? project
+        .getRepository().getLabel() : "");
     providerText = addTextProperty(composite, "Provider:", project.getProvider().getLabel());
   }
 }

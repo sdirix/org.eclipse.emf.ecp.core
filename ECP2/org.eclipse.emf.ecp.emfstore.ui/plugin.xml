@@ -13,21 +13,145 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.emf.ecp.emfstore.handler.CreateProjectHandler"
-            id="org.eclipse.emf.ecp.emfstore.ui.createProject"
-            name="Create Project">
+            id="org.eclipse.emf.ecp.emfstore.ui.commit"
+            name="commit">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.update"
+            name="update">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.share"
+            name="share">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?before=additions">
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
          <command
-               commandId="org.eclipse.emf.ecp.emfstore.ui.createProject"
+               commandId="org.eclipse.emf.ecp.emfstore.ui.share"
+               label="Share"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.commit"
+               icon="icons/checkin.gif"
+               label="Commit"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.update"
+               icon="icons/update.gif"
+               label="Update"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.handler.CommitProjectHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.commit">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.core.project.isShared"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.handler.ShareProjectHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.share">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.core.project.isShared"
+                        value="false">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.handler.UpdateProjectHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.update">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.core.project.isShared"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
    </extension>
 
 </plugin>

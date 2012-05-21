@@ -14,10 +14,11 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -26,7 +27,9 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.core.ECPProjectImpl;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
@@ -35,12 +38,15 @@ import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -345,9 +351,26 @@ public abstract class DefaultProvider extends Element implements InternalProvide
     System.out.println(providerClass + " received " + event + " for " + contextClass + " " + context);
   }
 
-  public ECPMetamodelContext getMetamodelContext(ECPProject ecpProject)
+  /**
+   * Convenient implementation of the {@link #getUnsupportedEPackages(Collection)} method to return an empty list. The
+   * provider has to {@link Override} this method if not all {@link EPackage}s are supported.
+   */
+  public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages)
   {
-    // TODO Auto-generated method stub
-    return null;
+    return Collections.emptyList();
+  }
+
+  /**
+   * Convenient implementation of the {@link #getLinkElements(ECPProject, EObject, EReference)} method to use the
+   * {@link ItemPropertyDescriptor} to get all object of an object.
+   */
+  public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference)
+  {
+    return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
+  }
+
+  public ECPProject createProject(String name, ECPProperties properties)
+  {
+    return new ECPProjectImpl(this, name, properties);
   }
 }

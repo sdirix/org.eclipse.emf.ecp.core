@@ -15,6 +15,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ * @author Eugen Neufeld
+ */
 public class CommitProjectHandler extends AbstractHandler
 {
 

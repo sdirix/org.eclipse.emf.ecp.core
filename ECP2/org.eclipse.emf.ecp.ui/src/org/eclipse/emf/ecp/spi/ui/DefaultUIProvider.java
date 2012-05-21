@@ -25,7 +25,9 @@ import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.ui.util.ActionHelper;
 import org.eclipse.emf.ecp.ui.widgets.PropertiesComposite;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -58,6 +60,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public class DefaultUIProvider extends Element implements UIProvider
 {
@@ -184,7 +187,7 @@ public class DefaultUIProvider extends Element implements UIProvider
       Object element = elements[0];
       if (context instanceof ECPProject)
       {
-        ECPProject project = (ECPProject)context;
+        final ECPProject project = (ECPProject)context;
 
         if (element instanceof Resource)
         {
@@ -200,6 +203,11 @@ public class DefaultUIProvider extends Element implements UIProvider
           {
             for (Object descriptor : descriptors)
             {
+              final CommandParameter cp = (CommandParameter)descriptor;
+              if (!cp.getEReference().isMany())
+              {
+                continue;
+              }
               manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor)
               {
                 @Override
@@ -210,6 +218,7 @@ public class DefaultUIProvider extends Element implements UIProvider
                   try
                   {
                     object.eResource().save(null);
+                    ActionHelper.openModelElement(cp.getEValue(), this.getClass().getName(), project);
                   }
                   catch (IOException ex)
                   {

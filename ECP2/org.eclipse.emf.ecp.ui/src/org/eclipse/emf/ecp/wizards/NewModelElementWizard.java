@@ -74,7 +74,7 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
       ecpProject.getElements().add(newMEInstance);
 
       // 3.open the newly created ME
-      ActionHelper.openModelElement(newMEInstance, this.getClass().getName());
+      ActionHelper.openModelElement(newMEInstance, this.getClass().getName(), ecpProject);
     }
 
     return true;

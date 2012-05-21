@@ -12,18 +12,21 @@ package org.eclipse.emf.ecp.wizards;
 
 //TODO: Revise
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPMetamodelContext;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
  * @author Hodaie ContentProvider for TreeViewer which is shown on ModelTreePage
+ * @author Eugen Neufeld
  */
 public class ModelTreeContentProvider extends AdapterFactoryContentProvider
 {
@@ -56,6 +59,43 @@ public class ModelTreeContentProvider extends AdapterFactoryContentProvider
     }
 
     extractRootPackages(modelElementClasses);
+  }
+
+  public ModelTreeContentProvider(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
+      Collection<EPackage> projectFilteredEPackages, Collection<EClass> projectFilteredEClasss)
+  {
+    super(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+    metaContext = null;
+    modelElementClasses = new HashSet<EClass>();
+    rootPackages = new HashSet<EPackage>();
+    for (EPackage ePackage : ePackages)
+    {
+      if (unsupportedEPackages.contains(ePackage))
+      {
+        continue;
+      }
+      boolean addToPackages = projectFilteredEPackages.contains(ePackage);
+      boolean packageAllowed = addToPackages;
+      for (EClassifier classifier : ePackage.getEClassifiers())
+      {
+        if (classifier instanceof EClass && !((EClass)classifier).isAbstract())
+        {
+          EClass eClass = (EClass)classifier;
+          addToPackages = addToPackages || projectFilteredEClasss.contains(eClass);
+          if (packageAllowed || projectFilteredEClasss.contains(eClass))
+          {
+            modelElementClasses.add(eClass);
+
+          }
+        }
+      }
+
+      if (addToPackages)
+      {
+        rootPackages.add(ePackage);
+        extractAllSuperPackages(ePackage);
+      }
+    }
   }
 
   private void extractRootPackages(Set<EClass> eClasses)
@@ -146,7 +186,7 @@ public class ModelTreeContentProvider extends AdapterFactoryContentProvider
    */
   private boolean isNonDomainElement(EClass eClass)
   {
-    return metaContext.isNonDomainElement(eClass);
+    return false;
   }
 
   /**

@@ -10,9 +10,14 @@
  */
 package org.eclipse.emf.ecp.core.util;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,7 +42,7 @@ public final class ECPUtil
       {
         return null;
       }
-  
+
       if (elementContext != commonContext)
       {
         if (commonContext == null)
@@ -50,7 +55,7 @@ public final class ECPUtil
         }
       }
     }
-  
+
     return commonContext;
   }
 
@@ -139,5 +144,49 @@ public final class ECPUtil
     }
 
     return removed;
+  }
+
+  // TODO move to another helper
+  /**
+   * This method looks through all known {@link EPackage}s to find all subclasses for the provided super class.
+   * 
+   * @param superClass
+   *          - the class for which to get the subclasses
+   * @return a {@link Collection} of {@link EClass}es
+   */
+  public static Collection<EClass> getSubClasses(EClass superClass)
+  {
+    Collection<EClass> classes = new HashSet<EClass>();
+    for (Object objectEPackage : Registry.INSTANCE.values())
+    {
+      EPackage ePackage = (EPackage)objectEPackage;
+      for (EClassifier eClassifier : ePackage.getEClassifiers())
+      {
+        if (eClassifier instanceof EClass)
+        {
+          EClass eClass = (EClass)eClassifier;
+          if (superClass.isSuperTypeOf(eClass) && !eClass.isAbstract() && !eClass.isInterface())
+          {
+            classes.add(eClass);
+          }
+        }
+      }
+    }
+    return classes;
+  }
+
+  // TODO move to another helper
+  public static Set<EPackage> getAllRegisteredEPackages()
+  {
+    Set<EPackage> ePackages = new HashSet<EPackage>();
+    for (Object object : Registry.INSTANCE.values())
+    {
+      if (object instanceof EPackage)
+      {
+        EPackage ePackage = (EPackage)object;
+        ePackages.add(ePackage);
+      }
+    }
+    return ePackages;
   }
 }

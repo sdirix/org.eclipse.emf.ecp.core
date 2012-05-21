@@ -36,6 +36,7 @@
    
    <extension
          point="org.eclipse.ui.popupMenus">
+      <!--
       <objectContribution
             adaptable="true"
             id="org.eclipse.emf.ecp.ui.contribution.closedCloseables"
@@ -82,6 +83,7 @@
                style="push">
          </action>
       </objectContribution>
+      -->
       <objectContribution
             adaptable="true"
             id="org.eclipse.emf.ecp.ui.contribution.checkoutSources"
@@ -126,20 +128,208 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.popup.any?after=global_additions">
+         <command
+               commandId="org.eclipse.emf.ecp.ui.closable"
+               label="Open"
+               style="push">
+            <parameter
+                  name="org.eclipse.emf.ecp.ecpclosable.type"
+                  value="open">
+            </parameter>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.util.ECPCloseable">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.emf.ecp.core.closeable.closed"
+                              value="true">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.closable"
+               label="Close"
+               style="push">
+            <parameter
+                  name="org.eclipse.emf.ecp.ecpclosable.type"
+                  value="close">
+            </parameter>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.util.ECPCloseable">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.emf.ecp.core.closeable.open"
+                              value="true">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.delete"
+               icon="icons/delete.gif"
+               label="Delete"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.util.ECPDeletable">
+                        </instanceof>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
-         <dynamic
-               class="org.eclipse.emf.ecp.ui.commands.DynamicContainmentCommands"
-               id="org.eclipse.emf.ecp.ui.commands.dynamicMECreationCommands">
-         </dynamic>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.project.createProject"
+               icon="icons/add.gif"
+               label="Create new project"
+               style="push">
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.project.filterModelElements"
+               icon="icons/sample.gif"
+               label="Filter Model Elements"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
+               </reference>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
+               icon="icons/add.gif"
+               label="New Model Element"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
+               </reference>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
-            id="org.eclipse.emf.ecp.ui.wiards.newModelElementWizard"
-            name="New Modelelement">
+            id="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
+            name="New Model Element">
       </command>
+      <command
+            defaultHandler="org.eclipse.emf.ecp.ui.commands.ProjectFilterdPackagesHandler"
+            id="org.eclipse.emf.ecp.ui.project.filterModelElements"
+            name="Filter Modelelements">
+      </command>
+      <command
+            defaultHandler="org.eclipse.emf.ecp.ui.commands.CreateContainmentHandler"
+            description="This generic command is used by dynamic commands to create containment MEs"
+            id="org.eclipse.emf.ecp.navigator.createContaiment"
+            name="New Containment ME">
+         <commandParameter
+               id="org.eclipse.emf.ecp.navigator.eClassParameter"
+               name="eClassParameter"
+               optional="true"
+               typeId="org.eclipse.emf.ecp.navigator.eClassType">
+         </commandParameter>
+         <commandParameter
+               id="org.eclipse.emf.ecp.navigator.eReferenceParameter"
+               name="eReferenceParameter"
+               optional="true"
+               typeId="org.eclipse.emf.ecp.navigator.eReferenceType">
+         </commandParameter>
+  
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.closable"
+            name="closeable">
+         <commandParameter
+               id="org.eclipse.emf.ecp.ecpclosable.type"
+               name="ECPCloseable Type"
+               optional="true">
+         </commandParameter>
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.project.createProject"
+            name="Create new project">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.project.share"
+            name="Share project">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.delete"
+            name="Delete">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.project.commit"
+            name="Commit project">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.project.update"
+            name="Update project">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.DeleteHandler"
+            commandId="org.eclipse.emf.ecp.ui.delete">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.core.deletable.canDelete"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.CreateProjectHandler"
+            commandId="org.eclipse.emf.ecp.ui.project.createProject">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.CloseableHandler"
+            commandId="org.eclipse.emf.ecp.ui.closable">
+      </handler>
    </extension>
 
 </plugin>

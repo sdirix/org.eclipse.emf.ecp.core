@@ -11,8 +11,12 @@
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPMetamodelContext;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -22,6 +26,7 @@ import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -35,7 +40,11 @@ import org.eclipse.core.runtime.Platform;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -48,6 +57,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
   private Object providerSpecificData;
 
+  private Set<EPackage> filteredEPackages = Collections.emptySet();
+
+  private Set<EClass> filteredEClasses = Collections.emptySet();
+
   private EditingDomain editingDomain;
 
   private boolean open;
@@ -57,6 +70,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     super(name, properties);
     this.provider = provider;
     open = true;
+    setupFilteredEPackages();
     notifyProvider(LifecycleEvent.INIT);
   }
 
@@ -103,10 +117,48 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
 
     open = in.readBoolean();
+
+    int filteredPackageSize = in.readInt();
+    filteredEPackages = new HashSet<EPackage>();
+    for (int i = 0; i < filteredPackageSize; i++)
+    {
+      EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
+      filteredEPackages.add(ePackage);
+    }
+    int filteredEClassSize = in.readInt();
+    filteredEClasses = new HashSet<EClass>();
+    for (int i = 0; i < filteredEClassSize; i++)
+    {
+      EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
+      EClassifier eClassifier = ePackage.getEClassifier(in.readUTF());
+      if (eClassifier instanceof EClass)
+      {
+        filteredEClasses.add((EClass)eClassifier);
+      }
+    }
+
     if (open)
     {
       notifyProvider(LifecycleEvent.INIT);
     }
+  }
+
+  /**
+   * this method sets all known {@link EPackage}s as the filter.
+   */
+  private void setupFilteredEPackages()
+  {
+    Set<EPackage> ePackages = new HashSet<EPackage>();
+
+    for (Object o : Registry.INSTANCE.values())
+    {
+      if (o instanceof EPackage)
+      {
+        ePackages.add((EPackage)o);
+      }
+    }
+
+    setFilteredPackages(ePackages);
   }
 
   @Override
@@ -125,6 +177,19 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
 
     out.writeBoolean(open);
+
+    out.writeInt(filteredEPackages.size());
+    for (EPackage ePackage : filteredEPackages)
+    {
+      out.writeUTF(ePackage.getNsURI());
+    }
+    out.writeInt(filteredEClasses.size());
+    for (EClass eClass : filteredEClasses)
+    {
+
+      out.writeUTF(eClass.getEPackage().getNsURI());
+      out.writeUTF(eClass.getName());
+    }
   }
 
   public String getType()
@@ -158,19 +223,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   public boolean isShared()
   {
     return repository != null;
-  }
-
-  public void share(ECPRepository repository)
-  {
-    InternalProvider provider = getProvider();
-    provider.shareProject(this, repository);
-    setRepository((InternalRepository)repository);
-  }
-
-  public ECPRepository unshare()
-  {
-    InternalProvider provider = getProvider();
-    return provider.unshareProject(this);
   }
 
   private void setRepository(InternalRepository repository)
@@ -493,14 +545,52 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
   }
 
-  public ECPMetamodelContext getMetamodelContext()
-  {
-    // TODO Auto-generated method stub
-    return provider.getMetamodelContext(this);
-  }
-
   public EList<EObject> getElements()
   {
-    return provider.getElements(this);
+    return getProvider().getElements(this);
+  }
+
+  public Collection<EPackage> getUnsupportedEPackages()
+  {
+    return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages());
+  }
+
+  public void setFilteredPackages(Set<EPackage> filteredPackages)
+  {
+    filteredEPackages = filteredPackages;
+    ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+  }
+
+  public Set<EPackage> getFilteredPackages()
+  {
+    return filteredEPackages;
+  }
+
+  /**
+   * @return the filteredEClasses
+   */
+  public Set<EClass> getFilteredEClasses()
+  {
+    return filteredEClasses;
+  }
+
+  /**
+   * @param filteredEClasses
+   *          the filteredEClasses to set
+   */
+  public void setFilteredEClasses(Set<EClass> filteredEClasses)
+  {
+    this.filteredEClasses = filteredEClasses;
+    ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.core.ECPProject#getLinkElements(org.eclipse.emf.ecore.EObject,
+   * org.eclipse.emf.ecore.EReference)
+   */
+  public Iterator<EObject> getLinkElements(EObject modelElement, EReference eReference)
+  {
+    return getProvider().getLinkElements(this, modelElement, eReference);
   }
 }

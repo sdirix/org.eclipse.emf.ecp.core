@@ -4,6 +4,7 @@
 package org.eclipse.emf.ecp.ui.util;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
  * Modelelement opener offer the functionality to open a specific model element. Standard opener is the model element
@@ -33,6 +34,8 @@ public interface ModelElementOpener
    * 
    * @param modelElement
    *          the model element to open
+   * @param ecpProject
+   *          the project this element belongs to
    */
-  void openModelElement(EObject modelElement);
+  void openModelElement(EObject modelElement, ECPProject ecpProject);
 }

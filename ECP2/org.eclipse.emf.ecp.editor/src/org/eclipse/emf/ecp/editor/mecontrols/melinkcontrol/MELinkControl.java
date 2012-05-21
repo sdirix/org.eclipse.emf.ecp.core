@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
-import java.util.ArrayList;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -21,6 +19,7 @@ import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -38,144 +37,181 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
+import java.util.ArrayList;
+
 /**
  * GUI Control for the ME reference links.
  * 
  * @author helming
  * @author shterev
+ * @author Eugen Neufeld
  */
-public class MELinkControl {
+public class MELinkControl
+{
 
-	protected Composite linkComposite;
-	private EReference eReference;
-	private Hyperlink hyperlink;
-	private ILabelProvider labelProvider;
-	private ILabelProviderListener labelProviderListener;
-	private ImageHyperlink imageHyperlink;
-	protected EObject link;
-	protected EObject contextModelElement;
-	protected FormToolkit toolkit;
-	private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
-	private EditorModelelementContext context;
+  protected Composite linkComposite;
 
-	public EditorModelelementContext getContext() {
-		return context;
-	}
+  private EReference eReference;
 
-	public void setContext(EditorModelelementContext context) {
-		this.context = context;
-	}
+  private Hyperlink hyperlink;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Control createControl(final Composite parent, int style, IItemPropertyDescriptor itemPropertyDescriptor,
-		final EObject link, EObject contextModelElement, FormToolkit toolkit, EditorModelelementContext context) {
-		this.context = context;
-		Object feature = itemPropertyDescriptor.getFeature(link);
-		this.eReference = (EReference) feature;
-		this.link = link;
-		this.contextModelElement = contextModelElement;
-		this.toolkit = toolkit;
-		return createControl(parent, style);
+  private ILabelProvider labelProvider;
 
-	}
+  private ILabelProviderListener labelProviderListener;
 
-	protected Control createControl(final Composite parent, int style) {
-		linkComposite = toolkit.createComposite(parent, style);
-		linkComposite.setLayout(new GridLayout(3, false));
+  private ImageHyperlink imageHyperlink;
 
-		createHyperlink(parent, style);
-		createDeleteAction(style);
-		return linkComposite;
-	}
+  protected EObject link;
 
-	protected void createDeleteAction(int style) {
-		ImageHyperlink deleteLink = toolkit.createImageHyperlink(linkComposite, style);
-		Image deleteImage = null;
-		if (eReference.isContainment() && (context.getMetaModelElementContext().isNonDomainElement(link.eClass()))) {
-			deleteImage = Activator.getImageDescriptor("icons/delete.gif").createImage();
-		} else {
-			deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
-		}
-		deleteLink.setImage(deleteImage);
+  protected EObject contextModelElement;
 
-		deleteLink.addMouseListener(new MEHyperLinkDeleteAdapter(contextModelElement, eReference, link, context));
-	}
+  protected FormToolkit toolkit;
 
-	protected void createHyperlink(final Composite parent, int style) {
-		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
-		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
-		labelProviderListener = new ILabelProviderListener() {
-			public void labelProviderChanged(LabelProviderChangedEvent event) {
-				updateIcon();
-			}
-		};
-		labelProvider.addListener(labelProviderListener);
+  private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
 
-		ArrayList<EObject> list = new ArrayList<EObject>();
-		list.add(link);
-		modelElementChangeListener = new org.eclipse.emf.ecp.editor.ModelElementChangeListener(link) {
+  private EditorModelelementContext context;
 
-			@Override
-			public void onChange(Notification notification) {
-				Display.getDefault().asyncExec(new Runnable() {
+  public EditorModelelementContext getContext()
+  {
+    return context;
+  }
 
-					public void run() {
-						if (hyperlink != null && !hyperlink.isDisposed()) {
-							ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
-							String text = shortLabelProvider.getText(link);
-							hyperlink.setText(text);
-							hyperlink.setToolTipText(text);
-							linkComposite.layout(true);
-							parent.getParent().layout(true);
-						}
-					}
+  public void setContext(EditorModelelementContext context)
+  {
+    this.context = context;
+  }
 
-				});
+  /**
+   * {@inheritDoc}
+   */
+  public Control createControl(final Composite parent, int style, IItemPropertyDescriptor itemPropertyDescriptor,
+      final EObject link, EObject contextModelElement, FormToolkit toolkit, EditorModelelementContext context)
+  {
+    this.context = context;
+    Object feature = itemPropertyDescriptor.getFeature(link);
+    eReference = (EReference)feature;
+    this.link = link;
+    this.contextModelElement = contextModelElement;
+    this.toolkit = toolkit;
+    return createControl(parent, style);
 
-			}
-		};
+  }
 
-		Image image = labelProvider.getImage(link);
-		imageHyperlink = toolkit.createImageHyperlink(linkComposite, style);
-		imageHyperlink.setImage(image);
-		imageHyperlink.setData(link.eClass());
-		//TODO: Reactivate
-//		ModelElementClassTooltip.enableFor(imageHyperlink);
-		ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
-		hyperlink = toolkit.createHyperlink(linkComposite, (shortLabelProvider.getText(link)), style);
-		hyperlink.setToolTipText(shortLabelProvider.getText(link));
-		IHyperlinkListener listener = new MEHyperLinkAdapter(link, contextModelElement, eReference.getName());
-		hyperlink.addHyperlinkListener(listener);
-		imageHyperlink.addHyperlinkListener(listener);
-	}
+  protected Control createControl(final Composite parent, int style)
+  {
+    linkComposite = toolkit.createComposite(parent, style);
+    linkComposite.setLayout(new GridLayout(3, false));
 
-	private void updateIcon() {
-		imageHyperlink.setImage(labelProvider.getImage(link));
-	}
+    createHyperlink(parent, style);
+    createDeleteAction(style);
+    return linkComposite;
+  }
 
-	/**
-	 * Disposes the Composite of this {@link MELinkControl}.
-	 */
+  protected void createDeleteAction(int style)
+  {
+    ImageHyperlink deleteLink = toolkit.createImageHyperlink(linkComposite, style);
+    Image deleteImage = null;
+    if (eReference.isContainment() && context.getMetaModelElementContext().isNonDomainElement(link.eClass()))
+    {
+      deleteImage = Activator.getImageDescriptor("icons/delete.gif").createImage();
+    }
+    else
+    {
+      deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
+    }
+    deleteLink.setImage(deleteImage);
 
-	public void dispose() {
-		if (modelElementChangeListener != null) {
-			modelElementChangeListener.remove();
-		}
-		if (labelProvider != null) {
-			labelProvider.removeListener(labelProviderListener);
-			labelProvider.dispose();
-		}
-		if (linkComposite != null) {
-			linkComposite.dispose();
-		}
-	}
+    deleteLink.addMouseListener(new MEHyperLinkDeleteAdapter(contextModelElement, eReference, link, context));
+  }
 
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject link2, EObject contextModelElement2) {
-		return 0;
-	}
+  protected void createHyperlink(final Composite parent, int style)
+  {
+    AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+    IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+    labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
+    labelProviderListener = new ILabelProviderListener()
+    {
+      public void labelProviderChanged(LabelProviderChangedEvent event)
+      {
+        updateIcon();
+      }
+    };
+    labelProvider.addListener(labelProviderListener);
+
+    ArrayList<EObject> list = new ArrayList<EObject>();
+    list.add(link);
+    modelElementChangeListener = new org.eclipse.emf.ecp.editor.ModelElementChangeListener(link)
+    {
+
+      @Override
+      public void onChange(Notification notification)
+      {
+        Display.getDefault().asyncExec(new Runnable()
+        {
+
+          public void run()
+          {
+            if (hyperlink != null && !hyperlink.isDisposed())
+            {
+              ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
+              String text = shortLabelProvider.getText(link);
+              hyperlink.setText(text);
+              hyperlink.setToolTipText(text);
+              linkComposite.layout(true);
+              parent.getParent().layout(true);
+            }
+          }
+
+        });
+
+      }
+    };
+
+    Image image = labelProvider.getImage(link);
+    imageHyperlink = toolkit.createImageHyperlink(linkComposite, style);
+    imageHyperlink.setImage(image);
+    imageHyperlink.setData(link.eClass());
+    // TODO: Reactivate
+    // ModelElementClassTooltip.enableFor(imageHyperlink);
+    ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
+    hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(link), style);
+    hyperlink.setToolTipText(shortLabelProvider.getText(link));
+    IHyperlinkListener listener = new MEHyperLinkAdapter(link, contextModelElement, eReference.getName(),
+        context.getEcpProject());
+    hyperlink.addHyperlinkListener(listener);
+    imageHyperlink.addHyperlinkListener(listener);
+  }
+
+  private void updateIcon()
+  {
+    imageHyperlink.setImage(labelProvider.getImage(link));
+  }
+
+  /**
+   * Disposes the Composite of this {@link MELinkControl}.
+   */
+
+  public void dispose()
+  {
+    if (modelElementChangeListener != null)
+    {
+      modelElementChangeListener.remove();
+    }
+    if (labelProvider != null)
+    {
+      labelProvider.removeListener(labelProviderListener);
+      labelProvider.dispose();
+    }
+    if (linkComposite != null)
+    {
+      linkComposite.dispose();
+    }
+  }
+
+  public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject link2, EObject contextModelElement2)
+  {
+    return 0;
+  }
 
 }

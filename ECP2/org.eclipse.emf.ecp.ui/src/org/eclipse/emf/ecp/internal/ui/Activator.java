@@ -23,6 +23,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public final class Activator extends AbstractUIPlugin
 {
@@ -60,6 +61,19 @@ public final class Activator extends AbstractUIPlugin
   public static void log(String message)
   {
     instance.getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));
+  }
+
+  public static void log(String message, Throwable t)
+  {
+    if (t instanceof CoreException)
+    {
+      CoreException coreException = (CoreException)t;
+      instance.getLog().log(coreException.getStatus());
+    }
+    else
+    {
+      instance.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, message, t));
+    }
   }
 
   public static void log(IStatus status)

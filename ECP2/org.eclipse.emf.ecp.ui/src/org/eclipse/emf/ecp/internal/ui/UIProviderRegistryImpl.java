@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, Object> implements UIProviderRegistry
 {
@@ -70,7 +71,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, Ob
 
     for (UIProvider ui : getUIProviders())
     {
-      if (ui.getProvider() == provider)
+      if (ui.getProvider().equals(provider))
       {
         uiProvider = ui;
         break;

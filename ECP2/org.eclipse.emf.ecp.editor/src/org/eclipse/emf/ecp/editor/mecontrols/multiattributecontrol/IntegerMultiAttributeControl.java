@@ -11,7 +11,8 @@
 package org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 
@@ -19,82 +20,96 @@ import org.eclipse.swt.events.KeyListener;
  * Integer implementation of a MultiAttributeItem.
  * 
  * @author Christian Kroemer (christian.kroemer@z-corp-online.de)
+ * @author Eugen Neufeld
  */
-public class IntegerMultiAttributeControl extends MultiAttributeControl {
+public class IntegerMultiAttributeControl extends MultiAttributeControl
+{
 
-	// CONSTANTS
-	private static final int EMPTY_VALUE = new Integer(0);
+  // CONSTANTS
+  private static final int EMPTY_VALUE = new Integer(0);
 
-	// essential references
-	private MultiAttributeController<Integer> dataManipulator;
-	private PersonalListener personalListener = new PersonalListener(); // see inner class
+  // essential references
+  private MultiAttributeController<Integer> dataManipulator;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void createDataStructures(EStructuralFeature feature) {
-		EDataTypeEList<Integer> storedValues = (EDataTypeEList<Integer>) getModelElement().eGet(feature);
-		dataManipulator = new MultiAttributeController<Integer>(this, storedValues);
-	}
+  private PersonalListener personalListener = new PersonalListener(); // see inner class
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void createSingleField(Object contentObj) {
-		assert (contentObj instanceof Integer);
-		int content = (Integer) contentObj;
-		IntegerAttributeControl f = new IntegerAttributeControl(this, dataManipulator, content);
-		f.getWidget().addKeyListener(personalListener);
-		if (!isEditable()) {
-			f.getWidget().setEnabled(false);
-		}
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  protected void createDataStructures(EStructuralFeature feature)
+  {
+    InternalEList<Integer> storedValues = (InternalEList<Integer>)getModelElement().eGet(feature);
+    dataManipulator = new MultiAttributeController<Integer>(this, storedValues);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void createSingleField() {
-		IntegerAttributeControl f = new IntegerAttributeControl(this, dataManipulator);
-		f.getWidget().addKeyListener(personalListener);
-		if (!isEditable()) {
-			f.getWidget().setEnabled(false);
-		}
-		setEmptyField(f.getWidget());
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void createSingleField(Object contentObj)
+  {
+    assert contentObj instanceof Integer;
+    int content = (Integer)contentObj;
+    IntegerAttributeControl f = new IntegerAttributeControl(this, dataManipulator, content);
+    f.getWidget().addKeyListener(personalListener);
+    if (!isEditable())
+    {
+      f.getWidget().setEnabled(false);
+    }
+  }
 
-	/**
-	 * Implements specific listeners for this type's widget in general, no single-field-specific listener!
-	 */
-	private class PersonalListener implements KeyListener {
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void createSingleField()
+  {
+    IntegerAttributeControl f = new IntegerAttributeControl(this, dataManipulator);
+    f.getWidget().addKeyListener(personalListener);
+    if (!isEditable())
+    {
+      f.getWidget().setEnabled(false);
+    }
+    setEmptyField(f.getWidget());
+  }
 
-		public void keyPressed(KeyEvent e) {
-			if (e.keyCode == 13) { // ENTER
-				getEmptyField().forceFocus();
-			}
-		}
+  /**
+   * Implements specific listeners for this type's widget in general, no single-field-specific listener!
+   */
+  private class PersonalListener implements KeyListener
+  {
 
-		public void keyReleased(KeyEvent e) {
-			// nothing
-		}
-	}
+    public void keyPressed(KeyEvent e)
+    {
+      if (e.keyCode == 13)
+      { // ENTER
+        getEmptyField().forceFocus();
+      }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object[] getAllStoredElements() {
-		return dataManipulator.getAllStoredElements();
-	}
+    public void keyReleased(KeyEvent e)
+    {
+      // nothing
+    }
+  }
 
-	/**
-	 * @return the EMPTY_VALUE
-	 */
-	public static int getEmptyValue() {
-		return EMPTY_VALUE;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Object[] getAllStoredElements()
+  {
+    return dataManipulator.getAllStoredElements();
+  }
+
+  /**
+   * @return the EMPTY_VALUE
+   */
+  public static int getEmptyValue()
+  {
+    return EMPTY_VALUE;
+  }
 
 }

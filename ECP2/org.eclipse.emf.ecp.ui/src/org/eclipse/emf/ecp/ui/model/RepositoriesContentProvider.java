@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.ui.model;
 
+import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -18,12 +19,21 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositoryManager> implements
     ECPRepositoryManager.Listener
 {
+  private final ECPProvider allowedProvider;
+
   public RepositoriesContentProvider()
   {
+    allowedProvider = null;
+  }
+
+  public RepositoriesContentProvider(ECPProvider allowedProvider)
+  {
+    this.allowedProvider = allowedProvider;
   }
 
   public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception
@@ -67,7 +77,20 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
   {
     if (parent == ECPRepositoryManager.INSTANCE)
     {
-      childrenList.addChildren(ECPRepositoryManager.INSTANCE.getRepositories());
+      if (allowedProvider == null)
+      {
+        childrenList.addChildren(ECPRepositoryManager.INSTANCE.getRepositories());
+      }
+      else
+      {
+        for (ECPRepository ecpRepository : ECPRepositoryManager.INSTANCE.getRepositories())
+        {
+          if (allowedProvider.equals(ecpRepository.getProvider()))
+          {
+            childrenList.addChild(ecpRepository);
+          }
+        }
+      }
     }
     else
     {

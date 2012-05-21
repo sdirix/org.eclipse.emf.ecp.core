@@ -14,7 +14,8 @@ import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPMetamodelContext;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
@@ -34,7 +35,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * @author Eike Stepper
@@ -265,22 +268,30 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 
     /*
      * (non-Javadoc)
-     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getMetamodelContext(org.eclipse.emf.ecp.core.ECPProject)
-     */
-    public ECPMetamodelContext getMetamodelContext(ECPProject ecpProject)
-    {
-      // TODO Auto-generated method stub
-      return getResolvedElement().getMetamodelContext(ecpProject);
-    }
-
-    /*
-     * (non-Javadoc)
      * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getElements(org.eclipse.emf.ecp.internal.core.ECPProjectImpl)
      */
     public EList<EObject> getElements(ECPProject ecpProject)
     {
-      // TODO Auto-generated method stub
       return getResolvedElement().getElements(ecpProject);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getUnsupportedEPackages(java.util.Collection)
+     */
+    public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages)
+    {
+      return getResolvedElement().getUnsupportedEPackages(ePackages);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getLinkElements(org.eclipse.emf.ecp.core.ECPProject,
+     * org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
+     */
+    public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference)
+    {
+      return getResolvedElement().getLinkElements(ecpProject, modelElement, eReference);
     }
   }
 }

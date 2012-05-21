@@ -10,21 +10,31 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.commands;
 
-import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.ui.dialogs.ModelElementSelectionTreeDialog;
+import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-//TODO: Revise
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Hodaie This is the handler for "Add new model element" context menu command. The command is only shown on
  *         LeafSections. The handler initializes and shows the AddNewModelElementWizard
+ * @author Eugen Neufeld
  */
+// TODO: Revise
 public class NewModelElementWizardHandler extends AbstractHandler
 {
 
@@ -40,22 +50,47 @@ public class NewModelElementWizardHandler extends AbstractHandler
    */
   public Object execute(final ExecutionEvent event) throws ExecutionException
   {
-
-    NewModelElementWizard wizard = new NewModelElementWizard();
-
     ISelection selection = HandlerUtil.getCurrentSelection(event);
-    IStructuredSelection ssel;
-    if (selection != null && selection instanceof IStructuredSelection)
+    IStructuredSelection ssel = (IStructuredSelection)selection;
+
+    ECPProject ecpProject = (ECPProject)ssel.getFirstElement();
+
+    Set<EPackage> ePackages = new HashSet<EPackage>();
+
+    for (Object o : Registry.INSTANCE.values())
     {
-      ssel = (IStructuredSelection)selection;
-      wizard.init(HandlerUtil.getActiveWorkbenchWindow(event).getWorkbench(), ssel);
+      if (o instanceof EPackage)
+      {
+        ePackages.add((EPackage)o);
+      }
     }
 
-    WizardDialog dialog = new WizardDialog(HandlerUtil.getActiveShell(event), wizard);
-    wizard.setWindowTitle(WIZARD_TITLE);
-    dialog.create();
-    dialog.open();
+    ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(HandlerUtil.getActiveShell(event),
+        ePackages, ecpProject.getUnsupportedEPackages(), ecpProject.getFilteredPackages(),
+        ecpProject.getFilteredEClasses());
+    dialog.setAllowMultiple(false);
+    int result = dialog.open();
+    if (result == Dialog.OK)
+    {
+      EObject newMEInstance = null;
+      Object[] dialogSelection = dialog.getResult();
+      for (Object object : dialogSelection)
+      {
+        if (object instanceof EClass)
+        {
+          EClass eClasse = (EClass)object;
+          // 1.create ME
+          EPackage ePackage = eClasse.getEPackage();
+          newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
 
+          ecpProject.getElements().add(newMEInstance);
+
+          // 3.open the newly created ME
+          ActionHelper.openModelElement(newMEInstance, ActionHelper.class.getName(), ecpProject);
+
+        }
+      }
+    }
     return null;
   }
 

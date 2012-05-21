@@ -85,6 +85,14 @@ public class ECPProjectProperties extends Properties<ECPProject>
         return "<unknown provider>";
       }
     });
+    add(new Property<ECPProject>("isShared", "Is project shared", "Is this project already shared?")
+    {
+      @Override
+      protected Object eval(ECPProject project)
+      {
+        return project.isShared();
+      }
+    });
   }
 
   public static void main(String[] args)
