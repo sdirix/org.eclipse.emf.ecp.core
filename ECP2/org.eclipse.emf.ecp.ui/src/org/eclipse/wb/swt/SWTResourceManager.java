@@ -43,6 +43,8 @@ import java.util.Map;
  */
 public class SWTResourceManager
 {
+  private static final GraphicHelper graphicHelper = GraphicHelper.IMPL;
+
   // //////////////////////////////////////////////////////////////////////////
   //
   // Color
@@ -135,7 +137,7 @@ public class SWTResourceManager
       ImageData data = new ImageData(stream);
       if (data.transparentPixel > 0)
       {
-        return new Image(display, data, data.getTransparencyMask());
+        return graphicHelper.getImage(display, data);
       }
       return new Image(display, data);
     }
@@ -209,7 +211,7 @@ public class SWTResourceManager
   {
     Image image = new Image(Display.getCurrent(), MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
     //
-    GC gc = new GC(image);
+    GC gc = graphicHelper.getGC(image);
     gc.setBackground(getColor(SWT.COLOR_RED));
     gc.fillRectangle(0, 0, MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
     gc.dispose();
@@ -300,7 +302,7 @@ public class SWTResourceManager
       //
       result = new Image(Display.getCurrent(), bib.width, bib.height);
       //
-      GC gc = new GC(result);
+      GC gc = graphicHelper.getGC(result);
       gc.drawImage(baseImage, 0, 0);
       if (corner == TOP_LEFT)
       {
