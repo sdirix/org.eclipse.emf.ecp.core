@@ -25,7 +25,8 @@ public class SelectOrCreateRepositoryPage extends WizardPage
   protected SelectOrCreateRepositoryPage(String pageName)
   {
     super(pageName);
-    // TODO Auto-generated constructor stub
+    setTitle("Create or use existing ECPRepository");
+    setDescription("Please select wether you want to create or use an existing ECPRepository.");
   }
 
   private boolean createNewRepository = true;

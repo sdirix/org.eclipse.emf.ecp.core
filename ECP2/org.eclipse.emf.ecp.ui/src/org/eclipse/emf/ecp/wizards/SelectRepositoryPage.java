@@ -33,6 +33,8 @@ public class SelectRepositoryPage extends WizardPage
   protected SelectRepositoryPage(String pageName)
   {
     super(pageName);
+    setTitle("Select an existing ECPRepository");
+    setDescription("Please select an existing ECPRepository to use.");
   }
 
   /*

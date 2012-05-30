@@ -393,7 +393,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
     if (open)
     {
-      ECPProjectManagerImpl.INSTANCE.changeProject(this, true, false);
+      ECPProjectManagerImpl.INSTANCE.changeProject(this, true, true);
     }
   }
 

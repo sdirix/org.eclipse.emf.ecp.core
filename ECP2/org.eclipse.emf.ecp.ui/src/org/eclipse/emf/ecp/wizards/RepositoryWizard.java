@@ -97,7 +97,7 @@ public class RepositoryWizard extends Wizard
   public void init(ECPProvider provider)
   {
     this.provider = provider;
-
+    setWindowTitle("ECPRepository Wizard");
   }
 
 }
