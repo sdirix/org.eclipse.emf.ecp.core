@@ -49,7 +49,9 @@ public class ModelElementSelectionTreeDialog extends ElementTreeSelectionDialog
   {
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
-    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    GridData gdComposite = new GridData(SWT.FILL, SWT.FILL, true, true);
+    gdComposite.minimumHeight = 250;
+    composite.setLayoutData(gdComposite);
     createMessageArea(composite).setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
     Label filterLabel = new Label(composite, SWT.LEFT);
     filterLabel.setText("Search:");
