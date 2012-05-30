@@ -24,6 +24,14 @@
             id="org.eclipse.emf.ecp.emfstore.ui.share"
             name="share">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin"
+            name="Login">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout"
+            name="Logout">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -98,6 +106,45 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelRepositoriesView?after=additions">
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin"
+               icon="icons/serverLogin.png"
+               label="Login"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <test
+                        forcePluginActivation="true"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                        value="false">
+                  </test>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout"
+               icon="icons/lock.png"
+               label="Logout"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <test
+                        forcePluginActivation="true"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                        value="true">
+                  </test>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -152,6 +199,14 @@
             </with>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.handler.EmfstoreLogOutHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.handler.EmfstoreLogInHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.decorators">
@@ -171,6 +226,16 @@
             If the porject has local changes.
          </description>
       </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.emf.ecp.emfstore.ui.property.EMFStoreIsLoggedInTester"
+            id="org.eclipse.emf.ecp.emfstore.ui.testers.emfstoreIsLoggedIn"
+            namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
+            properties="emfserverIsLoggedIn"
+            type="org.eclipse.emf.ecp.core.ECPRepository">
+      </propertyTester>
    </extension>
 
 </plugin>

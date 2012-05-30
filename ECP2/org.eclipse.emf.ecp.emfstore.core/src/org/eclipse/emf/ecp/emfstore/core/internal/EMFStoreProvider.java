@@ -22,7 +22,6 @@ import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
-import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
@@ -103,28 +102,6 @@ public class EMFStoreProvider extends DefaultProvider
     else if (parent instanceof InternalRepository)
     {
       ServerInfo serverInfo = getServerInfo((InternalRepository)parent);
-      if (serverInfo.getLastUsersession() == null)
-      {
-        Usersession usersession = ModelFactory.eINSTANCE.createUsersession();
-        usersession.setServerInfo(serverInfo);
-        usersession.setUsername("super");
-        usersession.setPassword("super");
-        serverInfo.setLastUsersession(usersession);
-        try
-        {
-          usersession.logIn();
-        }
-        catch (AccessControlException ex)
-        {
-          // TODO Auto-generated catch block
-          ex.printStackTrace();
-        }
-        catch (EmfStoreException ex)
-        {
-          // TODO Auto-generated catch block
-          ex.printStackTrace();
-        }
-      }
       EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
       for (ProjectInfo projectInfo : projectInfos)
       {
