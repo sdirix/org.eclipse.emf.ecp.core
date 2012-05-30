@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -69,13 +68,6 @@ public class DeleteDialog extends TitleAreaDialog
     btnDontAskAgain.setText("Don't ask again");
 
     return area;
-  }
-
-  @Override
-  protected void createButtonsForButtonBar(Composite parent)
-  {
-    createButton(parent, IDialogConstants.OK_ID, IDialogConstants.YES_LABEL, true);
-    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.NO_LABEL, false);
   }
 
   @Override

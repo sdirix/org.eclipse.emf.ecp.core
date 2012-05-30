@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ProvidersContentProvider;
 import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -258,13 +257,6 @@ public class AddRepositoryDialog extends TitleAreaDialog
 
     providerStackLayout.topControl = control;
     providerStack.layout();
-  }
-
-  @Override
-  protected void createButtonsForButtonBar(Composite parent)
-  {
-    createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
 
   @Override

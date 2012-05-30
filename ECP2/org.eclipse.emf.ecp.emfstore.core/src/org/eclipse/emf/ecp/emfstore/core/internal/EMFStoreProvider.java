@@ -68,13 +68,17 @@ public class EMFStoreProvider extends DefaultProvider
     Set<EPackage> unsupported = new HashSet<EPackage>();
     for (EPackage ePackage : packages)
     {
-      if (!ePackage.getNsURI().equalsIgnoreCase("http://org/eclipse/example/bowling")
-          && !ePackage.getNsURI().equals("http://eclipse.org/emf/emfstore/common/model")
-          && !ePackage.getNsURI().equals("http://www4.in.tum.de/~af3/model"))
-
+      if (ePackage.getNsURI().equalsIgnoreCase("http://org/eclipse/example/bowling")
+          || ePackage.getNsURI().equals("http://eclipse.org/emf/emfstore/common/model")
+          || ePackage.getNsURI().equals("http://www4.in.tum.de/~af3/model")
+          || ePackage.getNsURI().equals("http://www.cksw.de/model/birequirements/0.1")
+          || ePackage.getESuperPackage() != null
+          && ePackage.getESuperPackage().getNsURI().equals("http://www.cksw.de/model/birequirements/0.1"))
       {
-        unsupported.add(ePackage);
+        continue;
       }
+      unsupported.add(ePackage);
+
     }
     return unsupported;
   }

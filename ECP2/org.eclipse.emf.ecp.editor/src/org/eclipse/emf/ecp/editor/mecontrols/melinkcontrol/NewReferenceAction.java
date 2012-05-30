@@ -32,9 +32,10 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.PlatformUI;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * An Action for adding reference links to a model element. It is mainly used in the {@link MEMultiLinkControl}
@@ -70,9 +71,11 @@ public class NewReferenceAction extends ReferenceAction
         return;
       }
       Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
+      List<EPackage> ePackages = new ArrayList<EPackage>();
+      ePackages.add(modelElement.eClass().getEPackage());
+      ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
       ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()
-          .getActiveWorkbenchWindow().getShell(), Arrays.asList(modelElement.eClass().getEPackage()),
-          new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
+          .getActiveWorkbenchWindow().getShell(), ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 
       dialog.setAllowMultiple(false);
       int result = dialog.open();

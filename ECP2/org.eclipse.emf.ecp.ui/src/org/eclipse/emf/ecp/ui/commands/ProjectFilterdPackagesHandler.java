@@ -60,7 +60,7 @@ public class ProjectFilterdPackagesHandler extends AbstractHandler
     int result = dialog.open();
     if (result == Dialog.OK)
     {
-      Object[] dialogSelection = dialog.getChecked();
+      Object[] dialogSelection = dialog.getResult();
       Set<EPackage> filtererdPackages = new HashSet<EPackage>();
       Set<EClass> filtererdEClasses = new HashSet<EClass>();
       for (Object object : dialogSelection)

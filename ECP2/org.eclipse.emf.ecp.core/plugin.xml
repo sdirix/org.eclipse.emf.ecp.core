@@ -16,7 +16,7 @@
          id="org.eclipse.emf.ecp.core.project.properties"
          type="org.eclipse.emf.ecp.core.ECPProject"
          namespace="org.eclipse.emf.ecp.core.project"
-         properties="name,repositoryName,repositoryLabel,providerName,providerLabel"
+         properties="name,repositoryName,repositoryLabel,providerName,providerLabel,isShared"
          class="org.eclipse.emf.ecp.internal.core.properties.ECPProjectProperties$Tester"/>
       <propertyTester
             class="org.eclipse.emf.ecp.internal.core.properties.ECPDeletableProperties$Tester"

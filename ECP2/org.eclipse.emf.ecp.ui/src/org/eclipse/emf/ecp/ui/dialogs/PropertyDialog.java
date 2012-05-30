@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.ecp.ui.dialogs;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -109,13 +108,6 @@ public class PropertyDialog extends TitleAreaDialog
     });
 
     return area;
-  }
-
-  @Override
-  protected void createButtonsForButtonBar(Composite parent)
-  {
-    createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
 
   @Override
