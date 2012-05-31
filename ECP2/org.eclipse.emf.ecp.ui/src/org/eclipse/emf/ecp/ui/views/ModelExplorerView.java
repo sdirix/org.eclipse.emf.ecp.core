@@ -14,13 +14,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
@@ -81,7 +81,7 @@ public class ModelExplorerView extends TreeView
   }
 
   @Override
-  protected void configureViewer(TreeViewer viewer)
+  protected void configureViewer(final TreeViewer viewer)
   {
     viewer.setContentProvider(contentProvider);
     viewer.setLabelProvider(new ModelLabelProvider(contentProvider));
@@ -105,19 +105,21 @@ public class ModelExplorerView extends TreeView
           return;
         }
         EditingDomain domain = null;
+        ECPProject project = null;
         if (elements[0] instanceof ECPProject)
         {
           ECPModelContext context = ECPUtil.getModelContext(contentProvider, elements);
           if (context != null && context instanceof ECPProject)
           {
-            ECPProject project = (ECPProject)context;
-            domain = project.getEditingDomain();
+            project = (ECPProject)context;
           }
         }
         else
         {
-          domain = AdapterFactoryEditingDomain.getEditingDomainFor((EObject)elements[0]);
+          ECPModelContextProvider contextProvider = (ECPModelContextProvider)viewer.getContentProvider();
+          project = (ECPProject)ECPUtil.getModelContext(contextProvider, elements[0]);
         }
+        domain = project.getEditingDomain();
         dropAdapter.setEditingDomain(domain);
       }
     });
