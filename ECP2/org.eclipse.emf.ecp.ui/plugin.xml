@@ -241,6 +241,38 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
+         <command
+               commandId="org.eclipse.emf.ecp.ui.search"
+               icon="icons/magnifier.png"
+               id="SearchElementButon"
+               style="push"
+               tooltip="Search for model element">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <or>
+                           <instanceof
+                                 value="org.eclipse.emf.ecore.EObject">
+                           </instanceof>
+                           <instanceof
+                                 value="org.eclipse.emf.ecp.core.ECPProject">
+                           </instanceof>
+                        </or>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -287,20 +319,12 @@
             name="Create new project">
       </command>
       <command
-            id="org.eclipse.emf.ecp.ui.project.share"
-            name="Share project">
-      </command>
-      <command
             id="org.eclipse.emf.ecp.ui.delete"
             name="Delete">
       </command>
       <command
-            id="org.eclipse.emf.ecp.ui.project.commit"
-            name="Commit project">
-      </command>
-      <command
-            id="org.eclipse.emf.ecp.ui.project.update"
-            name="Update project">
+            id="org.eclipse.emf.ecp.ui.search"
+            name="Search Element">
       </command>
    </extension>
    <extension
@@ -329,6 +353,10 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.CloseableHandler"
             commandId="org.eclipse.emf.ecp.ui.closable">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.SearchModelElementHandler"
+            commandId="org.eclipse.emf.ecp.ui.search">
       </handler>
    </extension>
 

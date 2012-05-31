@@ -208,6 +208,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(refreshAction);
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     // manager.add(new Separator());
     // drillDownAdapter.addNavigationActions(manager);
   }

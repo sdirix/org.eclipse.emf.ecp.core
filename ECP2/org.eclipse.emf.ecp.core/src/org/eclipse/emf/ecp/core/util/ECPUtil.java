@@ -32,7 +32,7 @@ public final class ECPUtil
   {
   }
 
-  public static ECPModelContext getModelContext(ECPModelContextProvider contextProvider, Object[] elements)
+  public static ECPModelContext getModelContext(ECPModelContextProvider contextProvider, Object... elements)
   {
     ECPModelContext commonContext = null;
     for (Object element : elements)
