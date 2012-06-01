@@ -2,10 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.emfstore"
       label="EMF Client Platform (EMFStore Support)"
-      version="1.0.0.qualifier">
+      version="1.0.0.qualifier"
+      provider-name="%providerName">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      This Feature allows the use of the EMFStore for the EMF Client Platform.
    </description>
 
    <copyright url="http://www.example.com/copyright">
