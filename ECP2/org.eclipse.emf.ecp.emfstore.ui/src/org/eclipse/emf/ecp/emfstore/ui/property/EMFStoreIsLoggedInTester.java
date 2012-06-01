@@ -5,6 +5,7 @@ package org.eclipse.emf.ecp.emfstore.ui.property;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommandWithResult;
@@ -28,7 +29,7 @@ public class EMFStoreIsLoggedInTester extends PropertyTester
     if (receiver instanceof ECPRepository && expectedValue instanceof Boolean)
     {
       final ECPRepository ecpRepository = (ECPRepository)receiver;
-      final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository);
+      final ServerInfo serverInfo = EMFStoreProvider.getServerInfo((InternalRepository)ecpRepository);
       EMFStoreCommandWithResult<Boolean> command = new EMFStoreCommandWithResult<Boolean>()
       {
         @Override

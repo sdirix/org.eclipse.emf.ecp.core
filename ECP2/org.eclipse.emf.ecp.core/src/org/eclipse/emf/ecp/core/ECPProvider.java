@@ -36,6 +36,7 @@ public interface ECPProvider extends ECPElement, IAdaptable
 
   public ECPProject createProject(String name, ECPProperties properties);
 
+  // TODO check whether necessary
   public void shareProject(ECPProject project, ECPRepository repository);
 
   public ECPRepository unshareProject(ECPProject project);

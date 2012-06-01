@@ -7,6 +7,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -44,7 +45,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator
       ECPProject project = (ECPProject)element;
       ECPProvider provider = project.getProvider();
       if (provider != null && providerLabel.equalsIgnoreCase(provider.getName())
-          && EMFStoreProvider.INSTANCE.getProjectSpace(project).isDirty())
+          && EMFStoreProvider.getProjectSpace((InternalProject)project).isDirty())
       {
         decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
       }

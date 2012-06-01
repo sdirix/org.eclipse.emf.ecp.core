@@ -61,6 +61,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
    * @param ecpProject
    * @return list of Elements of this project
    */
+  // TODO check whether not to use fillChildren
   public EList<EObject> getElements(ECPProject ecpProject);
 
   /**
