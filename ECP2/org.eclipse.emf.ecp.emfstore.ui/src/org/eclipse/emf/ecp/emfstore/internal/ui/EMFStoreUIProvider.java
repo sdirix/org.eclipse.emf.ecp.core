@@ -1,23 +1,21 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreCheckoutData;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
+import org.eclipse.emf.emfstore.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.client.model.exceptions.CertificateStoreException;
+import org.eclipse.emf.emfstore.client.model.observers.CheckoutObserver;
 import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
-import org.eclipse.emf.emfstore.server.model.ProjectInfo;
+import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -33,6 +31,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.ArrayList;
 
@@ -51,6 +50,38 @@ public class EMFStoreUIProvider extends DefaultUIProvider
   @SuppressWarnings("unchecked")
   public <T> T getAdapter(Object adaptable, Class<T> adapterType)
   {
+    if (EMFStoreCheckoutData.class.isInstance(adaptable) && adapterType.equals(ProjectSpace.class))
+    {
+      EMFStoreCheckoutData checkoutData = (EMFStoreCheckoutData)adaptable;
+      final ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(PlatformUI.getWorkbench()
+          .getActiveWorkbenchWindow().getShell());
+      try
+      {
+        progressDialog.open();
+        progressDialog.getProgressMonitor().beginTask("Checkout project...", IProgressMonitor.UNKNOWN);
+        checkoutData.getServerInfo().getLastUsersession().logIn();
+        ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
+            .checkout(checkoutData.getServerInfo().getLastUsersession(), checkoutData.getProjectInfo());
+        WorkspaceManager.getInstance().getCurrentWorkspace().save();
+        WorkspaceManager.getObserverBus().notify(CheckoutObserver.class).checkoutDone(projectSpace);
+        return (T)projectSpace;
+      }
+      catch (EmfStoreException e)
+      {
+        Activator.log(e);
+        // BEGIN SUPRESS CATCH EXCEPTION
+      }
+      catch (RuntimeException e)
+      {
+        Activator.log(e);
+        // END SUPRESS CATCH EXCEPTION
+      }
+      finally
+      {
+        progressDialog.getProgressMonitor().done();
+        progressDialog.close();
+      }
+    }
     return super.getAdapter(adaptable, adapterType);
   }
 
@@ -129,77 +160,77 @@ public class EMFStoreUIProvider extends DefaultUIProvider
     return composite;
   }
 
-  @Override
-  public Control createCheckoutUI(Composite parent, final ECPCheckoutSource checkoutSource,
-      final ECPProperties projectProperties)
-  {
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(new GridLayout(2, false));
-
-    new Label(composite, SWT.NONE).setText("User");
-    final Text tUser = new Text(composite, SWT.SINGLE | SWT.BORDER);
-    tUser.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-
-    new Label(composite, SWT.NONE).setText("Password");
-    final Text tPassword = new Text(composite, SWT.SINGLE | SWT.BORDER);
-    tPassword.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-
-    Button bConnect = new Button(composite, SWT.PUSH);
-    bConnect.setText("Connect");
-    bConnect.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
-
-    new Label(composite, SWT.NONE).setText("Select Project:");
-    final ComboViewer cvProjectInfos = new ComboViewer(composite, SWT.READ_ONLY);
-    cvProjectInfos.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-    cvProjectInfos.setLabelProvider(new LabelProvider()
-    {
-      @Override
-      public String getText(Object object)
-      {
-        if (object instanceof ProjectInfo)
-        {
-          ProjectInfo projectInfo = (ProjectInfo)object;
-          return projectInfo.getName();
-        }
-        return "";
-      }
-    });
-    cvProjectInfos.setContentProvider(new ArrayContentProvider());
-
-    cvProjectInfos.addSelectionChangedListener(new ISelectionChangedListener()
-    {
-
-      public void selectionChanged(SelectionChangedEvent event)
-      {
-        ProjectInfo projectInfo = (ProjectInfo)((IStructuredSelection)event.getSelection()).getFirstElement();
-        projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectInfo.getProjectId().getId());
-      }
-    });
-
-    bConnect.addSelectionListener(new SelectionListener()
-    {
-
-      public void widgetSelected(SelectionEvent e)
-      {
-        EList<ProjectInfo> projectInfos = EMFStoreProvider.INSTANCE.getAllProjects(checkoutSource.getRepository(),
-            tUser.getText(), tPassword.getText());
-        cvProjectInfos.setInput(projectInfos);
-        if (projectInfos.size() > 0)
-        {
-          cvProjectInfos.setSelection(new StructuredSelection(projectInfos.get(0)));
-        }
-      }
-
-      public void widgetDefaultSelected(SelectionEvent e)
-      {
-        widgetSelected(e);
-      }
-    });
-
-    tUser.setText("super");
-    tPassword.setText("super");
-    return composite;
-  }
+  // @Override
+  // public Control createCheckoutUI(Composite parent, final ECPCheckoutSource checkoutSource,
+  // final ECPProperties projectProperties)
+  // {
+  // Composite composite = new Composite(parent, SWT.NONE);
+  // composite.setLayout(new GridLayout(2, false));
+  //
+  // new Label(composite, SWT.NONE).setText("User");
+  // final Text tUser = new Text(composite, SWT.SINGLE | SWT.BORDER);
+  // tUser.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+  //
+  // new Label(composite, SWT.NONE).setText("Password");
+  // final Text tPassword = new Text(composite, SWT.SINGLE | SWT.BORDER);
+  // tPassword.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+  //
+  // Button bConnect = new Button(composite, SWT.PUSH);
+  // bConnect.setText("Connect");
+  // bConnect.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+  //
+  // new Label(composite, SWT.NONE).setText("Select Project:");
+  // final ComboViewer cvProjectInfos = new ComboViewer(composite, SWT.READ_ONLY);
+  // cvProjectInfos.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+  // cvProjectInfos.setLabelProvider(new LabelProvider()
+  // {
+  // @Override
+  // public String getText(Object object)
+  // {
+  // if (object instanceof ProjectInfo)
+  // {
+  // ProjectInfo projectInfo = (ProjectInfo)object;
+  // return projectInfo.getName();
+  // }
+  // return "";
+  // }
+  // });
+  // cvProjectInfos.setContentProvider(new ArrayContentProvider());
+  //
+  // cvProjectInfos.addSelectionChangedListener(new ISelectionChangedListener()
+  // {
+  //
+  // public void selectionChanged(SelectionChangedEvent event)
+  // {
+  // ProjectInfo projectInfo = (ProjectInfo)((IStructuredSelection)event.getSelection()).getFirstElement();
+  // projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectInfo.getProjectId().getId());
+  // }
+  // });
+  //
+  // bConnect.addSelectionListener(new SelectionListener()
+  // {
+  //
+  // public void widgetSelected(SelectionEvent e)
+  // {
+  // EList<ProjectInfo> projectInfos = EMFStoreProvider.INSTANCE.getAllProjects(checkoutSource.getRepository(),
+  // tUser.getText(), tPassword.getText());
+  // cvProjectInfos.setInput(projectInfos);
+  // if (projectInfos.size() > 0)
+  // {
+  // cvProjectInfos.setSelection(new StructuredSelection(projectInfos.get(0)));
+  // }
+  // }
+  //
+  // public void widgetDefaultSelected(SelectionEvent e)
+  // {
+  // widgetSelected(e);
+  // }
+  // });
+  //
+  // tUser.setText("super");
+  // tPassword.setText("super");
+  // return composite;
+  // }
 
   /**
    * @return

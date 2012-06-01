@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.emfstore.decorator;
+package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;

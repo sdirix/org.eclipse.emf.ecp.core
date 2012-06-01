@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.emfstore.ui.property;
+package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;

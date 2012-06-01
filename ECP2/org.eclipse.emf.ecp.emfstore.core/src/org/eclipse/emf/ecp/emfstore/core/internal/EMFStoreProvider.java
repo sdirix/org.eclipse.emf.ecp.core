@@ -84,7 +84,6 @@ public class EMFStoreProvider extends DefaultProvider
   @Override
   public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList)
   {
-    // TODO Auto-generated method stub
     if (parent instanceof InternalProject)
     {
       ProjectSpace projectSpace = getProjectSpace((InternalProject)parent);
@@ -99,7 +98,8 @@ public class EMFStoreProvider extends DefaultProvider
       EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
       for (ProjectInfo projectInfo : projectInfos)
       {
-        childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository)parent, projectInfo, serverInfo));
+        childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository)parent, new EMFStoreCheckoutData(
+            serverInfo, projectInfo)));
       }
 
     }

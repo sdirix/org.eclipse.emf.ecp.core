@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecp.emfstore.handler;
+package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -25,11 +25,11 @@ public class CommitProjectHandler extends AbstractHandler
   {
     InternalProject project = (InternalProject)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
         .getFirstElement();
-    ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+    ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
     // TODO Ugly
     if (projectSpace.getUsersession() == null)
     {
-      ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+      ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
       projectSpace.setUsersession(serverInfo.getLastUsersession());
     }
     try

@@ -286,6 +286,7 @@
             id="org.eclipse.emf.ecp.ui.project.filterModelElements"
             name="Filter Modelelements">
       </command>
+      <!--
       <command
             defaultHandler="org.eclipse.emf.ecp.ui.commands.CreateContainmentHandler"
             description="This generic command is used by dynamic commands to create containment MEs"
@@ -305,6 +306,7 @@
          </commandParameter>
   
       </command>
+      -->
       <command
             id="org.eclipse.emf.ecp.ui.closable"
             name="closeable">

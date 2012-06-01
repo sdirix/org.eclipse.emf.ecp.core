@@ -149,7 +149,7 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.eclipse.emf.ecp.emfstore.handler.CommitProjectHandler"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.CommitProjectHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.commit">
          <enabledWhen>
             <with
@@ -166,7 +166,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.emf.ecp.emfstore.handler.ShareProjectHandler"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ShareProjectHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.share">
          <enabledWhen>
             <with
@@ -183,7 +183,7 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.emf.ecp.emfstore.handler.UpdateProjectHandler"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.UpdateProjectHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.update">
          <enabledWhen>
             <with
@@ -200,11 +200,11 @@
          </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.emf.ecp.emfstore.handler.EmfstoreLogOutHandler"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.EmfstoreLogOutHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout">
       </handler>
       <handler
-            class="org.eclipse.emf.ecp.emfstore.handler.EmfstoreLogInHandler"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.EmfstoreLogInHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin">
       </handler>
    </extension>
@@ -212,7 +212,7 @@
          point="org.eclipse.ui.decorators">
       <decorator
             adaptable="true"
-            class="org.eclipse.emf.ecp.emfstore.decorator.EMFStoreDirtyDecorator"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyDecorator"
             id="org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator"
             label="EMFStoreDirty Decorator"
             lightweight="true"
@@ -230,7 +230,7 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="org.eclipse.emf.ecp.emfstore.ui.property.EMFStoreIsLoggedInTester"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreIsLoggedInTester"
             id="org.eclipse.emf.ecp.emfstore.ui.testers.emfstoreIsLoggedIn"
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
             properties="emfserverIsLoggedIn"
