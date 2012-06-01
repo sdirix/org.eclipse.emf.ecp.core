@@ -8,12 +8,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.core;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.ui;bundle-version="[3.4.0,4.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.edit.ui;bundle-version="[2.5.0,3.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.rap.rwt;bundle-version="[1.5.0,2.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.rap.edit.ui;bundle-version="[2.7.0,3.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.rap.jface;bundle-version="[1.5.0,2.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.rap.ui.views;bundle-version="[1.5.0,2.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.rap.ui.workbench;bundle-version="[1.5.0,2.0.0)";resolution:=optional;visibility:=reexport
+ org.eclipse.emf.edit.ui;bundle-version="[2.5.0,3.0.0)";resolution:=optional;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.0.0";x-internal:=true,
