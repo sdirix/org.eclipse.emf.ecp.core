@@ -118,11 +118,17 @@
                <iterate
                      ifEmpty="false"
                      operator="and">
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
-                        value="false">
-                  </test>
+                  <and>
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="false">
+                     </test>
+                  </and>
                </iterate>
             </visibleWhen>
          </command>
@@ -136,11 +142,16 @@
                <iterate
                      ifEmpty="false"
                      operator="and">
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
-                        value="true">
-                  </test>
+                  <and>
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="true">
+                     </test></and>
                </iterate>
             </visibleWhen>
          </command>

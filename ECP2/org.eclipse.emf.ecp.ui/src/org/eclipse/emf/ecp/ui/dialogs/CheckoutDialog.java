@@ -14,6 +14,7 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 
@@ -30,7 +31,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 
 /**
  * @author Eike Stepper
@@ -86,7 +86,7 @@ public class CheckoutDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     setTitle("Checkout");
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.ecp.ui", "icons/checkout_project_wiz.png"));
+    setTitleImage(Activator.getImage("icons/checkout_project_wiz.png"));
 
     UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(checkoutSource);
 

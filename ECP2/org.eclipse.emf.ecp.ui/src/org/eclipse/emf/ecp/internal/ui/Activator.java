@@ -11,15 +11,18 @@
 package org.eclipse.emf.ecp.internal.ui;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import org.osgi.framework.BundleContext;
+
+import java.net.URL;
 
 /**
  * @author Eike Stepper
@@ -47,8 +50,6 @@ public final class Activator extends AbstractUIPlugin
   public void stop(BundleContext context) throws Exception
   {
     UIProviderRegistryImpl.INSTANCE.deactivate();
-    ResourceManager.dispose();
-    SWTResourceManager.dispose();
     instance = null;
     super.stop(context);
   }
@@ -107,11 +108,54 @@ public final class Activator extends AbstractUIPlugin
 
   public static ImageDescriptor getImageDescriptor(String path)
   {
-    return ResourceManager.getPluginImageDescriptor(PLUGIN_ID, path);
+    // return ResourceManager.getPluginImageDescriptor(PLUGIN_ID, path);
+    ImageDescriptor id = getInstance().getImageRegistry().getDescriptor(path);
+    if (id == null)
+    {
+      id = loadImageDescriptor(path);
+    }
+    return id;
   }
 
   public static Image getImage(String path)
   {
-    return ResourceManager.getPluginImage(PLUGIN_ID, path);
+    // return ResourceManager.getPluginImage(PLUGIN_ID, path);
+    Image image = getInstance().getImageRegistry().get(path);
+    if (image == null)
+    {
+      image = loadImage(path);
+    }
+    return image;
+  }
+
+  /**
+   * @param path
+   * @return
+   */
+  private static Image loadImage(String path)
+  {
+    ImageDescriptor id = loadImageDescriptor(path);
+    if (id == null)
+    {
+      return null;
+    }
+    getInstance().getImageRegistry().put(path, id);
+    return getInstance().getImageRegistry().get(path);
+  }
+
+  /**
+   * @param path
+   * @return
+   */
+  private static ImageDescriptor loadImageDescriptor(String path)
+  {
+    URL url = FileLocator.find(Platform.getBundle(PLUGIN_ID), new Path(path), null);
+    if (url == null)
+    {
+      return null;
+    }
+    ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(url);
+    getInstance().getImageRegistry().put(path, imageDescriptor);
+    return imageDescriptor;
   }
 }

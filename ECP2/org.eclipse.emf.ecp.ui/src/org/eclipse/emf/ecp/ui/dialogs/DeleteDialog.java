@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -21,7 +22,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.ResourceManager;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class DeleteDialog extends TitleAreaDialog
     int count = deletables.size();
 
     setTitle("Delete");
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.ecp.ui", "icons/delete_wiz.png"));
+    setTitleImage(Activator.getImage("icons/delete_wiz.png"));
     setMessage("Are you sure you want to delete " + count + " element" + (count == 1 ? "" : "s") + "?");
 
     Composite area = (Composite)super.createDialogArea(parent);

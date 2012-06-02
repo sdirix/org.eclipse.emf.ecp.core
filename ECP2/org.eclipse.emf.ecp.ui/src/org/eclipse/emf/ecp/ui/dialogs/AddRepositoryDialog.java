@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ProvidersContentProvider;
@@ -41,7 +42,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -126,7 +126,7 @@ public class AddRepositoryDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     setTitle("Add Repository");
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.ecp.ui", "icons/checkout_project_wiz.png"));
+    setTitleImage(Activator.getImage("icons/checkout_project_wiz.png"));
     setMessage("Select a provider and configure the new repository.");
 
     Composite area = (Composite)super.createDialogArea(parent);

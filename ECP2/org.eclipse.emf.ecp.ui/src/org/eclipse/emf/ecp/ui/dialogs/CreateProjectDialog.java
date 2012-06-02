@@ -5,6 +5,7 @@ package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
 import org.eclipse.emf.ecp.ui.model.TreeContentProvider;
@@ -27,7 +28,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 
 /**
  * @author Eugen Neufeld
@@ -67,7 +67,7 @@ public class CreateProjectDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     setTitle("Create Project");
-    setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.ecp.ui", "icons/checkout_project_wiz.png"));
+    setTitleImage(Activator.getImage("icons/checkout_project_wiz.png"));
     setMessage("Select a provider and set the project name.");
 
     Composite area = (Composite)super.createDialogArea(parent);
