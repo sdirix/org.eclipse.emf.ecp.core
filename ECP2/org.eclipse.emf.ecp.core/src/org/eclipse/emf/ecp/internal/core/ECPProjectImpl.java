@@ -552,7 +552,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
   public Collection<EPackage> getUnsupportedEPackages()
   {
-    return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages());
+    return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages(), getRepository());
   }
 
   public void setFilteredPackages(Set<EPackage> filteredPackages)
