@@ -293,8 +293,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
      */
     public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository)
     {
-      // TODO Auto-generated method stub
-      return null;
+      return getResolvedElement().getUnsupportedEPackages(ePackages, repository);
     }
   }
 }
