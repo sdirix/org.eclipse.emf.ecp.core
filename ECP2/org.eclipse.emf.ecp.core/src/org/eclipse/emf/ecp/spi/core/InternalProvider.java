@@ -71,7 +71,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
    *          packages to filter from
    * @return a {@link Collection} of {@link EPackage}s that are not supported
    */
-  public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages);
+  public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
 
   /**
    * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
