@@ -4,7 +4,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -27,7 +26,6 @@ import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @author Eugen Neufeld
@@ -60,26 +58,26 @@ public class EMFStoreProvider extends DefaultProvider
     // TODO Auto-generated constructor stub
   }
 
-  @Override
-  public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages)
-  {
-    Set<EPackage> unsupported = new HashSet<EPackage>();
-    for (EPackage ePackage : packages)
-    {
-      if (ePackage.getNsURI().equalsIgnoreCase("http://org/eclipse/example/bowling")
-          || ePackage.getNsURI().equals("http://eclipse.org/emf/emfstore/common/model")
-          || ePackage.getNsURI().equals("http://www4.in.tum.de/~af3/model")
-          || ePackage.getNsURI().equals("http://www.cksw.de/model/birequirements/0.1")
-          || ePackage.getESuperPackage() != null
-          && ePackage.getESuperPackage().getNsURI().equals("http://www.cksw.de/model/birequirements/0.1"))
-      {
-        continue;
-      }
-      unsupported.add(ePackage);
-
-    }
-    return unsupported;
-  }
+  // @Override
+  // public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages)
+  // {
+  // Set<EPackage> unsupported = new HashSet<EPackage>();
+  // for (EPackage ePackage : packages)
+  // {
+  // if (ePackage.getNsURI().equalsIgnoreCase("http://org/eclipse/example/bowling")
+  // || ePackage.getNsURI().equals("http://eclipse.org/emf/emfstore/common/model")
+  // || ePackage.getNsURI().equals("http://www4.in.tum.de/~af3/model")
+  // || ePackage.getNsURI().equals("http://www.cksw.de/model/birequirements/0.1")
+  // || ePackage.getESuperPackage() != null
+  // && ePackage.getESuperPackage().getNsURI().equals("http://www.cksw.de/model/birequirements/0.1"))
+  // {
+  // continue;
+  // }
+  // unsupported.add(ePackage);
+  //
+  // }
+  // return unsupported;
+  // }
 
   @Override
   public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList)
