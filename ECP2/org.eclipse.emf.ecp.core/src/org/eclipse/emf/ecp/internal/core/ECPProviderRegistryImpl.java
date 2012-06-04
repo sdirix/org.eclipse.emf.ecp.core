@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -277,21 +278,23 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 
     /*
      * (non-Javadoc)
-     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getUnsupportedEPackages(java.util.Collection)
-     */
-    public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages)
-    {
-      return getResolvedElement().getUnsupportedEPackages(ePackages);
-    }
-
-    /*
-     * (non-Javadoc)
      * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getLinkElements(org.eclipse.emf.ecp.core.ECPProject,
      * org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
      */
     public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference)
     {
       return getResolvedElement().getLinkElements(ecpProject, modelElement, eReference);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getUnsupportedEPackages(java.util.Collection,
+     * org.eclipse.emf.ecp.spi.core.InternalRepository)
+     */
+    public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository)
+    {
+      // TODO Auto-generated method stub
+      return null;
     }
   }
 }
