@@ -20,6 +20,7 @@ import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
+import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
@@ -43,6 +44,8 @@ public class EMFStoreProvider extends DefaultProvider
   public static final String PROP_CERTIFICATE = "certificate";
 
   public static final String PROP_PROJECTSPACEID = "projectSpaceID";
+
+  public static final String PROP_SERVERINFOID = "serverInfoID";
 
   private AdapterImpl adapter;
 
@@ -93,13 +96,29 @@ public class EMFStoreProvider extends DefaultProvider
     else if (parent instanceof InternalRepository)
     {
       ServerInfo serverInfo = getServerInfo((InternalRepository)parent);
-      EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
-      for (ProjectInfo projectInfo : projectInfos)
+      if (serverInfo.getLastUsersession() != null)
       {
-        childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository)parent, new EMFStoreCheckoutData(
-            serverInfo, projectInfo)));
-      }
+        try
+        {
+          serverInfo.getLastUsersession().logIn();
+          EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
+          for (ProjectInfo projectInfo : projectInfos)
+          {
+            childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository)parent, new EMFStoreCheckoutData(
+                serverInfo, projectInfo)));
+          }
 
+        }
+        catch (AccessControlException ex)
+        {
+          Activator.log(ex);
+        }
+        catch (EmfStoreException e)
+        {
+          Activator.log(e);
+        }
+
+      }
     }
     super.fillChildren(context, parent, childrenList);
   }
@@ -157,9 +176,22 @@ public class EMFStoreProvider extends DefaultProvider
     if (context instanceof InternalRepository)
     {
       ServerInfo serverInfo = getServerInfo((InternalRepository)context);
-      Workspace workspace = WorkspaceManager.getInstance().getCurrentWorkspace();
-      workspace.addServerInfo(serverInfo);
-      workspace.save();
+      if (serverInfo.getLastUsersession() != null)
+      {
+        try
+        {
+
+          serverInfo.getLastUsersession().logIn();
+        }
+        catch (AccessControlException ex)
+        {
+          Activator.log(ex);
+        }
+        catch (EmfStoreException ex)
+        {
+          Activator.log(ex);
+        }
+      }
     }
     else if (context instanceof InternalProject)
     {
@@ -318,13 +350,42 @@ public class EMFStoreProvider extends DefaultProvider
     ServerInfo serverInfo = (ServerInfo)internalRepository.getProviderSpecificData();
     if (serverInfo == null)
     {
-      serverInfo = EMFStoreClientUtil.createServerInfo(
-          internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL), Integer
-              .parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)), internalRepository
-              .getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
+      Workspace workspace = WorkspaceManager.getInstance().getCurrentWorkspace();
+
+      boolean foundExisting = false;
+      for (ServerInfo info : workspace.getServerInfos())
+      {
+        if (isSameServerInfo(info, internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
+            Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
+            internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE)))
+        {
+          serverInfo = info;
+          foundExisting = true;
+          break;
+        }
+      }
+      if (!foundExisting)
+      {
+        serverInfo = EMFStoreClientUtil.createServerInfo(
+            internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
+            Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
+            internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
+        workspace.addServerInfo(serverInfo);
+        workspace.save();
+      }
       internalRepository.setProviderSpecificData(serverInfo);
     }
     return serverInfo;
   }
 
+  /**
+   * @param info
+   * @param ecpProperties
+   * @return
+   */
+  private static boolean isSameServerInfo(ServerInfo info, String url, int port, String certificate)
+  {
+    return info.getUrl().equalsIgnoreCase(url) && info.getPort() == port
+        && info.getCertificateAlias().equalsIgnoreCase(certificate);
+  }
 }
