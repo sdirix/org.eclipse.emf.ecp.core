@@ -189,11 +189,6 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
     disposable.removeDisposeListener(listener);
   }
 
-  public InternalRepository getRepository()
-  {
-    return this;
-  }
-
   public InternalProvider getProvider()
   {
     return provider;
@@ -260,17 +255,20 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
     // TODO Consider to cache the result
     return result.toArray(new InternalProject[result.size()]);
   }
-
-  public String getDefaultCheckoutName()
-  {
-    return getName();
-  }
-
-  public ECPProject checkout(String projectName, ECPProperties projectProperties)
-  {
-    InternalProject project = new ECPProjectImpl(this, projectName, projectProperties);
-    provider.handleLifecycle(project, LifecycleEvent.CREATE);
-    ECPProjectManagerImpl.INSTANCE.changeElements(null, Collections.singleton(project));
-    return project;
-  }
+  // public InternalRepository getRepository()
+  // {
+  // return this;
+  // }
+  // public String getDefaultCheckoutName()
+  // {
+  // return getName();
+  // }
+  //
+  // public ECPProject checkout(String projectName, ECPProperties projectProperties)
+  // {
+  // InternalProject project = new ECPProjectImpl(this, projectName, projectProperties);
+  // provider.handleLifecycle(project, LifecycleEvent.CREATE);
+  // ECPProjectManagerImpl.INSTANCE.changeElements(null, Collections.singleton(project));
+  // return project;
+  // }
 }

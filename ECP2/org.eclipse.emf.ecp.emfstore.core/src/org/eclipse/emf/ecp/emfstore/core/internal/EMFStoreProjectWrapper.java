@@ -1,6 +1,6 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
-import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
@@ -43,14 +43,14 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource
     return checkoutData.getProjectInfo().getName();
   }
 
-  public ECPProject checkout(String projectName, ECPProperties projectProperties)
+  public void checkout(String projectName, ECPProperties projectProperties)
   {
     ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getUIProvider().getAdapter(checkoutData, ProjectSpace.class);
     if (projectSpace != null)
     {
       projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getIdentifier());
     }
-    return repository.checkout(projectName, projectProperties);
+    ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);
   }
 
 }

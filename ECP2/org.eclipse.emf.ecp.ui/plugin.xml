@@ -361,5 +361,14 @@
             commandId="org.eclipse.emf.ecp.ui.search">
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.emf.ecp.ui.perspective.ECPPerspectiveFactory"
+            icon="icons/sample.gif"
+            id="org.eclipse.emf.ecp.ui.main"
+            name="ECP">
+      </perspective>
+   </extension>
 
 </plugin>

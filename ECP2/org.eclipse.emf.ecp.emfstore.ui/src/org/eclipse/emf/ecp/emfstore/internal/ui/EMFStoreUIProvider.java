@@ -11,6 +11,7 @@ import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.client.model.exceptions.CertificateStoreException;
 import org.eclipse.emf.emfstore.client.model.observers.CheckoutObserver;
 import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
+import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -59,9 +60,11 @@ public class EMFStoreUIProvider extends DefaultUIProvider
       {
         progressDialog.open();
         progressDialog.getProgressMonitor().beginTask("Checkout project...", IProgressMonitor.UNKNOWN);
-        checkoutData.getServerInfo().getLastUsersession().logIn();
-        ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
-            .checkout(checkoutData.getServerInfo().getLastUsersession(), checkoutData.getProjectInfo());
+        // checkoutData.getServerInfo().getLastUsersession().logIn();
+        ProjectSpace projectSpace = WorkspaceManager
+            .getInstance()
+            .getCurrentWorkspace()
+            .checkout(checkoutData.getServerInfo().getLastUsersession(), ModelUtil.clone(checkoutData.getProjectInfo()));
         WorkspaceManager.getInstance().getCurrentWorkspace().save();
         WorkspaceManager.getObserverBus().notify(CheckoutObserver.class).checkoutDone(projectSpace);
         return (T)projectSpace;

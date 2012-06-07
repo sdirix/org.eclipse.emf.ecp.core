@@ -100,7 +100,10 @@ public class EMFStoreProvider extends DefaultProvider
       {
         try
         {
-          serverInfo.getLastUsersession().logIn();
+          if (!serverInfo.getLastUsersession().isLoggedIn())
+          {
+            serverInfo.getLastUsersession().logIn();
+          }
           EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
           for (ProjectInfo projectInfo : projectInfos)
           {
@@ -172,15 +175,13 @@ public class EMFStoreProvider extends DefaultProvider
    */
   private void handleCreate(final ECPModelContext context)
   {
-
     if (context instanceof InternalRepository)
     {
       ServerInfo serverInfo = getServerInfo((InternalRepository)context);
-      if (serverInfo.getLastUsersession() != null)
+      if (serverInfo.getLastUsersession() != null && !serverInfo.getLastUsersession().isLoggedIn())
       {
         try
         {
-
           serverInfo.getLastUsersession().logIn();
         }
         catch (AccessControlException ex)
@@ -195,37 +196,37 @@ public class EMFStoreProvider extends DefaultProvider
     }
     else if (context instanceof InternalProject)
     {
-      InternalProject project = (InternalProject)context;
-      if (project.getRepository() != null)
-      {
-        ServerInfo serverInfo = getServerInfo(project.getRepository());
-        if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn())
-        {
-          for (ProjectInfo projectInfo : serverInfo.getProjectInfos())
-          {
-            if (projectInfo.getProjectId().getId().equals(project.getProperties().getValue(PROP_PROJECTSPACEID)))
-            {
-              try
-              {
-                ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
-                    .checkout(serverInfo.getLastUsersession(), projectInfo);
-
-                WorkspaceManager.getInstance().getCurrentWorkspace().save();
-                if (project.getProviderSpecificData() == null)
-                {
-                  project.setProviderSpecificData(projectSpace);
-                }
-              }
-              catch (EmfStoreException ex)
-              {
-                // TODO Auto-generated catch block
-                ex.printStackTrace();
-              }
-
-            }
-          }
-        }
-      }
+      getProjectSpace((InternalProject)context);
+      // InternalProject project = (InternalProject)context;
+      // if (project.getRepository() != null)
+      // {
+      // ServerInfo serverInfo = getServerInfo(project.getRepository());
+      // if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn())
+      // {
+      // for (ProjectInfo projectInfo : WorkspaceManager.getInstance().getCurrentWorkspace().getp.getProjectInfos())
+      // {
+      // if (projectInfo.getProjectId().getId().equals(project.getProperties().getValue(PROP_PROJECTSPACEID)))
+      // {
+      // try
+      // {
+      // ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
+      // .checkout(serverInfo.getLastUsersession(), projectInfo);
+      //
+      // WorkspaceManager.getInstance().getCurrentWorkspace().save();
+      // if (project.getProviderSpecificData() == null)
+      // {
+      // project.setProviderSpecificData(projectSpace);
+      // }
+      // }
+      // catch (EmfStoreException ex)
+      // {
+      // Activator.log(ex);
+      // }
+      //
+      // }
+      // }
+      // }
+      // }
     }
   }
 
@@ -277,7 +278,6 @@ public class EMFStoreProvider extends DefaultProvider
   // TODO remove
   public EList<ProjectInfo> getAllProjects(ECPRepository repository, String user, String password)
   {
-    // TODO Auto-generated method stub
     ServerInfo serverInfo = getServerInfo((InternalRepository)repository);
     if (serverInfo.getLastUsersession() == null)
     {
@@ -295,8 +295,7 @@ public class EMFStoreProvider extends DefaultProvider
       }
       catch (Exception ex)
       {
-        // TODO Auto-generated catch block
-        ex.printStackTrace();
+        Activator.log(ex);
       }
     }
 
@@ -330,7 +329,7 @@ public class EMFStoreProvider extends DefaultProvider
         if (ps.getIdentifier().equals(projectSpaceID))
         {
           found = true;
-          internalProject.setProviderSpecificData(ps);
+          projectSpace = ps;
           break;
         }
       }
@@ -339,8 +338,9 @@ public class EMFStoreProvider extends DefaultProvider
         projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
             .createLocalProject(internalProject.getName(), "");
         internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getIdentifier());
-        internalProject.setProviderSpecificData(projectSpace);
+
       }
+      internalProject.setProviderSpecificData(projectSpace);
     }
     return projectSpace;
   }

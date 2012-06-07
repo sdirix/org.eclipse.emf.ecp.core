@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
  * @author Eike Stepper
@@ -19,5 +18,5 @@ public interface ECPCheckoutSource extends ECPRepositoryAware
 {
   public String getDefaultCheckoutName();
 
-  public ECPProject checkout(String projectName, ECPProperties projectProperties);
+  public void checkout(String projectName, ECPProperties projectProperties);
 }

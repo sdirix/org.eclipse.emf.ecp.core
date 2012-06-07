@@ -209,11 +209,6 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
       throw new UnsupportedOperationException();
     }
 
-    public ECPRepository getRepository()
-    {
-      return this;
-    }
-
     public InternalProvider getProvider()
     {
       String providerName = getConfigurationElement().getAttribute("provider");
@@ -263,16 +258,6 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
     public void notifyObjectsChanged(Object[] objects)
     {
       getResolvedElement().notifyObjectsChanged(objects);
-    }
-
-    public String getDefaultCheckoutName()
-    {
-      return getResolvedElement().getDefaultCheckoutName();
-    }
-
-    public ECPProject checkout(String projectName, ECPProperties projectProperties)
-    {
-      return getResolvedElement().checkout(projectName, projectProperties);
     }
 
     @Override

@@ -11,7 +11,6 @@
 package org.eclipse.emf.ecp.spi.core.util;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -70,20 +69,21 @@ public class RepositoryWrapper extends ModelContextWrapper<InternalRepository> i
     getDelegate().addDisposeListener(listener);
   }
 
-  public String getDefaultCheckoutName()
-  {
-    return getDelegate().getDefaultCheckoutName();
-  }
-
-  public ECPRepository getRepository()
-  {
-    return getDelegate().getRepository();
-  }
-
-  public ECPProject checkout(String projectName, ECPProperties projectProperties)
-  {
-    return getDelegate().checkout(projectName, projectProperties);
-  }
+  // TODO remove
+  // public String getDefaultCheckoutName()
+  // {
+  // return getDelegate().getDefaultCheckoutName();
+  // }
+  //
+  // public ECPRepository getRepository()
+  // {
+  // return getDelegate().getRepository();
+  // }
+  //
+  // public ECPProject checkout(String projectName, ECPProperties projectProperties)
+  // {
+  // return getDelegate().checkout(projectName, projectProperties);
+  // }
 
   public void removeDisposeListener(DisposeListener listener)
   {

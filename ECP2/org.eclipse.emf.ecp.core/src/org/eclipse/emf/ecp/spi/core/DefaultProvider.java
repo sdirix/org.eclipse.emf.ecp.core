@@ -27,9 +27,7 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
-import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.core.ECPProjectImpl;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
@@ -367,10 +365,5 @@ public abstract class DefaultProvider extends Element implements InternalProvide
   public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference)
   {
     return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
-  }
-
-  public ECPProject createProject(String name, ECPProperties properties)
-  {
-    return new ECPProjectImpl(this, name, properties);
   }
 }

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.ecp.cdo.internal.core;
 
-import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -62,10 +62,10 @@ public class CDOBranchWrapper implements ECPCheckoutSource
     return repository.getName() + "." + getName();
   }
 
-  public ECPProject checkout(String projectName, ECPProperties projectProperties)
+  public void checkout(String projectName, ECPProperties projectProperties)
   {
     projectProperties.addProperty("branchPath", branchPath);
-    return repository.checkout(projectName, projectProperties);
+    ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);
   }
 
   @Override

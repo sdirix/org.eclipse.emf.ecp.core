@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry.Listener;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
@@ -250,11 +249,6 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
     public boolean hasUnsharedProjectSupport()
     {
       return getResolvedElement().hasUnsharedProjectSupport();
-    }
-
-    public ECPProject createProject(String name, ECPProperties properties)
-    {
-      return getResolvedElement().createProject(name, properties);
     }
 
     public void shareProject(ECPProject project, ECPRepository repository)

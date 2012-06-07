@@ -84,8 +84,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
     }
 
     setRepository((InternalRepository)repository);
-    // TODO ugly
     provider = getRepository().getProvider();
+    notifyProvider(LifecycleEvent.INIT);
     open = true;
   }
 

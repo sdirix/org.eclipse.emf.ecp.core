@@ -21,6 +21,8 @@ public interface ECPProjectManager
 
   public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
 
+  public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties);
+
   public ECPProject getProject(Object adaptable);
 
   public ECPProject getProject(String name);

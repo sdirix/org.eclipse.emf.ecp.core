@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -21,8 +20,7 @@ import org.eclipse.core.runtime.IAdaptable;
 /**
  * @author Eike Stepper
  */
-public interface ECPRepository extends ECPElement, ECPModelContext, ECPCheckoutSource, ECPPropertiesAware,
-    ECPDeletable, IAdaptable
+public interface ECPRepository extends ECPElement, ECPModelContext, ECPPropertiesAware, ECPDeletable, IAdaptable
 {
   public static final String TYPE = "Repository";
 

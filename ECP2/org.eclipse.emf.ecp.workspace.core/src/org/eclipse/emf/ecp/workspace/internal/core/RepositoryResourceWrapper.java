@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.core;
 
-import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -38,10 +38,10 @@ public class RepositoryResourceWrapper extends ResourceWrapper<InternalRepositor
     return getName();
   }
 
-  public ECPProject checkout(String projectName, ECPProperties projectProperties)
+  public void checkout(String projectName, ECPProperties projectProperties)
   {
     projectProperties.addProperty(WorkspaceProvider.PROP_ROOT_URI, getURI().toString());
-    return getRepository().checkout(projectName, projectProperties);
+    ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);
   }
 
   @Override

@@ -23,6 +23,8 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import java.io.IOException;
@@ -44,10 +46,26 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 
   public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
   {
-    InternalProject project = (InternalProject)provider.createProject(name, properties);
+    InternalProject project = new ECPProjectImpl((InternalProvider)provider, name, properties);
+    return createProject(project);
+  }
+
+  public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
+  {
+    InternalProject project = new ECPProjectImpl(repository, name, properties);
+    return createProject(project);
+
+  }
+
+  /**
+   * @param project
+   * @return
+   */
+  private ECPProject createProject(InternalProject project)
+  {
+    project.getProvider().handleLifecycle(project, LifecycleEvent.CREATE);
     changeElements(null, Collections.singleton(project));
     return project;
-
   }
 
   public InternalProject getProject(Object adaptable)
