@@ -50,7 +50,7 @@ public class CreateProjectDialog extends TitleAreaDialog
   {
     super(parentShell);
     setShellStyle(SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
-
+    parentShell.setText("Create Project");
     projectName = "";
   }
 

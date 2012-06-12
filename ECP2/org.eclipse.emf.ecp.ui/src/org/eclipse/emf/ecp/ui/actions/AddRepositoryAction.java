@@ -10,13 +10,14 @@
  */
 package org.eclipse.emf.ecp.ui.actions;
 
-import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.dialogs.AddRepositoryDialog;
+import org.eclipse.emf.ecp.wizards.AddRepositoryPage;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -36,17 +37,65 @@ public class AddRepositoryAction extends Action
   @Override
   public void run()
   {
-    AddRepositoryDialog dialog = new AddRepositoryDialog(shell);
-    if (dialog.open() == AddRepositoryDialog.OK)
+    RepositoryWizard repositoryWizard = new RepositoryWizard();
+    repositoryWizard.setWindowTitle("Add Repository");
+    WizardDialog wizardDialog = new WizardDialog(shell, repositoryWizard);
+    // AddRepositoryDialog dialog = new AddRepositoryDialog(shell);
+    if (wizardDialog.open() == WizardDialog.OK)
     {
-      ECPProvider provider = dialog.getProvider();
-      ECPProperties properties = dialog.getProperties();
+      // ECPProvider provider = dialog.getProvider();
+      // ECPProperties properties = dialog.getProperties();
+      //
+      // String name = dialog.getRepositoryName();
+      // String label = dialog.getRepositoryLabel();
+      // String description = dialog.getRepositoryDescription();
+      //
+      // ECPRepositoryManager.INSTANCE.addRepository(provider, name, label, description, properties);
+    }
+  }
 
-      String name = dialog.getRepositoryName();
-      String label = dialog.getRepositoryLabel();
-      String description = dialog.getRepositoryDescription();
+  private class RepositoryWizard extends Wizard
+  {
+    private ECPRepository selectedRepository = null;
 
-      ECPRepositoryManager.INSTANCE.addRepository(provider, name, label, description, properties);
+    private AddRepositoryPage addPage;
+
+    /**
+     * . ({@inheritDoc})
+     */
+    @Override
+    public void addPages()
+    {
+      addPage = new AddRepositoryPage("AddRepository", null);
+      addPage(addPage);
+    }
+
+    /**
+     * . ({@inheritDoc})
+     */
+    @Override
+    public boolean canFinish()
+    {
+
+      return selectedRepository != null || addPage.getProperties() != null && addPage.getRepositoryName() != null;
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.jface.wizard.Wizard#performFinish()
+     */
+    @Override
+    public boolean performFinish()
+    {
+      if (selectedRepository == null)
+      {
+        selectedRepository = ECPRepositoryManager.INSTANCE.addRepository(addPage.getProvider(),
+            addPage.getRepositoryName(), addPage.getRepositoryLabel() == null ? "" : addPage.getRepositoryLabel(),
+            addPage.getRepositoryDescription() == null ? "" : addPage.getRepositoryDescription(),
+            addPage.getProperties());
+      }
+      return true;
     }
   }
 }

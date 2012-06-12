@@ -68,13 +68,18 @@ public class AddRepositoryPage extends WizardPage
   /**
    * @param pageName
    */
-  protected AddRepositoryPage(String pageName, ECPProvider provider)
+  public AddRepositoryPage(String pageName, ECPProvider provider)
   {
     super(pageName);
     this.provider = provider;
     // repositoryName = "";
     // repositoryLabel = "";
     // repositoryDescription = "";
+  }
+
+  public final ECPProvider getProvider()
+  {
+    return provider;
   }
 
   public final ECPProperties getProperties()

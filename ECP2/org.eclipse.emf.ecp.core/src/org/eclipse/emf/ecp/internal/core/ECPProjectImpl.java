@@ -468,21 +468,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
       return null;
     }
 
-    public String getDefaultCheckoutName()
-    {
-      return null;
-    }
-
-    public ECPProject checkout(String projectName, ECPProperties projectProperties)
-    {
-      return null;
-    }
-
-    public ECPRepository getRepository()
-    {
-      return null;
-    }
-
     public ECPProperties getProperties()
     {
       return null;

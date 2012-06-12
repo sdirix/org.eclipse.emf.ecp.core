@@ -37,53 +37,8 @@
    <extension
          point="org.eclipse.ui.popupMenus">
       <!--
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.ecp.ui.contribution.closedCloseables"
-            objectClass="org.eclipse.emf.ecp.core.util.ECPCloseable">
-         <action
-               class="org.eclipse.emf.ecp.ui.actions.CloseableAction$Open"
-               enablesFor="multiple"
-               id="org.eclipse.emf.ecp.ui.openAction"
-               label="Open"
-               state="true"
-               style="push">
-         </action>
-         <enablement>
-    	         <test property="org.eclipse.emf.ecp.core.closeable.closed" value="true"/>
-         </enablement>
-      </objectContribution>
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.ecp.ui.contribution.openCloseables"
-            objectClass="org.eclipse.emf.ecp.core.util.ECPCloseable">
-         <action
-               class="org.eclipse.emf.ecp.ui.actions.CloseableAction$Close"
-               enablesFor="multiple"
-               id="org.eclipse.emf.ecp.ui.closeAction"
-               label="Close"
-               state="true"
-               style="push">
-         </action>
-         <enablement>
-            <test property="org.eclipse.emf.ecp.core.closeable.open" value="true"/>
-         </enablement>
-      </objectContribution>
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.ecp.ui.contribution.deletables"
-            objectClass="org.eclipse.emf.ecp.core.util.ECPDeletable">
-         <action
-               class="org.eclipse.emf.ecp.ui.actions.DeleteAction"
-               enablesFor="multiple"
-               icon="icons/delete.gif"
-               id="org.eclipse.emf.ecp.ui.deleteAction"
-               label="Delete"
-               state="true"
-               style="push">
-         </action>
-      </objectContribution>
-      -->
+      
+      
       <objectContribution
             adaptable="true"
             id="org.eclipse.emf.ecp.ui.contribution.checkoutSources"
@@ -98,6 +53,7 @@
                style="push">
          </action>
       </objectContribution>
+      -->
       <objectContribution
             adaptable="true"
             id="org.eclipse.emf.ecp.ui.contribution.repositories"
@@ -201,6 +157,27 @@
                      <and>
                         <instanceof
                               value="org.eclipse.emf.ecp.core.util.ECPDeletable">
+                        </instanceof>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.checkout"
+               icon="icons/checkout_project.gif"
+               label="Checkout..."
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.util.ECPCheckoutSource">
                         </instanceof>
                      </and>
                   </iterate>
@@ -328,6 +305,14 @@
             id="org.eclipse.emf.ecp.ui.search"
             name="Search Element">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.checkout"
+            name="Checkout">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.addrepository"
+            name="Add Repository">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -359,6 +344,14 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.SearchModelElementHandler"
             commandId="org.eclipse.emf.ecp.ui.search">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.CheckoutHandler"
+            commandId="org.eclipse.emf.ecp.ui.checkout">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.AddRepositoryHandler"
+            commandId="org.eclipse.emf.ecp.ui.addrepository">
       </handler>
    </extension>
    <extension
