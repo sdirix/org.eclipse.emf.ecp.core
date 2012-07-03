@@ -43,7 +43,7 @@ public class ShareProjectHandler extends AbstractHandler
         ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
         projectSpace.setUsersession(serverInfo.getLastUsersession());
       }
-      new UIShareProjectController(HandlerUtil.getActiveShell(event)).share(projectSpace);
+      new UIShareProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 
     }
     return null;
