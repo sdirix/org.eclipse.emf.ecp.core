@@ -57,8 +57,6 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
   private TreeViewer viewer;
 
-  private DrillDownAdapter drillDownAdapter;
-
   private Action refreshAction;
 
   public TreeView(String id)
@@ -100,7 +98,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       }
 
       refreshAction = new RefreshViewerAction(viewer);
-      drillDownAdapter = new DrillDownAdapter(viewer);
+      new DrillDownAdapter(viewer);
 
       hookContextMenu();
       hookDoubleClickAction();

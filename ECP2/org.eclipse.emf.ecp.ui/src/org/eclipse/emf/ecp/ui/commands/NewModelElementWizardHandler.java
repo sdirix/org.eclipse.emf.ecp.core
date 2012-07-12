@@ -38,8 +38,6 @@ import java.util.Set;
 public class NewModelElementWizardHandler extends AbstractHandler
 {
 
-  private static final String WIZARD_TITLE = "Add new model element";
-
   /**
    * String to pass the eclass which containments shall be shown in the new element wizard.
    */
