@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.AssociationClassHelper;
 import org.eclipse.emf.ecp.editor.ControlFactory;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
@@ -162,8 +161,7 @@ public class AssociationClassLink extends MELinkControl
           hyperlink.removeHyperlinkListener(linkToMEListener);
         }
         // add new listeners
-        linkToMEListener = new MEHyperLinkAdapter(relatedModelElement, modelElement, eReference.getName(), getContext()
-            .getEcpProject());
+        linkToMEListener = new MEHyperLinkAdapter(relatedModelElement, modelElement, eReference.getName(), getContext());
         imgHyperlink.addHyperlinkListener(linkToMEListener);
         hyperlink.addHyperlinkListener(linkToMEListener);
         if (meChangeListener != null)
@@ -226,7 +224,7 @@ public class AssociationClassLink extends MELinkControl
     {
       Hyperlink associationLink = toolkit.createHyperlink(composite, "[edit]", style);
       associationLink.addHyperlinkListener(new MEHyperLinkAdapter(association, modelElement, eReference.getName(),
-          getContext().getEcpProject()));
+          getContext()));
     }
     if (eReference.isContainment()
         && getContext().getMetaModelElementContext().isNonDomainElement(association.eClass()))

@@ -19,16 +19,15 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.ui.dialogs.ModelElementSelectionTreeDialog;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
+import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.PlatformUI;
 
@@ -74,26 +73,36 @@ public class NewReferenceAction extends ReferenceAction
       List<EPackage> ePackages = new ArrayList<EPackage>();
       ePackages.add(modelElement.eClass().getEPackage());
       ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
-      ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()
-          .getActiveWorkbenchWindow().getShell(), ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 
-      dialog.setAllowMultiple(false);
-      int result = dialog.open();
+      NewModelElementWizard wizard = new NewModelElementWizard();
+      wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
+
+      wizard.setWindowTitle("New Reference Element");
+      // ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()
+      // .getActiveWorkbenchWindow().getShell(), ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
+      //
+      // dialog.setAllowMultiple(false);
+      // int result = dialog.open();
+      WizardDialog wd = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+
       EObject newMEInstance = null;
-      if (result == Dialog.OK)
-      {
-        Object[] dialogSelection = dialog.getResult();
-        for (Object object : dialogSelection)
-        {
-          if (object instanceof EClass)
-          {
-            EClass eClasse = (EClass)object;
-            // 1.create ME
-            EPackage ePackage = eClasse.getEPackage();
-            newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
+      int result = wd.open();
 
-          }
-        }
+      if (result == WizardDialog.OK)
+      {
+        // Object[] dialogSelection = dialog.getResult();
+        // for (Object object : dialogSelection)
+        // {
+        // if (object instanceof EClass)
+        // {
+        // EClass eClasse = (EClass)object;
+        EClass eClasse = wizard.getNewMEType();
+        // 1.create ME
+        EPackage ePackage = eClasse.getEPackage();
+        newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
+
+        // }
+        // }
       }
       if (newMEInstance == null)
       {
@@ -149,7 +158,7 @@ public class NewReferenceAction extends ReferenceAction
         if (newMEInstance.eContainer() == null)
         {
           // throw new RuntimeException("No matching container for model element found");
-          modelElementContext.getEcpProject().getElements().add(newMEInstance);
+          modelElementContext.getElements().add(newMEInstance);
         }
 
       }
@@ -166,7 +175,7 @@ public class NewReferenceAction extends ReferenceAction
         modelElement.eSet(eReference, newMEInstance);
       }
 
-      ActionHelper.openModelElement(newMEInstance, this.getClass().getName(), modelElementContext.getEcpProject());
+      modelElementContext.openEditor(newMEInstance, this.getClass().getName());
     }
   }
 

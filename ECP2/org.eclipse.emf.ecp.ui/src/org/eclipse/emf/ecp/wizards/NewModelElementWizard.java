@@ -15,13 +15,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWizard;
+
+import java.util.Collection;
 
 /**
  * @author Hodaie This is implementation of New Model Element wizard. This wizard is show through
@@ -29,7 +27,7 @@ import org.eclipse.ui.IWorkbenchWizard;
  *         wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
  *         tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
  */
-public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
+public class NewModelElementWizard extends Wizard
 {
 
   /**
@@ -45,14 +43,30 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
 
   private ECPProject ecpProject;
 
+  private Collection<EPackage> ePackages;
+
+  private Collection<EPackage> unsupportedEPackages;
+
+  private Collection<EPackage> filteredEPackages;
+
+  private Collection<EClass> filteredEClasses;
+
   /**
    * . ({@inheritDoc})
    */
   @Override
   public void addPages()
   {
-
-    ModelTreePage treePage = new ModelTreePage("ModelTreePage", ecpProject);
+    ModelTreePage treePage = null;
+    if (ecpProject != null)
+    {
+      treePage = new ModelTreePage("ModelTreePage", ecpProject);
+    }
+    else
+    {
+      treePage = new ModelTreePage("ModelTreePage", ePackages, unsupportedEPackages, filteredEPackages,
+          filteredEClasses);
+    }
     addPage(treePage);
 
   }
@@ -80,22 +94,36 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
     return true;
   }
 
-  /**
-   * . ({@inheritDoc})
-   */
-  public void init(IWorkbench workbench, IStructuredSelection selection)
+  public void init(ECPProject ecpProject)
   {
-    // get the in navigator selected ME
-    if (selection.getFirstElement() instanceof InternalProject)
-    {
-      ecpProject = (InternalProject)selection.getFirstElement();
-    }
-    else
-    {
-
-    }
-
+    this.ecpProject = ecpProject;
   }
+
+  public void init(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
+      Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses)
+  {
+    this.ePackages = ePackages;
+    this.unsupportedEPackages = unsupportedEPackages;
+    this.filteredEPackages = filteredEPackages;
+    this.filteredEClasses = filteredEClasses;
+  }
+
+  // /**
+  // * . ({@inheritDoc})
+  // */
+  // public void init(IWorkbench workbench, IStructuredSelection selection)
+  // {
+  // // get the in navigator selected ME
+  // if (selection.getFirstElement() instanceof InternalProject)
+  // {
+  // ecpProject = (InternalProject)selection.getFirstElement();
+  // }
+  // else
+  // {
+  //
+  // }
+  //
+  // }
 
   /**
    * . ({@inheritDoc})
@@ -123,6 +151,14 @@ public class NewModelElementWizard extends Wizard implements IWorkbenchWizard
   public void setTreePageCompleted(boolean treePageCompleted)
   {
     this.treePageCompleted = treePageCompleted;
+  }
+
+  /**
+   * @return
+   */
+  public EClass getNewMEType()
+  {
+    return newMEType;
   }
 
 }

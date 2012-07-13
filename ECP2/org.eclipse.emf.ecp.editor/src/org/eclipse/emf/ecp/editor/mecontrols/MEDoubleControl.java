@@ -10,158 +10,59 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.core.databinding.observable.Diffs;
-import org.eclipse.core.databinding.observable.value.AbstractObservableValue;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Spinner;
-
 /**
- * Standard widgets to edit a double attribute.
+ * Standard widget to edit a double attribute.
  * 
  * @author helming
+ * @author emueller
  */
-public class MEDoubleControl extends AbstractMEControl {
+public class MEDoubleControl extends METextWidgetControl<Double>
+{
 
-	private EAttribute attribute;
+  @Override
+  protected int getPriority()
+  {
+    return 1;
+  }
 
-	private Spinner spinner;
+  @Override
+  protected Double convertStringToModel(String s)
+  {
+    return Double.parseDouble(s);
+  }
 
-	private static final int PRIORITY = 1;
+  @Override
+  protected boolean validateString(String s)
+  {
+    /*
+     * Do not perform any validation here, since a double can be represented with characters which include 'E', 'f' or
+     * 'd'. Furthermore if values become to be, 'Infinity' is also a valid value.
+     */
+    return true;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @return A spinner for the double value.
-	 */
-	@Override
-	public Control createControl(Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-		this.attribute = (EAttribute) feature;
-		int digits = 2; // default value
-		EAnnotation annotation = attribute.getEAnnotation("org.eclipse.emf.ecp.editor");
-		if (annotation != null) {
-			String digitsSetting = annotation.getDetails().get("digits");
-			if (digitsSetting != null) {
-				try {
-					digits = Integer.parseInt(digitsSetting);
-				} catch (NumberFormatException nfe) {
-					Activator.logException(new IllegalArgumentException(
-						"Model element annotation 'digits' must be an integer"));
-				}
-			}
-		}
-		spinner = new Spinner(parent, style);
-		spinner.setDigits(digits);
-		spinner.setMinimum(-1000000);
-		spinner.setMaximum(1000000);
-		IObservableValue model = EMFEditObservables.observeValue(getEditingDomain(), getModelElement(), attribute);
-		EMFDataBindingContext dbc = new EMFDataBindingContext();
-		DoubleSpinnerObservable spinnerObservable = new DoubleSpinnerObservable(spinner);
-		dbc.bindValue(spinnerObservable, model, null, null);
-		Double doubleValueOfSpinner = (Double) getModelElement().eGet(attribute) * Math.pow(10, spinner.getDigits());
-		spinner.setSelection(doubleValueOfSpinner.intValue());
-		return spinner;
-	}
+  @Override
+  protected String convertModelToString(Double t)
+  {
+    return Double.toString(t);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
-		Object feature = itemPropertyDescriptor.getFeature(modelElement);
-		if (feature instanceof EAttribute && ((EAttribute) feature).getEType().getInstanceClass().equals(double.class)) {
+  @Override
+  protected void postValidate(String text)
+  {
+    try
+    {
+      setUnvalidatedString(Double.toString(Double.parseDouble(text)));
+    }
+    catch (NumberFormatException e)
+    {
+      setUnvalidatedString(Double.toString(getDefaultValue()));
+    }
+  }
 
-			return PRIORITY;
-		}
-		return AbstractMEControl.DO_NOT_RENDER;
-	}
-
-	/**
-	 * 
-	 * @author Lee
-	 * @author Carlan
-	 * 
-	 */
-	private class DoubleSpinnerObservable extends AbstractObservableValue {
-
-		private double value;
-		private Spinner spinner;
-		private boolean currentlyUpdatingFlag;
-
-		private ModifyListener widgetListener = new ModifyListener() {
-
-			public void modifyText(ModifyEvent e) {
-				if (!currentlyUpdatingFlag) {
-					double newValue = getSpinnerValue();
-					fireValueChange(Diffs.createValueDiff(value, newValue));
-					value = newValue;
-				}
-			}
-
-		};
-
-		public DoubleSpinnerObservable(Spinner spinner) {
-			this.spinner = spinner;
-			value = getSpinnerValue();
-			this.spinner.addModifyListener(widgetListener);
-		}
-
-		private double getSpinnerValue() {
-			return spinner.getSelection() / Math.pow(10, spinner.getDigits());
-		}
-
-		@Override
-		public synchronized void dispose() {
-			spinner.removeModifyListener(widgetListener);
-			super.dispose();
-		}
-
-		public Object getValueType() {
-			return Double.class;
-		}
-
-		@Override
-		protected Object doGetValue() {
-			if (!spinner.isDisposed()) {
-				return getSpinnerValue();
-			}
-			return null;
-		}
-
-		@Override
-		protected void doSetValue(Object value) {
-			if (value == null) {
-				spinner.setSelection(0);
-			} else if (value instanceof Double && !spinner.isDisposed()) {
-				double oldVal;
-				double newVal;
-				try {
-					currentlyUpdatingFlag = true;
-					oldVal = getSpinnerValue();
-					newVal = ((Double) value);
-					Double temp = newVal * Math.pow(10, spinner.getDigits());
-					spinner.setSelection(temp.intValue());
-					value = newVal;
-					fireValueChange(Diffs.createValueDiff(oldVal, newVal));
-				} finally {
-					currentlyUpdatingFlag = false;
-				}
-			}
-
-		}
-	}
+  @Override
+  protected Double getDefaultValue()
+  {
+    return 0.0;
+  }
 }

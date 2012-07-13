@@ -9,6 +9,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ProvidersContentProvider;
@@ -114,7 +115,7 @@ public class AddRepositoryPage extends WizardPage
   public void createControl(Composite parent)
   {
     setTitle("Add Repository");
-    // setTitleImage(ResourceManager.getPluginImage("org.eclipse.emf.ecp.ui", "icons/checkout_project_wiz.png"));
+    setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png"));
     setMessage("Select a provider and configure the new repository.");
 
     Composite composite = new Composite(parent, SWT.NONE);

@@ -10,73 +10,49 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
-
 /**
  * Standard widgets to edit a single line text attribute.
  * 
  * @author helming
+ * @author emueller
  */
-public class METextControl extends AbstractMEControl {
+public class METextControl extends METextWidgetControl<String>
+{
 
-	private Text text;
+  @Override
+  protected int getPriority()
+  {
+    return 1;
+  }
 
-	private EAttribute attribute;
+  @Override
+  protected String convertStringToModel(String s)
+  {
+    return s;
+  }
 
-	private static final int PRIORITY = 1;
+  @Override
+  protected boolean validateString(String s)
+  {
+    return true;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @return A Text Control.
-	 */
-	@Override
-	public Control createControl(Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-		this.attribute = (EAttribute) feature;
-		text = getToolkit().createText(parent, new String(), style | SWT.SINGLE);
-		if (!getItemPropertyDescriptor().canSetProperty(getModelElement())) {
-			text.setEditable(false);
-		}
-		IObservableValue model = EMFEditObservables.observeValue(getEditingDomain(), getModelElement(), attribute);
-		EMFDataBindingContext dbc = new EMFDataBindingContext();
-		dbc.bindValue(SWTObservables.observeText(text, SWT.FocusOut), model, null, null);
-		return text;
-	}
+  @Override
+  protected String convertModelToString(String t)
+  {
+    return t;
+  }
 
-	/**
-	 * . This sets the keyboard focus in Text control.
-	 */
-	public void setFocus() {
-		this.text.setFocus();
-	}
+  @Override
+  protected void postValidate(String text)
+  {
+    // do nothing
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void applyCustomLayoutData() {
-		GridDataFactory.fillDefaults().grab(true, false).hint(250, 16).align(SWT.FILL, SWT.TOP).applyTo(text);
-	}
-
-	@Override
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
-		Object feature = itemPropertyDescriptor.getFeature(modelElement);
-		if (feature instanceof EAttribute && ((EAttribute) feature).getEType().getInstanceClass().equals(String.class)) {
-			return PRIORITY;
-		}
-		return AbstractMEControl.DO_NOT_RENDER;
-	}
+  @Override
+  protected String getDefaultValue()
+  {
+    return "";
+  }
 
 }

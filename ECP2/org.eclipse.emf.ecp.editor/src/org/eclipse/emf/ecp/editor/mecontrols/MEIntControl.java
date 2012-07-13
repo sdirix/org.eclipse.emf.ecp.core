@@ -10,64 +10,57 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Spinner;
-
 /**
  * Standard widgets to edit a integer attribute.
  * 
  * @author helming
+ * @author emueller
  */
-public class MEIntControl extends AbstractMEControl {
+public class MEIntControl extends METextWidgetControl<Integer>
+{
 
-	private EAttribute attribute;
+  @Override
+  protected int getPriority()
+  {
+    return 1;
+  }
 
-	private Spinner spinner;
+  @Override
+  protected Integer convertStringToModel(String s)
+  {
+    return Integer.parseInt(s);
+  }
 
-	private static final int PRIORITY = 1;
+  @Override
+  protected boolean validateString(String s)
+  {
+    // TODO: perform validation
+    return true;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @return A spinner for the int value.
-	 */
-	@Override
-	public Control createControl(Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-		this.attribute = (EAttribute) feature;
-		spinner = new Spinner(parent, style);
-		spinner.setMinimum(-1000);
-		spinner.setMaximum(1000);
-		IObservableValue model = EMFEditObservables.observeValue(getEditingDomain(), getModelElement(), attribute);
-		EMFDataBindingContext dbc = new EMFDataBindingContext();
-		dbc.bindValue(SWTObservables.observeSelection(spinner), model, null, null);
+  @Override
+  protected String convertModelToString(Integer t)
+  {
+    return Integer.toString(t);
+  }
 
-		return spinner;
-	}
+  @Override
+  protected void postValidate(String text)
+  {
+    try
+    {
+      setUnvalidatedString(Integer.toString(Integer.parseInt(text)));
+    }
+    catch (NumberFormatException e)
+    {
+      setUnvalidatedString(Integer.toString(getDefaultValue()));
+    }
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
-		Object feature = itemPropertyDescriptor.getFeature(modelElement);
-		if (feature instanceof EAttribute && ((EAttribute) feature).getEType().getInstanceClass().equals(int.class)
-			&& !((EAttribute) feature).isMany()) {
-
-			return PRIORITY;
-		}
-		return AbstractMEControl.DO_NOT_RENDER;
-	}
+  @Override
+  protected Integer getDefaultValue()
+  {
+    return 0;
+  }
 
 }

@@ -10,12 +10,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -27,44 +24,87 @@ import org.eclipse.swt.widgets.Control;
  * 
  * @author helming
  */
-public class MEBoolControl extends AbstractMEControl {
+public class MEBoolControl extends MEPrimitiveAttributeControl<Boolean>
+{
 
-	private EAttribute attribute;
+  private Button check;
 
-	private Button check;
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#getPriority()
+   */
+  @Override
+  protected int getPriority()
+  {
+    return 1;
+  }
 
-	private static final int PRIORITY = 1;
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#getDefaultValue()
+   */
+  @Override
+  protected Boolean getDefaultValue()
+  {
+    return false;
+  }
 
-	/**
-	 * returns a check button without Label. {@inheritDoc}
-	 * 
-	 * @return Control
-	 */
-	@Override
-	public Control createControl(Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-		this.attribute = (EAttribute) feature;
-		check = getToolkit().createButton(parent, "", SWT.CHECK);
-		IObservableValue model = EMFEditObservables.observeValue(getEditingDomain(), getModelElement(), attribute);
-		EMFDataBindingContext dbc = new EMFDataBindingContext();
-		dbc.bindValue(SWTObservables.observeSelection(check), model, null, null);
-		return check;
-	}
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#postValidate(java.lang.String)
+   */
+  @Override
+  protected void postValidate(String text)
+  {
+    // TODO Auto-generated method stub
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
-		Object feature = itemPropertyDescriptor.getFeature(modelElement);
-		if (feature instanceof EAttribute && ((EAttribute) feature).getEType().getInstanceClass().equals(boolean.class)) {
+  }
 
-			return PRIORITY;
-		}
-		return AbstractMEControl.DO_NOT_RENDER;
-	}
+  /*
+   * (non-Javadoc)
+   * @see
+   * org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#createAttributeControl(org.eclipse.swt.widgets
+   * .Composite, int)
+   */
+  @Override
+  protected Control createAttributeControl(Composite composite, int style)
+  {
+    check = getToolkit().createButton(composite, "", SWT.CHECK);
+    return check;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#addVerifyListener()
+   */
+  @Override
+  protected void addVerifyListener()
+  {
+    // TODO Auto-generated method stub
+
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see
+   * org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#addFocusListener(org.eclipse.emf.databinding.
+   * EMFDataBindingContext)
+   */
+  @Override
+  protected void addFocusListener(EMFDataBindingContext dbc)
+  {
+    // TODO Auto-generated method stub
+
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#getObservableValue()
+   */
+  @Override
+  protected ISWTObservableValue getObservableValue()
+  {
+    return SWTObservables.observeSelection(check);
+  }
 
 }

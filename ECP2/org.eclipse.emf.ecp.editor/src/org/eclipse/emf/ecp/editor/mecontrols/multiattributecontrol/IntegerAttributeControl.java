@@ -21,181 +21,209 @@ import org.eclipse.swt.widgets.Spinner;
  * 
  * @author Christian Kroemer (christian.kroemer@z-corp-online.de)
  */
-class IntegerAttributeControl extends AttributeControl {
+class IntegerAttributeControl extends AttributeControl<Integer, Spinner>
+{
 
-	// CONSTANTS
-	private static final int SIZE_LIMIT = 10000000;
+  // CONSTANTS
+  private static final int SIZE_LIMIT = 10000000;
 
-	// state and references
-	private MultiAttributeController<Integer> dataManipulator;
-	private Spinner widget;
-	private Integer value;
+  // state and references
+  // private MultiAttributeController<Integer> dataManipulator;
+  // private Spinner widget;
+  // private Integer value;
 
-	/**
-	 * Constructor for control with content.
-	 * 
-	 * @param parentItem the corresponding IntegerMultiAttributeWidget
-	 * @param dataManipulator a MultiAttributeController for this widget
-	 * @param value the initial value for this control
-	 */
-	IntegerAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<Integer> dataManipulator,
-		int value) {
-		this.setParentItem(parentItem);
-		this.dataManipulator = dataManipulator;
-		this.value = value;
-		this.setIndex(parentItem.getControlList().size());
-		parentItem.getControlList().add(this);
+  /**
+   * Constructor for control with content.
+   * 
+   * @param parentItem
+   *          the corresponding IntegerMultiAttributeWidget
+   * @param dataManipulator
+   *          a MultiAttributeController for this widget
+   * @param value
+   *          the initial value for this control
+   */
+  IntegerAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<Integer> dataManipulator, int value)
+  {
+    super(dataManipulator, value);
+    setParentItem(parentItem);
+    // this.dataManipulator = dataManipulator;
+    // this.value = value;
+    setIndex(parentItem.getControlList().size());
+    parentItem.getControlList().add(this);
 
-		// initialize
-		createCompositeLayout();
-		setWidget(new Spinner(getFieldComposite(), parentItem.getStyle() | SWT.SINGLE));
-		getWidget().setValues(value, -SIZE_LIMIT, SIZE_LIMIT, 0, 1, 1);
-		getWidget().addModifyListener(this);
-		createDeleteButton();
-		createUpDownButtons();
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
-	}
+    // initialize
+    createCompositeLayout();
+    setWidget(new Spinner(getFieldComposite(), parentItem.getStyle() | SWT.SINGLE));
+    getWidget().setValues(value, -SIZE_LIMIT, SIZE_LIMIT, 0, 1, 1);
+    getWidget().addModifyListener(this);
+    createDeleteButton();
+    createUpDownButtons();
+    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
+  }
 
-	/**
-	 * Constructor for control with no initial content.
-	 * 
-	 * @param parentItem the corresponding IntegerMultiAttributeWidget
-	 * @param dataManipulator a MultiAttributeController for this widget
-	 */
-	IntegerAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<Integer> dataManipulator) {
-		this.setParentItem(parentItem);
-		this.dataManipulator = dataManipulator;
-		this.value = IntegerMultiAttributeControl.getEmptyValue();
+  /**
+   * Constructor for control with no initial content.
+   * 
+   * @param parentItem
+   *          the corresponding IntegerMultiAttributeWidget
+   * @param dataManipulator
+   *          a MultiAttributeController for this widget
+   */
+  IntegerAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<Integer> dataManipulator)
+  {
+    super(dataManipulator, IntegerMultiAttributeControl.getEmptyValue());
 
-		// initialize
-		createCompositeLayout();
-		setWidget(new Spinner(getFieldComposite(), parentItem.getStyle() | SWT.SINGLE));
-		getWidget().setValues(value, -SIZE_LIMIT, SIZE_LIMIT, 0, 1, 1);
-		getWidget().addModifyListener(this);
-		getWidget().setForeground(new Color(getWidget().getDisplay(), 100, 100, 100));
-		createAddButton();
-		createInvisibleUpDownButtons();
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
-	}
+    setParentItem(parentItem);
+    // this.dataManipulator = dataManipulator;
+    // this.value = IntegerMultiAttributeControl.getEmptyValue();
 
-	/**
-	 * Hidden default constructor.
-	 */
-	@SuppressWarnings("unused")
-	private IntegerAttributeControl() {
-		// nothing
-	}
+    // initialize
+    createCompositeLayout();
+    setWidget(new Spinner(getFieldComposite(), parentItem.getStyle() | SWT.SINGLE));
+    getWidget().setValues(value, -SIZE_LIMIT, SIZE_LIMIT, 0, 1, 1);
+    getWidget().addModifyListener(this);
+    getWidget().setForeground(new Color(getWidget().getDisplay(), 100, 100, 100));
+    createAddButton();
+    createInvisibleUpDownButtons();
+    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected boolean swapThisControlWith(int index) {
-		if (index >= getParentItem().getControlList().size() || index < 0) {
-			return false;
-		}
-		// create non-duplicate Integer
-		int random = 0;
-		while (dataManipulator.contains(random)) {
-			random = ((int) (Math.random() * 10000));
-		}
-		// use it for swap
-		int thisValue = value;
-		int otherValue = ((IntegerAttributeControl) getParentItem().getControlList().get(index)).value;
-		getWidget().setSelection(random);
-		((IntegerAttributeControl) getParentItem().getControlList().get(index)).getWidget().setSelection(thisValue);
-		getWidget().setSelection(otherValue);
+  /**
+   * Hidden default constructor.
+   */
+  @SuppressWarnings("unused")
+  private IntegerAttributeControl()
+  {
+    // nothing
+  }
 
-		return true;
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected boolean swapThisControlWith(int index)
+  {
+    if (index >= getParentItem().getControlList().size() || index < 0)
+    {
+      return false;
+    }
+    // create non-duplicate Integer
+    int random = 0;
+    while (dataManipulator.contains(random))
+    {
+      random = (int)(Math.random() * 10000);
+    }
+    // use it for swap
+    int thisValue = value;
+    int otherValue = ((IntegerAttributeControl)getParentItem().getControlList().get(index)).value;
+    getWidget().setSelection(random);
+    ((IntegerAttributeControl)getParentItem().getControlList().get(index)).getWidget().setSelection(thisValue);
+    getWidget().setSelection(otherValue);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void modifyText(ModifyEvent e) { // still duplicated code, but better solution?!
-		if (e.getSource().equals(getWidget())) {
-			// first edit? --> layout changes
-			if (getIndex() == -1) {
-				getWidget().setForeground(new Color(getWidget().getDisplay(), 0, 0, 0));
-				getButton().dispose();
-				createDeleteButton();
-				createUpDownButtons();
-			}
+    return true;
+  }
 
-			final int newValue = getWidget().getSelection();
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void modifyText(ModifyEvent e)
+  { // still duplicated code, but better solution?!
+    if (e.getSource().equals(getWidget()))
+    {
+      // first edit? --> layout changes
+      if (getIndex() == -1)
+      {
+        getWidget().setForeground(new Color(getWidget().getDisplay(), 0, 0, 0));
+        getButton().dispose();
+        createDeleteButton();
+        createUpDownButtons();
+      }
 
-			// jump over duplicates
-			if (!getParentItem().isAllowDuplicates() && dataManipulator.contains(newValue)) {
-				if (newValue > value) {
-					getWidget().setSelection(newValue + 1);
-				} else {
-					getWidget().setSelection(newValue - 1);
-				}
-				return;
-			}
-			// end of duplicate handling
+      final int newValue = getWidget().getSelection();
 
-			if (getIndex() != -1) {
-				// was a regular entry before
-				dataManipulator.replaceElementAt(getIndex(), newValue);
-				value = newValue;
-			} else {
-				// was a dummy entry before
-				this.setIndex(getParentItem().getControlList().size());
-				getParentItem().getControlList().add(this);
-				dataManipulator.add(newValue);
-				value = newValue;
-				getButton().setVisible(true);
-				if (!getParentItem().isFull()) {
-					getParentItem().createSingleField();
-				}
-				getFieldComposite().layout();
-			}
+      // jump over duplicates
+      if (!getParentItem().isAllowDuplicates() && dataManipulator.contains(newValue))
+      {
+        if (newValue > value)
+        {
+          getWidget().setSelection(newValue + 1);
+        }
+        else
+        {
+          getWidget().setSelection(newValue - 1);
+        }
+        return;
+      }
+      // end of duplicate handling
 
-			getParentItem().refreshWidget();
-		}
-	}
+      if (getIndex() != -1)
+      {
+        // was a regular entry before
+        dataManipulator.replaceElementAt(getIndex(), newValue);
+        value = newValue;
+      }
+      else
+      {
+        // was a dummy entry before
+        setIndex(getParentItem().getControlList().size());
+        getParentItem().getControlList().add(this);
+        dataManipulator.add(newValue);
+        value = newValue;
+        getButton().setVisible(true);
+        if (!getParentItem().isFull())
+        {
+          getParentItem().createSingleField();
+        }
+        getFieldComposite().layout();
+      }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void addButtonFunctionality() {
-		// duplicate handling
-		if (!getParentItem().isAllowDuplicates()) {
-			while (dataManipulator.contains(value)) {
-				value++;
-			}
-		}
-		// end of duplicate handling
-		// automatically added then (ModifyListener!)
-		getWidget().setSelection(value);
-		getWidget().setForeground(new Color(getWidget().getDisplay(), 0, 0, 0));
-		getButton().dispose();
-		createDeleteButton();
-		createUpDownButtons();
-	}
+      getParentItem().refreshWidget();
+    }
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected boolean removeElementAt(int i) {
-		return dataManipulator.removeElementAt(i);
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void addButtonFunctionality()
+  {
+    // duplicate handling
+    if (!getParentItem().isAllowDuplicates())
+    {
+      while (dataManipulator.contains(value))
+      {
+        value++;
+      }
+    }
+    // end of duplicate handling
+    // automatically added then (ModifyListener!)
+    getWidget().setSelection(value);
+    getWidget().setForeground(new Color(getWidget().getDisplay(), 0, 0, 0));
+    getButton().dispose();
+    createDeleteButton();
+    createUpDownButtons();
+  }
 
-	/**
-	 * @param widget the widget to set
-	 */
-	public void setWidget(Spinner widget) {
-		this.widget = widget;
-	}
+  // /**
+  // * {@inheritDoc}
+  // */
+  // @Override
+  // protected boolean removeElementAt(int i) {
+  // return dataManipulator.removeElementAt(i);
+  // }
 
-	/**
-	 * @return the widget
-	 */
-	public Spinner getWidget() {
-		return widget;
-	}
+  // /**
+  // * @param widget the widget to set
+  // */
+  // public void setWidget(Spinner widget) {
+  // this.widget = widget;
+  // }
+  //
+  // /**
+  // * @return the widget
+  // */
+  // public Spinner getWidget() {
+  // return widget;
+  // }
 }

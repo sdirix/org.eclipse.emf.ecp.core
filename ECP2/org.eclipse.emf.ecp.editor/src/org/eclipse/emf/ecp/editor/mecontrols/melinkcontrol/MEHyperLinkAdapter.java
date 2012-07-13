@@ -11,9 +11,7 @@
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -30,7 +28,7 @@ public class MEHyperLinkAdapter extends HyperlinkAdapter implements IHyperlinkLi
 
   private EObject target;
 
-  private final ECPProject ecpProject;
+  private EditorModelelementContext modelContext;
 
   /**
    * Default constructor.
@@ -41,15 +39,14 @@ public class MEHyperLinkAdapter extends HyperlinkAdapter implements IHyperlinkLi
    *          the target of the model link
    * @param featureName
    *          the feature of the model link
-   * @param ecpProject
-   * @param context
+   * @param modelContext
    *          the {@link EditorModelelementContext}
    */
-  public MEHyperLinkAdapter(EObject target, EObject source, String featureName, ECPProject ecpProject)
+  public MEHyperLinkAdapter(EObject target, EObject source, String featureName, EditorModelelementContext modelContext)
   {
     super();
     this.target = target;
-    this.ecpProject = ecpProject;
+    this.modelContext = modelContext;
   }
 
   /**
@@ -58,7 +55,7 @@ public class MEHyperLinkAdapter extends HyperlinkAdapter implements IHyperlinkLi
   @Override
   public void linkActivated(HyperlinkEvent event)
   {
-    ActionHelper.openModelElement(target, "org.eclipse.emf.ecp.editor", ecpProject);
+    modelContext.openEditor(target, "org.eclipse.emf.ecp.editor");
     super.linkActivated(event);
   }
 }

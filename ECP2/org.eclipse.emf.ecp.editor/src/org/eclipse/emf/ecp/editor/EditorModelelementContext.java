@@ -1,9 +1,9 @@
 package org.eclipse.emf.ecp.editor;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import java.util.Collection;
@@ -74,9 +74,8 @@ public interface EditorModelelementContext
    */
   Iterator<EObject> getLinkElements(EReference eReference);
 
-  /**
-   * @return
-   */
-  ECPProject getEcpProject();
+  EList<EObject> getElements();
+
+  void openEditor(EObject o, String source);
 
 }

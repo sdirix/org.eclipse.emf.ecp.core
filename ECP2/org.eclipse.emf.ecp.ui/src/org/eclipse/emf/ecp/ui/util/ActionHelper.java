@@ -30,22 +30,22 @@ public final class ActionHelper
   /**
    * The ID of the meeditor.
    */
-  public static final String MEEDITOR_ID = "org.eclipse.emf.ecp.editor";
+  // public static final String MEEDITOR_ID = "org.eclipse.emf.ecp.editor";
 
   /**
    * Constant for the open model element command.
    */
-  public static final String MEEDITOR_OPENMODELELEMENT_COMMAND_ID = "org.eclipse.emf.ecp.editor.openModelElement";
+  // public static final String MEEDITOR_OPENMODELELEMENT_COMMAND_ID = "org.eclipse.emf.ecp.editor.openModelElement";
 
   /**
    * Constant for the modelelement context.
    */
-  public static final String MECONTEXT_EVALUATIONCONTEXT_VARIABLE = "meContext";
+  // public static final String MECONTEXT_EVALUATIONCONTEXT_VARIABLE = "meContext";
 
   /**
    * Constant for the modelelement to be opened.
    */
-  public static final String ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE = "meToOpen";
+  // public static final String ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE = "meToOpen";
 
   private ActionHelper()
   {

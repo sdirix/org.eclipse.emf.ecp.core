@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscont
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.AssociationClassHelper;
 import org.eclipse.emf.ecp.editor.ECPCommand;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.MESuggestedSelectionDialog;

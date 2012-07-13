@@ -20,170 +20,198 @@ import org.eclipse.swt.widgets.Text;
  * 
  * @author Christian Kroemer (christian.kroemer@z-corp-online.de)
  */
-class StringAttributeControl extends AttributeControl {
-	private MultiAttributeController<String> dataManipulator;
-	private Text widget;
-	private String value;
+class StringAttributeControl extends AttributeControl<String, Text>
+{
 
-	/**
-	 * Constructor for control with content.
-	 * 
-	 * @param parentItem the corresponding StringMultiAttributeWidget
-	 * @param dataManipulator a MultiAttributeController for this widget
-	 * @param value the initial value for this control
-	 */
-	StringAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<String> dataManipulator,
-		String value) {
-		this.setParentItem(parentItem);
-		this.dataManipulator = dataManipulator;
-		this.value = value;
-		this.setIndex(parentItem.getControlList().size());
-		parentItem.getControlList().add(this);
+  // private Text widget;
+  // private String value;
 
-		// initializeFromInt
-		createCompositeLayout();
-		setWidget(parentItem.getToolkit().createText(getFieldComposite(), value, parentItem.getStyle() | SWT.SINGLE));
-		getWidget().addModifyListener(this);
-		createDeleteButton();
-		createUpDownButtons();
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
-	}
+  /**
+   * Constructor for control with content.
+   * 
+   * @param parentItem
+   *          the corresponding StringMultiAttributeWidget
+   * @param dataManipulator
+   *          a MultiAttributeController for this widget
+   * @param value
+   *          the initial value for this control
+   */
+  StringAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<String> dataManipulator,
+      String value)
+  {
 
-	/**
-	 * Constructor for control with no initial content.
-	 * 
-	 * @param parentItem the corresponding StringMultiAttributeWidget
-	 * @param dataManipulator a MultiAttributeController for this widget
-	 */
-	StringAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<String> dataManipulator) {
-		this.setParentItem(parentItem);
-		this.dataManipulator = dataManipulator;
-		this.value = StringMultiAttributeControl.getEmptyValue();
+    super(dataManipulator, value);
+    setParentItem(parentItem);
+    // this.dataManipulator = dataManipulator;
+    // this.value = value;
+    setIndex(parentItem.getControlList().size());
+    parentItem.getControlList().add(this);
 
-		// initializeFromInt
-		createCompositeLayout();
-		setWidget(parentItem.getToolkit().createText(getFieldComposite(), value, parentItem.getStyle() | SWT.SINGLE));
-		getWidget().addModifyListener(this);
-		getWidget().setMessage("Add new element...");
-		createAddButton();
-		createInvisibleUpDownButtons();
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
-	}
+    // initializeFromInt
+    createCompositeLayout();
+    setWidget(parentItem.getToolkit().createText(getFieldComposite(), value, parentItem.getStyle() | SWT.SINGLE));
+    getWidget().addModifyListener(this);
+    createDeleteButton();
+    createUpDownButtons();
+    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
+  }
 
-	/**
-	 * Hidden default constructor.
-	 */
-	@SuppressWarnings("unused")
-	private StringAttributeControl() {
-		// hide default constructor
-	}
+  /**
+   * Constructor for control with no initial content.
+   * 
+   * @param parentItem
+   *          the corresponding StringMultiAttributeWidget
+   * @param dataManipulator
+   *          a MultiAttributeController for this widget
+   */
+  StringAttributeControl(MultiAttributeControl parentItem, MultiAttributeController<String> dataManipulator)
+  {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected boolean swapThisControlWith(int index) {
-		if (index >= getParentItem().getControlList().size() || index < 0) {
-			return false;
-		}
-		// create non-duplicate String
-		String random = "";
-		while (dataManipulator.contains(random)) {
-			random = ((Double) Math.random()).toString();
-		}
-		// use it for swap
-		String thisValue = value;
-		String otherValue = ((StringAttributeControl) getParentItem().getControlList().get(index)).value;
-		getWidget().setText(random);
-		((StringAttributeControl) getParentItem().getControlList().get(index)).getWidget().setText(thisValue);
-		getWidget().setText(otherValue);
+    super(dataManipulator, StringMultiAttributeControl.getEmptyValue());
 
-		return true;
-	}
+    setParentItem(parentItem);
+    // this.dataManipulator = dataManipulator;
+    // this.value = StringMultiAttributeControl.getEmptyValue();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void modifyText(ModifyEvent e) { // still duplicated code, but better solution?!
-		if (e.getSource().equals(getWidget())) {
-			// first edit? --> new button
-			if (getIndex() == -1) {
-				getButton().dispose();
-				getWidget().setMessage("");
-				createDeleteButton();
-				createUpDownButtons();
-			}
+    // initializeFromInt
+    createCompositeLayout();
+    setWidget(parentItem.getToolkit().createText(getFieldComposite(), value, parentItem.getStyle() | SWT.SINGLE));
+    getWidget().addModifyListener(this);
+    getWidget().setMessage("Add new element...");
+    createAddButton();
+    createInvisibleUpDownButtons();
+    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(getWidget());
+  }
 
-			final String newValue = getWidget().getText();
+  /**
+   * Hidden default constructor.
+   */
+  @SuppressWarnings("unused")
+  private StringAttributeControl()
+  {
+    // hide default constructor
+  }
 
-			// handle duplicates
-			if (!getParentItem().isAllowDuplicates() && dataManipulator.contains(newValue)) {
-				getWidget().setText("_" + newValue);
-				return;
-			}
-			// end of duplicate handling
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected boolean swapThisControlWith(int index)
+  {
+    if (index >= getParentItem().getControlList().size() || index < 0)
+    {
+      return false;
+    }
+    // create non-duplicate String
+    String random = "";
+    while (dataManipulator.contains(random))
+    {
+      random = ((Double)Math.random()).toString();
+    }
+    // use it for swap
+    String thisValue = value;
+    String otherValue = ((StringAttributeControl)getParentItem().getControlList().get(index)).value;
+    getWidget().setText(random);
+    ((StringAttributeControl)getParentItem().getControlList().get(index)).getWidget().setText(thisValue);
+    getWidget().setText(otherValue);
 
-			if (getIndex() != -1) {
-				// was a regular entry before
-				dataManipulator.replaceElementAt(getIndex(), newValue);
-				value = newValue;
-			} else {
-				// was a dummy entry before
-				this.setIndex(getParentItem().getControlList().size());
-				getParentItem().getControlList().add(this);
-				dataManipulator.add(newValue);
-				value = newValue;
-				getButton().setVisible(true);
-				if (!getParentItem().isFull()) {
-					getParentItem().createSingleField();
-				}
-				getFieldComposite().layout();
-			}
+    return true;
+  }
 
-			getParentItem().refreshWidget();
-		}
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void modifyText(ModifyEvent e)
+  { // still duplicated code, but better solution?!
+    if (e.getSource().equals(getWidget()))
+    {
+      // first edit? --> new button
+      if (getIndex() == -1)
+      {
+        getButton().dispose();
+        getWidget().setMessage("");
+        createDeleteButton();
+        createUpDownButtons();
+      }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void addButtonFunctionality() {
-		// duplicate handling
-		if (!getParentItem().isAllowDuplicates()) {
-			while (dataManipulator.contains(value)) {
-				value = "_" + value;
-			}
-		}
-		// end of duplicate handling
-		// automatically added then (ModifyListener!)
-		getWidget().setText(value);
-		getButton().dispose();
-		getWidget().setMessage("");
-		createDeleteButton();
-		createUpDownButtons();
-	}
+      final String newValue = getWidget().getText();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected boolean removeElementAt(int i) {
-		return dataManipulator.removeElementAt(i);
-	}
+      // handle duplicates
+      if (!getParentItem().isAllowDuplicates() && dataManipulator.contains(newValue))
+      {
+        getWidget().setText("_" + newValue);
+        return;
+      }
+      // end of duplicate handling
 
-	/**
-	 * @param widget the widget to set
-	 */
-	public void setWidget(Text widget) {
-		this.widget = widget;
-	}
+      if (getIndex() != -1)
+      {
+        // was a regular entry before
+        dataManipulator.replaceElementAt(getIndex(), newValue);
+        value = newValue;
+      }
+      else
+      {
+        // was a dummy entry before
+        setIndex(getParentItem().getControlList().size());
+        getParentItem().getControlList().add(this);
+        dataManipulator.add(newValue);
+        value = newValue;
+        getButton().setVisible(true);
+        if (!getParentItem().isFull())
+        {
+          getParentItem().createSingleField();
+        }
+        getFieldComposite().layout();
+      }
 
-	/**
-	 * @return the widget
-	 */
-	public Text getWidget() {
-		return widget;
-	}
+      getParentItem().refreshWidget();
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void addButtonFunctionality()
+  {
+    // duplicate handling
+    if (!getParentItem().isAllowDuplicates())
+    {
+      while (dataManipulator.contains(value))
+      {
+        value = "_" + value;
+      }
+    }
+    // end of duplicate handling
+    // automatically added then (ModifyListener!)
+    getWidget().setText(value);
+    getButton().dispose();
+    getWidget().setMessage("");
+    createDeleteButton();
+    createUpDownButtons();
+  }
+
+  // /**
+  // * {@inheritDoc}
+  // */
+  // @Override
+  // protected boolean removeElementAt(int i) {
+  // return dataManipulator.removeElementAt(i);
+  // }
+
+  // /**
+  // * @param widget the widget to set
+  // */
+  // public void setWidget(Text widget) {
+  // this.widget = widget;
+  // }
+  //
+  // /**
+  // * @return the widget
+  // */
+  // public Text getWidget() {
+  // return widget;
+  // }
 }

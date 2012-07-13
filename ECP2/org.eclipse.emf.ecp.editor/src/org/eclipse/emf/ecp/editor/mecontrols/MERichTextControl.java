@@ -12,189 +12,220 @@ package org.eclipse.emf.ecp.editor.mecontrols;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.MEEditor;
-import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.ecp.editor.ECPCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * The standard widget for multi line text fields.
  * 
  * @author helming
  */
-public class MERichTextControl extends AbstractMEControl {
-	private EAttribute attribute;
+public class MERichTextControl extends AbstractMEControl implements IValidatableControl
+{
+  private EAttribute attribute;
 
-	private AdapterImpl eAdapter;
+  private AdapterImpl eAdapter;
 
-	private static final int PRIORITY = 2;
+  private static final int PRIORITY = 2;
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#createControl(org.eclipse.swt.widgets.Composite,
-	 *      int)
-	 */
-	@Override
-	public Control createControl(Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-		this.attribute = (EAttribute) feature;
-		composite = getToolkit().createComposite(parent, style);
-		composite.setBackgroundMode(SWT.INHERIT_FORCE);
-		composite.setLayout(new GridLayout());
+  private Label labelWidgetImage; // Label for diagnostic image
 
-		createToolBar();
-		createText();
-		eAdapter = new AdapterImpl() {
-			@Override
-			public void notifyChanged(Notification msg) {
-				if (msg.getFeature() != null && msg.getFeature().equals(MERichTextControl.this.attribute)) {
-					load();
-				}
-				super.notifyChanged(msg);
-			}
-		};
-		getModelElement().eAdapters().add(eAdapter);
+  private Composite composite;
 
-		shoudShowExpand = true;
-		load();
+  private ToolBar toolBar;
 
-		return composite;
-	}
+  private Text text;
 
-	private Composite composite;
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#createControl(org.eclipse.swt.widgets.Composite, int)
+   */
+  @Override
+  public Control createControl(Composite parent, int style)
+  {
+    Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
+    attribute = (EAttribute)feature;
+    composite = getToolkit().createComposite(parent, style);
+    composite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-	private ToolBar toolBar;
+    GridLayoutFactory.fillDefaults().numColumns(3).spacing(2, 0).applyTo(composite);
+    GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
 
-	private boolean shoudShowExpand;
+    labelWidgetImage = getToolkit().createLabel(composite, "     ");
+    labelWidgetImage.setBackground(composite.getBackground());
 
-	private Text text;
+    createText();
+    eAdapter = new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        if (msg.getFeature() != null && msg.getFeature().equals(attribute))
+        {
+          load();
+        }
+        super.notifyChanged(msg);
+      }
+    };
+    getModelElement().eAdapters().add(eAdapter);
+    load();
+    return composite;
+  }
 
-	private void createText() {
-		text = new Text(composite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+  private void createText()
+  {
 
-		text.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		text.setSize(10, 100);
-		text.addFocusListener(new FocusAdapter() {
+    text = new Text(composite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 
-			@Override
-			public void focusLost(FocusEvent e) {
-				save();
-				super.focusLost(e);
-			}
+    text.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+    text.setSize(10, 100);
+    text.addFocusListener(new FocusAdapter()
+    {
 
-		});
-		GridData spec = new GridData();
-		spec.horizontalAlignment = GridData.FILL;
-		spec.grabExcessHorizontalSpace = true;
-		spec.verticalAlignment = GridData.FILL;
-		spec.grabExcessVerticalSpace = true;
-		spec.heightHint = 200;
-		text.setLayoutData(spec);
-	}
+      @Override
+      public void focusLost(FocusEvent e)
+      {
+        save();
+        super.focusLost(e);
+      }
 
-	private void createToolBar() {
-		toolBar = new ToolBar(composite, SWT.NULL);
+    });
+    GridData spec = new GridData();
+    spec.horizontalAlignment = GridData.FILL;
+    spec.grabExcessHorizontalSpace = true;
+    spec.verticalAlignment = GridData.FILL;
+    spec.grabExcessVerticalSpace = true;
+    spec.heightHint = 200;
+    text.setLayoutData(spec);
 
-		if (shoudShowExpand) {
-			ToolItem textItem = new ToolItem(toolBar, SWT.PUSH);
-			ImageDescriptor textImageDescriptor = Activator.getImageDescriptor("icons/text.png");
-			textItem.setImage(textImageDescriptor.createImage());
-			textItem.setToolTipText("Go to the description tab");
-			textItem.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent event) {
-					final IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage().getActiveEditor();
-					if (activeEditor instanceof MEEditor) {
-						((MEEditor) activeEditor).setActivePage("Description");
-					}
-				}
-			});
-		}
-	}
+    if (!getItemPropertyDescriptor().canSetProperty(getModelElement()))
+    {
+      text.setEnabled(false);
+    }
+  }
 
-	/**
-	 * Sets if the expand toolbar button should be shown.
-	 * 
-	 * @param show if shown.
-	 */
-	public void setShowExpand(boolean show) {
-		shoudShowExpand = show;
-	}
+  /**
+   * Returns the {@link ToolBar}.
+   * 
+   * @return the toolbar
+   */
+  public ToolBar getToolbar()
+  {
+    return toolBar;
+  }
 
-	/**
-	 * @return the toolbar.
-	 */
-	public ToolBar getToolbar() {
-		return toolBar;
-	}
+  private void save()
+  {
+    new ECPCommand(getModelElement())
+    {
+      @Override
+      protected void doRun()
+      {
+        getModelElement().eSet(attribute, text.getText());
+      }
+    }.run(true);
+  }
 
-	//TODO: Refactor to use databinding
-	
-	private void save() {
-		SetCommand.create(getEditingDomain(), getModelElement(), attribute, text.getText()).execute();
-	}
+  private void load()
+  {
 
-	private void load() {
+    String txt = "";
+    final StringBuffer value = new StringBuffer();
+    new ECPCommand(getModelElement())
+    {
+      @Override
+      protected void doRun()
+      {
+        if (getModelElement().eGet(attribute) == null)
+        {
+          value.append("");
+        }
+        else
+        {
+          value.append(getModelElement().eGet(attribute));
+        }
+      }
+    }.run(true);
+    txt = value.toString();
+    text.setText(txt);
+  }
 
-		String txt =(String) getModelElement().eGet(attribute);
-		if(txt==null){
-			return;
-		}
-		text.setText(txt);
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void dispose()
+  {
+    getModelElement().eAdapters().remove(eAdapter);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void dispose() {
-		getModelElement().eAdapters().remove(eAdapter);
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void applyCustomLayoutData()
+  {
+    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(250, 150).grab(true, false).applyTo(composite);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void applyCustomLayoutData() {
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(250, 150).grab(true, false).applyTo(composite);
-	}
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+   *      org.eclipse.emf.ecore.EObject)
+   */
+  @Override
+  public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
+  {
+    Object feature = itemPropertyDescriptor.getFeature(modelElement);
+    if (feature instanceof EAttribute && ((EAttribute)feature).getEType().getInstanceClass().equals(String.class))
+    {
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
-		Object feature = itemPropertyDescriptor.getFeature(modelElement);
-		if (feature instanceof EAttribute && ((EAttribute) feature).getEType().getInstanceClass().equals(String.class)) {
+      if (itemPropertyDescriptor.isMultiLine(feature))
+      {
+        return PRIORITY;
+      }
+    }
+    return AbstractMEControl.DO_NOT_RENDER;
+  }
 
-			if (itemPropertyDescriptor.isMultiLine(feature)) {
-				return PRIORITY;
-			}
-		}
-		return AbstractMEControl.DO_NOT_RENDER;
-	}
+  /**
+   * . {@inheritDoc}
+   */
+  public void handleValidation(Diagnostic diagnostic)
+  {
+    if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING)
+    {
+      Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png").createImage();
+      labelWidgetImage.setImage(image);
+      labelWidgetImage.setToolTipText(diagnostic.getMessage());
+    }
+  }
+
+  /**
+   * . {@inheritDoc}
+   */
+  public void resetValidation()
+  {
+    labelWidgetImage.setImage(null);
+    labelWidgetImage.setToolTipText("");
+  }
 }

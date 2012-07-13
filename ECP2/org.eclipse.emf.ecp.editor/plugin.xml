@@ -45,6 +45,7 @@
             type="java.lang.String">
       </widget>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.commands">
       <command
@@ -53,15 +54,7 @@
             name="OpenModelElement">
       </command>
    </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="org.eclipse.emf.ecp.editor.MEEditor"
-            default="false"
-            id="org.eclipse.emf.ecp.editor"
-            name="Model Element Editor">
-      </editor>
-   </extension>
+   -->
    <extension
          point="org.eclipse.emf.ecp.editor.referencecontrols">
       <widget

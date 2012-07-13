@@ -177,8 +177,7 @@ public class MELinkControl
     ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
     hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(link), style);
     hyperlink.setToolTipText(shortLabelProvider.getText(link));
-    IHyperlinkListener listener = new MEHyperLinkAdapter(link, contextModelElement, eReference.getName(),
-        context.getEcpProject());
+    IHyperlinkListener listener = new MEHyperLinkAdapter(link, contextModelElement, eReference.getName(), context);
     hyperlink.addHyperlinkListener(listener);
     imageHyperlink.addHyperlinkListener(listener);
   }

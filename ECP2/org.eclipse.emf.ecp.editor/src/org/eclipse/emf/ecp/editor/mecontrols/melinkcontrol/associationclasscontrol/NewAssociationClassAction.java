@@ -16,12 +16,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.AssociationClassHelper;
 import org.eclipse.emf.ecp.editor.ECPCommand;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
-import org.eclipse.emf.ecp.ui.util.MEClassLabelProvider;
+import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -121,7 +119,7 @@ public class NewAssociationClassAction extends Action
       // create the association
       AssociationClassHelper.createAssociation(eReference, modelElement, relatedModelElement,
           context.getMetaModelElementContext());
-      ActionHelper.openModelElement(relatedModelElement, this.getClass().getName(), context.getEcpProject());
+      context.openEditor(relatedModelElement, this.getClass().getName());
     }
   }
 

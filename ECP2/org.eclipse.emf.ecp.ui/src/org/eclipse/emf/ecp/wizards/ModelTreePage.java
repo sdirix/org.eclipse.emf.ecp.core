@@ -12,28 +12,21 @@ package org.eclipse.emf.ecp.wizards;
 
 //TODO: Revise
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.ui.util.MEClassLabelProvider;
+import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
 
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Tree;
+
+import java.util.Collection;
 
 /**
  * @author Hodaie This is the first page of NewModelElementWizard. On this page the model packages and their class (only
@@ -44,13 +37,11 @@ import org.eclipse.swt.widgets.Tree;
 public class ModelTreePage extends WizardPage implements Listener
 {
 
-  private TreeViewer treeViewer;
-
   private static final String PAGE_TITLE = "Add new model element";
 
   private static final String PAGE_DESCRIPTION = "Select model element type";
 
-  private final ECPProject project;
+  private final SelectModelElementHelper helper;
 
   /**
    * Constructor.
@@ -63,7 +54,17 @@ public class ModelTreePage extends WizardPage implements Listener
   protected ModelTreePage(String pageName, ECPProject project)
   {
     super(pageName);
-    this.project = project;
+    helper = new SelectModelElementHelper(project);
+    setTitle(PAGE_TITLE);
+    setDescription(PAGE_DESCRIPTION);
+
+  }
+
+  protected ModelTreePage(String pageName, Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
+      Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses)
+  {
+    super(pageName);
+    helper = new SelectModelElementHelper(ePackages, unsupportedEPackages, filteredEPackages, filteredEClasses);
     setTitle(PAGE_TITLE);
     setDescription(PAGE_DESCRIPTION);
 
@@ -75,46 +76,9 @@ public class ModelTreePage extends WizardPage implements Listener
   public void createControl(Composite parent)
   {
 
-    Composite composite = new Composite(parent, SWT.NULL);
-
-    GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
-
-    Label filterLabel = new Label(composite, SWT.LEFT);
-    filterLabel.setText("Search:");
-    final Text filterInput = new Text(composite, SWT.SEARCH);
-    filterInput.setMessage("Model Element class");
-    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(filterInput);
-
-    Tree tree = new Tree(composite, SWT.SINGLE);
-    final ModelClassFilter filter = new ModelClassFilter();
-    filterInput.addModifyListener(new ModifyListener()
-    {
-      public void modifyText(ModifyEvent e)
-      {
-        String text = filterInput.getText();
-        filter.setSearchTerm(text);
-        treeViewer.expandAll();
-        if (text != null && text.length() == 0)
-        {
-          treeViewer.collapseAll();
-        }
-        treeViewer.refresh();
-      }
-    });
-
-    treeViewer = new TreeViewer(tree);
-    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).minSize(0, 150).span(2, 1)
-        .applyTo(treeViewer.getControl());
-
-    treeViewer.setContentProvider(new ModelTreeContentProvider(ECPUtil.getAllRegisteredEPackages(), project
-        .getUnsupportedEPackages(), project.getFilteredPackages(), project.getFilteredEClasses()));
-    treeViewer.setLabelProvider(new MEClassLabelProvider());
-    treeViewer.setComparator(new ViewerComparator());
-    treeViewer.addFilter(filter);
-    // give an empty object, otherwise it does not initialize
-    treeViewer.setInput(new Object());
-    treeViewer.getTree().addListener(SWT.Selection, this);
-    treeViewer.addDoubleClickListener(new IDoubleClickListener()
+    Composite composite = helper.createUI(parent);
+    helper.getTreeViewer().getTree().addListener(SWT.Selection, this);
+    helper.getTreeViewer().addDoubleClickListener(new IDoubleClickListener()
     {
 
       public void doubleClick(DoubleClickEvent event)
@@ -155,7 +119,7 @@ public class ModelTreePage extends WizardPage implements Listener
 
     NewModelElementWizard wizard = (NewModelElementWizard)getWizard();
     boolean canFinish = false;
-    ISelection sel = treeViewer.getSelection();
+    ISelection sel = helper.getTreeViewer().getSelection();
     if (sel == null)
     {
       canFinish = false;

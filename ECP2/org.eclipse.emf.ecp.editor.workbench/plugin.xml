@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+         <editor
+            class="org.eclipse.emf.ecp.editor.MEEditor"
+            default="false"
+            id="org.eclipse.emf.ecp.editor"
+            name="Model Element Editor">
+      </editor>
+   </extension>
+
+</plugin>
