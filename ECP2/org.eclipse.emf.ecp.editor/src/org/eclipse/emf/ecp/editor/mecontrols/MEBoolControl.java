@@ -11,100 +11,37 @@
 package org.eclipse.emf.ecp.editor.mecontrols;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-
-import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.BooleanWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
 
 /**
  * This is the standard Control to edit boolean values.
  * 
  * @author helming
+ * @author Eugen Neufeld
  */
-public class MEBoolControl extends MEPrimitiveAttributeControl<Boolean>
+public class MEBoolControl extends MEAttributeControl
 {
 
-  private Button check;
-
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#getPriority()
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
    */
   @Override
-  protected int getPriority()
+  protected Class<?> getClassType()
   {
-    return 1;
+    return Boolean.class;
   }
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#getDefaultValue()
-   */
-  @Override
-  protected Boolean getDefaultValue()
-  {
-    return false;
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#postValidate(java.lang.String)
-   */
-  @Override
-  protected void postValidate(String text)
-  {
-    // TODO Auto-generated method stub
-
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see
-   * org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#createAttributeControl(org.eclipse.swt.widgets
-   * .Composite, int)
-   */
-  @Override
-  protected Control createAttributeControl(Composite composite, int style)
-  {
-    check = getToolkit().createButton(composite, "", SWT.CHECK);
-    return check;
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#addVerifyListener()
-   */
-  @Override
-  protected void addVerifyListener()
-  {
-    // TODO Auto-generated method stub
-
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see
-   * org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#addFocusListener(org.eclipse.emf.databinding.
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
    * EMFDataBindingContext)
    */
   @Override
-  protected void addFocusListener(EMFDataBindingContext dbc)
+  protected ECPWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
-    // TODO Auto-generated method stub
-
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEPrimitiveAttributeControl#getObservableValue()
-   */
-  @Override
-  protected ISWTObservableValue getObservableValue()
-  {
-    return SWTObservables.observeSelection(check);
+    return new BooleanWidget(dbc);
   }
 
 }

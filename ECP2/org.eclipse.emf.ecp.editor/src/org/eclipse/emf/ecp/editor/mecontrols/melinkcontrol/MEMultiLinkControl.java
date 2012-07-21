@@ -14,9 +14,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.editor.ECPCommand;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 
 import org.eclipse.jface.action.ToolBarManager;
@@ -68,7 +68,7 @@ public class MEMultiLinkControl extends AbstractMEControl
     @Override
     protected void doRun()
     {
-      Object objectList = getModelElement().eGet(eReference);
+      Object objectList = getModelElement().eGet(getStructuralFeature());
       if (objectList instanceof EList)
       {
         EList<EObject> eList = (EList<EObject>)objectList;
@@ -129,7 +129,7 @@ public class MEMultiLinkControl extends AbstractMEControl
     }
   }
 
-  private EReference eReference;
+  // private EReference eReference;
 
   private int style;
 
@@ -149,9 +149,9 @@ public class MEMultiLinkControl extends AbstractMEControl
 
   private DropTarget sectionDropTarget;
 
-  private static final int PRIORITY = 1;
+  // private static final int PRIORITY = 1;
 
-  private Object feature;
+  // private Object feature;
 
   private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
 
@@ -173,10 +173,10 @@ public class MEMultiLinkControl extends AbstractMEControl
       }
     });
 
-    toolBarManager
-        .add(new AddReferenceAction(getModelElement(), eReference, getItemPropertyDescriptor(), getContext()));
-    toolBarManager
-        .add(new NewReferenceAction(getModelElement(), eReference, getItemPropertyDescriptor(), getContext()));
+    toolBarManager.add(new AddReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
+        getItemPropertyDescriptor(), getContext()));
+    toolBarManager.add(new NewReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
+        getItemPropertyDescriptor(), getContext()));
     toolBarManager.update(true);
     section.setTextClient(toolbar);
   }
@@ -188,15 +188,16 @@ public class MEMultiLinkControl extends AbstractMEControl
   public Control createControl(final Composite parent, int style)
   {
     linkControls = new ArrayList<MELinkControl>();
-    feature = getItemPropertyDescriptor().getFeature(getModelElement());
-    eReference = (EReference)feature;
+    // feature = getItemPropertyDescriptor().getFeature(getModelElement());
+    // eReference = (EReference)feature;
     modelElementChangeListener = new org.eclipse.emf.ecp.editor.ModelElementChangeListener(getModelElement())
     {
 
       @Override
       public void onChange(Notification notification)
       {
-        if (notification.getEventType() != Notification.RESOLVE && notification.getFeature().equals(feature))
+        if (notification.getEventType() != Notification.RESOLVE
+            && notification.getFeature().equals(getStructuralFeature()))
         {
           rebuildLinkSection();
         }
@@ -225,7 +226,8 @@ public class MEMultiLinkControl extends AbstractMEControl
     sectionDropTarget = new DropTarget(section, DND.DROP_COPY);
     Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
     sectionDropTarget.setTransfer(transfers);
-    sectionDropTarget.addDropListener(new MEMultiLinkControlDropAdapter(getModelElement(), eReference, getContext()));
+    sectionDropTarget.addDropListener(new MEMultiLinkControlDropAdapter(getModelElement(),
+        (EReference)getStructuralFeature(), getContext()));
 
   }
 
@@ -270,18 +272,55 @@ public class MEMultiLinkControl extends AbstractMEControl
     }
   }
 
-  @Override
-  public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
-  {
-    Object feature = itemPropertyDescriptor.getFeature(modelElement);
-    if (feature instanceof EReference
-        && EObject.class.isAssignableFrom(((EReference)feature).getEType().getInstanceClass())
-        && ((EReference)feature).isMany())
-    {
+  // @Override
+  // public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
+  // {
+  // Object feature = itemPropertyDescriptor.getFeature(modelElement);
+  // if (feature instanceof EReference
+  // && EObject.class.isAssignableFrom(((EReference)feature).getEType().getInstanceClass())
+  // && ((EReference)feature).isMany())
+  // {
+  //
+  // return PRIORITY;
+  // }
+  // return AbstractMEControl.DO_NOT_RENDER;
+  // }
 
-      return PRIORITY;
-    }
-    return AbstractMEControl.DO_NOT_RENDER;
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getPriority()
+   */
+  @Override
+  protected int getPriority()
+  {
+    // TODO Auto-generated method stub
+    return 1;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
+   */
+  @Override
+  protected Class<? extends EStructuralFeature> getEStructuralFeatureType()
+  {
+    return EReference.class;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+   */
+  @Override
+  protected Class<?> getClassType()
+  {
+    return EObject.class;
+  }
+
+  @Override
+  protected boolean isMulti()
+  {
+    return true;
   }
 
 }

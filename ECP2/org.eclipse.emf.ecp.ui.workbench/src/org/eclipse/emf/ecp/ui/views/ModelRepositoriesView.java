@@ -12,12 +12,8 @@ package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.ui.actions.AddRepositoryAction;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
-import org.eclipse.emf.ecp.ui.model.RepositoriesContentProvider;
-import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -29,8 +25,6 @@ import org.eclipse.swt.widgets.Composite;
 public class ModelRepositoriesView extends TreeView implements ECPProviderRegistry.Listener
 {
   public static final String ID = "org.eclipse.emf.ecp.ui.ModelRepositoriesView";
-
-  private RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
 
   private Action addRepositoryAction;
 
@@ -72,8 +66,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProviderRegist
   @Override
   protected TreeViewer createViewer(Composite parent)
   {
-    TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider),
-        contentProvider, ECPRepositoryManager.INSTANCE, createLabelDecorator());
+	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, false, createLabelDecorator());
 
     addRepositoryAction = new AddRepositoryAction(getSite().getShell());
     setEnablements();

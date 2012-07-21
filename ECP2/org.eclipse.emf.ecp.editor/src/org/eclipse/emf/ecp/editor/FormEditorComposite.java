@@ -39,17 +39,21 @@ import java.util.Map;
 /**
  * @author Eugen Neufeld
  */
-public class FormEditorContentHelper
+public class FormEditorComposite
 {
 
-  public FormEditorContentHelper(EObject modelElement, EditorModelelementContext modelElementContext)
+  public FormEditorComposite(EObject modelElement, EditorModelelementContext modelElementContext, Composite parent,
+      FormToolkit toolkit)
   {
-    // this.toolkit = toolkit;
     this.modelElement = modelElement;
     this.modelElementContext = modelElementContext;
+    this.parent = parent;
+    this.toolkit = toolkit;
   }
 
-  // private final FormToolkit toolkit;
+  private final Composite parent;
+
+  private final FormToolkit toolkit;
 
   private final EObject modelElement;
 
@@ -71,7 +75,7 @@ public class FormEditorContentHelper
 
   private Composite bottomComposite;
 
-  public Composite createUI(Composite parent, FormToolkit toolkit)
+  public Composite createUI()
   {
     Composite topComposite = toolkit.createComposite(parent);
     topComposite.setLayout(new GridLayout());
@@ -114,11 +118,6 @@ public class FormEditorContentHelper
       createAttributes(toolkit, rightColumnComposite, rightColumnAttributes);
     }
     createAttributes(toolkit, bottomComposite, bottomAttributes);
-    // form.setImage(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-    // ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(modelElement));
-    // createToolbar();
-    // form.pack();
-    // updateSectionTitle();
 
     return topComposite;
   }
@@ -208,6 +207,7 @@ public class FormEditorContentHelper
     GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
         .applyTo(attributeComposite);
 
+    // TODO add extensionpoint
     ControlFactory controlFactory = new ControlFactory();
 
     for (IItemPropertyDescriptor itemPropertyDescriptor : attributes)
@@ -240,14 +240,6 @@ public class FormEditorContentHelper
         GridDataFactory.fillDefaults().span(2, 1).grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
             .applyTo(control);
       }
-      // TODO remove if unused
-      // if (itemPropertyDescriptor.getFeature(modelElement) == problemFeature)
-      // {
-      // ControlDecoration dec = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
-      // dec.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK));
-      // dec.setDescriptionText("Problem detected.");
-      // }
-
     }
 
   }

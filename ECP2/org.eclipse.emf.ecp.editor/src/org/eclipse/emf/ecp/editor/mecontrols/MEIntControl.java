@@ -10,57 +10,39 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.IntegerWidget;
+
 /**
  * Standard widgets to edit a integer attribute.
  * 
  * @author helming
  * @author emueller
+ * @author Eugen Neufeld
  */
-public class MEIntControl extends METextWidgetControl<Integer>
+public class MEIntControl extends MEAttributeControl
 {
 
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+   */
   @Override
-  protected int getPriority()
+  protected Class<?> getClassType()
   {
-    return 1;
+    return Integer.class;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+   * EMFDataBindingContext)
+   */
   @Override
-  protected Integer convertStringToModel(String s)
+  protected ECPWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
-    return Integer.parseInt(s);
-  }
-
-  @Override
-  protected boolean validateString(String s)
-  {
-    // TODO: perform validation
-    return true;
-  }
-
-  @Override
-  protected String convertModelToString(Integer t)
-  {
-    return Integer.toString(t);
-  }
-
-  @Override
-  protected void postValidate(String text)
-  {
-    try
-    {
-      setUnvalidatedString(Integer.toString(Integer.parseInt(text)));
-    }
-    catch (NumberFormatException e)
-    {
-      setUnvalidatedString(Integer.toString(getDefaultValue()));
-    }
-  }
-
-  @Override
-  protected Integer getDefaultValue()
-  {
-    return 0;
+    return new IntegerWidget(dbc);
   }
 
 }

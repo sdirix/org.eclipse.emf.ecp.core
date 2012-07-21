@@ -10,49 +10,49 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.StringWidget;
+
 /**
  * Standard widgets to edit a single line text attribute.
  * 
  * @author helming
  * @author emueller
+ * @author Eugen Neufeld
  */
-public class METextControl extends METextWidgetControl<String>
+public class METextControl extends MEAttributeControl
 {
 
+  private ECPWidget widget;
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+   */
   @Override
-  protected int getPriority()
+  protected Class<?> getClassType()
   {
-    return 1;
+    return String.class;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+   * EMFDataBindingContext)
+   */
   @Override
-  protected String convertStringToModel(String s)
+  protected ECPWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
-    return s;
+    widget = new StringWidget(dbc);
+    return widget;
   }
 
-  @Override
-  protected boolean validateString(String s)
+  /**
+   * This sets the keyboard focus in Text control.
+   **/
+  public void setFocus()
   {
-    return true;
+    widget.getControl().setFocus();
   }
-
-  @Override
-  protected String convertModelToString(String t)
-  {
-    return t;
-  }
-
-  @Override
-  protected void postValidate(String text)
-  {
-    // do nothing
-  }
-
-  @Override
-  protected String getDefaultValue()
-  {
-    return "";
-  }
-
 }

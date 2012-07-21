@@ -10,59 +10,38 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.DoubleWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+
 /**
  * Standard widget to edit a double attribute.
  * 
  * @author helming
  * @author emueller
+ * @author Eugen Neufeld
  */
-public class MEDoubleControl extends METextWidgetControl<Double>
+public class MEDoubleControl extends MEAttributeControl
 {
 
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+   */
   @Override
-  protected int getPriority()
+  protected Class<?> getClassType()
   {
-    return 1;
+    return Double.class;
   }
 
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+   * EMFDataBindingContext)
+   */
   @Override
-  protected Double convertStringToModel(String s)
+  protected ECPWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
-    return Double.parseDouble(s);
-  }
-
-  @Override
-  protected boolean validateString(String s)
-  {
-    /*
-     * Do not perform any validation here, since a double can be represented with characters which include 'E', 'f' or
-     * 'd'. Furthermore if values become to be, 'Infinity' is also a valid value.
-     */
-    return true;
-  }
-
-  @Override
-  protected String convertModelToString(Double t)
-  {
-    return Double.toString(t);
-  }
-
-  @Override
-  protected void postValidate(String text)
-  {
-    try
-    {
-      setUnvalidatedString(Double.toString(Double.parseDouble(text)));
-    }
-    catch (NumberFormatException e)
-    {
-      setUnvalidatedString(Double.toString(getDefaultValue()));
-    }
-  }
-
-  @Override
-  protected Double getDefaultValue()
-  {
-    return 0.0;
+    return new DoubleWidget(dbc);
   }
 }

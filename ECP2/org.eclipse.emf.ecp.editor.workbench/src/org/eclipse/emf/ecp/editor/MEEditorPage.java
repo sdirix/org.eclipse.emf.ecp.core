@@ -44,36 +44,15 @@ import java.util.Map;
  * @author naughton
  */
 public class MEEditorPage extends FormPage {
-
-	// private EObject modelElement;
-	//
-	// private FormToolkit toolkit;
-	//
-	// private List<AbstractMEControl> meControls = new ArrayList<AbstractMEControl>();
-	//
 	private static String activeModelelement = "activeModelelement";
 
 	//
 	private ScrolledForm form;
+	//
+	 private final EditorModelelementContext modelElementContext;
+	 private EObject modelElement;
 
-	//
-	// private List<IItemPropertyDescriptor> leftColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
-	//
-	// private List<IItemPropertyDescriptor> rightColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
-	//
-	// private List<IItemPropertyDescriptor> bottomAttributes = new ArrayList<IItemPropertyDescriptor>();
-	//
-	// private Composite leftColumnComposite;
-	//
-	// private Composite rightColumnComposite;
-	//
-	// private Composite bottomComposite;
-	//
-	// private EStructuralFeature problemFeature;
-	//
-	// private final EditorModelelementContext modelElementContext;
-
-	private FormEditorContentHelper editorPageContent;
+	private FormEditorComposite editorPageContent;
 
 	/**
 	 * Default constructor.
@@ -92,7 +71,8 @@ public class MEEditorPage extends FormPage {
 	public MEEditorPage(MEEditor editor, String id, String title, EditorModelelementContext modelElementContext,
 		EObject modelElement) {
 		super(editor, id, title);
-		editorPageContent = new FormEditorContentHelper(modelElement, modelElementContext);
+		this.modelElement=modelElement;
+		this.modelElementContext=modelElementContext;
 
 	}
 
@@ -115,7 +95,6 @@ public class MEEditorPage extends FormPage {
 	public MEEditorPage(MEEditor editor, String id, String title, EditorModelelementContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
 		this(editor, id, title, modelElementContext, modelElement);
-		// this.problemFeature = problemFeature;
 	}
 
 	/**
@@ -130,7 +109,8 @@ public class MEEditorPage extends FormPage {
 		toolkit.decorateFormHeading(form.getForm());
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		editorPageContent.createUI(body, toolkit);
+		editorPageContent = new FormEditorComposite(modelElement, modelElementContext,body, toolkit);
+		editorPageContent.createUI();
 
 		form.setImage(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(editorPageContent.getModelElement()));
@@ -187,7 +167,6 @@ public class MEEditorPage extends FormPage {
 				Command command = DeleteCommand.create(editorPageContent.getModelElementContext().getEditingDomain(),
 					editorPageContent.getModelElement());
 				command.execute();
-
 			}
 		});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),

@@ -112,19 +112,22 @@
    <extension
          point="org.eclipse.emf.ecp.editor.attributecontrols">
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.StringMultiAttributeControl"
-            name="org.eclipse.emf.ecp.editor.multistringcontrol"
-            showLabel="true"
-            type="java.lang.String">
-      </widget>
-   </extension>
-   <extension
-         point="org.eclipse.emf.ecp.editor.attributecontrols">
-      <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.IntegerMultiAttributeControl"
+            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.MultiIntegerAttributeControl"
             name="org.eclipse.emf.ecp.editor.multiintegercontrol"
-            showLabel="true"
+            showLabel="false"
             type="java.lang.Integer">
+      </widget>
+      <widget
+            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.MultiDateTimeAttributeControl"
+            name="org.eclipse.emf.ecp.editor.multidatecontrol3"
+            showLabel="false"
+            type="java.util.Date">
+      </widget>
+      <widget
+            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.MultiTextAttributeControl"
+            name="org.eclipse.emf.ecp.editor.multistringcontrol4"
+            showLabel="false"
+            type="java.lang.String">
       </widget>
    </extension>
 </plugin>

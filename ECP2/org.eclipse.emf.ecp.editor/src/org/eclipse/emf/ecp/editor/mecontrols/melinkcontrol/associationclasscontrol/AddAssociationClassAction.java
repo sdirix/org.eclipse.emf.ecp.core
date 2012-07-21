@@ -13,10 +13,10 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscont
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.ECPCommand;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;

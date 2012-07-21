@@ -15,7 +15,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.editor.ECPCommand;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.jface.layout.GridDataFactory;
@@ -227,5 +228,41 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
   {
     labelWidgetImage.setImage(null);
     labelWidgetImage.setToolTipText("");
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getPriority()
+   */
+  @Override
+  protected int getPriority()
+  {
+    return 2;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
+   */
+  @Override
+  protected Class<? extends EStructuralFeature> getEStructuralFeatureType()
+  {
+    return EAttribute.class;
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+   */
+  @Override
+  protected Class<?> getClassType()
+  {
+    return String.class;
+  }
+
+  @Override
+  protected boolean isMulti()
+  {
+    return false;
   }
 }

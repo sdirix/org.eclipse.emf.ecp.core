@@ -10,177 +10,205 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GUI Control for the ME reference single links.
  * 
  * @author helming
  */
-public class MESingleLinkControl extends AbstractMEControl {
+public class MESingleLinkControl extends AbstractMEControl
+{
 
-	private Composite composite;
+  private int style;
 
-	private EReference eReference;
+  private MELinkControl meControl;
 
-	private Composite linkArea;
+  private Label labelWidget;
 
-	private Composite parent;
+  private ModelElementChangeListener modelElementChangeListener;
 
-	private int style;
+  /**
+   * Standard Constructor.
+   */
+  public MESingleLinkControl()
+  {
+    super();
+  }
 
-	private MELinkControl meControl;
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
+   */
+  @Override
+  protected Class<? extends EStructuralFeature> getEStructuralFeatureType()
+  {
+    return EReference.class;
+  }
 
-	private Label labelWidget;
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected Control createControl(final Composite parent, int style)
+  {
+    final Composite composite = getToolkit().createComposite(parent, style);
 
-	private static final int PRIORITY = 1;
+    GridLayoutFactory.fillDefaults().spacing(0, 0).numColumns(3).equalWidth(false).applyTo(composite);
 
-	private ModelElementChangeListener modelElementChangeListener;
+    this.style = style;
+    final Composite linkArea = getToolkit().createComposite(composite);
+    linkArea.setLayout(new FillLayout());
+    updateLink(linkArea, composite);
 
-	/**
-	 * Standard Constructor.
-	 */
-	public MESingleLinkControl() {
-		super();
-	}
+    for (Action action : initActions())
+    {
+      createButtonForAction(action, composite);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Control createControl(final Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-		this.eReference = (EReference) feature;
-		composite = getToolkit().createComposite(parent, style);
-		composite.setLayout(new GridLayout(3, false));
-		GridLayoutFactory.fillDefaults().spacing(0, 0).numColumns(3).equalWidth(false).applyTo(composite);
-		this.parent = parent;
-		this.style = style;
-		linkArea = getToolkit().createComposite(composite);
-		linkArea.setLayout(new FillLayout());
-		updateLink();
+    modelElementChangeListener = new ModelElementChangeListener(getModelElement())
+    {
 
-		for (Action action : initActions()) {
-			createButtonForAction(action);
-		}
+      @Override
+      public void onChange(Notification notification)
+      {
+        if (notification.getFeature() == getStructuralFeature())
+        {
+          updateLink(linkArea, composite);
+        }
 
-		modelElementChangeListener = new ModelElementChangeListener(getModelElement()) {
+      }
+    };
 
-			@Override
-			public void onChange(Notification notification) {
-				if (notification.getFeature() == eReference) {
-					updateLink();
-				}
+    return composite;
+  }
 
-			}
-		};
+  /**
+   * Creates the actions for the control.
+   * 
+   * @return list of actions
+   */
+  protected List<Action> initActions()
+  {
+    List<Action> result = new ArrayList<Action>();
+    AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
+        getItemPropertyDescriptor(), getContext());
+    result.add(addAction);
+    ReferenceAction newAction = new NewReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
+        getItemPropertyDescriptor(), getContext());
+    result.add(newAction);
+    return result;
+  }
 
-		return composite;
-	}
+  /**
+   * Creates a button for an action.
+   * 
+   * @param action
+   *          the action
+   */
+  private void createButtonForAction(final Action action, Composite composite)
+  {
+    Button selectButton = getToolkit().createButton(composite, "", SWT.PUSH);
+    selectButton.setImage(action.getImageDescriptor().createImage());
+    selectButton.setToolTipText(action.getToolTipText());
+    selectButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        action.run();
+      }
 
-	/**
-	 * Creates the actions for the control.
-	 * 
-	 * @return list of actions
-	 */
-	protected List<Action> initActions() {
-		List<Action> result = new ArrayList<Action>();
-		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), eReference,
-			getItemPropertyDescriptor(), getContext());
-		result.add(addAction);
-		ReferenceAction newAction = new NewReferenceAction(getModelElement(), eReference, getItemPropertyDescriptor(),
-			getContext());
-		result.add(newAction);
-		return result;
-	}
+    });
+  }
 
-	/**
-	 * @return the eReference
-	 */
-	protected EReference geteReference() {
-		return eReference;
-	}
+  private void updateLink(Composite linkArea, Composite composite)
+  {
+    if (meControl != null)
+    {
+      meControl.dispose();
+    }
+    if (labelWidget != null)
+    {
+      labelWidget.dispose();
+    }
 
-	/**
-	 * Creates a button for an action.
-	 * 
-	 * @param action the action
-	 */
-	protected void createButtonForAction(final Action action) {
-		Button selectButton = getToolkit().createButton(composite, "", SWT.PUSH);
-		selectButton.setImage(action.getImageDescriptor().createImage());
-		selectButton.setToolTipText(action.getToolTipText());
-		selectButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				action.run();
-			}
+    EObject opposite = (EObject)getModelElement().eGet(getStructuralFeature());
+    if (opposite != null)
+    {
+      MELinkControlFactory meLinkControlFactory = new MELinkControlFactory();
+      meControl = meLinkControlFactory.createMELinkControl(getItemPropertyDescriptor(), opposite, getModelElement(),
+          getContext());
+      meControl.createControl(linkArea, style, getItemPropertyDescriptor(), opposite, getModelElement(), getToolkit(),
+          getContext());
+    }
+    else
+    {
+      labelWidget = getToolkit().createLabel(linkArea, "(Not Set)");
+      labelWidget.setBackground(composite.getBackground());
+      labelWidget.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+    }
+    linkArea.layout(true);
+    composite.layout(true);
+  }
 
-		});
-	}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void dispose()
+  {
+    modelElementChangeListener.remove();
+    if (meControl != null)
+    {
+      meControl.dispose();
+    }
 
-	private void updateLink() {
-		if (meControl != null) {
-			meControl.dispose();
-		}
-		if (labelWidget != null) {
-			labelWidget.dispose();
-		}
+  }
 
-		EObject opposite = (EObject) getModelElement().eGet(eReference);
-		if (opposite != null) {
-			MELinkControlFactory meLinkControlFactory = new MELinkControlFactory();
-			meControl = meLinkControlFactory.createMELinkControl(getItemPropertyDescriptor(), opposite,
-				getModelElement(), getContext());
-			meControl.createControl(linkArea, style, getItemPropertyDescriptor(), opposite, getModelElement(),
-				getToolkit(), getContext());
-		} else {
-			labelWidget = getToolkit().createLabel(linkArea, "(Not Set)");
-			labelWidget.setBackground(parent.getBackground());
-			labelWidget.setForeground(parent.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-		}
-		linkArea.layout(true);
-		composite.layout(true);
-	}
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+   */
+  @Override
+  protected Class<?> getClassType()
+  {
+    return EObject.class;
+  }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void dispose() {
-		modelElementChangeListener.remove();
-		if (meControl != null) {
-			meControl.dispose();
-		}
-
-	}
-
-	@Override
-	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
-		Object feature = itemPropertyDescriptor.getFeature(modelElement);
-		if (feature instanceof EReference && !((EReference) feature).isMany()
-			&& EObject.class.isAssignableFrom(((EReference) feature).getEType().getInstanceClass())) {
-			return PRIORITY;
-		}
-		return AbstractMEControl.DO_NOT_RENDER;
-	}
+  @Override
+  protected boolean isMulti()
+  {
+    return false;
+  }
+  // @Override
+  // public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
+  // {
+  // Object feature = itemPropertyDescriptor.getFeature(modelElement);
+  // if (feature instanceof EReference && !((EReference)feature).isMany()
+  // && EObject.class.isAssignableFrom(((EReference)feature).getEType().getInstanceClass()))
+  // {
+  // return PRIORITY;
+  // }
+  // return AbstractMEControl.DO_NOT_RENDER;
+  // }
 }

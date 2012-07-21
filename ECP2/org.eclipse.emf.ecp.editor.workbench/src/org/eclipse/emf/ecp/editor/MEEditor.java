@@ -328,8 +328,4 @@ public class MEEditor extends SharedHeaderFormEditor {
 			}
 		}
 	}
-
-	public EditorModelelementContext getModelElementContext() {
-		return modelElementContext;
-	}
 }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.editor.mecontrols;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -19,6 +20,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Abstract class for the ME controls.
  * 
@@ -26,6 +30,19 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  */
 public abstract class AbstractMEControl
 {
+  public static final Map<Class<?>, Class<?>> primitives = new HashMap<Class<?>, Class<?>>();
+
+  static
+  {
+    primitives.put(Boolean.class, boolean.class);
+    primitives.put(Byte.class, byte.class);
+    primitives.put(Short.class, short.class);
+    primitives.put(Character.class, char.class);
+    primitives.put(Integer.class, int.class);
+    primitives.put(Long.class, long.class);
+    primitives.put(Float.class, float.class);
+    primitives.put(Double.class, double.class);
+  }
 
   /**
    * The default constant in case the widgets decides it shouldn't render the attribute.
@@ -53,6 +70,20 @@ public abstract class AbstractMEControl
 
   private EditorModelelementContext context;
 
+  private EStructuralFeature structuralFeature;
+
+  /**
+   * @return the attribute
+   */
+  public EStructuralFeature getStructuralFeature()
+  {
+    return structuralFeature;
+  }
+
+  protected abstract Class<? extends EStructuralFeature> getEStructuralFeatureType();
+
+  protected abstract Class<?> getClassType();
+
   /**
    * @return the toolkit
    */
@@ -70,7 +101,63 @@ public abstract class AbstractMEControl
    *          the modelelement
    * @return the priority
    */
-  public abstract int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement);
+  public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
+  {
+    Object feature = itemPropertyDescriptor.getFeature(modelElement);
+
+    if (getEStructuralFeatureType().isInstance(feature) && isAssignable((EStructuralFeature)feature)
+        && isMultiplicityCorrect((EStructuralFeature)feature))
+    {
+
+      return getPriority();
+    }
+
+    return AbstractMEControl.DO_NOT_RENDER;
+  }
+
+  /**
+   * @return
+   */
+  private boolean isMultiplicityCorrect(EStructuralFeature feature)
+  {
+    return feature.isMany() == isMulti();
+  }
+
+  protected abstract boolean isMulti();
+
+  /**
+   * @return
+   */
+  private boolean isAssignable(EStructuralFeature feature)
+  {
+    Class<?> featureInstance = getFeatureClass(feature);
+    if (featureInstance.isPrimitive())
+    {
+      return primitives.get(getClassType()).isAssignableFrom(featureInstance);
+    }
+    return getClassType().isAssignableFrom(featureInstance);
+  }
+
+  /**
+   * @return
+   */
+  protected Class<?> getFeatureClass(EStructuralFeature feature)
+  {
+    return feature.getEType().getInstanceClass();
+  }
+
+  /**
+   * Returns the priority by which the control should be rendered. The priority determines which control will be used to
+   * render a specific type since multiple controls may be registered to render the same type. <br>
+   * This implementation returns 1. A subclass providing a control that should be used instead of the default
+   * implementations should override this method.
+   * 
+   * @return an integer value representing the priority by which the control gets rendered
+   */
+  protected int getPriority()
+  {
+    return 1;
+  }
 
   /**
    * @param toolkit
@@ -184,9 +271,6 @@ public abstract class AbstractMEControl
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public void dispose()
   {
 
@@ -225,8 +309,19 @@ public abstract class AbstractMEControl
     setModelElement(modelElement);
     setToolkit(toolkit);
     setItemPropertyDescriptor(itemPropertyDescriptor);
+
+    setStructuralFeature();
     return createControl(parent, style);
 
+  }
+
+  /**
+   * 
+   */
+  private void setStructuralFeature()
+  {
+    Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
+    structuralFeature = (EStructuralFeature)feature;
   }
 
   /**
