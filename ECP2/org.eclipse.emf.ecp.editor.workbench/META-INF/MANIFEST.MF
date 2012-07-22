@@ -16,3 +16,4 @@ Import-Package: org.eclipse.emf.edit.ui.provider,
  org.eclipse.ui.forms,
  org.eclipse.ui.forms.editor,
  org.eclipse.ui.forms.widgets
+Bundle-Vendor: Eclipse Modeling Project
