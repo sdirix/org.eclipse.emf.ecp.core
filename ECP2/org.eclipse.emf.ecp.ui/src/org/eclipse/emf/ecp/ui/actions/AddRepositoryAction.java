@@ -12,8 +12,9 @@ package org.eclipse.emf.ecp.ui.actions;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.ui.platform.Activator;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.wizards.AddRepositoryPage;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;

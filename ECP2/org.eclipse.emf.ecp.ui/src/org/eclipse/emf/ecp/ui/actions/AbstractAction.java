@@ -10,7 +10,8 @@
  */
 package org.eclipse.emf.ecp.ui.actions;
 
-import org.eclipse.emf.ecp.ui.platform.Activator;
+import org.eclipse.emf.ecp.internal.ui.Activator;
+
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
