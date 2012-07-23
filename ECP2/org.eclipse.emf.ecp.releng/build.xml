@@ -13,6 +13,7 @@
 
 	<property file="build.properties" />
 	<property environment="hudson" />
+	<property name="ant.build.javac.target" value="1.5"/> 
 
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
 		<classpath>
