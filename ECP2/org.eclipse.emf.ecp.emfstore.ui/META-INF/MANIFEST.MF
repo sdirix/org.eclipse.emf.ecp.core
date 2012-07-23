@@ -2,21 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ui
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.ui;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.ecp.ui;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.emfstore.client;bundle-version="[0.9.0,1.0.0)",
- org.eclipse.emf.emfstore.client.ui;bundle-version="[0.9.0,1.0.0)",
+ org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.0.0.qualifier,2.0.0)",
+ org.eclipse.emf.ecp.ui;bundle-version="[1.0.0.qualifier,2.0.0)",
+ org.eclipse.emf.emfstore.client;bundle-version="[0.9.0,1.0.0.qualifier)",
+ org.eclipse.emf.emfstore.client.ui;bundle-version="[0.9.0,1.0.0.qualifier)",
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui;version="1.0.0";x-internal:=true,
- org.eclipse.emf.ecp.emfstore.internal.ui.decorator;version="1.0.0";x-internal:=true,
- org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.0.0";x-internal:=true;uses:="org.eclipse.core.commands",
- org.eclipse.emf.ecp.emfstore.internal.ui.property;version="1.0.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui;version="1.0.0.qualifier";x-internal:=true,
+ org.eclipse.emf.ecp.emfstore.internal.ui.decorator;version="1.0.0.qualifier";x-internal:=true,
+ org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.0.0.qualifier";x-internal:=true;uses:="org.eclipse.core.commands",
+ org.eclipse.emf.ecp.emfstore.internal.ui.property;version="1.0.0.qualifier";x-internal:=true
 Import-Package: org.eclipse.core.commands,
  org.eclipse.jface.action,
  org.eclipse.jface.dialogs,
