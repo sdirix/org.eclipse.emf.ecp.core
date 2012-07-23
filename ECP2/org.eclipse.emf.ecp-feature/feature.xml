@@ -12,11 +12,11 @@
 <feature
       id="org.eclipse.emf.ecp"
       label="EMF Client Platform"
-      version="1.0.0.qualifier"
+      version="1.0.0"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
-      license-feature-version="2.0.0.qualifier">
+      license-feature-version="2.0.0">
 
    <description>
       %description
