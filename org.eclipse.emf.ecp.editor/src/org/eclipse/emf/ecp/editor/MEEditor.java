@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.common.utilities.ShortLabelProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -305,6 +306,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 			mePage.setFocus();
 		}
 		updateStatusMessage();
+		getSite().getSelectionProvider().setSelection(new StructuredSelection(modelElement));
 
 	}
 
