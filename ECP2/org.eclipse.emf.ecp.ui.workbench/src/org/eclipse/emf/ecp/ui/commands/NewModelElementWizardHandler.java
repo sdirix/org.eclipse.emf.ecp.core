@@ -10,15 +10,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.commands;
 
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -30,9 +27,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class NewModelElementWizardHandler extends AbstractHandler
 {
 
-  private static final String WIZARD_TITLE = "Add new model element";
-
-  /**
+   /**
    * String to pass the eclass which containments shall be shown in the new element wizard.
    */
   public static final String COMMAND_ECLASS_PARAM = "org.eclipse.emf.ecp.navigator.eClassParameter";
@@ -44,20 +39,8 @@ public class NewModelElementWizardHandler extends AbstractHandler
   {
     ISelection selection = HandlerUtil.getCurrentSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
-
-    ECPProject ecpProject = (ECPProject)ssel.getFirstElement();
-
-    NewModelElementWizard rw = new NewModelElementWizard();
-    rw.setWindowTitle(WIZARD_TITLE);
-    rw.init(ecpProject);
-
-    WizardDialog wd = new WizardDialog(HandlerUtil.getActiveShell(event), rw);
-
-    int result = wd.open();
-    if (result == WizardDialog.OK)
-    {
-
-    }
+    HandlerHelper.newModelElementHandlerHelper(ssel, HandlerUtil.getActiveShell(event));
+    
     return null;
   }
 }
