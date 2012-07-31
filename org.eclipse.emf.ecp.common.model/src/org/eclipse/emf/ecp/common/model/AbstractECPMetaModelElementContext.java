@@ -76,7 +76,7 @@ public abstract class AbstractECPMetaModelElementContext implements ECPMetaModel
 		Set<EClass> result = new HashSet<EClass>();
 
 		for (EClass subClass : getAllModelElementEClassesImpl()) {
-			if (association || !isAssociationClassElement(subClass)) {
+			if (association || (!isAssociationClassElement(subClass) && !isNonDomainElement(subClass))) {
 				result.add(subClass);
 			}
 		}
