@@ -157,9 +157,9 @@ public final class ECPUtil
   public static Collection<EClass> getSubClasses(EClass superClass)
   {
     Collection<EClass> classes = new HashSet<EClass>();
-    for (Object objectEPackage : Registry.INSTANCE.values())
+    for (String nsURI : Registry.INSTANCE.keySet())
     {
-      EPackage ePackage = (EPackage)objectEPackage;
+      EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
       for (EClassifier eClassifier : ePackage.getEClassifiers())
       {
         if (eClassifier instanceof EClass)
