@@ -8,10 +8,12 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor;
+package org.eclipse.emf.ecp.editor.input;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.editor.MEEditor;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;

@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecp.explorereditorbridge;
 
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
@@ -55,4 +56,14 @@ public class Activator extends AbstractUIPlugin
     return plugin;
   }
 
+  /**
+   * Logs exception.
+   * 
+   * @param e
+   */
+  public static void logException(Exception e)
+  {
+    getDefault().getLog().log(
+        new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+  }
 }
