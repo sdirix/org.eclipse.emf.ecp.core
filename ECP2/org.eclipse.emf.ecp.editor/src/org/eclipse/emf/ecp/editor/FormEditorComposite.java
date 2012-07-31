@@ -208,7 +208,7 @@ public class FormEditorComposite
         .applyTo(attributeComposite);
 
     // TODO add extensionpoint
-    ControlFactory controlFactory = new ControlFactory();
+    ControlFactory controlFactory = ControlFactory.getInstance();
 
     for (IItemPropertyDescriptor itemPropertyDescriptor : attributes)
     {

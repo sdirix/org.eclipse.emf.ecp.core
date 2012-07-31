@@ -30,10 +30,21 @@ import java.util.Set;
  * Factory for generating {@link AbstractMEControl}'s according to a {@link IItemPropertyDescriptor}.
  * 
  * @author shterev
+ * @author Eugen Neufeld
  */
-// TODO singleton
 public class ControlFactory
 {
+  private static ControlFactory INSTANCE;
+
+  public static ControlFactory getInstance()
+  {
+    if (INSTANCE == null)
+    {
+      INSTANCE = new ControlFactory();
+    }
+    return INSTANCE;
+  }
+
   private HashMap<Class<?>, ArrayList<AbstractMEControl>> controlRegistry;
 
   /**

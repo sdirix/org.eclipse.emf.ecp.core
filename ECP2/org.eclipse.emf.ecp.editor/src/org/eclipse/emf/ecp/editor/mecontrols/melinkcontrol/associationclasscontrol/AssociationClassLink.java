@@ -215,7 +215,7 @@ public class AssociationClassLink extends MELinkControl
     hyperlink = toolkit.createHyperlink(composite, "", style);
     if (eAttribute.size() == 1)
     {
-      ControlFactory controlFactory = new ControlFactory();
+      ControlFactory controlFactory = ControlFactory.getInstance();
       ItemPropertyDescriptor itemPropertyDescriptor = new ItemPropertyDescriptor(null, "", "", eAttribute.get(0));
       AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor, association, getContext());
       meControl.createControl(composite, style, itemPropertyDescriptor, association, getContext(), toolkit);
