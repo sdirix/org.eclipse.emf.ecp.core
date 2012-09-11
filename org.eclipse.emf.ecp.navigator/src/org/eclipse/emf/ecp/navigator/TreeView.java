@@ -43,6 +43,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
@@ -67,6 +68,7 @@ public class TreeView extends ViewPart implements ISelectionListener { // implem
 	private AdapterImpl workspaceListenerAdapter;
 	private boolean internalSelectionEvent;
 	private TreeLabelProvider labelProvider;
+	private ISelectionService selectionService;
 
 	/**
 	 * Constructor.
@@ -103,7 +105,7 @@ public class TreeView extends ViewPart implements ISelectionListener { // implem
 	 */
 	@Override
 	public void dispose() {
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().removeSelectionListener(this);
+		selectionService.removeSelectionListener(this);
 		getSite().getPage().removePartListener(partListener);
 		currentWorkspace.eAdapters().remove(workspaceListenerAdapter);
 		if (labelProvider != null) {
@@ -131,7 +133,8 @@ public class TreeView extends ViewPart implements ISelectionListener { // implem
 			// Do not show any content
 		}
 
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().addSelectionListener(this);
+		selectionService = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
+		selectionService.addSelectionListener(this);
 
 		// this is for workaround for update problem in navigator
 		getSite().setSelectionProvider(viewer);
