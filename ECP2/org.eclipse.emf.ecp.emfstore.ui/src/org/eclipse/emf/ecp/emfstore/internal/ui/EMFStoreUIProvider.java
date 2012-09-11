@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui;
 
+import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreCheckoutData;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
@@ -89,6 +90,12 @@ public class EMFStoreUIProvider extends DefaultUIProvider
   }
 
   @Override
+  public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties)
+  {
+    return null;
+  }
+
+  @Override
   public Control createAddRepositoryUI(Composite parent, final ECPProperties repositoryProperties,
       final Text repositoryNameText, Text repositoryLabelText, Text repositoryDescriptionText)
   {
@@ -160,6 +167,10 @@ public class EMFStoreUIProvider extends DefaultUIProvider
         widgetSelected(e);
       }
     });
+
+    urlText.setText("localhost");
+    portText.setText("8080");
+    certificateText.setText(KeyStoreManager.getInstance().getDefaultCertificate());
     return composite;
   }
 

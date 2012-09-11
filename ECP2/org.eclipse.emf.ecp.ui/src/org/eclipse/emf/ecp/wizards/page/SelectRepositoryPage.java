@@ -12,7 +12,7 @@ import org.eclipse.emf.ecp.wizards.ShareWizard;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -25,8 +25,6 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class SelectRepositoryPage extends WizardPage
 {
-
-  private TreeViewer viewer;
 
   /**
    * @param pageName
@@ -49,12 +47,12 @@ public class SelectRepositoryPage extends WizardPage
 
     RepositoriesContentProvider contentProvider = new RepositoriesContentProvider(
         ((ShareWizard)getWizard()).getProvider());
-    viewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    TableViewer viewer = new TableViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(contentProvider);
     viewer.setLabelProvider(new RepositoriesLabelProvider(contentProvider));
     viewer.setSorter(new ViewerSorter());
     viewer.setInput(ECPRepositoryManager.INSTANCE);
-    viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
     viewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
