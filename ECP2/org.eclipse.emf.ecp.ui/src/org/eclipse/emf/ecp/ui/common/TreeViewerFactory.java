@@ -40,8 +40,8 @@ public class TreeViewerFactory
   public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD, ILabelDecorator labelDecorator)
   {
     final ModelContentProvider contentProvider = new ModelContentProvider();
-    final TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new ModelLabelProvider(contentProvider),
-        contentProvider, ECPProjectManager.INSTANCE, labelDecorator);
+    final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
+        ECPProjectManager.INSTANCE, labelDecorator);
     if (hasDnD)
     {
       final ModelExplorerDropAdapter dropAdapter = new ModelExplorerDropAdapter(viewer);
@@ -82,12 +82,11 @@ public class TreeViewerFactory
     return viewer;
   }
 
-  public static TreeViewer createRepositoryExplorerViewer(Composite parent, boolean hasDnD,
-      ILabelDecorator labelDecorator)
+  public static TreeViewer createRepositoryExplorerViewer(Composite parent, ILabelDecorator labelDecorator)
   {
     RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
-    TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider),
-        contentProvider, ECPRepositoryManager.INSTANCE, labelDecorator);
+    TreeViewer viewer = createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider), contentProvider,
+        ECPRepositoryManager.INSTANCE, labelDecorator);
     return viewer;
   }
 

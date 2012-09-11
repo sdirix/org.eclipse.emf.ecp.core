@@ -24,6 +24,8 @@ public class CheckedModelElementHelper extends AbstractModelElementHelper
 {
   private Object[] checked = null;
 
+  private Object[] initialSelection = null;
+
   /**
    * @param ePackages
    * @param unsupportedEPackages
@@ -82,32 +84,11 @@ public class CheckedModelElementHelper extends AbstractModelElementHelper
         setChecked();
       }
     });
-    // getButton(IDialogConstants.SELECT_ALL_ID).addSelectionListener(new SelectionListener()
-    // {
-    //
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // setChecked();
-    // }
-    //
-    // public void widgetDefaultSelected(SelectionEvent e)
-    // {
-    // widgetSelected(e);
-    // }
-    // });
-    // getButton(IDialogConstants.DESELECT_ALL_ID).addSelectionListener(new SelectionListener()
-    // {
-    //
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // setChecked();
-    // }
-    //
-    // public void widgetDefaultSelected(SelectionEvent e)
-    // {
-    // widgetSelected(e);
-    // }
-    // });
+
+    if (initialSelection != null)
+    {
+      getTreeViewer().setCheckedElements(initialSelection);
+    }
     return composite;
   }
 
@@ -142,6 +123,10 @@ public class CheckedModelElementHelper extends AbstractModelElementHelper
     if (getTreeViewer() != null)
     {
       getTreeViewer().setCheckedElements(selection);
+    }
+    else
+    {
+      initialSelection = selection;
     }
   }
 }

@@ -81,6 +81,12 @@
             showLabel="true"
             type="org.eclipse.emf.ecore.EObject">
       </widget>
+      <widget
+            class="org.eclipse.emf.ecp.editor.mecontrols.MELinkControl"
+            name="org.eclipse.emf.ecp.editor.mesinglelinkcontrol2"
+            showLabel="true"
+            type="org.eclipse.emf.ecore.EObject">
+      </widget>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.editor.melinkcontrols">

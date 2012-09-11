@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.wizards;
+package org.eclipse.emf.ecp.wizards.page;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -22,7 +22,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage
   /**
    * @param pageName
    */
-  protected SelectOrCreateRepositoryPage(String pageName)
+  public SelectOrCreateRepositoryPage(String pageName)
   {
     super(pageName);
     setTitle("Create or use existing ECPRepository");

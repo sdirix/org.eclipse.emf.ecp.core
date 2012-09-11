@@ -66,7 +66,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProviderRegist
   @Override
   protected TreeViewer createViewer(Composite parent)
   {
-	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, false, createLabelDecorator());
+	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
 
     addRepositoryAction = new AddRepositoryAction(getSite().getShell());
     setEnablements();

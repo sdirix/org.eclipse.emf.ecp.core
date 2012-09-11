@@ -29,7 +29,7 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 /**
  * @author Eugen Neufeld
  */
-public class DateTimWidget extends ECPWidget
+public class DateTimeWidget extends ECPAttributeWidget
 {
   private ImageHyperlink dateDeleteButton;
 
@@ -46,7 +46,7 @@ public class DateTimWidget extends ECPWidget
   /**
    * @param dbc
    */
-  public DateTimWidget(EMFDataBindingContext dbc, EObject modelElement, EStructuralFeature feature)
+  public DateTimeWidget(EMFDataBindingContext dbc, EObject modelElement, EStructuralFeature feature)
   {
     super(dbc);
     this.modelElement = modelElement;
@@ -55,7 +55,7 @@ public class DateTimWidget extends ECPWidget
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#createWidget(org.eclipse.ui.forms.widgets.FormToolkit,
+   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#createWidget(org.eclipse.ui.forms.widgets.FormToolkit,
    * org.eclipse.swt.widgets.Composite, int)
    */
   @Override
@@ -102,7 +102,7 @@ public class DateTimWidget extends ECPWidget
   /*
    * (non-Javadoc)
    * @see
-   * org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#bindValue(org.eclipse.core.databinding.observable.value
+   * org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#bindValue(org.eclipse.core.databinding.observable.value
    * .IObservableValue)
    */
   @Override
@@ -117,7 +117,7 @@ public class DateTimWidget extends ECPWidget
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#setEditable(boolean)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#setEditable(boolean)
    */
   @Override
   public void setEditable(boolean isEditable)
@@ -129,7 +129,7 @@ public class DateTimWidget extends ECPWidget
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#getControl()
+   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#getControl()
    */
   @Override
   public Control getControl()

@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.editor.mecontrols;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.EEnumWidget;
 
 /**
@@ -50,7 +50,7 @@ public class MEEnumControl extends MEAttributeControl
    * EMFDataBindingContext)
    */
   @Override
-  protected ECPWidget getAttributeWidget(EMFDataBindingContext dbc)
+  protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
     return new EEnumWidget(dbc, getItemPropertyDescriptor(), getModelElement(), getStructuralFeature());
   }

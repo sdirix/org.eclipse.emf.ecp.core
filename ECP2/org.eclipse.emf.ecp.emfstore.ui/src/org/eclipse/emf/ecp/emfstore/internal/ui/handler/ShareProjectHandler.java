@@ -3,7 +3,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.ecp.wizards.RepositoryWizard;
+import org.eclipse.emf.ecp.wizards.ShareWizard;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.ui.controller.UIShareProjectController;
@@ -26,7 +26,7 @@ public class ShareProjectHandler extends AbstractHandler
     InternalProject project = (InternalProject)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
         .getFirstElement();
 
-    RepositoryWizard rw = new RepositoryWizard();
+    ShareWizard rw = new ShareWizard();
     rw.init(project.getProvider());
 
     WizardDialog wd = new WizardDialog(HandlerUtil.getActiveShell(event), rw);

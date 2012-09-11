@@ -28,5 +28,6 @@ public interface ECPRepository extends ECPElement, ECPModelContext, ECPPropertie
 
   public String getDescription();
 
+  // TODO remove or use
   public ECPProject[] getOpenProjects();
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -74,17 +75,19 @@ public class NewReferenceAction extends ReferenceAction
       ePackages.add(modelElement.eClass().getEPackage());
       ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
 
-      NewModelElementWizard wizard = new NewModelElementWizard();
-      wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
+      NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
+      SelectModelElementHelper helper = new SelectModelElementHelper(ePackages, new HashSet<EPackage>(),
+          new HashSet<EPackage>(), classes);
+      wizard.setUIProvider(helper);
+      // wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 
-      wizard.setWindowTitle("New Reference Element");
       // ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()
       // .getActiveWorkbenchWindow().getShell(), ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
       //
       // dialog.setAllowMultiple(false);
       // int result = dialog.open();
       WizardDialog wd = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
-
+      // wizard.setWindowTitle("New Reference Element");
       EObject newMEInstance = null;
       int result = wd.open();
 
@@ -96,7 +99,12 @@ public class NewReferenceAction extends ReferenceAction
         // if (object instanceof EClass)
         // {
         // EClass eClasse = (EClass)object;
-        EClass eClasse = wizard.getNewMEType();
+        Object[] selection = helper.getTreeSelection();
+        if (selection == null || selection.length == 0)
+        {
+          return;
+        }
+        EClass eClasse = (EClass)selection[0];
         // 1.create ME
         EPackage ePackage = eClasse.getEPackage();
         newMEInstance = ePackage.getEFactoryInstance().create(eClasse);

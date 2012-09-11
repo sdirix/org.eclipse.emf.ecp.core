@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Text;
 
 import java.util.List;
 
-public class UICreateProject
+public class UICreateProject implements CompositeUiProvider
 {
 
   public interface CreateProjectChangeListener

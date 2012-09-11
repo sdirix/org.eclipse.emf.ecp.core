@@ -150,12 +150,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   {
     Set<EPackage> ePackages = new HashSet<EPackage>();
 
-    for (Object o : Registry.INSTANCE.values())
+    for (String nsUri : Registry.INSTANCE.keySet())
     {
-      if (o instanceof EPackage)
-      {
-        ePackages.add((EPackage)o);
-      }
+      EPackage ePackage = Registry.INSTANCE.getEPackage(nsUri);
+      ePackages.add(ePackage);
     }
 
     setFilteredPackages(ePackages);

@@ -255,20 +255,4 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
     // TODO Consider to cache the result
     return result.toArray(new InternalProject[result.size()]);
   }
-  // public InternalRepository getRepository()
-  // {
-  // return this;
-  // }
-  // public String getDefaultCheckoutName()
-  // {
-  // return getName();
-  // }
-  //
-  // public ECPProject checkout(String projectName, ECPProperties projectProperties)
-  // {
-  // InternalProject project = new ECPProjectImpl(this, projectName, projectProperties);
-  // provider.handleLifecycle(project, LifecycleEvent.CREATE);
-  // ECPProjectManagerImpl.INSTANCE.changeElements(null, Collections.singleton(project));
-  // return project;
-  // }
 }

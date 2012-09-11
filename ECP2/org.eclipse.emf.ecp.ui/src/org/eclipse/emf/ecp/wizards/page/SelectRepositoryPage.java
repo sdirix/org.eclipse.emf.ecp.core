@@ -1,12 +1,13 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.wizards;
+package org.eclipse.emf.ecp.wizards.page;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
+import org.eclipse.emf.ecp.wizards.ShareWizard;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -30,7 +31,7 @@ public class SelectRepositoryPage extends WizardPage
   /**
    * @param pageName
    */
-  protected SelectRepositoryPage(String pageName)
+  public SelectRepositoryPage(String pageName)
   {
     super(pageName);
     setTitle("Select an existing ECPRepository");
@@ -47,7 +48,7 @@ public class SelectRepositoryPage extends WizardPage
     container.setLayout(new GridLayout(1, true));
 
     RepositoriesContentProvider contentProvider = new RepositoriesContentProvider(
-        ((RepositoryWizard)getWizard()).getProvider());
+        ((ShareWizard)getWizard()).getProvider());
     viewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(contentProvider);
     viewer.setLabelProvider(new RepositoriesLabelProvider(contentProvider));
@@ -61,7 +62,7 @@ public class SelectRepositoryPage extends WizardPage
       public void selectionChanged(SelectionChangedEvent event)
       {
         ECPRepository ecpRepository = (ECPRepository)((IStructuredSelection)event.getSelection()).getFirstElement();
-        ((RepositoryWizard)getWizard()).setSelectedRepository(ecpRepository);
+        ((ShareWizard)getWizard()).setSelectedRepository(ecpRepository);
         setPageComplete(true);
       }
     });

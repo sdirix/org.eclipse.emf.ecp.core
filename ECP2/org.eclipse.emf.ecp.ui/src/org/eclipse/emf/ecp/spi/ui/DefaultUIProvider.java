@@ -180,6 +180,7 @@ public class DefaultUIProvider extends Element implements UIProvider
     return UIProvider.EMF_LABEL_PROVIDER.getImage(element);
   }
 
+  // TODO is this the right place for this implementation?
   public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements)
   {
     if (elements.length == 1)

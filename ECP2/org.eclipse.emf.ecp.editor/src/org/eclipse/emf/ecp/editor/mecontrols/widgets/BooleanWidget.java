@@ -17,7 +17,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 /**
  * @author Eugen Neufeld
  */
-public class BooleanWidget extends ECPWidget
+public class BooleanWidget extends ECPAttributeWidget
 {
 
   /**
@@ -46,7 +46,7 @@ public class BooleanWidget extends ECPWidget
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#setEditable(boolean)
+   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#setEditable(boolean)
    */
   @Override
   public void setEditable(boolean isEditable)
@@ -56,7 +56,7 @@ public class BooleanWidget extends ECPWidget
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#getControl()
+   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#getControl()
    */
   @Override
   public Control getControl()

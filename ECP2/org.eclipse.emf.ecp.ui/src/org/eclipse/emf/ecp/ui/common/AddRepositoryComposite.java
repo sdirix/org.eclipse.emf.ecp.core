@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.wizards;
+package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -9,7 +9,6 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ProvidersContentProvider;
@@ -21,7 +20,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.ModifyEvent;
@@ -40,84 +38,52 @@ import java.util.Map;
 /**
  * @author Eugen Neufeld
  */
-public class AddRepositoryPage extends WizardPage
+public class AddRepositoryComposite implements CompositeUiProvider
 {
+
+  public interface AddRepositoryChangeListener
+  {
+    public void repositoryNameChanged(String repositoryName);
+
+    public void repositoryLabelChanged(String repositoryLabel);
+
+    public void repositoryDescriptionChanged(String repositoryDescription);
+
+    public void repositoryProviderChanged(ECPProvider provider);
+  }
+
+  public AddRepositoryComposite()
+  {
+
+  }
+
+  public AddRepositoryComposite(ECPProvider provider)
+  {
+    this.provider = provider;
+  }
+
+  private Composite providerStack;
+
+  private StackLayout providerStackLayout;
+
+  private Text repositoryLabelText;
+
+  private Text repositoryDescriptionText;
+
+  private Text repositoryNameText;
+
+  private AddRepositoryChangeListener listener;
+
+  private ECPProvider provider;
+
   private String repositoryName;
 
   private String repositoryLabel;
 
   private String repositoryDescription;
 
-  private Map<String, Control> providerControls = new HashMap<String, Control>();
-
-  private Map<String, ECPProperties> providerProperties = new HashMap<String, ECPProperties>();
-
-  private ComboViewer providersViewer;
-
-  private Composite providerStack;
-
-  private StackLayout providerStackLayout;
-
-  private Text repositoryNameText;
-
-  private Text repositoryLabelText;
-
-  private Text repositoryDescriptionText;
-
-  private ECPProvider provider;
-
-  /**
-   * @param pageName
-   */
-  public AddRepositoryPage(String pageName, ECPProvider provider)
+  public Composite createUI(Composite parent)
   {
-    super(pageName);
-    this.provider = provider;
-    // repositoryName = "";
-    // repositoryLabel = "";
-    // repositoryDescription = "";
-  }
-
-  public final ECPProvider getProvider()
-  {
-    return provider;
-  }
-
-  public final ECPProperties getProperties()
-  {
-    if (provider == null)
-    {
-      return null;
-    }
-
-    return providerProperties.get(provider.getName());
-  }
-
-  public final String getRepositoryName()
-  {
-    return repositoryName;
-  }
-
-  public final String getRepositoryLabel()
-  {
-    return repositoryLabel;
-  }
-
-  public final String getRepositoryDescription()
-  {
-    return repositoryDescription;
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-   */
-  public void createControl(Composite parent)
-  {
-    setTitle("Add Repository");
-    setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png"));
-    setMessage("Select a provider and configure the new repository.");
-
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayoutData(new GridData(GridData.FILL_BOTH));
     composite.setLayout(new GridLayout(2, false));
@@ -128,7 +94,7 @@ public class AddRepositoryPage extends WizardPage
       label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
       label.setText("Provider:");
 
-      providersViewer = new ComboViewer(composite, SWT.NONE);
+      ComboViewer providersViewer = new ComboViewer(composite, SWT.NONE);
       Combo combo = providersViewer.getCombo();
       GridData gd_combo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
       gd_combo.widthHint = 150;
@@ -146,9 +112,22 @@ public class AddRepositoryPage extends WizardPage
           if (provider != null)
           {
             showProviderUI(provider);
+            if (listener != null)
+            {
+              listener.repositoryProviderChanged(provider);
+            }
           }
         }
       });
+
+      for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders())
+      {
+        if (provider.canAddRepositories())
+        {
+          providersViewer.setSelection(new StructuredSelection(provider));
+          break;
+        }
+      }
     }
 
     GridData gd_providerStack = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -157,11 +136,10 @@ public class AddRepositoryPage extends WizardPage
     providerStack = new Composite(composite, SWT.NONE);
     providerStack.setLayout(providerStackLayout);
     providerStack.setLayoutData(gd_providerStack);
-
     {
-      Label label = new Label(composite, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      label.setText("Name:");
+      Label repositoryNameLabel = new Label(composite, SWT.NONE);
+      repositoryNameLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+      repositoryNameLabel.setText("Name:");
 
       repositoryNameText = new Text(composite, SWT.BORDER);
       // repositoryNameText.setText(repositoryName);
@@ -176,15 +154,17 @@ public class AddRepositoryPage extends WizardPage
           {
             repositoryLabelText.setText(repositoryName);
           }
-          setPageComplete(true);
+          if (listener != null)
+          {
+            listener.repositoryNameChanged(repositoryName);
+          }
         }
       });
     }
-
     {
-      Label label = new Label(composite, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      label.setText("Label:");
+      Label repositoryLabelLabel = new Label(composite, SWT.NONE);
+      repositoryLabelLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+      repositoryLabelLabel.setText("Label:");
 
       repositoryLabelText = new Text(composite, SWT.BORDER);
       // repositoryLabelText.setText(repositoryLabel);
@@ -194,14 +174,17 @@ public class AddRepositoryPage extends WizardPage
         public void modifyText(ModifyEvent e)
         {
           repositoryLabel = repositoryLabelText.getText();
+          if (listener != null)
+          {
+            listener.repositoryLabelChanged(repositoryLabel);
+          }
         }
       });
     }
-
     {
-      Label label = new Label(composite, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      label.setText("Description:");
+      Label repositoryDescriptionLabel = new Label(composite, SWT.NONE);
+      repositoryDescriptionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+      repositoryDescriptionLabel.setText("Description:");
 
       repositoryDescriptionText = new Text(composite, SWT.BORDER);
       // repositoryDescriptionText.setText(repositoryDescription);
@@ -213,32 +196,32 @@ public class AddRepositoryPage extends WizardPage
         public void modifyText(ModifyEvent e)
         {
           repositoryDescription = repositoryDescriptionText.getText();
+          if (listener != null)
+          {
+            listener.repositoryDescriptionChanged(repositoryDescription);
+          }
         }
       });
     }
 
-    if (provider == null)
-    {
-      for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders())
-      {
-        if (provider.canAddRepositories())
-        {
-          providersViewer.setSelection(new StructuredSelection(provider));
-          break;
-        }
-      }
-    }
-    else
+    if (provider != null)
     {
       showProviderUI(provider);
     }
 
-    setControl(composite);
-    setPageComplete(false);
+    return composite;
   }
+
+  private Map<String, Control> providerControls = new HashMap<String, Control>();
+
+  private Map<String, ECPProperties> providerProperties = new HashMap<String, ECPProperties>();
 
   protected void showProviderUI(ECPProvider provider)
   {
+    if (providerStack == null)
+    {
+      return;
+    }
     String name = provider.getName();
     Control control = providerControls.get(name);
     if (control == null)
@@ -256,9 +239,57 @@ public class AddRepositoryPage extends WizardPage
     providerStack.layout();
   }
 
-  @Override
-  public boolean canFlipToNextPage()
+  /**
+   * @return
+   */
+  public ECPProvider getProvider()
   {
-    return false;
+    return provider;
+  }
+
+  /**
+   * @return
+   */
+  public String getRepositoryName()
+  {
+    return repositoryName;
+  }
+
+  /**
+   * @return
+   */
+  public String getRepositoryDescription()
+  {
+    return repositoryDescription;
+  }
+
+  /**
+   * @return
+   */
+  public ECPProperties getProperties()
+  {
+    if (provider == null)
+    {
+      return null;
+    }
+
+    return providerProperties.get(provider.getName());
+  }
+
+  /**
+   * @return
+   */
+  public String getRepositoryLabel()
+  {
+    return repositoryLabel;
+  }
+
+  /**
+   * @param listener
+   *          the listener to set
+   */
+  public void setListener(AddRepositoryChangeListener listener)
+  {
+    this.listener = listener;
   }
 }

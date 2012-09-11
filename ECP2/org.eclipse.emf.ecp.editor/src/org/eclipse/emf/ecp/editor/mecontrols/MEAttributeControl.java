@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -65,7 +65,7 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
     labelWidgetImage = getToolkit().createLabel(composite, "    ");
     labelWidgetImage.setBackground(parent.getBackground());
 
-    ECPWidget widget = getAttributeWidget(getDataBindingContext());
+    ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
     Control control = widget.createWidget(getToolkit(), composite, style);
     widget.setEditable(isEditable());
 
@@ -94,7 +94,7 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
   /**
    * @return
    */
-  protected abstract ECPWidget getAttributeWidget(EMFDataBindingContext dbc);
+  protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
 
   /**
    * {@inheritDoc}

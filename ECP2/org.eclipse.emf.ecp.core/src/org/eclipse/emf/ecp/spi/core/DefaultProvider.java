@@ -92,7 +92,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
     description = "";
   }
 
-  public String getType()
+  public final String getType()
   {
     return TYPE;
   }

@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
-import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -132,11 +132,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
         {
           if (entry.isAddition() && entry.getPosition() >= sectionComposite.getChildren().length)
           {
-            ECPObservableValue modelValue = new ECPObservableValue(model, entry.getPosition(), getClassType());
-            AttributeControlHelper h = new AttributeControlHelper(modelValue);
-
-            h.createControl(sectionComposite, style);
-            controlHelpers.add(h);
+            addControl(sectionComposite, style, model, entry.getPosition());
             sectionComposite.layout(true);
 
             refreshSection();
@@ -146,15 +142,20 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
     });
     for (int i = 0; i < model.size(); i++)
     {
-      ECPObservableValue modelValue = new ECPObservableValue(model, i, getClassType());
-      AttributeControlHelper h = new AttributeControlHelper(modelValue);
-
-      h.createControl(sectionComposite, style);
-      controlHelpers.add(h);
+      addControl(sectionComposite, style, model, i);
     }
     isFull();
     section.setClient(sectionComposite);
     return section;
+  }
+
+  private void addControl(Composite sectionComposite, int style, final IObservableList model, int position)
+  {
+    ECPObservableValue modelValue = new ECPObservableValue(model, position, getClassType());
+    AttributeControlHelper h = new AttributeControlHelper(modelValue);
+
+    h.createControl(sectionComposite, style);
+    controlHelpers.add(h);
   }
 
   private void createSectionToolbar(Section section, FormToolkit toolkit)
@@ -200,7 +201,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
   /**
    * @return
    */
-  protected abstract ECPWidget getAttributeWidget(EMFDataBindingContext dbc);
+  protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
 
   /**
    * {@inheritDoc}
@@ -268,7 +269,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
       labelWidgetImage = getToolkit().createLabel(composite, "    ");
       labelWidgetImage.setBackground(parent.getBackground());
 
-      ECPWidget widget = getAttributeWidget(getDataBindingContext());
+      ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
       Control control = widget.createWidget(getToolkit(), composite, style);
       widget.setEditable(isEditable());
 

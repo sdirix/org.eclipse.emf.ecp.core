@@ -11,7 +11,7 @@
 package org.eclipse.emf.ecp.editor.mecontrols;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
+import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.StringWidget;
 
 /**
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.editor.mecontrols.widgets.StringWidget;
 public class METextControl extends MEAttributeControl
 {
 
-  private ECPWidget widget;
+  private ECPAttributeWidget widget;
 
   /*
    * (non-Javadoc)
@@ -42,7 +42,7 @@ public class METextControl extends MEAttributeControl
    * EMFDataBindingContext)
    */
   @Override
-  protected ECPWidget getAttributeWidget(EMFDataBindingContext dbc)
+  protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
     widget = new StringWidget(dbc);
     return widget;

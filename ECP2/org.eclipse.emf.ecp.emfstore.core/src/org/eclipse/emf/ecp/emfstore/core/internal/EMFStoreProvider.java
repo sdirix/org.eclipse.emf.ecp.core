@@ -13,10 +13,8 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.emfstore.client.model.ModelFactory;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.client.model.Usersession;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
@@ -272,35 +270,35 @@ public class EMFStoreProvider extends DefaultProvider
 
   }
 
-  /**
-   * @param repository
-   */
-  // TODO remove
-  public EList<ProjectInfo> getAllProjects(ECPRepository repository, String user, String password)
-  {
-    ServerInfo serverInfo = getServerInfo((InternalRepository)repository);
-    if (serverInfo.getLastUsersession() == null)
-    {
-      Usersession usersession = ModelFactory.eINSTANCE.createUsersession();
-      usersession.setServerInfo(serverInfo);
-      usersession.setUsername(user);
-      usersession.setPassword(password);
-      serverInfo.setLastUsersession(usersession);
-    }
-    if (!serverInfo.getLastUsersession().isLoggedIn())
-    {
-      try
-      {
-        serverInfo.getLastUsersession().logIn();
-      }
-      catch (Exception ex)
-      {
-        Activator.log(ex);
-      }
-    }
-
-    return serverInfo.getProjectInfos();
-  }
+  // /**
+  // * @param repository
+  // */
+  // // TODO remove
+  // public EList<ProjectInfo> getAllProjects(ECPRepository repository, String user, String password)
+  // {
+  // ServerInfo serverInfo = getServerInfo((InternalRepository)repository);
+  // if (serverInfo.getLastUsersession() == null)
+  // {
+  // Usersession usersession = ModelFactory.eINSTANCE.createUsersession();
+  // usersession.setServerInfo(serverInfo);
+  // usersession.setUsername(user);
+  // usersession.setPassword(password);
+  // serverInfo.setLastUsersession(usersession);
+  // }
+  // if (!serverInfo.getLastUsersession().isLoggedIn())
+  // {
+  // try
+  // {
+  // serverInfo.getLastUsersession().logIn();
+  // }
+  // catch (Exception ex)
+  // {
+  // Activator.log(ex);
+  // }
+  // }
+  //
+  // return serverInfo.getProjectInfos();
+  // }
 
   /*
    * (non-Javadoc)

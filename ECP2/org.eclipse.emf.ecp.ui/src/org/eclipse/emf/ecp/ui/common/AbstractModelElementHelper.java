@@ -10,6 +10,9 @@ import org.eclipse.emf.ecp.ui.model.ModelTreeContentProvider;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
@@ -21,7 +24,7 @@ import org.eclipse.swt.widgets.Text;
 
 import java.util.Collection;
 
-public abstract class AbstractModelElementHelper
+public abstract class AbstractModelElementHelper implements CompositeUiProvider
 {
   private final Collection<EPackage> ePackages;
 
@@ -32,6 +35,8 @@ public abstract class AbstractModelElementHelper
   private final Collection<EClass> filteredEClasses;
 
   private TreeViewer treeViewer;
+
+  private Object[] treeSelection;
 
   public AbstractModelElementHelper(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
       Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses)
@@ -95,6 +100,15 @@ public abstract class AbstractModelElementHelper
 
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).minSize(0, 150).span(2, 1)
         .applyTo(treeViewer.getTree());
+
+    treeViewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        treeSelection = ((IStructuredSelection)treeViewer.getSelection()).toArray();
+      }
+    });
     return composite;
   }
 
@@ -120,6 +134,14 @@ public abstract class AbstractModelElementHelper
   public TreeViewer getTreeViewer()
   {
     return treeViewer;
+  }
+
+  /**
+   * @return the treeSelection
+   */
+  public Object[] getTreeSelection()
+  {
+    return treeSelection;
   }
 
 }

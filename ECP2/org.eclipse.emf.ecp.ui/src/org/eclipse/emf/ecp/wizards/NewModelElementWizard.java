@@ -10,46 +10,31 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.wizards;
 
-//TODO: Revise
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
+import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
 
-import org.eclipse.jface.wizard.Wizard;
-
-import java.util.Collection;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.widgets.Composite;
 
 /**
- * @author Hodaie This is implementation of New Model Element wizard. This wizard is show through
+ * @author Hodaie
+ * @author Eugen Neufeld This is implementation of New Model Element wizard. This wizard is show through
  *         "Add new model element..." command in context menu of Navigator (only on right click on LeafSection). The
  *         wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
  *         tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
  */
-public class NewModelElementWizard extends Wizard
+public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
 {
 
-  /**
-   * . Through this field, the ModelTreePage tells the wizard which model element type is selected
-   */
-  private EClass newMEType;
-
-  /**
-   * Through this field, the ModelTreePage tells the wizard if it's ready to finish, i.e. if the selection a model
-   * element is and not a package.
-   */
-  private boolean treePageCompleted;
-
-  private ECPProject ecpProject;
-
-  private Collection<EPackage> ePackages;
-
-  private Collection<EPackage> unsupportedEPackages;
-
-  private Collection<EPackage> filteredEPackages;
-
-  private Collection<EClass> filteredEClasses;
+  public NewModelElementWizard(String title)
+  {
+    setWindowTitle(title);
+  }
 
   /**
    * . ({@inheritDoc})
@@ -57,17 +42,49 @@ public class NewModelElementWizard extends Wizard
   @Override
   public void addPages()
   {
-    ModelTreePage treePage = null;
-    if (ecpProject != null)
+    super.addPages();
+    WizardPage wp = new WizardPage("Add new model element")
     {
-      treePage = new ModelTreePage("ModelTreePage", ecpProject);
-    }
-    else
-    {
-      treePage = new ModelTreePage("ModelTreePage", ePackages, unsupportedEPackages, filteredEPackages,
-          filteredEClasses);
-    }
-    addPage(treePage);
+
+      public void createControl(Composite parent)
+      {
+        Composite composite = getUIProvider().createUI(parent);
+        getUIProvider().getTreeViewer().addSelectionChangedListener(new ISelectionChangedListener()
+        {
+
+          public void selectionChanged(SelectionChangedEvent event)
+          {
+            IStructuredSelection sel = (IStructuredSelection)getUIProvider().getTreeViewer().getSelection();
+            if (sel != null && sel.getFirstElement() instanceof EClass)
+            {
+              setPageComplete(true);
+            }
+            else
+            {
+              setPageComplete(false);
+            }
+          }
+        });
+        getUIProvider().getTreeViewer().addDoubleClickListener(new IDoubleClickListener()
+        {
+
+          public void doubleClick(DoubleClickEvent event)
+          {
+            if (isPageComplete())
+            {
+              performFinish();
+            }
+
+          }
+
+        });
+        setPageComplete(false);
+        setControl(composite);
+      }
+    };
+    addPage(wp);
+    wp.setTitle("Add new model element");
+    wp.setDescription("Select model element type");
 
   }
 
@@ -78,87 +95,6 @@ public class NewModelElementWizard extends Wizard
   @Override
   public boolean performFinish()
   {
-    final EObject newMEInstance;
-    if (ecpProject != null && newMEType != null)
-    {
-      // 1.create ME
-      EPackage ePackage = newMEType.getEPackage();
-      newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
-
-      ecpProject.getElements().add(newMEInstance);
-
-      // 3.open the newly created ME
-      ActionHelper.openModelElement(newMEInstance, this.getClass().getName(), ecpProject);
-    }
-
     return true;
   }
-
-  public void init(ECPProject ecpProject)
-  {
-    this.ecpProject = ecpProject;
-  }
-
-  public void init(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
-      Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses)
-  {
-    this.ePackages = ePackages;
-    this.unsupportedEPackages = unsupportedEPackages;
-    this.filteredEPackages = filteredEPackages;
-    this.filteredEClasses = filteredEClasses;
-  }
-
-  // /**
-  // * . ({@inheritDoc})
-  // */
-  // public void init(IWorkbench workbench, IStructuredSelection selection)
-  // {
-  // // get the in navigator selected ME
-  // if (selection.getFirstElement() instanceof InternalProject)
-  // {
-  // ecpProject = (InternalProject)selection.getFirstElement();
-  // }
-  // else
-  // {
-  //
-  // }
-  //
-  // }
-
-  /**
-   * . ({@inheritDoc})
-   */
-  @Override
-  public boolean canFinish()
-  {
-    return treePageCompleted;
-
-  }
-
-  /**
-   * @param newMEType
-   *          The ME type that was in ModelTreePage selected.
-   */
-  public void setNewMEType(EClass newMEType)
-  {
-    this.newMEType = newMEType;
-  }
-
-  /**
-   * @param treePageCompleted
-   *          If ModelTreePage is complete (i.e. its selection is a ME)
-   */
-  public void setTreePageCompleted(boolean treePageCompleted)
-  {
-    this.treePageCompleted = treePageCompleted;
-  }
-
-  /**
-   * @return
-   */
-  public EClass getNewMEType()
-  {
-    return newMEType;
-  }
-
 }
