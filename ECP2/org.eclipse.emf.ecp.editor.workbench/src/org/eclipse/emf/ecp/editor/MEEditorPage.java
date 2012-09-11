@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.editor;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -163,10 +165,16 @@ public class MEEditorPage extends FormPage {
 
 			@Override
 			public void run() {
-				// TODO: Test
-				Command command = DeleteCommand.create(editorPageContent.getModelElementContext().getEditingDomain(),
-					editorPageContent.getModelElement());
-				command.execute();
+				new ECPCommand(editorPageContent.getModelElement()) {
+
+					@Override
+					protected void doRun() {
+						EcoreUtil.delete(editorPageContent.getModelElement(), true);
+					}
+
+				}.run(true);
+				
+				MEEditorPage.this.getEditor().close(true);
 			}
 		});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
