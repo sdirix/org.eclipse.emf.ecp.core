@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
@@ -70,9 +71,9 @@ public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
 
           public void doubleClick(DoubleClickEvent event)
           {
-            if (isPageComplete())
+            if (isPageComplete() && performFinish())
             {
-              performFinish();
+              ((WizardDialog)getContainer()).close();
             }
 
           }
