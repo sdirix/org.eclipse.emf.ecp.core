@@ -19,8 +19,6 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator
 {
 
-  private String providerLabel = "org.eclipse.emf.ecp.emfstore.provider";
-
   private String dirtyPath = "icons/dirty.png";
 
   /**
@@ -44,7 +42,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator
     {
       ECPProject project = (ECPProject)element;
       ECPProvider provider = project.getProvider();
-      if (provider != null && providerLabel.equalsIgnoreCase(provider.getName())
+      if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName())
           && EMFStoreProvider.getProjectSpace((InternalProject)project).isDirty())
       {
         decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);

@@ -238,6 +238,19 @@
             If the porject has local changes.
          </description>
       </decorator>
+      <decorator
+           adaptable="true"
+           class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator"
+           id="org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator"
+           label="Login Decorator"
+           lightweight="true"
+           state="true">
+        <enablement>
+           <objectClass
+                 name="org.eclipse.emf.ecp.core.ECPRepository">
+           </objectClass>
+        </enablement>
+     </decorator>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -249,5 +262,16 @@
             type="org.eclipse.emf.ecp.core.ECPRepository">
       </propertyTester>
    </extension>
-
+	<extension
+         point="org.eclipse.emf.emfstore.client.loginObserver">
+      <observer
+            loginObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator">
+      </observer>
+   </extension>
+   <extension
+         point="org.eclipse.emf.emfstore.client.logoutObserver">
+      <observer
+            logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator">
+      </observer>
+   </extension>
 </plugin>
