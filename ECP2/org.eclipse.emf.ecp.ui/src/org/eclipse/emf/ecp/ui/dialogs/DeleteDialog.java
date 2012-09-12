@@ -18,7 +18,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -63,9 +62,9 @@ public class DeleteDialog extends TitleAreaDialog
     composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     composite.setLayout(new GridLayout(1, false));
 
-    Button btnDontAskAgain = new Button(composite, SWT.CHECK);
-    btnDontAskAgain.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-    btnDontAskAgain.setText("Don't ask again");
+    // Button btnDontAskAgain = new Button(composite, SWT.CHECK);
+    // btnDontAskAgain.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+    // btnDontAskAgain.setText("Don't ask again");
 
     return area;
   }
