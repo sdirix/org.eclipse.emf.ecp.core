@@ -39,6 +39,7 @@
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
          <command
                commandId="org.eclipse.emf.ecp.emfstore.ui.share"
+               icon="icons/arrow_out.png"
                label="Share"
                style="push">
             <visibleWhen
