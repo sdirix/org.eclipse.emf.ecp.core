@@ -8,18 +8,29 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
+import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.AddReferenceAction;
+import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.NewReferenceAction;
+import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.ReferenceAction;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.LinkWidget;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eugen Neufeld
@@ -74,12 +85,15 @@ public class MELinkControl extends AbstractMEControl
   {
     final Composite composite = getToolkit().createComposite(parent, style);
     composite.setBackgroundMode(SWT.INHERIT_FORCE);
-    GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(composite);
+    GridLayoutFactory.fillDefaults().numColumns(4).spacing(2, 0).applyTo(composite);
     GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
 
     labelWidgetImage = getToolkit().createLabel(composite, "    ");
     labelWidgetImage.setBackground(parent.getBackground());
-    createWidgetControl(composite, style);
+    final Composite linkComposite = getToolkit().createComposite(composite, SWT.NONE);
+    linkComposite.setLayout(new FillLayout());
+    GridDataFactory.fillDefaults().grab(true, false).applyTo(linkComposite);
+    createWidgetControl(linkComposite, style);
 
     modelElementChangeListener = new ModelElementChangeListener(getModelElement())
     {
@@ -89,18 +103,15 @@ public class MELinkControl extends AbstractMEControl
       {
         if (notification.getFeature() == getStructuralFeature())
         {
-          createWidgetControl(composite, style);
+          createWidgetControl(linkComposite, style);
         }
       }
     };
 
-    controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
-    controlDecoration.setDescriptionText("Invalid input");
-    controlDecoration.setShowHover(true);
-    FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-        FieldDecorationRegistry.DEC_ERROR);
-    controlDecoration.setImage(fieldDecoration.getImage());
-    controlDecoration.hide();
+    for (Action action : initActions())
+    {
+      createButtonForAction(action, composite);
+    }
 
     return composite;
   }
@@ -110,6 +121,7 @@ public class MELinkControl extends AbstractMEControl
     if (control != null)
     {
       control.dispose();
+      controlDecoration.dispose();
     }
     final EObject opposite = (EObject)getModelElement().eGet(getStructuralFeature());
     if (opposite != null)
@@ -124,7 +136,56 @@ public class MELinkControl extends AbstractMEControl
       control.setBackground(composite.getBackground());
       control.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     }
+    // GridDataFactory.fillDefaults().grab(true, true).applyTo(control);
+
+    controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
+    controlDecoration.setDescriptionText("Invalid input");
+    controlDecoration.setShowHover(true);
+    FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
+        FieldDecorationRegistry.DEC_ERROR);
+    controlDecoration.setImage(fieldDecoration.getImage());
+    controlDecoration.hide();
+
     composite.layout();
+  }
+
+  /**
+   * Creates the actions for the control.
+   * 
+   * @return list of actions
+   */
+  private List<Action> initActions()
+  {
+    List<Action> result = new ArrayList<Action>();
+    AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
+        getItemPropertyDescriptor(), getContext());
+    result.add(addAction);
+    ReferenceAction newAction = new NewReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
+        getItemPropertyDescriptor(), getContext());
+    result.add(newAction);
+    return result;
+  }
+
+  /**
+   * Creates a button for an action.
+   * 
+   * @param action
+   *          the action
+   */
+  private void createButtonForAction(final Action action, Composite composite)
+  {
+    Button selectButton = getToolkit().createButton(composite, "", SWT.PUSH);
+    selectButton.setImage(action.getImageDescriptor().createImage());
+    selectButton.setToolTipText(action.getToolTipText());
+    selectButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        action.run();
+      }
+
+    });
   }
 
   /**
@@ -145,6 +206,19 @@ public class MELinkControl extends AbstractMEControl
   {
     // TODO Auto-generated method stub
     return 2;
+  }
+
+  @Override
+  public void dispose()
+  {
+    super.dispose();
+    if (control != null)
+    {
+      control.dispose();
+      controlDecoration.dispose();
+    }
+    labelWidgetImage.dispose();
+    modelElementChangeListener.remove();
   }
 
 }
