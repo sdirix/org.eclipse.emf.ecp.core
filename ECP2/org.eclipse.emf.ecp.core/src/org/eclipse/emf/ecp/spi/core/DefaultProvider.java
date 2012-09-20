@@ -353,6 +353,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
    * Convenient implementation of the {@link #getUnsupportedEPackages(Collection)} method to return an empty list. The
    * provider has to {@link Override} this method if not all {@link EPackage}s are supported.
    */
+  @SuppressWarnings("javadoc")
   public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages, InternalRepository repository)
   {
     return Collections.emptyList();
