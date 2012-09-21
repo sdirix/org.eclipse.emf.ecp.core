@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -55,9 +56,9 @@ public class AddAssociationClassAction extends Action
   private final class AddAssociationClassCommand extends ECPCommand
   {
 
-    public AddAssociationClassCommand(EObject eObject)
+    public AddAssociationClassCommand(EObject eObject, EditingDomain domain)
     {
-      super(eObject);
+      super(eObject, domain);
     }
 
     @Override
@@ -138,6 +139,6 @@ public class AddAssociationClassAction extends Action
   @Override
   public void run()
   {
-    new AddAssociationClassCommand(modelElement).run(true);
+    new AddAssociationClassCommand(modelElement, context.getEditingDomain()).run(true);
   }
 }

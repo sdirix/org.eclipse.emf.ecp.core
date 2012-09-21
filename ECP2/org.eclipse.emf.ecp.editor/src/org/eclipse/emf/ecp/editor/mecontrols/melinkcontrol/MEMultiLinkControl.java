@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 
 import org.eclipse.jface.action.ToolBarManager;
@@ -58,9 +59,9 @@ public class MEMultiLinkControl extends AbstractMEControl
   {
     private final int sizeLimit;
 
-    public RebuildLinksCommand(EObject modelElement, int sizeLimit)
+    public RebuildLinksCommand(EObject modelElement, EditingDomain domain, int sizeLimit)
     {
-      super(modelElement);
+      super(modelElement, domain);
       this.sizeLimit = sizeLimit;
     }
 
@@ -252,7 +253,7 @@ public class MEMultiLinkControl extends AbstractMEControl
     }
     linkControls.clear();
     // JH: TransactionUtil.getEditingDomain(modelElement);
-    new RebuildLinksCommand(getModelElement(), sizeLimit).run(false);
+    new RebuildLinksCommand(getModelElement(), getEditingDomain(), sizeLimit).run(false);
   }
 
   /**

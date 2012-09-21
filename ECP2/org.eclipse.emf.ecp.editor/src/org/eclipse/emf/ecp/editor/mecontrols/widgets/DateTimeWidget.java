@@ -7,6 +7,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -43,20 +44,25 @@ public class DateTimeWidget extends ECPAttributeWidget
 
   private EStructuralFeature feature;
 
+  private EditingDomain domain;
+
   /**
    * @param dbc
    */
-  public DateTimeWidget(EMFDataBindingContext dbc, EObject modelElement, EStructuralFeature feature)
+  public DateTimeWidget(EMFDataBindingContext dbc, EObject modelElement, EStructuralFeature feature,
+      EditingDomain domain)
   {
     super(dbc);
     this.modelElement = modelElement;
     this.feature = feature;
+    this.domain = domain;
   }
 
   /*
    * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#createWidget(org.eclipse.ui.forms.widgets.FormToolkit,
-   * org.eclipse.swt.widgets.Composite, int)
+   * @see
+   * org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#createWidget(org.eclipse.ui.forms.widgets.FormToolkit
+   * , org.eclipse.swt.widgets.Composite, int)
    */
   @Override
   public Control createWidget(FormToolkit toolkit, Composite composite, int style)
@@ -86,7 +92,7 @@ public class DateTimeWidget extends ECPAttributeWidget
       @Override
       public void mouseUp(MouseEvent e)
       {
-        new ECPCommand(modelElement)
+        new ECPCommand(modelElement, domain)
         {
 
           @Override
@@ -102,8 +108,8 @@ public class DateTimeWidget extends ECPAttributeWidget
   /*
    * (non-Javadoc)
    * @see
-   * org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#bindValue(org.eclipse.core.databinding.observable.value
-   * .IObservableValue)
+   * org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#bindValue(org.eclipse.core.databinding.observable
+   * .value .IObservableValue)
    */
   @Override
   public void bindValue(IObservableValue modelValue, final ControlDecoration controlDecoration)

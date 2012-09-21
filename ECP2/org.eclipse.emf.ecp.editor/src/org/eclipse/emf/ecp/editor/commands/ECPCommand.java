@@ -12,75 +12,90 @@ package org.eclipse.emf.ecp.editor.commands;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.ChangeCommand;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+
 //TODO: possibily remove this class
 /**
  * Command capable of recording changes on a model element.
  * 
  * @author emueller
  */
-public abstract class ECPCommand extends ChangeCommand {
+public abstract class ECPCommand extends ChangeCommand
+{
 
-	private EObject eObject;
-	private RuntimeException runtimeException;
+  private EObject eObject;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param eObject the model element whose changes one is interested in
-	 */
-	public ECPCommand(EObject eObject) {
-		super(eObject);
-		this.eObject = eObject;
-	}
+  private EditingDomain domain;
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.edit.ChangeCommand#doExecute()
-	 */
-	@Override
-	protected final void doExecute() {
-		try {
-			doRun();
-			// BEGIN SUPRESS CATCH EXCEPTION
-		} catch (RuntimeException e) {
-			// END SUPRESS CATCH EXCEPTION
-			runtimeException = e;
-			throw e;
-		}
-	}
+  private RuntimeException runtimeException;
 
-	/**
-	 * The actual action that is being executed.
-	 */
-	protected abstract void doRun();
+  /**
+   * Constructor.
+   * 
+   * @param eObject
+   *          the model element whose changes one is interested in
+   */
+  public ECPCommand(EObject eObject, EditingDomain domain)
+  {
+    super(eObject);
+    this.eObject = eObject;
+    this.domain = domain;
+  }
 
-	/**
-	 * Executes the command.
-	 * 
-	 * @param ignoreExceptions true if any thrown exception in the execution of the command should be ignored.
-	 */
-	public void run(boolean ignoreExceptions) {
-		runtimeException = null;
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.eclipse.emf.edit.ChangeCommand#doExecute()
+   */
+  @Override
+  protected final void doExecute()
+  {
+    try
+    {
+      doRun();
+      // BEGIN SUPRESS CATCH EXCEPTION
+    }
+    catch (RuntimeException e)
+    {
+      // END SUPRESS CATCH EXCEPTION
+      runtimeException = e;
+      throw e;
+    }
+  }
 
-		EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
-		domain.getCommandStack().execute(this);
+  /**
+   * The actual action that is being executed.
+   */
+  protected abstract void doRun();
 
-		if (!ignoreExceptions && runtimeException != null) {
-			throw runtimeException;
-		}
-	}
+  /**
+   * Executes the command.
+   * 
+   * @param ignoreExceptions
+   *          true if any thrown exception in the execution of the command should be ignored.
+   */
+  public void run(boolean ignoreExceptions)
+  {
+    runtimeException = null;
 
-	/**
-	 * Executes the command.
-	 * 
-	 * @deprecated use run(boolean) instead.
-	 */
-	@Deprecated
-	public void run() {
-		run(true);
-	}
+    // EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+    domain.getCommandStack().execute(this);
+
+    if (!ignoreExceptions && runtimeException != null)
+    {
+      throw runtimeException;
+    }
+  }
+
+  /**
+   * Executes the command.
+   * 
+   * @deprecated use run(boolean) instead.
+   */
+  @Deprecated
+  public void run()
+  {
+    run(true);
+  }
 
 }

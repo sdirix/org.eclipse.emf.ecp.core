@@ -24,7 +24,7 @@ public class MultiDateTimeAttributeControl extends MultiMEAttributeControl
   @Override
   protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc)
   {
-    return new DateTimeWidget(dbc, getModelElement(), getStructuralFeature());
+    return new DateTimeWidget(dbc, getModelElement(), getStructuralFeature(), getEditingDomain());
   }
 
   /*

@@ -165,7 +165,7 @@ public class MEEditorPage extends FormPage {
 
 			@Override
 			public void run() {
-				new ECPCommand(editorPageContent.getModelElement()) {
+				new ECPCommand(editorPageContent.getModelElement(),modelElementContext.getEditingDomain()) {
 
 					@Override
 					protected void doRun() {

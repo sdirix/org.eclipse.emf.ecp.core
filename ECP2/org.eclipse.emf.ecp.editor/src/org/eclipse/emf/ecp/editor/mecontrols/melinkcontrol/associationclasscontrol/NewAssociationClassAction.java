@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -59,9 +60,9 @@ public class NewAssociationClassAction extends Action
   private final class NewAssociationClassCommand extends ECPCommand
   {
 
-    public NewAssociationClassCommand(EObject eObject)
+    public NewAssociationClassCommand(EObject eObject, EditingDomain domain)
     {
-      super(eObject);
+      super(eObject, domain);
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -171,6 +172,6 @@ public class NewAssociationClassAction extends Action
   @Override
   public void run()
   {
-    new NewAssociationClassCommand(modelElement).run(true);
+    new NewAssociationClassCommand(modelElement, context.getEditingDomain()).run(true);
   }
 }

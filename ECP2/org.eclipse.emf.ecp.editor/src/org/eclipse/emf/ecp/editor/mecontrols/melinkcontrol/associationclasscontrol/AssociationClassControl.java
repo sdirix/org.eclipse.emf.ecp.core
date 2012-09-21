@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControl;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControlFactory;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.jface.action.ToolBarManager;
@@ -68,14 +69,14 @@ public class AssociationClassControl extends AbstractMEControl
 
     private int sizeLimit;
 
-    public RebuildLinksCommand(EObject eObject)
+    public RebuildLinksCommand(EObject eObject, EditingDomain domain)
     {
-      super(eObject);
+      super(eObject, domain);
     }
 
-    public RebuildLinksCommand(EObject eObject, int sizeLimit)
+    public RebuildLinksCommand(EObject eObject, EditingDomain domain, int sizeLimit)
     {
-      this(eObject);
+      this(eObject, domain);
       this.sizeLimit = sizeLimit;
     }
 
@@ -271,7 +272,7 @@ public class AssociationClassControl extends AbstractMEControl
       linkArea.dispose();
     }
     linkControls.clear();
-    new RebuildLinksCommand(getModelElement(), sizeLimit).run(true);
+    new RebuildLinksCommand(getModelElement(), getEditingDomain(), sizeLimit).run(true);
   }
 
   /*

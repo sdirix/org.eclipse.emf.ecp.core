@@ -135,7 +135,7 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 
   private void save()
   {
-    new ECPCommand(getModelElement())
+    new ECPCommand(getModelElement(), getEditingDomain())
     {
       @Override
       protected void doRun()
@@ -150,7 +150,7 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 
     String txt = "";
     final StringBuffer value = new StringBuffer();
-    new ECPCommand(getModelElement())
+    new ECPCommand(getModelElement(), getEditingDomain())
     {
       @Override
       protected void doRun()
