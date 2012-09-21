@@ -5,14 +5,18 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProjectManager.Listener;
 import org.eclipse.emf.ecp.editor.EditorMetamodelContext;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.EditorModelelementContextListener;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class EditorContext implements EditorModelelementContext
 {
@@ -23,23 +27,50 @@ public class EditorContext implements EditorModelelementContext
 
   private MetaModeElementContext metaModeElementContext;
 
+  private List<EditorModelelementContextListener> contextListeners = new ArrayList<EditorModelelementContextListener>();
+
   public EditorContext(EObject modelElement, ECPProject ecpProject)
   {
     this.modelElement = modelElement;
     this.ecpProject = ecpProject;
     metaModeElementContext = new MetaModeElementContext();
+
+    ECPProjectManager.INSTANCE.addListener(new Listener()
+    {
+
+      public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception
+      {
+        // TODO Auto-generated method stub
+
+      }
+
+      public void projectChanged(ECPProject project, boolean opened) throws Exception
+      {
+        if (!opened)
+        {
+          for (EditorModelelementContextListener contextListener : contextListeners)
+          {
+            contextListener.onContextDeleted();
+          }
+          dispose();
+        }
+      }
+
+      public void objectsChanged(ECPProject project, Object[] objects) throws Exception
+      {
+        // do nothing
+      }
+    });
   }
 
   public void addModelElementContextListener(EditorModelelementContextListener modelElementContextListener)
   {
-    // TODO Auto-generated method stub
-
+    contextListeners.add(modelElementContextListener);
   }
 
   public void removeModelElementContextListener(EditorModelelementContextListener modelElementContextListener)
   {
-    // TODO Auto-generated method stub
-
+    contextListeners.remove(modelElementContextListener);
   }
 
   public Collection<EObject> getAllModelElementsbyClass(EClass clazz, boolean association)
@@ -68,7 +99,6 @@ public class EditorContext implements EditorModelelementContext
 
   public void dispose()
   {
-    // TODO Auto-generated method stub
 
   }
 

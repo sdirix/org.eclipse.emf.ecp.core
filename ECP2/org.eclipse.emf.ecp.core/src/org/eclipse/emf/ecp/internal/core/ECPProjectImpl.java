@@ -576,4 +576,31 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
   {
     return getProvider().getLinkElements(this, modelElement, eReference);
   }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.core.ECPProject#doSave()
+   */
+  public void doSave()
+  {
+    getProvider().doSave(this);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.core.ECPProject#isDirty()
+   */
+  public boolean isDirty()
+  {
+    return getProvider().isDirty(this);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.core.ECPProject#hasAutosave()
+   */
+  public boolean hasAutosave()
+  {
+    return getProvider().hasAutosave(this);
+  }
 }

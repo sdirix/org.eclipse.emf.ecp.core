@@ -289,5 +289,32 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
     {
       return getResolvedElement().getUnsupportedEPackages(ePackages, repository);
     }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#doSave(org.eclipse.emf.ecp.spi.core.InternalProject)
+     */
+    public void doSave(InternalProject project)
+    {
+      getResolvedElement().doSave(project);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isDirty(org.eclipse.emf.ecp.spi.core.InternalProject)
+     */
+    public boolean isDirty(InternalProject project)
+    {
+      return getResolvedElement().isDirty(project);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.emf.ecp.spi.core.InternalProvider#hasAutosave(org.eclipse.emf.ecp.spi.core.InternalProject)
+     */
+    public boolean hasAutosave(InternalProject project)
+    {
+      return getResolvedElement().hasAutosave(project);
+    }
   }
 }

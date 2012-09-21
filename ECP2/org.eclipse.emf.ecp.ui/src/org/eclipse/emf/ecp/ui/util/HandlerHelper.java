@@ -286,4 +286,12 @@ public class HandlerHelper
       }
     }
   }
+
+  /**
+   * @param project
+   */
+  public static void saveProject(ECPProject project)
+  {
+    project.doSave();
+  }
 }

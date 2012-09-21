@@ -93,6 +93,11 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
    */
   public Iterator<EObject> getLinkElements(EObject modelElement, EReference eReference);
 
+  public void doSave();
+
+  public boolean isDirty();
+
+  public boolean hasAutosave();
   // /**
   // * @param ecpRepository
   // */

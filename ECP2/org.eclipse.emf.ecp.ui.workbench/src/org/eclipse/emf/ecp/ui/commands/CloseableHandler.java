@@ -3,6 +3,8 @@
  */
 package org.eclipse.emf.ecp.ui.commands;
 
+import java.util.Arrays;
+
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 
@@ -26,7 +28,8 @@ public class CloseableHandler extends AbstractHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		IStructuredSelection ssel = (IStructuredSelection) selection;
 		String currentType = event.getParameter("org.eclipse.emf.ecp.ecpclosable.type");
-		ECPCloseable[] closeable = (ECPCloseable[]) ssel.toArray();
+		Object[] selectionArray =  ssel.toArray();
+		ECPCloseable[] closeable = Arrays.copyOf(selectionArray, selectionArray.length, ECPCloseable[].class);
 		HandlerHelper.close(closeable, currentType);
 
 		return null;

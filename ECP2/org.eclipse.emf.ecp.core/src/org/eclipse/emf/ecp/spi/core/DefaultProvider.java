@@ -366,4 +366,28 @@ public abstract class DefaultProvider extends Element implements InternalProvide
   {
     return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
   }
+
+  /**
+   * Convenient implementation where nothing happens
+   */
+  public void doSave(InternalProject project)
+  {
+    // do nothing
+  }
+
+  /**
+   * Convenient implementation where the project is autosaved
+   */
+  public boolean isDirty(InternalProject project)
+  {
+    return false;
+  }
+
+  /**
+   * Convenient implementation where the project has autosave
+   */
+  public boolean hasAutosave(InternalProject project)
+  {
+    return true;
+  }
 }

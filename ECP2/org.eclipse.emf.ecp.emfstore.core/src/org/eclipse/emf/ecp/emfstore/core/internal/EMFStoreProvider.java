@@ -13,11 +13,14 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
+import org.eclipse.emf.emfstore.common.model.IdEObjectCollection;
+import org.eclipse.emf.emfstore.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
@@ -51,12 +54,21 @@ public class EMFStoreProvider extends DefaultProvider
   {
     super(NAME);
     INSTANCE = this;
+    configureEMFStore();
   }
 
   public EMFStoreProvider(String name)
   {
     super(name);
-    // TODO Auto-generated constructor stub
+    configureEMFStore();
+  }
+
+  /**
+   * 
+   */
+  private void configureEMFStore()
+  {
+    Configuration.setAutoSave(false);
   }
 
   // @Override
@@ -265,7 +277,32 @@ public class EMFStoreProvider extends DefaultProvider
       };
 
       projectSpace.getProject().eAdapters().add(adapter);
+      projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver()
+      {
 
+        public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement)
+        {
+          // 2
+          ((InternalProject)context).notifyObjectsChanged(new Object[] { modelElement });
+        }
+
+        public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement)
+        {
+          // 3
+        }
+
+        public void modelElementAdded(IdEObjectCollection collection, EObject modelElement)
+        {
+          // 1
+
+        }
+
+        public void collectionDeleted(IdEObjectCollection collection)
+        {
+          // project delete
+          ((InternalProject)context).notifyObjectsChanged(collection.getAllModelElements().toArray());
+        }
+      });
     }
 
   }
@@ -385,5 +422,35 @@ public class EMFStoreProvider extends DefaultProvider
   {
     return info.getUrl().equalsIgnoreCase(url) && info.getPort() == port
         && info.getCertificateAlias().equalsIgnoreCase(certificate);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#doSave(org.eclipse.emf.ecp.spi.core.InternalProject)
+   */
+  @Override
+  public void doSave(InternalProject project)
+  {
+    getProjectSpace(project).save();
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#isDirty(org.eclipse.emf.ecp.spi.core.InternalProject)
+   */
+  @Override
+  public boolean isDirty(InternalProject project)
+  {
+    return getProjectSpace(project).hasUnsavedChanges();
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#hasAutosave(org.eclipse.emf.ecp.spi.core.InternalProject)
+   */
+  @Override
+  public boolean hasAutosave(InternalProject project)
+  {
+    return Configuration.isAutoSaveEnabled();
   }
 }

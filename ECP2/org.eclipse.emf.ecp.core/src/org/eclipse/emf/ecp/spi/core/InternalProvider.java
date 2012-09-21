@@ -86,4 +86,10 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
    * @return {@link Iterator} of {@link EObject} that can be linked
    */
   public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference);
+
+  public void doSave(InternalProject project);
+
+  public boolean isDirty(InternalProject project);
+
+  public boolean hasAutosave(InternalProject project);
 }

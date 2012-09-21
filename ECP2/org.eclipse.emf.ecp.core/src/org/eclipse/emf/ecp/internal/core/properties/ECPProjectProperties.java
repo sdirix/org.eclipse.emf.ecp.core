@@ -93,6 +93,22 @@ public class ECPProjectProperties extends Properties<ECPProject>
         return project.isShared();
       }
     });
+    add(new Property<ECPProject>("isDirty", "Is project dirty", "Has this project unsaved changes?")
+    {
+      @Override
+      protected Object eval(ECPProject project)
+      {
+        return project.isDirty();
+      }
+    });
+    add(new Property<ECPProject>("hasAutosave", "Autosave", "Has this project an autosave?")
+    {
+      @Override
+      protected Object eval(ECPProject project)
+      {
+        return project.hasAutosave();
+      }
+    });
   }
 
   public static void main(String[] args)

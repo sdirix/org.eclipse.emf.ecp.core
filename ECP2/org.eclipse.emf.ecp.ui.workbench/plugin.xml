@@ -244,6 +244,12 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.saveProject"
+               icon="icons/database_save.png"
+               label="Save Project"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -308,6 +314,11 @@
             id="org.eclipse.emf.ecp.ui.addrepository"
             name="Add Repository">
       </command>
+      <command
+            description="Save Project"
+            id="org.eclipse.emf.ecp.ui.workbench.saveProject"
+            name="Save Project">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -343,6 +354,32 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.CheckoutHandler"
             commandId="org.eclipse.emf.ecp.ui.checkout">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.SaveProjectHandler"
+            commandId="org.eclipse.emf.ecp.ui.workbench.saveProject">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.eclipse.emf.ecp.core.project.isDirty"
+                        value="true">
+                  </test>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.eclipse.emf.ecp.core.project.hasAutosave"
+                        value="false">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
       </handler>
    </extension>
    <extension
