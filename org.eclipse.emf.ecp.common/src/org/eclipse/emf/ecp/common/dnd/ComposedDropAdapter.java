@@ -112,7 +112,7 @@ public class ComposedDropAdapter extends DropTargetAdapter {
 				if (targetIsRoot) {
 					try {
 						ECPProject project = ECPWorkspaceManager.getInstance().getWorkSpace().getProject(target);
-						for (EObject obj : source) {
+						for (EObject obj : source) {							
 							project.addModelElementToRoot(obj);
 						}
 					} catch (NoWorkspaceException e) {
@@ -150,6 +150,7 @@ public class ComposedDropAdapter extends DropTargetAdapter {
 		}
 
 		if (targetIsRoot) {
+			event.detail = DND.DROP_NONE;
 			return;
 		}
 
