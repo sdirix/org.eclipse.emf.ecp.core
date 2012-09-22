@@ -4,7 +4,7 @@
   <local-check-config name="ECPStyle" location="/ECPDeveloper/coding/emfcpStyle5.xml" type="project" description="">
     <additional-data name="protect-config-file" value="true"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="ECPStyle" local="true">
+  <fileset name="all" enabled="true" check-config-name="emf" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
 </fileset-config>

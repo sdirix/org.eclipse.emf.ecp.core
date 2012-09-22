@@ -20,6 +20,7 @@ public interface ECPMetamodelContext
 
   /**
    * @param eClass
+   *          the eClass to check
    * @return if the class is non domain
    */
   boolean isNonDomainElement(EClass eClass);
