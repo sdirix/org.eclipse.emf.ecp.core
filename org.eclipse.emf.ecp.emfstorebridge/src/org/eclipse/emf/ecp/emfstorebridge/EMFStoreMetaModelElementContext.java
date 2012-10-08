@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstorebridge;
 
+import java.util.Arrays;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.model.AbstractECPMetaModelElementContext;
@@ -82,6 +84,19 @@ public class EMFStoreMetaModelElementContext extends AbstractECPMetaModelElement
 	 */
 	@Override
 	public boolean isNonDomainElement(EClass eClass) {
-		return org.eclipse.emf.emfstore.common.model.ModelPackage.eINSTANCE.getNonDomainElement().isSuperTypeOf(eClass);
+		EClass nonDomainElementEClass = org.eclipse.emf.emfstore.common.model.ModelPackage.eINSTANCE.getNonDomainElement();
+		Class<?> instanceClass = eClass.getInstanceClass();
+		boolean isNonDomainElement = false;
+		
+		if (instanceClass != null) {
+			for (Class<?> iface : Arrays.asList(instanceClass.getInterfaces())) {
+				if (iface.getCanonicalName().equals(nonDomainElementEClass.getInstanceClassName())) {
+					isNonDomainElement = true;
+					break;
+				}
+			}
+		}
+		
+		return isNonDomainElement || nonDomainElementEClass.isSuperTypeOf(eClass);
 	}
 }
