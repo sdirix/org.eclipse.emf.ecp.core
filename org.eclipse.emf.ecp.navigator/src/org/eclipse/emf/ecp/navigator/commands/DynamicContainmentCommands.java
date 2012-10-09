@@ -150,8 +150,10 @@ public class DynamicContainmentCommands extends CompoundContributionItem {
 					}
 				}
 
+				ECPProject project = null;
+				
 				try {
-					ECPProject project = ECPWorkspaceManager.getInstance().getWorkSpace().getProject(selectedME);
+					project = ECPWorkspaceManager.getInstance().getWorkSpace().getProject(selectedME);
 					if (project != null && project.getMetaModelElementContext().isNonDomainElement(containment.getEReferenceType())) {
 						continue;
 					}
@@ -167,9 +169,14 @@ public class DynamicContainmentCommands extends CompoundContributionItem {
 
 				Object type = commandParameter.getValue();
 				if (type instanceof EObject) {
+					
+					 EClass typeClass = ((EObject) type).eClass();
+					 if (project != null && project.getMetaModelElementContext().isNonDomainElement(typeClass)) {
+						 continue;
+					 }
+					
 					commandParams.put(
-							CreateContainmentHandler.COMMAND_ECLASS_PARAM,
-							((EObject) type).eClass());
+							CreateContainmentHandler.COMMAND_ECLASS_PARAM, typeClass);
 					commandParams.put(
 							CreateContainmentHandler.COMMAND_ECREFERENCE_PARAM,
 							containment.getName());
