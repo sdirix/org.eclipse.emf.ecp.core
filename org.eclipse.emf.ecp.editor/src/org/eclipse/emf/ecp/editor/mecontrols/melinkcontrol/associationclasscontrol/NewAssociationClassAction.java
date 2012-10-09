@@ -63,7 +63,7 @@ public class NewAssociationClassAction extends Action {
 		protected void doRun() {
 			EClass relatedModelElementClass = null;
 			Set<EClass> subclasses = context.getMetaModelElementContext().getAllSubEClasses(modelElement.eClass(),
-				false);
+				false, true);
 			// select object type to create
 			if (subclasses.size() == 1) {
 				relatedModelElementClass = subclasses.iterator().next();
