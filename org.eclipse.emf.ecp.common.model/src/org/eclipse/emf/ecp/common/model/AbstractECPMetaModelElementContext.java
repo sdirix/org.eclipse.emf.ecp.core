@@ -49,13 +49,20 @@ public abstract class AbstractECPMetaModelElementContext implements ECPMetaModel
 	 * @see org.eclipse.emf.ecp.model.MetaModelElementContext#isNonDomainElement(org.eclipse.emf.ecore.EClass)
 	 */
 	public abstract boolean isNonDomainElement(EClass eClass);
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	public Set<EClass> getAllSubEClasses(EClass eClass, boolean association) {
+		return getAllSubEClasses(eClass, association, false);
+	}
 
-		Set<EClass> allEClasses = getAllModelElementEClasses(association);
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<EClass> getAllSubEClasses(EClass eClass, boolean association, boolean includeNonDomainElements) {
+
+		Set<EClass> allEClasses = getAllModelElementEClasses(association, includeNonDomainElements);
 		Set<EClass> result = new HashSet<EClass>();
 
 		for (EClass subClass : allEClasses) {
@@ -72,12 +79,21 @@ public abstract class AbstractECPMetaModelElementContext implements ECPMetaModel
 	 * {@inheritDoc}
 	 */
 	public Set<EClass> getAllModelElementEClasses(boolean association) {
+		return getAllModelElementEClasses(association, false);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<EClass> getAllModelElementEClasses(boolean association, boolean includeNonDomainElemnts) {
 
 		Set<EClass> result = new HashSet<EClass>();
 
 		for (EClass subClass : getAllModelElementEClassesImpl()) {
-			if (association || (!isAssociationClassElement(subClass) && !isNonDomainElement(subClass))) {
-				result.add(subClass);
+			if (association || !isAssociationClassElement(subClass)) {
+				if (includeNonDomainElemnts || !isNonDomainElement(subClass)) {
+					result.add(subClass);
+				}
 			}
 		}
 

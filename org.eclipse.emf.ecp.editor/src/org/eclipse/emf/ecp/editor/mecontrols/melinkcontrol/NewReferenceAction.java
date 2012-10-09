@@ -62,7 +62,7 @@ public class NewReferenceAction extends ReferenceAction {
 
 			EClass clazz = eReference.getEReferenceType();
 			EClass newClass = null;
-			Set<EClass> subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false);
+			Set<EClass> subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, true);
 			if (subclasses.size() == 1) {
 				newClass = subclasses.iterator().next();
 			} else {

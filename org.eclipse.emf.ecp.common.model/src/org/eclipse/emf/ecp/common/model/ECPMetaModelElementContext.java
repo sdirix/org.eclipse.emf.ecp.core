@@ -30,6 +30,16 @@ public interface ECPMetaModelElementContext {
 	 * @return a set of {@link EClass}es
 	 */
 	Set<EClass> getAllModelElementEClasses(boolean association);
+	
+	/**
+	 * Returns all types of model elements in this context. Could exclude {@link AssociationClassElement}s.
+	 * 
+	 * @param association whether to include {@link AssociationClassElement}
+	 * @param includeNonDomainElemnts whether to include non-domain elements in the resulting set
+	 * @return a set of {@link EClass}es
+	 */
+	Set<EClass> getAllModelElementEClasses(boolean association, boolean includeNonDomainElemnts);
+
 
 	/**
 	 * Retrieve all EClasses from the EcorePackage registry that are subclasses of the given {@link EClass}.
@@ -40,6 +50,17 @@ public interface ECPMetaModelElementContext {
 	 * @return a set of EClasses
 	 */
 	Set<EClass> getAllSubEClasses(EClass eClass, boolean association);
+	
+	/**
+	 * Retrieve all EClasses from the EcorePackage registry that are subclasses of the given {@link EClass}.
+	 * Does not include abstract classes or interfaces. Could exclude {@link AssociationClassElement}s.
+	 * 
+	 * @param eClass the superClass of the subClasses to retrieve
+	 * @param association whether to include {@link AssociationClassElement}
+	 * @param includeNonDomainElements whether to include non-domain elements in the resulting set
+	 * @return a set of EClasses
+	 */
+	Set<EClass> getAllSubEClasses(EClass eClass, boolean association, boolean includeNonDomainElements);
 
 	/**
 	 * Whether a {@link EClass} is a domain element. Non Domain Elements are not root nodes of the model and
