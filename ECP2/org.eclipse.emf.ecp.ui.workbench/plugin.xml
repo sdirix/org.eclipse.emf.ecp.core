@@ -217,34 +217,6 @@
             allPopups="false"
             locationURI="toolbar:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
          <command
-               commandId="org.eclipse.emf.ecp.ui.search"
-               icon="icons/magnifier.png"
-               id="SearchElementButon"
-               style="push"
-               tooltip="Search for model element">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.emf.ecore.EObject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.emf.ecp.core.ECPProject">
-                           </instanceof>
-                        </or>
-                     </iterate>
-                  </and>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
                commandId="org.eclipse.emf.ecp.ui.workbench.saveProject"
                icon="icons/database_save.png"
                label="Save Project"
@@ -303,10 +275,6 @@
             name="Delete">
       </command>
       <command
-            id="org.eclipse.emf.ecp.ui.search"
-            name="Search Element">
-      </command>
-      <command
             id="org.eclipse.emf.ecp.ui.checkout"
             name="Checkout">
       </command>
@@ -346,10 +314,6 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.CloseableHandler"
             commandId="org.eclipse.emf.ecp.ui.closable">
-      </handler>
-      <handler
-            class="org.eclipse.emf.ecp.ui.commands.SearchModelElementHandler"
-            commandId="org.eclipse.emf.ecp.ui.search">
       </handler>
       <handler
             class="org.eclipse.emf.ecp.ui.commands.CheckoutHandler"

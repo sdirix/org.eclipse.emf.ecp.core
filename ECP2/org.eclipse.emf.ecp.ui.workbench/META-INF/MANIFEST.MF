@@ -27,4 +27,4 @@ Export-Package: org.eclipse.emf.ecp.ui.actions;version="1.0.0.qualifier";x-inter
  org.eclipse.emf.ecp.ui.commands;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.ui.perspective;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.ui.platform;version="1.0.0.qualifier";x-internal:=true,
- org.eclipse.emf.ecp.ui.views;version="1.0.0.qualifier";x-internal:=true
+ org.eclipse.emf.ecp.ui.views;version="1.0.0.qualifier"
