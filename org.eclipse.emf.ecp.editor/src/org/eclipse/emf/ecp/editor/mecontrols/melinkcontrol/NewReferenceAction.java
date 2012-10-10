@@ -62,7 +62,14 @@ public class NewReferenceAction extends ReferenceAction {
 
 			EClass clazz = eReference.getEReferenceType();
 			EClass newClass = null;
-			Set<EClass> subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, true);
+			Set<EClass> subclasses = null;
+			
+			if (eReference.isContainment()) {
+				subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, true);				
+			} else {
+				subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, false);
+			}
+			
 			if (subclasses.size() == 1) {
 				newClass = subclasses.iterator().next();
 			} else {
@@ -89,7 +96,7 @@ public class NewReferenceAction extends ReferenceAction {
 			if (!eReference.isContainer()) {
 				// Returns the value of the Container
 				EObject parent = modelElement.eContainer();
-				while (!(parent == null) && newMEInstance.eContainer() == null) {
+				while (parent != null && newMEInstance.eContainer() == null) {
 					EReference reference = modelElementContext.getMetaModelElementContext()
 						.getPossibleContainingReference(newMEInstance, parent);
 					if (reference != null && reference.isMany()) {
