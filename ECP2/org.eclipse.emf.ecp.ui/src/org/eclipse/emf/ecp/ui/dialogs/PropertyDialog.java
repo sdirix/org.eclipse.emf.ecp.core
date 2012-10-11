@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.ecp.ui.dialogs;
 
+import org.eclipse.emf.ecp.ui.util.Messages;
+
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -69,8 +71,8 @@ public class PropertyDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    setMessage("Message");
-    setTitle("Title");
+    setMessage(Messages.PropertyDialog_Message);
+    setTitle(Messages.PropertyDialog_Title);
     Composite area = (Composite)super.createDialogArea(parent);
     Composite container = new Composite(area, SWT.NONE);
     container.setLayout(new GridLayout(2, false));
@@ -78,10 +80,10 @@ public class PropertyDialog extends TitleAreaDialog
 
     Label lblKey = new Label(container, SWT.NONE);
     lblKey.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblKey.setText("Key:");
+    lblKey.setText(Messages.PropertyDialog_Key);
 
     keyText = new Text(container, SWT.BORDER);
-    keyText.setText(key == null ? "" : key);
+    keyText.setText(key == null ? "" : key); //$NON-NLS-1$
     keyText.setEditable(keyEditable);
     keyText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     keyText.addModifyListener(new ModifyListener()
@@ -94,10 +96,10 @@ public class PropertyDialog extends TitleAreaDialog
 
     Label lblValue = new Label(container, SWT.NONE);
     lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-    lblValue.setText("Value:");
+    lblValue.setText(Messages.PropertyDialog_Value);
 
     valueText = new Text(container, SWT.BORDER);
-    valueText.setText(value == null ? "" : value);
+    valueText.setText(value == null ? "" : value); //$NON-NLS-1$
     valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     valueText.addModifyListener(new ModifyListener()
     {

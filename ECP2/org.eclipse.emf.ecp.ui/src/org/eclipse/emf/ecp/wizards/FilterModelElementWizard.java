@@ -4,6 +4,7 @@
 package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecp.ui.common.CheckedModelElementHelper;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -31,7 +32,7 @@ public class FilterModelElementWizard extends ECPWizard<CheckedModelElementHelpe
   public void addPages()
   {
     super.addPages();
-    WizardPage page = new WizardPage("Filter")
+    WizardPage page = new WizardPage(Messages.FilterModelElementWizard_Title_FilterProject)
     {
 
       public void createControl(Composite parent)
@@ -43,8 +44,8 @@ public class FilterModelElementWizard extends ECPWizard<CheckedModelElementHelpe
       }
     };
     addPage(page);
-    page.setTitle("Select EPacakges and EClasses");
-    page.setDescription("Select the pacakges that should be suggested when creating new model elements.");
+    page.setTitle(Messages.FilterModelElementWizard_PageTitle_FilterProject);
+    page.setDescription(Messages.FilterModelElementWizard_PageDescription_FilterProject);
   }
 
 }

@@ -13,6 +13,7 @@ import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ProvidersContentProvider;
 import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -92,7 +93,7 @@ public class AddRepositoryComposite implements CompositeUiProvider
     {
       Label label = new Label(composite, SWT.NONE);
       label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      label.setText("Provider:");
+      label.setText(Messages.AddRepositoryComposite_RepositoryProvider);
 
       ComboViewer providersViewer = new ComboViewer(composite, SWT.NONE);
       Combo combo = providersViewer.getCombo();
@@ -139,7 +140,7 @@ public class AddRepositoryComposite implements CompositeUiProvider
     {
       Label repositoryNameLabel = new Label(composite, SWT.NONE);
       repositoryNameLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      repositoryNameLabel.setText("Name:");
+      repositoryNameLabel.setText(Messages.AddRepositoryComposite_RepositoryName);
 
       repositoryNameText = new Text(composite, SWT.BORDER);
       // repositoryNameText.setText(repositoryName);
@@ -164,7 +165,7 @@ public class AddRepositoryComposite implements CompositeUiProvider
     {
       Label repositoryLabelLabel = new Label(composite, SWT.NONE);
       repositoryLabelLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      repositoryLabelLabel.setText("Label:");
+      repositoryLabelLabel.setText(Messages.AddRepositoryComposite_RepositoryLabel);
 
       repositoryLabelText = new Text(composite, SWT.BORDER);
       // repositoryLabelText.setText(repositoryLabel);
@@ -184,7 +185,7 @@ public class AddRepositoryComposite implements CompositeUiProvider
     {
       Label repositoryDescriptionLabel = new Label(composite, SWT.NONE);
       repositoryDescriptionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      repositoryDescriptionLabel.setText("Description:");
+      repositoryDescriptionLabel.setText(Messages.AddRepositoryComposite_RepositoryDescription);
 
       repositoryDescriptionText = new Text(composite, SWT.BORDER);
       // repositoryDescriptionText.setText(repositoryDescription);

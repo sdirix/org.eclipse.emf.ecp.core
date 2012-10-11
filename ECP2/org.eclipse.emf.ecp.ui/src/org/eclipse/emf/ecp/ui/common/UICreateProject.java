@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.ui.common;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -23,120 +24,103 @@ import org.eclipse.swt.widgets.Text;
 
 import java.util.List;
 
-public class UICreateProject implements CompositeUiProvider
-{
+public class UICreateProject implements CompositeUiProvider {
 
-  public interface CreateProjectChangeListener
-  {
-    public void projectNameChanged(String projectName);
+	public interface CreateProjectChangeListener {
+		public void projectNameChanged(String projectName);
 
-    public void providerChanged(ECPProvider provider);
-  }
+		public void providerChanged(ECPProvider provider);
+	}
 
-  public UICreateProject(List<ECPProvider> providers)
-  {
-    this.providers = providers;
-  }
+	public UICreateProject(List<ECPProvider> providers) {
+		this.providers = providers;
+	}
 
-  private CreateProjectChangeListener listener;
+	private CreateProjectChangeListener listener;
 
-  private final List<ECPProvider> providers;
+	private final List<ECPProvider> providers;
 
-  private ComboViewer providersViewer;
+	private ComboViewer providersViewer;
 
-  private ECPProvider provider;
+	private ECPProvider provider;
 
-  private String projectName;
+	private String projectName;
 
-  public Composite createUI(Composite parent)
-  {
+	public Composite createUI(Composite parent) {
 
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-    composite.setLayout(new GridLayout(2, false));
-    if (providers.size() > 1)
-    {
-      Label label = new Label(composite, SWT.NONE);
-      label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-      label.setText("Provider:");
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		composite.setLayout(new GridLayout(2, false));
+		if (providers.size() > 1) {
+			Label label = new Label(composite, SWT.NONE);
+			label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+			label.setText(Messages.UICreateProject_ProjectProvider + ":");//$NON-NLS-1$
 
-      providersViewer = new ComboViewer(composite, SWT.NONE);
-      Combo combo = providersViewer.getCombo();
-      GridData gd_combo = new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1);
-      gd_combo.minimumWidth = 150;
-      combo.setLayoutData(gd_combo);
-      providersViewer.setContentProvider(new ArrayContentProvider());
-      providersViewer.setLabelProvider(new ProvidersLabelProvider());
-      providersViewer.setSorter(new ViewerSorter());
-      providersViewer.setInput(ECPProviderRegistry.INSTANCE);
-      providersViewer.addSelectionChangedListener(new ISelectionChangedListener()
-      {
-        public void selectionChanged(SelectionChangedEvent event)
-        {
-          IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-          provider = (ECPProvider)selection.getFirstElement();
-          if (listener != null)
-          {
-            listener.providerChanged(provider);
-          }
-        }
-      });
-    }
-    else if (providers.size() == 1)
-    {
-      provider = providers.get(0);
-    }
-    Label labelName = new Label(composite, SWT.NONE);
-    labelName.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-    labelName.setText("Projectname:");
+			providersViewer = new ComboViewer(composite, SWT.NONE);
+			Combo combo = providersViewer.getCombo();
+			GridData gd_combo = new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1);
+			gd_combo.minimumWidth = 150;
+			combo.setLayoutData(gd_combo);
+			providersViewer.setContentProvider(new ArrayContentProvider());
+			providersViewer.setLabelProvider(new ProvidersLabelProvider());
+			providersViewer.setSorter(new ViewerSorter());
+			providersViewer.setInput(ECPProviderRegistry.INSTANCE);
+			providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+				public void selectionChanged(SelectionChangedEvent event) {
+					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+					provider = (ECPProvider) selection.getFirstElement();
+					if (listener != null) {
+						listener.providerChanged(provider);
+					}
+				}
+			});
+		} else if (providers.size() == 1) {
+			provider = providers.get(0);
+		}
+		Label labelName = new Label(composite, SWT.NONE);
+		labelName.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		labelName.setText(Messages.UICreateProject_ProjectName + ":"); //$//$NON-NLS-1$
 
-    final Text textProjectName = new Text(composite, SWT.BORDER | SWT.SINGLE);
-    textProjectName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));
-    textProjectName.addModifyListener(new ModifyListener()
-    {
+		final Text textProjectName = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		textProjectName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));
+		textProjectName.addModifyListener(new ModifyListener() {
 
-      public void modifyText(ModifyEvent e)
-      {
-        projectName = textProjectName.getText();
-        if (projectName.equals(""))
-        {
-          projectName = null;
-        }
-        if (listener != null)
-        {
-          listener.projectNameChanged(projectName);
-        }
-      }
-    });
-    if (providers.size() > 1)
-    {
-      providersViewer.setSelection(new StructuredSelection(providers.get(0)));
-    }
-    return composite;
-  }
+			public void modifyText(ModifyEvent e) {
+				projectName = textProjectName.getText();
+				if (projectName.equals("")) //$NON-NLS-1$
+				{
+					projectName = null;
+				}
+				if (listener != null) {
+					listener.projectNameChanged(projectName);
+				}
+			}
+		});
+		if (providers.size() > 1) {
+			providersViewer.setSelection(new StructuredSelection(providers.get(0)));
+		}
+		return composite;
+	}
 
-  /**
-   * @return the provider
-   */
-  public ECPProvider getProvider()
-  {
-    return provider;
-  }
+	/**
+	 * @return the provider
+	 */
+	public ECPProvider getProvider() {
+		return provider;
+	}
 
-  /**
-   * @return the projectName
-   */
-  public String getProjectName()
-  {
-    return projectName;
-  }
+	/**
+	 * @return the projectName
+	 */
+	public String getProjectName() {
+		return projectName;
+	}
 
-  /**
-   * @param listener
-   *          the listener to set
-   */
-  public void setListener(CreateProjectChangeListener listener)
-  {
-    this.listener = listener;
-  }
+	/**
+	 * @param listener
+	 *            the listener to set
+	 */
+	public void setListener(CreateProjectChangeListener listener) {
+		this.listener = listener;
+	}
 }

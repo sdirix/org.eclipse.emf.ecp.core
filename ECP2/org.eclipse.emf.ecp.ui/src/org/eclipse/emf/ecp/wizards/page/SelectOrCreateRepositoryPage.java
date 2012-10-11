@@ -3,6 +3,8 @@
  */
 package org.eclipse.emf.ecp.wizards.page;
 
+import org.eclipse.emf.ecp.ui.util.Messages;
+
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -25,8 +27,8 @@ public class SelectOrCreateRepositoryPage extends WizardPage
   public SelectOrCreateRepositoryPage(String pageName)
   {
     super(pageName);
-    setTitle("Create or use existing ECPRepository");
-    setDescription("Please select wether you want to create or use an existing ECPRepository.");
+    setTitle(Messages.SelectOrCreateRepositoryPage_PageTitle_ExistingOrNewRepository);
+    setDescription(Messages.SelectOrCreateRepositoryPage_PageDescription_ExistingOrNewRepository);
   }
 
   private boolean createNewRepository = true;
@@ -41,7 +43,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage
     container.setLayout(new GridLayout(1, true));
     Button bCreateNewRepository = new Button(container, SWT.RADIO);
     bCreateNewRepository.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-    bCreateNewRepository.setText("Create new repository");
+    bCreateNewRepository.setText(Messages.SelectOrCreateRepositoryPage_CreateNewRepository);
     bCreateNewRepository.addSelectionListener(new SelectionListener()
     {
 
@@ -58,7 +60,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage
 
     Button bSelectRepository = new Button(container, SWT.RADIO);
     bSelectRepository.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-    bSelectRepository.setText("Select existing repository");
+    bSelectRepository.setText(Messages.SelectOrCreateRepositoryPage_SelectExistingRepository);
     bSelectRepository.addSelectionListener(new SelectionListener()
     {
 
@@ -98,9 +100,9 @@ public class SelectOrCreateRepositoryPage extends WizardPage
   {
     if (createNewRepository)
     {
-      return getWizard().getPage("AddRepository");
+      return getWizard().getPage("AddRepository"); //$NON-NLS-1$
     }
-    return getWizard().getPage("SelectRepository");
+    return getWizard().getPage("SelectRepository"); //$NON-NLS-1$
 
   }
 

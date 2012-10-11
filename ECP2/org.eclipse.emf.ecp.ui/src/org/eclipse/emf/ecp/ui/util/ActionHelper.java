@@ -64,12 +64,12 @@ public final class ActionHelper
   {
     if (me == null)
     {
-      MessageDialog.openError(Display.getCurrent().getActiveShell(), "The element was deleted",
-          "The model element you are trying to open was deleted!");
+      MessageDialog.openError(Display.getCurrent().getActiveShell(), Messages.ActionHelper_ErrorTitle_ElementDeleted,
+          Messages.ActionHelper_ErrorMessage_ElementDeleted);
       return;
     }
     IConfigurationElement[] modelelementopener = Platform.getExtensionRegistry().getConfigurationElementsFor(
-        "org.eclipse.emf.ecp.ui.modelelementopener");
+        "org.eclipse.emf.ecp.ui.modelelementopener"); //$NON-NLS-1$
     ModelElementOpener bestCandidate = null;
     int bestValue = -1;
     for (IConfigurationElement element : modelelementopener)
@@ -77,7 +77,7 @@ public final class ActionHelper
       modelelementopener = null;
       try
       {
-        ModelElementOpener modelelementOpener = (ModelElementOpener)element.createExecutableExtension("class");
+        ModelElementOpener modelelementOpener = (ModelElementOpener)element.createExecutableExtension("class"); //$NON-NLS-1$
         int value = modelelementOpener.canOpen(me);
         if (value > bestValue)
         {

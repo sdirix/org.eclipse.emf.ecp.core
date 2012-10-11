@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class PropertiesLabelProvider extends LabelProvider implements ITableLabelProvider
 {
-  private static final Image PROPERTY = Activator.getImage("icons/property_obj.gif");
+  private static final Image PROPERTY = Activator.getImage("icons/property_obj.gif"); //$NON-NLS-1$
 
   public PropertiesLabelProvider()
   {

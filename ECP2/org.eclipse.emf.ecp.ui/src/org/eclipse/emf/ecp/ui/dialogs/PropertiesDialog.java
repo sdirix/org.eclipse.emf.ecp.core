@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.ui.util.Messages;
 import org.eclipse.emf.ecp.ui.widgets.PropertiesComposite;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -65,14 +66,14 @@ public class PropertiesDialog extends TitleAreaDialog
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setText("Properties");
+    newShell.setText(Messages.PropertiesDialog_DialogTitle);
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
     setTitle(title);
-    setTitleImage(Activator.getImage("icons/properties_wiz.png"));
+    setTitleImage(Activator.getImage("icons/properties_wiz.png")); //$NON-NLS-1$
     setMessage(message);
 
     Composite area = (Composite)super.createDialogArea(parent);
@@ -121,11 +122,11 @@ public class PropertiesDialog extends TitleAreaDialog
   protected Text addTextProperty(Composite composite, String key, String value)
   {
     Label label = new Label(composite, SWT.NONE);
-    label.setText(key == null ? "" : key);
+    label.setText(key == null ? "" : key); //$NON-NLS-1$
     label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
     Text text = new Text(composite, SWT.NONE);
-    text.setText(value == null ? "" : value);
+    text.setText(value == null ? "" : value); //$NON-NLS-1$
     text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     text.setEditable(isEditable());
     return text;

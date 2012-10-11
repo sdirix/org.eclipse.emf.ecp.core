@@ -21,7 +21,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class RepositoriesLabelProvider extends ECPLabelProvider
 {
-  private static final Image REPOSITORY = Activator.getImage("icons/repository.gif");
+  private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
 
   public RepositoriesLabelProvider(ECPModelContextProvider modelContextProvider)
   {

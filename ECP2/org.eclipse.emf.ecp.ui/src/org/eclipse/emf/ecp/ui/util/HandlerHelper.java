@@ -148,17 +148,17 @@ public class HandlerHelper {
 			ECPRepositoryManager.INSTANCE.addRepository(
 				addRepositoryComposite.getProvider(),
 				addRepositoryComposite.getRepositoryName(),
-				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(),
-				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite
+				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
+				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
 					.getRepositoryDescription(), addRepositoryComposite.getProperties());
 		}
 	}
 
 	public static void close(ECPCloseable[] closeables, String currentType) {
 		for (ECPCloseable closeable : closeables) {
-			if ("open".equalsIgnoreCase(currentType)) {
+			if ("open".equalsIgnoreCase(currentType)) { //$NON-NLS-1$
 				closeable.open();
-			} else if ("close".equalsIgnoreCase(currentType)) {
+			} else if ("close".equalsIgnoreCase(currentType)) { //$NON-NLS-1$
 				closeable.close();
 			}
 		}

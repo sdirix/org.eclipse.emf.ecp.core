@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.ecp.ui.views;
 
+import org.eclipse.emf.ecp.ui.Messages;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.actions.RefreshViewerAction;
 import org.eclipse.jface.action.Action;
@@ -46,7 +47,7 @@ import org.eclipse.ui.part.ViewPart;
  */
 public abstract class TreeView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
-  public static final String GLOBAL_ADDITIONS = "global_additions";
+  public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
   private final String id;
 
@@ -91,7 +92,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       viewer = createViewer(parent);
       if (viewer == null)
       {
-        throw new IllegalStateException("Viewer has not been created");
+        throw new IllegalStateException(Messages.TreeView_Exception_ViewerNotCreated);
       }
 
       refreshAction = new RefreshViewerAction(viewer);
@@ -241,7 +242,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
   private void hookContextMenu()
   {
-    MenuManager manager = new MenuManager("#PopupMenu");
+    MenuManager manager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     manager.setRemoveAllWhenShown(true);
     manager.addMenuListener(new IMenuListener()
     {

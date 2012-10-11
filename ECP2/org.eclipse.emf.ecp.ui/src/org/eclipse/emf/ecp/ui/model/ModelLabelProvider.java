@@ -23,9 +23,9 @@ import org.eclipse.swt.graphics.Image;
  */
 public class ModelLabelProvider extends ECPLabelProvider implements ECPProjectManager.Listener
 {
-  private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif");
+  private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 
-  private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif");
+  private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
 
   public ModelLabelProvider(ECPModelContextProvider modelContextProvider)
   {

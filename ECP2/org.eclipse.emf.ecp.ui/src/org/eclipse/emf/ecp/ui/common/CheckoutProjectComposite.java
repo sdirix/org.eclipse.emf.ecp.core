@@ -8,6 +8,7 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -39,7 +40,7 @@ public class CheckoutProjectComposite implements CompositeUiProvider
     projectName = this.checkoutSource.getDefaultCheckoutName();
     if (projectName == null)
     {
-      projectName = "";
+      projectName = ""; //$NON-NLS-1$
     }
     uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(checkoutSource);
   }
@@ -51,7 +52,7 @@ public class CheckoutProjectComposite implements CompositeUiProvider
     composite.setLayout(new GridLayout(2, false));
 
     Label lblNewLabel = new Label(composite, SWT.NONE);
-    lblNewLabel.setText("Project name:");
+    lblNewLabel.setText(Messages.CheckoutProjectComposite_ProjectName);
 
     final Text projectNameText = new Text(composite, SWT.BORDER);
     projectNameText.setText(projectName);

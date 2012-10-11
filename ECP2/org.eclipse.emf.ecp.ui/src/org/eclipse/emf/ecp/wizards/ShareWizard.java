@@ -7,6 +7,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
+import org.eclipse.emf.ecp.ui.util.Messages;
 import org.eclipse.emf.ecp.wizards.page.AddRepositoryPage;
 import org.eclipse.emf.ecp.wizards.page.SelectOrCreateRepositoryPage;
 import org.eclipse.emf.ecp.wizards.page.SelectRepositoryPage;
@@ -59,10 +60,10 @@ public class ShareWizard extends Wizard
   public void addPages()
   {
 
-    SelectOrCreateRepositoryPage userChoicePage = new SelectOrCreateRepositoryPage("UserChoice");
-    SelectRepositoryPage selectPage = new SelectRepositoryPage("SelectRepository");
+    SelectOrCreateRepositoryPage userChoicePage = new SelectOrCreateRepositoryPage("UserChoice"); //$NON-NLS-1$
+    SelectRepositoryPage selectPage = new SelectRepositoryPage("SelectRepository"); //$NON-NLS-1$
     repositoryComposite = new AddRepositoryComposite(provider);
-    AddRepositoryPage addPage = new AddRepositoryPage("AddRepository", repositoryComposite);
+    AddRepositoryPage addPage = new AddRepositoryPage("AddRepository", repositoryComposite); //$NON-NLS-1$
     addPage(userChoicePage);
     addPage(selectPage);
     addPage(addPage);
@@ -91,8 +92,8 @@ public class ShareWizard extends Wizard
     {
       selectedRepository = ECPRepositoryManager.INSTANCE.addRepository(provider, repositoryComposite
           .getRepositoryName(),
-          repositoryComposite.getRepositoryLabel() == null ? "" : repositoryComposite.getRepositoryLabel(),
-          repositoryComposite.getRepositoryDescription() == null ? "" : repositoryComposite.getRepositoryDescription(),
+          repositoryComposite.getRepositoryLabel() == null ? "" : repositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
+          repositoryComposite.getRepositoryDescription() == null ? "" : repositoryComposite.getRepositoryDescription(), //$NON-NLS-1$
           repositoryComposite.getProperties());
     }
     return true;
@@ -105,7 +106,7 @@ public class ShareWizard extends Wizard
   public void init(ECPProvider provider)
   {
     this.provider = provider;
-    setWindowTitle("ECPRepository Wizard");
+    setWindowTitle(Messages.ShareWizard_Title_Share);
   }
 
 }

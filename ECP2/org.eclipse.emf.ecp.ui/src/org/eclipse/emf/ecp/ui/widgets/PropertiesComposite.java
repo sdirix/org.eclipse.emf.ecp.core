@@ -14,6 +14,7 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.ui.dialogs.PropertyDialog;
 import org.eclipse.emf.ecp.ui.model.PropertiesContentProvider;
 import org.eclipse.emf.ecp.ui.model.PropertiesLabelProvider;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -62,12 +63,12 @@ public class PropertiesComposite extends Composite
     TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
     TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
     tblclmnNewColumn.setWidth(122);
-    tblclmnNewColumn.setText("Key");
+    tblclmnNewColumn.setText(Messages.PropertiesComposite_TableColumnName_Key);
 
     TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
     TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
     tblclmnNewColumn_1.setWidth(314);
-    tblclmnNewColumn_1.setText("Value");
+    tblclmnNewColumn_1.setText(Messages.PropertiesComposite_TableColumnName_Value);
 
     tableViewer.setLabelProvider(new PropertiesLabelProvider());
     tableViewer.setContentProvider(new PropertiesContentProvider());
@@ -83,7 +84,7 @@ public class PropertiesComposite extends Composite
       buttonBar.setLayout(gl_buttonBar);
 
       Button addButton = new Button(buttonBar, SWT.NONE);
-      addButton.setText("&Add...");
+      addButton.setText(Messages.PropertiesComposite_AddProperty);
       addButton.addSelectionListener(new SelectionListener()
       {
         public void widgetSelected(SelectionEvent e)
@@ -104,7 +105,7 @@ public class PropertiesComposite extends Composite
       });
 
       Button editButton = new Button(buttonBar, SWT.NONE);
-      editButton.setText("Edit...");
+      editButton.setText(Messages.PropertiesComposite_EditProperty);
       editButton.addSelectionListener(new SelectionListener()
       {
         public void widgetSelected(SelectionEvent e)
@@ -128,7 +129,7 @@ public class PropertiesComposite extends Composite
       });
 
       Button removeButton = new Button(buttonBar, SWT.NONE);
-      removeButton.setText("&Remove");
+      removeButton.setText(Messages.PropertiesComposite_RemoveProperty);
       removeButton.addSelectionListener(new SelectionListener()
       {
         public void widgetSelected(SelectionEvent e)

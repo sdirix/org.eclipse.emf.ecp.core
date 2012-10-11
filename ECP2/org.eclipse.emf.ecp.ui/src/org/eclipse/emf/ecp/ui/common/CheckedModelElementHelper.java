@@ -2,6 +2,7 @@ package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -53,7 +54,7 @@ public class CheckedModelElementHelper extends AbstractModelElementHelper
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).span(2, 1).applyTo(buttons);
 
     Button buttonAll = new Button(buttons, SWT.PUSH);
-    buttonAll.setText("Select All");
+    buttonAll.setText(Messages.CheckedModelElementHelper_SelectAllLabel);
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).applyTo(buttonAll);
     buttonAll.addSelectionListener(new SelectionAdapter()
     {
@@ -66,7 +67,7 @@ public class CheckedModelElementHelper extends AbstractModelElementHelper
       }
     });
     Button buttonNone = new Button(buttons, SWT.PUSH);
-    buttonNone.setText("Deselect All");
+    buttonNone.setText(Messages.CheckedModelElementHelper_DeselectAllLabel);
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).applyTo(buttonNone);
     buttonNone.addSelectionListener(new SelectionAdapter()
     {

@@ -6,6 +6,7 @@ package org.eclipse.emf.ecp.ui.dialogs;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.ui.util.Messages;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -31,13 +32,13 @@ import java.util.Comparator;
 public abstract class ModelelementSelectionDialog extends FilteredItemsSelectionDialog
 {
 
-  private static final String DIALOG_SETTINGS = "STANDARD_DIALOG_SETTING";
+  private static final String DIALOG_SETTINGS = "STANDARD_DIALOG_SETTING"; //$NON-NLS-1$
 
-  private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)";
+  private static final String DIALOG_MESSAGE = Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern;
 
-  private static final String DIALOG_TITLE = "Search Model Element";
+  private static final String DIALOG_TITLE = Messages.ModelelementSelectionDialog_DialogTitle;
 
-  private static final String DIALOG_INITIAL_PATTERN = "**";
+  private static final String DIALOG_INITIAL_PATTERN = "**"; //$NON-NLS-1$
 
   private ILabelProvider labelProvider;
 
@@ -216,7 +217,7 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
       IProgressMonitor progressMonitor)
   {
 
-    progressMonitor.beginTask("Searching", modelElements.size());
+    progressMonitor.beginTask(Messages.ModelelementSelectionDialog_ProgressMonitor_Searching, modelElements.size());
     for (EObject modelElement : modelElements)
     {
       contentProvider.add(modelElement, itemsFilter);
@@ -321,9 +322,9 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
     {
       String label = getLabelProvider().getText(item);
 
-      if (!patternMatcher.getPattern().startsWith("*"))
+      if (!patternMatcher.getPattern().startsWith("*")) //$NON-NLS-1$
       {
-        patternMatcher.setPattern("*" + patternMatcher.getPattern() + "*");
+        patternMatcher.setPattern("*" + patternMatcher.getPattern() + "*"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       return matches(label);

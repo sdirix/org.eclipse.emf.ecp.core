@@ -7,6 +7,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
 import org.eclipse.emf.ecp.ui.model.ModelClassFilter;
 import org.eclipse.emf.ecp.ui.model.ModelTreeContentProvider;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -64,9 +65,9 @@ public abstract class AbstractModelElementHelper implements CompositeUiProvider
     GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 
     Label filterLabel = new Label(composite, SWT.LEFT);
-    filterLabel.setText("Search:");
+    filterLabel.setText(Messages.AbstractModelElementHelper_FilterLabel);
     final Text filterInput = new Text(composite, SWT.SEARCH);
-    filterInput.setMessage("Model Element class");
+    filterInput.setMessage(Messages.AbstractModelElementHelper_FilterText);
     GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(filterInput);
 
     final ModelClassFilter filter = new ModelClassFilter();

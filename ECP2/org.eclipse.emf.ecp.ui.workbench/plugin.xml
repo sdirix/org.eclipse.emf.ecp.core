@@ -10,23 +10,23 @@
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ModelExplorerView"
-            icon="icons/sample.gif"
+            icon="./icons/sample.gif"
             id="org.eclipse.emf.ecp.ui.ModelExplorerView"
-            name="Model Explorer">
+            name="%ModelExplorerView">
       </view>
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ModelRepositoriesView"
             icon="icons/repositories.gif"
             id="org.eclipse.emf.ecp.ui.ModelRepositoriesView"
-            name="Model Repositories">
+            name="%ModelRepositoryView">
       </view>
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ECPProvidersView"
             icon="icons/providers.gif"
             id="org.eclipse.emf.ecp.ui.ECPProvidersView"
-            name="ECP Providers">
+            name="%ECPProviderView">
       </view>
    </extension>
    <extension
@@ -57,7 +57,7 @@
                class="org.eclipse.emf.ecp.ui.actions.RepositoryPropertiesAction"
                enablesFor="1"
                id="org.eclipse.emf.ecp.ui.repositoryPropertiesAction"
-               label="Properties"
+               label="%RepositoryProperties"
                state="true"
                style="push">
          </action>
@@ -70,7 +70,7 @@
                class="org.eclipse.emf.ecp.ui.actions.ProjectPropertiesAction"
                enablesFor="1"
                id="org.eclipse.emf.ecp.ui.projectPropertiesAction"
-               label="Properties"
+               label="%ProjectProperties"
                state="true"
                style="push">
          </action>
@@ -83,7 +83,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=global_additions">
          <command
                commandId="org.eclipse.emf.ecp.ui.closable"
-               label="Open"
+               label="%OpenClosable"
                style="push">
             <parameter
                   name="org.eclipse.emf.ecp.ecpclosable.type"
@@ -111,7 +111,7 @@
          </command>
          <command
                commandId="org.eclipse.emf.ecp.ui.closable"
-               label="Close"
+               label="%CloseClosable"
                style="push">
             <parameter
                   name="org.eclipse.emf.ecp.ecpclosable.type"
@@ -140,7 +140,7 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.delete"
                icon="icons/delete.gif"
-               label="Delete"
+               label="%DelteProject"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -161,7 +161,7 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.checkout"
                icon="icons/checkout_project.gif"
-               label="Checkout..."
+               label="%CheckoutProject"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -185,13 +185,13 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.project.createProject"
                icon="icons/add.gif"
-               label="Create new project"
+               label="%CreateNewProject"
                style="push">
          </command>
          <command
                commandId="org.eclipse.emf.ecp.ui.project.filterModelElements"
                icon="icons/sample.gif"
-               label="Filter Model Elements"
+               label="%FilterProject"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -203,7 +203,7 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
                icon="icons/add.gif"
-               label="New Model Element"
+               label="%NewModelElement"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -219,7 +219,7 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.workbench.saveProject"
                icon="icons/database_save.png"
-               label="Save Project"
+               label="%SaveProject"
                style="push">
          </command>
       </menuContribution>
@@ -259,7 +259,7 @@
       -->
       <command
             id="org.eclipse.emf.ecp.ui.closable"
-            name="closeable">
+            name="Close/Open">
          <commandParameter
                id="org.eclipse.emf.ecp.ecpclosable.type"
                name="ECPCloseable Type"

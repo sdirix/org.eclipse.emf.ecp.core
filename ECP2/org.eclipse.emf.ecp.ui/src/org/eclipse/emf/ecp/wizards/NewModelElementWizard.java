@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -44,7 +45,7 @@ public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
   public void addPages()
   {
     super.addPages();
-    WizardPage wp = new WizardPage("Add new model element")
+    WizardPage wp = new WizardPage(Messages.NewModelElementWizard_WizardTitle_AddModelElement)
     {
 
       public void createControl(Composite parent)
@@ -84,8 +85,8 @@ public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
       }
     };
     addPage(wp);
-    wp.setTitle("Add new model element");
-    wp.setDescription("Select model element type");
+    wp.setTitle(Messages.NewModelElementWizard_PageTitle_AddModelElement);
+    wp.setDescription(Messages.NewModelElementWizard_PageDescription_AddModelElement);
 
   }
 

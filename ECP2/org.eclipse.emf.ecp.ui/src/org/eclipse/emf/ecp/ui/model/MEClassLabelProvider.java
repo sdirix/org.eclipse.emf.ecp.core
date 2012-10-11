@@ -47,7 +47,7 @@ public class MEClassLabelProvider extends AdapterFactoryLabelProvider
     {
       return ((EClass)object).getName();
     }
-    return "";
+    return ""; //$NON-NLS-1$
   }
 
   /**

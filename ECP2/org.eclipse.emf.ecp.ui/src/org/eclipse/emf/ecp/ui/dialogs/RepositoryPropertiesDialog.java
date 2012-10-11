@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -68,7 +69,7 @@ public class RepositoryPropertiesDialog extends PropertiesDialog
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setText("Repository Properties");
+    newShell.setText(Messages.RepositoryPropertiesDialog_DialogTitle);
   }
 
   @Override
@@ -77,6 +78,6 @@ public class RepositoryPropertiesDialog extends PropertiesDialog
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
 
-    providerText = addTextProperty(composite, "Provider:", repository.getProvider().getLabel());
+    providerText = addTextProperty(composite, Messages.RepositoryPropertiesDialog_RepositoryProvider, repository.getProvider().getLabel());
   }
 }
