@@ -51,7 +51,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 		Set<EObject> eObjects=projectSpace.getProject().getAllModelElements();
 		
 		if (project == null) {
-			MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			MessageDialog.openInformation(HandlerUtil.getActiveShell(event),
 				"Information", "You must first select the Project.");
 		} else {
 			ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event), new AdapterFactoryLabelProvider(

@@ -55,10 +55,10 @@ public class EMFStoreProvider extends DefaultProvider {
 		configureEMFStore();
 	}
 
-	public EMFStoreProvider(String name) {
-		super(name);
-		configureEMFStore();
-	}
+	// public EMFStoreProvider(String name) {
+	// super(name);
+	// configureEMFStore();
+	// }
 
 	/**
    * 

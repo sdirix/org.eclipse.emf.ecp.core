@@ -3,8 +3,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.client.ui.controller.UICommitProjectController;
+import org.eclipse.emf.emfstore.client.ui.controller.UIUndoLastOperationController;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -12,22 +11,23 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-/**
- * @author Eugen Neufeld
- */
-public class CommitProjectHandler extends AbstractHandler {
+public class UndoLastOperationHandler extends AbstractHandler {
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
-		// TODO Ugly
-		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
-			projectSpace.setUsersession(serverInfo.getLastUsersession());
+		if (project == null) {
+			return null;
 		}
-		new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-
+		ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
+		if (projectSpace != null) {
+			new UIUndoLastOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		}
 		return null;
 	}
+
 }
