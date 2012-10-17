@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.IFilterProvider;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -33,23 +34,31 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public final class ECPProjectImpl extends PropertiesElement implements InternalProject, DisposeListener {
+
 	private InternalRepository repository;
 
 	private InternalProvider provider;
@@ -133,9 +142,30 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * this method sets all known {@link EPackage}s as the filter.
 	 */
 	private void setupFilteredEPackages() {
+		List<IFilterProvider> filterProviders = new ArrayList<IFilterProvider>();
+		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+			"org.eclipse.emf.ecp.core.filters");
+		for (IExtension extension : extensionPoint.getExtensions()) {
+			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+			try {
+				IFilterProvider filterProvider = (IFilterProvider) configurationElement
+					.createExecutableExtension("class");
+				filterProviders.add(filterProvider);
+			} catch (CoreException ex) {
+				Activator.log(ex);
+			}
+		}
+
 		Set<EPackage> ePackages = new HashSet<EPackage>();
+		Set<String> filteredNsUris = new HashSet<String>();
+		for (IFilterProvider filterProvider : filterProviders) {
+			filteredNsUris.addAll(filterProvider.getFilteredPackages());
+		}
 
 		for (String nsUri : Registry.INSTANCE.keySet()) {
+			if (filteredNsUris.contains(nsUri)) {
+				continue;
+			}
 			EPackage ePackage = Registry.INSTANCE.getEPackage(nsUri);
 			ePackages.add(ePackage);
 		}
