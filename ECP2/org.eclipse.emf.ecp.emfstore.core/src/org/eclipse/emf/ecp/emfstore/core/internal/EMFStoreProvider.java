@@ -55,11 +55,6 @@ public class EMFStoreProvider extends DefaultProvider {
 		configureEMFStore();
 	}
 
-	// public EMFStoreProvider(String name) {
-	// super(name);
-	// configureEMFStore();
-	// }
-
 	/**
    * 
    */
@@ -256,7 +251,7 @@ public class EMFStoreProvider extends DefaultProvider {
 
 				public void collectionDeleted(IdEObjectCollection collection) {
 					// project delete
-					((InternalProject) context).notifyObjectsChanged(collection.getAllModelElements().toArray());
+					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
 				}
 			});
 		}
@@ -395,6 +390,18 @@ public class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public boolean hasAutosave(InternalProject project) {
 		return Configuration.isAutoSaveEnabled();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#delete(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 * java.util.Collection)
+	 */
+	public void delete(InternalProject project, Collection<EObject> eObjects) {
+		ProjectSpace projectSpace = getProjectSpace(project);
+		for (EObject eObject : eObjects) {
+			projectSpace.getProject().deleteModelElement(eObject);
+		}
 	}
 
 }

@@ -212,6 +212,25 @@
                </reference>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
+               icon="icons/delete.gif"
+               label="Delete Model Element"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecore.EObject">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -287,6 +306,10 @@
             id="org.eclipse.emf.ecp.ui.workbench.saveProject"
             name="Save Project">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
+            name="Delete Model Element">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -344,6 +367,10 @@
                </iterate>
             </with>
          </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.DeleteModelElement"
+            commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
       </handler>
    </extension>
    <extension

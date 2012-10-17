@@ -23,7 +23,7 @@ Import-Package: org.eclipse.core.commands,
  org.eclipse.ui;ui.workbench=split,
  org.eclipse.ui.dialogs,
  org.eclipse.ui.handlers,
- org.eclipse.ui.part,
+ org.eclipse.ui.part;ui.workbench=split,
  org.eclipse.ui.plugin
 Export-Package: org.eclipse.emf.ecp.ui.actions;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.ui.commands;version="1.0.0.qualifier";x-internal:=true,

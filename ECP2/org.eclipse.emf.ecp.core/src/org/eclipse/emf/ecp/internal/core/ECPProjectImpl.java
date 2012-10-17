@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.Platform;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -503,5 +504,31 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 */
 	public boolean hasAutosave() {
 		return getProvider().hasAutosave(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#delete(org.eclipse.emf.ecore.EObject[])
+	 */
+	public void delete(EObject... eObjects) {
+		getProvider().delete(this, Arrays.asList(eObjects));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#delete(java.util.Collection)
+	 */
+	public void delete(Collection<EObject> eObjects) {
+		getProvider().delete(this, eObjects);
+		notifyObjectsChanged(new Object[] { this });
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#addModelElement(org.eclipse.emf.ecore.EObject)
+	 */
+	public void addModelElement(EObject eObject) {
+		getProvider().getElements(this).add(eObject);
+		notifyObjectsChanged(new Object[] { this });
 	}
 }

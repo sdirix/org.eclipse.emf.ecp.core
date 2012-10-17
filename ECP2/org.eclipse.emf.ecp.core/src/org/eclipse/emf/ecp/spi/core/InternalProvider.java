@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.spi.core;
 
@@ -30,66 +29,73 @@ import java.util.Iterator;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPModelContextProvider,
-    InternalRegistryElement, AdapterProvider
-{
-  public static final ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
-      ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+	InternalRegistryElement, AdapterProvider {
+	public static final ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
+		ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-  public AdapterProvider getUIProvider();
+	public AdapterProvider getUIProvider();
 
-  public void setUIProvider(AdapterProvider uiProvider);
+	public void setUIProvider(AdapterProvider uiProvider);
 
-  public EditingDomain createEditingDomain(InternalProject project);
+	public EditingDomain createEditingDomain(InternalProject project);
 
-  public boolean isSlow(Object parent);
+	public boolean isSlow(Object parent);
 
-  public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList);
+	public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList);
 
-  public void handleLifecycle(ECPModelContext context, LifecycleEvent event);
+	public void handleLifecycle(ECPModelContext context, LifecycleEvent event);
 
-  /**
-   * @author Eike Stepper
-   */
-  public enum LifecycleEvent
-  {
-    CREATE, INIT, DISPOSE, REMOVE;
-  }
+	/**
+	 * @author Eike Stepper
+	 */
+	public enum LifecycleEvent {
+		CREATE, INIT, DISPOSE, REMOVE;
+	}
 
-  /**
-   * @param ecpProject
-   * @return list of Elements of this project
-   */
-  // TODO check whether not to use fillChildren
-  public EList<EObject> getElements(ECPProject ecpProject);
+	/**
+	 * @param ecpProject
+	 * @return list of Elements of this project
+	 */
+	// TODO check whether not to use fillChildren
+	public EList<EObject> getElements(ECPProject ecpProject);
 
-  /**
-   * filter packages that are not supported by this provider
-   * 
-   * @param ePackages
-   *          packages to filter from
-   * @return a {@link Collection} of {@link EPackage}s that are not supported
-   */
-  public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
+	/**
+	 * filter packages that are not supported by this provider
+	 * 
+	 * @param ePackages
+	 *            packages to filter from
+	 * @return a {@link Collection} of {@link EPackage}s that are not supported
+	 */
+	public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
 
-  /**
-   * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
-   * eReference.
-   * 
-   * @param ecpProject
-   *          - the project the call is from
-   * @param modelElement
-   *          - {@link EObject} to add the {@link EReference} to
-   * @param eReference
-   *          - the {@link EReference} to add
-   * @return {@link Iterator} of {@link EObject} that can be linked
-   */
-  public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference);
+	/**
+	 * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
+	 * eReference.
+	 * 
+	 * @param ecpProject
+	 *            - the project the call is from
+	 * @param modelElement
+	 *            - {@link EObject} to add the {@link EReference} to
+	 * @param eReference
+	 *            - the {@link EReference} to add
+	 * @return {@link Iterator} of {@link EObject} that can be linked
+	 */
+	public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference);
 
-  public void doSave(InternalProject project);
+	public void doSave(InternalProject project);
 
-  public boolean isDirty(InternalProject project);
+	public boolean isDirty(InternalProject project);
 
-  public boolean hasAutosave(InternalProject project);
+	public boolean hasAutosave(InternalProject project);
+
+	/**
+	 * Deletes a collection of EObjects from the model
+	 * 
+	 * @param project the project from where to delete
+	 * @param eObjects the {@link Collection} if {@link EObject}s to delete
+	 */
+	public void delete(InternalProject project, Collection<EObject> eObjects);
 }

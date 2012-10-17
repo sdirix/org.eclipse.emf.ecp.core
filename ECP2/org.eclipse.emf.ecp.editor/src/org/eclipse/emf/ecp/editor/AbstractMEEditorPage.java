@@ -21,20 +21,19 @@ import org.eclipse.ui.forms.editor.FormPage;
  * 
  * @author shterev
  */
-public abstract class AbstractMEEditorPage
-{
+public abstract class AbstractMEEditorPage {
 
-  /**
-   * Default init.
-   * 
-   * @param editor
-   *          the {@link MEEditor}
-   * @param editingDomain
-   *          the editingDomain
-   * @param modelElement
-   *          the modelElement
-   * @return FormPage
-   */
-  public abstract FormPage createPage(FormEditor editor, EditingDomain editingDomain, EObject modelElement);
+	/**
+	 * Default init.
+	 * 
+	 * @param editor
+	 *            the {@link FormEditor}
+	 * @param editingDomain
+	 *            the editingDomain
+	 * @param modelElement
+	 *            the modelElement
+	 * @return FormPage
+	 */
+	public abstract FormPage createPage(FormEditor editor, EditingDomain editingDomain, EObject modelElement);
 
 }

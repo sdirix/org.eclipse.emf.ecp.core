@@ -21,7 +21,6 @@ import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 /**
@@ -34,7 +33,6 @@ public class SearchModelElementHandler extends AbstractHandler {
 	/**
 	 * {@link Inherited}
 	 */
-	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection=(IStructuredSelection)HandlerUtil.getCurrentSelection(event);
 

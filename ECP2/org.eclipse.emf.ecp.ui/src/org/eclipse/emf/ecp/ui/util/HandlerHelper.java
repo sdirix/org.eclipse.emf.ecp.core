@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -51,6 +52,10 @@ public class HandlerHelper {
 				checkoutSource.checkout(projectName, projectProperties);
 			}
 		}
+	}
+
+	public static void deleteModelElement(ECPProject project, Collection<EObject> eObjects) {
+		project.delete(eObjects);
 	}
 
 	public static void createProject(final AbstractUICallback callback) {
@@ -94,7 +99,7 @@ public class HandlerHelper {
 				EPackage ePackage = newMEType.getEPackage();
 				EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
 
-				ecpProject.getElements().add(newMEInstance);
+				ecpProject.addModelElement(newMEInstance);
 
 				// 3.open the newly created ME
 				ActionHelper.openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);
@@ -145,9 +150,8 @@ public class HandlerHelper {
 		AddRepositoryComposite addRepositoryComposite = new AddRepositoryComposite();
 		callback.setCompositeUIProvider(addRepositoryComposite);
 		if (AbstractUICallback.OK == callback.open()) {
-			ECPRepositoryManager.INSTANCE.addRepository(
-				addRepositoryComposite.getProvider(),
-				addRepositoryComposite.getRepositoryName(),
+			ECPRepositoryManager.INSTANCE.addRepository(addRepositoryComposite.getProvider(), addRepositoryComposite
+				.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
 				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
 					.getRepositoryDescription(), addRepositoryComposite.getProperties());
