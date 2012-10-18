@@ -134,7 +134,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			}
 		}
 
-		// no need to initialize, as the content provider does it
+		// do not initialize on startup, will be initializes by view
 		// notifyProvider(LifecycleEvent.INIT);
 	}
 
@@ -561,4 +561,5 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		getProvider().getElements(this).add(eObject);
 		notifyObjectsChanged(new Object[] { this });
 	}
+
 }

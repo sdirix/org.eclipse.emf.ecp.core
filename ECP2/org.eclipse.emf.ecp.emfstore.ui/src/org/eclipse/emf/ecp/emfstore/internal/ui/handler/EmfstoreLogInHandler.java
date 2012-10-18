@@ -18,23 +18,21 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eugen Neufeld
  */
-public class EmfstoreLogInHandler extends AbstractHandler
-{
+public class EmfstoreLogInHandler extends AbstractHandler {
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-   */
-  public Object execute(ExecutionEvent event) throws ExecutionException
-  {
-    final ECPRepository ecpRepository = (ECPRepository)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
-        .getFirstElement();
-    final ServerInfo serverInfo = EMFStoreProvider.getServerInfo((InternalRepository)ecpRepository);
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
+			.getCurrentSelection(event)).getFirstElement();
+		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 
-    new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
+		new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
 
-    // ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();
-    return null;
-  }
+		// ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();
+		return null;
+	}
 
 }

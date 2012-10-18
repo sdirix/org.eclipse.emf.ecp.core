@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.spi.core;
 
@@ -17,17 +16,16 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 /**
  * @author Eike Stepper
  */
-public interface InternalProject extends ECPProject, ECPProjectAware, StorableElement
-{
-  public InternalRepository getRepository();
+public interface InternalProject extends ECPProject, ECPProjectAware, StorableElement {
+	public InternalRepository getRepository();
 
-  public InternalProvider getProvider();
+	public InternalProvider getProvider();
 
-  public Object getProviderSpecificData();
+	public Object getProviderSpecificData();
 
-  public void setProviderSpecificData(Object data);
+	public void setProviderSpecificData(Object data);
 
-  public void notifyObjectsChanged(Object[] objects);
+	public void notifyObjectsChanged(Object[] objects);
 
-  public void undispose(InternalRepository repository);
+	public void undispose(InternalRepository repository);
 }

@@ -9,14 +9,13 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.ui.common.dnd.ComposedDropAdapter;
-import org.eclipse.emf.ecp.ui.common.dnd.ECPDragAdapter;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
+import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
@@ -46,8 +45,8 @@ public class TreeViewerFactory {
 
 			int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
 			Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
-			viewer.addDragSupport(dndOperations, transfers, new ECPDragAdapter(viewer));// new ViewerDragAdapter(viewer)
-			viewer.addDropSupport(dndOperations, transfers, new ComposedDropAdapter(viewer));// dropAdapter
+			viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));// new ECPDragAdapter(viewer)
+			viewer.addDropSupport(dndOperations, transfers, dropAdapter);// ComposedDropAdapter
 			viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 				public void selectionChanged(SelectionChangedEvent event) {

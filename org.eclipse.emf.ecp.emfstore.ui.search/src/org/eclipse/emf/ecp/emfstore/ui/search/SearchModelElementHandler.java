@@ -44,7 +44,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 		
 		InternalProject project = (InternalProject) contextProvider.getModelContext(selection.getFirstElement());
 		
-		ProjectSpace projectSpace=EMFStoreProvider.getProjectSpace(project);
+		ProjectSpace projectSpace=EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		
 		Set<EObject> eObjects=projectSpace.getProject().getAllModelElements();
 		

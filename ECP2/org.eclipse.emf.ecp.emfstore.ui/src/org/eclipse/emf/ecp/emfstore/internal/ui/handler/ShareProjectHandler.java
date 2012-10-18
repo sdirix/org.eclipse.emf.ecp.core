@@ -18,34 +18,30 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eugen Neufeld
  */
-public class ShareProjectHandler extends AbstractHandler
-{
+public class ShareProjectHandler extends AbstractHandler {
 
-  public Object execute(ExecutionEvent event) throws ExecutionException
-  {
-    InternalProject project = (InternalProject)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
-        .getFirstElement();
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+			.getFirstElement();
 
-    ShareWizard rw = new ShareWizard();
-    rw.init(project.getProvider());
+		ShareWizard rw = new ShareWizard();
+		rw.init(project.getProvider());
 
-    WizardDialog wd = new WizardDialog(HandlerUtil.getActiveShell(event), rw);
-    int result = wd.open();
-    if (result == WizardDialog.OK)
-    {
-      // TODO internal cast again
-      InternalRepository repository = (InternalRepository)rw.getSelectedRepository();
-      project.undispose(repository);
-      ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
-      // TODO Ugly
-      if (projectSpace.getUsersession() == null)
-      {
-        ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
-        projectSpace.setUsersession(serverInfo.getLastUsersession());
-      }
-      new UIShareProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		WizardDialog wd = new WizardDialog(HandlerUtil.getActiveShell(event), rw);
+		int result = wd.open();
+		if (result == WizardDialog.OK) {
+			// TODO internal cast again
+			InternalRepository repository = (InternalRepository) rw.getSelectedRepository();
+			project.undispose(repository);
+			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			// TODO Ugly
+			if (projectSpace.getUsersession() == null) {
+				ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+				projectSpace.setUsersession(serverInfo.getLastUsersession());
+			}
+			new UIShareProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 
-    }
-    return null;
-  }
+		}
+		return null;
+	}
 }

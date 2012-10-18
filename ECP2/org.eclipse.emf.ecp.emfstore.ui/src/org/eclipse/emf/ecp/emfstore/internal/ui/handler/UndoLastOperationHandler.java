@@ -23,7 +23,7 @@ public class UndoLastOperationHandler extends AbstractHandler {
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
+		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		if (projectSpace != null) {
 			new UIUndoLastOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		}

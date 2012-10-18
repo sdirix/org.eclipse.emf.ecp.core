@@ -31,102 +31,88 @@ import org.eclipse.ui.PlatformUI;
  * @see ILightweightLabelDecorator
  */
 public class ESBrowserLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, LoginObserver,
-    LogoutObserver
-{
+	LogoutObserver {
 
-  /**
-   * {@inheritDoc} Decorates the label of a {@link ServerInfo} object according to its login state.
-   */
-  public void decorate(Object element, IDecoration decoration)
-  {
-    if (element instanceof ECPRepository)
-    {
-      InternalRepository repository = (InternalRepository)element;
-      ECPProvider provider = repository.getProvider();
+	/**
+	 * {@inheritDoc} Decorates the label of a {@link ServerInfo} object according to its login state.
+	 */
+	public void decorate(Object element, IDecoration decoration) {
+		if (element instanceof ECPRepository) {
+			InternalRepository repository = (InternalRepository) element;
+			ECPProvider provider = repository.getProvider();
 
-      if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName()))
-      {
-        ServerInfo server = EMFStoreProvider.getServerInfo(repository);
-        if (server.getLastUsersession() != null && server.getLastUsersession().isLoggedIn())
-        {
-          decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"), IDecoration.BOTTOM_RIGHT);
-        }
-        else
-        {
-          decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_delete.png"), IDecoration.BOTTOM_RIGHT);
-        }
-      }
-    }
-  }
+			if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName())) {
+				ServerInfo server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
+				if (server.getLastUsersession() != null && server.getLastUsersession().isLoggedIn()) {
+					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"),
+						IDecoration.BOTTOM_RIGHT);
+				} else {
+					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_delete.png"),
+						IDecoration.BOTTOM_RIGHT);
+				}
+			}
+		}
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.jface.viewers.BaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
-   */
-  @Override
-  public void addListener(ILabelProviderListener listener)
-  {
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.jface.viewers.BaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
+	 */
+	@Override
+	public void addListener(ILabelProviderListener listener) {
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.jface.viewers.BaseLabelProvider#dispose()
-   */
-  @Override
-  public void dispose()
-  {
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.jface.viewers.BaseLabelProvider#dispose()
+	 */
+	@Override
+	public void dispose() {
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isLabelProperty(Object element, String property)
-  {
-    return false;
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isLabelProperty(Object element, String property) {
+		return false;
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.jface.viewers.BaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
-   */
-  @Override
-  public void removeListener(ILabelProviderListener listener)
-  {
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.jface.viewers.BaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
+	 */
+	@Override
+	public void removeListener(ILabelProviderListener listener) {
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.emf.emfstore.client.model.observers.LoginObserver#loginCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
-   */
-  public void loginCompleted(Usersession session)
-  {
-    update();
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.client.model.observers.LoginObserver#loginCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
+	 */
+	public void loginCompleted(Usersession session) {
+		update();
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.emf.emfstore.client.model.observers.LogoutObserver#logoutCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
-   */
-  public void logoutCompleted(Usersession session)
-  {
-    update();
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.client.model.observers.LogoutObserver#logoutCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
+	 */
+	public void logoutCompleted(Usersession session) {
+		update();
+	}
 
-  private void update()
-  {
-    Display.getDefault().asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        PlatformUI.getWorkbench().getDecoratorManager()
-            .update("org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator");
-      }
-    });
-  }
+	private void update() {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				PlatformUI.getWorkbench().getDecoratorManager()
+					.update("org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator");
+			}
+		});
+	}
 }

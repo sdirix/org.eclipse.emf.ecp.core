@@ -242,11 +242,12 @@ public class EMFStoreProvider extends DefaultProvider {
 
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					// 3
+					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
 				}
 
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
 					// 1
-
+					// ((InternalProject) context).notifyObjectsChanged(new Object[] { context });
 				}
 
 				public void collectionDeleted(IdEObjectCollection collection) {
@@ -301,7 +302,7 @@ public class EMFStoreProvider extends DefaultProvider {
 		return result.iterator();
 	}
 
-	public static ProjectSpace getProjectSpace(InternalProject internalProject) {
+	public ProjectSpace getProjectSpace(InternalProject internalProject) {
 		ProjectSpace projectSpace = (ProjectSpace) internalProject.getProviderSpecificData();
 		if (projectSpace == null) {
 			boolean found = false;
@@ -326,7 +327,7 @@ public class EMFStoreProvider extends DefaultProvider {
 		return projectSpace;
 	}
 
-	public static ServerInfo getServerInfo(InternalRepository internalRepository) {
+	public ServerInfo getServerInfo(InternalRepository internalRepository) {
 		ServerInfo serverInfo = (ServerInfo) internalRepository.getProviderSpecificData();
 		if (serverInfo == null) {
 			Workspace workspace = WorkspaceManager.getInstance().getCurrentWorkspace();
@@ -360,7 +361,7 @@ public class EMFStoreProvider extends DefaultProvider {
 	 * @param ecpProperties
 	 * @return
 	 */
-	private static boolean isSameServerInfo(ServerInfo info, String url, int port, String certificate) {
+	private boolean isSameServerInfo(ServerInfo info, String url, int port, String certificate) {
 		return info.getUrl().equalsIgnoreCase(url) && info.getPort() == port
 			&& info.getCertificateAlias().equalsIgnoreCase(certificate);
 	}

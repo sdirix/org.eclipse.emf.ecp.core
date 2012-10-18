@@ -20,10 +20,10 @@ public class CommitProjectHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
+		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO Ugly
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
+			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
 		new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
