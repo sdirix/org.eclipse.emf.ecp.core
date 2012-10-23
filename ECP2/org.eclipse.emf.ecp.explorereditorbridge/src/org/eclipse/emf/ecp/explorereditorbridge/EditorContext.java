@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.explorereditorbridge;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -101,18 +100,17 @@ public class EditorContext implements EditorModelelementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getElements()
-	 */
-	public EList<EObject> getElements() {
-		// TODO Auto-generated method stub
-		return ecpProject.getElements();
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#openEditor(org.eclipse.emf.ecore.EObject)
 	 */
 	public void openEditor(EObject o, String source) {
 		ActionHelper.openModelElement(o, source, ecpProject);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
+	 */
+	public void addModelElement(EObject newMEInstance) {
+		ecpProject.addModelElement(newMEInstance);
 	}
 }

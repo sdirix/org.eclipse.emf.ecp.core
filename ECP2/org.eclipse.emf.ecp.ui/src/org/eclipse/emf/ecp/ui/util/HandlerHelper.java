@@ -82,7 +82,13 @@ public class HandlerHelper {
 		}
 	}
 
-	public static void addModelElement(final ECPProject ecpProject, final AbstractUICallback callback) {
+	/**
+	 * Add a new {@link EObject} to the root of an {@link ECPProject}.
+	 * 
+	 * @param ecpProject the {@link ECPProject} to add the {@link EObject} to
+	 * @param callback the {@link AbstractUICallback} to call for user input
+	 */
+	public static void addModelElement(final ECPProject ecpProject, final AbstractUICallback callback, boolean open) {
 		SelectModelElementHelper helper = new SelectModelElementHelper(ecpProject);
 
 		callback.setCompositeUIProvider(helper);
@@ -101,8 +107,10 @@ public class HandlerHelper {
 
 				ecpProject.addModelElement(newMEInstance);
 
-				// 3.open the newly created ME
-				ActionHelper.openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);
+				if (open) {
+					// 3.open the newly created ME
+					ActionHelper.openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);
+				}
 			}
 		}
 	}

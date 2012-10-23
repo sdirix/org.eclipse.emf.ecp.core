@@ -36,6 +36,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	ECPDeletable, IEditingDomainProvider, IAdaptable {
 	public static final String TYPE = "Project";
 
+	// TODO check whether not to remove
 	public EList<EObject> getElements();
 
 	/**

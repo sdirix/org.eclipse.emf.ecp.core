@@ -41,6 +41,8 @@ public class ShareProjectHandler extends AbstractHandler {
 			}
 			new UIShareProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 
+			project.notifyObjectsChanged(new Object[] { project });
+			repository.notifyObjectsChanged(new Object[] { repository });
 		}
 		return null;
 	}

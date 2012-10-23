@@ -122,7 +122,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		filteredEPackages = new HashSet<EPackage>();
 		for (int i = 0; i < filteredPackageSize; i++) {
 			EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
-			filteredEPackages.add(ePackage);
+			if (ePackage != null) {
+				filteredEPackages.add(ePackage);
+			}
 		}
 		int filteredEClassSize = in.readInt();
 		filteredEClasses = new HashSet<EClass>();
@@ -232,6 +234,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		this.repository = repository;
 
 		if (this.repository != null) {
+
 			this.repository.addDisposeListener(this);
 		}
 	}
@@ -558,7 +561,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * @see org.eclipse.emf.ecp.core.ECPProject#addModelElement(org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(EObject eObject) {
-		getProvider().getElements(this).add(eObject);
+		getProvider().addModelElement(this, eObject);
 		notifyObjectsChanged(new Object[] { this });
 	}
 

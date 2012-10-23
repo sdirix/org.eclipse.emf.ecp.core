@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -71,8 +70,11 @@ public interface EditorModelelementContext {
 	 */
 	Iterator<EObject> getLinkElements(EReference eReference);
 
-	EList<EObject> getElements();
-
 	void openEditor(EObject o, String source);
+
+	/**
+	 * @param newMEInstance
+	 */
+	void addModelElement(EObject newMEInstance);
 
 }

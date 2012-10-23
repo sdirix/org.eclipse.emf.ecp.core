@@ -98,4 +98,10 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param eObjects the {@link Collection} if {@link EObject}s to delete
 	 */
 	public void delete(InternalProject project, Collection<EObject> eObjects);
+
+	/**
+	 * @param ecpProjectImpl
+	 * @param eObject
+	 */
+	public void addModelElement(InternalProject project, EObject eObject);
 }

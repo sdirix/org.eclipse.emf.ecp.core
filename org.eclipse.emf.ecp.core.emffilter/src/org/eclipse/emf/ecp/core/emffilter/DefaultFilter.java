@@ -20,7 +20,7 @@ public class DefaultFilter implements IFilterProvider {
 
 	@Override
 	public Collection<String> getFilteredPackages() {
-		Set<String> packages = new HashSet<>();
+		Set<String> packages = new HashSet<String>();
 		//e4
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/ui/menu");
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/ui");
@@ -51,6 +51,9 @@ public class DefaultFilter implements IFilterProvider {
 		//xml
 		packages.add("http://www.eclipse.org/xsd/2002/XSD");
 		packages.add("http://www.w3.org/XML/1998/namespace");
+		//CDO
+		packages.add("http://www.eclipse.org/emf/CDO/Eresource/4.0.0");
+		packages.add("http://www.eclipse.org/emf/CDO/Eresource/4.0.0");
 		
 		return packages;
 	}

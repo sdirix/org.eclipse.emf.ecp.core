@@ -281,5 +281,15 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 		public void delete(InternalProject project, Collection<EObject> eObjects) {
 			getResolvedElement().delete(project, eObjects);
 		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see
+		 * org.eclipse.emf.ecp.spi.core.InternalProvider#addModelElement(org.eclipse.emf.ecp.spi.core.InternalProject,
+		 * org.eclipse.emf.ecore.EObject)
+		 */
+		public void addModelElement(InternalProject project, EObject eObject) {
+			getResolvedElement().addModelElement(project, eObject);
+		}
 	}
 }

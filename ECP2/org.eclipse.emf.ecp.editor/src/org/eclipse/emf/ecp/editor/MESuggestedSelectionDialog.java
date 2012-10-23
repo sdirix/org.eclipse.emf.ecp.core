@@ -10,16 +10,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.ui.dialogs.ModelelementSelectionDialog;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -27,6 +23,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This dialog represents the possibility to select an element from a list where the list is sorted and additional
@@ -57,9 +59,9 @@ public class MESuggestedSelectionDialog extends ModelelementSelectionDialog {
 	 * @param reference the reference for which this is used
 	 */
 	public MESuggestedSelectionDialog(String title, String message, boolean blockOnOpen, EObject baseElement,
-		EReference reference, Collection<EObject> elements) {
+		EReference reference, Collection<EObject> elements, Shell shell) {
 
-		super(reference.isMany());
+		super(reference.isMany(), shell);
 
 		setTitle(title);
 		setMessage(message);
@@ -158,7 +160,7 @@ public class MESuggestedSelectionDialog extends ModelelementSelectionDialog {
 	}
 
 	private boolean isRelevant(Double val) {
-		return (val != null);
+		return val != null;
 	}
 
 	/**

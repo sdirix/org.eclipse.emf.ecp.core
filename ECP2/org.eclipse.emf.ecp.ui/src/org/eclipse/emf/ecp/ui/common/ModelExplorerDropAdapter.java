@@ -61,6 +61,7 @@ class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 			source = getDragSource(event);
 
 			ECPProject project = (ECPProject) target;
+			// TODO delegate to provider?
 			if (project.getElements().contains(source.iterator().next())) {
 				event.detail = DND.DROP_NONE;
 			} else {

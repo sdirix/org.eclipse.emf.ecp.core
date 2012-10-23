@@ -1,12 +1,20 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
  * 
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
@@ -53,7 +61,12 @@ public class DateTimeWidget extends ECPAttributeWidget {
 	private Label unsetLabel;
 
 	/**
-	 * @param dbc
+	 * Constructor of the DateTimeWidget.
+	 * 
+	 * @param dbc the {@link EMFDataBindingContext}
+	 * @param modelElement the {@link EObject} to edit
+	 * @param feature the {@link EStructuralFeature} edited in this widget
+	 * @param domain the {@link EditingDomain} of the edited {@link EObject}
 	 */
 	public DateTimeWidget(EMFDataBindingContext dbc, EObject modelElement, EStructuralFeature feature,
 		EditingDomain domain) {
@@ -93,13 +106,9 @@ public class DateTimeWidget extends ECPAttributeWidget {
 			}
 
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		if (modelElement.eIsSet(feature)) {
@@ -111,6 +120,11 @@ public class DateTimeWidget extends ECPAttributeWidget {
 		return parentComposite;
 	}
 
+	/**
+	 * This method creates the date widget, the time widget and the delete button.
+	 * 
+	 * @param composite the parent {@link Composite}
+	 */
 	private void createDateAndTimeWidget(Composite composite) {
 
 		dateWidget = new DateTime(composite, SWT.DATE);
@@ -129,7 +143,9 @@ public class DateTimeWidget extends ECPAttributeWidget {
 
 					@Override
 					protected void doRun() {
-						modelElement.eSet(feature, null);
+						domain.getCommandStack().execute(
+							new RemoveCommand(domain, modelElement, feature, modelElement.eGet(feature)));
+
 						sl.topControl = unsetLabel;
 						parentComposite.layout();
 					}

@@ -237,7 +237,7 @@ public class EMFStoreProvider extends DefaultProvider {
 
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 					// 2
-					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
 				}
 
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
@@ -403,6 +403,23 @@ public class EMFStoreProvider extends DefaultProvider {
 		for (EObject eObject : eObjects) {
 			projectSpace.getProject().deleteModelElement(eObject);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addModelElement(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 * org.eclipse.emf.ecore.EObject)
+	 */
+	public void addModelElement(InternalProject project, final EObject eObject) {
+		// final Project emfStoreProject = getProjectSpace(project).getProject();
+		// project.getEditingDomain().getCommandStack().execute(new ChangeCommand(emfStoreProject) {
+		//
+		// @Override
+		// protected void doExecute() {
+		// emfStoreProject.addModelElement(eObject);
+		// }
+		// });
+		getElements(project).add(eObject);
 	}
 
 }

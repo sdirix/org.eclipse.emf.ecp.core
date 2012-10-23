@@ -26,6 +26,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,109 +37,94 @@ import java.util.Set;
  * 
  * @author Michael Haeger
  */
-public class AddAssociationClassAction extends Action
-{
+public class AddAssociationClassAction extends Action {
 
-  private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)";
+	private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)";
 
-  private EReference eReference;
+	private EReference eReference;
 
-  private EObject modelElement;
+	private EObject modelElement;
 
-  private final EditorModelelementContext context;
+	private final EditorModelelementContext context;
 
-  /**
-   * The link command.
-   * 
-   * @author Michael Haeger
-   * @author Eugen Neufeld
-   */
-  private final class AddAssociationClassCommand extends ECPCommand
-  {
+	/**
+	 * The link command.
+	 * 
+	 * @author Michael Haeger
+	 * @author Eugen Neufeld
+	 */
+	private final class AddAssociationClassCommand extends ECPCommand {
 
-    public AddAssociationClassCommand(EObject eObject, EditingDomain domain)
-    {
-      super(eObject, domain);
-    }
+		public AddAssociationClassCommand(EObject eObject, EditingDomain domain) {
+			super(eObject, domain);
+		}
 
-    @Override
-    protected void doRun()
-    {
-      Iterator<EObject> allElements = context.getLinkElements(eReference);
-      Set<EObject> elements = new HashSet<EObject>();
-      while (allElements.hasNext())
-      {
-        elements.add(allElements.next());
-      }
-      MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,
-          modelElement, eReference, elements);
-      if (dlg.open() == Window.OK)
-      {
-        if (eReference.isMany())
-        {
-          for (Object result : dlg.getResult())
-          {
-            AssociationClassHelper.createAssociation(eReference, modelElement, (EObject)result,
-                context.getMetaModelElementContext());
-          }
-        }
-        else
-        {
-          AssociationClassHelper.createAssociation(eReference, modelElement, (EObject)dlg.getFirstResult(),
-              context.getMetaModelElementContext());
-        }
-      }
-    }
-  }
+		@Override
+		protected void doRun() {
+			Iterator<EObject> allElements = context.getLinkElements(eReference);
+			Set<EObject> elements = new HashSet<EObject>();
+			while (allElements.hasNext()) {
+				elements.add(allElements.next());
+			}
+			MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,
+				modelElement, eReference, elements, PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+			if (dlg.open() == Window.OK) {
+				if (eReference.isMany()) {
+					for (Object result : dlg.getResult()) {
+						AssociationClassHelper.createAssociation(eReference, modelElement, (EObject) result,
+							context.getMetaModelElementContext());
+					}
+				} else {
+					AssociationClassHelper.createAssociation(eReference, modelElement, (EObject) dlg.getFirstResult(),
+						context.getMetaModelElementContext());
+				}
+			}
+		}
+	}
 
-  /**
-   * Default constructor.
-   * 
-   * @param modelElement
-   *          the object
-   * @param eReference
-   *          the reference to the AssociationClassElement
-   * @param descriptor
-   *          the descriptor used to generate display content
-   * @param context
-   *          model element context
-   */
-  public AddAssociationClassAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-      EditorModelelementContext context)
-  {
-    this.modelElement = modelElement;
-    this.eReference = eReference;
-    this.context = context;
-    Object obj = null;
-    if (!eReference.getEReferenceType().isAbstract())
-    {
-      obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance().create(eReference.getEReferenceType());
-    }
-    Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-        ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(obj);
-    ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/link_overlay.png");
-    OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
-        OverlayImageDescriptor.LOWER_RIGHT);
-    setImageDescriptor(imageDescriptor);
-    String attribute = descriptor.getDisplayName(eReference);
-    // make singular attribute labels
-    if (attribute.endsWith("ies"))
-    {
-      attribute = attribute.substring(0, attribute.length() - 3) + "y";
-    }
-    else if (attribute.endsWith("s"))
-    {
-      attribute = attribute.substring(0, attribute.length() - 1);
-    }
-    setToolTipText("Link " + attribute);
-  }
+	/**
+	 * Default constructor.
+	 * 
+	 * @param modelElement
+	 *            the object
+	 * @param eReference
+	 *            the reference to the AssociationClassElement
+	 * @param descriptor
+	 *            the descriptor used to generate display content
+	 * @param context
+	 *            model element context
+	 */
+	public AddAssociationClassAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
+		EditorModelelementContext context) {
+		this.modelElement = modelElement;
+		this.eReference = eReference;
+		this.context = context;
+		Object obj = null;
+		if (!eReference.getEReferenceType().isAbstract()) {
+			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
+				.create(eReference.getEReferenceType());
+		}
+		Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(obj);
+		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/link_overlay.png");
+		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
+			OverlayImageDescriptor.LOWER_RIGHT);
+		setImageDescriptor(imageDescriptor);
+		String attribute = descriptor.getDisplayName(eReference);
+		// make singular attribute labels
+		if (attribute.endsWith("ies")) {
+			attribute = attribute.substring(0, attribute.length() - 3) + "y";
+		} else if (attribute.endsWith("s")) {
+			attribute = attribute.substring(0, attribute.length() - 1);
+		}
+		setToolTipText("Link " + attribute);
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void run()
-  {
-    new AddAssociationClassCommand(modelElement, context.getEditingDomain()).run(true);
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void run() {
+		new AddAssociationClassCommand(modelElement, context.getEditingDomain()).run(true);
+	}
 }

@@ -29,56 +29,50 @@ import java.util.List;
  * 
  * @author Michael Haeger
  */
-public class AssociationClassControlNoNew extends MESingleLinkControl
-{
-  private static final int PRIORITY = 2;
+public class AssociationClassControlNoNew extends MESingleLinkControl {
+	private static final int PRIORITY = 2;
 
-  /**
-   * Default constructor.
-   */
-  public AssociationClassControlNoNew()
-  {
-    super();
-  }
+	/**
+	 * Default constructor.
+	 */
+	public AssociationClassControlNoNew() {
+		super();
+	}
 
-  /**
-   * Only create an AddReferenceAction. We can not support NewReferenceActions because of the containment.
-   * 
-   * @return Returns the actions.
-   */
-  @Override
-  protected List<Action> initActions()
-  {
-    List<Action> result = new ArrayList<Action>();
-    AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference)getStructuralFeature(),
-        getItemPropertyDescriptor(), getContext());
-    result.add(addAction);
-    return result;
-  }
+	/**
+	 * Only create an AddReferenceAction. We can not support NewReferenceActions because of the containment.
+	 * 
+	 * @return Returns the actions.
+	 */
+	@Override
+	protected List<Action> initActions() {
+		List<Action> result = new ArrayList<Action>();
+		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
+			getItemPropertyDescriptor(), getContext(), getShell());
+		result.add(addAction);
+		return result;
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MESingleLinkControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
-   *      org.eclipse.emf.ecore.EObject)
-   */
-  @Override
-  public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
-  {
-    Object feature = itemPropertyDescriptor.getFeature(modelElement);
-    if (feature instanceof EReference && !((EReference)feature).isMany())
-    {
-      if (getContext() != null && getContext().getMetaModelElementContext().isAssociationClassElement(modelElement))
-      {
-        ECPAssociationClassElement association = getContext().getMetaModelElementContext().getAssociationClassElement(
-            modelElement);
-        // display if given reference is equal to source or target feature
-        if (association.getSourceFeature().equals(feature) || association.getTargetFeature().equals(feature))
-        {
-          return PRIORITY;
-        }
-      }
-    }
-    return AbstractMEControl.DO_NOT_RENDER;
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MESingleLinkControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
+		Object feature = itemPropertyDescriptor.getFeature(modelElement);
+		if (feature instanceof EReference && !((EReference) feature).isMany()) {
+			if (getContext() != null
+				&& getContext().getMetaModelElementContext().isAssociationClassElement(modelElement)) {
+				ECPAssociationClassElement association = getContext().getMetaModelElementContext()
+					.getAssociationClassElement(modelElement);
+				// display if given reference is equal to source or target feature
+				if (association.getSourceFeature().equals(feature) || association.getTargetFeature().equals(feature)) {
+					return PRIORITY;
+				}
+			}
+		}
+		return AbstractMEControl.DO_NOT_RENDER;
+	}
 }
