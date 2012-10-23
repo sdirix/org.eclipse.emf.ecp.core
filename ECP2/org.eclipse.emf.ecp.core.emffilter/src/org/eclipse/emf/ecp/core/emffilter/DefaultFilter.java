@@ -18,7 +18,6 @@ public class DefaultFilter implements IFilterProvider {
 	public DefaultFilter() {
 	}
 
-	@Override
 	public Collection<String> getFilteredPackages() {
 		Set<String> packages = new HashSet<String>();
 		//e4
