@@ -6,8 +6,8 @@ package org.eclipse.emf.ecp.wizards;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.common.UICreateProject;
-import org.eclipse.emf.ecp.ui.common.UICreateProject.CreateProjectChangeListener;
+import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.common.CreateProjectComposite.CreateProjectChangeListener;
 import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Eugen Neufeld
  */
-public class CreateProjectWizard extends ECPWizard<UICreateProject>
+public class CreateProjectWizard extends ECPWizard<CreateProjectComposite>
 {
 
   /*

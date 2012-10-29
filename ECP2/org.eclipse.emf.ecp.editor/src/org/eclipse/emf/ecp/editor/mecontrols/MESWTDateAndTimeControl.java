@@ -22,27 +22,24 @@ import java.util.Date;
  * @author Hunnilee
  * @author Eugen Neufeld
  */
-public class MESWTDateAndTimeControl extends MEAttributeControl
-{
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
-   */
-  @Override
-  protected Class<?> getClassType()
-  {
-    return Date.class;
-  }
+public class MESWTDateAndTimeControl extends MEAttributeControl {
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+	 */
+	@Override
+	protected Class<?> getClassType() {
+		return Date.class;
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
-   * EMFDataBindingContext)
-   */
-  @Override
-  protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc)
-  {
-    return new DateTimeWidget(dbc, getModelElement(), getStructuralFeature(), getEditingDomain());
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+	 * EMFDataBindingContext)
+	 */
+	@Override
+	protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc) {
+		return new DateTimeWidget(dbc, getModelElement(), getStructuralFeature(), getContext().getEditingDomain());
+	}
 
 }

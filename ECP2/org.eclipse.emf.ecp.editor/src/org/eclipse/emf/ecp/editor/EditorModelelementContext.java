@@ -1,3 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Jonas Helmin - initial API and implementation
+ * Eugen Neufeld - Chnage of API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -37,7 +50,7 @@ public interface EditorModelelementContext {
 	 * 
 	 * @param clazz
 	 *            the type
-	 * @param association
+	 * @param association whether to search for associations
 	 * @return a {@link Collection} of {@link EObject} Iterator
 	 */
 	Collection<EObject> getAllModelElementsbyClass(EClass clazz, boolean association);
@@ -61,6 +74,12 @@ public interface EditorModelelementContext {
 	 */
 	void dispose();
 
+	/**
+	 * Checks whether this {@link EObject} is reachable from this {@link EditorModelelementContext}.
+	 * 
+	 * @param modelElement the {@link EObject} for which to check the reachability
+	 * @return true if the object is reachable, else otherwise
+	 */
 	boolean contains(EObject modelElement);
 
 	/**
@@ -70,11 +89,40 @@ public interface EditorModelelementContext {
 	 */
 	Iterator<EObject> getLinkElements(EReference eReference);
 
+	// TODO remove
+	/**
+	 * Open an Editor.
+	 * 
+	 * @param o the {@link EObject}
+	 * @param source the source
+	 */
+	@Deprecated
 	void openEditor(EObject o, String source);
 
 	/**
-	 * @param newMEInstance
+	 * Adds a model element to the underlying project.
+	 * 
+	 * @param eObject the {@link EObject} to add
 	 */
-	void addModelElement(EObject newMEInstance);
+	void addModelElement(EObject eObject);
+
+	/**
+	 * Checks whether the current {@link EditorModelelementContext} has unsaved changes.
+	 * 
+	 * @return true if there are unsaved changes
+	 */
+	boolean isDirty();
+
+	/**
+	 * 
+	 */
+	void save();
+
+	/**
+	 * Returns the {@link EObject} of this {@link EditorModelelementContext}.
+	 * 
+	 * @return the {@link EObject} of this context
+	 */
+	EObject getModelElement();
 
 }

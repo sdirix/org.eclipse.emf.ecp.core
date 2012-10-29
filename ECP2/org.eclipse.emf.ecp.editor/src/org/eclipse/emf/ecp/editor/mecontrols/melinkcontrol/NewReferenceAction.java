@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
+import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -73,7 +73,7 @@ public class NewReferenceAction extends ReferenceAction {
 			ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
 
 			NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
-			SelectModelElementHelper helper = new SelectModelElementHelper(ePackages, new HashSet<EPackage>(),
+			SelectModelClassComposite helper = new SelectModelClassComposite(ePackages, new HashSet<EPackage>(),
 				new HashSet<EPackage>(), classes);
 			wizard.setUIProvider(helper);
 			// wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
@@ -96,7 +96,7 @@ public class NewReferenceAction extends ReferenceAction {
 				// if (object instanceof EClass)
 				// {
 				// EClass eClasse = (EClass)object;
-				Object[] selection = helper.getTreeSelection();
+				Object[] selection = helper.getSelection();
 				if (selection == null || selection.length == 0) {
 					return;
 				}

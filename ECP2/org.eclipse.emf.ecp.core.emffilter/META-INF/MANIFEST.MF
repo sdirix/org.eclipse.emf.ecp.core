@@ -8,3 +8,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.core;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.emf.ecp.core.emffilter;x-internal:=true

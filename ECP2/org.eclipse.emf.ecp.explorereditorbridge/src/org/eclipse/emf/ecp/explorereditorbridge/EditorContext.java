@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.explorereditorbridge;
 
 import org.eclipse.emf.ecore.EClass;
@@ -18,22 +30,30 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class EditorContext implements EditorModelelementContext {
 
 	private final EObject modelElement;
 
 	private final ECPProject ecpProject;
 
+	// TODO what is it god for
 	private MetaModeElementContext metaModeElementContext;
 
 	private List<EditorModelelementContextListener> contextListeners = new ArrayList<EditorModelelementContextListener>();
+
+	private Listener projectListener;
 
 	public EditorContext(EObject modelElement, ECPProject ecpProject) {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		metaModeElementContext = new MetaModeElementContext();
 
-		ECPProjectManager.INSTANCE.addListener(new Listener() {
+		projectListener = new Listener() {
 
 			public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 				// TODO Auto-generated method stub
@@ -52,7 +72,8 @@ public class EditorContext implements EditorModelelementContext {
 			public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
 				// do nothing
 			}
-		});
+		};
+		ECPProjectManager.INSTANCE.addListener(projectListener);
 	}
 
 	public void addModelElementContextListener(EditorModelelementContextListener modelElementContextListener) {
@@ -82,12 +103,15 @@ public class EditorContext implements EditorModelelementContext {
 	}
 
 	public boolean contains(EObject eObject) {
-		// TODO Auto-generated method stub
+		// return ecpProject.contains(eObject);
 		return false;
 	}
 
+	/**
+	 * Dispose the context.
+	 */
 	public void dispose() {
-
+		ECPProjectManager.INSTANCE.removeListener(projectListener);
 	}
 
 	/*
@@ -98,6 +122,7 @@ public class EditorContext implements EditorModelelementContext {
 		return ecpProject.getLinkElements(modelElement, eReference);
 	}
 
+	// TODO remove
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#openEditor(org.eclipse.emf.ecore.EObject)
@@ -112,5 +137,30 @@ public class EditorContext implements EditorModelelementContext {
 	 */
 	public void addModelElement(EObject newMEInstance) {
 		ecpProject.addModelElement(newMEInstance);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#isDirty()
+	 */
+	public boolean isDirty() {
+		// auto save
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#save()
+	 */
+	public void save() {
+		// do nothing
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getModelElement()
+	 */
+	public EObject getModelElement() {
+		return modelElement;
 	}
 }

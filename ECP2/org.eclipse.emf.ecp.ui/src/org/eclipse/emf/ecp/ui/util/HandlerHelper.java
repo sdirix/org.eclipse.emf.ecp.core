@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -21,11 +22,17 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.ui.common.AbstractUICallback;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.common.CheckedModelElementHelper;
+import org.eclipse.emf.ecp.ui.common.CheckedSelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
-import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
-import org.eclipse.emf.ecp.ui.common.UICreateProject;
+import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
+import org.eclipse.emf.ecp.ui.common.SelectModelElementComposite;
 import org.eclipse.emf.ecp.ui.dialogs.DeleteDialog;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
@@ -65,7 +72,7 @@ public class HandlerHelper {
 				providers.add(provider);
 			}
 		}
-		UICreateProject createProjectComposite = new UICreateProject(providers);
+		CreateProjectComposite createProjectComposite = new CreateProjectComposite(providers);
 		callback.setCompositeUIProvider(createProjectComposite);
 
 		if (AbstractUICallback.OK == callback.open()) {
@@ -82,6 +89,30 @@ public class HandlerHelper {
 		}
 	}
 
+	public static void createNewReferenceElement(EditingDomain editingDomain, EObject eObject, EReference eReference,
+		Object input, AbstractUICallback callBack) {
+		SelectModelElementComposite composite = new SelectModelElementComposite(new AdapterFactoryLabelProvider(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE)), input);
+		callBack.setCompositeUIProvider(composite);
+		if (AbstractUICallback.OK == callBack.open()) {
+			Object[] results = composite.getSelection();
+			if (eReference.isMany()) {
+				List<EObject> list = new ArrayList<EObject>();
+				for (Object result : results) {
+					if (result instanceof EObject) {
+						list.add((EObject) result);
+					}
+				}
+				editingDomain.getCommandStack().execute(new AddCommand(editingDomain, eObject, eReference, list));
+			} else {
+				if (results.length > 0 && results[0] instanceof EObject) {
+					editingDomain.getCommandStack().execute(
+						new SetCommand(editingDomain, eObject, eReference, results[0]));
+				}
+			}
+		}
+	}
+
 	/**
 	 * Add a new {@link EObject} to the root of an {@link ECPProject}.
 	 * 
@@ -89,12 +120,12 @@ public class HandlerHelper {
 	 * @param callback the {@link AbstractUICallback} to call for user input
 	 */
 	public static void addModelElement(final ECPProject ecpProject, final AbstractUICallback callback, boolean open) {
-		SelectModelElementHelper helper = new SelectModelElementHelper(ecpProject);
+		SelectModelClassComposite helper = new SelectModelClassComposite(ecpProject);
 
 		callback.setCompositeUIProvider(helper);
 
 		if (AbstractUICallback.OK == callback.open()) {
-			Object[] selection = helper.getTreeSelection();
+			Object[] selection = helper.getSelection();
 			if (selection == null || selection.length == 0) {
 				return;
 			}
@@ -125,7 +156,7 @@ public class HandlerHelper {
 			}
 
 		}
-		CheckedModelElementHelper checkedModelComposite = new CheckedModelElementHelper(ePackages,
+		CheckedSelectModelClassComposite checkedModelComposite = new CheckedSelectModelClassComposite(ePackages,
 			new HashSet<EPackage>(), ePackages, new HashSet<EClass>());
 
 		callback.setCompositeUIProvider(checkedModelComposite);

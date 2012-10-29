@@ -4,21 +4,21 @@
 package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.ui.common.AbstractUICallback;
-import org.eclipse.emf.ecp.ui.common.CompositeUiProvider;
+import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
 
 /**
  * @author Eugen Neufeld
  */
-public class DialogUICallback<T extends CompositeUiProvider> extends AbstractUICallback
+public class DialogUICallback<T extends ICompositeProvider> extends AbstractUICallback
 {
 
   /*
    * (non-Javadoc)
    * @see org.eclipse.emf.ecp.ui.common.AbstractUICallback#setCompositeUIProvider(org.eclipse.emf.ecp.ui.common.
-   * CompositeUiProvider)
+   * ICompositeProvider)
    */
   @Override
-  public void setCompositeUIProvider(CompositeUiProvider uiProvider)
+  public void setCompositeUIProvider(ICompositeProvider uiProvider)
   {
     // TODO Auto-generated method stub
 

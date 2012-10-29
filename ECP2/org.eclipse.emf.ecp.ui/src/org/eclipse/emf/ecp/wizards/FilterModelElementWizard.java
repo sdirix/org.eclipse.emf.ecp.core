@@ -3,7 +3,7 @@
  */
 package org.eclipse.emf.ecp.wizards;
 
-import org.eclipse.emf.ecp.ui.common.CheckedModelElementHelper;
+import org.eclipse.emf.ecp.ui.common.CheckedSelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eugen Neufeld
  */
-public class FilterModelElementWizard extends ECPWizard<CheckedModelElementHelper>
+public class FilterModelElementWizard extends ECPWizard<CheckedSelectModelClassComposite>
 {
   /*
    * (non-Javadoc)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="menuContributionEnablement" name="Menu Contribution Enablement" schema="schema/menuContributionEnablement.exsd"/>
 <extension
          point="org.eclipse.ui.views">
       <category
@@ -207,9 +208,26 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <reference
-                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
-               </reference>
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
             </visibleWhen>
          </command>
          <command
@@ -246,7 +264,6 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
             id="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
             name="New Model Element">
       </command>
@@ -369,6 +386,10 @@
          </enabledWhen>
       </handler>
       <handler
+            class="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
+            commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
+      </handler>
+      <handler
             class="org.eclipse.emf.ecp.ui.commands.DeleteModelElement"
             commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
       </handler>
@@ -381,5 +402,15 @@
             id="org.eclipse.emf.ecp.ui.main"
             name="ECP">
       </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.emf.ecp.ui.tester.ECPMenuContributionsEnablementTester"
+            id="org.eclipse.emf.ecp.ui.workbench.menu.properties"
+            namespace="org.eclipse.emf.ecp.ui.workbench.menu"
+            properties="enablement"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
 </plugin>

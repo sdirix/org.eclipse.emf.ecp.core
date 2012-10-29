@@ -4,7 +4,7 @@
 package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecp.ui.common.AbstractUICallback;
-import org.eclipse.emf.ecp.ui.common.CompositeUiProvider;
+import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
 
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * @author Eugen Neufeld
  */
-public class WizardUICallback<T extends CompositeUiProvider> extends AbstractUICallback
+public class WizardUICallback<T extends ICompositeProvider> extends AbstractUICallback
 {
 
   private final Shell shell;
@@ -45,11 +45,11 @@ public class WizardUICallback<T extends CompositeUiProvider> extends AbstractUIC
   /*
    * (non-Javadoc)
    * @see org.eclipse.emf.ecp.ui.common.AbstractUICallback#setCompositeUIProvider(org.eclipse.emf.ecp.ui.common.
-   * CompositeUiProvider)
+   * ICompositeProvider)
    */
   @SuppressWarnings("unchecked")
   @Override
-  public void setCompositeUIProvider(CompositeUiProvider uiProvider)
+  public void setCompositeUIProvider(ICompositeProvider uiProvider)
   {
     wizard.setUIProvider((T)uiProvider);
   }

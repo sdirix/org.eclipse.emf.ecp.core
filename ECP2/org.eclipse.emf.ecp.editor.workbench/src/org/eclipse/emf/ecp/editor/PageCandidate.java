@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
  * 
  * @author helming
  */
-public class PageCandidate {
+public final class PageCandidate {
 
 	// By which pages this page is about to be replaced
 	private List<PageCandidate> replacedBy = new LinkedList<PageCandidate>();

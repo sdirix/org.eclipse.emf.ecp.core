@@ -8,24 +8,30 @@
  * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
- *******************************************************************************/
-package org.eclipse.emf.ecp.core.util;
+ ******************************************************************************/
+package org.eclipse.emf.ecp.editor;
 
-import java.util.Collection;
+import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
 
 /**
- * Interface to provide a collection of nsUris that should not be available.
- * 
  * @author Eugen Neufeld
  * 
  */
-public interface IFilterProvider {
+public interface IEditorCompositeProvider extends ICompositeProvider {
 
 	/**
-	 * Returns the {@link Collection} of nsUris that should be by default not visible in ecp.
 	 * 
-	 * @return the Collection of nsUris
 	 */
-	Collection<String> getFilteredPackages();
+	void dispose();
+
+	/**
+	 * 
+	 */
+	void updateLiveValidation();
+
+	/**
+	 * 
+	 */
+	void focus();
+
 }

@@ -15,7 +15,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.Messages;
-import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
+import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.ecp.wizards.WizardUICallback;
@@ -43,7 +43,7 @@ public class NewModelElementWizardHandler extends AbstractHandler
   {
     ISelection selection = HandlerUtil.getCurrentSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
-    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), new WizardUICallback<SelectModelElementHelper>(HandlerUtil.getActiveShell(event), new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title)),true);
+    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), new WizardUICallback<SelectModelClassComposite>(HandlerUtil.getActiveShell(event), new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title)),true);
     
     return null;
   }

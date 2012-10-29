@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.editor.mecontrols;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.swt.widgets.Composite;
@@ -57,11 +56,6 @@ public abstract class AbstractMEControl {
 	 * the modelElement.
 	 */
 	private EObject modelElement;
-
-	/**
-	 * the editingDomain.
-	 */
-	private EditingDomain editingDomain;
 
 	private boolean showLabel;
 
@@ -174,21 +168,6 @@ public abstract class AbstractMEControl {
 	}
 
 	/**
-	 * @return the editingDomain
-	 */
-	public EditingDomain getEditingDomain() {
-		return editingDomain;
-	}
-
-	/**
-	 * @param editingDomain
-	 *            the editingDomain to set
-	 */
-	private void setEditingDomain(EditingDomain editingDomain) {
-		this.editingDomain = editingDomain;
-	}
-
-	/**
 	 * @return if the label for this control should be shown.
 	 */
 	public boolean getShowLabel() {
@@ -281,7 +260,6 @@ public abstract class AbstractMEControl {
 	public Control createControl(Composite parent, int style, IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject modelElement, EditorModelelementContext context, FormToolkit toolkit) {
 		setContext(context);
-		setEditingDomain(context.getEditingDomain());
 		setModelElement(modelElement);
 		setToolkit(toolkit);
 		setItemPropertyDescriptor(itemPropertyDescriptor);

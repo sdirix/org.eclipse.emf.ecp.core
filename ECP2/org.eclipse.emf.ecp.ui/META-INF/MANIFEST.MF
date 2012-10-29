@@ -12,6 +12,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.spi.ui;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.common;version="1.0.0.qualifier",
+ org.eclipse.emf.ecp.ui.common.dnd;x-internal:=true,
  org.eclipse.emf.ecp.ui.dialogs;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.model;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.util;version="1.0.0.qualifier",

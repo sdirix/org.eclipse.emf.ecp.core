@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.editor.input;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
-import org.eclipse.emf.ecp.editor.MEEditor;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -37,7 +36,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class MEEditorInput implements IEditorInput {
 
-	private EObject modelElement;
 	private EStructuralFeature problemFeature;
 	private DecoratingLabelProvider labelProvider;
 	private EditorModelelementContext modelElementContext;
@@ -45,37 +43,34 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * Constructor to add a probleFeature.
 	 * 
-	 * @param me the model element to open
 	 * @param context context of the model element
 	 * @param problemFeature the problem feature
 	 */
-	public MEEditorInput(EObject me, EditorModelelementContext context, EStructuralFeature problemFeature) {
-		this(me, context);
+	public MEEditorInput( EditorModelelementContext context, EStructuralFeature problemFeature) {
+		this(context);
 		this.problemFeature = problemFeature;
 	}
 
 	/**
 	 * Default constructor.
 	 * 
-	 * @param me the modelElement
 	 * @param context context of the modelelement
 	 */
-	public MEEditorInput(EObject me, EditorModelelementContext context) {
+	public MEEditorInput(EditorModelelementContext context) {
 		super();
 		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
 		IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
 		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
-		this.modelElement = me;
 		this.modelElementContext = context;
-		if (labelProvider.getLabelProvider().getText(modelElement) == null) {
+		if (labelProvider.getLabelProvider().getText(modelElementContext.getModelElement()) == null) {
 			final Shell activeShell = Display.getCurrent().getActiveShell();
 			boolean doSetName = MessageDialog
 				.openQuestion(
 					activeShell,
 					"Missing title",
 					"The element you are trying to open does not have a proper name and cannot be opened.\nDo you want to set a custom name for it or use a default one?");
-			String newName = "new " + modelElement.eClass().getName();
+			String newName = "new " + modelElementContext.getModelElement().eClass().getName();
 			if (doSetName) {
 				final InputDialog inputDialog = new InputDialog(activeShell, "New title",
 					"Please enter the new name for this element", newName, null);
@@ -109,7 +104,7 @@ public class MEEditorInput implements IEditorInput {
 	 * {@inheritDoc}
 	 */
 	public ImageDescriptor getImageDescriptor() {
-		ImageDescriptor descriptor = ImageDescriptor.createFromImage(labelProvider.getImage(modelElement));
+		ImageDescriptor descriptor = ImageDescriptor.createFromImage(labelProvider.getImage(modelElementContext.getModelElement()));
 		return descriptor;
 	}
 
@@ -117,7 +112,7 @@ public class MEEditorInput implements IEditorInput {
 	 * {@inheritDoc}
 	 */
 	public String getName() {
-		return labelProvider.getLabelProvider().getText(modelElement);
+		return labelProvider.getLabelProvider().getText(modelElementContext.getModelElement());
 	}
 
 	/**
@@ -133,24 +128,6 @@ public class MEEditorInput implements IEditorInput {
 	 */
 	public String getToolTipText() {
 		return getName();
-	}
-
-	/**
-	 * Getter for the modelElement.
-	 * 
-	 * @return the modelElement
-	 */
-	public EObject getModelElement() {
-		return modelElement;
-	}
-
-	/**
-	 * Setter for the modelElement.
-	 * 
-	 * @param modelElement the modelElement
-	 */
-	public void setModelElement(EObject modelElement) {
-		this.modelElement = modelElement;
 	}
 
 	/**
@@ -177,7 +154,7 @@ public class MEEditorInput implements IEditorInput {
 	public boolean equals(Object obj) {
 		if (obj instanceof MEEditorInput) {
 			MEEditorInput other = (MEEditorInput) obj;
-			boolean ret = modelElement.equals(other.modelElement);
+			boolean ret = modelElementContext.getModelElement().equals(other.modelElementContext.getModelElement());
 			return ret;
 		}
 		return false;
@@ -197,7 +174,7 @@ public class MEEditorInput implements IEditorInput {
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 
 		if (clazz.equals(EObject.class)) {
-			return getModelElement();
+			return modelElementContext.getModelElement();
 		}
 		return null;
 	}

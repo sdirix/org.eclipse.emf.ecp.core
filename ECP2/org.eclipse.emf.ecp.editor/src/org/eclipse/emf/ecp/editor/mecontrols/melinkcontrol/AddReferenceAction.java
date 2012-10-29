@@ -112,6 +112,10 @@ public class AddReferenceAction extends ReferenceAction {
 			while (allElements.hasNext()) {
 				elements.add(allElements.next());
 			}
+
+			// HandlerHelper.createNewReferenceElement(modelElement, eReference,
+			// new WizardUICallback<SelectModelElementComposite>(shell, null));
+
 			MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,
 				modelElement, eReference, elements, shell);
 
@@ -197,7 +201,17 @@ public class AddReferenceAction extends ReferenceAction {
 	 */
 	@Override
 	public void run() {
+		// TODO check if works
+		// Iterator<EObject> allElements = context.getLinkElements(eReference);
+		// Set<EObject> elements = new HashSet<EObject>();
+		// while (allElements.hasNext()) {
+		// elements.add(allElements.next());
+		// }
+		// HandlerHelper.createNewReferenceElement(context.getEditingDomain(), context.getModelElement(), eReference,
+		// elements, new WizardUICallback<SelectModelElementComposite>(shell, new AddReferenceModelElementWizard()));
+
 		context.getEditingDomain().getCommandStack().execute(new AddReferenceCommand(modelElement));
+
 	}
 
 }

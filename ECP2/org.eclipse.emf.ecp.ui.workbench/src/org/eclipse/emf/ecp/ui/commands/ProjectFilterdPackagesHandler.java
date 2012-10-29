@@ -7,7 +7,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.common.CheckedModelElementHelper;
+import org.eclipse.emf.ecp.ui.common.CheckedSelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.ecp.wizards.FilterModelElementWizard;
 import org.eclipse.emf.ecp.wizards.WizardUICallback;
@@ -33,7 +33,7 @@ public class ProjectFilterdPackagesHandler extends AbstractHandler
     ISelection selection = HandlerUtil.getCurrentSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
     
-    HandlerHelper.filterProjectPackages((ECPProject)ssel.getFirstElement(),new WizardUICallback<CheckedModelElementHelper>(HandlerUtil.getActiveShell(event), new FilterModelElementWizard()));
+    HandlerHelper.filterProjectPackages((ECPProject)ssel.getFirstElement(),new WizardUICallback<CheckedSelectModelClassComposite>(HandlerUtil.getActiveShell(event), new FilterModelElementWizard()));
     
     
     return null;

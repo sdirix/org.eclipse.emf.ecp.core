@@ -13,27 +13,17 @@
 
 package org.eclipse.emf.ecp.ui.common;
 
+import org.eclipse.swt.widgets.Composite;
+
 /**
  * @author Eugen Neufeld
  */
-public abstract class AbstractUICallback {
-
-	public abstract void setCompositeUIProvider(ICompositeProvider uiProvider);
-
+public interface ICompositeProvider {
 	/**
-	 * return code when the callback was closed successfully
-	 */
-	public static final int OK = 0;
-
-	/**
-	 * return code when the callback was canceled
-	 */
-	public static final int CANCEL = 1;
-
-	/**
-	 * the abstract method, which return
+	 * This method creates a UI bundled into a {@link Composite} that can be used anywhere.
 	 * 
-	 * @return {@link #OK} when successful else {@link #CANCEL}
+	 * @param parent the parent {@link Composite}
+	 * @return the created {@link Composite}
 	 */
-	public abstract int open();
+	Composite createUI(Composite parent);
 }

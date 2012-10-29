@@ -1,6 +1,16 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
  * 
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -25,6 +35,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import java.util.ArrayList;
@@ -39,21 +50,35 @@ import java.util.Map;
 /**
  * @author Eugen Neufeld
  */
-public class FormEditorComposite {
+public class FormEditorComposite implements IEditorCompositeProvider {
 
-	public FormEditorComposite(EObject modelElement, EditorModelelementContext modelElementContext, Composite parent,
-		FormToolkit toolkit) {
-		this.modelElement = modelElement;
+	/**
+	 * Constructor to initialize the {@link FormToolkit} on its own.
+	 * 
+	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param shell the shell used for callbacks
+	 */
+	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell) {
 		this.modelElementContext = modelElementContext;
-		this.parent = parent;
-		this.toolkit = toolkit;
+		toolkit = new FormToolkit(shell.getDisplay());
+		this.shell = shell;
 	}
 
-	private final Composite parent;
+	/**
+	 * Constructor where the {@link FormToolkit} is provided.
+	 * 
+	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param shell the {@link Shell} for callback
+	 * @param toolkit the {@link FormToolkit}
+	 */
+	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell, FormToolkit toolkit) {
+		this.modelElementContext = modelElementContext;
+		this.toolkit = toolkit;
+		this.shell = shell;
+	}
 
+	private Shell shell;
 	private final FormToolkit toolkit;
-
-	private final EObject modelElement;
 
 	private final EditorModelelementContext modelElementContext;
 
@@ -73,7 +98,11 @@ public class FormEditorComposite {
 
 	private Composite bottomComposite;
 
-	public Composite createUI() {
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#createUI(org.eclipse.swt.widgets.Composite)
+	 */
+	public Composite createUI(Composite parent) {
 		Composite topComposite = toolkit.createComposite(parent);
 		topComposite.setLayout(new GridLayout());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topComposite);
@@ -129,7 +158,7 @@ public class FormEditorComposite {
 		while (iterator.hasNext()) {
 			IItemPropertyDescriptor descriptor = iterator.next();
 
-			if (visibilityDescriptor.getValue(descriptor, modelElement)) {
+			if (visibilityDescriptor.getValue(descriptor, modelElementContext.getModelElement())) {
 				iterator.remove();
 			}
 		}
@@ -141,12 +170,13 @@ public class FormEditorComposite {
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
 
 		List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
-			.getPropertyDescriptors(modelElement);
+			.getPropertyDescriptors(modelElementContext.getModelElement());
 		if (propertyDescriptors != null) {
 			filterHiddenAttributes(propertyDescriptors);
 			AnnotationPositionDescriptor positionDescriptor = new AnnotationPositionDescriptor();
 			for (IItemPropertyDescriptor itemPropertyDescriptor : propertyDescriptors) {
-				String value = positionDescriptor.getValue(itemPropertyDescriptor, modelElement);
+				String value = positionDescriptor.getValue(itemPropertyDescriptor,
+					modelElementContext.getModelElement());
 				if (value.equals("left")) {
 					leftColumnAttributes.add(itemPropertyDescriptor);
 				} else if (value.equals("right")) {
@@ -162,7 +192,7 @@ public class FormEditorComposite {
 			AnnotationPriorityDescriptor priorityDescriptor = new AnnotationPriorityDescriptor();
 			for (IItemPropertyDescriptor itemPropertyDescriptor : propertyDescriptors) {
 				priorityMap.put(itemPropertyDescriptor,
-					priorityDescriptor.getValue(itemPropertyDescriptor, modelElement));
+					priorityDescriptor.getValue(itemPropertyDescriptor, modelElementContext.getModelElement()));
 			}
 
 			Comparator<IItemPropertyDescriptor> comparator = new Comparator<IItemPropertyDescriptor>() {
@@ -188,49 +218,37 @@ public class FormEditorComposite {
 		ControlFactory controlFactory = ControlFactory.getInstance();
 
 		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {
-			AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor, modelElement,
-				modelElementContext);
+			AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor,
+				modelElementContext.getModelElement(), modelElementContext);
 			if (meControl == null) {
 				continue;
 			}
-			meControl.setShell(parent.getShell());
-			meControls.put((EStructuralFeature) itemPropertyDescriptor.getFeature(modelElement), meControl);
+			meControl.setShell(shell);
+			meControls.put(
+				(EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement()),
+				meControl);
 			Control control;
 			if (meControl.getShowLabel()) {
 				Label label = toolkit.createLabel(attributeComposite,
-					itemPropertyDescriptor.getDisplayName(modelElement));
-				label.setData(modelElement);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(modelElement));
-				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor, modelElement,
-					modelElementContext, toolkit);
+					itemPropertyDescriptor.getDisplayName(modelElementContext.getModelElement()));
+				label.setData(modelElementContext.getModelElement());
+				label.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
+				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
+					modelElementContext.getModelElement(), modelElementContext, toolkit);
 				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).hint(100, 20).applyTo(label);
 				GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 					.applyTo(control);
 				meControl.applyCustomLayoutData();
 			} else {
-				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor, modelElement,
-					modelElementContext, toolkit);
-				control.setData(modelElement);
-				control.setToolTipText(itemPropertyDescriptor.getDescription(modelElement));
+				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
+					modelElementContext.getModelElement(), modelElementContext, toolkit);
+				control.setData(modelElementContext.getModelElement());
+				control.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
 				GridDataFactory.fillDefaults().span(2, 1).grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 					.applyTo(control);
 			}
 		}
 
-	}
-
-	/**
-	 * @return the modelElement
-	 */
-	public EObject getModelElement() {
-		return modelElement;
-	}
-
-	/**
-	 * @return the modelElementContext
-	 */
-	public EditorModelelementContext getModelElementContext() {
-		return modelElementContext;
 	}
 
 	/**
@@ -260,7 +278,7 @@ public class FormEditorComposite {
 	 * Triggers live validation of the model attributes.
 	 **/
 	public void updateLiveValidation() {
-		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElement);
+		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElementContext.getModelElement());
 		List<AbstractMEControl> affectedControls = new ArrayList<AbstractMEControl>();
 
 		for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();) {
@@ -268,7 +286,7 @@ public class FormEditorComposite {
 			Object object = childDiagnostic.getData().get(0);
 			if (object instanceof EObject) {
 				EObject eObject = (EObject) object;
-				if (eObject != modelElement) {
+				if (eObject != modelElementContext.getModelElement()) {
 					continue;
 				}
 			}
@@ -300,4 +318,14 @@ public class FormEditorComposite {
 			}
 		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.IEditorCompositeProvider#focus()
+	 */
+	public void focus() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

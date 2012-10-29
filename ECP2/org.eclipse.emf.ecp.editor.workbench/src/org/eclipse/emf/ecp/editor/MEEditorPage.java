@@ -10,16 +10,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.common.command.Command;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
-import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.swt.SWTException;
@@ -35,9 +35,6 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.services.IEvaluationService;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * The editor page for the {@link MEEditor}.
  * 
@@ -52,9 +49,8 @@ public class MEEditorPage extends FormPage {
 	private ScrolledForm form;
 	//
 	 private final EditorModelelementContext modelElementContext;
-	 private EObject modelElement;
 
-	private FormEditorComposite editorPageContent;
+	private IEditorCompositeProvider editorPageContent;
 
 	/**
 	 * Default constructor.
@@ -73,7 +69,6 @@ public class MEEditorPage extends FormPage {
 	public MEEditorPage(MEEditor editor, String id, String title, EditorModelelementContext modelElementContext,
 		EObject modelElement) {
 		super(editor, id, title);
-		this.modelElement=modelElement;
 		this.modelElementContext=modelElementContext;
 
 	}
@@ -111,11 +106,11 @@ public class MEEditorPage extends FormPage {
 		toolkit.decorateFormHeading(form.getForm());
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		editorPageContent = new FormEditorComposite(modelElement, modelElementContext,body, toolkit);
-		editorPageContent.createUI();
+		editorPageContent = new FormEditorComposite(modelElementContext, form.getShell(),toolkit);
+		editorPageContent.createUI(body);
 
 		form.setImage(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(editorPageContent.getModelElement()));
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(modelElementContext.getModelElement()));
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
@@ -127,9 +122,9 @@ public class MEEditorPage extends FormPage {
 	public void updateSectionTitle() {
 		// Layout form
 		ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
-		String name = shortLabelProvider.getText(editorPageContent.getModelElement());
+		String name = shortLabelProvider.getText(modelElementContext.getModelElement());
 
-		name += " [" + editorPageContent.getModelElement().eClass().getName() + "]";
+		name += " [" + modelElementContext.getModelElement().eClass().getName() + "]";
 		try {
 			form.setText(name);
 		} catch (SWTException e) {
@@ -146,7 +141,7 @@ public class MEEditorPage extends FormPage {
 			@SuppressWarnings("rawtypes")
 			public Map getCurrentState() {
 				HashMap<Object, Object> map = new HashMap<Object, Object>();
-				map.put(activeModelelement, editorPageContent.getModelElement());
+				map.put(activeModelelement, modelElementContext.getModelElement());
 				return map;
 			}
 
@@ -165,11 +160,11 @@ public class MEEditorPage extends FormPage {
 
 			@Override
 			public void run() {
-				new ECPCommand(editorPageContent.getModelElement(),modelElementContext.getEditingDomain()) {
+				new ECPCommand(modelElementContext.getModelElement(),modelElementContext.getEditingDomain()) {
 
 					@Override
 					protected void doRun() {
-						EcoreUtil.delete(editorPageContent.getModelElement(), true);
+						EcoreUtil.delete(modelElementContext.getModelElement(), true);
 					}
 
 				}.run(true);
@@ -197,7 +192,7 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void setFocus() {
-		super.setFocus();
+		editorPageContent.focus();
 	}
 	/**
 	 * Triggers live validation of the model attributes.
