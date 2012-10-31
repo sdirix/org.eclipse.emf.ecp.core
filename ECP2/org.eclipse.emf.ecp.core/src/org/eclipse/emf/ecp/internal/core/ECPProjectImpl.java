@@ -164,10 +164,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			filteredNsUris.addAll(filterProvider.getFilteredPackages());
 		}
 
-		for (String nsUri : Registry.INSTANCE.keySet()) {
-			if (filteredNsUris.contains(nsUri)) {
-				continue;
-			}
+		Set<String> relevantURIs = new HashSet<String>(Registry.INSTANCE.keySet());
+		relevantURIs.removeAll(filteredNsUris);
+
+		for (String nsUri : relevantURIs) {
 			EPackage ePackage = Registry.INSTANCE.getEPackage(nsUri);
 			ePackages.add(ePackage);
 		}

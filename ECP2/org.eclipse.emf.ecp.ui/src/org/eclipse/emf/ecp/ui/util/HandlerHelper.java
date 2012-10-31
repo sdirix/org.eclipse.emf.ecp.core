@@ -12,6 +12,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
@@ -65,28 +66,40 @@ public class HandlerHelper {
 		project.delete(eObjects);
 	}
 
-	public static void createProject(final AbstractUICallback callback) {
+	public static ECPProject createProject(final AbstractUICallback callback) {
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
 			if (provider.hasUnsharedProjectSupport()) {
 				providers.add(provider);
 			}
 		}
+		if (providers.size() == 0) {
+			callback.showError("No Provider", "Please check if a suitable provider is installed.");
+			return null;
+		}
 		CreateProjectComposite createProjectComposite = new CreateProjectComposite(providers);
 		callback.setCompositeUIProvider(createProjectComposite);
 
 		if (AbstractUICallback.OK == callback.open()) {
 			ECPProvider selectedProvider = createProjectComposite.getProvider();
-
+			if (selectedProvider == null) {
+				callback.showError("No project created", "Please check if a suitable provider is installed.");
+				return null;
+			}
 			ECPProperties projectProperties = ECPUtil.createProperties();
 
 			String projectName = createProjectComposite.getProjectName();
 			ECPProject project = ECPProjectManager.INSTANCE.createProject(selectedProvider, projectName,
 				projectProperties);
-
+			if (project == null) {
+				callback.showError("No project created", "Please check the log.");
+				return null;
+			}
 			((InternalProvider) selectedProvider).handleLifecycle(project, LifecycleEvent.CREATE);
 			project.open();
+			return project;
 		}
+		return null;
 	}
 
 	public static void createNewReferenceElement(EditingDomain editingDomain, EObject eObject, EReference eReference,
@@ -185,16 +198,18 @@ public class HandlerHelper {
 		}
 	}
 
-	public static void createRepository(AbstractUICallback callback) {
+	public static ECPRepository createRepository(AbstractUICallback callback) {
 		AddRepositoryComposite addRepositoryComposite = new AddRepositoryComposite();
 		callback.setCompositeUIProvider(addRepositoryComposite);
 		if (AbstractUICallback.OK == callback.open()) {
-			ECPRepositoryManager.INSTANCE.addRepository(addRepositoryComposite.getProvider(), addRepositoryComposite
-				.getRepositoryName(),
+			ECPRepository ecpRepository = ECPRepositoryManager.INSTANCE.addRepository(
+				addRepositoryComposite.getProvider(), addRepositoryComposite.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
 				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
 					.getRepositoryDescription(), addRepositoryComposite.getProperties());
+			return ecpRepository;
 		}
+		return null;
 	}
 
 	public static void close(ECPCloseable[] closeables, String currentType) {

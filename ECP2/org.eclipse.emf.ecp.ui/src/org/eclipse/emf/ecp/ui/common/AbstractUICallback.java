@@ -36,4 +36,6 @@ public abstract class AbstractUICallback {
 	 * @return {@link #OK} when successful else {@link #CANCEL}
 	 */
 	public abstract int open();
+
+	public abstract void showError(String title, String message);
 }
