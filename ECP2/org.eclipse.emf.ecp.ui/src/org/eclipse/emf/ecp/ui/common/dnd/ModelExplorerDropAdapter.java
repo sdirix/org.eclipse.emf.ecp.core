@@ -14,7 +14,13 @@
 package org.eclipse.emf.ecp.ui.common.dnd;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
@@ -23,17 +29,19 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 
-import java.util.Collection;
-
 /**
  * @author Eugen Neufeld
  */
 public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
+
+	private ECPModelContextProvider contextProvider;
+
 	/*
 	 * @param viewer
 	 */
-	public ModelExplorerDropAdapter(Viewer viewer) {
+	public ModelExplorerDropAdapter(ECPModelContextProvider contextProvider, Viewer viewer) {
 		super(null, viewer);
+		this.contextProvider = contextProvider;
 	}
 
 	/*
@@ -42,21 +50,22 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 	 */
 	@Override
 	public void dragEnter(DropTargetEvent event) {
-		// Remember the requested operation.
-		originalOperation = event.detail;
-		Object target = extractDropTarget(event.item);
-		if (target instanceof ECPProject) {
-			setEditingDomain(((ECPProject) target).getEditingDomain());
-		} else {
-			domain = AdapterFactoryEditingDomain.getEditingDomainFor(target);
-			if (domain == null) {
-				Collection<?> sourceObjects = getDragSource(event);
-				if (sourceObjects != null && sourceObjects.size() != 0) {
-					domain = AdapterFactoryEditingDomain.getEditingDomainFor(sourceObjects.iterator().next());
-				}
-			}
+		if (domain == null) {
+			return;
 		}
-		helper(event);
+		super.dragEnter(event);
+	}
+
+	/**
+	 * @param object
+	 * @return
+	 */
+	private EditingDomain getProjectDomain(Object object) {
+		ECPProject project = (ECPProject) ECPUtil.getModelContext(contextProvider, object);
+		if (project != null) {
+			return project.getEditingDomain();
+		}
+		return null;
 	}
 
 	/*
@@ -66,20 +75,52 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 	@Override
 	public void dragOver(DropTargetEvent event) {
 		Object target = extractDropTarget(event.item);
+		if (target == null) {
+			return;
+		}
+		source = getDragSource(event);
+		Object sourceObject = source.iterator().next();
+
+		EditingDomain sourceProjectDomain = getProjectDomain(sourceObject);
+		EditingDomain targetProjectDomain = getProjectDomain(target);
+		EditingDomain newDomain = null;
+
+		if (target instanceof ECPProject) {
+			newDomain = ((ECPProject) target).getEditingDomain();
+		} else {
+			newDomain = AdapterFactoryEditingDomain.getEditingDomainFor(target);
+		}
+
+		if (domain == null || newDomain != null && sourceProjectDomain == targetProjectDomain) {
+			domain = newDomain;
+		}
+
 		if (target instanceof ECPProject) {
 
-			source = getDragSource(event);
-
 			ECPProject project = (ECPProject) target;
+			if (sourceObject instanceof ECPProject) {
+				event.detail = DND.DROP_COPY;
+				event.feedback = DND.FEEDBACK_INSERT_AFTER | DND.FEEDBACK_INSERT_BEFORE | DND.FEEDBACK_SCROLL;
+			}
 			// TODO delegate to provider?
-			if (project.getElements().contains(source.iterator().next())) {
+			else if (project.getElements().contains(sourceObject)) {
 				event.detail = DND.DROP_NONE;
 			} else {
 				event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
-				event.detail = DND.DROP_COPY;
+				if (sourceProjectDomain == targetProjectDomain) {
+					event.detail = DND.DROP_MOVE;
+				} else {
+					event.detail = DND.DROP_COPY;
+				}
+
 			}
 		} else {
-			super.dragOver(event);
+			if (sourceProjectDomain != targetProjectDomain) {
+				event.detail = DND.DROP_NONE;
+
+			} else {
+				super.dragOver(event);
+			}
 		}
 	}
 
@@ -90,14 +131,40 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 	@Override
 	public void drop(DropTargetEvent event) {
 		Object target = extractDropTarget(event.item);
+		source = getDragSource(event);
+		Object sourceObject = source.iterator().next();
 
 		if (target instanceof ECPProject) {
 			ECPProject project = (ECPProject) target;
 
-			source = getDragSource(event);
+			if (sourceObject instanceof EObject) {
+				if (event.detail == DND.DROP_MOVE) {
+					project.addModelElement((EObject) sourceObject);
+				} else if (event.detail == DND.DROP_COPY) {
+					project.addModelElement(EcoreUtil.copy((EObject) sourceObject));
+				}
+			} else if (sourceObject instanceof ECPProject) {
+				ECPProvider offlineProvider = null;
+				for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+					if (provider.hasUnsharedProjectSupport()) {
+						offlineProvider = provider;
+						break;
+					}
+				}
+				if (offlineProvider == null) {
+					return;
+				}
+				ECPProject oldProject = (ECPProject) sourceObject;
+				ECPProject newProject = ECPProjectManager.INSTANCE.createProject(offlineProvider, oldProject.getName()
+					+ " (Copy)", ECPUtil.createProperties());
 
-			project.addModelElement((EObject) source.iterator().next());
-		} else {
+				newProject.setFilteredEClasses(oldProject.getFilteredEClasses());
+				newProject.setFilteredPackages(oldProject.getFilteredPackages());
+				for (EObject eObject : oldProject.getElements()) {
+					newProject.addModelElement(EcoreUtil.copy(eObject));
+				}
+			}
+		} else if (event.detail != DND.DROP_NONE) {
 			super.drop(event);
 		}
 	}
@@ -118,7 +185,6 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 
 	public void setEditingDomain(EditingDomain editingDomain) {
 		domain = editingDomain;
-
 	}
 
 }

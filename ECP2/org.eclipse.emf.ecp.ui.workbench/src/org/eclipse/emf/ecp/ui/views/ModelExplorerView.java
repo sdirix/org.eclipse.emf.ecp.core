@@ -16,20 +16,34 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
+import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
+import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.PartInitException;
 
 /**
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public class ModelExplorerView extends TreeView {
+public class ModelExplorerView extends TreeView implements ILinkedWithEditorView {
 	/**
 	 * @author Jonas
 	 * @author Eugen Neufeld
@@ -54,7 +68,15 @@ public class ModelExplorerView extends TreeView {
 
 	public static final String ID = "org.eclipse.emf.ecp.ui.ModelExplorerView";
 
+	private IPartListener2 linkWithEditorPartListener=new LinkedWithEditorPartListener(this);
+	
+	private boolean linkingActive=false;
+	
 	private ModelContentProvider contentProvider;
+
+	private TreeViewer viewer;
+
+	private Action linkWithEditorAction;
 
 	public ModelExplorerView() {
 		super(ID);
@@ -62,12 +84,74 @@ public class ModelExplorerView extends TreeView {
 
 	@Override
 	protected TreeViewer createViewer(final Composite parent) {
-		final TreeViewer viewer = TreeViewerFactory.createModelExplorerViewer(parent, true, createLabelDecorator());
+		viewer = TreeViewerFactory.createModelExplorerViewer(parent, true, createLabelDecorator());
 		contentProvider=(ModelContentProvider)viewer.getContentProvider();
 		viewer.addDoubleClickListener(new DoubleClickListener());
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			public void selectionChanged(SelectionChangedEvent event) {
+				if(linkingActive){
+					Object selected=((IStructuredSelection)event.getSelection()).getFirstElement();
+					if(selected instanceof EObject){
+						for (IEditorReference editorRef : getSite().getPage().getEditorReferences()) {
+							Object editorInput = null;
+							try {
+	
+								editorInput = editorRef.getEditorInput().getAdapter(EObject.class);
+							} catch (PartInitException e) {
+								e.printStackTrace();
+							}
+							if (selected.equals(editorInput)) {
+								getSite().getPage().bringToTop(editorRef.getPart(true));
+								return;
+							}
+						}
+					}
+				}
+			}
+		});
 		return viewer;
 	}
 
+	@Override
+	protected void fillLocalToolBar(IToolBarManager manager) {
+		super.fillLocalToolBar(manager);
+		linkingActive = getDialogSettings().getBoolean("LinkWithEditor");
+		if (linkingActive) {
+			getSite().getPage().addPartListener(linkWithEditorPartListener);
+		}
+
+		linkWithEditorAction = new Action("Link with editor", SWT.TOGGLE) {
+
+			@Override
+			public void run() {
+				if (linkingActive) {
+					linkingActive = false;
+					getSite().getPage().removePartListener(linkWithEditorPartListener);
+				} else {
+					linkingActive = true;
+					getSite().getPage().addPartListener(linkWithEditorPartListener);
+					IEditorPart editor = getSite().getPage().getActiveEditor();
+					if (editor != null) {
+						editorActivated(editor);
+					}
+				}
+
+				getDialogSettings().put("LinkWithEditor", this.isChecked());
+			}
+
+		};
+
+		linkWithEditorAction.setImageDescriptor(Activator.getImageDescriptor("icons/link_with_editor.gif"));
+		linkWithEditorAction.setToolTipText("Link with editor");
+		linkWithEditorAction.setChecked(getDialogSettings().getBoolean("LinkWithEditor"));
+		manager.add(linkWithEditorAction);
+	}
+
+	private IDialogSettings getDialogSettings() {
+		return Activator.getDefault().getDialogSettings();
+	}
+	
 	@Override
 	protected void fillContextMenu(IMenuManager manager) {
 		Object[] elements = getSelection().toArray();
@@ -81,5 +165,14 @@ public class ModelExplorerView extends TreeView {
 		}
 
 		super.fillContextMenu(manager);
+	}
+
+	public void editorActivated(IEditorPart activatedEditor) {
+		if(!linkingActive || !getViewSite().getPage().isPartVisible(this)){
+			return;
+		}
+		Object input=activatedEditor.getEditorInput().getAdapter(EObject.class);
+		if(input!=null)
+			viewer.setSelection(new StructuredSelection(input),true);
 	}
 }

@@ -11,7 +11,7 @@
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ModelExplorerView"
-            icon="./icons/sample.gif"
+            icon="icons/sample.gif"
             id="org.eclipse.emf.ecp.ui.ModelExplorerView"
             name="%ModelExplorerView">
       </view>
@@ -249,6 +249,57 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.import"
+               label="Import Child"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecore.EObject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.navigator.exportModel"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </and>
+                  </iterate>
+                  <count
+                        value="1">
+                  </count>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.export"
+               icon="icons/database_go.png"
+               label="Export"
+               style="push">
+               <visibleWhen
+                  checkEnabled="false">
+                  <and>
+                     <iterate>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.emf.ecore.EObject">
+                           </instanceof>
+                           <test
+                                 args="org.eclipse.emf.ecp.navigator.exportModel"
+                                 property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                                 value="true">
+                           </test>
+                        </and>
+                     </iterate>
+                     <count
+                           value="1">
+                     </count>
+                  </and>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -327,6 +378,14 @@
             id="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
             name="Delete Model Element">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.workbench.import"
+            name="Import Child">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.workbench.export"
+            name="Export model">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -392,6 +451,14 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.DeleteModelElement"
             commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ImportHandler"
+            commandId="org.eclipse.emf.ecp.ui.workbench.import">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ExportHandler"
+            commandId="org.eclipse.emf.ecp.ui.workbench.export">
       </handler>
    </extension>
    <extension

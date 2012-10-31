@@ -12,6 +12,7 @@ import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
@@ -20,6 +21,7 @@ import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.common.model.IdEObjectCollection;
+import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
@@ -411,15 +413,15 @@ public class EMFStoreProvider extends DefaultProvider {
 	 * org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(InternalProject project, final EObject eObject) {
-		// final Project emfStoreProject = getProjectSpace(project).getProject();
-		// project.getEditingDomain().getCommandStack().execute(new ChangeCommand(emfStoreProject) {
-		//
-		// @Override
-		// protected void doExecute() {
-		// emfStoreProject.addModelElement(eObject);
-		// }
-		// });
-		getElements(project).add(eObject);
+		final Project emfStoreProject = getProjectSpace(project).getProject();
+		project.getEditingDomain().getCommandStack().execute(new ChangeCommand(emfStoreProject) {
+
+			@Override
+			protected void doExecute() {
+				emfStoreProject.addModelElement(eObject);
+			}
+		});
+		// getElements(project).add(eObject);
 	}
 
 }

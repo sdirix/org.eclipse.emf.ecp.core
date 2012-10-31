@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 
@@ -52,7 +51,7 @@ public class TreeViewerFactory {
 		final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
 			ECPProjectManager.INSTANCE, labelDecorator);
 		if (hasDnD) {
-			final ModelExplorerDropAdapter dropAdapter = new ModelExplorerDropAdapter(viewer);
+			final ModelExplorerDropAdapter dropAdapter = new ModelExplorerDropAdapter(contentProvider, viewer);
 
 			int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
 			Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
@@ -65,7 +64,6 @@ public class TreeViewerFactory {
 					if (elements == null || elements.length == 0) {
 						return;
 					}
-					EditingDomain domain = null;
 					ECPProject project = null;
 					if (elements[0] instanceof ECPProject) {
 						ECPModelContext context = ECPUtil.getModelContext(contentProvider, elements);
@@ -77,8 +75,7 @@ public class TreeViewerFactory {
 						project = (ECPProject) ECPUtil.getModelContext(contextProvider, elements[0]);
 					}
 					if (project != null) {
-						domain = project.getEditingDomain();
-						dropAdapter.setEditingDomain(domain);
+						dropAdapter.setEditingDomain(project.getEditingDomain());
 					}
 				}
 			});
