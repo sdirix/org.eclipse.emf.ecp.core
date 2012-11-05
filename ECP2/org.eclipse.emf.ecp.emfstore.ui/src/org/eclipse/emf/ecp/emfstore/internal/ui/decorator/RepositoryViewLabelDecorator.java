@@ -30,7 +30,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @see ILightweightLabelDecorator
  */
-public class ESBrowserLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, LoginObserver,
+public class RepositoryViewLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, LoginObserver,
 	LogoutObserver {
 
 	/**

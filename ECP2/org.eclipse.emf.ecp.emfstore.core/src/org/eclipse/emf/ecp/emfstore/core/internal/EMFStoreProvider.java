@@ -227,29 +227,21 @@ public class EMFStoreProvider extends DefaultProvider {
 			if (projectSpace == null) {
 				return;
 			}
-			adapter = new AdapterImpl() {
-				@Override
-				public void notifyChanged(Notification notification) {
-					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
-				}
-			};
-
-			projectSpace.getProject().eAdapters().add(adapter);
 			projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
 
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 					// 2
-					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
+					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
 				}
 
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					// 3
-					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
+					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
 				}
 
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
 					// 1
-					// ((InternalProject) context).notifyObjectsChanged(new Object[] { context });
+					// ((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
 				}
 
 				public void collectionDeleted(IdEObjectCollection collection) {

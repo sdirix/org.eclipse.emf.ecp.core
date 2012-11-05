@@ -304,7 +304,7 @@
       </decorator>
       <decorator
            adaptable="true"
-           class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator"
+           class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator"
            id="org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator"
            label="Login Decorator"
            lightweight="true"
@@ -329,13 +329,13 @@
 	<extension
          point="org.eclipse.emf.emfstore.client.loginObserver">
       <observer
-            loginObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator">
+            loginObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
       </observer>
    </extension>
    <extension
          point="org.eclipse.emf.emfstore.client.logoutObserver">
       <observer
-            logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator">
+            logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
       </observer>
    </extension>
 </plugin>

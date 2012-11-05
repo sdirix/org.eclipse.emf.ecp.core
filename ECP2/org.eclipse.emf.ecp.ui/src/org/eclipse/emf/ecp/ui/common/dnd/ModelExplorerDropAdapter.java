@@ -144,6 +144,11 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 					project.addModelElement(EcoreUtil.copy((EObject) sourceObject));
 				}
 			} else if (sourceObject instanceof ECPProject) {
+
+				// TODO copy of project by projectmanager
+				ECPProject oldProject = (ECPProject) sourceObject;
+				// ECPProjectManager.INSTANCE.clone(oldProject);
+
 				ECPProvider offlineProvider = null;
 				for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
 					if (provider.hasUnsharedProjectSupport()) {
@@ -154,12 +159,13 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 				if (offlineProvider == null) {
 					return;
 				}
-				ECPProject oldProject = (ECPProject) sourceObject;
+
 				ECPProject newProject = ECPProjectManager.INSTANCE.createProject(offlineProvider, oldProject.getName()
 					+ " (Copy)", ECPUtil.createProperties());
 
 				newProject.setFilteredEClasses(oldProject.getFilteredEClasses());
 				newProject.setFilteredPackages(oldProject.getFilteredPackages());
+
 				for (EObject eObject : oldProject.getElements()) {
 					newProject.addModelElement(EcoreUtil.copy(eObject));
 				}
