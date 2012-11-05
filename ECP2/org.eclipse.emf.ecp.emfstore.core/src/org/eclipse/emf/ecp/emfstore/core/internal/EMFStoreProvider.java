@@ -5,6 +5,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -414,6 +415,13 @@ public class EMFStoreProvider extends DefaultProvider {
 			}
 		});
 		// getElements(project).add(eObject);
+	}
+
+	@Override
+	public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
+		ProjectSpace toClone = getProjectSpace(projectToClone);
+		ProjectSpace target = getProjectSpace(targetProject);
+		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
 }

@@ -63,6 +63,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 		return project;
 	}
 
+	public ECPProject cloneProject(ECPProject project) {
+		InternalProject internalProject = (InternalProject) project;
+		InternalProject newProject = internalProject.clone();
+		return createProject(newProject);
+	}
+
 	public InternalProject getProject(Object adaptable) {
 		if (adaptable instanceof ECPProjectAware) {
 			ECPProjectAware projectAware = (ECPProjectAware) adaptable;

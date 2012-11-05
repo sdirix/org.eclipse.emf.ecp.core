@@ -104,4 +104,10 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param eObject
 	 */
 	public void addModelElement(InternalProject project, EObject eObject);
+
+	/**
+	 * @param ecpProjectImpl
+	 * @param project
+	 */
+	public void cloneProject(InternalProject projectToClone, InternalProject targetProject);
 }

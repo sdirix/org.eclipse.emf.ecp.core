@@ -17,8 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -147,28 +145,29 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 
 				// TODO copy of project by projectmanager
 				ECPProject oldProject = (ECPProject) sourceObject;
-				// ECPProjectManager.INSTANCE.clone(oldProject);
-
-				ECPProvider offlineProvider = null;
-				for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-					if (provider.hasUnsharedProjectSupport()) {
-						offlineProvider = provider;
-						break;
-					}
-				}
-				if (offlineProvider == null) {
-					return;
-				}
-
-				ECPProject newProject = ECPProjectManager.INSTANCE.createProject(offlineProvider, oldProject.getName()
-					+ " (Copy)", ECPUtil.createProperties());
-
-				newProject.setFilteredEClasses(oldProject.getFilteredEClasses());
-				newProject.setFilteredPackages(oldProject.getFilteredPackages());
-
-				for (EObject eObject : oldProject.getElements()) {
-					newProject.addModelElement(EcoreUtil.copy(eObject));
-				}
+				ECPProjectManager.INSTANCE.cloneProject(oldProject);
+				//
+				// ECPProvider offlineProvider = null;
+				// for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+				// if (provider.hasUnsharedProjectSupport()) {
+				// offlineProvider = provider;
+				// break;
+				// }
+				// }
+				// if (offlineProvider == null) {
+				// return;
+				// }
+				//
+				// ECPProject newProject = ECPProjectManager.INSTANCE.createProject(offlineProvider,
+				// oldProject.getName()
+				// + " (Copy)", ECPUtil.createProperties());
+				//
+				// newProject.setFilteredEClasses(oldProject.getFilteredEClasses());
+				// newProject.setFilteredPackages(oldProject.getFilteredPackages());
+				//
+				// for (EObject eObject : oldProject.getElements()) {
+				// newProject.addModelElement(EcoreUtil.copy(eObject));
+				// }
 			}
 		} else if (event.detail != DND.DROP_NONE) {
 			super.drop(event);

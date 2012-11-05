@@ -291,5 +291,15 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 		public void addModelElement(InternalProject project, EObject eObject) {
 			getResolvedElement().addModelElement(project, eObject);
 		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see
+		 * org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.internal.core.ECPProjectImpl,
+		 * org.eclipse.emf.ecp.spi.core.InternalProject)
+		 */
+		public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
+			getResolvedElement().cloneProject(projectToClone, targetProject);
+		}
 	}
 }

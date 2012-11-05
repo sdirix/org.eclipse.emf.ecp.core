@@ -15,8 +15,9 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public interface InternalProject extends ECPProject, ECPProjectAware, StorableElement {
+public interface InternalProject extends ECPProject, ECPProjectAware, StorableElement, Cloneable {
 	public InternalRepository getRepository();
 
 	public InternalProvider getProvider();
@@ -28,4 +29,9 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	public void notifyObjectsChanged(Object[] objects);
 
 	public void undispose(InternalRepository repository);
+
+	/**
+	 * @return
+	 */
+	public InternalProject clone();
 }

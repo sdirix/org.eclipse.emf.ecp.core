@@ -565,4 +565,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		notifyObjectsChanged(new Object[] { this });
 	}
 
+	@Override
+	public InternalProject clone() {
+		InternalProject project = new ECPProjectImpl(getProvider(), getName() + "(Copy)", ECPUtil.createProperties());
+		project.setFilteredEClasses(getFilteredEClasses());
+		project.setFilteredPackages(getFilteredPackages());
+		getProvider().cloneProject(this, project);
+		return project;
+	}
 }
