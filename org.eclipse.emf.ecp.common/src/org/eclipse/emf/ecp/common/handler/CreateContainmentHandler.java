@@ -33,10 +33,14 @@ import org.eclipse.emf.ecp.common.utilities.ActionHelper;
 public class CreateContainmentHandler extends AbstractHandler {
 
 	/**
-	 * The Id for EClass parameter to command. A model element of this EClass type is created in this handler.
+	 * The Id for the EClass parameter to command. A model element of this EClass type is created in this handler.
 	 */
 	public static final String COMMAND_ECLASS_PARAM = "org.eclipse.emf.ecp.navigator.eClassParameter";
-	public static final String COMMAND_ECREFERENCE_PARAM = "org.eclipse.emf.ecp.navigator.eReferenceParameter";
+	
+	/**
+	 * The Id for the EReference parameter to command. A model element of this EReference type is created in this handler.
+	 */
+	public static final String COMMAND_EREFERENCE_PARAM = "org.eclipse.emf.ecp.navigator.eReferenceParameter";
 
 	/**
 	 * . {@inheritDoc}
@@ -52,7 +56,7 @@ public class CreateContainmentHandler extends AbstractHandler {
 			final EObject selectedME = UiUtil.getSelectedModelelement();
 			EPackage ePackage = newMEType.getEPackage();
 			newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
-			EReference ref = (EReference) selectedME.eClass().getEStructuralFeature((String)event.getObjectParameterForExecution(COMMAND_ECREFERENCE_PARAM));
+			EReference ref = (EReference) selectedME.eClass().getEStructuralFeature((String)event.getObjectParameterForExecution(COMMAND_EREFERENCE_PARAM));
 			if(ref==null){
 				ref= getStructuralFeature(newMEInstance, selectedME);
 			}

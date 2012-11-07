@@ -52,6 +52,11 @@ public class NewReferenceAction extends ReferenceAction {
 			super(eObject);
 		}
 
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * @see org.eclipse.emf.ecp.common.commands.ECPCommand#doRun()
+		 */
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void doRun() {
@@ -60,16 +65,10 @@ public class NewReferenceAction extends ReferenceAction {
 				return;
 			}
 
-			EClass clazz = eReference.getEReferenceType();
+			EClass clazz = getReference().getEReferenceType();
 			EClass newClass = null;
-			Set<EClass> subclasses = null;
-			
-			if (eReference.isContainment()) {
-				subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, true);				
-			} else {
-				subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, false);
-			}
-			
+			Set<EClass> subclasses = getAllSubEClasses(clazz);
+
 			if (subclasses.size() == 1) {
 				newClass = subclasses.iterator().next();
 			} else {
@@ -93,9 +92,9 @@ public class NewReferenceAction extends ReferenceAction {
 			EPackage ePackage = newClass.getEPackage();
 			newMEInstance = ePackage.getEFactoryInstance().create(newClass);
 
-			if (!eReference.isContainer()) {
+			if (!getReference().isContainer()) {
 				// Returns the value of the Container
-				EObject parent = modelElement.eContainer();
+				EObject parent = getModelElement().eContainer();
 				while (parent != null && newMEInstance.eContainer() == null) {
 					EReference reference = modelElementContext.getMetaModelElementContext()
 						.getPossibleContainingReference(newMEInstance, parent);
@@ -114,15 +113,27 @@ public class NewReferenceAction extends ReferenceAction {
 			}
 
 			// add the new object to the reference
-			Object object = modelElement.eGet(eReference);
+			Object object = getModelElement().eGet(getReference());
 			if (isMultiReference()) {
 				EList<EObject> eList = (EList<EObject>) object;
 				eList.add(newMEInstance);
 			} else {
-				modelElement.eSet(eReference, newMEInstance);
+				getModelElement().eSet(getReference(), newMEInstance);
 			}
 
 			ActionHelper.openModelElement(newMEInstance, this.getClass().getName());
+		}
+
+		private Set<EClass> getAllSubEClasses(EClass clazz) {
+			Set<EClass> subclasses;
+			
+			if (getReference().isContainment()) {
+				subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, true);
+			} else {
+				subclasses = modelElementContext.getMetaModelElementContext().getAllSubEClasses(clazz, false, false);
+			}
+			
+			return subclasses;
 		}
 
 	}
@@ -139,8 +150,8 @@ public class NewReferenceAction extends ReferenceAction {
 	 */
 	public NewReferenceAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
 		ECPModelelementContext modelElementContext) {
-		this.modelElement = modelElement;
-		this.eReference = eReference;
+		this.setModelElement(modelElement);
+		this.setReference(eReference);
 		this.modelElementContext = modelElementContext;
 
 		Object obj = null;
@@ -151,7 +162,7 @@ public class NewReferenceAction extends ReferenceAction {
 				.create(eReference.getEReferenceType());
 		}
 		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		Image image = new AdapterFactoryLabelProvider(adapterFactory).getImage(obj);
 		adapterFactory.dispose();
 
@@ -177,14 +188,14 @@ public class NewReferenceAction extends ReferenceAction {
 	 */
 	@Override
 	public void run() {
-		if (eReference.isContainer()) {
+		if (getReference().isContainer()) {
 			DialogHandler.showErrorDialog("Operation not permitted for container references!");
 			return;
 		}
-		new NewReferenceCommand(modelElement).run(true);
+		new NewReferenceCommand(getModelElement()).run(true);
 	}
 
 	private boolean isMultiReference() {
-		return (eReference.getUpperBound() != 1 && eReference.getUpperBound() != 0);
+		return (getReference().getUpperBound() != 1 && getReference().getUpperBound() != 0);
 	}
 }

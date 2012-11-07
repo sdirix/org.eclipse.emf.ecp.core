@@ -13,10 +13,12 @@ package org.eclipse.emf.ecp.validation.filter.impl;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecp.validation.Activator;
 import org.eclipse.emf.ecp.validation.filter.ValidationFilter;
-
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 
+/**
+ * Validation warning filter.
+ */
 public class Severity2ValidationFilter extends ValidationFilter {
 
 	/**

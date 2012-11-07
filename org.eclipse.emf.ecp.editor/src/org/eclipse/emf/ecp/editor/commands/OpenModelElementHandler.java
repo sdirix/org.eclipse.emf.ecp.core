@@ -26,53 +26,44 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * @author Hodaie This handler handles openModelEelement command. This handler
- *         is to be executed indirectly using IHandlerService.executeCommand()
- *         method. The Command itself does not have any UI representation.
+ * This handler handles openModelEelement command. This handler
+ * is to be executed indirectly using IHandlerService.executeCommand()
+ * method. The Command itself does not have any UI representation.
+ *         
+ * @author Hodaie          
  */
 public class OpenModelElementHandler extends AbstractHandler {
 
-	@SuppressWarnings("unused")
-	private static final String ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE = "meToOpen";
 	private static final String FEATURE_TO_MARK_EVALUATIONCONTEXT_VARIABLE = "featureToMark";
-	private static final String MECONTEXT_EVALUATIONCONTEXT_VARIABLE = "meContext";
 
 	/**
-	 * . ({@inheritDoc}) We added this package and command to meeditor plug-in,
+	 * {@inheritDoc} 
+	 * 
+	 * <br/>
+	 * We added this package and command to the editor plug-in,
 	 * we needed to open a model element from model.edit plug-in and to avoid
 	 * circular references we had to execute this command indirectly using
-	 * IHandlerServise.excuteCommand
+	 * IHandlerServise.executeCommand.
 	 */
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		// We get the required model element Through activeModelelemet
-		// variable.
-		// This variable is already set, in the method which calls to execute
-		// this command.
-		// Object o = HandlerUtil.getVariableChecked(event,
-		// ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE);
-		Object o = ((IStructuredSelection) HandlerUtil
-				.getCurrentSelection(event)).getFirstElement();
+		Object o = ((IStructuredSelection) HandlerUtil.getCurrentSelection(event)).getFirstElement();
 
 		EObject me = (EObject) o;
 
-		// ECPModelelementContext context = (ECPModelelementContext)
-		// HandlerUtil.getVariableChecked(event,
-		// MECONTEXT_EVALUATIONCONTEXT_VARIABLE);
-		ECPModelelementContext context=null;
+		ECPModelelementContext context = null;
 		try {
-			context = ECPWorkspaceManager.getInstance()
-					.getWorkSpace().getProject(me);
+			context = ECPWorkspaceManager.getInstance().getWorkSpace().getProject(me);
 		} catch (NoWorkspaceException e1) {
+			
 		}
 
 		EStructuralFeature problemFeature;
 
 		try {
-			problemFeature = (EStructuralFeature) HandlerUtil
-					.getVariableChecked(event,
-							FEATURE_TO_MARK_EVALUATIONCONTEXT_VARIABLE);
+			problemFeature = (EStructuralFeature) HandlerUtil.getVariableChecked(event,
+				FEATURE_TO_MARK_EVALUATIONCONTEXT_VARIABLE);
 		} catch (ExecutionException executionException) {
 			problemFeature = null;
 		}
@@ -85,9 +76,8 @@ public class OpenModelElementHandler extends AbstractHandler {
 				input = new MEEditorInput(me, context, problemFeature);
 			}
 			try {
-				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-						.getActivePage()
-						.openEditor(input, "org.eclipse.emf.ecp.editor", true);
+				PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+					.openEditor(input, "org.eclipse.emf.ecp.editor", true);
 			} catch (PartInitException e) {
 				Activator.logException(e);
 			}

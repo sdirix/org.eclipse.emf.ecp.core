@@ -51,8 +51,9 @@ public class Activator extends AbstractECPPlugin {
 		plugin = null;
 		super.stop(context);
 	}
+
 	// END SUPRESS CATCH EXCEPTION
-	
+
 	/**
 	 * 
 	 * @return the shared instance

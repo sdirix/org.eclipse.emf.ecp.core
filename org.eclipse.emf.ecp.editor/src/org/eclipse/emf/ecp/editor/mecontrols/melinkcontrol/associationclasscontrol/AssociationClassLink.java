@@ -110,7 +110,7 @@ public class AssociationClassLink extends MELinkControl {
 		modelElement = contextModelElement;
 		eReference = (EReference) itemPropertyDescriptor.getFeature(association);
 		eAttribute = AssociationClassHelper.getAssociationFeatures(association, context.getMetaModelElementContext());
-		this.toolkit = toolkit;
+		setToolkit(toolkit);
 		setContext(context);
 		this.parent = parent;
 		// create components
@@ -166,28 +166,27 @@ public class AssociationClassLink extends MELinkControl {
 	}
 
 	private void createComponents(final Composite parent, int style) {
-		composite = toolkit.createComposite(parent, style);
+		composite = getToolkit().createComposite(parent, style);
 		composite.setLayout(new GridLayout(5, false));
 		// handle element deletion
 		delAssociationListener = new MEHyperLinkDeleteAdapter(modelElement, eReference, association, getContext());
 		// listen for changes of the goal reference instance
 		associationChangeListener = new AssociationChangeListener(association);
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-			adapterFactory);
+		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
 		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
-		imgHyperlink = toolkit.createImageHyperlink(composite, style);
+		imgHyperlink = getToolkit().createImageHyperlink(composite, style);
 		ModelElementClassTooltip.enableFor(imgHyperlink);
-		hyperlink = toolkit.createHyperlink(composite, "", style);
+		hyperlink = getToolkit().createHyperlink(composite, "", style);
 		if (eAttribute.size() == 1) {
 			ControlFactory controlFactory = new ControlFactory();
 			ItemPropertyDescriptor itemPropertyDescriptor = new ItemPropertyDescriptor(null, "", "", eAttribute.get(0));
 			AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor, association,
 				getContext());
-			meControl.createControl(composite, style, itemPropertyDescriptor, association, getContext(), toolkit);
+			meControl.createControl(composite, style, itemPropertyDescriptor, association, getContext(), getToolkit());
 		} else if (eAttribute.size() > 1) {
-			Hyperlink associationLink = toolkit.createHyperlink(composite, "[edit]", style);
+			Hyperlink associationLink = getToolkit().createHyperlink(composite, "[edit]", style);
 			associationLink
 				.addHyperlinkListener(new MEHyperLinkAdapter(association, modelElement, eReference.getName()));
 		}
@@ -197,7 +196,7 @@ public class AssociationClassLink extends MELinkControl {
 		} else {
 			deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 		}
-		ImageHyperlink delHyperlink = toolkit.createImageHyperlink(composite, style);
+		ImageHyperlink delHyperlink = getToolkit().createImageHyperlink(composite, style);
 		delHyperlink.setImage(deleteImage);
 		delHyperlink.addMouseListener(delAssociationListener);
 	}

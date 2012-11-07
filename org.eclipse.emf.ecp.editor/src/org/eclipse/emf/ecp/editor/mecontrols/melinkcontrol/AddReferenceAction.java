@@ -34,7 +34,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * An Action for adding reference links to a model element. It is mainly used in the {@link MEMultiLinkControl}
+ * An Action for adding reference links to a model element. <br/>
+ * It is mainly used in the {@link MEMultiLinkControl}.
  * 
  * @author shterev
  */
@@ -55,7 +56,6 @@ public class AddReferenceAction extends ReferenceAction {
 			super(eObject);
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		protected void doRun() {
 
@@ -63,46 +63,35 @@ public class AddReferenceAction extends ReferenceAction {
 				return;
 			}
 
-			EClass clazz = eReference.getEReferenceType();
+			EClass clazz = getReference().getEReferenceType();
 			Collection<EObject> allElements = context.getAllModelElementsbyClass(clazz, true);
-			allElements.remove(modelElement);
-			Object object = modelElement.eGet(eReference);
+			allElements.remove(getModelElement());
+			Object object = getModelElement().eGet(getReference());
 
-			EList<EObject> eList = null;
-			EObject eObject = null;
-
-			// don't the instances that are already linked
-			if (eReference.isMany() && object instanceof EList) {
-				eList = (EList<EObject>) object;
-				for (EObject ref : eList) {
-					allElements.remove(ref);
-				}
-			} else if (!eReference.isMany() && object instanceof EObject) {
-				eObject = (EObject) object;
-				allElements.remove(eObject);
-			}
+			// don't provide facility to link instances that are already linked
+			EList<EObject> eList = filterAlreadyLinkedElements(allElements, object);
 
 			// don't show contained elements for inverse containment references
-			if (eReference.isContainer()) {
-				allElements.removeAll(modelElement.eContents());
+			if (getReference().isContainer()) {
+				allElements.removeAll(getModelElement().eContents());
 			}
 
 			// take care of circular references
-			if (eReference.isContainment()) {
+			if (getReference().isContainment()) {
 				Iterator<EObject> iter = allElements.iterator();
 				while (iter.hasNext()) {
 					EObject me = iter.next();
-					if (EcoreUtil.isAncestor(me, modelElement)) {
+					if (EcoreUtil.isAncestor(me, getModelElement())) {
 						iter.remove();
 					}
 				}
 			}
 
 			MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,
-				modelElement, eReference, allElements);
+				getModelElement(), getReference(), allElements);
 
 			if (dlg.open() == Window.OK) {
-				if (eReference.isMany()) {
+				if (getReference().isMany()) {
 					Object[] results = dlg.getResult();
 					ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(PlatformUI.getWorkbench()
 						.getActiveWorkbenchWindow().getShell());
@@ -122,11 +111,32 @@ public class AddReferenceAction extends ReferenceAction {
 				} else {
 					Object result = dlg.getFirstResult();
 					if (result instanceof EObject) {
-						modelElement.eSet(eReference, result);
+						getModelElement().eSet(getReference(), result);
 					}
 				}
 
 			}
+		}
+
+		@SuppressWarnings("unchecked")
+		private EList<EObject> filterAlreadyLinkedElements(Collection<EObject> allElements, Object object) {
+			
+			EObject eObject;
+			EList<EObject> list = null;
+			
+			if (getReference().isMany() && object instanceof EList) {
+				list = (EList<EObject>) object;
+				
+				for (EObject ref : list) {
+					allElements.remove(ref);
+				}
+				
+			} else if (!getReference().isMany() && object instanceof EObject) {
+				eObject = (EObject) object;
+				allElements.remove(eObject);
+			}
+			
+			return list;
 		}
 
 	}
@@ -141,8 +151,8 @@ public class AddReferenceAction extends ReferenceAction {
 	 */
 	public AddReferenceAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
 		ECPModelelementContext context) {
-		this.modelElement = modelElement;
-		this.eReference = eReference;
+		this.setModelElement(modelElement);
+		this.setReference(eReference);
 		this.context = context;
 
 		Object obj = null;
@@ -151,7 +161,7 @@ public class AddReferenceAction extends ReferenceAction {
 				.create(eReference.getEReferenceType());
 		}
 		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		Image image = new AdapterFactoryLabelProvider(adapterFactory).getImage(obj);
 		adapterFactory.dispose();
 		String overlayString = "icons/link_overlay.png";
@@ -180,7 +190,7 @@ public class AddReferenceAction extends ReferenceAction {
 	 */
 	@Override
 	public void run() {
-		new AddReferenceCommand(this.modelElement).run(true);
+		new AddReferenceCommand(this.getModelElement()).run(true);
 	}
 
 }

@@ -56,17 +56,17 @@ import org.eclipse.swt.widgets.Text;
  */
 public abstract class MEPrimitiveAttributeControl<T> extends AbstractMEControl {
 	
-	public static final Map<Class<?>, Class<?>> primitives = new HashMap<Class<?>, Class<?>>();
+	private static final Map<Class<?>, Class<?>> PRIMITIVES = new HashMap<Class<?>, Class<?>>();
 	
 	static {
-	    primitives.put(Boolean.class, boolean.class);
-	    primitives.put(Byte.class, byte.class);
-	    primitives.put(Short.class, short.class);
-	    primitives.put(Character.class, char.class);
-	    primitives.put(Integer.class, int.class);
-	    primitives.put(Long.class, long.class);
-	    primitives.put(Float.class, float.class);
-	    primitives.put(Double.class, double.class);
+	    PRIMITIVES.put(Boolean.class, boolean.class);
+	    PRIMITIVES.put(Byte.class, byte.class);
+	    PRIMITIVES.put(Short.class, short.class);
+	    PRIMITIVES.put(Character.class, char.class);
+	    PRIMITIVES.put(Integer.class, int.class);
+	    PRIMITIVES.put(Long.class, long.class);
+	    PRIMITIVES.put(Float.class, float.class);
+	    PRIMITIVES.put(Double.class, double.class);
 	}
 
 	private Text text;
@@ -144,7 +144,7 @@ public abstract class MEPrimitiveAttributeControl<T> extends AbstractMEControl {
 	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
 		Object feature = itemPropertyDescriptor.getFeature(modelElement);
 		
-		if (feature instanceof EAttribute && (((EAttribute) feature).getEType().getInstanceClass().equals(primitives.get(getClassType()))
+		if (feature instanceof EAttribute && (((EAttribute) feature).getEType().getInstanceClass().equals(PRIMITIVES.get(getClassType()))
 			|| ((EAttribute) feature).getEType().getInstanceClass().equals((getClassType())))
 			&& !((EAttribute) feature).isMany()) {
 
@@ -337,6 +337,11 @@ public abstract class MEPrimitiveAttributeControl<T> extends AbstractMEControl {
 		text.setFocus();
 	}
 	
+	/**
+	 * Returns the converter for a primitive data type.
+	 * 
+	 * @return the converter instance 
+	 */
 	protected IConverter getConverter() {
 		IConverter converter = new IConverter() {
 			

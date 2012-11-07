@@ -55,8 +55,8 @@ public class ValidationContentProvider extends AdapterFactoryContentProvider {
 				constraints.add(statuses[i]);
 
 			}
-		} else if(!status.isOK()) {
-			
+		} else if (!status.isOK()) {
+
 			constraints.add(status);
 		}
 

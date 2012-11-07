@@ -19,11 +19,11 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
- * Represents a page candidate to be showsn in meeditor.
+ * Represents a page candidate to be shown in meeditor.
  * 
  * @author helming
  */
-public class PageCandidate {
+public final class PageCandidate {
 
 	// By which pages this page is about to be replaced
 	private List<PageCandidate> replacedBy = new LinkedList<PageCandidate>();

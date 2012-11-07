@@ -82,7 +82,7 @@ public class MEEditorPage extends FormPage {
 	private EStructuralFeature problemFeature;
 	private final ECPModelelementContext modelElementContext;
 	private final ComposedAdapterFactory adapterFactory;
-	
+
 	/**
 	 * Default constructor.
 	 * 
@@ -102,8 +102,7 @@ public class MEEditorPage extends FormPage {
 		super(editor, id, title);
 		this.modelElementContext = modelElementContext;
 		this.modelElement = modelElement;
-		this.adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		this.adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 	}
 
@@ -236,20 +235,20 @@ public class MEEditorPage extends FormPage {
 			"toolbar:org.eclipse.emf.ecp.editor.MEEditorPage");
 		form.getToolBarManager().update(true);
 	}
-	
+
 	/**
-	 * Filters attributes marked with "hidden=true" annotation
+	 * Filters attributes marked with "hidden=true" annotation.
 	 * 
 	 * @param propertyDescriptors property descriptors to filter
 	 */
 	private void filterHiddenAttributes(Collection<IItemPropertyDescriptor> propertyDescriptors) {
 		Iterator<IItemPropertyDescriptor> iterator = propertyDescriptors.iterator();
-		
+
 		AnnotationHiddenDescriptor visibilityDescriptor = new AnnotationHiddenDescriptor();
-		
+
 		while (iterator.hasNext()) {
 			IItemPropertyDescriptor descriptor = iterator.next();
-			
+
 			if (visibilityDescriptor.getValue(descriptor, modelElement)) {
 				iterator.remove();
 			}
@@ -258,12 +257,11 @@ public class MEEditorPage extends FormPage {
 
 	private void sortAndOrderAttributes() {
 
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			adapterFactory);
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
 
 		Collection<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
 			.getPropertyDescriptors(modelElement);
-			
+
 		if (propertyDescriptors != null) {
 			filterHiddenAttributes(propertyDescriptors);
 			AnnotationPositionDescriptor positionDescriptor = new AnnotationPositionDescriptor();
@@ -353,7 +351,7 @@ public class MEEditorPage extends FormPage {
 		for (AbstractMEControl control : meControls.values()) {
 			control.dispose();
 		}
-		if (adapterFactory!=null) {
+		if (adapterFactory != null) {
 			adapterFactory.dispose();
 		}
 		super.dispose();
@@ -380,44 +378,44 @@ public class MEEditorPage extends FormPage {
 	/**
 	 * Triggers live validation of the model attributes.
 	 * **/
-	public void updateLiveValidation() {	
+	public void updateLiveValidation() {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElement);
 		List<AbstractMEControl> affectedControls = new ArrayList<AbstractMEControl>();
-		
-		for (Iterator<Diagnostic> i= diagnostic.getChildren().iterator(); i.hasNext();) {
+
+		for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();) {
 			Diagnostic childDiagnostic = i.next();
 			Object object = childDiagnostic.getData().get(0);
-			if(object instanceof EObject) {
+			if (object instanceof EObject) {
 				EObject eObject = (EObject) object;
-				if(eObject!=modelElement){
+				if (eObject != modelElement) {
 					continue;
 				}
 			}
-			if(childDiagnostic.getData().size()<2){
+			if (childDiagnostic.getData().size() < 2) {
 				continue;
 			}
 			AbstractMEControl meControl = this.meControls.get(childDiagnostic.getData().get(1));
 			affectedControls.add(meControl);
-			if (meControl instanceof IValidatableControl) { 
+			if (meControl instanceof IValidatableControl) {
 				if (this.valdiatedControls.containsKey(meControl)) {
 					if (childDiagnostic.getSeverity() != this.valdiatedControls.get(meControl).getSeverity()) {
-						((IValidatableControl)meControl).handleValidation(childDiagnostic);
+						((IValidatableControl) meControl).handleValidation(childDiagnostic);
 						this.valdiatedControls.put(meControl, childDiagnostic);
-					} 
+					}
 				} else {
-					((IValidatableControl)meControl).handleValidation(childDiagnostic);
+					((IValidatableControl) meControl).handleValidation(childDiagnostic);
 					this.valdiatedControls.put(meControl, childDiagnostic);
 				}
 			}
 		}
-		
+
 		Map<AbstractMEControl, Diagnostic> temp = new HashMap<AbstractMEControl, Diagnostic>();
 		temp.putAll(this.valdiatedControls);
 		for (Map.Entry<AbstractMEControl, Diagnostic> entry : temp.entrySet()) {
 			AbstractMEControl meControl = entry.getKey();
 			if (!affectedControls.contains(meControl)) {
 				this.valdiatedControls.remove(meControl);
-				((IValidatableControl)meControl).resetValidation();
+				((IValidatableControl) meControl).resetValidation();
 			}
 		}
 	}

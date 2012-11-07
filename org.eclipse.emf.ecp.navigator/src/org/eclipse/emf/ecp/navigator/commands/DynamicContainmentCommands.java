@@ -178,7 +178,7 @@ public class DynamicContainmentCommands extends CompoundContributionItem {
 					commandParams.put(
 							CreateContainmentHandler.COMMAND_ECLASS_PARAM, typeClass);
 					commandParams.put(
-							CreateContainmentHandler.COMMAND_ECREFERENCE_PARAM,
+							CreateContainmentHandler.COMMAND_EREFERENCE_PARAM,
 							containment.getName());
 					commandParam.label = "New "
 							+ ((EObject) type).eClass().getName();

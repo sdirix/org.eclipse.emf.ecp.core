@@ -103,7 +103,7 @@ public class ValidationView extends ViewPart {
 	private TableItem tableItem;
 
 	private ECPWorkspace workspace;
-	
+
 	private ValidationLabelProvider labelProvider;
 
 	/**
@@ -190,8 +190,8 @@ public class ValidationView extends ViewPart {
 		column = new TableViewerColumn(tableViewer, SWT.LEFT, 2);
 		column.getColumn().setText("Affected ModelElement");
 		column.getColumn().setWidth(200);
-		labelProvider =  new ValidationLabelProvider();
-		setLabelProviderAndComparator(column,labelProvider);
+		labelProvider = new ValidationLabelProvider();
+		setLabelProviderAndComparator(column, labelProvider);
 
 		// content provider
 		tableViewer.setContentProvider(new ValidationContentProvider());
@@ -213,7 +213,7 @@ public class ValidationView extends ViewPart {
 	}
 
 	/**
-	 * Sets the LabelProvider and Comparator for a specific column
+	 * Sets the LabelProvider and Comparator for a specific column.
 	 * 
 	 * @param column
 	 * @param labelProvider
@@ -274,13 +274,13 @@ public class ValidationView extends ViewPart {
 	 */
 	@Override
 	public void setFocus() {
-		
+
 	}
 
 	/**
 	 * Updates the validation view table for the new live validation.
 	 * 
-	 * @param validationResults
+	 * @param diagnostic
 	 *            validation results.
 	 */
 	public void updateTable(Diagnostic diagnostic) {
@@ -324,7 +324,7 @@ public class ValidationView extends ViewPart {
 	@Override
 	public void dispose() {
 		workspace.eAdapters().remove(workspaceListenerAdapter);
-		if (labelProvider!=null) {
+		if (labelProvider != null) {
 			labelProvider.dispose();
 		}
 		super.dispose();
@@ -383,6 +383,9 @@ public class ValidationView extends ViewPart {
 		}
 	}
 
+	/**
+	 * Context menu listener.
+	 */
 	private final class MenuDetectListenerImplementation implements MenuDetectListener {
 
 		public void menuDetected(MenuDetectEvent e) {
@@ -444,6 +447,9 @@ public class ValidationView extends ViewPart {
 			leftClickMenu.setVisible(true);
 		}
 
+		/**
+		 * Refactoring selection listener.
+		 */
 		private final class RefactoringSelectionListener implements SelectionListener {
 			public void widgetSelected(SelectionEvent e) {
 				// only show selection dialog if there is more than one
@@ -490,6 +496,9 @@ public class ValidationView extends ViewPart {
 		}
 	}
 
+	/**
+	 * Label provider for a refactoring strategy.
+	 */
 	private final class RefactoringStrategyLabelProvider extends LabelProvider {
 
 		@Override
@@ -503,6 +512,9 @@ public class ValidationView extends ViewPart {
 		}
 	}
 
+	/**
+	 * Simple structured content provider for lists.
+	 */
 	private final class SimpleContentProvider implements IStructuredContentProvider {
 
 		public Object[] getElements(Object inputElement) {
@@ -514,11 +526,11 @@ public class ValidationView extends ViewPart {
 		}
 
 		public void dispose() {
-			// TODO Auto-generated method stub
+
 		}
 
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-			// TODO Auto-generated method stub
+
 		}
 	}
 

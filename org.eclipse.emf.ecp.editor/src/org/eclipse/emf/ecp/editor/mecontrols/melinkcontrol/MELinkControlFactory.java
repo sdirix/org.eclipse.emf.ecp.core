@@ -22,9 +22,16 @@ import org.eclipse.emf.ecp.common.model.ECPModelelementContext;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+/**
+ * Factory for creating link controls.
+ */
 public class MELinkControlFactory {
+	
 	private HashMap<Class<?>, ArrayList<MELinkControl>> controlRegistry;
 
+	/**
+	 * Constructor.
+	 */
 	public MELinkControlFactory() {
 		controlRegistry = new HashMap<Class<?>, ArrayList<MELinkControl>>();
 		initializeMEControls();
@@ -55,11 +62,35 @@ public class MELinkControlFactory {
 
 	}
 
+	/**
+	 * Creates a link control.
+	 * 
+	 * @param itemPropertyDescriptor
+	 * 			an item property descriptor
+	 * @param link
+	 * 			the object where the link to should lead to
+	 * @param contextModelElement
+	 * 			the model element for which to render the link
+	 * @return the created link control
+	 */
 	public MELinkControl createMELinkControl(IItemPropertyDescriptor itemPropertyDescriptor, final EObject link,
 		EObject contextModelElement) {
 		return createMELinkControl(itemPropertyDescriptor, link, contextModelElement, null);
 	}
 
+	/**
+	 * Creates a link control.
+	 * 
+	 * @param itemPropertyDescriptor
+	 * 			an item property descriptor
+	 * @param link
+	 * 			the object where the link to should lead to
+	 * @param contextModelElement
+	 * 			the model element for which to render the link
+	 * @param context
+	 * 			an ECP model context
+	 * @return the created link control
+	 */
 	public MELinkControl createMELinkControl(IItemPropertyDescriptor itemPropertyDescriptor, final EObject link,
 		EObject contextModelElement, ECPModelelementContext context) {
 		ArrayList<MELinkControl> candidates = new ArrayList<MELinkControl>();

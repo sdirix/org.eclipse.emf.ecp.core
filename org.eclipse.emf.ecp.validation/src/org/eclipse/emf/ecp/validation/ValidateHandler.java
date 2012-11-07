@@ -75,7 +75,7 @@ public class ValidateHandler extends AbstractHandler {
 	}
 
 	/**
-	 * Instantiates the ValidationView
+	 * Instantiates the ValidationView.
 	 */
 	private void instantiateValidationView() {
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();

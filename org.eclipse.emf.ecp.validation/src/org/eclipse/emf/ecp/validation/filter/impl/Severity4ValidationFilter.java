@@ -16,6 +16,9 @@ import org.eclipse.emf.ecp.validation.filter.ValidationFilter;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 
+/**
+ * Validation error filter.
+ */
 public class Severity4ValidationFilter extends ValidationFilter {
 
 	/**

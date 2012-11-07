@@ -72,7 +72,7 @@ public class MESingleLinkControl extends AbstractMEControl {
 		this.eReference = (EReference) feature;
 		composite = getToolkit().createComposite(parent, style);
 		List<Action> initActions = initActions();
-		int columns = initActions.size()+1;
+		int columns = initActions.size() + 1;
 		composite.setLayout(new GridLayout(columns, false));
 		if (!getItemPropertyDescriptor().canSetProperty(getModelElement())) {
 			composite.setEnabled(false);

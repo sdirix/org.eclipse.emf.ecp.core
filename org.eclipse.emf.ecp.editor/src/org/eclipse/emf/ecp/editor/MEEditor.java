@@ -318,7 +318,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 		modelElementChangeListener.remove();
 		modelElementContext.removeModelElementContextListener(modelElementContextListener);
 		((MEEditorInput) getEditorInput()).getLabelProvider().removeListener(labelProviderListener);
-		((MEEditorInput)getEditorInput()).dispose();
+		((MEEditorInput) getEditorInput()).dispose();
 		super.dispose();
 	}
 
@@ -335,6 +335,10 @@ public class MEEditor extends SharedHeaderFormEditor {
 		}
 	}
 
+	/**
+	 * Returns the ECP model element context.
+	 * @return the model element context.
+	 */
 	public ECPModelelementContext getModelElementContext() {
 		return modelElementContext;
 	}

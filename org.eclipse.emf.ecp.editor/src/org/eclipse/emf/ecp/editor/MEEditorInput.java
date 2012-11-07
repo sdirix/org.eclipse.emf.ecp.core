@@ -211,8 +211,11 @@ public class MEEditorInput implements IEditorInput {
 		return modelElementContext;
 	}
 
+	/**
+	 * Disposes this editor input.
+	 */
 	public void dispose() {
-		if (adapterFactory!=null) {
+		if (adapterFactory != null) {
 			adapterFactory.dispose();
 		}
 	}

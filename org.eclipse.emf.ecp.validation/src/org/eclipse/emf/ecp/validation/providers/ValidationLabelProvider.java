@@ -35,8 +35,7 @@ public class ValidationLabelProvider extends ColumnLabelProvider {
 	 */
 	public ValidationLabelProvider() {
 		super();
-		adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 	}
 
@@ -72,11 +71,10 @@ public class ValidationLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public void dispose(ColumnViewer viewer, ViewerColumn column) {
-		if (adapterFactory!=null) {
+		if (adapterFactory != null) {
 			adapterFactory.dispose();
 		}
 		super.dispose(viewer, column);
 	}
-	
 
 }

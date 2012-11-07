@@ -59,6 +59,8 @@ public class SeverityLabelProvider extends ColumnLabelProvider {
 				return "INFO";
 			case IStatus.OK:
 				return "OK";
+			default:
+				break;
 			}
 		}
 		return super.getText(element);
