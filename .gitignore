@@ -1,2 +1,10 @@
+*.class
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
 bin/
 /org.eclipse.emf.ecp.xmiworkspace
+
