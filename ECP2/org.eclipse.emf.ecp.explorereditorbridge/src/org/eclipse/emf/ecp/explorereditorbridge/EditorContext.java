@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPProjectManager.Listener;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.editor.EditorMetamodelContext;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.EditorModelelementContextListener;
@@ -46,14 +46,14 @@ public class EditorContext implements EditorModelelementContext {
 
 	private List<EditorModelelementContextListener> contextListeners = new ArrayList<EditorModelelementContextListener>();
 
-	private Listener projectListener;
+	private IECPProjectsChangedObserver projectObserver;
 
 	public EditorContext(EObject modelElement, ECPProject ecpProject) {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		metaModeElementContext = new MetaModeElementContext();
 
-		projectListener = new Listener() {
+		projectObserver = new IECPProjectsChangedObserver() {
 
 			public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 				// TODO Auto-generated method stub
@@ -73,7 +73,7 @@ public class EditorContext implements EditorModelelementContext {
 				// do nothing
 			}
 		};
-		ECPProjectManager.INSTANCE.addListener(projectListener);
+		ECPProjectManager.INSTANCE.addChangeObserver(projectObserver);
 	}
 
 	public void addModelElementContextListener(EditorModelelementContextListener modelElementContextListener) {
@@ -111,7 +111,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * Dispose the context.
 	 */
 	public void dispose() {
-		ECPProjectManager.INSTANCE.removeListener(projectListener);
+		ECPProjectManager.INSTANCE.removeChangeObserver(projectObserver);
 	}
 
 	/*

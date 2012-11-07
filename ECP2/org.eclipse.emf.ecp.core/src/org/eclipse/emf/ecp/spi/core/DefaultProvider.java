@@ -336,4 +336,12 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		throw new UnsupportedOperationException();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecore.EObject)
+	 */
+	public boolean contains(InternalProject project, EObject eObject) {
+		// TODO change
+		throw new UnsupportedOperationException();
+	}
 }

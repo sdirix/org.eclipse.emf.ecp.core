@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.core;
 
@@ -17,24 +16,25 @@ import org.eclipse.core.runtime.IAdaptable;
 /**
  * @author Eike Stepper
  */
-public interface ECPProvider extends ECPElement, IAdaptable
-{
-  public static final String TYPE = "Provider";
+public interface ECPProvider extends ECPElement, IAdaptable {
+	public static final String TYPE = "Provider";
 
-  public String getLabel();
+	public String getLabel();
 
-  public String getDescription();
+	public String getDescription();
 
-  public ECPRepository[] getAllRepositories();
+	public ECPRepository[] getAllRepositories();
 
-  public ECPProject[] getOpenProjects();
+	public ECPProject[] getOpenProjects();
 
-  public boolean canAddRepositories();
+	public boolean canAddRepositories();
 
-  public boolean hasUnsharedProjectSupport();
+	public boolean hasUnsharedProjectSupport();
 
-  // TODO check whether necessary
-  public void shareProject(ECPProject project, ECPRepository repository);
+	// TODO check whether necessary
+	public void shareProject(ECPProject project, ECPRepository repository);
 
-  public ECPRepository unshareProject(ECPProject project);
+	public ECPRepository unshareProject(ECPProject project);
+
+	public Class<?> getContainerClass();
 }

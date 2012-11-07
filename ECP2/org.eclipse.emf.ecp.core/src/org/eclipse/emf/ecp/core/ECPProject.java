@@ -42,6 +42,16 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	public EList<EObject> getElements();
 
 	/**
+	 * Whether the given {@link EObject} is contained in the project.
+	 * 
+	 * @param eObject
+	 *            the object whose containment within the project should be checked
+	 * 
+	 * @return true, if the project contains the given {@link EObject}, false otherwise
+	 */
+	public boolean contains(EObject eObject);
+
+	/**
 	 * Returns <code>true</code> if this project is shared with a {@link ECPRepository repository}, <code>false</code>
 	 * otherwise. Same as calling <code>getRepository() != null</code>.
 	 */

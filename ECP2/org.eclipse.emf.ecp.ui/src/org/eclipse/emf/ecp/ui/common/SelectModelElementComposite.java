@@ -32,7 +32,7 @@ public class SelectModelElementComposite extends AbstractFilteredSelectionCompos
 
 		@Override
 		public boolean select(Viewer viewer, Object parentElement, Object element) {
-			if (getSearchTerm() == null || getSearchTerm().isEmpty()) {
+			if (getSearchTerm() == null || getSearchTerm().length() == 0) {
 				return true;
 			}
 			if (!(element instanceof EObject)) {

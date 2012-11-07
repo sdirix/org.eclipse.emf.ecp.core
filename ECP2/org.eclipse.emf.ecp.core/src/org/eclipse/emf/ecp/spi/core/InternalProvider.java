@@ -110,4 +110,16 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param project
 	 */
 	public void cloneProject(InternalProject projectToClone, InternalProject targetProject);
+
+	/**
+	 * Whether the given {@link EObject} is contained in the project managed by the provider.
+	 * 
+	 * @param project
+	 *            the project that is supposed to contain the given {@link EObject}
+	 * @param eObject
+	 *            the object whose containment within the project should be checked
+	 * 
+	 * @return true, if the project managed by the provider contains the given {@link EObject}, false otherwise
+	 */
+	public boolean contains(InternalProject project, EObject eObject);
 }

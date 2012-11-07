@@ -255,4 +255,12 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerClass()
+	 */
+	public Class<?> getContainerClass() {
+		throw new UnsupportedOperationException();
+	}
 }

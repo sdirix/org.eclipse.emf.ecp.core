@@ -424,4 +424,21 @@ public class EMFStoreProvider extends DefaultProvider {
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#contains(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public boolean contains(InternalProject internalProject, EObject eObject) {
+		ProjectSpace projectSpace = getProjectSpace(internalProject);
+		return projectSpace.getProject().containsInstance(eObject);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerClass()
+	 */
+	public Class<?> getContainerClass() {
+		return Project.class;
+	}
 }

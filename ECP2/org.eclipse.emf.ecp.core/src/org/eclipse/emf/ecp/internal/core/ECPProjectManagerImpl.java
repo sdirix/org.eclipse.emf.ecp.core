@@ -13,13 +13,15 @@ import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPProjectManager.Listener;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -34,8 +36,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, Listener> implements ECPProjectManager,
-	ECPRepositoryManager.Listener {
+public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedObserver> implements
+	ECPProjectManager, IECPRepositoriesChangedObserver {
+
 	public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
 	private boolean initializedProjects = false;
 
@@ -104,29 +107,19 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 			storeElement((InternalProject) project);
 		}
 
-		Listener[] listeners = getRegistryListeners();
-		if (listeners != null) {
-			for (int i = 0; i < listeners.length; i++) {
-				try {
-					Listener listener = listeners[i];
-					listener.projectChanged(project, opened);
-				} catch (Exception ex) {
-					Activator.log(ex);
-				}
-			}
+		try {
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class).projectChanged(project, opened);
+		} catch (Exception ex) {
+			Activator.log(ex);
 		}
 	}
 
 	public void notifyObjectsChanged(ECPProject project, Object[] objects) {
-		Listener[] listeners = getRegistryListeners();
-		if (listeners != null) {
-			for (Listener listener : listeners) {
-				try {
-					listener.objectsChanged(project, objects);
-				} catch (Exception ex) {
-					Activator.log(ex);
-				}
-			}
+
+		try {
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class).objectsChanged(project, objects);
+		} catch (Exception ex) {
+			Activator.log(ex);
 		}
 	}
 
@@ -155,12 +148,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 	@Override
 	protected void doActivate() throws Exception {
 		super.doActivate();
-		ECPRepositoryManager.INSTANCE.addListener(this);
+		ECPRepositoryManager.INSTANCE.addObserver(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPRepositoryManager.INSTANCE.removeListener(this);
+		ECPRepositoryManager.INSTANCE.removeObserver(this);
 		super.doDeactivate();
 	}
 
@@ -175,14 +168,9 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 	}
 
 	@Override
-	protected Listener[] createListenerArray(int size) {
-		return new Listener[size];
-	}
-
-	@Override
-	protected void notifyListener(Listener listener, InternalProject[] oldElements, InternalProject[] newElements)
-		throws Exception {
-		listener.projectsChanged(oldElements, newElements);
+	protected void notifyObservers(IECPProjectsChangedObserver observer, InternalProject[] oldElements,
+		InternalProject[] newElements) throws Exception {
+		observer.projectsChanged(oldElements, newElements);
 	}
 
 	@Override

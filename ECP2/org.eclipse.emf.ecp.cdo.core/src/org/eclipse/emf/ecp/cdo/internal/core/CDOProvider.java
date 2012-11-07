@@ -313,4 +313,12 @@ public class CDOProvider extends DefaultProvider {
 	public void addModelElement(InternalProject project, EObject eObject) {
 		// getProjectData(project).getRootResource().getContents().add(eObject);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerEClass()
+	 */
+	public Class<CDOProjectData> getContainerClass() {
+		return CDOProjectData.class;
+	}
 }

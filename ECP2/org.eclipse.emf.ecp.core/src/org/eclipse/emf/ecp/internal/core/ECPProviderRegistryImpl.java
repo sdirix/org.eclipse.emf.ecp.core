@@ -18,10 +18,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry.Listener;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
+import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
@@ -41,7 +41,8 @@ import java.util.Iterator;
 /**
  * @author Eike Stepper
  */
-public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, Listener> implements ECPProviderRegistry {
+public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, IECPProvidersChangedObserver> implements
+	ECPProviderRegistry {
 	public static final ECPProviderRegistryImpl INSTANCE = new ECPProviderRegistryImpl();
 
 	private final ProviderParser extensionParser = new ProviderParser();
@@ -83,15 +84,16 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 		return new InternalProvider[size];
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.ecp.internal.core.util.Registry#notifyObservers(org.eclipse.emf.ecp.core.util.observer.IECPObserver
+	 * , ELEMENT[], ELEMENT[])
+	 */
 	@Override
-	protected Listener[] createListenerArray(int size) {
-		return new Listener[size];
-	}
-
-	@Override
-	protected void notifyListener(Listener listener, InternalProvider[] oldElements, InternalProvider[] newElements)
-		throws Exception {
-		listener.providersChanged(oldElements, newElements);
+	protected void notifyObservers(IECPProvidersChangedObserver observer, InternalProvider[] oldProviders,
+		InternalProvider[] newProviders) throws Exception {
+		observer.providersChanged(oldProviders, newProviders);
 	}
 
 	@Override
@@ -300,6 +302,23 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, L
 		 */
 		public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
 			getResolvedElement().cloneProject(projectToClone, targetProject);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
+		 * org.eclipse.emf.ecore.EObject)
+		 */
+		public boolean contains(InternalProject project, EObject eObject) {
+			return getResolvedElement().contains(project, eObject);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerEClass()
+		 */
+		public Class<?> getContainerClass() {
+			return getResolvedElement().getContainerClass();
 		}
 	}
 }

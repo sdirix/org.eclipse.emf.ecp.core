@@ -573,4 +573,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		getProvider().cloneProject(this, project);
 		return project;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#contains(org.eclipse.emf.ecore.EObject)
+	 */
+	public boolean contains(EObject eObject) {
+		return getProvider().contains(this, eObject);
+	}
 }
