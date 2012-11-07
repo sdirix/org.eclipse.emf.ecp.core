@@ -73,7 +73,7 @@ public class EditorContext implements EditorModelelementContext {
 				// do nothing
 			}
 		};
-		ECPProjectManager.INSTANCE.addChangeObserver(projectObserver);
+		ECPProjectManager.INSTANCE.addObserver(projectObserver);
 	}
 
 	public void addModelElementContextListener(EditorModelelementContextListener modelElementContextListener) {
@@ -111,7 +111,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * Dispose the context.
 	 */
 	public void dispose() {
-		ECPProjectManager.INSTANCE.removeChangeObserver(projectObserver);
+		ECPProjectManager.INSTANCE.removeObserver(projectObserver);
 	}
 
 	/*

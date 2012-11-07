@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.validation;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -21,38 +20,42 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/**
+	 * The plug-in ID.
+	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.validation"; //$NON-NLS-1$
 
-	// The shared instance
+	/**
+	 * The shared instance.
+	 */
 	private static Activator plugin;
 
 	/**
-	 * The constructor
+	 * The constructor.
 	 */
 	public Activator() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	/**
+	 * {@inheritDoc}
 	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
+	// END SUPRESS CATCH EXCEPTION
 
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance.
 	 * 
 	 * @return the shared instance
 	 */
@@ -60,7 +63,5 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
+	
 }
