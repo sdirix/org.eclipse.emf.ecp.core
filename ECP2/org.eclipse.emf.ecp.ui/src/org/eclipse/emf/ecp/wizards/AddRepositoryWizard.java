@@ -4,6 +4,7 @@
 package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
+import org.eclipse.emf.ecp.ui.util.Messages;
 import org.eclipse.emf.ecp.wizards.page.AddRepositoryPage;
 
 /**
@@ -18,10 +19,10 @@ public class AddRepositoryWizard extends ECPWizard<AddRepositoryComposite>
   @Override
   public void addPages()
   {
-    setWindowTitle("ECPRepository Wizard");
+    setWindowTitle(Messages.AddRepositoryWizard_Title_AddRepository);
 
     super.addPages();
-    addPage(new AddRepositoryPage("AddRepository", getUIProvider()));
+    addPage(new AddRepositoryPage(Messages.AddRepositoryWizard_PageTitle_AddReposditory, getUIProvider()));
   }
 
   /*

@@ -14,7 +14,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
+import org.eclipse.emf.ecp.ui.Messages;
+import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.ecp.wizards.WizardUICallback;
@@ -27,14 +28,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
  *         LeafSections. The handler initializes and shows the AddNewModelElementWizard
  * @author Eugen Neufeld
  */
-// TODO: Revise
 public class NewModelElementWizardHandler extends AbstractHandler
 {
 
    /**
    * String to pass the eclass which containments shall be shown in the new element wizard.
    */
-  public static final String COMMAND_ECLASS_PARAM = "org.eclipse.emf.ecp.navigator.eClassParameter";
+  public static final String COMMAND_ECLASS_PARAM = "org.eclipse.emf.ecp.navigator.eClassParameter"; //$NON-NLS-1$
 
   /**
    * . ({@inheritDoc})
@@ -43,8 +43,7 @@ public class NewModelElementWizardHandler extends AbstractHandler
   {
     ISelection selection = HandlerUtil.getCurrentSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
-//    HandlerHelper.newModelElementHandlerHelper(ssel, HandlerUtil.getActiveShell(event));
-    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), new WizardUICallback<SelectModelElementHelper>(HandlerUtil.getActiveShell(event), new NewModelElementWizard("Add new model element")));
+    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), new WizardUICallback<SelectModelClassComposite>(HandlerUtil.getActiveShell(event), new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title)),true);
     
     return null;
   }

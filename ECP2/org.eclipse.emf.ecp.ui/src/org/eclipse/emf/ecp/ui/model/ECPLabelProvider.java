@@ -56,12 +56,12 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
   {
     if (element instanceof SlowElement)
     {
-      return Activator.getImage("icons/pending.gif");
+      return Activator.getImage("icons/pending.gif"); //$NON-NLS-1$
     }
 
     if (element instanceof ErrorElement)
     {
-      return Activator.getImage("icons/error.gif");
+      return Activator.getImage("icons/error.gif"); //$NON-NLS-1$
     }
 
     UIProvider uiProvider = getUIProvider(element);

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.ChildrenListImpl;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -248,7 +249,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     @Override
     public String toString()
     {
-      return "Error";
+      return Messages.TreeContentProvider_ErrorElement_Error;
     }
   }
 
@@ -265,7 +266,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
     @Override
     public String toString()
     {
-      return "Pending...";
+      return Messages.TreeContentProvider_SlowElement_Pending;
     }
   }
 
@@ -285,7 +286,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 
     public void startThread()
     {
-      Thread thread = new Thread(this, "SlowChildrenList");
+      Thread thread = new Thread(this, "SlowChildrenList"); //$NON-NLS-1$
       thread.setDaemon(true);
       thread.start();
     }

@@ -1,6 +1,16 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
  * 
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -25,6 +35,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import java.util.ArrayList;
@@ -39,309 +50,282 @@ import java.util.Map;
 /**
  * @author Eugen Neufeld
  */
-public class FormEditorComposite
-{
+public class FormEditorComposite implements IEditorCompositeProvider {
 
-  public FormEditorComposite(EObject modelElement, EditorModelelementContext modelElementContext, Composite parent,
-      FormToolkit toolkit)
-  {
-    this.modelElement = modelElement;
-    this.modelElementContext = modelElementContext;
-    this.parent = parent;
-    this.toolkit = toolkit;
-  }
+	/**
+	 * Constructor to initialize the {@link FormToolkit} on its own.
+	 * 
+	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param shell the shell used for callbacks
+	 */
+	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell) {
+		this.modelElementContext = modelElementContext;
+		toolkit = new FormToolkit(shell.getDisplay());
+		this.shell = shell;
+	}
 
-  private final Composite parent;
+	/**
+	 * Constructor where the {@link FormToolkit} is provided.
+	 * 
+	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param shell the {@link Shell} for callback
+	 * @param toolkit the {@link FormToolkit}
+	 */
+	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell, FormToolkit toolkit) {
+		this.modelElementContext = modelElementContext;
+		this.toolkit = toolkit;
+		this.shell = shell;
+	}
 
-  private final FormToolkit toolkit;
+	private Shell shell;
+	private final FormToolkit toolkit;
 
-  private final EObject modelElement;
+	private final EditorModelelementContext modelElementContext;
 
-  private final EditorModelelementContext modelElementContext;
+	private Map<EStructuralFeature, AbstractMEControl> meControls = new HashMap<EStructuralFeature, AbstractMEControl>();
 
-  private Map<EStructuralFeature, AbstractMEControl> meControls = new HashMap<EStructuralFeature, AbstractMEControl>();
+	private Map<AbstractMEControl, Diagnostic> valdiatedControls = new HashMap<AbstractMEControl, Diagnostic>();
 
-  private Map<AbstractMEControl, Diagnostic> valdiatedControls = new HashMap<AbstractMEControl, Diagnostic>();
+	private List<IItemPropertyDescriptor> leftColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
 
-  private List<IItemPropertyDescriptor> leftColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
+	private List<IItemPropertyDescriptor> rightColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
 
-  private List<IItemPropertyDescriptor> rightColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
+	private List<IItemPropertyDescriptor> bottomAttributes = new ArrayList<IItemPropertyDescriptor>();
 
-  private List<IItemPropertyDescriptor> bottomAttributes = new ArrayList<IItemPropertyDescriptor>();
+	private Composite leftColumnComposite;
 
-  private Composite leftColumnComposite;
+	private Composite rightColumnComposite;
 
-  private Composite rightColumnComposite;
+	private Composite bottomComposite;
 
-  private Composite bottomComposite;
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#createUI(org.eclipse.swt.widgets.Composite)
+	 */
+	public Composite createUI(Composite parent) {
+		Composite topComposite = toolkit.createComposite(parent);
+		topComposite.setLayout(new GridLayout());
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topComposite);
 
-  public Composite createUI()
-  {
-    Composite topComposite = toolkit.createComposite(parent);
-    topComposite.setLayout(new GridLayout());
-    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topComposite);
+		sortAndOrderAttributes();
+		if (!rightColumnAttributes.isEmpty()) {
+			SashForm topSash = new SashForm(topComposite, SWT.HORIZONTAL);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topSash);
+			toolkit.adapt(topSash, true, true);
+			topSash.setSashWidth(4);
+			leftColumnComposite = toolkit.createComposite(topSash, SWT.NONE);
+			rightColumnComposite = toolkit.createComposite(topSash, SWT.NONE);
+			GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(5, 2, 5, 5)
+				.applyTo(rightColumnComposite);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(rightColumnComposite);
+			int[] topWeights = { 50, 50 };
+			topSash.setWeights(topWeights);
+		} else {
+			leftColumnComposite = toolkit.createComposite(topComposite, SWT.NONE);
+		}
 
-    sortAndOrderAttributes();
-    if (!rightColumnAttributes.isEmpty())
-    {
-      SashForm topSash = new SashForm(topComposite, SWT.HORIZONTAL);
-      GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topSash);
-      toolkit.adapt(topSash, true, true);
-      topSash.setSashWidth(4);
-      leftColumnComposite = toolkit.createComposite(topSash, SWT.NONE);
-      rightColumnComposite = toolkit.createComposite(topSash, SWT.NONE);
-      GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(5, 2, 5, 5)
-          .applyTo(rightColumnComposite);
-      GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(rightColumnComposite);
-      int[] topWeights = { 50, 50 };
-      topSash.setWeights(topWeights);
-    }
-    else
-    {
-      leftColumnComposite = toolkit.createComposite(topComposite, SWT.NONE);
-    }
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(2, 5, 5, 5)
+			.applyTo(leftColumnComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(leftColumnComposite);
 
-    GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(2, 5, 5, 5)
-        .applyTo(leftColumnComposite);
-    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(leftColumnComposite);
+		bottomComposite = toolkit.createComposite(topComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(0, 0, 0, 0)
+			.applyTo(bottomComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(bottomComposite);
 
-    bottomComposite = toolkit.createComposite(topComposite);
-    GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(0, 0, 0, 0)
-        .applyTo(bottomComposite);
-    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(bottomComposite);
+		// Sort and order attributes
+		// Create attributes
+		createAttributes(toolkit, leftColumnComposite, leftColumnAttributes);
+		if (!rightColumnAttributes.isEmpty()) {
+			createAttributes(toolkit, rightColumnComposite, rightColumnAttributes);
+		}
+		createAttributes(toolkit, bottomComposite, bottomAttributes);
 
-    // Sort and order attributes
-    // Create attributes
-    createAttributes(toolkit, leftColumnComposite, leftColumnAttributes);
-    if (!rightColumnAttributes.isEmpty())
-    {
-      createAttributes(toolkit, rightColumnComposite, rightColumnAttributes);
-    }
-    createAttributes(toolkit, bottomComposite, bottomAttributes);
+		return topComposite;
+	}
 
-    return topComposite;
-  }
+	/**
+	 * Filters attributes marked with "hidden=true" annotation
+	 * 
+	 * @param propertyDescriptors
+	 *            property descriptors to filter
+	 */
+	private void filterHiddenAttributes(Collection<IItemPropertyDescriptor> propertyDescriptors) {
+		Iterator<IItemPropertyDescriptor> iterator = propertyDescriptors.iterator();
 
-  /**
-   * Filters attributes marked with "hidden=true" annotation
-   * 
-   * @param propertyDescriptors
-   *          property descriptors to filter
-   */
-  private void filterHiddenAttributes(Collection<IItemPropertyDescriptor> propertyDescriptors)
-  {
-    Iterator<IItemPropertyDescriptor> iterator = propertyDescriptors.iterator();
+		AnnotationHiddenDescriptor visibilityDescriptor = new AnnotationHiddenDescriptor();
 
-    AnnotationHiddenDescriptor visibilityDescriptor = new AnnotationHiddenDescriptor();
+		while (iterator.hasNext()) {
+			IItemPropertyDescriptor descriptor = iterator.next();
 
-    while (iterator.hasNext())
-    {
-      IItemPropertyDescriptor descriptor = iterator.next();
+			if (visibilityDescriptor.getValue(descriptor, modelElementContext.getModelElement())) {
+				iterator.remove();
+			}
+		}
+	}
 
-      if (visibilityDescriptor.getValue(descriptor, modelElement))
-      {
-        iterator.remove();
-      }
-    }
-  }
+	private void sortAndOrderAttributes() {
 
-  private void sortAndOrderAttributes()
-  {
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
 
-    AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+		List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
+			.getPropertyDescriptors(modelElementContext.getModelElement());
+		if (propertyDescriptors != null) {
+			filterHiddenAttributes(propertyDescriptors);
+			AnnotationPositionDescriptor positionDescriptor = new AnnotationPositionDescriptor();
+			for (IItemPropertyDescriptor itemPropertyDescriptor : propertyDescriptors) {
+				String value = positionDescriptor.getValue(itemPropertyDescriptor,
+					modelElementContext.getModelElement());
+				if (value.equals("left")) {
+					leftColumnAttributes.add(itemPropertyDescriptor);
+				} else if (value.equals("right")) {
+					rightColumnAttributes.add(itemPropertyDescriptor);
+				} else if (value.equals("bottom")) {
+					bottomAttributes.add(itemPropertyDescriptor);
+				} else {
+					leftColumnAttributes.add(itemPropertyDescriptor);
+				}
+			}
 
-    List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
-        .getPropertyDescriptors(modelElement);
-    if (propertyDescriptors != null)
-    {
-      filterHiddenAttributes(propertyDescriptors);
-      AnnotationPositionDescriptor positionDescriptor = new AnnotationPositionDescriptor();
-      for (IItemPropertyDescriptor itemPropertyDescriptor : propertyDescriptors)
-      {
-        String value = positionDescriptor.getValue(itemPropertyDescriptor, modelElement);
-        if (value.equals("left"))
-        {
-          leftColumnAttributes.add(itemPropertyDescriptor);
-        }
-        else if (value.equals("right"))
-        {
-          rightColumnAttributes.add(itemPropertyDescriptor);
-        }
-        else if (value.equals("bottom"))
-        {
-          bottomAttributes.add(itemPropertyDescriptor);
-        }
-        else
-        {
-          leftColumnAttributes.add(itemPropertyDescriptor);
-        }
-      }
+			final HashMap<IItemPropertyDescriptor, Double> priorityMap = new HashMap<IItemPropertyDescriptor, Double>();
+			AnnotationPriorityDescriptor priorityDescriptor = new AnnotationPriorityDescriptor();
+			for (IItemPropertyDescriptor itemPropertyDescriptor : propertyDescriptors) {
+				priorityMap.put(itemPropertyDescriptor,
+					priorityDescriptor.getValue(itemPropertyDescriptor, modelElementContext.getModelElement()));
+			}
 
-      final HashMap<IItemPropertyDescriptor, Double> priorityMap = new HashMap<IItemPropertyDescriptor, Double>();
-      AnnotationPriorityDescriptor priorityDescriptor = new AnnotationPriorityDescriptor();
-      for (IItemPropertyDescriptor itemPropertyDescriptor : propertyDescriptors)
-      {
-        priorityMap.put(itemPropertyDescriptor, priorityDescriptor.getValue(itemPropertyDescriptor, modelElement));
-      }
+			Comparator<IItemPropertyDescriptor> comparator = new Comparator<IItemPropertyDescriptor>() {
+				public int compare(IItemPropertyDescriptor o1, IItemPropertyDescriptor o2) {
+					return Double.compare(priorityMap.get(o1), priorityMap.get(o2));
+				}
+			};
+			Collections.sort(leftColumnAttributes, comparator);
+			Collections.sort(rightColumnAttributes, comparator);
+			Collections.sort(bottomAttributes, comparator);
 
-      Comparator<IItemPropertyDescriptor> comparator = new Comparator<IItemPropertyDescriptor>()
-      {
-        public int compare(IItemPropertyDescriptor o1, IItemPropertyDescriptor o2)
-        {
-          return Double.compare(priorityMap.get(o1), priorityMap.get(o2));
-        }
-      };
-      Collections.sort(leftColumnAttributes, comparator);
-      Collections.sort(rightColumnAttributes, comparator);
-      Collections.sort(bottomAttributes, comparator);
+		}
 
-    }
+	}
 
-  }
+	private void createAttributes(FormToolkit toolkit, Composite column, List<IItemPropertyDescriptor> attributes) {
+		Composite attributeComposite = toolkit.createComposite(column);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(attributeComposite);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
+			.applyTo(attributeComposite);
 
-  private void createAttributes(FormToolkit toolkit, Composite column, List<IItemPropertyDescriptor> attributes)
-  {
-    Composite attributeComposite = toolkit.createComposite(column);
-    GridLayoutFactory.fillDefaults().numColumns(2).applyTo(attributeComposite);
-    GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
-        .applyTo(attributeComposite);
+		// TODO add extensionpoint
+		ControlFactory controlFactory = ControlFactory.getInstance();
 
-    // TODO add extensionpoint
-    ControlFactory controlFactory = ControlFactory.getInstance();
+		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {
+			AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor,
+				modelElementContext.getModelElement(), modelElementContext);
+			if (meControl == null) {
+				continue;
+			}
+			meControl.setShell(shell);
+			meControls.put(
+				(EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement()),
+				meControl);
+			Control control;
+			if (meControl.getShowLabel()) {
+				Label label = toolkit.createLabel(attributeComposite,
+					itemPropertyDescriptor.getDisplayName(modelElementContext.getModelElement()));
+				label.setData(modelElementContext.getModelElement());
+				label.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
+				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
+					modelElementContext.getModelElement(), modelElementContext, toolkit);
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).hint(100, 20).applyTo(label);
+				GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
+					.applyTo(control);
+				meControl.applyCustomLayoutData();
+			} else {
+				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
+					modelElementContext.getModelElement(), modelElementContext, toolkit);
+				control.setData(modelElementContext.getModelElement());
+				control.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
+				GridDataFactory.fillDefaults().span(2, 1).grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
+					.applyTo(control);
+			}
+		}
 
-    for (IItemPropertyDescriptor itemPropertyDescriptor : attributes)
-    {
-      AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor, modelElement,
-          modelElementContext);
-      if (meControl == null)
-      {
-        continue;
-      }
-      meControls.put((EStructuralFeature)itemPropertyDescriptor.getFeature(modelElement), meControl);
-      Control control;
-      if (meControl.getShowLabel())
-      {
-        Label label = toolkit.createLabel(attributeComposite, itemPropertyDescriptor.getDisplayName(modelElement));
-        label.setData(modelElement);
-        label.setToolTipText(itemPropertyDescriptor.getDescription(modelElement));
-        control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor, modelElement,
-            modelElementContext, toolkit);
-        GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(label);
-        GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).indent(10, 0).applyTo(control);
-        meControl.applyCustomLayoutData();
-      }
-      else
-      {
-        control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor, modelElement,
-            modelElementContext, toolkit);
-        control.setData(modelElement);
-        control.setToolTipText(itemPropertyDescriptor.getDescription(modelElement));
-        GridDataFactory.fillDefaults().span(2, 1).grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
-            .applyTo(control);
-      }
-    }
+	}
 
-  }
+	/**
+	 * Dispose the ModelElement controls.
+	 */
+	public void dispose() {
+		for (AbstractMEControl control : meControls.values()) {
+			control.dispose();
+		}
+	}
 
-  /**
-   * @return the modelElement
-   */
-  public EObject getModelElement()
-  {
-    return modelElement;
-  }
+	/**
+	 * Set focus to the controls.
+	 */
+	public void setFocus() {
+		// set keyboard focus on the first Text control
+		for (AbstractMEControl meControl : meControls.values()) {
+			if (meControl instanceof METextControl) {
+				((METextControl) meControl).setFocus();
+				return;
+			}
+		}
+		leftColumnComposite.setFocus();
+	}
 
-  /**
-   * @return the modelElementContext
-   */
-  public EditorModelelementContext getModelElementContext()
-  {
-    return modelElementContext;
-  }
+	/**
+	 * Triggers live validation of the model attributes.
+	 **/
+	public void updateLiveValidation() {
+		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElementContext.getModelElement());
+		List<AbstractMEControl> affectedControls = new ArrayList<AbstractMEControl>();
 
-  /**
-   * Dispose the ModelElement controls.
-   */
-  public void dispose()
-  {
-    for (AbstractMEControl control : meControls.values())
-    {
-      control.dispose();
-    }
-  }
+		for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();) {
+			Diagnostic childDiagnostic = i.next();
+			Object object = childDiagnostic.getData().get(0);
+			if (object instanceof EObject) {
+				EObject eObject = (EObject) object;
+				if (eObject != modelElementContext.getModelElement()) {
+					continue;
+				}
+			}
+			if (childDiagnostic.getData().size() < 2) {
+				continue;
+			}
+			AbstractMEControl meControl = meControls.get(childDiagnostic.getData().get(1));
+			affectedControls.add(meControl);
+			if (meControl instanceof IValidatableControl) {
+				if (valdiatedControls.containsKey(meControl)) {
+					if (childDiagnostic.getSeverity() != valdiatedControls.get(meControl).getSeverity()) {
+						((IValidatableControl) meControl).handleValidation(childDiagnostic);
+						valdiatedControls.put(meControl, childDiagnostic);
+					}
+				} else {
+					((IValidatableControl) meControl).handleValidation(childDiagnostic);
+					valdiatedControls.put(meControl, childDiagnostic);
+				}
+			}
+		}
 
-  /**
-   * Set focus to the controls.
-   */
-  public void setFocus()
-  {
-    // set keyboard focus on the first Text control
-    for (AbstractMEControl meControl : meControls.values())
-    {
-      if (meControl instanceof METextControl)
-      {
-        ((METextControl)meControl).setFocus();
-        return;
-      }
-    }
-    leftColumnComposite.setFocus();
-  }
+		Map<AbstractMEControl, Diagnostic> temp = new HashMap<AbstractMEControl, Diagnostic>();
+		temp.putAll(valdiatedControls);
+		for (Map.Entry<AbstractMEControl, Diagnostic> entry : temp.entrySet()) {
+			AbstractMEControl meControl = entry.getKey();
+			if (!affectedControls.contains(meControl)) {
+				valdiatedControls.remove(meControl);
+				((IValidatableControl) meControl).resetValidation();
+			}
+		}
+	}
 
-  /**
-   * Triggers live validation of the model attributes.
-   **/
-  public void updateLiveValidation()
-  {
-    Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElement);
-    List<AbstractMEControl> affectedControls = new ArrayList<AbstractMEControl>();
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.IEditorCompositeProvider#focus()
+	 */
+	public void focus() {
+		// TODO Auto-generated method stub
 
-    for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();)
-    {
-      Diagnostic childDiagnostic = i.next();
-      Object object = childDiagnostic.getData().get(0);
-      if (object instanceof EObject)
-      {
-        EObject eObject = (EObject)object;
-        if (eObject != modelElement)
-        {
-          continue;
-        }
-      }
-      if (childDiagnostic.getData().size() < 2)
-      {
-        continue;
-      }
-      AbstractMEControl meControl = meControls.get(childDiagnostic.getData().get(1));
-      affectedControls.add(meControl);
-      if (meControl instanceof IValidatableControl)
-      {
-        if (valdiatedControls.containsKey(meControl))
-        {
-          if (childDiagnostic.getSeverity() != valdiatedControls.get(meControl).getSeverity())
-          {
-            ((IValidatableControl)meControl).handleValidation(childDiagnostic);
-            valdiatedControls.put(meControl, childDiagnostic);
-          }
-        }
-        else
-        {
-          ((IValidatableControl)meControl).handleValidation(childDiagnostic);
-          valdiatedControls.put(meControl, childDiagnostic);
-        }
-      }
-    }
+	}
 
-    Map<AbstractMEControl, Diagnostic> temp = new HashMap<AbstractMEControl, Diagnostic>();
-    temp.putAll(valdiatedControls);
-    for (Map.Entry<AbstractMEControl, Diagnostic> entry : temp.entrySet())
-    {
-      AbstractMEControl meControl = entry.getKey();
-      if (!affectedControls.contains(meControl))
-      {
-        valdiatedControls.remove(meControl);
-        ((IValidatableControl)meControl).resetValidation();
-      }
-    }
-  }
 }

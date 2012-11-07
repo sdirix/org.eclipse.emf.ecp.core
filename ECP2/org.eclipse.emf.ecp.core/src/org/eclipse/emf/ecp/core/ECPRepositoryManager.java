@@ -4,43 +4,34 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 
 /**
  * @author Eike Stepper
  */
-public interface ECPRepositoryManager
-{
-  public static final ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
+public interface ECPRepositoryManager {
 
-  public ECPRepository getRepository(Object adaptable);
+	public static final ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
 
-  public ECPRepository getRepository(String name);
+	public ECPRepository getRepository(Object adaptable);
 
-  public ECPRepository[] getRepositories();
+	public ECPRepository getRepository(String name);
 
-  public boolean hasRepositories();
+	public ECPRepository[] getRepositories();
 
-  public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
-      ECPProperties properties);
+	public boolean hasRepositories();
 
-  public void addListener(Listener listener);
+	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
+		ECPProperties properties);
 
-  public void removeListener(Listener listener);
+	public void addObserver(IECPRepositoriesChangedObserver changeObserver);
 
-  /**
-   * @author Eike Stepper
-   */
-  public interface Listener
-  {
-    public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception;
+	public void removeObserver(IECPRepositoriesChangedObserver changeObserver);
 
-    public void objectsChanged(ECPRepository repository, Object[] objects) throws Exception;
-  }
 }

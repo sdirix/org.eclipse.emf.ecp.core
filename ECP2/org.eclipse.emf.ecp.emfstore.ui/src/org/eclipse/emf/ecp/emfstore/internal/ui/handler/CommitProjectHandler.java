@@ -15,22 +15,19 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eugen Neufeld
  */
-public class CommitProjectHandler extends AbstractHandler
-{
+public class CommitProjectHandler extends AbstractHandler {
 
-  public Object execute(ExecutionEvent event) throws ExecutionException
-  {
-    InternalProject project = (InternalProject)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
-        .getFirstElement();
-    ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
-    // TODO Ugly
-    if (projectSpace.getUsersession() == null)
-    {
-      ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
-      projectSpace.setUsersession(serverInfo.getLastUsersession());
-    }
-    new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-
-    return null;
-  }
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+			.getFirstElement();
+		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO Ugly
+		if (projectSpace.getUsersession() == null) {
+			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			projectSpace.setUsersession(serverInfo.getLastUsersession());
+		}
+		new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		project.notifyObjectsChanged(new Object[] { project });
+		return null;
+	}
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="menuContributionEnablement" name="Menu Contribution Enablement" schema="schema/menuContributionEnablement.exsd"/>
 <extension
          point="org.eclipse.ui.views">
       <category
@@ -12,21 +13,21 @@
             class="org.eclipse.emf.ecp.ui.views.ModelExplorerView"
             icon="icons/sample.gif"
             id="org.eclipse.emf.ecp.ui.ModelExplorerView"
-            name="Model Explorer">
+            name="%ModelExplorerView">
       </view>
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ModelRepositoriesView"
             icon="icons/repositories.gif"
             id="org.eclipse.emf.ecp.ui.ModelRepositoriesView"
-            name="Model Repositories">
+            name="%ModelRepositoryView">
       </view>
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ECPProvidersView"
             icon="icons/providers.gif"
             id="org.eclipse.emf.ecp.ui.ECPProvidersView"
-            name="ECP Providers">
+            name="%ECPProviderView">
       </view>
    </extension>
    <extension
@@ -57,7 +58,7 @@
                class="org.eclipse.emf.ecp.ui.actions.RepositoryPropertiesAction"
                enablesFor="1"
                id="org.eclipse.emf.ecp.ui.repositoryPropertiesAction"
-               label="Properties"
+               label="%RepositoryProperties"
                state="true"
                style="push">
          </action>
@@ -70,7 +71,7 @@
                class="org.eclipse.emf.ecp.ui.actions.ProjectPropertiesAction"
                enablesFor="1"
                id="org.eclipse.emf.ecp.ui.projectPropertiesAction"
-               label="Properties"
+               label="%ProjectProperties"
                state="true"
                style="push">
          </action>
@@ -83,7 +84,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=global_additions">
          <command
                commandId="org.eclipse.emf.ecp.ui.closable"
-               label="Open"
+               label="%OpenClosable"
                style="push">
             <parameter
                   name="org.eclipse.emf.ecp.ecpclosable.type"
@@ -111,7 +112,7 @@
          </command>
          <command
                commandId="org.eclipse.emf.ecp.ui.closable"
-               label="Close"
+               label="%CloseClosable"
                style="push">
             <parameter
                   name="org.eclipse.emf.ecp.ecpclosable.type"
@@ -140,7 +141,7 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.delete"
                icon="icons/delete.gif"
-               label="Delete"
+               label="%DelteProject"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -161,7 +162,7 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.checkout"
                icon="icons/checkout_project.gif"
-               label="Checkout..."
+               label="%CheckoutProject"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -185,13 +186,13 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.project.createProject"
                icon="icons/add.gif"
-               label="Create new project"
+               label="%CreateNewProject"
                style="push">
          </command>
          <command
                commandId="org.eclipse.emf.ecp.ui.project.filterModelElements"
                icon="icons/sample.gif"
-               label="Filter Model Elements"
+               label="%FilterProject"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -203,25 +204,8 @@
          <command
                commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
                icon="icons/add.gif"
-               label="New Model Element"
+               label="%NewModelElement"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
-               </reference>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
-         <command
-               commandId="org.eclipse.emf.ecp.ui.search"
-               icon="icons/magnifier.png"
-               id="SearchElementButon"
-               style="push"
-               tooltip="Search for model element">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -230,24 +214,100 @@
                      <count
                            value="1">
                      </count>
-                     <iterate>
-                        <or>
-                           <instanceof
-                                 value="org.eclipse.emf.ecore.EObject">
-                           </instanceof>
-                           <instanceof
-                                 value="org.eclipse.emf.ecp.core.ECPProject">
-                           </instanceof>
-                        </or>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
                      </iterate>
                   </and>
                </with>
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
+               icon="icons/delete.gif"
+               label="Delete Model Element"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecore.EObject">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.import"
+               label="Import Child"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecore.EObject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.navigator.exportModel"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </and>
+                  </iterate>
+                  <count
+                        value="1">
+                  </count>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.workbench.export"
+               icon="icons/database_go.png"
+               label="Export"
+               style="push">
+               <visibleWhen
+                  checkEnabled="false">
+                  <and>
+                     <iterate>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.emf.ecore.EObject">
+                           </instanceof>
+                           <test
+                                 args="org.eclipse.emf.ecp.navigator.exportModel"
+                                 property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                                 value="true">
+                           </test>
+                        </and>
+                     </iterate>
+                     <count
+                           value="1">
+                     </count>
+                  </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
+         <command
                commandId="org.eclipse.emf.ecp.ui.workbench.saveProject"
                icon="icons/database_save.png"
-               label="Save Project"
+               label="%SaveProject"
                style="push">
          </command>
       </menuContribution>
@@ -255,7 +315,6 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
             id="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
             name="New Model Element">
       </command>
@@ -287,7 +346,7 @@
       -->
       <command
             id="org.eclipse.emf.ecp.ui.closable"
-            name="closeable">
+            name="Close/Open">
          <commandParameter
                id="org.eclipse.emf.ecp.ecpclosable.type"
                name="ECPCloseable Type"
@@ -303,10 +362,6 @@
             name="Delete">
       </command>
       <command
-            id="org.eclipse.emf.ecp.ui.search"
-            name="Search Element">
-      </command>
-      <command
             id="org.eclipse.emf.ecp.ui.checkout"
             name="Checkout">
       </command>
@@ -318,6 +373,18 @@
             description="Save Project"
             id="org.eclipse.emf.ecp.ui.workbench.saveProject"
             name="Save Project">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
+            name="Delete Model Element">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.workbench.import"
+            name="Import Child">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.workbench.export"
+            name="Export model">
       </command>
    </extension>
    <extension
@@ -346,10 +413,6 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.CloseableHandler"
             commandId="org.eclipse.emf.ecp.ui.closable">
-      </handler>
-      <handler
-            class="org.eclipse.emf.ecp.ui.commands.SearchModelElementHandler"
-            commandId="org.eclipse.emf.ecp.ui.search">
       </handler>
       <handler
             class="org.eclipse.emf.ecp.ui.commands.CheckoutHandler"
@@ -381,6 +444,22 @@
             </with>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
+            commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.DeleteModelElement"
+            commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ImportHandler"
+            commandId="org.eclipse.emf.ecp.ui.workbench.import">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ExportHandler"
+            commandId="org.eclipse.emf.ecp.ui.workbench.export">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -390,5 +469,15 @@
             id="org.eclipse.emf.ecp.ui.main"
             name="ECP">
       </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.emf.ecp.ui.tester.ECPMenuContributionsEnablementTester"
+            id="org.eclipse.emf.ecp.ui.workbench.menu.properties"
+            namespace="org.eclipse.emf.ecp.ui.workbench.menu"
+            properties="enablement"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
 </plugin>

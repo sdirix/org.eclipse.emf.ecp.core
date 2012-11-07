@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -41,7 +42,7 @@ public class DeleteDialog extends TitleAreaDialog
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setText("Delete");
+    newShell.setText(Messages.DeleteDialog_DialogTitle);
   }
 
   @Override
@@ -49,9 +50,9 @@ public class DeleteDialog extends TitleAreaDialog
   {
     int count = deletables.size();
 
-    setTitle("Delete");
-    setTitleImage(Activator.getImage("icons/delete_wiz.png"));
-    setMessage("Are you sure you want to delete " + count + " element" + (count == 1 ? "" : "s") + "?");
+    setTitle(Messages.DeleteDialog_Title);
+    setTitleImage(Activator.getImage("icons/delete_wiz.png")); //$NON-NLS-1$
+    setMessage(Messages.DeleteDialog_Message_AreYouSure + count + Messages.DeleteDialog_Message_element + (count == 1 ? "" : Messages.DeleteDialog_Message_element_plural) + "?"); //$NON-NLS-3$ //$NON-NLS-5$
 
     Composite area = (Composite)super.createDialogArea(parent);
     Composite container = new Composite(area, SWT.NONE);

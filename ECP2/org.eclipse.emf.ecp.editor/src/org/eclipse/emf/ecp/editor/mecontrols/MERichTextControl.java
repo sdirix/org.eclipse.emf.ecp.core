@@ -38,231 +38,202 @@ import org.eclipse.swt.widgets.ToolBar;
  * 
  * @author helming
  */
-public class MERichTextControl extends AbstractMEControl implements IValidatableControl
-{
-  private EAttribute attribute;
+public class MERichTextControl extends AbstractMEControl implements IValidatableControl {
+	private EAttribute attribute;
 
-  private AdapterImpl eAdapter;
+	private AdapterImpl eAdapter;
 
-  private static final int PRIORITY = 2;
+	private static final int PRIORITY = 2;
 
-  private Label labelWidgetImage; // Label for diagnostic image
+	private Label labelWidgetImage; // Label for diagnostic image
 
-  private Composite composite;
+	private Composite composite;
 
-  private ToolBar toolBar;
+	private ToolBar toolBar;
 
-  private Text text;
+	private Text text;
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#createControl(org.eclipse.swt.widgets.Composite, int)
-   */
-  @Override
-  public Control createControl(Composite parent, int style)
-  {
-    Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
-    attribute = (EAttribute)feature;
-    composite = getToolkit().createComposite(parent, style);
-    composite.setBackgroundMode(SWT.INHERIT_FORCE);
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#createControl(org.eclipse.swt.widgets.Composite,
+	 *      int)
+	 */
+	@Override
+	public Control createControl(Composite parent, int style) {
+		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
+		attribute = (EAttribute) feature;
+		composite = getToolkit().createComposite(parent, style);
+		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-    GridLayoutFactory.fillDefaults().numColumns(3).spacing(2, 0).applyTo(composite);
-    GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(3).spacing(2, 0).applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
 
-    labelWidgetImage = getToolkit().createLabel(composite, "     ");
-    labelWidgetImage.setBackground(composite.getBackground());
+		labelWidgetImage = getToolkit().createLabel(composite, "     ");
+		labelWidgetImage.setBackground(composite.getBackground());
 
-    createText();
-    eAdapter = new AdapterImpl()
-    {
-      @Override
-      public void notifyChanged(Notification msg)
-      {
-        if (msg.getFeature() != null && msg.getFeature().equals(attribute))
-        {
-          load();
-        }
-        super.notifyChanged(msg);
-      }
-    };
-    getModelElement().eAdapters().add(eAdapter);
-    load();
-    return composite;
-  }
+		createText();
+		eAdapter = new AdapterImpl() {
+			@Override
+			public void notifyChanged(Notification msg) {
+				if (msg.getFeature() != null && msg.getFeature().equals(attribute)) {
+					load();
+				}
+				super.notifyChanged(msg);
+			}
+		};
+		getModelElement().eAdapters().add(eAdapter);
+		load();
+		return composite;
+	}
 
-  private void createText()
-  {
+	private void createText() {
 
-    text = new Text(composite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+		text = new Text(composite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 
-    text.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-    text.setSize(10, 100);
-    text.addFocusListener(new FocusAdapter()
-    {
+		text.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		text.setSize(10, 100);
+		text.addFocusListener(new FocusAdapter() {
 
-      @Override
-      public void focusLost(FocusEvent e)
-      {
-        save();
-        super.focusLost(e);
-      }
+			@Override
+			public void focusLost(FocusEvent e) {
+				save();
+				super.focusLost(e);
+			}
 
-    });
-    GridData spec = new GridData();
-    spec.horizontalAlignment = GridData.FILL;
-    spec.grabExcessHorizontalSpace = true;
-    spec.verticalAlignment = GridData.FILL;
-    spec.grabExcessVerticalSpace = true;
-    spec.heightHint = 200;
-    text.setLayoutData(spec);
+		});
+		GridData spec = new GridData();
+		spec.horizontalAlignment = GridData.FILL;
+		spec.grabExcessHorizontalSpace = true;
+		spec.verticalAlignment = GridData.FILL;
+		spec.grabExcessVerticalSpace = true;
+		spec.heightHint = 200;
+		text.setLayoutData(spec);
 
-    if (!getItemPropertyDescriptor().canSetProperty(getModelElement()))
-    {
-      text.setEnabled(false);
-    }
-  }
+		if (!getItemPropertyDescriptor().canSetProperty(getModelElement())) {
+			text.setEnabled(false);
+		}
+	}
 
-  /**
-   * Returns the {@link ToolBar}.
-   * 
-   * @return the toolbar
-   */
-  public ToolBar getToolbar()
-  {
-    return toolBar;
-  }
+	/**
+	 * Returns the {@link ToolBar}.
+	 * 
+	 * @return the toolbar
+	 */
+	public ToolBar getToolbar() {
+		return toolBar;
+	}
 
-  private void save()
-  {
-    new ECPCommand(getModelElement(), getEditingDomain())
-    {
-      @Override
-      protected void doRun()
-      {
-        getModelElement().eSet(attribute, text.getText());
-      }
-    }.run(true);
-  }
+	private void save() {
+		new ECPCommand(getModelElement(), getContext().getEditingDomain()) {
+			@Override
+			protected void doRun() {
+				getModelElement().eSet(attribute, text.getText());
+			}
+		}.run(true);
+	}
 
-  private void load()
-  {
+	private void load() {
 
-    String txt = "";
-    final StringBuffer value = new StringBuffer();
-    new ECPCommand(getModelElement(), getEditingDomain())
-    {
-      @Override
-      protected void doRun()
-      {
-        if (getModelElement().eGet(attribute) == null)
-        {
-          value.append("");
-        }
-        else
-        {
-          value.append(getModelElement().eGet(attribute));
-        }
-      }
-    }.run(true);
-    txt = value.toString();
-    text.setText(txt);
-  }
+		String txt = "";
+		final StringBuffer value = new StringBuffer();
+		new ECPCommand(getModelElement(), getContext().getEditingDomain()) {
+			@Override
+			protected void doRun() {
+				if (getModelElement().eGet(attribute) == null) {
+					value.append("");
+				} else {
+					value.append(getModelElement().eGet(attribute));
+				}
+			}
+		}.run(true);
+		txt = value.toString();
+		text.setText(txt);
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose()
-  {
-    getModelElement().eAdapters().remove(eAdapter);
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void dispose() {
+		getModelElement().eAdapters().remove(eAdapter);
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void applyCustomLayoutData()
-  {
-    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(250, 150).grab(true, false).applyTo(composite);
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void applyCustomLayoutData() {
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).hint(250, 150).grab(true, false).applyTo(composite);
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
-   *      org.eclipse.emf.ecore.EObject)
-   */
-  @Override
-  public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
-  {
-    Object feature = itemPropertyDescriptor.getFeature(modelElement);
-    if (feature instanceof EAttribute && ((EAttribute)feature).getEType().getInstanceClass().equals(String.class))
-    {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
+		Object feature = itemPropertyDescriptor.getFeature(modelElement);
+		if (feature instanceof EAttribute && ((EAttribute) feature).getEType().getInstanceClass().equals(String.class)) {
 
-      if (itemPropertyDescriptor.isMultiLine(feature))
-      {
-        return PRIORITY;
-      }
-    }
-    return AbstractMEControl.DO_NOT_RENDER;
-  }
+			if (itemPropertyDescriptor.isMultiLine(feature)) {
+				return PRIORITY;
+			}
+		}
+		return AbstractMEControl.DO_NOT_RENDER;
+	}
 
-  /**
-   * . {@inheritDoc}
-   */
-  public void handleValidation(Diagnostic diagnostic)
-  {
-    if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING)
-    {
-      Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png").createImage();
-      labelWidgetImage.setImage(image);
-      labelWidgetImage.setToolTipText(diagnostic.getMessage());
-    }
-  }
+	/**
+	 * . {@inheritDoc}
+	 */
+	public void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
+			Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png")
+				.createImage();
+			labelWidgetImage.setImage(image);
+			labelWidgetImage.setToolTipText(diagnostic.getMessage());
+		}
+	}
 
-  /**
-   * . {@inheritDoc}
-   */
-  public void resetValidation()
-  {
-    labelWidgetImage.setImage(null);
-    labelWidgetImage.setToolTipText("");
-  }
+	/**
+	 * . {@inheritDoc}
+	 */
+	public void resetValidation() {
+		labelWidgetImage.setImage(null);
+		labelWidgetImage.setToolTipText("");
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getPriority()
-   */
-  @Override
-  protected int getPriority()
-  {
-    return 2;
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getPriority()
+	 */
+	@Override
+	protected int getPriority() {
+		return 2;
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
-   */
-  @Override
-  protected Class<? extends EStructuralFeature> getEStructuralFeatureType()
-  {
-    return EAttribute.class;
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
+	 */
+	@Override
+	protected Class<? extends EStructuralFeature> getEStructuralFeatureType() {
+		return EAttribute.class;
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
-   */
-  @Override
-  protected Class<?> getClassType()
-  {
-    return String.class;
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+	 */
+	@Override
+	protected Class<?> getClassType() {
+		return String.class;
+	}
 
-  @Override
-  protected boolean isMulti()
-  {
-    return false;
-  }
+	@Override
+	protected boolean isMulti() {
+		return false;
+	}
 }

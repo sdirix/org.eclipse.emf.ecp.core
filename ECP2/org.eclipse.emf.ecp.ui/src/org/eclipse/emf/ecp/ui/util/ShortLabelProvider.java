@@ -37,11 +37,11 @@ public class ShortLabelProvider extends AdapterFactoryLabelProvider
     String name = super.getText(object);
     if (name == null)
     {
-      name = "";
+      name = ""; //$NON-NLS-1$
     }
     if (name.length() > limit + 5)
     {
-      name = name.substring(0, limit).concat("[...]");
+      name = name.substring(0, limit).concat("[...]"); //$NON-NLS-1$
     }
     return name;
   }

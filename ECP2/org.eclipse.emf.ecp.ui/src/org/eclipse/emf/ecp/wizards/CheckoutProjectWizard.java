@@ -7,6 +7,7 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -30,7 +31,7 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite>
   @Override
   public void addPages()
   {
-    WizardPage wp = new WizardPage("Checkout")
+    WizardPage wp = new WizardPage("Checkout") //$NON-NLS-1$
     {
 
       public void createControl(Composite parent)
@@ -43,21 +44,21 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite>
     };
     addPage(wp);
 
-    wp.setTitle("Checkout");
-    wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png"));
+    wp.setTitle(Messages.CheckoutProjectWizard_PageTitle_CheckoutProject);
+    wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$
 
     ECPCheckoutSource checkoutSource = getUIProvider().getCheckoutSource();
 
     ECPRepository repository = checkoutSource.getRepository();
     if (checkoutSource == repository)
     {
-      wp.setMessage("Checkout " + repository.getLabel() + ".");
+      wp.setMessage(Messages.CheckoutProjectWizard_PageMessage_CheckoutRepositrory + repository.getLabel() + "."); //$NON-NLS-2$ //$NON-NLS-1$
     }
     else
     {
-      wp.setMessage("Checkout " + getUIProvider().getUiProvider().getText(checkoutSource) + " from "
-          + repository.getLabel() + ".");
+      wp.setMessage(Messages.CheckoutProjectWizard_PageMessage_CheckoutProject + getUIProvider().getUiProvider().getText(checkoutSource) + Messages.CheckoutProjectWizard_PageMessage_CheckoutFrom
+          + repository.getLabel() + "."); //$NON-NLS-1$
     }
-    setWindowTitle("Checkout");
+    setWindowTitle(Messages.CheckoutProjectWizard_Title_Checkout);
   }
 }

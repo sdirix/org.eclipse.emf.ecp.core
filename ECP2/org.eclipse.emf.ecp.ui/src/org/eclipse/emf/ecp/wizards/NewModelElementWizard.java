@@ -11,7 +11,8 @@
 package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.ui.common.SelectModelElementHelper;
+import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -29,7 +30,7 @@ import org.eclipse.swt.widgets.Composite;
  *         wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
  *         tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
  */
-public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
+public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite>
 {
 
   public NewModelElementWizard(String title)
@@ -44,18 +45,18 @@ public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
   public void addPages()
   {
     super.addPages();
-    WizardPage wp = new WizardPage("Add new model element")
+    WizardPage wp = new WizardPage(Messages.NewModelElementWizard_WizardTitle_AddModelElement)
     {
 
       public void createControl(Composite parent)
       {
         Composite composite = getUIProvider().createUI(parent);
-        getUIProvider().getTreeViewer().addSelectionChangedListener(new ISelectionChangedListener()
+        getUIProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener()
         {
 
           public void selectionChanged(SelectionChangedEvent event)
           {
-            IStructuredSelection sel = (IStructuredSelection)getUIProvider().getTreeViewer().getSelection();
+            IStructuredSelection sel = (IStructuredSelection)getUIProvider().getViewer().getSelection();
             if (sel != null && sel.getFirstElement() instanceof EClass)
             {
               setPageComplete(true);
@@ -66,7 +67,7 @@ public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
             }
           }
         });
-        getUIProvider().getTreeViewer().addDoubleClickListener(new IDoubleClickListener()
+        getUIProvider().getViewer().addDoubleClickListener(new IDoubleClickListener()
         {
 
           public void doubleClick(DoubleClickEvent event)
@@ -84,8 +85,8 @@ public class NewModelElementWizard extends ECPWizard<SelectModelElementHelper>
       }
     };
     addPage(wp);
-    wp.setTitle("Add new model element");
-    wp.setDescription("Select model element type");
+    wp.setTitle(Messages.NewModelElementWizard_PageTitle_AddModelElement);
+    wp.setDescription(Messages.NewModelElementWizard_PageDescription_AddModelElement);
 
   }
 

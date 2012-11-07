@@ -19,74 +19,66 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @author helming
  */
-public abstract class ModelElementChangeListener extends AdapterImpl
-{
+public abstract class ModelElementChangeListener extends AdapterImpl {
 
-  private final EObject modelelement;
+	private final EObject modelelement;
 
-  /**
-   * Default constructor.
-   * 
-   * @param modelelement
-   *          the modelelement to listen on
-   */
-  public ModelElementChangeListener(EObject modelelement)
-  {
-    this.modelelement = modelelement;
-    modelelement.eAdapters().add(this);
-  }
+	/**
+	 * Default constructor.
+	 * 
+	 * @param modelelement
+	 *            the modelelement to listen on
+	 */
+	public ModelElementChangeListener(EObject modelelement) {
+		this.modelelement = modelelement;
+		modelelement.eAdapters().add(this);
+	}
 
-  /**
-   * Handle changes to the model element.
-   * 
-   * @param notification
-   *          the EMF notification, providing details on the change
-   * @return
-   */
-  public abstract void onChange(Notification notification);
+	/**
+	 * Handle changes to the model element.
+	 * 
+	 * @param notification
+	 *            the EMF notification, providing details on the change
+	 * 
+	 */
+	public abstract void onChange(Notification notification);
 
-  /**
-   * Handle a runtime exception that occured in this listeners methods. NOTE: runtime exceptions of this method will be
-   * logged and silently dropped.
-   * 
-   * @param exception
-   *          the exception
-   */
-  void onRuntimeExceptionInListener(RuntimeException exception)
-  {
-    remove();
-  }
+	/**
+	 * Handle a runtime exception that occured in this listeners methods. NOTE: runtime exceptions of this method will
+	 * be
+	 * logged and silently dropped.
+	 * 
+	 * @param exception
+	 *            the exception
+	 */
+	void onRuntimeExceptionInListener(RuntimeException exception) {
+		remove();
+	}
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-   */
-  @Override
-  public void notifyChanged(Notification notification)
-  {
-    if (notification.isTouch())
-    {
-      return;
-    }
-    // BEGIN SUPRESS CATCH EXCEPTION
-    try
-    {
-      onChange(notification);
-    }
-    catch (RuntimeException e)
-    {
-      onRuntimeExceptionInListener(e);
-    }
-    // END SUPRESS CATCH EXCEPTION
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+	 */
+	@Override
+	public void notifyChanged(Notification notification) {
+		if (notification.isTouch()) {
+			return;
+		}
+		// BEGIN SUPRESS CATCH EXCEPTION
+		try {
+			onChange(notification);
+		} catch (RuntimeException e) {
+			onRuntimeExceptionInListener(e);
+		}
+		// END SUPRESS CATCH EXCEPTION
+	}
 
-  /**
-   * Removes the {@link ModelElementChangeListener}.
-   */
-  public void remove()
-  {
-    modelelement.eAdapters().remove(this);
-  }
+	/**
+	 * Removes the {@link ModelElementChangeListener}.
+	 */
+	public void remove() {
+		modelelement.eAdapters().remove(this);
+	}
 
 }

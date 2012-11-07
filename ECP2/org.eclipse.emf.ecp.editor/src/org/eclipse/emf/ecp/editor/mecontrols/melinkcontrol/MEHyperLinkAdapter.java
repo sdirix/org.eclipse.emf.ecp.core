@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -23,39 +24,37 @@ import org.eclipse.ui.forms.events.IHyperlinkListener;
  * @author helming
  * @author Eugen Neufeld
  */
-public class MEHyperLinkAdapter extends HyperlinkAdapter implements IHyperlinkListener
-{
+public class MEHyperLinkAdapter extends HyperlinkAdapter implements IHyperlinkListener {
 
-  private EObject target;
+	private EObject target;
 
-  private EditorModelelementContext modelContext;
+	private EditorModelelementContext modelContext;
 
-  /**
-   * Default constructor.
-   * 
-   * @param source
-   *          the source of the model link
-   * @param target
-   *          the target of the model link
-   * @param featureName
-   *          the feature of the model link
-   * @param modelContext
-   *          the {@link EditorModelelementContext}
-   */
-  public MEHyperLinkAdapter(EObject target, EObject source, String featureName, EditorModelelementContext modelContext)
-  {
-    super();
-    this.target = target;
-    this.modelContext = modelContext;
-  }
+	/**
+	 * Default constructor.
+	 * 
+	 * @param source
+	 *            the source of the model link
+	 * @param target
+	 *            the target of the model link
+	 * @param featureName
+	 *            the feature of the model link
+	 * @param modelContext
+	 *            the {@link EditorModelelementContext}
+	 */
+	public MEHyperLinkAdapter(EObject target, EObject source, String featureName, EditorModelelementContext modelContext) {
+		super();
+		this.target = target;
+		this.modelContext = modelContext;
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void linkActivated(HyperlinkEvent event)
-  {
-    modelContext.openEditor(target, "org.eclipse.emf.ecp.editor");
-    super.linkActivated(event);
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void linkActivated(HyperlinkEvent event) {
+		ActionHelper.openModelElement(target, "", null);
+		modelContext.openEditor(target, "org.eclipse.emf.ecp.editor");
+		super.linkActivated(event);
+	}
 }

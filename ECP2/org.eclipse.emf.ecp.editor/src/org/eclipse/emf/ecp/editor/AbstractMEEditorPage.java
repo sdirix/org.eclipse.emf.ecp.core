@@ -10,31 +10,23 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 
 /**
  * An abstract class for the MEEditorPages.
  * 
- * @author shterev
+ * @author Eugen Neufeld
  */
-public abstract class AbstractMEEditorPage
-{
+public abstract class AbstractMEEditorPage {
 
-  /**
-   * Default init.
-   * 
-   * @param editor
-   *          the {@link MEEditor}
-   * @param editingDomain
-   *          the editingDomain
-   * @param modelElement
-   *          the modelElement
-   * @return FormPage
-   */
-  public abstract FormPage createPage(FormEditor editor, EditingDomain editingDomain, EObject modelElement);
+	/**
+	 * Create a page for the editor.
+	 * 
+	 * @param editor the editor to add the page to
+	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @return the {@link FormPage}
+	 */
+	public abstract FormPage createPage(FormEditor editor, EditorModelelementContext modelElementContext);
 
 }

@@ -1,0 +1,31 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+package org.eclipse.emf.ecp.core.util;
+
+import java.util.Collection;
+
+/**
+ * Interface to provide a collection of nsUris that should not be available.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+public interface IFilterProvider {
+
+	/**
+	 * Returns the {@link Collection} of nsUris that should be by default not visible in ecp.
+	 * 
+	 * @return the Collection of nsUris
+	 */
+	Collection<String> getFilteredPackages();
+}

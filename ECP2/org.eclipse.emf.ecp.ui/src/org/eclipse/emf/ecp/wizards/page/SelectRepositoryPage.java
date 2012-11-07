@@ -7,6 +7,7 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
+import org.eclipse.emf.ecp.ui.util.Messages;
 import org.eclipse.emf.ecp.wizards.ShareWizard;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -32,8 +33,8 @@ public class SelectRepositoryPage extends WizardPage
   public SelectRepositoryPage(String pageName)
   {
     super(pageName);
-    setTitle("Select an existing ECPRepository");
-    setDescription("Please select an existing ECPRepository to use.");
+    setTitle(Messages.SelectRepositoryPage_PageTitle_SelectRepository);
+    setDescription(Messages.SelectRepositoryPage_PageDescription_SelectRepository);
   }
 
   /*

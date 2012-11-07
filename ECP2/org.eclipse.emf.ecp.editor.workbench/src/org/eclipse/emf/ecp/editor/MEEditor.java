@@ -22,7 +22,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.editor.input.MEEditorInput;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.SWTException;
@@ -47,8 +46,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	public static final String ID = "org.eclipse.emf.ecp.editor";
 
-	private EObject modelElement;
-	private EditingDomain editingDomain;
 	private MEEditorPage mePage;
 
 	private ILabelProviderListener labelProviderListener;
@@ -92,7 +89,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 				try {
 					newPage = (AbstractMEEditorPage) configTemp[i].createExecutableExtension("class");
-					FormPage createPage = newPage.createPage(this, editingDomain, modelElement);
+					FormPage createPage = newPage.createPage(this, modelElementContext);
 					if (createPage != null) {
 						addPage(createPage);
 					}
@@ -120,10 +117,10 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (!replaceMEEditor) {
 			try {
 				if (editorInput.getProblemFeature() != null) {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext, modelElement,
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext, modelElementContext.getModelElement(),
 						editorInput.getProblemFeature());
 				} else {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext, modelElement);
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext, modelElementContext.getModelElement());
 				}
 
 				addPage(mePage);
@@ -139,7 +136,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 		for (IConfigurationElement e : config) {
 			try {
 				AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class");
-				FormPage createPage = newPage.createPage(this, editingDomain, modelElement);
+				FormPage createPage = newPage.createPage(this, modelElementContext);
 				if (createPage != null) {
 					addPage(createPage);
 				}
@@ -159,7 +156,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		// do nothing (Jonas said so)
+		modelElementContext.save();
 	}
 
 	/**
@@ -188,20 +185,18 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (input instanceof MEEditorInput) {
 			setInput(input);
 			final MEEditorInput meInput = (MEEditorInput) input;
-			modelElement = meInput.getModelElement();
-			setPartName((new ShortLabelProvider()).getText(modelElement));
+			this.modelElementContext=meInput.getModelElementContext();
+			setPartName((new ShortLabelProvider()).getText(modelElementContext.getModelElement()));
 			setTitleImage(input.getImageDescriptor().createImage());
-			modelElementContext = meInput.getModelElementContext();
-			initializeEditingDomain();
 
 			modelElementContextListener = new EditorModelelementContextListener() {
 
 				
 				public void onModelElementDeleted(EObject deleted) {
-					if (modelElement == deleted) {
+					if (modelElementContext.getModelElement().equals(deleted)) {
 						close(false);
 					} else {
-						if (!modelElementContext.contains(modelElement)) {
+						if (!modelElementContext.contains(modelElementContext.getModelElement())) {
 							close(false);
 						}
 					}
@@ -209,19 +204,19 @@ public class MEEditor extends SharedHeaderFormEditor {
 				}
 
 				public void onContextDeleted() {
-					onModelElementDeleted(modelElement);
+					onModelElementDeleted(modelElementContext.getModelElement());
 
 				}
 			};
 			modelElementContext.addModelElementContextListener(modelElementContextListener);
-			modelElementChangeListener = new ModelElementChangeListener(modelElement) {
+			modelElementChangeListener = new ModelElementChangeListener(modelElementContext.getModelElement()) {
 
 				@Override
 				public void onChange(Notification notification) {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							updateIcon(input);
-							setPartName((new ShortLabelProvider()).getText(modelElement));
+							setPartName((new ShortLabelProvider()).getText(modelElementContext.getModelElement()));
 							if (mePage != null) {
 								mePage.updateSectionTitle();
 								mePage.updateLiveValidation();
@@ -258,7 +253,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 			try {
 				StatusMessageProvider statusMessageProvider = (StatusMessageProvider) e
 					.createExecutableExtension("class");
-				int newpriority = statusMessageProvider.canRender(modelElement);
+				int newpriority = statusMessageProvider.canRender(modelElementContext.getModelElement());
 				if (newpriority > priority) {
 					priority = newpriority;
 					this.statusMessageProvider = statusMessageProvider;
@@ -272,15 +267,8 @@ public class MEEditor extends SharedHeaderFormEditor {
 	private void updateStatusMessage() {
 		if (statusMessageProvider != null) {
 			getEditorSite().getActionBars().getStatusLineManager()
-				.setMessage(statusMessageProvider.getMessage(modelElement));
+				.setMessage(statusMessageProvider.getMessage(modelElementContext.getModelElement()));
 		}
-	}
-
-	/**
-	 * Initializes the editing domain for this model element.
-	 */
-	protected void initializeEditingDomain() {
-		this.editingDomain = modelElementContext.getEditingDomain();
 	}
 
 	/**
@@ -288,8 +276,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	@Override
 	public boolean isDirty() {
-		// we do always save immediately so we are never dirty
-		return false;
+		return modelElementContext.isDirty();
 	}
 
 	/**

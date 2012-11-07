@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.internal.core.util;
 
@@ -21,157 +20,126 @@ import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
  * @author Eike Stepper
  */
 public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Element implements
-    InternalDescriptor<ELEMENT>, DisposeListener
-{
-  private final Disposable disposable = new Disposable(this)
-  {
-    @Override
-    protected void doDispose()
-    {
-      if (resolvedElement instanceof ECPDisposable)
-      {
-        try
-        {
-          ((ECPDisposable)resolvedElement).dispose();
-        }
-        catch (Exception ex)
-        {
-          Activator.log(ex);
-        }
-      }
+	InternalDescriptor<ELEMENT>, DisposeListener {
+	private final Disposable disposable = new Disposable(this) {
+		@Override
+		protected void doDispose() {
+			if (resolvedElement instanceof ECPDisposable) {
+				try {
+					((ECPDisposable) resolvedElement).dispose();
+				} catch (Exception ex) {
+					Activator.log(ex);
+				}
+			}
 
-      resolvedElement = null;
-      ElementDescriptor.this.doDispose();
-    }
-  };
+			resolvedElement = null;
+			ElementDescriptor.this.doDispose();
+		}
+	};
 
-  private final ElementRegistry<ELEMENT, ?> registry;
+	private final ElementRegistry<ELEMENT, ?> registry;
 
-  private String label;
+	private String label;
 
-  private String description;
+	private String description;
 
-  private ELEMENT resolvedElement;
+	private ELEMENT resolvedElement;
 
-  public ElementDescriptor(ElementRegistry<ELEMENT, ?> registry, String name)
-  {
-    super(name);
-    this.registry = registry;
-    label = name;
-    description = "";
-  }
+	public ElementDescriptor(ElementRegistry<ELEMENT, ?> registry, String name) {
+		super(name);
+		this.registry = registry;
+		label = name;
+		description = "";
+	}
 
-  public final ElementRegistry<ELEMENT, ?> getRegistry()
-  {
-    return registry;
-  }
+	public final ElementRegistry<ELEMENT, ?> getRegistry() {
+		return registry;
+	}
 
-  public final String getLabel()
-  {
-    return label;
-  }
+	public final String getLabel() {
+		return label;
+	}
 
-  public final void setLabel(String label)
-  {
-    this.label = label;
-  }
+	public final void setLabel(String label) {
+		this.label = label;
+	}
 
-  public final String getDescription()
-  {
-    return description;
-  }
+	public final String getDescription() {
+		return description;
+	}
 
-  public final void setDescription(String description)
-  {
-    this.description = description;
-  }
+	public final void setDescription(String description) {
+		this.description = description;
+	}
 
-  public final boolean isResolved()
-  {
-    return resolvedElement != null;
-  }
+	public final boolean isResolved() {
+		return resolvedElement != null;
+	}
 
-  public final ELEMENT getResolvedElement()
-  {
-    boolean resolved = false;
-    synchronized (this)
-    {
-      if (resolvedElement == null)
-      {
-        try
-        {
-          resolvedElement = resolve();
-          if (resolvedElement instanceof InternalRegistryElement)
-          {
-            InternalRegistryElement registryElement = (InternalRegistryElement)resolvedElement;
-            registryElement.setLabel(getLabel());
-            registryElement.setDescription(getDescription());
-          }
+	public final ELEMENT getResolvedElement() {
+		boolean resolved = false;
+		synchronized (this) {
+			if (resolvedElement == null) {
+				try {
+					resolvedElement = resolve();
+					if (resolvedElement instanceof InternalRegistryElement) {
+						InternalRegistryElement registryElement = (InternalRegistryElement) resolvedElement;
+						registryElement.setLabel(getLabel());
+						registryElement.setDescription(getDescription());
+					}
 
-          if (resolvedElement instanceof ECPDisposable)
-          {
-            ECPDisposable disposable = (ECPDisposable)resolvedElement;
-            disposable.addDisposeListener(this);
-          }
+					if (resolvedElement instanceof ECPDisposable) {
+						ECPDisposable disposable = (ECPDisposable) resolvedElement;
+						disposable.addDisposeListener(this);
+					}
 
-          resolvedElement(resolvedElement);
-        }
-        catch (Throwable t)
-        {
-          throw new Error("Unable to resolve " + this, t);
-        }
+					resolvedElement(resolvedElement);
+				} catch (Throwable t) {
+					throw new Error("Unable to resolve " + this, t);
+				}
 
-        resolved = true;
-      }
-    }
+				resolved = true;
+			}
+		}
 
-    if (resolved)
-    {
-      registry.descriptorChanged(this, true);
-    }
+		if (resolved) {
+			registry.descriptorChanged(this, true);
+		}
 
-    return resolvedElement;
-  }
+		return resolvedElement;
+	}
 
-  public final boolean isDisposed()
-  {
-    return disposable.isDisposed();
-  }
+	public final boolean isDisposed() {
+		return disposable.isDisposed();
+	}
 
-  public final void dispose()
-  {
-    disposable.dispose();
-  }
+	public final void dispose() {
+		disposable.dispose();
+	}
 
-  public final void addDisposeListener(DisposeListener listener)
-  {
-    disposable.addDisposeListener(listener);
-  }
+	public final void addDisposeListener(DisposeListener listener) {
+		disposable.addDisposeListener(listener);
+	}
 
-  public final void removeDisposeListener(DisposeListener listener)
-  {
-    disposable.removeDisposeListener(listener);
-  }
+	public final void removeDisposeListener(DisposeListener listener) {
+		disposable.removeDisposeListener(listener);
+	}
 
-  public final void disposed(ECPDisposable disposable)
-  {
-    if (resolvedElement == disposable)
-    {
-      resolvedElement = null;
-    }
+	public final void disposed(ECPDisposable disposable) {
+		if (resolvedElement == disposable) {
+			resolvedElement = null;
+		}
 
-    registry.descriptorChanged(this, false);
-  }
+		registry.descriptorChanged(this, false);
+	}
 
-  protected void doDispose()
-  {
-    // Can be overridden in subclasses
-  }
+	protected void doDispose() {
+		// Can be overridden in subclasses
+	}
 
-  protected void resolvedElement(ELEMENT element)
-  {
-    // Can be overridden in subclasses
-  }
+	protected void resolvedElement(ELEMENT element) {
+		// Can be overridden in subclasses
+	}
 
-  protected abstract ELEMENT resolve() throws Exception;
+	protected abstract ELEMENT resolve() throws Exception;
 }

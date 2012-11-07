@@ -32,6 +32,14 @@
             id="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout"
             name="Logout">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation"
+            name="Undo">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations"
+            name="Revert">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -88,6 +96,54 @@
                icon="icons/update.gif"
                label="Update"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation"
+               icon="icons/arrow_undo.png"
+               label="Undo Last Operation"
+               style="push"
+               tooltip="Undo the last executed operation">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations"
+               icon="icons/revert.png"
+               label="Revert All Operations"
+               style="push"
+               tooltip="Reverts all operations since last commit">
             <visibleWhen
                   checkEnabled="false">
                <and>
@@ -219,6 +275,14 @@
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.EmfstoreLogInHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin">
       </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.UndoLastOperationHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.RevertAllOperationsHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.decorators">
@@ -240,7 +304,7 @@
       </decorator>
       <decorator
            adaptable="true"
-           class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator"
+           class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator"
            id="org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator"
            label="Login Decorator"
            lightweight="true"
@@ -265,13 +329,13 @@
 	<extension
          point="org.eclipse.emf.emfstore.client.loginObserver">
       <observer
-            loginObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator">
+            loginObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
       </observer>
    </extension>
    <extension
          point="org.eclipse.emf.emfstore.client.logoutObserver">
       <observer
-            logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ESBrowserLabelDecorator">
+            logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
       </observer>
    </extension>
 </plugin>

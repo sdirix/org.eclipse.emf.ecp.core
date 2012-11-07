@@ -4,5 +4,12 @@
 
    <extension-point id="uiProviders" name="ECP UI Providers" schema="schema/uiProviders.exsd"/>
    <extension-point id="modelelementopener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
+   <extension-point id="dropadapter" name="ECP UI DropAdapaters" schema="schema/dropadapter.exsd"/>
+   <extension
+         point="org.eclipse.emf.ecp.ui.dropadapter">
+      <MEDropAdapter
+            class="org.eclipse.emf.ecp.ui.common.dnd.DefaultMEDropAdapter">
+      </MEDropAdapter>
+   </extension>
 	
 </plugin>

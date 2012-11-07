@@ -15,24 +15,21 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eugen Neufeld
  */
-public class UpdateProjectHandler extends AbstractHandler
-{
+public class UpdateProjectHandler extends AbstractHandler {
 
-  public Object execute(ExecutionEvent event) throws ExecutionException
-  {
+	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-    InternalProject project = (InternalProject)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
-        .getFirstElement();
-    ProjectSpace projectSpace = EMFStoreProvider.getProjectSpace(project);
-    // TODO Ugly
-    if (projectSpace.getUsersession() == null)
-    {
-      ServerInfo serverInfo = EMFStoreProvider.getServerInfo(project.getRepository());
-      projectSpace.setUsersession(serverInfo.getLastUsersession());
-    }
-    new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-    project.notifyObjectsChanged(new Object[] { project });
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+			.getFirstElement();
+		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO Ugly
+		if (projectSpace.getUsersession() == null) {
+			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			projectSpace.setUsersession(serverInfo.getLastUsersession());
+		}
+		new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		project.notifyObjectsChanged(new Object[] { project });
 
-    return null;
-  }
+		return null;
+	}
 }

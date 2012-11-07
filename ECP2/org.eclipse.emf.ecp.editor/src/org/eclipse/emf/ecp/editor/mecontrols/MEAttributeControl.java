@@ -35,87 +35,80 @@ import org.eclipse.swt.widgets.Label;
  * @author emueller
  * @author Eugen Neufeld
  */
-public abstract class MEAttributeControl extends AbstractMEControl implements IValidatableControl
-{
+public abstract class MEAttributeControl extends AbstractMEControl implements IValidatableControl {
 
-  private Label labelWidgetImage; // Label for diagnostic image
+	private Label labelWidgetImage; // Label for diagnostic image
 
-  private ControlDecoration controlDecoration;
+	private ControlDecoration controlDecoration;
 
-  @Override
-  protected Class<EAttribute> getEStructuralFeatureType()
-  {
-    return EAttribute.class;
-  }
+	@Override
+	protected Class<EAttribute> getEStructuralFeatureType() {
+		return EAttribute.class;
+	}
 
-  @Override
-  protected boolean isMulti()
-  {
-    return false;
-  }
+	@Override
+	protected boolean isMulti() {
+		return false;
+	}
 
-  @Override
-  protected Control createControl(Composite parent, int style)
-  {
-    Composite composite = getToolkit().createComposite(parent, style);
-    composite.setBackgroundMode(SWT.INHERIT_FORCE);
-    GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(composite);
-    GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
+	@Override
+	protected Control createControl(Composite parent, int style) {
+		Composite composite = getToolkit().createComposite(parent, style);
+		composite.setBackgroundMode(SWT.INHERIT_FORCE);
+		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
 
-    labelWidgetImage = getToolkit().createLabel(composite, "    ");
-    labelWidgetImage.setBackground(parent.getBackground());
+		labelWidgetImage = getToolkit().createLabel(composite, "    ");
+		labelWidgetImage.setBackground(parent.getBackground());
 
-    ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
-    Control control = widget.createWidget(getToolkit(), composite, style);
-    widget.setEditable(isEditable());
+		ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
+		Control control = widget.createWidget(getToolkit(), composite, style);
+		widget.setEditable(isEditable());
 
-    controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
-    controlDecoration.setDescriptionText("Invalid input");
-    controlDecoration.setShowHover(true);
-    FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-        FieldDecorationRegistry.DEC_ERROR);
-    controlDecoration.setImage(fieldDecoration.getImage());
-    controlDecoration.hide();
+		controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
+		controlDecoration.setDescriptionText("Invalid input");
+		controlDecoration.setShowHover(true);
+		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
+			FieldDecorationRegistry.DEC_ERROR);
+		controlDecoration.setImage(fieldDecoration.getImage());
+		controlDecoration.hide();
 
-    IObservableValue model = EMFEditObservables.observeValue(getEditingDomain(), getModelElement(),
-        getStructuralFeature());
-    widget.bindValue(model, controlDecoration);
-    return composite;
-  }
+		IObservableValue model = EMFEditObservables.observeValue(getContext().getEditingDomain(), getModelElement(),
+			getStructuralFeature());
+		widget.bindValue(model, controlDecoration);
+		return composite;
+	}
 
-  /**
+	/**
    * 
    */
-  private EMFDataBindingContext getDataBindingContext()
-  {
-    return new EMFDataBindingContext();
-  }
+	private EMFDataBindingContext getDataBindingContext() {
+		return new EMFDataBindingContext();
+	}
 
-  /**
-   * @return
-   */
-  protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
+	/**
+	 * @return
+	 */
+	protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
 
-  /**
-   * {@inheritDoc}
-   **/
-  public void handleValidation(Diagnostic diagnostic)
-  {
-    if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING)
-    {
-      Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png").createImage();
-      labelWidgetImage.setImage(image);
-      labelWidgetImage.setToolTipText(diagnostic.getMessage());
-    }
-  }
+	/**
+	 * {@inheritDoc}
+	 **/
+	public void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
+			Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png")
+				.createImage();
+			labelWidgetImage.setImage(image);
+			labelWidgetImage.setToolTipText(diagnostic.getMessage());
+		}
+	}
 
-  /**
-   * {@inheritDoc}
-   **/
-  public void resetValidation()
-  {
-    labelWidgetImage.setImage(null);
-    labelWidgetImage.setToolTipText("");
-  }
+	/**
+	 * {@inheritDoc}
+	 **/
+	public void resetValidation() {
+		labelWidgetImage.setImage(null);
+		labelWidgetImage.setToolTipText("");
+	}
 
 }

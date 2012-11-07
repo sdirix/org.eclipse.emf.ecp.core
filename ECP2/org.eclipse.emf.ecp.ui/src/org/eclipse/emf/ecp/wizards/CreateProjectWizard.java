@@ -6,8 +6,9 @@ package org.eclipse.emf.ecp.wizards;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.common.UICreateProject;
-import org.eclipse.emf.ecp.ui.common.UICreateProject.CreateProjectChangeListener;
+import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.common.CreateProjectComposite.CreateProjectChangeListener;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * @author Eugen Neufeld
  */
-public class CreateProjectWizard extends ECPWizard<UICreateProject>
+public class CreateProjectWizard extends ECPWizard<CreateProjectComposite>
 {
 
   /*
@@ -47,7 +48,7 @@ public class CreateProjectWizard extends ECPWizard<UICreateProject>
         providers.add(provider);
       }
     }
-    WizardPage wp = new WizardPage("CreateProject")
+    WizardPage wp = new WizardPage("CreateProject") //$NON-NLS-1$
     {
 
       public void createControl(Composite parent)
@@ -77,15 +78,15 @@ public class CreateProjectWizard extends ECPWizard<UICreateProject>
       }
     };
     addPage(wp);
-    String title = "Create Project";
-    String message = "Select a provider and set the project name.";
+    String title = Messages.CreateProjectWizard_PageTitle_CreateProjectDefault;
+    String message = Messages.CreateProjectWizard_PageMessage_CreateProjectDefault;
     if (providers.size() == 1)
     {
-      title = "Create " + providers.get(0).getLabel() + " Project";
-      message = "Set the project name.";
+      title = Messages.CreateProjectWizard_PageTitle_Create + providers.get(0).getLabel() + Messages.CreateProjectWizard_PageTitle_Project;
+      message = Messages.CreateProjectWizard_PageMessage_CreateProject;
     }
     wp.setTitle(title);
-    wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png"));
+    wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$
     wp.setMessage(message);
     setWindowTitle(title);
   }

@@ -1,6 +1,13 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
  * 
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -18,23 +25,22 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eugen Neufeld
  */
-public class EmfstoreLogInHandler extends AbstractHandler
-{
+public class EmfstoreLogInHandler extends AbstractHandler {
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-   */
-  public Object execute(ExecutionEvent event) throws ExecutionException
-  {
-    final ECPRepository ecpRepository = (ECPRepository)((IStructuredSelection)HandlerUtil.getCurrentSelection(event))
-        .getFirstElement();
-    final ServerInfo serverInfo = EMFStoreProvider.getServerInfo((InternalRepository)ecpRepository);
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
+			.getCurrentSelection(event)).getFirstElement();
+		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 
-    new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
+		new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
 
-    // ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();
-    return null;
-  }
+		// ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();
+		((InternalRepository) ecpRepository).notifyObjectsChanged(new Object[] { ecpRepository });
+		return null;
+	}
 
 }

@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.ui.actions.AddRepositoryAction;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.jface.action.Action;
@@ -22,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eike Stepper
  */
-public class ModelRepositoriesView extends TreeView implements ECPProviderRegistry.Listener
+public class ModelRepositoriesView extends TreeView implements IECPProvidersChangedObserver //ECPProviderRegistry.Listener
 {
   public static final String ID = "org.eclipse.emf.ecp.ui.ModelRepositoriesView";
 
@@ -36,7 +37,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProviderRegist
   @Override
   public void dispose()
   {
-    ECPProviderRegistry.INSTANCE.removeListener(this);
+    ECPProviderRegistry.INSTANCE.removeObserver(this);
     super.dispose();
   }
 
@@ -70,7 +71,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProviderRegist
 
     addRepositoryAction = new AddRepositoryAction(getSite().getShell());
     setEnablements();
-    ECPProviderRegistry.INSTANCE.addListener(this);
+    ECPProviderRegistry.INSTANCE.addObserver(this);
     return viewer;
   }
 

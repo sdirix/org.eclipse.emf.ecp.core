@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,7 +35,7 @@ public class ProjectPropertiesDialog extends PropertiesDialog
 
   public ProjectPropertiesDialog(Shell parentShell, boolean editable, ECPProject project)
   {
-    super(parentShell, project.getName(), "The project is " + (project.isOpen() ? "open" : "closed") + ".", editable,
+    super(parentShell, project.getName(), Messages.ProjectPropertiesDialog_DialogTitle_ProjectIs + (project.isOpen() ? Messages.ProjectPropertiesDialog_DialogTitle_Open : Messages.ProjectPropertiesDialog_DialogTitle_Closed) + ".", editable, //$NON-NLS-4$
         project.getProperties());
     this.project = project;
   }
@@ -63,7 +64,7 @@ public class ProjectPropertiesDialog extends PropertiesDialog
   protected void configureShell(Shell newShell)
   {
     super.configureShell(newShell);
-    newShell.setText("Project Properties");
+    newShell.setText(Messages.ProjectPropertiesDialog_DialogTitle);
   }
 
   @Override
@@ -72,8 +73,8 @@ public class ProjectPropertiesDialog extends PropertiesDialog
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(new GridLayout(2, false));
 
-    repositoryText = addTextProperty(composite, "Repository:", project.getRepository() != null ? project
-        .getRepository().getLabel() : "");
-    providerText = addTextProperty(composite, "Provider:", project.getProvider().getLabel());
+    repositoryText = addTextProperty(composite, Messages.ProjectPropertiesDialog_ProjectRepository, project.getRepository() != null ? project
+        .getRepository().getLabel() : ""); //$NON-NLS-1$
+    providerText = addTextProperty(composite, Messages.ProjectPropertiesDialog_ProjectProvider, project.getProvider().getLabel());
   }
 }

@@ -15,35 +15,30 @@ import org.eclipse.core.expressions.PropertyTester;
 /**
  * @author Eugen Neufeld
  */
-public class EMFStoreIsLoggedInTester extends PropertyTester
-{
+public class EMFStoreIsLoggedInTester extends PropertyTester {
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object, java.lang.String, java.lang.Object[],
-   *      java.lang.Object)
-   */
-  public boolean test(Object receiver, String property, Object[] args, final Object expectedValue)
-  {
-    if (receiver instanceof ECPRepository && expectedValue instanceof Boolean)
-    {
-      final ECPRepository ecpRepository = (ECPRepository)receiver;
-      final ServerInfo serverInfo = EMFStoreProvider.getServerInfo((InternalRepository)ecpRepository);
-      EMFStoreCommandWithResult<Boolean> command = new EMFStoreCommandWithResult<Boolean>()
-      {
-        @Override
-        protected Boolean doRun()
-        {
-          Usersession usersession = serverInfo.getLastUsersession();
-          Boolean ret = new Boolean(usersession != null && usersession.isLoggedIn());
-          return ret.equals(expectedValue);
-        }
-      };
-      Boolean result = command.run(false);
-      return result;
-    }
-    return false;
-  }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object, java.lang.String, java.lang.Object[],
+	 *      java.lang.Object)
+	 */
+	public boolean test(Object receiver, String property, Object[] args, final Object expectedValue) {
+		if (receiver instanceof ECPRepository && expectedValue instanceof Boolean) {
+			final ECPRepository ecpRepository = (ECPRepository) receiver;
+			final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
+			EMFStoreCommandWithResult<Boolean> command = new EMFStoreCommandWithResult<Boolean>() {
+				@Override
+				protected Boolean doRun() {
+					Usersession usersession = serverInfo.getLastUsersession();
+					Boolean ret = new Boolean(usersession != null && usersession.isLoggedIn());
+					return ret.equals(expectedValue);
+				}
+			};
+			Boolean result = command.run(false);
+			return result;
+		}
+		return false;
+	}
 
 }

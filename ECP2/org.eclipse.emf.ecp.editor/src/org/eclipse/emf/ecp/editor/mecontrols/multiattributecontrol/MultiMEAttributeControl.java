@@ -1,6 +1,16 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
  * 
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -51,354 +61,308 @@ import java.util.List;
 /**
  * @author Eugen Neufeld
  */
-public abstract class MultiMEAttributeControl extends AbstractMEControl implements IValidatableControl
-{
+public abstract class MultiMEAttributeControl extends AbstractMEControl implements IValidatableControl {
 
-  private List<AttributeControlHelper> controlHelpers = new ArrayList<MultiMEAttributeControl.AttributeControlHelper>();
+	private List<AttributeControlHelper> controlHelpers = new ArrayList<MultiMEAttributeControl.AttributeControlHelper>();
 
-  private int upperBound;
+	private int upperBound;
 
-  private AddAction addAction;
+	private AddAction addAction;
 
-  private Section section;
+	private Section section;
 
-  @Override
-  protected Class<EAttribute> getEStructuralFeatureType()
-  {
-    return EAttribute.class;
-  }
+	@Override
+	protected Class<EAttribute> getEStructuralFeatureType() {
+		return EAttribute.class;
+	}
 
-  @Override
-  protected boolean isMulti()
-  {
-    return true;
-  }
+	@Override
+	protected boolean isMulti() {
+		return true;
+	}
 
-  private void refreshSection()
-  {
-    section.setExpanded(false);
-    section.setExpanded(true);
-    isFull();
-  }
+	private void refreshSection() {
+		section.setExpanded(false);
+		section.setExpanded(true);
+		isFull();
+	}
 
-  private void updateIndicesAfterRemove(int indexRemoved)
-  {
-    int i = 0;
-    for (AttributeControlHelper h : controlHelpers)
-    {
-      if (i < indexRemoved)
-      {
-        i++;
-        continue;
-      }
-      ECPObservableValue modelValue = h.getModelValue();
-      modelValue.setIndex(modelValue.getIndex() - 1);
-    }
-  }
+	private void updateIndicesAfterRemove(int indexRemoved) {
+		int i = 0;
+		for (AttributeControlHelper h : controlHelpers) {
+			if (i < indexRemoved) {
+				i++;
+				continue;
+			}
+			ECPObservableValue modelValue = h.getModelValue();
+			modelValue.setIndex(modelValue.getIndex() - 1);
+		}
+	}
 
-  private void shiftIndecesToRight(int index)
-  {
-    ECPObservableValue modelValue = controlHelpers.get(index + 1).getModelValue();
-    modelValue.setIndex(modelValue.getIndex() + 1);
+	private void shiftIndecesToRight(int index) {
+		ECPObservableValue modelValue = controlHelpers.get(index + 1).getModelValue();
+		modelValue.setIndex(modelValue.getIndex() + 1);
 
-  }
+	}
 
-  private void shiftIndecesToLeft(int index)
-  {
-    ECPObservableValue modelValue = controlHelpers.get(index - 1).getModelValue();
-    modelValue.setIndex(modelValue.getIndex() - 1);
+	private void shiftIndecesToLeft(int index) {
+		ECPObservableValue modelValue = controlHelpers.get(index - 1).getModelValue();
+		modelValue.setIndex(modelValue.getIndex() - 1);
 
-  }
+	}
 
-  @Override
-  protected Control createControl(Composite parent, final int style)
-  {
-    upperBound = getStructuralFeature().getUpperBound();
-    section = getToolkit().createSection(parent, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
-    section.setText(getItemPropertyDescriptor().getDisplayName(getModelElement()));
-    createSectionToolbar(section, getToolkit());
-    final Composite sectionComposite = getToolkit().createComposite(section, style);
-    GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(sectionComposite);
+	@Override
+	protected Control createControl(Composite parent, final int style) {
+		upperBound = getStructuralFeature().getUpperBound();
+		section = getToolkit().createSection(parent, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
+		section.setText(getItemPropertyDescriptor().getDisplayName(getModelElement()));
+		createSectionToolbar(section, getToolkit());
+		final Composite sectionComposite = getToolkit().createComposite(section, style);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(sectionComposite);
 
-    final IObservableList model = EMFEditObservables.observeList(getEditingDomain(), getModelElement(),
-        getStructuralFeature());
-    model.addListChangeListener(new IListChangeListener()
-    {
+		final IObservableList model = EMFEditObservables.observeList(getContext().getEditingDomain(),
+			getModelElement(), getStructuralFeature());
+		model.addListChangeListener(new IListChangeListener() {
 
-      public void handleListChange(ListChangeEvent event)
-      {
-        ListDiff diff = event.diff;
-        for (final ListDiffEntry entry : diff.getDifferences())
-        {
-          if (entry.isAddition() && entry.getPosition() >= sectionComposite.getChildren().length)
-          {
-            addControl(sectionComposite, style, model, entry.getPosition());
-            sectionComposite.layout(true);
+			public void handleListChange(ListChangeEvent event) {
+				ListDiff diff = event.diff;
+				for (final ListDiffEntry entry : diff.getDifferences()) {
+					if (entry.isAddition() && entry.getPosition() >= sectionComposite.getChildren().length) {
+						addControl(sectionComposite, style, model, entry.getPosition());
+						sectionComposite.layout(true);
 
-            refreshSection();
-          }
-        }
-      }
-    });
-    for (int i = 0; i < model.size(); i++)
-    {
-      addControl(sectionComposite, style, model, i);
-    }
-    isFull();
-    section.setClient(sectionComposite);
-    return section;
-  }
+						refreshSection();
+					}
+				}
+			}
+		});
+		for (int i = 0; i < model.size(); i++) {
+			addControl(sectionComposite, style, model, i);
+		}
+		isFull();
+		section.setClient(sectionComposite);
+		return section;
+	}
 
-  private void addControl(Composite sectionComposite, int style, final IObservableList model, int position)
-  {
-    ECPObservableValue modelValue = new ECPObservableValue(model, position, getClassType());
-    AttributeControlHelper h = new AttributeControlHelper(modelValue);
+	private void addControl(Composite sectionComposite, int style, final IObservableList model, int position) {
+		ECPObservableValue modelValue = new ECPObservableValue(model, position, getClassType());
+		AttributeControlHelper h = new AttributeControlHelper(modelValue);
 
-    h.createControl(sectionComposite, style);
-    controlHelpers.add(h);
-  }
+		h.createControl(sectionComposite, style);
+		controlHelpers.add(h);
+	}
 
-  private void createSectionToolbar(Section section, FormToolkit toolkit)
-  {
-    ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
-    ToolBar toolbar = toolBarManager.createControl(section);
-    final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
-    toolbar.setCursor(handCursor);
-    // Cursor needs to be explicitly disposed
-    toolbar.addDisposeListener(new DisposeListener()
-    {
-      public void widgetDisposed(DisposeEvent e)
-      {
-        if (!handCursor.isDisposed())
-        {
-          handCursor.dispose();
-        }
-      }
-    });
-    addAction = new AddAction();
-    addAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-        .getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
-    addAction.setToolTipText("Add Entry");
-    toolBarManager.add(addAction);
-    toolBarManager.update(true);
-    section.setTextClient(toolbar);
-  }
+	private void createSectionToolbar(Section section, FormToolkit toolkit) {
+		ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
+		ToolBar toolbar = toolBarManager.createControl(section);
+		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+		toolbar.setCursor(handCursor);
+		// Cursor needs to be explicitly disposed
+		toolbar.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				if (!handCursor.isDisposed()) {
+					handCursor.dispose();
+				}
+			}
+		});
+		addAction = new AddAction();
+		addAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+			.getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
+		addAction.setToolTipText("Add Entry");
+		toolBarManager.add(addAction);
+		toolBarManager.update(true);
+		section.setTextClient(toolbar);
+	}
 
-  /**
+	/**
    * 
    */
-  private EMFDataBindingContext getDataBindingContext()
-  {
-    return new EMFDataBindingContext();
-  }
+	private EMFDataBindingContext getDataBindingContext() {
+		return new EMFDataBindingContext();
+	}
 
-  private void isFull()
-  {
-    boolean full = controlHelpers.size() >= upperBound && upperBound != -1;
-    addAction.setEnabled(!full);
-  }
+	private void isFull() {
+		boolean full = controlHelpers.size() >= upperBound && upperBound != -1;
+		addAction.setEnabled(!full);
+	}
 
-  /**
-   * @return
-   */
-  protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
+	/**
+	 * @return
+	 */
+	protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
 
-  /**
-   * {@inheritDoc}
-   **/
-  public void handleValidation(Diagnostic diagnostic)
-  {
-    for (int i = 0; i < controlHelpers.size(); i++)
-    {
-      controlHelpers.get(i).handleValidation(diagnostic);
-    }
-  }
+	/**
+	 * {@inheritDoc}
+	 **/
+	public void handleValidation(Diagnostic diagnostic) {
+		for (int i = 0; i < controlHelpers.size(); i++) {
+			controlHelpers.get(i).handleValidation(diagnostic);
+		}
+	}
 
-  /**
-   * {@inheritDoc}
-   **/
-  public void resetValidation()
-  {
-    for (int i = 0; i < controlHelpers.size(); i++)
-    {
-      controlHelpers.get(i).resetValidation();
-    }
-  }
+	/**
+	 * {@inheritDoc}
+	 **/
+	public void resetValidation() {
+		for (int i = 0; i < controlHelpers.size(); i++) {
+			controlHelpers.get(i).resetValidation();
+		}
+	}
 
-  protected abstract Object getDefaultValue();
+	protected abstract Object getDefaultValue();
 
-  private class AddAction extends Action
-  {
+	private class AddAction extends Action {
 
-    @Override
-    public void run()
-    {
-      AddCommand.create(getEditingDomain(), getModelElement(), getStructuralFeature(), getDefaultValue(),
-          controlHelpers.size()).execute();
-      super.run();
-    }
-  }
+		@Override
+		public void run() {
+			AddCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
+				getDefaultValue(), controlHelpers.size()).execute();
+			super.run();
+		}
+	}
 
-  private class AttributeControlHelper
-  {
-    private final ECPObservableValue modelValue;
+	private class AttributeControlHelper {
+		private final ECPObservableValue modelValue;
 
-    private Label labelWidgetImage; // Label for diagnostic image
+		private Label labelWidgetImage; // Label for diagnostic image
 
-    private ControlDecoration controlDecoration;
+		private ControlDecoration controlDecoration;
 
-    private Composite composite;
+		private Composite composite;
 
-    public AttributeControlHelper(ECPObservableValue modelValue)
-    {
-      this.modelValue = modelValue;
-    }
+		public AttributeControlHelper(ECPObservableValue modelValue) {
+			this.modelValue = modelValue;
+		}
 
-    private AttributeControlHelper getThis()
-    {
-      return this;
-    }
+		private AttributeControlHelper getThis() {
+			return this;
+		}
 
-    void createControl(Composite parent, int style)
-    {
-      composite = getToolkit().createComposite(parent, style);
-      composite.setBackgroundMode(SWT.INHERIT_FORCE);
-      GridLayoutFactory.fillDefaults().numColumns(5).spacing(2, 0).applyTo(composite);
-      GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
+		void createControl(Composite parent, int style) {
+			composite = getToolkit().createComposite(parent, style);
+			composite.setBackgroundMode(SWT.INHERIT_FORCE);
+			GridLayoutFactory.fillDefaults().numColumns(5).spacing(2, 0).applyTo(composite);
+			GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
 
-      labelWidgetImage = getToolkit().createLabel(composite, "    ");
-      labelWidgetImage.setBackground(parent.getBackground());
+			labelWidgetImage = getToolkit().createLabel(composite, "    ");
+			labelWidgetImage.setBackground(parent.getBackground());
 
-      ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
-      Control control = widget.createWidget(getToolkit(), composite, style);
-      widget.setEditable(isEditable());
+			ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
+			Control control = widget.createWidget(getToolkit(), composite, style);
+			widget.setEditable(isEditable());
 
-      createDeleteButton(composite);
-      createUpDownButtons(composite);
-      controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
-      controlDecoration.setDescriptionText("Invalid input");
-      controlDecoration.setShowHover(true);
-      FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-          FieldDecorationRegistry.DEC_ERROR);
-      controlDecoration.setImage(fieldDecoration.getImage());
-      controlDecoration.hide();
+			createDeleteButton(composite);
+			createUpDownButtons(composite);
+			controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
+			controlDecoration.setDescriptionText("Invalid input");
+			controlDecoration.setShowHover(true);
+			FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
+				FieldDecorationRegistry.DEC_ERROR);
+			controlDecoration.setImage(fieldDecoration.getImage());
+			controlDecoration.hide();
 
-      widget.bindValue(modelValue, controlDecoration);
-    }
+			widget.bindValue(modelValue, controlDecoration);
+		}
 
-    void handleValidation(Diagnostic diagnostic)
-    {
-      if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING)
-      {
-        Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png")
-            .createImage();
-        labelWidgetImage.setImage(image);
-        labelWidgetImage.setToolTipText(diagnostic.getMessage());
-      }
-    }
+		void handleValidation(Diagnostic diagnostic) {
+			if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
+				Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png")
+					.createImage();
+				labelWidgetImage.setImage(image);
+				labelWidgetImage.setToolTipText(diagnostic.getMessage());
+			}
+		}
 
-    void resetValidation()
-    {
-      labelWidgetImage.setImage(null);
-      labelWidgetImage.setToolTipText("");
-    }
+		void resetValidation() {
+			labelWidgetImage.setImage(null);
+			labelWidgetImage.setToolTipText("");
+		}
 
-    /**
-     * Initializes the delete button.
-     */
-    private void createDeleteButton(Composite composite)
-    {
-      Button delB = new Button(composite, SWT.PUSH);
-      delB.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
-      delB.addSelectionListener(new SelectionAdapter()
-      {
+		/**
+		 * Initializes the delete button.
+		 */
+		private void createDeleteButton(Composite composite) {
+			Button delB = new Button(composite, SWT.PUSH);
+			delB.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
+			delB.addSelectionListener(new SelectionAdapter() {
 
-        /*
-         * (non-Javadoc)
-         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-         */
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          controlHelpers.remove(getThis());
-          RemoveCommand.create(getEditingDomain(), getModelElement(), getStructuralFeature(), modelValue.getValue())
-              .execute();
-          getThis().composite.dispose();
-          refreshSection();
-          updateIndicesAfterRemove(modelValue.getIndex());
-        }
+				/*
+				 * (non-Javadoc)
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					controlHelpers.remove(getThis());
+					RemoveCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
+						modelValue.getValue()).execute();
+					getThis().composite.dispose();
+					refreshSection();
+					updateIndicesAfterRemove(modelValue.getIndex());
+				}
 
-      });
-    }
+			});
+		}
 
-    /**
-     * Initializes the up/down buttons.
-     */
-    private void createUpDownButtons(Composite composite)
-    {
-      Image up = Activator.getImageDescriptor("icons/arrow_up.png").createImage();
-      Image down = Activator.getImageDescriptor("icons/arrow_down.png").createImage();
+		/**
+		 * Initializes the up/down buttons.
+		 */
+		private void createUpDownButtons(Composite composite) {
+			Image up = Activator.getImageDescriptor("icons/arrow_up.png").createImage();
+			Image down = Activator.getImageDescriptor("icons/arrow_down.png").createImage();
 
-      Button upB = new Button(composite, SWT.PUSH);
-      upB.setImage(up);
-      upB.addSelectionListener(new SelectionAdapter()
-      {
-        /*
-         * (non-Javadoc)
-         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-         */
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          if (getThis().getModelValue().getIndex() == 0)
-          {
-            return;
-          }
-          int currentIndex = getThis().getModelValue().getIndex();
-          controlHelpers.get(currentIndex).composite.moveAbove(controlHelpers.get(currentIndex - 1).composite);
-          controlHelpers.remove(currentIndex);
-          MoveCommand.create(getEditingDomain(), getModelElement(), getStructuralFeature(), modelValue.getValue(),
-              currentIndex - 1).execute();
-          controlHelpers.add(--currentIndex, getThis());
-          getThis().getModelValue().setIndex(currentIndex);
-          shiftIndecesToRight(currentIndex);
-          refreshSection();
-        }
-      });
-      Button downB = new Button(composite, SWT.PUSH);
-      downB.setImage(down);
-      downB.addSelectionListener(new SelectionAdapter()
-      {
-        /*
-         * (non-Javadoc)
-         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-         */
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          if (getThis().getModelValue().getIndex() + 1 == controlHelpers.size())
-          {
-            return;
-          }
-          int currentIndex = getThis().getModelValue().getIndex();
-          controlHelpers.get(currentIndex).composite.moveBelow(controlHelpers.get(currentIndex + 1).composite);
-          controlHelpers.remove(currentIndex);
-          MoveCommand.create(getEditingDomain(), getModelElement(), getStructuralFeature(), modelValue.getValue(),
-              currentIndex + 1).execute();
-          controlHelpers.add(++currentIndex, getThis());
-          getThis().getModelValue().setIndex(currentIndex);
-          shiftIndecesToLeft(currentIndex);
-          refreshSection();
-        }
-      });
-    }
+			Button upB = new Button(composite, SWT.PUSH);
+			upB.setImage(up);
+			upB.addSelectionListener(new SelectionAdapter() {
+				/*
+				 * (non-Javadoc)
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if (getThis().getModelValue().getIndex() == 0) {
+						return;
+					}
+					int currentIndex = getThis().getModelValue().getIndex();
+					controlHelpers.get(currentIndex).composite.moveAbove(controlHelpers.get(currentIndex - 1).composite);
+					controlHelpers.remove(currentIndex);
+					MoveCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
+						modelValue.getValue(), currentIndex - 1).execute();
+					controlHelpers.add(--currentIndex, getThis());
+					getThis().getModelValue().setIndex(currentIndex);
+					shiftIndecesToRight(currentIndex);
+					refreshSection();
+				}
+			});
+			Button downB = new Button(composite, SWT.PUSH);
+			downB.setImage(down);
+			downB.addSelectionListener(new SelectionAdapter() {
+				/*
+				 * (non-Javadoc)
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if (getThis().getModelValue().getIndex() + 1 == controlHelpers.size()) {
+						return;
+					}
+					int currentIndex = getThis().getModelValue().getIndex();
+					controlHelpers.get(currentIndex).composite.moveBelow(controlHelpers.get(currentIndex + 1).composite);
+					controlHelpers.remove(currentIndex);
+					MoveCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
+						modelValue.getValue(), currentIndex + 1).execute();
+					controlHelpers.add(++currentIndex, getThis());
+					getThis().getModelValue().setIndex(currentIndex);
+					shiftIndecesToLeft(currentIndex);
+					refreshSection();
+				}
+			});
+		}
 
-    /**
-     * @return the modelValue
-     */
-    ECPObservableValue getModelValue()
-    {
-      return modelValue;
-    }
-  }
+		/**
+		 * @return the modelValue
+		 */
+		ECPObservableValue getModelValue() {
+			return modelValue;
+		}
+	}
 }
