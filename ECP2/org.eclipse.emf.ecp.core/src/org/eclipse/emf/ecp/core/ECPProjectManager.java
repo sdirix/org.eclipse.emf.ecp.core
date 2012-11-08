@@ -19,19 +19,39 @@ public interface ECPProjectManager {
 
 	public static final ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
 
-	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
+	// APITODO: comment the next methods
+	/**
+	 * 
+	 * @param provider
+	 * @param name
+	 * @param properties
+	 * @return
+	 */
+	ECPProject createProject(ECPProvider provider, String name);
 
-	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties);
+	ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
 
-	public ECPProject cloneProject(ECPProject project);
+	ECPProject createProject(ECPRepository repository, String name, ECPProperties properties);
 
+	/**
+	 * Clones an {@link ECPProject} within the same provider.
+	 * 
+	 * @param project
+	 * @return
+	 */
+	ECPProject cloneProject(ECPProject project);
+
+	/**
+	 * Document when this works
+	 * 
+	 * @param adaptable
+	 * @return
+	 */
 	public ECPProject getProject(Object adaptable);
 
-	public ECPProject getProject(String name);
+	ECPProject getProject(String name);
 
 	public ECPProject[] getProjects();
-
-	public boolean hasProjects();
 
 	public void addObserver(IECPProjectsChangedObserver changeObserver);
 

@@ -55,8 +55,8 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	 * @param project
 	 */
 	public AbstractEClassTreeSelectionComposite(ECPProject project) {
-		this(ECPUtil.getAllRegisteredEPackages(), project.getUnsupportedEPackages(), project.getFilteredPackages(),
-			project.getFilteredEClasses());
+		this(ECPUtil.getAllRegisteredEPackages(), project.getUnsupportedEPackages(), project.getVisiblePackages(),
+			project.getVisibleEClasses());
 	}
 
 	private ILabelProvider getLabelProvider() {

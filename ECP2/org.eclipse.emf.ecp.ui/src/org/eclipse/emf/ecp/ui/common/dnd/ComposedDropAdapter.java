@@ -129,12 +129,12 @@ public class ComposedDropAdapter extends DropTargetAdapter {
 				+ " (Copy)", ECPUtil.createProperties());
 
 			for (EObject eObject : project.getElements()) {
-				projectCopy.addModelElement(EcoreUtil.copy(eObject));
+				projectCopy.getElements().add(EcoreUtil.copy(eObject));
 			}
 			project.open();
 
 		} else if (targetIsRoot) {
-			((ECPProject) target).addModelElement((EObject) dropee);
+			((ECPProject) target).getElements().add((EObject) dropee);
 		} else {
 			EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor((EObject) target);
 			editingDomain.getCommandStack().execute(new ChangeCommand((EObject) target) {

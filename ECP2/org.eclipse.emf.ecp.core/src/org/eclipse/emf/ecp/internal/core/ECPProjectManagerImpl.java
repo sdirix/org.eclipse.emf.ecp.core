@@ -98,8 +98,9 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return projects;
 	}
 
-	public boolean hasProjects() {
-		return hasElements();
+	@Override
+	public void storeElement(InternalProject project) {
+		super.storeElement(project);
 	}
 
 	public void changeProject(ECPProject project, boolean opened, boolean store) {
@@ -176,5 +177,15 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	@Override
 	protected boolean isRemoveDisposedElements() {
 		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProjectManager#createProject(org.eclipse.emf.ecp.core.ECPProvider,
+	 * java.lang.String)
+	 */
+	public ECPProject createProject(ECPProvider provider, String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
