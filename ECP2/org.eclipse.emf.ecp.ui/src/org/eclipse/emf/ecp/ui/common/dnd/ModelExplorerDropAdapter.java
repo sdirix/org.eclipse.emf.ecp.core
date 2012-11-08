@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
@@ -127,47 +128,30 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 	 * @see org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter#drop(org.eclipse.swt.dnd.DropTargetEvent)
 	 */
 	@Override
-	public void drop(DropTargetEvent event) {
+	public void drop(final DropTargetEvent event) {
 		Object target = extractDropTarget(event.item);
 		source = getDragSource(event);
-		Object sourceObject = source.iterator().next();
+		final Object sourceObject = source.iterator().next();
 
 		if (target instanceof ECPProject) {
-			ECPProject project = (ECPProject) target;
+			final ECPProject project = (ECPProject) target;
 
 			if (sourceObject instanceof EObject) {
-				if (event.detail == DND.DROP_MOVE) {
-					project.addModelElement((EObject) sourceObject);
-				} else if (event.detail == DND.DROP_COPY) {
-					project.addModelElement(EcoreUtil.copy((EObject) sourceObject));
-				}
-			} else if (sourceObject instanceof ECPProject) {
+				project.getEditingDomain().getCommandStack().execute(new ChangeCommand((EObject) sourceObject) {
 
-				// TODO copy of project by projectmanager
+					@Override
+					protected void doExecute() {
+						if (event.detail == DND.DROP_MOVE) {
+							project.getElements().add((EObject) sourceObject);
+						} else if (event.detail == DND.DROP_COPY) {
+							project.getElements().add(EcoreUtil.copy((EObject) sourceObject));
+						}
+					}
+				});
+
+			} else if (sourceObject instanceof ECPProject) {
 				ECPProject oldProject = (ECPProject) sourceObject;
 				ECPProjectManager.INSTANCE.cloneProject(oldProject);
-				//
-				// ECPProvider offlineProvider = null;
-				// for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-				// if (provider.hasUnsharedProjectSupport()) {
-				// offlineProvider = provider;
-				// break;
-				// }
-				// }
-				// if (offlineProvider == null) {
-				// return;
-				// }
-				//
-				// ECPProject newProject = ECPProjectManager.INSTANCE.createProject(offlineProvider,
-				// oldProject.getName()
-				// + " (Copy)", ECPUtil.createProperties());
-				//
-				// newProject.setFilteredEClasses(oldProject.getFilteredEClasses());
-				// newProject.setFilteredPackages(oldProject.getFilteredPackages());
-				//
-				// for (EObject eObject : oldProject.getElements()) {
-				// newProject.addModelElement(EcoreUtil.copy(eObject));
-				// }
 			}
 		} else if (event.detail != DND.DROP_NONE) {
 			super.drop(event);

@@ -34,8 +34,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, Listener> implements ECPProjectManager,
-	ECPRepositoryManager.Listener {
+public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedObserver> implements
+	ECPProjectManager, IECPRepositoriesChangedObserver {
+
 	public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
 	private boolean initializedProjects = false;
 
@@ -95,8 +96,9 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 		return projects;
 	}
 
-	public boolean hasProjects() {
-		return hasElements();
+	@Override
+	public void storeElement(InternalProject project) {
+		super.storeElement(project);
 	}
 
 	public void changeProject(ECPProject project, boolean opened, boolean store) {
@@ -104,29 +106,19 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 			storeElement((InternalProject) project);
 		}
 
-		Listener[] listeners = getRegistryListeners();
-		if (listeners != null) {
-			for (int i = 0; i < listeners.length; i++) {
-				try {
-					Listener listener = listeners[i];
-					listener.projectChanged(project, opened);
-				} catch (Exception ex) {
-					Activator.log(ex);
-				}
-			}
+		try {
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class).projectChanged(project, opened);
+		} catch (Exception ex) {
+			Activator.log(ex);
 		}
 	}
 
 	public void notifyObjectsChanged(ECPProject project, Object[] objects) {
-		Listener[] listeners = getRegistryListeners();
-		if (listeners != null) {
-			for (Listener listener : listeners) {
-				try {
-					listener.objectsChanged(project, objects);
-				} catch (Exception ex) {
-					Activator.log(ex);
-				}
-			}
+
+		try {
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class).objectsChanged(project, objects);
+		} catch (Exception ex) {
+			Activator.log(ex);
 		}
 	}
 
@@ -155,12 +147,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 	@Override
 	protected void doActivate() throws Exception {
 		super.doActivate();
-		ECPRepositoryManager.INSTANCE.addListener(this);
+		ECPRepositoryManager.INSTANCE.addObserver(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPRepositoryManager.INSTANCE.removeListener(this);
+		ECPRepositoryManager.INSTANCE.removeObserver(this);
 		super.doDeactivate();
 	}
 
@@ -175,18 +167,23 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, List
 	}
 
 	@Override
-	protected Listener[] createListenerArray(int size) {
-		return new Listener[size];
-	}
-
-	@Override
-	protected void notifyListener(Listener listener, InternalProject[] oldElements, InternalProject[] newElements)
-		throws Exception {
-		listener.projectsChanged(oldElements, newElements);
+	protected void notifyObservers(IECPProjectsChangedObserver observer, InternalProject[] oldElements,
+		InternalProject[] newElements) throws Exception {
+		observer.projectsChanged(oldElements, newElements);
 	}
 
 	@Override
 	protected boolean isRemoveDisposedElements() {
 		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProjectManager#createProject(org.eclipse.emf.ecp.core.ECPProvider,
+	 * java.lang.String)
+	 */
+	public ECPProject createProject(ECPProvider provider, String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

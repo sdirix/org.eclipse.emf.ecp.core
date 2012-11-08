@@ -172,7 +172,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			ePackages.add(ePackage);
 		}
 
-		setFilteredPackages(ePackages);
+		setVisiblePackages(ePackages);
 	}
 
 	@Override
@@ -481,19 +481,19 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages(), getRepository());
 	}
 
-	public void setFilteredPackages(Set<EPackage> filteredPackages) {
+	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
 		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
 	}
 
-	public Set<EPackage> getFilteredPackages() {
+	public Set<EPackage> getVisiblePackages() {
 		return filteredEPackages;
 	}
 
 	/**
 	 * @return the filteredEClasses
 	 */
-	public Set<EClass> getFilteredEClasses() {
+	public Set<EClass> getVisibleEClasses() {
 		return filteredEClasses;
 	}
 
@@ -501,7 +501,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * @param filteredEClasses
 	 *            the filteredEClasses to set
 	 */
-	public void setFilteredEClasses(Set<EClass> filteredEClasses) {
+	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
 		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
 	}
@@ -511,7 +511,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * @see org.eclipse.emf.ecp.core.ECPProject#getLinkElements(org.eclipse.emf.ecore.EObject,
 	 * org.eclipse.emf.ecore.EReference)
 	 */
-	public Iterator<EObject> getLinkElements(EObject modelElement, EReference eReference) {
+	public Iterator<EObject> getReferenceCandidates(EObject modelElement, EReference eReference) {
 		return getProvider().getLinkElements(this, modelElement, eReference);
 	}
 
@@ -519,7 +519,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#doSave()
 	 */
-	public void doSave() {
+	public void saveModel() {
 		getProvider().doSave(this);
 	}
 
@@ -527,7 +527,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#isDirty()
 	 */
-	public boolean isDirty() {
+	public boolean isModelDirty() {
 		return getProvider().isDirty(this);
 	}
 
@@ -535,7 +535,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#hasAutosave()
 	 */
-	public boolean hasAutosave() {
+	public boolean isModelAutoSave() {
 		return getProvider().hasAutosave(this);
 	}
 
@@ -568,9 +568,24 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	public InternalProject clone() {
 		InternalProject project = new ECPProjectImpl(getProvider(), getName() + "(Copy)", ECPUtil.createProperties());
-		project.setFilteredEClasses(getFilteredEClasses());
-		project.setFilteredPackages(getFilteredPackages());
+		project.setVisibleEClasses(getVisibleEClasses());
+		project.setVisiblePackages(getVisiblePackages());
 		getProvider().cloneProject(this, project);
 		return project;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#saveProject()
+	 */
+	public void saveProperties() {
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#contains(org.eclipse.emf.ecore.EObject)
+	 */
+	public boolean contains(EObject eObject) {
+		return getProvider().contains(this, eObject);
 	}
 }

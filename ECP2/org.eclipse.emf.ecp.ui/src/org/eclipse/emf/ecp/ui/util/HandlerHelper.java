@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.common.SelectModelElementComposite;
 import org.eclipse.emf.ecp.ui.dialogs.DeleteDialog;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -147,9 +148,15 @@ public class HandlerHelper {
 			if (ecpProject != null && newMEType != null) {
 				// 1.create ME
 				EPackage ePackage = newMEType.getEPackage();
-				EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
+				final EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
 
-				ecpProject.addModelElement(newMEInstance);
+				ecpProject.getEditingDomain().getCommandStack().execute(new ChangeCommand(newMEInstance) {
+
+					@Override
+					protected void doExecute() {
+						ecpProject.getElements().add(newMEInstance);
+					}
+				});
 
 				if (open) {
 					// 3.open the newly created ME
@@ -175,8 +182,8 @@ public class HandlerHelper {
 		callback.setCompositeUIProvider(checkedModelComposite);
 
 		Set<Object> initialSelectionSet = new HashSet<Object>();
-		initialSelectionSet.addAll(ecpProject.getFilteredPackages());
-		initialSelectionSet.addAll(ecpProject.getFilteredEClasses());
+		initialSelectionSet.addAll(ecpProject.getVisiblePackages());
+		initialSelectionSet.addAll(ecpProject.getVisibleEClasses());
 		checkedModelComposite.setInitialSelection(initialSelectionSet.toArray());
 
 		if (AbstractUICallback.OK == callback.open()) {
@@ -193,8 +200,8 @@ public class HandlerHelper {
 					}
 				}
 			}
-			ecpProject.setFilteredPackages(filtererdPackages);
-			ecpProject.setFilteredEClasses(filtererdEClasses);
+			ecpProject.setVisiblePackages(filtererdPackages);
+			ecpProject.setVisibleEClasses(filtererdEClasses);
 		}
 	}
 
@@ -255,6 +262,6 @@ public class HandlerHelper {
 	 * @param project
 	 */
 	public static void saveProject(ECPProject project) {
-		project.doSave();
+		project.saveModel();
 	}
 }

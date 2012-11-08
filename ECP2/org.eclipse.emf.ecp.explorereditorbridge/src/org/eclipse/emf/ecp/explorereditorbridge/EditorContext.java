@@ -46,14 +46,14 @@ public class EditorContext implements EditorModelelementContext {
 
 	private List<EditorModelelementContextListener> contextListeners = new ArrayList<EditorModelelementContextListener>();
 
-	private Listener projectListener;
+	private IECPProjectsChangedObserver projectObserver;
 
 	public EditorContext(EObject modelElement, ECPProject ecpProject) {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		metaModeElementContext = new MetaModeElementContext();
 
-		projectListener = new Listener() {
+		projectObserver = new IECPProjectsChangedObserver() {
 
 			public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 				// TODO Auto-generated method stub
@@ -73,7 +73,7 @@ public class EditorContext implements EditorModelelementContext {
 				// do nothing
 			}
 		};
-		ECPProjectManager.INSTANCE.addListener(projectListener);
+		ECPProjectManager.INSTANCE.addObserver(projectObserver);
 	}
 
 	public void addModelElementContextListener(EditorModelelementContextListener modelElementContextListener) {
@@ -111,7 +111,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * Dispose the context.
 	 */
 	public void dispose() {
-		ECPProjectManager.INSTANCE.removeListener(projectListener);
+		ECPProjectManager.INSTANCE.removeObserver(projectObserver);
 	}
 
 	/*
@@ -119,7 +119,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference)
 	 */
 	public Iterator<EObject> getLinkElements(EReference eReference) {
-		return ecpProject.getLinkElements(modelElement, eReference);
+		return ecpProject.getReferenceCandidates(modelElement, eReference);
 	}
 
 	// TODO remove
@@ -136,7 +136,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(EObject newMEInstance) {
-		ecpProject.addModelElement(newMEInstance);
+		ecpProject.getElements().add(newMEInstance);
 	}
 
 	/*

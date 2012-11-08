@@ -97,7 +97,8 @@ public class EMFStoreProvider extends DefaultProvider {
 			ServerInfo serverInfo = getServerInfo((InternalRepository) parent);
 			if (serverInfo.getLastUsersession() != null) {
 				try {
-					if (!serverInfo.getLastUsersession().isLoggedIn()) {
+					if (!serverInfo.getLastUsersession().isLoggedIn()
+						&& serverInfo.getLastUsersession().getSessionId() != null) {
 						serverInfo.getLastUsersession().logIn();
 					}
 					EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
@@ -229,20 +230,24 @@ public class EMFStoreProvider extends DefaultProvider {
 				return;
 			}
 			projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
-
+				// 2
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
-					// 2
+
 					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
 				}
 
+				// 3
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
-					// 3
-					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+					if (modelElement.eContainer() == null) {
+						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+					}
 				}
 
+				// 1
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
-					// 1
-					// ((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+					if (Project.class.isInstance(modelElement.eContainer())) {
+						((InternalProject) context).notifyObjectsChanged(new Object[] { context });
+					}
 				}
 
 				public void collectionDeleted(IdEObjectCollection collection) {
@@ -329,22 +334,25 @@ public class EMFStoreProvider extends DefaultProvider {
 
 			boolean foundExisting = false;
 			for (ServerInfo info : workspace.getServerInfos()) {
-				if (isSameServerInfo(info,
-					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
-					Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
-					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE))) {
+				if (internalRepository.getProperties().hasProperties()
+					&& isSameServerInfo(info,
+						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
+						Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
+						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE))) {
 					serverInfo = info;
 					foundExisting = true;
 					break;
 				}
 			}
-			if (!foundExisting) {
+			if (!foundExisting && internalRepository.getProperties().hasProperties()) {
 				serverInfo = EMFStoreClientUtil.createServerInfo(
 					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
 					Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
 					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
 				workspace.addServerInfo(serverInfo);
 				workspace.save();
+			} else {
+				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080);
 			}
 			internalRepository.setProviderSpecificData(serverInfo);
 		}
@@ -424,4 +432,21 @@ public class EMFStoreProvider extends DefaultProvider {
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#contains(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public boolean contains(InternalProject internalProject, EObject eObject) {
+		ProjectSpace projectSpace = getProjectSpace(internalProject);
+		return projectSpace.getProject().containsInstance(eObject);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerClass()
+	 */
+	public Class<?> getContainerClass() {
+		return Project.class;
+	}
 }
