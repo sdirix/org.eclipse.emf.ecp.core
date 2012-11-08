@@ -22,6 +22,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.editor.input.MEEditorInput;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.SWTException;
@@ -118,10 +119,11 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (!replaceMEEditor) {
 			try {
 				if (editorInput.getProblemFeature() != null) {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext, modelElementContext.getModelElement(),
-						editorInput.getProblemFeature());
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
+						modelElementContext.getModelElement(), editorInput.getProblemFeature());
 				} else {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext, modelElementContext.getModelElement());
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
+						modelElementContext.getModelElement());
 				}
 
 				addPage(mePage);
@@ -158,7 +160,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		modelElementContext.save();
-		firePropertyChange(IEditorPart.PROP_DIRTY); 
+		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
 
 	/**
@@ -187,13 +189,15 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (input instanceof MEEditorInput) {
 			setInput(input);
 			final MEEditorInput meInput = (MEEditorInput) input;
-			this.modelElementContext=meInput.getModelElementContext();
+			this.modelElementContext = meInput.getModelElementContext();
 			setPartName((new ShortLabelProvider()).getText(modelElementContext.getModelElement()));
-			setTitleImage(input.getImageDescriptor().createImage());
+			ImageDescriptor imageDescriptor = input.getImageDescriptor();
+			if (imageDescriptor != null) {
+				setTitleImage(imageDescriptor.createImage());
+			}
 
 			modelElementContextListener = new EditorModelelementContextListener() {
 
-				
 				public void onModelElementDeleted(EObject deleted) {
 					if (modelElementContext.getModelElement().equals(deleted)) {
 						close(false);
@@ -221,7 +225,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 							setPartName((new ShortLabelProvider()).getText(modelElementContext.getModelElement()));
 							if (mePage != null) {
 								mePage.updateSectionTitle();
-								mePage.updateLiveValidation();
+								// mePage.updateLiveValidation();
 							}
 							updateStatusMessage();
 						}
