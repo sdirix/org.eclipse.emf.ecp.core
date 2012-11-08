@@ -162,6 +162,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		}
 		createAttributes(toolkit, bottomComposite, bottomAttributes);
 
+		updateLiveValidation();
 		return topComposite;
 	}
 
