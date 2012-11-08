@@ -28,6 +28,7 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -157,6 +158,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		modelElementContext.save();
+		firePropertyChange(IEditorPart.PROP_DIRTY); 
 	}
 
 	/**
