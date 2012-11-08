@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -68,8 +69,7 @@ public class DateTimeWidget extends ECPAttributeWidget {
 	 * @param feature the {@link EStructuralFeature} edited in this widget
 	 * @param domain the {@link EditingDomain} of the edited {@link EObject}
 	 */
-	public DateTimeWidget(EMFDataBindingContext dbc, EObject modelElement, EStructuralFeature feature,
-		EditingDomain domain) {
+	public DateTimeWidget(DataBindingContext dbc, EObject modelElement, EStructuralFeature feature, EditingDomain domain) {
 		super(dbc);
 		this.modelElement = modelElement;
 		this.feature = feature;

@@ -10,11 +10,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.EEnumWidget;
+
+import org.eclipse.core.databinding.DataBindingContext;
 
 /**
  * This is the standard Control to enum values.
@@ -23,35 +24,31 @@ import org.eclipse.emf.ecp.editor.mecontrols.widgets.EEnumWidget;
  * @author Nikolay Kasyanov
  * @author Eugen Neufeld
  */
-public class MEEnumControl extends MEAttributeControl
-{
-  /**
-   * @return
-   */
-  @Override
-  protected Class<?> getFeatureClass(EStructuralFeature feature)
-  {
-    return feature.getEType().getClass();
-  }
+public class MEEnumControl extends MEAttributeControl {
+	/**
+	 * @return
+	 */
+	@Override
+	protected Class<?> getFeatureClass(EStructuralFeature feature) {
+		return feature.getEType().getClass();
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
-   */
-  @Override
-  protected Class<?> getClassType()
-  {
-    return EEnum.class;
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+	 */
+	@Override
+	protected Class<?> getClassType() {
+		return EEnum.class;
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
-   * EMFDataBindingContext)
-   */
-  @Override
-  protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc)
-  {
-    return new EEnumWidget(dbc, getItemPropertyDescriptor(), getModelElement(), getStructuralFeature());
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+	 * EMFDataBindingContext)
+	 */
+	@Override
+	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
+		return new EEnumWidget(dbc, getItemPropertyDescriptor(), getModelElement(), getStructuralFeature());
+	}
 }

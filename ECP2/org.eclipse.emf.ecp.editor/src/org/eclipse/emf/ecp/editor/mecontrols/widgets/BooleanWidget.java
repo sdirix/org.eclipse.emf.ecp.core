@@ -3,8 +3,7 @@
  */
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -17,50 +16,44 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 /**
  * @author Eugen Neufeld
  */
-public class BooleanWidget extends ECPAttributeWidget
-{
+public class BooleanWidget extends ECPAttributeWidget {
 
-  /**
-   * @param dbc
-   */
-  public BooleanWidget(EMFDataBindingContext dbc)
-  {
-    super(dbc);
-  }
+	/**
+	 * @param dbc
+	 */
+	public BooleanWidget(DataBindingContext dbc) {
+		super(dbc);
+	}
 
-  Button check;
+	Button check;
 
-  @Override
-  public Control createWidget(final FormToolkit toolkit, final Composite composite, final int style)
-  {
-    check = toolkit.createButton(composite, "", SWT.CHECK);
-    return check;
-  }
+	@Override
+	public Control createWidget(final FormToolkit toolkit, final Composite composite, final int style) {
+		check = toolkit.createButton(composite, "", SWT.CHECK);
+		return check;
+	}
 
-  @Override
-  public void bindValue(final IObservableValue modelValue, final ControlDecoration controlDecoration)
-  {
-    IObservableValue targetValue = SWTObservables.observeSelection(check);
-    getDbc().bindValue(targetValue, modelValue);
-  }
+	@Override
+	public void bindValue(final IObservableValue modelValue, final ControlDecoration controlDecoration) {
+		IObservableValue targetValue = SWTObservables.observeSelection(check);
+		getDbc().bindValue(targetValue, modelValue);
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#setEditable(boolean)
-   */
-  @Override
-  public void setEditable(boolean isEditable)
-  {
-    check.setEnabled(isEditable);
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#setEditable(boolean)
+	 */
+	@Override
+	public void setEditable(boolean isEditable) {
+		check.setEnabled(isEditable);
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#getControl()
-   */
-  @Override
-  public Control getControl()
-  {
-    return check;
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#getControl()
+	 */
+	@Override
+	public Control getControl() {
+		return check;
+	}
 }

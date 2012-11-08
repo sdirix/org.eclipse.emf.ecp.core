@@ -13,8 +13,7 @@
 
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -48,7 +47,7 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	/**
 	 * @param dbc
 	 */
-	public AbstractTextWidget(EMFDataBindingContext dbc) {
+	public AbstractTextWidget(DataBindingContext dbc) {
 		super(dbc);
 	}
 
