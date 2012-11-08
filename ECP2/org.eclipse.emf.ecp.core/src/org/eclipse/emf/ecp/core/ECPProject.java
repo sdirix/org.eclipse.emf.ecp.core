@@ -40,7 +40,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	/**
 	 * The type of the ECPElement.
 	 */
-	public static final String TYPE = "Project";
+	String TYPE = "Project";
 
 	/**
 	 * Returns the list of the direct content objects; each is of type EObject.
@@ -59,7 +59,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * 
 	 * @return true, if the project contains the given {@link EObject}, false otherwise
 	 */
-	public boolean contains(EObject eObject);
+	boolean contains(EObject eObject);
 
 	/**
 	 * Returns <code>true</code> if this project is shared with a {@link ECPRepository repository}, <code>false</code>
@@ -124,7 +124,6 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 */
 	void saveProperties();
 
-	// APITODO: comment the next three methods
 	/**
 	 * Saves the currently pending changes of the mode. This method delegates to the provider.
 	 */

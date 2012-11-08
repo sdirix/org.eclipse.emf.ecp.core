@@ -230,6 +230,7 @@ public class NewReferenceAction extends ReferenceAction {
 	 */
 	@Override
 	public void run() {
+		// checks if we try to create a container for ourself, this is not allowed
 		if (eReference.isContainer()) {
 			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "",
 				"Operation not permitted for container references!");

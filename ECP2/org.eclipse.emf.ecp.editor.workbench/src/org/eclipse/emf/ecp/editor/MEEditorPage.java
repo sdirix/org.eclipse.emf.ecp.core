@@ -194,11 +194,5 @@ public class MEEditorPage extends FormPage {
 	public void setFocus() {
 		editorPageContent.focus();
 	}
-	/**
-	 * Triggers live validation of the model attributes.
-	 * **/
-	public void updateLiveValidation() {
-		editorPageContent.updateLiveValidation();
-	}
 
 }

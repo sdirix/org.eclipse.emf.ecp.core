@@ -122,4 +122,13 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @return true, if the project managed by the provider contains the given {@link EObject}, false otherwise
 	 */
 	public boolean contains(InternalProject project, EObject eObject);
+
+	/**
+	 * Checks whether the data of the project still exists, method is called on startup. {@link DefaultProvider}
+	 * implements this by returning true, adopt if needed.
+	 * 
+	 * @param project {@link InternalProject} to check
+	 * @return true if data exists, false otherwise
+	 */
+	boolean projectExists(InternalProject project);
 }
