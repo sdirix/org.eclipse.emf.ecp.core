@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -73,6 +74,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	private boolean open;
 
+	/**
+	 * Constructor used when an offline project is created.
+	 * 
+	 * @param provider the {@link ECPProvider} of this project
+	 * @param name the name of the project
+	 * @param properties the properties of the project
+	 */
 	public ECPProjectImpl(InternalProvider provider, String name, ECPProperties properties) {
 		super(name, properties);
 		this.provider = provider;
@@ -81,6 +89,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		notifyProvider(LifecycleEvent.INIT);
 	}
 
+	/**
+	 * Constructor used when an online project is created.
+	 * 
+	 * @param repository the {@link ECPRepository} of this project
+	 * @param name the name of the project
+	 * @param properties the properties of the project
+	 */
 	public ECPProjectImpl(ECPRepository repository, String name, ECPProperties properties) {
 		super(name, properties);
 
@@ -94,6 +109,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		open = true;
 	}
 
+	/**
+	 * Constructor used to load persisted projects on startup.
+	 * 
+	 * @param in the {@link ObjectInput} to parse
+	 * @throws IOException is thrown when file can't be read.
+	 */
 	public ECPProjectImpl(ObjectInput in) throws IOException {
 		super(in);
 

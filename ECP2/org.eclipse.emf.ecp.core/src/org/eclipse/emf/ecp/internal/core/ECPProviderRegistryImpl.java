@@ -320,5 +320,14 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		public Class<?> getContainerClass() {
 			return getResolvedElement().getContainerClass();
 		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see
+		 * org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(org.eclipse.emf.ecp.spi.core.InternalProject)
+		 */
+		public boolean projectExists(InternalProject project) {
+			return getResolvedElement().projectExists(project);
+		}
 	}
 }

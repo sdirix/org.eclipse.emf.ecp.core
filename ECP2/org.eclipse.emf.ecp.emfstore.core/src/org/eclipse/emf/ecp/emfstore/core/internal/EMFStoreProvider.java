@@ -303,6 +303,10 @@ public class EMFStoreProvider extends DefaultProvider {
 	}
 
 	public ProjectSpace getProjectSpace(InternalProject internalProject) {
+		return getProjectSpace(internalProject, true);
+	}
+
+	private ProjectSpace getProjectSpace(InternalProject internalProject, boolean createNewIfNeeded) {
 		ProjectSpace projectSpace = (ProjectSpace) internalProject.getProviderSpecificData();
 		if (projectSpace == null) {
 			boolean found = false;
@@ -315,7 +319,7 @@ public class EMFStoreProvider extends DefaultProvider {
 					break;
 				}
 			}
-			if (!found) {
+			if (!found && createNewIfNeeded) {
 				projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
 					.createLocalProject(internalProject.getName(), "");
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
@@ -448,5 +452,10 @@ public class EMFStoreProvider extends DefaultProvider {
 	 */
 	public Class<?> getContainerClass() {
 		return Project.class;
+	}
+
+	@Override
+	public boolean projectExists(InternalProject project) {
+		return getProjectSpace(project, false) != null;
 	}
 }
