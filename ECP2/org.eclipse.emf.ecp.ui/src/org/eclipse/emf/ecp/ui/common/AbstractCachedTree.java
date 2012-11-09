@@ -67,6 +67,10 @@ public abstract class AbstractCachedTree<T> {
 	 */
 	public void update(EObject eObject, T value, Set<? extends Class<?>> excludedTypes) {
 
+		if (isExcludedType(excludedTypes, eObject.getClass())) {
+			return;
+		}
+
 		updateNode(eObject, value);
 		rootValue.putIntoCache(eObject, value);
 
