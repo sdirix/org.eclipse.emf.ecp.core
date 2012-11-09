@@ -77,7 +77,6 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		this.modelElementContext = modelElementContext;
 		this.toolkit = toolkit;
 		this.shell = shell;
-		// FIXME where register, in the context?
 		addModelElementListener();
 	}
 

@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
 public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedObserver> implements
 	ECPProjectManager, IECPRepositoriesChangedObserver {
@@ -46,6 +47,10 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	private boolean initializedProjects = false;
 
 	private ECPProjectManagerImpl() {
+	}
+
+	public ECPProject createProject(ECPProvider provider, String name) {
+		return this.createProject(provider, name, ECPUtil.createProperties());
 	}
 
 	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties) {

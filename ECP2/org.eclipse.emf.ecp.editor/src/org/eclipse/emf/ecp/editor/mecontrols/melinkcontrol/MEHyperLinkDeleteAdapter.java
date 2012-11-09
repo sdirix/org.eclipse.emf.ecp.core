@@ -88,7 +88,7 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 		context.getEditingDomain().getCommandStack().execute(removeCommand);
 	}
 
-	private boolean askConfirmation(EObject toBeDeleted) {
+	public static boolean askConfirmation(EObject toBeDeleted) {
 		String question = null;
 		ComposedAdapterFactory adapterFactory = null;
 		// if (toBeDeleted.size() == 1) {

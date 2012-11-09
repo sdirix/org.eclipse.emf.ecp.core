@@ -98,14 +98,12 @@ public interface EditorModelelementContext {
 	 */
 	Iterator<EObject> getLinkElements(EReference eReference);
 
-	// TODO remove
 	/**
 	 * Open an Editor.
 	 * 
 	 * @param o the {@link EObject}
 	 * @param source the source
 	 */
-	@Deprecated
 	void openEditor(EObject o, String source);
 
 	/**

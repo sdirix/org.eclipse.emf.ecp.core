@@ -21,6 +21,17 @@ public interface ECPProjectManager {
 	public static final ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
 
 	/**
+	 * Method to construct an offline Project, this method calls
+	 * {@link #createProject(ECPProvider, String, ECPProperties)} with empty properties.
+	 * 
+	 * @param provider the {@link ECPProvider} of this project
+	 * @param name the name of the project
+	 * @return created {@link ECPProject}
+	 */
+
+	ECPProject createProject(ECPProvider provider, String name);
+
+	/**
 	 * Method to construct an offline Project and notify listeners about this add.
 	 * 
 	 * @param provider the {@link ECPProvider} of this project

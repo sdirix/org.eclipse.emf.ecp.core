@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
 
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -53,7 +52,6 @@ public class MEHyperLinkAdapter extends HyperlinkAdapter implements IHyperlinkLi
 	 */
 	@Override
 	public void linkActivated(HyperlinkEvent event) {
-		ActionHelper.openModelElement(target, "", null);
 		modelContext.openEditor(target, "org.eclipse.emf.ecp.editor");
 		super.linkActivated(event);
 	}

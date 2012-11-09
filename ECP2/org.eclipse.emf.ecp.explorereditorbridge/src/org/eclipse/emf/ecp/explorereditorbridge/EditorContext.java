@@ -73,7 +73,15 @@ public class EditorContext implements EditorModelelementContext {
 			}
 
 			public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
-				// do nothing
+				for (Object object : objects) {
+					if (EObject.class.isInstance(object) && object.equals(getModelElement())) {
+						for (EditorModelelementContextListener contextListener : contextListeners) {
+							contextListener.onContextDeleted();
+						}
+						dispose();
+						break;
+					}
+				}
 			}
 		};
 		ECPProjectManager.INSTANCE.addObserver(projectObserver);
@@ -125,12 +133,12 @@ public class EditorContext implements EditorModelelementContext {
 		return ecpProject.getReferenceCandidates(modelElement, eReference);
 	}
 
-	// TODO remove
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#openEditor(org.eclipse.emf.ecore.EObject)
 	 */
 	public void openEditor(EObject o, String source) {
+		// TODO only elements of the same project?
 		ActionHelper.openModelElement(o, source, ecpProject);
 	}
 
