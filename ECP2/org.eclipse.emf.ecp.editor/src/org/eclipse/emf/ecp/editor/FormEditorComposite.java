@@ -13,6 +13,7 @@
 
 package org.eclipse.emf.ecp.editor;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -34,6 +35,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -52,6 +54,8 @@ import java.util.Map;
  */
 public class FormEditorComposite implements IEditorCompositeProvider {
 
+	private ModelElementChangeListener modelElementChangeListener;
+
 	/**
 	 * Constructor to initialize the {@link FormToolkit} on its own.
 	 * 
@@ -59,9 +63,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	 * @param shell the shell used for callbacks
 	 */
 	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell) {
-		this.modelElementContext = modelElementContext;
-		toolkit = new FormToolkit(shell.getDisplay());
-		this.shell = shell;
+		this(modelElementContext, shell, new FormToolkit(shell.getDisplay()));
 	}
 
 	/**
@@ -75,6 +77,25 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		this.modelElementContext = modelElementContext;
 		this.toolkit = toolkit;
 		this.shell = shell;
+		// FIXME where register, in the context?
+		addModelElementListener();
+	}
+
+	/**
+	 * 
+	 */
+	private void addModelElementListener() {
+		modelElementChangeListener = new ModelElementChangeListener(modelElementContext.getModelElement()) {
+
+			@Override
+			public void onChange(Notification notification) {
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						updateLiveValidation();
+					}
+				});
+			}
+		};
 	}
 
 	private Shell shell;
@@ -141,6 +162,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		}
 		createAttributes(toolkit, bottomComposite, bottomAttributes);
 
+		updateLiveValidation();
 		return topComposite;
 	}
 
@@ -258,6 +280,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		for (AbstractMEControl control : meControls.values()) {
 			control.dispose();
 		}
+		modelElementChangeListener.remove();
 	}
 
 	/**

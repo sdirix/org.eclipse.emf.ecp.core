@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
 
@@ -19,21 +20,61 @@ public interface ECPProjectManager {
 
 	public static final ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
 
-	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
+	/**
+	 * Method to construct an offline Project and notify listeners about this add.
+	 * 
+	 * @param provider the {@link ECPProvider} of this project
+	 * @param name the name of the project
+	 * @param properties the project properties
+	 * @return created {@link ECPProject}
+	 */
 
-	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties);
+	ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
 
-	public ECPProject cloneProject(ECPProject project);
+	/**
+	 * Method to construct an online Project and notify listeners about this add.
+	 * 
+	 * @param repository the {@link ECPRepository} of this project
+	 * @param name the name of the project
+	 * @param properties the project properties
+	 * @return created {@link ECPProject}
+	 */
+	ECPProject createProject(ECPRepository repository, String name, ECPProperties properties);
 
-	public ECPProject getProject(Object adaptable);
+	/**
+	 * Clones an {@link ECPProject} within the same provider.
+	 * 
+	 * @param project the {@link ECPProject} to clone
+	 * @return the clone of the {@link ECPProject}
+	 */
+	ECPProject cloneProject(ECPProject project);
 
-	public ECPProject getProject(String name);
+	/**
+	 * This method checks whether the adaptable is {@link ECPProjectAware} and else uses the AdapterUtil to adapt to a
+	 * project.
+	 * 
+	 * @param adaptable the Object to adapt
+	 * @return the adapted {@link ECPProject}
+	 */
+	ECPProject getProject(Object adaptable);
 
-	public ECPProject[] getProjects();
+	/**
+	 * Searches for a project based on the provided {@link String}.
+	 * 
+	 * @param name of the project to search for
+	 * @return the {@link ECPProject}
+	 */
 
-	public boolean hasProjects();
+	ECPProject getProject(String name);
 
-	public void addObserver(IECPProjectsChangedObserver changeObserver);
+	/**
+	 * Returns all known projects.
+	 * 
+	 * @return an array of all known projects
+	 */
+	ECPProject[] getProjects();
 
-	public void removeObserver(IECPProjectsChangedObserver changeObserver);
+	void addObserver(IECPProjectsChangedObserver changeObserver);
+
+	void removeObserver(IECPProjectsChangedObserver changeObserver);
 }

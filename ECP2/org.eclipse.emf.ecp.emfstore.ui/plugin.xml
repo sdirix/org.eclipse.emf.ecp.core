@@ -294,9 +294,14 @@
             lightweight="true"
             state="true">
          <enablement>
-            <objectClass
-                  name="org.eclipse.emf.ecp.core.ECPProject">
-            </objectClass>
+            <or>
+               <objectClass
+                     name="org.eclipse.emf.ecp.core.ECPProject">
+               </objectClass>
+               <objectClass
+                     name="org.eclipse.emf.ecore.EObject">
+               </objectClass>
+            </or>
          </enablement>
          <description>
             If the porject has local changes.
@@ -336,6 +341,11 @@
          point="org.eclipse.emf.emfstore.client.logoutObserver">
       <observer
             logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
+      </observer>
+   </extension> <extension
+         point="org.eclipse.emf.emfstore.client.commitObserver">
+      <observer
+            commitObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyDecorator">
       </observer>
    </extension>
 </plugin>

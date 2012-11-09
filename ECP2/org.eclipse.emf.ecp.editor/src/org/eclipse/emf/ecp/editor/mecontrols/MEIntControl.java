@@ -10,9 +10,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.IntegerWidget;
+
+import org.eclipse.core.databinding.DataBindingContext;
 
 /**
  * Standard widgets to edit a integer attribute.
@@ -21,28 +22,25 @@ import org.eclipse.emf.ecp.editor.mecontrols.widgets.IntegerWidget;
  * @author emueller
  * @author Eugen Neufeld
  */
-public class MEIntControl extends MEAttributeControl
-{
+public class MEIntControl extends MEAttributeControl {
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
-   */
-  @Override
-  protected Class<?> getClassType()
-  {
-    return Integer.class;
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+	 */
+	@Override
+	protected Class<?> getClassType() {
+		return Integer.class;
+	}
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
-   * EMFDataBindingContext)
-   */
-  @Override
-  protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc)
-  {
-    return new IntegerWidget(dbc);
-  }
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+	 * EMFDataBindingContext)
+	 */
+	@Override
+	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
+		return new IntegerWidget(dbc);
+	}
 
 }

@@ -13,8 +13,7 @@
 
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
-
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -48,7 +47,7 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	/**
 	 * @param dbc
 	 */
-	public AbstractTextWidget(EMFDataBindingContext dbc) {
+	public AbstractTextWidget(DataBindingContext dbc) {
 		super(dbc);
 	}
 
@@ -175,7 +174,7 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	 * Validates the string entered in the text field. This method is executed whenever the user modifies the text
 	 * contained in the SWT Text control.
 	 * 
-	 * @param text
+	 * @param value
 	 *            the text to be validated
 	 * @return true if <code>text</code> is a valid model value
 	 */

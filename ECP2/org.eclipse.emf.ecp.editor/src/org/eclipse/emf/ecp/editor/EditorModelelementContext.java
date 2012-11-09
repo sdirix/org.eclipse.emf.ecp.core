@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import org.eclipse.core.databinding.DataBindingContext;
+
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -54,6 +56,13 @@ public interface EditorModelelementContext {
 	 * @return a {@link Collection} of {@link EObject} Iterator
 	 */
 	Collection<EObject> getAllModelElementsbyClass(EClass clazz, boolean association);
+
+	/**
+	 * Return the {@link DataBindingContext} to use in the editor.
+	 * 
+	 * @return the {@link DataBindingContext} to use
+	 */
+	DataBindingContext getDataBindingContext();
 
 	/**
 	 * Returns the editing domain.

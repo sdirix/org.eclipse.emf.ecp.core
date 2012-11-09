@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -73,6 +74,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	private boolean open;
 
+	/**
+	 * Constructor used when an offline project is created.
+	 * 
+	 * @param provider the {@link ECPProvider} of this project
+	 * @param name the name of the project
+	 * @param properties the properties of the project
+	 */
 	public ECPProjectImpl(InternalProvider provider, String name, ECPProperties properties) {
 		super(name, properties);
 		this.provider = provider;
@@ -81,6 +89,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		notifyProvider(LifecycleEvent.INIT);
 	}
 
+	/**
+	 * Constructor used when an online project is created.
+	 * 
+	 * @param repository the {@link ECPRepository} of this project
+	 * @param name the name of the project
+	 * @param properties the properties of the project
+	 */
 	public ECPProjectImpl(ECPRepository repository, String name, ECPProperties properties) {
 		super(name, properties);
 
@@ -94,6 +109,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		open = true;
 	}
 
+	/**
+	 * Constructor used to load persisted projects on startup.
+	 * 
+	 * @param in the {@link ObjectInput} to parse
+	 * @throws IOException is thrown when file can't be read.
+	 */
 	public ECPProjectImpl(ObjectInput in) throws IOException {
 		super(in);
 
@@ -172,7 +193,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			ePackages.add(ePackage);
 		}
 
-		setFilteredPackages(ePackages);
+		setVisiblePackages(ePackages);
 	}
 
 	@Override
@@ -481,19 +502,19 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages(), getRepository());
 	}
 
-	public void setFilteredPackages(Set<EPackage> filteredPackages) {
+	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
 		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
 	}
 
-	public Set<EPackage> getFilteredPackages() {
+	public Set<EPackage> getVisiblePackages() {
 		return filteredEPackages;
 	}
 
 	/**
 	 * @return the filteredEClasses
 	 */
-	public Set<EClass> getFilteredEClasses() {
+	public Set<EClass> getVisibleEClasses() {
 		return filteredEClasses;
 	}
 
@@ -501,7 +522,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * @param filteredEClasses
 	 *            the filteredEClasses to set
 	 */
-	public void setFilteredEClasses(Set<EClass> filteredEClasses) {
+	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
 		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
 	}
@@ -511,7 +532,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * @see org.eclipse.emf.ecp.core.ECPProject#getLinkElements(org.eclipse.emf.ecore.EObject,
 	 * org.eclipse.emf.ecore.EReference)
 	 */
-	public Iterator<EObject> getLinkElements(EObject modelElement, EReference eReference) {
+	public Iterator<EObject> getReferenceCandidates(EObject modelElement, EReference eReference) {
 		return getProvider().getLinkElements(this, modelElement, eReference);
 	}
 
@@ -519,7 +540,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#doSave()
 	 */
-	public void doSave() {
+	public void saveModel() {
 		getProvider().doSave(this);
 	}
 
@@ -527,7 +548,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#isDirty()
 	 */
-	public boolean isDirty() {
+	public boolean isModelDirty() {
 		return getProvider().isDirty(this);
 	}
 
@@ -535,7 +556,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#hasAutosave()
 	 */
-	public boolean hasAutosave() {
+	public boolean isModelAutoSave() {
 		return getProvider().hasAutosave(this);
 	}
 
@@ -568,10 +589,18 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	public InternalProject clone() {
 		InternalProject project = new ECPProjectImpl(getProvider(), getName() + "(Copy)", ECPUtil.createProperties());
-		project.setFilteredEClasses(getFilteredEClasses());
-		project.setFilteredPackages(getFilteredPackages());
+		project.setVisibleEClasses(getVisibleEClasses());
+		project.setVisiblePackages(getVisiblePackages());
 		getProvider().cloneProject(this, project);
 		return project;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#saveProject()
+	 */
+	public void saveProperties() {
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
 	/*

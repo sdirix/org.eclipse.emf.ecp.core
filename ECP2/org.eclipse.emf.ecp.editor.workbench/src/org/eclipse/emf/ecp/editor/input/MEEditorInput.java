@@ -20,6 +20,7 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IDecoratorManager;
@@ -46,7 +47,7 @@ public class MEEditorInput implements IEditorInput {
 	 * @param context context of the model element
 	 * @param problemFeature the problem feature
 	 */
-	public MEEditorInput( EditorModelelementContext context, EStructuralFeature problemFeature) {
+	public MEEditorInput(EditorModelelementContext context, EStructuralFeature problemFeature) {
 		this(context);
 		this.problemFeature = problemFeature;
 	}
@@ -104,8 +105,12 @@ public class MEEditorInput implements IEditorInput {
 	 * {@inheritDoc}
 	 */
 	public ImageDescriptor getImageDescriptor() {
-		ImageDescriptor descriptor = ImageDescriptor.createFromImage(labelProvider.getImage(modelElementContext.getModelElement()));
-		return descriptor;
+		Image image = labelProvider.getImage(modelElementContext.getModelElement());
+		if (image != null) {
+			ImageDescriptor descriptor = ImageDescriptor.createFromImage(image);
+			return descriptor;
+		}
+		return null;
 	}
 
 	/**

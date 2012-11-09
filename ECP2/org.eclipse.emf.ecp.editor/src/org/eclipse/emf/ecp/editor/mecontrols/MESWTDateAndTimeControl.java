@@ -10,9 +10,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.DateTimeWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
+
+import org.eclipse.core.databinding.DataBindingContext;
 
 import java.util.Date;
 
@@ -38,7 +39,7 @@ public class MESWTDateAndTimeControl extends MEAttributeControl {
 	 * EMFDataBindingContext)
 	 */
 	@Override
-	protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc) {
+	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
 		return new DateTimeWidget(dbc, getModelElement(), getStructuralFeature(), getContext().getEditingDomain());
 	}
 

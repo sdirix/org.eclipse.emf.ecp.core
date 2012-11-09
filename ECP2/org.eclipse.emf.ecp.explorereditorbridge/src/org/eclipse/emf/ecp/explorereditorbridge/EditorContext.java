@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.explorereditorbridge;
 
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -24,6 +25,8 @@ import org.eclipse.emf.ecp.editor.EditorModelelementContextListener;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+
+import org.eclipse.core.databinding.DataBindingContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -119,7 +122,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference)
 	 */
 	public Iterator<EObject> getLinkElements(EReference eReference) {
-		return ecpProject.getLinkElements(modelElement, eReference);
+		return ecpProject.getReferenceCandidates(modelElement, eReference);
 	}
 
 	// TODO remove
@@ -136,7 +139,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(EObject newMEInstance) {
-		ecpProject.addModelElement(newMEInstance);
+		ecpProject.getElements().add(newMEInstance);
 	}
 
 	/*
@@ -162,5 +165,15 @@ public class EditorContext implements EditorModelelementContext {
 	 */
 	public EObject getModelElement() {
 		return modelElement;
+	}
+
+	private EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getDataBindingContext()
+	 */
+	public DataBindingContext getDataBindingContext() {
+		return dataBindingContext;
 	}
 }

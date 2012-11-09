@@ -66,16 +66,6 @@ public interface IValidationService {
 	 * @return the severity for the given {@link EObject}
 	 */
 	Integer getSeverity(Object eObject);
-
-	/**
-	 * Sets the severity for the given {@link EObject}.
-	 * 
-	 * @param eObject
-	 * 			the {@link EObject} whose severity should be set
-	 * @param severity
-	 * 			the severity that should be set for the given {@link EObject}
-	 */
-	void putSeverity(Object eObject, Integer severity);
 	
 	/**
 	 * Returns the highest severity.
@@ -90,7 +80,7 @@ public interface IValidationService {
 	 * @param eObject
 	 * 			the {@link EObject} whose severity should be removed
 	 */
-	void removeSeverity(EObject eObject);
+	void remove(EObject eObject);
 
 	/**
 	 * Removes the severity of the given {@link EObject}.
@@ -100,5 +90,5 @@ public interface IValidationService {
 	 * @param excludedTypes
  	 * 			a collection of types which are ignored within the containment hierarchy of an {@link EObject} 
 	 */
-	void removeSeverityFor(EObject eObject, Set<? extends Class<?>> excludedTypes);
+	void remove(EObject eObject, Set<? extends Class<?>> excludedTypes);
 }

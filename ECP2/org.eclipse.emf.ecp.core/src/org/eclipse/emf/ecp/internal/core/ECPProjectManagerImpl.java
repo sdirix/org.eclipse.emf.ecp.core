@@ -28,6 +28,9 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.util.Collections;
@@ -90,6 +93,14 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		if (!initializedProjects) {
 
 			for (InternalProject project : projects) {
+
+				if (!project.getProvider().projectExists(project)) {
+					project.close();
+					Activator.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+						"Project Data was deleted since last start. Project is now closed."));
+
+					continue;
+				}
 				project.getProvider().handleLifecycle(project, LifecycleEvent.INIT);
 			}
 			initializedProjects = true;
@@ -98,8 +109,9 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return projects;
 	}
 
-	public boolean hasProjects() {
-		return hasElements();
+	@Override
+	public void storeElement(InternalProject project) {
+		super.storeElement(project);
 	}
 
 	public void changeProject(ECPProject project, boolean opened, boolean store) {
@@ -177,4 +189,5 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	protected boolean isRemoveDisposedElements() {
 		return false;
 	}
+
 }
