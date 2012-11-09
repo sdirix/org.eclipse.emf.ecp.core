@@ -36,7 +36,13 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 			return;
 		}
 		
-		Integer severity = Activator.getDefault().getValidationService().getSeverity(element);
+		Integer severity = null;
+		
+		if (element instanceof EObject) {
+			severity = Activator.getDefault().getValidationService().getSeverity(element);
+		} else if (element instanceof ECPProject) {
+			severity = Activator.getDefault().getValidationService().getHighestSeverity();
+		}
 		
 		if (severity == null) {
 			return;

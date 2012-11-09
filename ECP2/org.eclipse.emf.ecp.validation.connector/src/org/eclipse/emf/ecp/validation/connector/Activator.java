@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.validation.connector;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -37,16 +38,8 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.validation.connector"; //$NON-NLS-1$
 	
-	private static Set<Class<?>> excludedTypes = Collections.emptySet();
+	private static Set<Class<?>> excludedTypes;
 	
-	static {
-		excludedTypes.add(ECPProject.class);
-		
-		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-			excludedTypes.add(provider.getContainerClass());
-		}
-	}
-
 	/** 
 	 * The shared instance.
 	 */
@@ -55,6 +48,8 @@ public class Activator extends AbstractUIPlugin {
 	private IValidationService validationService;
 
 	private ValidationObserver validationObserver;
+
+	private BundleContext context;
 	
 	/**
 	 * The constructor.
@@ -68,12 +63,20 @@ public class Activator extends AbstractUIPlugin {
 	// BEGIN SUPRESS CATCH EXCEPTION
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		this.context = context;
 		plugin = this;
 		// Register directly with the service
 		ServiceReference<IValidationService> reference = context.getServiceReference(IValidationService.class);
 		validationService = (IValidationService) context.getService(reference);
 		validationObserver = new ValidationObserver();
 		ECPObserverBus.getInstance().register(validationObserver);
+		
+		excludedTypes = new HashSet<Class<?>>();
+		excludedTypes.add(ECPProject.class);
+		
+		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+			excludedTypes.add(provider.getContainerClass());
+		}
 	}
 
 	/**
@@ -101,6 +104,10 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the validation service
 	 */
 	public IValidationService getValidationService() {
+		if (validationService == null) {
+			ServiceReference<IValidationService> reference = context.getServiceReference(IValidationService.class);
+			validationService = (IValidationService) context.getService(reference);
+		}
 		return validationService;
 	}
 
@@ -133,11 +140,9 @@ public class Activator extends AbstractUIPlugin {
 				if (project.contains(eObject)) {
 					getValidationService().validate((EObject) object, excludedTypes);
 				} else {
-					getValidationService().removeSeverityFor(eObject, excludedTypes);
+					getValidationService().remove(eObject, excludedTypes);
 				}
 			}
-			
-			getValidationService().putSeverity(project, getValidationService().getHighestSeverity());
 		}
 		// END SUPRESS CATCH EXCEPTION
 	}
