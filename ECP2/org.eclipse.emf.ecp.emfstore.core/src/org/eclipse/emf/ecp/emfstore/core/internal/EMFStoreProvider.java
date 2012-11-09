@@ -246,7 +246,7 @@ public class EMFStoreProvider extends DefaultProvider {
 				// 1
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
 					if (Project.class.isInstance(modelElement.eContainer())) {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { context });
+						((InternalProject) context).notifyObjectsChanged(new Object[] { context, modelElement });
 					}
 				}
 
