@@ -12,12 +12,7 @@ package org.eclipse.emf.ecp.validation;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -53,24 +48,53 @@ public final class ValidationService extends AbstractCachedTree<Integer> impleme
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void validate(Collection<EObject> eObjects) {
 		for (EObject eObject : eObjects) {
 			update(eObject, getSeverity(eObject), EMPTY_SET);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void validate(Collection<EObject> eObjects, Set<? extends Class<?>> excludedTypes) {
 		validate(eObjects, EMPTY_SET);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void validate(EObject eObject) {
 		validate(eObject, EMPTY_SET);		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void validate(EObject eObject, Set<? extends Class<?>> excludedTypes) {
 		update(eObject, getSeverity(eObject), excludedTypes);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public Integer getSeverity(Object eObject) {
+		return getCachedValue(eObject);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Integer getHighestSeverity() {
+		return getRootValue();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Integer getDefaultValue() {
 		return Diagnostic.OK;
@@ -100,12 +124,5 @@ public final class ValidationService extends AbstractCachedTree<Integer> impleme
 		return new CachedSeverityTreeNode(value);
 	}
 
-	public Integer getSeverity(Object eObject) {
-		return getCachedValue(eObject);
-	}
-
-	public Integer getHighestSeverity() {
-		return getRootValue();
-	}
 }
 

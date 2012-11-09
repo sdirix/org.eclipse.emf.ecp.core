@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.validation.connector;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +20,7 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
+import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -45,11 +45,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	private static Activator plugin;
 
-	private IValidationService validationService;
+	private IValidationServiceProvider validationServiceProvider;
 
 	private ValidationObserver validationObserver;
-
-	private BundleContext context;
 	
 	/**
 	 * The constructor.
@@ -63,11 +61,10 @@ public class Activator extends AbstractUIPlugin {
 	// BEGIN SUPRESS CATCH EXCEPTION
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		this.context = context;
 		plugin = this;
 		// Register directly with the service
-		ServiceReference<IValidationService> reference = context.getServiceReference(IValidationService.class);
-		validationService = (IValidationService) context.getService(reference);
+		ServiceReference<IValidationServiceProvider> reference = context.getServiceReference(IValidationServiceProvider.class);
+		validationServiceProvider = (IValidationServiceProvider) context.getService(reference);
 		validationObserver = new ValidationObserver();
 		ECPObserverBus.getInstance().register(validationObserver);
 		
@@ -101,14 +98,13 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Returns the validation service.
 	 * 
+	 * @param project
+	 * 			the project for which to return the validation service
+	 * 
 	 * @return the validation service
 	 */
-	public IValidationService getValidationService() {
-		if (validationService == null) {
-			ServiceReference<IValidationService> reference = context.getServiceReference(IValidationService.class);
-			validationService = (IValidationService) context.getService(reference);
-		}
-		return validationService;
+	public IValidationService getValidationService(ECPProject project) {
+		return validationServiceProvider.getValidationService(project);
 	}
 
 	/**
@@ -119,12 +115,12 @@ public class Activator extends AbstractUIPlugin {
 		// BEGIN SUPRESS CATCH EXCEPTION
 		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 			for (ECPProject project : newProjects) {
-				getValidationService().validate(project.getElements());
+				getValidationService(project).validate(project.getElements());
 			}
 		}
 
 		public void projectChanged(ECPProject project, boolean opened) throws Exception {
-			getValidationService().validate(project.getElements());
+			getValidationService(project).validate(project.getElements());
 		}
 
 		public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
@@ -138,9 +134,9 @@ public class Activator extends AbstractUIPlugin {
 				EObject eObject = (EObject) object;
 				
 				if (project.contains(eObject)) {
-					getValidationService().validate((EObject) object, excludedTypes);
+					getValidationService(project).validate((EObject) object, excludedTypes);
 				} else {
-					getValidationService().remove(eObject, excludedTypes);
+					getValidationService(project).remove(eObject, excludedTypes);
 				}
 			}
 		}

@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.validation.connector;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -30,8 +31,8 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 	/**
 	 * {@inheritDoc}
 	 */
-	public void decorate(Object element, IDecoration decoration) {
-
+	public void decorate(final Object element, IDecoration decoration) {
+				
 		if (!(element instanceof EObject) && !(element instanceof ECPProject)) {
 			return;
 		}
@@ -39,9 +40,14 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 		Integer severity = null;
 		
 		if (element instanceof EObject) {
-			severity = Activator.getDefault().getValidationService().getSeverity(element);
+
+			ECPProject project = getProject((EObject) element);
+			
+			if (project != null) {
+				severity = Activator.getDefault().getValidationService(project).getSeverity(element);
+			}
 		} else if (element instanceof ECPProject) {
-			severity = Activator.getDefault().getValidationService().getHighestSeverity();
+			severity = Activator.getDefault().getValidationService((ECPProject) element).getHighestSeverity();
 		}
 		
 		if (severity == null) {
@@ -61,4 +67,14 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 
 	}
 
+	// TODO: replace with util method, when available
+	private ECPProject getProject(EObject element) {
+		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
+			if (project.contains(element)) {
+				return project;
+			}
+		}
+		
+		return null;
+	}
 }
