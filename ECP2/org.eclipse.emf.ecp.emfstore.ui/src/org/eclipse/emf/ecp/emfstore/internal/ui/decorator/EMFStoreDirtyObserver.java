@@ -38,6 +38,10 @@ public class EMFStoreDirtyObserver implements IECPProjectsChangedObserver {
 
 	public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
 
+		if (!project.isShared()) {
+			return;
+		}
+
 		for (Object object : objects) {
 
 			if (!(object instanceof EObject)) {
