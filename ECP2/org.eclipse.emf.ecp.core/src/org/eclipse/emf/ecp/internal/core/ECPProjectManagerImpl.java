@@ -190,13 +190,4 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProjectManager#createProject(org.eclipse.emf.ecp.core.ECPProvider,
-	 * java.lang.String)
-	 */
-	public ECPProject createProject(ECPProvider provider, String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
