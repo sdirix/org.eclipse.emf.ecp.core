@@ -179,6 +179,7 @@ public abstract class AbstractCachedTree<T> {
 		}
 
 		parentNode.putIntoCache(object, value);
+		rootValue.putIntoCache(parent, value);
 	}
 
 	/**
