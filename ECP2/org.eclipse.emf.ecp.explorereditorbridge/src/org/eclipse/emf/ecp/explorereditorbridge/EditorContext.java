@@ -73,8 +73,10 @@ public class EditorContext implements EditorModelelementContext {
 			}
 
 			public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
+				// TODO talk about
 				for (Object object : objects) {
-					if (EObject.class.isInstance(object) && object.equals(getModelElement())) {
+					if (EObject.class.isInstance(object) && object.equals(getModelElement())
+						&& ((EObject) object).eContainer() == null) {
 						for (EditorModelelementContextListener contextListener : contextListeners) {
 							contextListener.onContextDeleted();
 						}
