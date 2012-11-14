@@ -26,11 +26,11 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 	}
 
 	public void projectChanged(ECPProject project, boolean opened) throws Exception {
-		refreshViewer(project);
+		refreshViewer(true, project);
 	}
 
 	public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
-		refreshViewer(objects);
+		refreshViewer(false, objects);
 	}
 
 	@Override

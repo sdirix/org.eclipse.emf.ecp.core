@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Müller - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +39,7 @@ public abstract class AbstractCachedTree<T> {
 	/**
 	 * Empty set provided for convenience reasons.
 	 */
-	protected static final Set<? extends Class<?>> EMPTY_SET = Collections.emptySet();
+	protected static final Set<? extends Object> EMPTY_SET = Collections.emptySet();
 
 	/**
 	 * Private constructor.
@@ -62,12 +74,12 @@ public abstract class AbstractCachedTree<T> {
 	 *            the {@link EObject}
 	 * @param value
 	 *            the value associated with the {@link EObject}
-	 * @param excludedTypes
-	 *            a set of excluded types that are ignored during propagation of updated value
+	 * @param excludedObjects
+	 *            a set of excluded objects that are ignored during propagation of updated value
 	 */
-	public void update(EObject eObject, T value, Set<? extends Class<?>> excludedTypes) {
+	public void update(EObject eObject, T value, Set<? extends Object> excludedObjects) {
 
-		if (isExcludedType(excludedTypes, eObject.getClass())) {
+		if (excludedObjects.contains(eObject)) {
 			return;
 		}
 
@@ -77,7 +89,8 @@ public abstract class AbstractCachedTree<T> {
 		// propagate upwards
 		EObject parent = eObject.eContainer();
 
-		while (parent != null && !isExcludedType(excludedTypes, parent.getClass())) {
+		while (parent != null && !excludedObjects.contains(parent)) {// !isExcludedType(excludedTypes,
+																		// parent.getClass())
 			updateParentNode(parent, eObject, value);
 			parent = parent.eContainer();
 			eObject = parent;
@@ -118,10 +131,10 @@ public abstract class AbstractCachedTree<T> {
 	 * 
 	 * @param eObject
 	 *            the {@link EObject} that needs to be removed from the cached tree
-	 * @param excludedTypes
-	 *            a set of excluded types that are ignored during propagation of updates values
+	 * @param excludedObjects
+	 *            a set of excluded objects that are ignored during propagation of updates values
 	 */
-	public void remove(EObject eObject, Set<? extends Class<?>> excludedTypes) {
+	public void remove(EObject eObject, Set<? extends Object> excludedObjects) {
 
 		CachedTreeNode<T> node = nodes.get(eObject);
 		CachedTreeNode<T> parentNode = nodes.get(node.parent);
@@ -137,7 +150,8 @@ public abstract class AbstractCachedTree<T> {
 		parentNode.removeFromCache(eObject);
 		EObject parent = eObject.eContainer();
 
-		while (parent != null && !isExcludedType(excludedTypes, parent.getClass())) {
+		while (parent != null && !excludedObjects.contains(parent)) {// !isExcludedType(excludedTypes,
+																		// parent.getClass())
 
 			node = nodes.get(parent);
 			node.removeFromCache(eObject);
@@ -184,25 +198,6 @@ public abstract class AbstractCachedTree<T> {
 
 		parentNode.putIntoCache(object, value);
 		rootValue.putIntoCache(parent, value);
-	}
-
-	/**
-	 * Determines whether the given class is a excluded (ignored) type.
-	 * 
-	 * @param excludedTypes
-	 *            a set of types
-	 * @param clazz
-	 *            the actual class that will be checked against the excluded types
-	 * @return true, if the given class is contained in the set of excluded types
-	 */
-	private boolean isExcludedType(Set<? extends Class<?>> excludedTypes, Class<?> clazz) {
-		for (Class<?> type : excludedTypes) {
-			if (type.isAssignableFrom(clazz)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**

@@ -15,8 +15,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
@@ -38,7 +37,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.validation.connector"; //$NON-NLS-1$
 	
-	private static Set<Class<?>> excludedTypes;
+	private static Set<Object> excludedObjects;
 	
 	/** 
 	 * The shared instance.
@@ -68,11 +67,10 @@ public class Activator extends AbstractUIPlugin {
 		validationObserver = new ValidationObserver();
 		ECPObserverBus.getInstance().register(validationObserver);
 		
-		excludedTypes = new HashSet<Class<?>>();
-		excludedTypes.add(ECPProject.class);
-		
-		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-			excludedTypes.add(provider.getContainerClass());
+		excludedObjects = new HashSet<Object>();
+		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
+			excludedObjects.add(project);
+			excludedObjects.add(project.getModelRoot());
 		}
 	}
 
@@ -134,9 +132,9 @@ public class Activator extends AbstractUIPlugin {
 				EObject eObject = (EObject) object;
 				
 				if (project.contains(eObject)) {
-					getValidationService(project).validate((EObject) object, excludedTypes);
+					getValidationService(project).validate((EObject) object, excludedObjects);
 				} else {
-					getValidationService(project).remove(eObject, excludedTypes);
+					getValidationService(project).remove(eObject, excludedObjects);
 				}
 			}
 		}

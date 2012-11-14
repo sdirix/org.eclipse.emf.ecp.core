@@ -99,7 +99,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 
 			for (InternalProject project : projects) {
 
-				if (!project.getProvider().projectExists(project)) {
+				if (!project.getProvider().modelExists(project)) {
 					project.close();
 					Activator.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 						"Project Data was deleted since last start. Project is now closed."));

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -108,24 +107,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		}
 	}
 
-	public ECPProject createProject(String name, ECPProperties properties) {
-		// TODO: implement WorkspaceProvider.createProject(name, properties)
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean hasUnsharedProjectSupport() {
-		return false;
-	}
-
-	public void shareProject(ECPProject project, ECPRepository repository) {
-		throw new UnsupportedOperationException();
-	}
-
-	public ECPRepository unshareProject(ECPProject project) {
-		throw new UnsupportedOperationException();
-	}
-
-	public EList<EObject> getElements(ECPProject ecpProject) {
+	public EList<EObject> getElements(InternalProject project) {
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
 		throw new UnsupportedOperationException();
 	}
@@ -248,19 +230,31 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addModelElement(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 * org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
-	public void addModelElement(InternalProject project, EObject eObject) {
+	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerClass()
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 * org.eclipse.emf.ecore.EObject)
 	 */
-	public Class<?> getContainerClass() {
+	public boolean contains(InternalProject project, EObject eObject) {
+		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
+	 */
+	public Object getRoot(InternalProject project) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
+
 }

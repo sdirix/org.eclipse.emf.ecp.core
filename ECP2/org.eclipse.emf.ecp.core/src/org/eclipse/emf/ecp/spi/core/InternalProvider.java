@@ -1,9 +1,11 @@
-/*
+/**
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
  */
@@ -13,7 +15,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
@@ -33,49 +34,106 @@ import java.util.Iterator;
  */
 public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPModelContextProvider,
 	InternalRegistryElement, AdapterProvider {
-	public static final ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
-		ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
-	public AdapterProvider getUIProvider();
-
-	public void setUIProvider(AdapterProvider uiProvider);
-
-	public EditingDomain createEditingDomain(InternalProject project);
-
-	public boolean isSlow(Object parent);
-
-	public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList);
-
-	public void handleLifecycle(ECPModelContext context, LifecycleEvent event);
-
 	/**
+	 * Possible lifecycle events.
+	 * 
 	 * @author Eike Stepper
 	 */
 	public enum LifecycleEvent {
-		CREATE, INIT, DISPOSE, REMOVE;
+		/**
+		 * Called on create.
+		 */
+		CREATE,
+		/**
+		 * Called on initialization.
+		 */
+		INIT,
+		/**
+		 * Called on disposal.
+		 */
+		DISPOSE,
+		/**
+		 * Called when removed.
+		 */
+		REMOVE;
 	}
 
 	/**
-	 * @param ecpProject
-	 * @return list of Elements of this project
+	 * {@link ComposedAdapterFactory} to use.
 	 */
-	// TODO check whether not to use fillChildren
-	public EList<EObject> getElements(ECPProject ecpProject);
+	ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
+		ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 	/**
-	 * filter packages that are not supported by this provider
+	 * Allows access of the corresponding UI Adapter.
+	 * 
+	 * @return the UIProvider for this provider
+	 */
+	AdapterProvider getUIProvider();
+
+	/**
+	 * Allows to set the uiProvider.
+	 * 
+	 * @param uiProvider the uiProvider to set
+	 */
+	void setUIProvider(AdapterProvider uiProvider);
+
+	/**
+	 * This method creates an editing domain each time it is called.
+	 * 
+	 * @param project the {@link InternalProject} to create the domain for.
+	 * @return the created {@link EditingDomain}
+	 */
+	EditingDomain createEditingDomain(InternalProject project);
+
+	/**
+	 * Whether this provider is slow or not. Slow objects are handled differently.
+	 * 
+	 * @param parent to check
+	 * @return true if slow, false otherwise
+	 */
+	boolean isSlow(Object parent);
+
+	/**
+	 * Fills the elements of a certain parent object, depending on the context into the childrenList.
+	 * 
+	 * @param context the context to use
+	 * @param parent the parent to read the children from
+	 * @param childrenList the list to fill
+	 */
+	void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList);
+
+	/**
+	 * This method is called to handle a specific life cycle.
+	 * 
+	 * @param context the context to handle the lifecycle for
+	 * @param event the lifecycle event to handle
+	 */
+	void handleLifecycle(ECPModelContext context, LifecycleEvent event);
+
+	/**
+	 * This method returns an {@link EList} of the root elements.
+	 * 
+	 * @param project the project to get the root elements for
+	 * @return list of root elements of this project
+	 */
+	EList<EObject> getElements(InternalProject project);
+
+	/**
+	 * {@link EPackage}s that are not supported by this provider.
 	 * 
 	 * @param ePackages
 	 *            packages to filter from
+	 * @param repository the repository to check
 	 * @return a {@link Collection} of {@link EPackage}s that are not supported
 	 */
-	public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
+	Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
 
 	/**
 	 * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
 	 * eReference.
 	 * 
-	 * @param ecpProject
+	 * @param project
 	 *            - the project the call is from
 	 * @param modelElement
 	 *            - {@link EObject} to add the {@link EReference} to
@@ -83,33 +141,46 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 *            - the {@link EReference} to add
 	 * @return {@link Iterator} of {@link EObject} that can be linked
 	 */
-	public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference);
-
-	public void doSave(InternalProject project);
-
-	public boolean isDirty(InternalProject project);
-
-	public boolean hasAutosave(InternalProject project);
+	Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference);
 
 	/**
-	 * Deletes a collection of EObjects from the model
+	 * This method manually triggers the save of the model data.
+	 * 
+	 * @param project the project to save the model data for
+	 */
+	void doSave(InternalProject project);
+
+	/**
+	 * This method checks, whether the model is in a dirty state.
+	 * 
+	 * @param project the project to check the dirty state for
+	 * @return true if model is dirty, false otherwise
+	 */
+	boolean isDirty(InternalProject project);
+
+	/**
+	 * This method checks, whether a specific project has autosave or not.
+	 * 
+	 * @param project the project to check
+	 * @return true if autosave is enabled, false otherwise
+	 */
+	boolean hasAutosave(InternalProject project);
+
+	/**
+	 * Deletes a collection of EObjects from the model.
 	 * 
 	 * @param project the project from where to delete
 	 * @param eObjects the {@link Collection} if {@link EObject}s to delete
 	 */
-	public void delete(InternalProject project, Collection<EObject> eObjects);
+	void delete(InternalProject project, Collection<EObject> eObjects);
 
 	/**
-	 * @param ecpProjectImpl
-	 * @param eObject
+	 * This method clones a project.
+	 * 
+	 * @param projectToClone the project to be cloned
+	 * @param targetProject the project to add the cloned data to
 	 */
-	public void addModelElement(InternalProject project, EObject eObject);
-
-	/**
-	 * @param ecpProjectImpl
-	 * @param project
-	 */
-	public void cloneProject(InternalProject projectToClone, InternalProject targetProject);
+	void cloneProject(final InternalProject projectToClone, InternalProject targetProject);
 
 	/**
 	 * Whether the given {@link EObject} is contained in the project managed by the provider.
@@ -121,7 +192,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * 
 	 * @return true, if the project managed by the provider contains the given {@link EObject}, false otherwise
 	 */
-	public boolean contains(InternalProject project, EObject eObject);
+	boolean contains(InternalProject project, EObject eObject);
 
 	/**
 	 * Checks whether the data of the project still exists, method is called on startup. {@link DefaultProvider}
@@ -130,5 +201,13 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param project {@link InternalProject} to check
 	 * @return true if data exists, false otherwise
 	 */
-	boolean projectExists(InternalProject project);
+	boolean modelExists(InternalProject project);
+
+	/**
+	 * Method returning the model container.
+	 * 
+	 * @param project the project to get the root container for
+	 * @return the container object
+	 */
+	Object getRoot(InternalProject project);
 }

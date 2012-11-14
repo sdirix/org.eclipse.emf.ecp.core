@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.ui.model;
 
@@ -29,340 +28,290 @@ import java.util.WeakHashMap;
  * @author Eike Stepper
  */
 public abstract class TreeContentProvider<INPUT> extends StructuredContentProvider<INPUT> implements
-    ITreeContentProvider
-{
-  private static final Object[] NO_CHILDREN = new Object[0];
+	ITreeContentProvider {
+	private static final Object[] NO_CHILDREN = new Object[0];
 
-  private final Map<Object, Object> parentsCache = new WeakHashMap<Object, Object>();
+	private final Map<Object, Object> parentsCache = new WeakHashMap<Object, Object>();
 
-  private final Map<Object, InternalChildrenList> slowLists = new HashMap<Object, InternalChildrenList>();
+	private final Map<Object, InternalChildrenList> slowLists = new HashMap<Object, InternalChildrenList>();
 
-  public TreeContentProvider()
-  {
-  }
+	public TreeContentProvider() {
+	}
 
-  @Override
-  public TreeViewer getViewer()
-  {
-    return (TreeViewer)super.getViewer();
-  }
+	@Override
+	public TreeViewer getViewer() {
+		return (TreeViewer) super.getViewer();
+	}
 
-  public final Object[] getElements(Object parent)
-  {
-    return getChildren(parent);
-  }
+	public final Object[] getElements(Object parent) {
+		return getChildren(parent);
+	}
 
-  public final boolean hasChildren(Object parent)
-  {
-    if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent))
-    {
-      return false;
-    }
+	public final boolean hasChildren(Object parent) {
+		if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent)) {
+			return false;
+		}
 
-    InternalChildrenList childrenList = getChildrenList(parent);
-    synchronized (childrenList)
-    {
-      if (!childrenList.isComplete())
-      {
-        return true;
-      }
+		InternalChildrenList childrenList = getChildrenList(parent);
+		synchronized (childrenList) {
+			if (!childrenList.isComplete()) {
+				return true;
+			}
 
-      return childrenList.hasChildren();
-    }
-  }
+			return childrenList.hasChildren();
+		}
+	}
 
-  public final Object[] getChildren(Object parent)
-  {
-    if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent))
-    {
-      return NO_CHILDREN;
-    }
+	public final Object[] getChildren(Object parent) {
+		if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent)) {
+			return NO_CHILDREN;
+		}
 
-    Object[] result;
-    boolean complete;
+		Object[] result;
+		boolean complete;
 
-    InternalChildrenList childrenList = getChildrenList(parent);
-    synchronized (childrenList)
-    {
-      result = childrenList.getChildren();
-      complete = childrenList.isComplete();
-    }
+		InternalChildrenList childrenList = getChildrenList(parent);
+		synchronized (childrenList) {
+			result = childrenList.getChildren();
+			complete = childrenList.isComplete();
+		}
 
-    for (int i = 0; i < result.length; i++)
-    {
-      Object child = result[i];
-      parentsCache.put(child, parent);
-    }
+		for (int i = 0; i < result.length; i++) {
+			Object child = result[i];
+			parentsCache.put(child, parent);
+		}
 
-    if (!complete)
-    {
-      Object[] withPending = new Object[result.length + 1];
-      System.arraycopy(result, 0, withPending, 0, result.length);
-      withPending[result.length] = new SlowElement(parent);
-      result = withPending;
-    }
+		if (!complete) {
+			Object[] withPending = new Object[result.length + 1];
+			System.arraycopy(result, 0, withPending, 0, result.length);
+			withPending[result.length] = new SlowElement(parent);
+			result = withPending;
+		}
 
-    return result;
-  }
+		return result;
+	}
 
-  public final Object getParent(Object child)
-  {
-    if (child instanceof SyntheticElement)
-    {
-      return ((SyntheticElement)child).getParent();
-    }
+	public final Object getParent(Object child) {
+		if (child instanceof SyntheticElement) {
+			return ((SyntheticElement) child).getParent();
+		}
 
-    return parentsCache.get(child);
-  }
+		return parentsCache.get(child);
+	}
 
-  public final void refreshViewer(final Object... objects)
-  {
-    if (objects.length == 0)
-    {
-      return;
-    }
+	public final void refreshViewer(final boolean structural, final Object... objects) {
+		if (objects.length == 0) {
+			return;
+		}
 
-    final TreeViewer viewer = getViewer();
-    final Control control = viewer.getControl();
-    if (!control.isDisposed())
-    {
-      Display display = control.getDisplay();
-      if (display.getSyncThread() != Thread.currentThread())
-      {
-        display.asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            if (!control.isDisposed())
-            {
-              refresh(viewer, objects);
-            }
-          }
-        });
-      }
-      else
-      {
-        refresh(viewer, objects);
-      }
-    }
-  }
+		final TreeViewer viewer = getViewer();
+		final Control control = viewer.getControl();
+		if (!control.isDisposed()) {
+			Display display = control.getDisplay();
+			if (display.getSyncThread() != Thread.currentThread()) {
+				display.asyncExec(new Runnable() {
+					public void run() {
+						if (!control.isDisposed()) {
+							if (structural) {
+								refresh(viewer, objects);
+							} else {
+								update(viewer, objects);
+							}
+						}
+					}
+				});
+			} else {
+				if (structural) {
+					refresh(viewer, objects);
+				} else {
+					update(viewer, objects);
+				}
+			}
+		}
+	}
 
-  protected boolean isSlow(Object parent)
-  {
-    return false;
-  }
+	protected boolean isSlow(Object parent) {
+		return false;
+	}
 
-  protected InternalChildrenList getChildrenList(Object parent)
-  {
-    InternalChildrenList childrenList;
-    if (isSlow(parent))
-    {
-      SlowChildrenList newList = null;
-      synchronized (slowLists)
-      {
-        childrenList = slowLists.get(parent);
-        if (childrenList == null)
-        {
-          newList = new SlowChildrenList(parent);
-          childrenList = newList;
-          slowLists.put(parent, childrenList);
-        }
-      }
+	protected InternalChildrenList getChildrenList(Object parent) {
+		InternalChildrenList childrenList;
+		if (isSlow(parent)) {
+			SlowChildrenList newList = null;
+			synchronized (slowLists) {
+				childrenList = slowLists.get(parent);
+				if (childrenList == null) {
+					newList = new SlowChildrenList(parent);
+					childrenList = newList;
+					slowLists.put(parent, childrenList);
+				}
+			}
 
-      if (newList != null)
-      {
-        newList.startThread();
-      }
-    }
-    else
-    {
-      childrenList = new ChildrenListImpl(parent);
-      fillChildrenDetectError(parent, childrenList);
-    }
+			if (newList != null) {
+				newList.startThread();
+			}
+		} else {
+			childrenList = new ChildrenListImpl(parent);
+			fillChildrenDetectError(parent, childrenList);
+		}
 
-    return childrenList;
-  }
+		return childrenList;
+	}
 
-  protected void fillChildrenDetectError(Object parent, InternalChildrenList childrenList)
-  {
-    try
-    {
-      fillChildren(parent, childrenList);
-    }
-    catch (Throwable t)
-    {
-      Activator.log(t);
-      ErrorElement errorElement = new ErrorElement(parent, t);
-      childrenList.addChildWithoutRefresh(errorElement);
-    }
-  }
+	protected void fillChildrenDetectError(Object parent, InternalChildrenList childrenList) {
+		try {
+			fillChildren(parent, childrenList);
+		} catch (Throwable t) {
+			Activator.log(t);
+			ErrorElement errorElement = new ErrorElement(parent, t);
+			childrenList.addChildWithoutRefresh(errorElement);
+		}
+	}
 
-  protected abstract void fillChildren(Object parent, InternalChildrenList childrenList);
+	protected abstract void fillChildren(Object parent, InternalChildrenList childrenList);
 
-  public static void refresh(TreeViewer viewer, Object... objects)
-  {
-    if (!viewer.getControl().isDisposed())
-    {
-      for (Object object : objects)
-      {
-        viewer.refresh(object);
-      }
-    }
-  }
+	public static void refresh(TreeViewer viewer, Object... objects) {
+		if (!viewer.getControl().isDisposed()) {
+			for (Object object : objects) {
+				viewer.refresh(object);
+			}
+		}
+	}
 
-  /**
-   * @author Eike Stepper
-   */
-  public static class SyntheticElement
-  {
-    private final Object parent;
+	public static void update(TreeViewer viewer, Object... objects) {
+		if (!viewer.getControl().isDisposed()) {
+			for (Object object : objects) {
+				viewer.update(object, null);
+			}
+		}
+	}
 
-    public SyntheticElement(Object parent)
-    {
-      this.parent = parent;
-    }
+	/**
+	 * @author Eike Stepper
+	 */
+	public static class SyntheticElement {
+		private final Object parent;
 
-    public final Object getParent()
-    {
-      return parent;
-    }
-  }
+		public SyntheticElement(Object parent) {
+			this.parent = parent;
+		}
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class ErrorElement extends SyntheticElement
-  {
-    private final Throwable cause;
+		public final Object getParent() {
+			return parent;
+		}
+	}
 
-    public ErrorElement(Object parent, Throwable cause)
-    {
-      super(parent);
-      this.cause = cause;
-    }
+	/**
+	 * @author Eike Stepper
+	 */
+	public static final class ErrorElement extends SyntheticElement {
+		private final Throwable cause;
 
-    public final Throwable getCause()
-    {
-      return cause;
-    }
+		public ErrorElement(Object parent, Throwable cause) {
+			super(parent);
+			this.cause = cause;
+		}
 
-    @Override
-    public String toString()
-    {
-      return Messages.TreeContentProvider_ErrorElement_Error;
-    }
-  }
+		public final Throwable getCause() {
+			return cause;
+		}
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class SlowElement extends SyntheticElement
-  {
-    public SlowElement(Object parent)
-    {
-      super(parent);
-    }
+		@Override
+		public String toString() {
+			return Messages.TreeContentProvider_ErrorElement_Error;
+		}
+	}
 
-    @Override
-    public String toString()
-    {
-      return Messages.TreeContentProvider_SlowElement_Pending;
-    }
-  }
+	/**
+	 * @author Eike Stepper
+	 */
+	public static final class SlowElement extends SyntheticElement {
+		public SlowElement(Object parent) {
+			super(parent);
+		}
 
-  /**
-   * @author Eike Stepper
-   */
-  private final class SlowChildrenList extends ChildrenListImpl implements Runnable
-  {
-    private static final long serialVersionUID = 1L;
+		@Override
+		public String toString() {
+			return Messages.TreeContentProvider_SlowElement_Pending;
+		}
+	}
 
-    private boolean complete;
+	/**
+	 * @author Eike Stepper
+	 */
+	private final class SlowChildrenList extends ChildrenListImpl implements Runnable {
+		private static final long serialVersionUID = 1L;
 
-    public SlowChildrenList(Object parent)
-    {
-      super(parent);
-    }
+		private boolean complete;
 
-    public void startThread()
-    {
-      Thread thread = new Thread(this, "SlowChildrenList"); //$NON-NLS-1$
-      thread.setDaemon(true);
-      thread.start();
-    }
+		public SlowChildrenList(Object parent) {
+			super(parent);
+		}
 
-    public void run()
-    {
-      fillChildrenDetectError(getParent(), this);
-      setComplete();
-    }
+		public void startThread() {
+			Thread thread = new Thread(this, "SlowChildrenList"); //$NON-NLS-1$
+			thread.setDaemon(true);
+			thread.start();
+		}
 
-    @Override
-    public boolean isSlow()
-    {
-      return true;
-    }
+		public void run() {
+			fillChildrenDetectError(getParent(), this);
+			setComplete();
+		}
 
-    @Override
-    public boolean isComplete()
-    {
-      return complete;
-    }
+		@Override
+		public boolean isSlow() {
+			return true;
+		}
 
-    @Override
-    public void setComplete()
-    {
-      if (!complete)
-      {
-        try
-        {
-          complete = true;
-          childrenAdded();
-        }
-        finally
-        {
-          synchronized (slowLists)
-          {
-            slowLists.remove(getParent());
-          }
-        }
-      }
-    }
+		@Override
+		public boolean isComplete() {
+			return complete;
+		}
 
-    @Override
-    protected void childrenAdded()
-    {
-      final TreeViewer viewer = getViewer();
-      final Control control = viewer.getControl();
-      if (!control.isDisposed())
-      {
-        Display display = control.getDisplay();
+		@Override
+		public void setComplete() {
+			if (!complete) {
+				try {
+					complete = true;
+					childrenAdded();
+				} finally {
+					synchronized (slowLists) {
+						slowLists.remove(getParent());
+					}
+				}
+			}
+		}
 
-        // asyncExec() would lead to infinite recursion in setComplete()
-        display.syncExec(new Runnable()
-        {
-          public void run()
-          {
-            if (!control.isDisposed())
-            {
-              refresh(viewer, getParent());
-            }
-          }
-        });
-      }
-    }
+		@Override
+		protected void childrenAdded() {
+			final TreeViewer viewer = getViewer();
+			final Control control = viewer.getControl();
+			if (!control.isDisposed()) {
+				Display display = control.getDisplay();
 
-    // private void dumpStack(String msg)
-    // {
-    // try
-    // {
-    // Object parent = getParent();
-    // throw new RuntimeException(msg + " for " + parent + " (" + System.identityHashCode(parent) + ")");
-    // }
-    // catch (Exception ex)
-    // {
-    // ex.printStackTrace();
-    // }
-    // }
-  }
+				// asyncExec() would lead to infinite recursion in setComplete()
+				display.syncExec(new Runnable() {
+					public void run() {
+						if (!control.isDisposed()) {
+							refresh(viewer, getParent());
+						}
+					}
+				});
+			}
+		}
+
+		// private void dumpStack(String msg)
+		// {
+		// try
+		// {
+		// Object parent = getParent();
+		// throw new RuntimeException(msg + " for " + parent + " (" + System.identityHashCode(parent) + ")");
+		// }
+		// catch (Exception ex)
+		// {
+		// ex.printStackTrace();
+		// }
+		// }
+	}
 }

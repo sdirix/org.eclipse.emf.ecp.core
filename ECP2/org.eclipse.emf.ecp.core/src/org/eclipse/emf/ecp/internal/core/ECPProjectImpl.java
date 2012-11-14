@@ -199,7 +199,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	public void write(ObjectOutput out) throws IOException {
 		super.write(out);
-		if (isShared()) {
+		if (repository != null) {
 			out.writeBoolean(true);
 			out.writeUTF(repository.getName());
 		} else {
@@ -243,10 +243,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		return repository;
 	}
 
-	public boolean isShared() {
-		return repository != null;
-	}
-
 	private void setRepository(InternalRepository repository) {
 		if (this.repository != null) {
 			this.repository.removeDisposeListener(this);
@@ -274,7 +270,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	public void notifyObjectsChanged(Object[] objects) {
 		if (objects != null && objects.length != 0) {
-			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+			// ugly
+			List<Object> objList = new ArrayList<Object>(Arrays.asList(objects));
+			objList.add(this);
+			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objList.toArray());
 		}
 	}
 
@@ -562,27 +561,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#delete(org.eclipse.emf.ecore.EObject[])
-	 */
-	public void delete(EObject... eObjects) {
-		getProvider().delete(this, Arrays.asList(eObjects));
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#delete(java.util.Collection)
 	 */
 	public void delete(Collection<EObject> eObjects) {
 		getProvider().delete(this, eObjects);
-		notifyObjectsChanged(new Object[] { this });
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#addModelElement(org.eclipse.emf.ecore.EObject)
-	 */
-	public void addModelElement(EObject eObject) {
-		getProvider().addModelElement(this, eObject);
 		notifyObjectsChanged(new Object[] { this });
 	}
 
@@ -609,5 +591,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 */
 	public boolean contains(EObject eObject) {
 		return getProvider().contains(this, eObject);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.core.ECPProject#getModelRoot()
+	 */
+	public Object getModelRoot() {
+		return getProvider().getRoot(this);
 	}
 }

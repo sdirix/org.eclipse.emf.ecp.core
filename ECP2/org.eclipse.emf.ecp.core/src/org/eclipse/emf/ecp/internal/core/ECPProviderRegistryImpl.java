@@ -215,21 +215,13 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 			return getResolvedElement().hasUnsharedProjectSupport();
 		}
 
-		public void shareProject(ECPProject project, ECPRepository repository) {
-			getResolvedElement().shareProject(project, repository);
-		}
-
-		public ECPRepository unshareProject(ECPProject project) {
-			return getResolvedElement().unshareProject(project);
-		}
-
 		/*
 		 * (non-Javadoc)
 		 * @see
 		 * org.eclipse.emf.ecp.spi.core.InternalProvider#getElements(org.eclipse.emf.ecp.internal.core.ECPProjectImpl)
 		 */
-		public EList<EObject> getElements(ECPProject ecpProject) {
-			return getResolvedElement().getElements(ecpProject);
+		public EList<EObject> getElements(InternalProject project) {
+			return getResolvedElement().getElements(project);
 		}
 
 		/*
@@ -237,8 +229,8 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getLinkElements(org.eclipse.emf.ecp.core.ECPProject,
 		 * org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
 		 */
-		public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference) {
-			return getResolvedElement().getLinkElements(ecpProject, modelElement, eReference);
+		public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
+			return getResolvedElement().getLinkElements(project, modelElement, eReference);
 		}
 
 		/*
@@ -287,16 +279,6 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		/*
 		 * (non-Javadoc)
 		 * @see
-		 * org.eclipse.emf.ecp.spi.core.InternalProvider#addModelElement(org.eclipse.emf.ecp.spi.core.InternalProject,
-		 * org.eclipse.emf.ecore.EObject)
-		 */
-		public void addModelElement(InternalProject project, EObject eObject) {
-			getResolvedElement().addModelElement(project, eObject);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see
 		 * org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.internal.core.ECPProjectImpl,
 		 * org.eclipse.emf.ecp.spi.core.InternalProject)
 		 */
@@ -315,19 +297,19 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 
 		/*
 		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerEClass()
+		 * @see
+		 * org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(org.eclipse.emf.ecp.spi.core.InternalProject)
 		 */
-		public Class<?> getContainerClass() {
-			return getResolvedElement().getContainerClass();
+		public boolean modelExists(InternalProject project) {
+			return getResolvedElement().modelExists(project);
 		}
 
 		/*
 		 * (non-Javadoc)
-		 * @see
-		 * org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(org.eclipse.emf.ecp.spi.core.InternalProject)
+		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 		 */
-		public boolean projectExists(InternalProject project) {
-			return getResolvedElement().projectExists(project);
+		public Object getRoot(InternalProject project) {
+			return getResolvedElement().getRoot(project);
 		}
 	}
 }

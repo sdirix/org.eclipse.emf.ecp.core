@@ -31,8 +31,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
@@ -136,24 +134,7 @@ public class CDOProvider extends DefaultProvider {
 		}
 	}
 
-	public ECPProject createProject(String name, ECPProperties properties) {
-		// TODO: implement WorkspaceProvider.createProject(name, properties)
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean hasUnsharedProjectSupport() {
-		return false;
-	}
-
-	public void shareProject(ECPProject project, ECPRepository repository) {
-		throw new UnsupportedOperationException();
-	}
-
-	public ECPRepository unshareProject(ECPProject project) {
-		throw new UnsupportedOperationException();
-	}
-
-	public EList<EObject> getElements(ECPProject ecpProject) {
+	public EList<EObject> getElements(InternalProject project) {
 		// TODO: implement CDOProvider.addRootElement(project, rootElement)
 		throw new UnsupportedOperationException();
 	}
@@ -307,18 +288,27 @@ public class CDOProvider extends DefaultProvider {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addModelElement(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 * org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
-	public void addModelElement(InternalProject project, EObject eObject) {
-		// getProjectData(project).getRootResource().getContents().add(eObject);
+	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
+		throw new UnsupportedOperationException();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerEClass()
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 * org.eclipse.emf.ecore.EObject)
 	 */
-	public Class<CDOProjectData> getContainerClass() {
-		return CDOProjectData.class;
+	public boolean contains(InternalProject project, EObject eObject) {
+		throw new UnsupportedOperationException();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
+	 */
+	public Object getRoot(InternalProject project) {
+		throw new UnsupportedOperationException();
 	}
 }

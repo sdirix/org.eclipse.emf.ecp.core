@@ -303,15 +303,15 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/**
-	 * Convenient implementation of the {@link #getLinkElements(ECPProject, EObject, EReference)} method to use the
+	 * Convenient implementation of the {@link #getLinkElements(InternalProject, EObject, EReference)} method to use the
 	 * {@link ItemPropertyDescriptor} to get all object of an object.
 	 */
-	public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference) {
+	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
 	}
 
 	/**
-	 * Convenient implementation where nothing happens
+	 * Convenient implementation where nothing happens.
 	 */
 	public void doSave(InternalProject project) {
 		// do nothing
@@ -331,26 +331,16 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return true;
 	}
 
-	public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
-		// TODO change
-		throw new UnsupportedOperationException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecore.EObject)
-	 */
-	public boolean contains(InternalProject project, EObject eObject) {
-		// TODO change
-		throw new UnsupportedOperationException();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(
 	 * org.eclipse.emf.ecp.spi.core.InternalProvider,org.eclipse.emf.ecore.EObject)
 	 */
-	public boolean projectExists(InternalProject project) {
+	public boolean modelExists(InternalProject project) {
 		return true;
+	}
+
+	public boolean hasUnsharedProjectSupport() {
+		return false;
 	}
 }

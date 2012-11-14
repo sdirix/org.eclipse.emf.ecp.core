@@ -52,23 +52,6 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	EList<EObject> getElements();
 
 	/**
-	 * Whether the given {@link EObject} is contained in the project.
-	 * 
-	 * @param eObject
-	 *            the object whose containment within the project should be checked
-	 * 
-	 * @return true, if the project contains the given {@link EObject}, false otherwise
-	 */
-	boolean contains(EObject eObject);
-
-	/**
-	 * Returns <code>true</code> if this project is shared with a {@link ECPRepository repository}, <code>false</code>
-	 * otherwise. Same as calling <code>getRepository() != null</code>.
-	 */
-	// APITODO: Move to EMFStore specific plugin
-	boolean isShared();
-
-	/**
 	 * Returns a collection of {@link EPackage}s which are not supported by the provider. EObjects from these packages
 	 * cannot be created within the project.
 	 * 
@@ -149,4 +132,17 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * @param eObjects the collection of {@link EObject}s to delete
 	 */
 	void delete(Collection<EObject> eObjects);
+
+	/**
+	 * Whether the given {@link EObject} is contained in the project, call is delegated to the provider.
+	 * 
+	 * @param eObject
+	 *            the object whose containment within the project should be checked
+	 * 
+	 * @return true, if the project contains the given {@link EObject}, false otherwise
+	 */
+	boolean contains(EObject eObject);
+
+	// FIXME
+	Object getModelRoot();
 }

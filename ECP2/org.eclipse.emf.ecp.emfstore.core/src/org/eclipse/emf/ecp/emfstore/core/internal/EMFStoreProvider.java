@@ -6,14 +6,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
@@ -118,20 +115,13 @@ public class EMFStoreProvider extends DefaultProvider {
 		super.fillChildren(context, parent, childrenList);
 	}
 
+	@Override
 	public boolean hasUnsharedProjectSupport() {
 		return true;
 	}
 
-	public void shareProject(ECPProject project, ECPRepository repository) {
-		throw new UnsupportedOperationException();
-	}
-
-	public ECPRepository unshareProject(ECPProject project) {
-		throw new UnsupportedOperationException();
-	}
-
-	public EList<EObject> getElements(ECPProject ecpProject) {
-		ProjectSpace projectSpace = getProjectSpace((InternalProject) ecpProject);
+	public EList<EObject> getElements(InternalProject project) {
+		ProjectSpace projectSpace = getProjectSpace(project);
 		return projectSpace.getProject().getModelElements();
 	}
 
@@ -248,6 +238,7 @@ public class EMFStoreProvider extends DefaultProvider {
 					if (Project.class.isInstance(modelElement.eContainer())) {
 						((InternalProject) context).notifyObjectsChanged(new Object[] { context, modelElement });
 					}
+					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
 				}
 
 				public void collectionDeleted(IdEObjectCollection collection) {
@@ -295,10 +286,10 @@ public class EMFStoreProvider extends DefaultProvider {
 	 * org.eclipse.emf.ecore.EReference)
 	 */
 	@Override
-	public Iterator<EObject> getLinkElements(ECPProject ecpProject, EObject modelElement, EReference eReference) {
+	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		Collection<EObject> result = new HashSet<EObject>();
-		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result,
-			getProjectSpace((InternalProject) ecpProject).getProject(), eReference.getEType());
+		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result, getProjectSpace(project)
+			.getProject(), eReference.getEType());
 		return result.iterator();
 	}
 
@@ -412,25 +403,7 @@ public class EMFStoreProvider extends DefaultProvider {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#addModelElement(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecore.EObject)
-	 */
-	public void addModelElement(InternalProject project, final EObject eObject) {
-		final Project emfStoreProject = getProjectSpace(project).getProject();
-		project.getEditingDomain().getCommandStack().execute(new ChangeCommand(emfStoreProject) {
-
-			@Override
-			protected void doExecute() {
-				emfStoreProject.addModelElement(eObject);
-			}
-		});
-		// getElements(project).add(eObject);
-	}
-
-	@Override
-	public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
+	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		ProjectSpace toClone = getProjectSpace(projectToClone);
 		ProjectSpace target = getProjectSpace(targetProject);
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
@@ -440,22 +413,22 @@ public class EMFStoreProvider extends DefaultProvider {
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#contains(org.eclipse.emf.ecore.EObject)
 	 */
-	@Override
+
 	public boolean contains(InternalProject internalProject, EObject eObject) {
 		ProjectSpace projectSpace = getProjectSpace(internalProject);
 		return projectSpace.getProject().containsInstance(eObject);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProvider#getContainerClass()
-	 */
-	public Class<?> getContainerClass() {
-		return Project.class;
+	@Override
+	public boolean modelExists(InternalProject project) {
+		return getProjectSpace(project, false) != null;
 	}
 
-	@Override
-	public boolean projectExists(InternalProject project) {
-		return getProjectSpace(project, false) != null;
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
+	 */
+	public Object getRoot(InternalProject project) {
+		return getProjectSpace(project).getProject();
 	}
 }

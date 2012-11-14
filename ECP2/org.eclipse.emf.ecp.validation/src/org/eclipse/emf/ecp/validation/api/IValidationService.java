@@ -35,10 +35,10 @@ public interface IValidationService {
 	 * 
 	 * @param eObjects
 	 * 			a collection of {@link EObject}s to be validated
-	 * @param excludedTypes
-	 * 			a collection of types which are ignored within the containment hierarchy of an {@link EObject} 
+	 * @param excludedObjects
+	 * 			a collection of objects which are ignored within the containment hierarchy of an {@link EObject} 
 	 */
-	void validate(Collection<EObject> eObjects, Set<? extends Class<?>> excludedTypes);
+	void validate(Collection<EObject> eObjects, Set<? extends Object> excludedObjects);
 	
 	/**
 	 * Validates the given {@link EObject}.
@@ -53,10 +53,10 @@ public interface IValidationService {
 	 * 
 	 * @param eObject
 	 * 			the {@link EObject} to be validated
-     * @param excludedTypes
-	 * 			a collection of types which are ignored within the containment hierarchy of an {@link EObject} 
+     * @param excludedObjects
+	 * 			a collection of objects which are ignored within the containment hierarchy of an {@link EObject} 
 	 */
-	void validate(EObject eObject, Set<? extends Class<?>> excludedTypes);
+	void validate(EObject eObject, Set<? extends Object> excludedObjects);
 	
 	/**
 	 * Returns the severity for the given {@link EObject}.
@@ -87,8 +87,8 @@ public interface IValidationService {
 	 * 
 	 * @param eObject
 	 * 			the {@link EObject} whose severity should be removed
-	 * @param excludedTypes
+	 * @param excludedObjects
  	 * 			a collection of types which are ignored within the containment hierarchy of an {@link EObject} 
 	 */
-	void remove(EObject eObject, Set<? extends Class<?>> excludedTypes);
+	void remove(EObject eObject, Set<? extends Object> excludedObjects);
 }

@@ -52,16 +52,15 @@ public final class ValidationService extends AbstractCachedTree<Integer> impleme
 	 * {@inheritDoc}
 	 */
 	public void validate(Collection<EObject> eObjects) {
-		for (EObject eObject : eObjects) {
-			update(eObject, getSeverity(eObject), EMPTY_SET);
-		}
+		validate(eObjects, EMPTY_SET);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void validate(Collection<EObject> eObjects, Set<? extends Class<?>> excludedTypes) {
-		validate(eObjects, EMPTY_SET);
+	public void validate(Collection<EObject> eObjects, Set<? extends Object> excludedObjects) {
+		for(EObject eObject:eObjects)
+			validate(eObject, excludedObjects);
 	}
 
 	/**
@@ -74,8 +73,8 @@ public final class ValidationService extends AbstractCachedTree<Integer> impleme
 	/**
 	 * {@inheritDoc}
 	 */
-	public void validate(EObject eObject, Set<? extends Class<?>> excludedTypes) {
-		update(eObject, getSeverity(eObject), excludedTypes);
+	public void validate(EObject eObject, Set<? extends Object> excludedObjects) {
+		update(eObject, getSeverity(eObject), excludedObjects);
 	}
 
 	/**
