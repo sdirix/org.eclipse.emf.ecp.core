@@ -11,7 +11,7 @@
 package org.eclipse.emf.ecp.common.util;
 
 import org.eclipse.emf.emfstore.common.ILog;
-import org.eclipse.emf.emfstore.common.LogAdapter;
+import org.eclipse.emf.emfstore.internal.common.LogAdapter;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
