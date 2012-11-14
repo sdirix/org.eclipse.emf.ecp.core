@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.validation;
+package org.eclipse.emf.ecp.internal.validation;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -29,12 +29,24 @@ import org.eclipse.emf.ecp.validation.api.IValidationService;
  */
 public final class ValidationService extends AbstractCachedTree<Integer> implements IValidationService {
 	
+	/**
+	 * Tree node that caches the severity of its children.
+	 */
 	public class CachedSeverityTreeNode extends CachedTreeNode<Integer> {
 		
-		public CachedSeverityTreeNode(Integer data) {
-			super(data);
+		/**
+		 * Constructor.
+		 * 
+		 * @param severity
+		 * 			the initial severity value of this node
+		 */
+		public CachedSeverityTreeNode(Integer severity) {
+			super(severity);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public void update() {
 			
 			Collection<Integer> severities = values();
@@ -59,8 +71,9 @@ public final class ValidationService extends AbstractCachedTree<Integer> impleme
 	 * {@inheritDoc}
 	 */
 	public void validate(Collection<EObject> eObjects, Set<? extends Object> excludedObjects) {
-		for(EObject eObject:eObjects)
+		for(EObject eObject : eObjects) {
 			validate(eObject, excludedObjects);
+		}
 	}
 
 	/**
