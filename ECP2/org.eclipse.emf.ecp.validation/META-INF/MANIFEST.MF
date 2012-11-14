@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Validation Service
 Bundle-SymbolicName: org.eclipse.emf.ecp.validation;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.validation.Activator
+Bundle-Activator: org.eclipse.emf.ecp.internal.validation.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecp.core;bundle-version="1.0.0",

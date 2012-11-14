@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.validation.api;
 import java.util.Collection;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -65,15 +66,15 @@ public interface IValidationService {
 	 * 			the {@link EObject} whose severity should be returned
 	 * @return the severity for the given {@link EObject}
 	 */
-	Integer getSeverity(Object eObject);
+	Diagnostic getDiagnostic(Object eObject);
 	
 	/**
 	 * Returns the highest severity.
 	 * 
 	 * @return the highest severity
 	 */
-	Integer getHighestSeverity();
-	
+	Diagnostic getRootDiagnostic();
+		
 	/**
 	 * Removes the severity of the given {@link EObject}.
 	 * 
