@@ -223,27 +223,27 @@ public class EMFStoreProvider extends DefaultProvider {
 				// 2
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 
-					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, false);
 				}
 
 				// 3
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement.eContainer() == null) {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, true);
 					}
 				}
 
 				// 1
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
 					if (Project.class.isInstance(modelElement.eContainer())) {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { context, modelElement });
+						((InternalProject) context).notifyObjectsChanged(new Object[] { context, modelElement }, true);
 					}
-					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement });
+					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, true);
 				}
 
 				public void collectionDeleted(IdEObjectCollection collection) {
 					// project delete
-					((InternalProject) context).notifyObjectsChanged(new Object[] { context });
+					((InternalProject) context).notifyObjectsChanged(new Object[] { context }, true);
 				}
 			});
 		}

@@ -131,10 +131,11 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		}
 	}
 
-	public void notifyObjectsChanged(ECPProject project, Object[] objects) {
+	public void notifyObjectsChanged(ECPProject project, Object[] objects, boolean structural) {
 
 		try {
-			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class).objectsChanged(project, objects);
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class)
+				.objectsChanged(project, objects, structural);
 		} catch (Exception ex) {
 			Activator.log(ex);
 		}

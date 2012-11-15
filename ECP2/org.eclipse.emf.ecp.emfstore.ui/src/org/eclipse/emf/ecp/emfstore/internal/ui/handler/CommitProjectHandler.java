@@ -27,7 +27,8 @@ public class CommitProjectHandler extends AbstractHandler {
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
 		new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-		project.notifyObjectsChanged(new Object[] { project });
+		// is structural because of possible merge
+		project.notifyObjectsChanged(new Object[] { project }, true);
 		return null;
 	}
 }

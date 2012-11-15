@@ -11,7 +11,7 @@
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ModelExplorerView"
-            icon="icons/sample.gif"
+            icon="icons/folder_brick.png"
             id="org.eclipse.emf.ecp.ui.ModelExplorerView"
             name="%ModelExplorerView">
       </view>
@@ -465,7 +465,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="org.eclipse.emf.ecp.ui.perspective.ECPPerspectiveFactory"
-            icon="icons/sample.gif"
+            icon="icons/bricks.png"
             id="org.eclipse.emf.ecp.ui.main"
             name="ECP">
       </perspective>

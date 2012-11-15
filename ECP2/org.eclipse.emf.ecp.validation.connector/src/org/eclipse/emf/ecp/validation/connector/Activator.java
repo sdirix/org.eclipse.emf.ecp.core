@@ -121,7 +121,7 @@ public class Activator extends AbstractUIPlugin {
 			getValidationService(project).validate(project.getElements());
 		}
 
-		public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
+		public void objectsChanged(ECPProject project, Object[] objects,boolean structural) throws Exception {
 			
 			for (Object object : objects) {
 				

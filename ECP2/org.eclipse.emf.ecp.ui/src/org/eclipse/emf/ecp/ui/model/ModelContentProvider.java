@@ -14,6 +14,8 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
+import java.util.Arrays;
+
 /**
  * @author Eike Stepper
  */
@@ -29,8 +31,11 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 		refreshViewer(true, project);
 	}
 
-	public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
-		refreshViewer(false, objects);
+	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
+		refreshViewer(structural, objects);
+		if (!Arrays.asList(objects).contains(project)) {
+			refreshViewer(false, project);
+		}
 	}
 
 	@Override

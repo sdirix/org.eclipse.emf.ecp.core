@@ -15,5 +15,5 @@ public interface IECPProjectsChangedObserver extends IECPObserver {
 
 	void projectChanged(ECPProject project, boolean opened) throws Exception;
 
-	void objectsChanged(ECPProject project, Object[] objects) throws Exception;
+	void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception;
 }

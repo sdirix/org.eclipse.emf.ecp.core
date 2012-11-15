@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.ecp.site"
       label="EMF Client Platform Site"
-      version="1.0.0"
+      version="2.0.0"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
@@ -44,6 +44,14 @@
 
    <includes
          id="org.eclipse.emf.ecp.emfstore"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.ui3x"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.validation"
          version="0.0.0"/>
 
 </feature>

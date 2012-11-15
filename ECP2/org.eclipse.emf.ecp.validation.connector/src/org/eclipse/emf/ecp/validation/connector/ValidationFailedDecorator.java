@@ -61,6 +61,9 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 		case Diagnostic.WARNING:
 			decoration.addOverlay(Activator.getImageDescriptor("icons/warning_decorate.png"), IDecoration.BOTTOM_RIGHT);
 			break;
+		case Diagnostic.OK:
+			decoration.addOverlay(null);
+			break;
 		default:
 			break;
 		}

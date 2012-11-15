@@ -46,7 +46,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -268,12 +267,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		this.providerSpecificData = providerSpecificData;
 	}
 
-	public void notifyObjectsChanged(Object[] objects) {
+	public void notifyObjectsChanged(Object[] objects, boolean structural) {
 		if (objects != null && objects.length != 0) {
-			// ugly
-			List<Object> objList = new ArrayList<Object>(Arrays.asList(objects));
-			objList.add(this);
-			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objList.toArray());
+			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects, structural);
 		}
 	}
 
@@ -565,7 +561,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 */
 	public void delete(Collection<EObject> eObjects) {
 		getProvider().delete(this, eObjects);
-		notifyObjectsChanged(new Object[] { this });
+		notifyObjectsChanged(new Object[] { this }, true);
 	}
 
 	@Override
