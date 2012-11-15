@@ -12,7 +12,9 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.observers.CommitObserver;
 import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
@@ -50,7 +52,8 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 		}
 
 		if (element instanceof ECPProject) {
-			if (EMFStoreDirtyDecoratorCachedTree.getInstance().getRootValue() == Boolean.TRUE) {
+			if (EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance().getRootValue() == Boolean.TRUE) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 		}
