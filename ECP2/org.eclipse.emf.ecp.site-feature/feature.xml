@@ -46,12 +46,4 @@
          id="org.eclipse.emf.ecp.emfstore"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.emf.ecp.ui3x"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.validation"
-         version="0.0.0"/>
-
 </feature>
