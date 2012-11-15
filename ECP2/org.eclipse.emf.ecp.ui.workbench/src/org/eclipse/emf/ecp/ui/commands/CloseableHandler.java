@@ -29,7 +29,8 @@ public class CloseableHandler extends AbstractHandler {
 		IStructuredSelection ssel = (IStructuredSelection) selection;
 		String currentType = event.getParameter("org.eclipse.emf.ecp.ecpclosable.type");
 		Object[] selectionArray =  ssel.toArray();
-		ECPCloseable[] closeable = Arrays.copyOf(selectionArray, selectionArray.length, ECPCloseable[].class);
+		
+		ECPCloseable[] closeable = Arrays.asList(selectionArray).toArray(new ECPCloseable[0]);
 		HandlerHelper.close(closeable, currentType);
 
 		return null;
