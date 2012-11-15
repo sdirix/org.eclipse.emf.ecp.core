@@ -14,6 +14,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
@@ -58,7 +59,12 @@ public class HandlerHelper {
 			if (AbstractUICallback.OK == callback.open()) {
 				String projectName = checkoutCompposite.getProjectName();
 				ECPProperties projectProperties = checkoutCompposite.getProjectProperties();
-				checkoutSource.checkout(projectName, projectProperties);
+				try {
+					checkoutSource.checkout(projectName, projectProperties);
+				} catch (ProjectWithNameExistsException ex) {
+					callback.showError("Cannot checkout project", "A project with name " + projectName
+						+ " already exists in the workspace.");
+				}
 			}
 		}
 	}
@@ -90,8 +96,14 @@ public class HandlerHelper {
 			ECPProperties projectProperties = ECPUtil.createProperties();
 
 			String projectName = createProjectComposite.getProjectName();
-			ECPProject project = ECPProjectManager.INSTANCE.createProject(selectedProvider, projectName,
-				projectProperties);
+			ECPProject project = null;
+			try {
+				project = ECPProjectManager.INSTANCE.createProject(selectedProvider, projectName, projectProperties);
+			} catch (ProjectWithNameExistsException ex) {
+				callback.showError("No project created", "A project with name " + projectName
+					+ " already exists in the workspace.");
+				return null;
+			}
 			if (project == null) {
 				callback.showError("No project created", "Please check the log.");
 				return null;

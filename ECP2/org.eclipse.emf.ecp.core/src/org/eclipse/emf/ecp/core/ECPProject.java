@@ -143,6 +143,10 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 */
 	boolean contains(EObject eObject);
 
-	// FIXME
+	/**
+	 * This method return the model root of the project.
+	 * 
+	 * @return the root object of the underlying model
+	 */
 	Object getModelRoot();
 }
