@@ -288,6 +288,22 @@
          point="org.eclipse.ui.decorators">
       <decorator
             adaptable="true"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreUnsharedDecorator"
+            id="org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreUnsharedDecorator"
+            label="EMFStoreUnshared Decorator"
+            lightweight="true"
+            state="true">
+         <enablement>
+            <objectClass
+                  name="org.eclipse.emf.ecp.core.ECPProject">
+            </objectClass>
+         </enablement>
+         <description>
+            If the project is not shared.
+         </description>
+      </decorator>
+      <decorator
+            adaptable="true"
             class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyDecorator"
             id="org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator"
             label="EMFStoreDirty Decorator"
