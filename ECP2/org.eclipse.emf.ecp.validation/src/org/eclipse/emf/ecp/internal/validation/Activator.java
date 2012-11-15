@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.validation;
+package org.eclipse.emf.ecp.internal.validation;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
