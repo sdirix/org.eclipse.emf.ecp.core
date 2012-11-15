@@ -243,7 +243,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.core.project.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
                         value="false">
                   </test>
                </iterate>
@@ -329,6 +329,13 @@
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
             properties="emfserverIsLoggedIn"
             type="org.eclipse.emf.ecp.core.ECPRepository">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreProjectIsShared"
+            id="org.eclipse.emf.ecp.emfstore.ui.shared"
+            namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
+            properties="isShared"
+            type="org.eclipse.emf.ecp.core.ECPProject">
       </propertyTester>
    </extension>
 	<extension
