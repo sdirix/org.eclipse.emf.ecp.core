@@ -72,7 +72,7 @@ public class EditorContext implements EditorModelelementContext {
 				}
 			}
 
-			public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
+			public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 				// TODO talk about
 				for (Object object : objects) {
 					if (EObject.class.isInstance(object) && object.equals(getModelElement())

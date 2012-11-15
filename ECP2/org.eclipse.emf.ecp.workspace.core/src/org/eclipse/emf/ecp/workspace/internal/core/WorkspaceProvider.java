@@ -121,7 +121,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 
 			for (InternalProject project : getOpenProjects()) {
 				objects = getChangedObjects(delta, project);
-				project.notifyObjectsChanged(objects);
+				project.notifyObjectsChanged(objects, true);
 			}
 		}
 	}

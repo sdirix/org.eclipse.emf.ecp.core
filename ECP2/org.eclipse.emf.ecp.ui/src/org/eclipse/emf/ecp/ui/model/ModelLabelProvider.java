@@ -64,7 +64,7 @@ public class ModelLabelProvider extends ECPLabelProvider implements IECPProjects
 		fireEvent(new LabelProviderChangedEvent(this, project));
 	}
 
-	public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
+	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 		// Do nothing
 	}
 }

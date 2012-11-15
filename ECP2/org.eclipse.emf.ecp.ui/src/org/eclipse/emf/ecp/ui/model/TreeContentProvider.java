@@ -99,7 +99,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		return parentsCache.get(child);
 	}
 
-	public final void refreshViewer(final boolean structural, final Object... objects) {
+	public final void refreshViewer(final boolean sturctural, final Object... objects) {
 		if (objects.length == 0) {
 			return;
 		}
@@ -112,16 +112,17 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 				display.asyncExec(new Runnable() {
 					public void run() {
 						if (!control.isDisposed()) {
-							if (structural) {
+							if (sturctural) {
 								refresh(viewer, objects);
 							} else {
 								update(viewer, objects);
 							}
+
 						}
 					}
 				});
 			} else {
-				if (structural) {
+				if (sturctural) {
 					refresh(viewer, objects);
 				} else {
 					update(viewer, objects);

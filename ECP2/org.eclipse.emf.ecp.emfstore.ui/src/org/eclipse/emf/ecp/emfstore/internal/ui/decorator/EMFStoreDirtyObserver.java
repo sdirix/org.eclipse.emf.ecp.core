@@ -44,7 +44,7 @@ public class EMFStoreDirtyObserver implements IECPProjectsChangedObserver {
 
 	}
 
-	public void objectsChanged(ECPProject project, Object[] objects) throws Exception {
+	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 
 		loadExcludedObjects();
 

@@ -28,7 +28,7 @@ public class UpdateProjectHandler extends AbstractHandler {
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
 		new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-		project.notifyObjectsChanged(new Object[] { project });
+		project.notifyObjectsChanged(new Object[] { project }, true);
 
 		return null;
 	}
