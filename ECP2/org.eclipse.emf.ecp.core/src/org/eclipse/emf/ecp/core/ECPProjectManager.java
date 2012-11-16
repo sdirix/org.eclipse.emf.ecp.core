@@ -9,9 +9,12 @@
  */
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+
+import javax.naming.NameAlreadyBoundException;
 
 /**
  * @author Eike Stepper
@@ -27,9 +30,12 @@ public interface ECPProjectManager {
 	 * @param provider the {@link ECPProvider} of this project
 	 * @param name the name of the project
 	 * @return created {@link ECPProject}
+	 * @throws NameAlreadyBoundException
+	 * @throws ProjectWithNameExistsException when a project with the same name already exists
 	 */
 
-	ECPProject createProject(ECPProvider provider, String name);
+	ECPProject createProject(ECPProvider provider, String name) throws NameAlreadyBoundException,
+		ProjectWithNameExistsException;
 
 	/**
 	 * Method to construct an offline Project and notify listeners about this add.
@@ -38,9 +44,11 @@ public interface ECPProjectManager {
 	 * @param name the name of the project
 	 * @param properties the project properties
 	 * @return created {@link ECPProject}
+	 * @throws ProjectWithNameExistsException when a project with the same name already exists
 	 */
 
-	ECPProject createProject(ECPProvider provider, String name, ECPProperties properties);
+	ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
+		throws ProjectWithNameExistsException;
 
 	/**
 	 * Method to construct an online Project and notify listeners about this add.
@@ -49,8 +57,10 @@ public interface ECPProjectManager {
 	 * @param name the name of the project
 	 * @param properties the project properties
 	 * @return created {@link ECPProject}
+	 * @throws ProjectWithNameExistsException when a project with the same name already exists
 	 */
-	ECPProject createProject(ECPRepository repository, String name, ECPProperties properties);
+	ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
+		throws ProjectWithNameExistsException;
 
 	/**
 	 * Clones an {@link ECPProject} within the same provider.

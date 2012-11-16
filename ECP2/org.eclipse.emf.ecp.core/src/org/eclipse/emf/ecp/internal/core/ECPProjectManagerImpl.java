@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -49,19 +50,30 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	private ECPProjectManagerImpl() {
 	}
 
-	public ECPProject createProject(ECPProvider provider, String name) {
+	public ECPProject createProject(ECPProvider provider, String name) throws ProjectWithNameExistsException {
 		return this.createProject(provider, name, ECPUtil.createProperties());
 	}
 
-	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties) {
+	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
+		throws ProjectWithNameExistsException {
+		if (projectExists(name)) {
+			throw new ProjectWithNameExistsException("A project with name " + name + " already exists");
+		}
 		InternalProject project = new ECPProjectImpl((InternalProvider) provider, name, properties);
 		return createProject(project);
 	}
 
-	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties) {
+	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
+		throws ProjectWithNameExistsException {
+		if (projectExists(name)) {
+			throw new ProjectWithNameExistsException("A project with name " + name + " already exists");
+		}
 		InternalProject project = new ECPProjectImpl(repository, name, properties);
 		return createProject(project);
+	}
 
+	private boolean projectExists(String name) {
+		return getProject(name) != null;
 	}
 
 	/**
@@ -71,6 +83,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	private ECPProject createProject(InternalProject project) {
 		project.getProvider().handleLifecycle(project, LifecycleEvent.CREATE);
 		changeElements(null, Collections.singleton(project));
+
 		return project;
 	}
 
