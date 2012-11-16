@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,7 +49,7 @@ public class TreeViewerFactory {
 	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD, ILabelDecorator labelDecorator) {
 		final ModelContentProvider contentProvider = new ModelContentProvider();
 		final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
-			ECPProjectManager.INSTANCE, labelDecorator);
+			ECPProjectManager.INSTANCE, labelDecorator, false);
 		if (hasDnD) {
 			final ModelExplorerDropAdapter dropAdapter = new ModelExplorerDropAdapter(contentProvider, viewer);
 
@@ -86,22 +86,22 @@ public class TreeViewerFactory {
 	public static TreeViewer createRepositoryExplorerViewer(Composite parent, ILabelDecorator labelDecorator) {
 		RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
 		TreeViewer viewer = createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider), contentProvider,
-			ECPRepositoryManager.INSTANCE, labelDecorator);
+			ECPRepositoryManager.INSTANCE, labelDecorator, true);
 		return viewer;
 	}
 
 	public static TreeViewer createTreeViewer(Composite parent, ILabelProvider labelProvider,
-		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator) {
+		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator, boolean sort) {
 		TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		createTreeViewer(labelProvider, contentProvider, input, labelDecorator, viewer);
+		createTreeViewer(labelProvider, contentProvider, input, labelDecorator, viewer, sort);
 		return viewer;
 	}
 
 	public static TreeViewer createCheckedTreeViewer(Composite parent, ILabelProvider labelProvider,
-		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator) {
+		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator, boolean sort) {
 		final ContainerCheckedTreeViewer viewer = new ContainerCheckedTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
 			| SWT.V_SCROLL);
-		createTreeViewer(labelProvider, contentProvider, input, labelDecorator, viewer);
+		createTreeViewer(labelProvider, contentProvider, input, labelDecorator, viewer, sort);
 		return viewer;
 	}
 
@@ -113,10 +113,12 @@ public class TreeViewerFactory {
 	 * @param viewer
 	 */
 	private static void createTreeViewer(ILabelProvider labelProvider, ITreeContentProvider contentProvider,
-		Object input, ILabelDecorator labelDecorator, TreeViewer viewer) {
+		Object input, ILabelDecorator labelDecorator, TreeViewer viewer, boolean sort) {
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(labelProvider);
-		viewer.setSorter(new ViewerSorter());
+		if (sort) {
+			viewer.setSorter(new ViewerSorter());
+		}
 		viewer.setInput(input);
 
 		if (labelDecorator != null) {

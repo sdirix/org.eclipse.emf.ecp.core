@@ -34,7 +34,7 @@ public class ECPProvidersView extends TreeView
   protected TreeViewer createViewer(Composite parent)
   {
     TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new ProvidersLabelProvider(),
-        new ProvidersContentProvider(), ECPProviderRegistry.INSTANCE, createLabelDecorator());
+        new ProvidersContentProvider(), ECPProviderRegistry.INSTANCE, createLabelDecorator(),true);
     return viewer;
   }
 }

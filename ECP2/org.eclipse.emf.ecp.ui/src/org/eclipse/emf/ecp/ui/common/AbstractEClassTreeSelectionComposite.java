@@ -91,13 +91,13 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	}
 
 	private TreeViewer createTreeViewer(Composite composite) {
-		return TreeViewerFactory
-			.createTreeViewer(composite, getLabelProvider(), getContentProvider(), getInput(), null);
+		return TreeViewerFactory.createTreeViewer(composite, getLabelProvider(), getContentProvider(), getInput(),
+			null, true);
 	}
 
 	private TreeViewer createCheckedTreeViewer(Composite composite) {
 		return TreeViewerFactory.createCheckedTreeViewer(composite, getLabelProvider(), getContentProvider(),
-			getInput(), null);
+			getInput(), null, true);
 	}
 
 	@Override
