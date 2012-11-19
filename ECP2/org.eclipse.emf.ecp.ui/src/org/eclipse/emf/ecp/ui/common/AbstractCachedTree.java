@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar Müller - initial API and implementation
+ * Edgar Mueller - initial API and implementation
  * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.common;
