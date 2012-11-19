@@ -11,7 +11,7 @@ package org.eclipse.emf.ecp.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 /**
  * @author Eike Stepper
  */
-public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements IECPProjectsChangedObserver {
+public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements IECPProjectsChangedUIObserver {
 	public ModelContentProvider() {
 	}
 

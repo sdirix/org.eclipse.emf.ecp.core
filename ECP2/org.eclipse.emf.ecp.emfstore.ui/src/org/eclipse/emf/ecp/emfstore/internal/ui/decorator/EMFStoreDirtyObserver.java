@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 
@@ -24,7 +24,7 @@ import java.util.HashSet;
 /**
  * Project change observer that marks elements as dirty.
  */
-public class EMFStoreDirtyObserver implements IECPProjectsChangedObserver {
+public class EMFStoreDirtyObserver implements IECPProjectsChangedUIObserver {
 
 	private HashSet<Object> excludedObjects;
 

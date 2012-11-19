@@ -9,7 +9,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
  * @author Edgar
  * 
  */
-public interface IECPProjectsChangedObserver extends IECPObserver {
+public interface IECPProjectsChangedUIObserver extends IECPObserver {
 
 	void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception;
 

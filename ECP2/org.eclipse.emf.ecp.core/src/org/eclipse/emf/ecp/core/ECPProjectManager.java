@@ -12,7 +12,7 @@ package org.eclipse.emf.ecp.core;
 import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 
 import javax.naming.NameAlreadyBoundException;
 
@@ -95,7 +95,7 @@ public interface ECPProjectManager {
 	 */
 	ECPProject[] getProjects();
 
-	void addObserver(IECPProjectsChangedObserver changeObserver);
+	void addObserver(IECPProjectsChangedUIObserver changeObserver);
 
-	void removeObserver(IECPProjectsChangedObserver changeObserver);
+	void removeObserver(IECPProjectsChangedUIObserver changeObserver);
 }

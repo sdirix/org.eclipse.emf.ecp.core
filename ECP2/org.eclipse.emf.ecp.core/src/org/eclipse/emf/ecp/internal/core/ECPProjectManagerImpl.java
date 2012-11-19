@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -41,7 +41,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedObserver> implements
+public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedUIObserver> implements
 	ECPProjectManager, IECPRepositoriesChangedObserver {
 
 	public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
@@ -138,7 +138,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		}
 
 		try {
-			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class).projectChanged(project, opened);
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedUIObserver.class).projectChanged(project, opened);
 		} catch (Exception ex) {
 			Activator.log(ex);
 		}
@@ -147,7 +147,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	public void notifyObjectsChanged(ECPProject project, Object[] objects, boolean structural) {
 
 		try {
-			ECPObserverBus.getInstance().notify(IECPProjectsChangedObserver.class)
+			ECPObserverBus.getInstance().notify(IECPProjectsChangedUIObserver.class)
 				.objectsChanged(project, objects, structural);
 		} catch (Exception ex) {
 			Activator.log(ex);
@@ -199,7 +199,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	}
 
 	@Override
-	protected void notifyObservers(IECPProjectsChangedObserver observer, InternalProject[] oldElements,
+	protected void notifyObservers(IECPProjectsChangedUIObserver observer, InternalProject[] oldElements,
 		InternalProject[] newElements) throws Exception {
 		observer.projectsChanged(oldElements, newElements);
 	}

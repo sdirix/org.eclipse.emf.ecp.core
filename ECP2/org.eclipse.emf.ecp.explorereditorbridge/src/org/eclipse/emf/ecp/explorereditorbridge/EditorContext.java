@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.editor.EditorMetamodelContext;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.EditorModelelementContextListener;
@@ -49,14 +49,14 @@ public class EditorContext implements EditorModelelementContext {
 
 	private List<EditorModelelementContextListener> contextListeners = new ArrayList<EditorModelelementContextListener>();
 
-	private IECPProjectsChangedObserver projectObserver;
+	private IECPProjectsChangedUIObserver projectObserver;
 
 	public EditorContext(EObject modelElement, ECPProject ecpProject) {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		metaModeElementContext = new MetaModeElementContext();
 
-		projectObserver = new IECPProjectsChangedObserver() {
+		projectObserver = new IECPProjectsChangedUIObserver() {
 
 			public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 				// TODO Auto-generated method stub

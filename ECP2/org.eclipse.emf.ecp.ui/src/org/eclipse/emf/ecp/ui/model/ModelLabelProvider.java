@@ -12,7 +12,7 @@ package org.eclipse.emf.ecp.ui.model;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
@@ -21,7 +21,7 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @author Eike Stepper
  */
-public class ModelLabelProvider extends ECPLabelProvider implements IECPProjectsChangedObserver {
+public class ModelLabelProvider extends ECPLabelProvider implements IECPProjectsChangedUIObserver {
 	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 
 	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$

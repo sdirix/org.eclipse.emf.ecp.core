@@ -21,7 +21,7 @@
       </perspective>
    </extension>
    <extension
-         id="ECP3x"
+         id="product"
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.emf.ecp.application3x.application"

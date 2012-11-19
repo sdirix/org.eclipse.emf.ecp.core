@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.6"?><target name="ECP RCP" sequenceNumber="123">
+<?pde version="3.6"?><target name="ECP RCP" sequenceNumber="124">
 <locations>
 <location includeAllPlatforms="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.ecp.feature.feature.group" version="0.9.3.M6"/>
@@ -17,15 +17,16 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.ide" version="4.2.1.M20120914-1800"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.2"/>
+</location>
+<location includeAllPlatforms="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.8.1.v20120917-0436"/>
 <unit id="org.eclipse.jetty.sdk.feature.group" version="8.1.3.201206060641"/>
 <unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.1.1.v20120911-1146"/>
 <unit id="org.eclipse.net4j.sdk.feature.group" version="4.1.1.v20120911-1146"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.8.1.v20120814-104540-8-8nFqpFNOfwKDRVz-tXOcL5d_83"/>
 <repository location="http://download.eclipse.org/releases/juno/"/>
-</location>
-<location includeAllPlatforms="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.platform.ide" version="4.2.1.M20120914-1800"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.2"/>
 </location>
 </locations>
 </target>
