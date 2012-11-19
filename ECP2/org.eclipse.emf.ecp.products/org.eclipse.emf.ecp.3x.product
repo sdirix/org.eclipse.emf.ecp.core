@@ -31,9 +31,9 @@
       <feature id="org.eclipse.emf.ecp.cdo"/>
       <feature id="org.eclipse.emf.ecp.emfstore"/>
       <feature id="org.eclipse.emf.ecp.workspace"/>
-      <feature id="org.eclipse.emf.ecp.validation"/>
       <feature id="org.eclipse.emf.ecp.license"/>
       <feature id="org.eclipse.emf.ecp.target"/>
+      <feature id="org.eclipse.emf.ecp.validation.feature"/>
    </features>
 
    <configurations>

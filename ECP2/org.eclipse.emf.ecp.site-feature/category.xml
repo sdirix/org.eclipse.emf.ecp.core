@@ -15,7 +15,7 @@
    <feature url="features/org.eclipse.emf.ecp.ui3x_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.ui3x" version="1.0.0.qualifier">
       <category name="org.eclipse.emf.ecp.3x.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.validation_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.validation" version="1.0.0.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.validation.feature_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.validation.feature" version="1.0.0.qualifier">
       <category name="org.eclipse.emf.ecp.extra.category"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>

@@ -51,7 +51,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.validation"
+         id="org.eclipse.emf.ecp.validation.feature"
          version="0.0.0"/>
 
 </feature>
