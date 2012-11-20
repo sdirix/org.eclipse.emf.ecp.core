@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -148,5 +149,5 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * 
 	 * @return the root object of the underlying model
 	 */
-	Object getModelRoot();
+	Notifier getModelRoot();
 }

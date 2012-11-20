@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.spi.core;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
+import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 
 /**
  * @author Eike Stepper
@@ -29,6 +30,8 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	public void notifyObjectsChanged(Object[] objects, boolean structural);
 
 	public void undispose(InternalRepository repository);
+
+	void notifyProvider(LifecycleEvent event);
 
 	/**
 	 * @return

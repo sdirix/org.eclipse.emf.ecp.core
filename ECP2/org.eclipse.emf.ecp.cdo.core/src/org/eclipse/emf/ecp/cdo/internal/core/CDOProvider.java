@@ -29,6 +29,7 @@ import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -308,7 +309,7 @@ public class CDOProvider extends DefaultProvider {
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
-	public Object getRoot(InternalProject project) {
+	public Notifier getRoot(InternalProject project) {
 		throw new UnsupportedOperationException();
 	}
 }

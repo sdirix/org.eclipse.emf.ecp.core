@@ -119,7 +119,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 
 					continue;
 				}
-				project.getProvider().handleLifecycle(project, LifecycleEvent.INIT);
+				project.notifyProvider(LifecycleEvent.INIT);
 			}
 			initializedProjects = true;
 		}

@@ -14,7 +14,7 @@
   </properties>
   
   <modules>
-    <!-- <module>../_target</module>-->
+    <module>../_target</module>
     <module>../org.eclipse.emf.ecp-feature</module>
     <module>../org.eclipse.emf.ecp.application3x</module>
     <module>../org.eclipse.emf.ecp.cdo-feature</module>
@@ -99,7 +99,7 @@
 		  <target>
 		    <artifact>
 			  <groupId>org.eclipse.emf.ecp</groupId>
-              <artifactId>ecp</artifactId>
+              <artifactId>ecp-target</artifactId>
 			  <version>1.0.0-SNAPSHOT</version>
 			</artifact>
 		  </target>

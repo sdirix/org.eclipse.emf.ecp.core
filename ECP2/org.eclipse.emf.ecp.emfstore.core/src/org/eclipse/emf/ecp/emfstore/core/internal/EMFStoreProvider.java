@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -318,6 +319,7 @@ public class EMFStoreProvider extends DefaultProvider {
 
 			}
 			internalProject.setProviderSpecificData(projectSpace);
+
 		}
 		return projectSpace;
 	}
@@ -428,7 +430,7 @@ public class EMFStoreProvider extends DefaultProvider {
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
-	public Object getRoot(InternalProject project) {
+	public Notifier getRoot(InternalProject project) {
 		return getProjectSpace(project).getProject();
 	}
 }

@@ -11,6 +11,7 @@ package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -308,7 +309,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		 * (non-Javadoc)
 		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 		 */
-		public Object getRoot(InternalProject project) {
+		public Notifier getRoot(InternalProject project) {
 			return getResolvedElement().getRoot(project);
 		}
 	}

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -209,5 +210,5 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param project the project to get the root container for
 	 * @return the container object
 	 */
-	Object getRoot(InternalProject project);
+	Notifier getRoot(InternalProject project);
 }

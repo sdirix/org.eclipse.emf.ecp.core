@@ -9,7 +9,7 @@
     <relativePath>../org.eclipse.emf.ecp.releng/</relativePath>
   </parent>
   <groupId>org.eclipse.emf.ecp</groupId>
-  <artifactId>ecp</artifactId>
+  <artifactId>ecp-target</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-target-definition</packaging>
 </project>

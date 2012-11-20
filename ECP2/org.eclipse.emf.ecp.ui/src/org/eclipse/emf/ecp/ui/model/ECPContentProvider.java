@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.ui.model;
 
@@ -25,62 +24,50 @@ import org.eclipse.jface.viewers.TreeViewer;
  * @author Eike Stepper
  */
 public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPUT> implements ECPModelContextProvider,
-    INotifyChangedListener
-{
-  protected ViewerRefresh viewerRefresh;
+	INotifyChangedListener {
+	protected ViewerRefresh viewerRefresh;
 
-  public ECPContentProvider()
-  {
-    InternalProvider.EMF_ADAPTER_FACTORY.addListener(this);
-  }
+	public ECPContentProvider() {
+		InternalProvider.EMF_ADAPTER_FACTORY.addListener(this);
+	}
 
-  @Override
-  public void dispose()
-  {
-    InternalProvider.EMF_ADAPTER_FACTORY.removeListener(this);
-    super.dispose();
-  }
+	@Override
+	public void dispose() {
+		InternalProvider.EMF_ADAPTER_FACTORY.removeListener(this);
+		super.dispose();
+	}
 
-  @Override
-  protected void fillChildren(Object parent, InternalChildrenList childrenList)
-  {
-    ECPModelContext context = getModelContext(parent);
-    if (context != null)
-    {
-      InternalProvider provider = (InternalProvider)context.getProvider();
-      provider.fillChildren(context, parent, childrenList);
-    }
-  }
+	@Override
+	protected void fillChildren(Object parent, InternalChildrenList childrenList) {
+		ECPModelContext context = getModelContext(parent);
+		if (context != null) {
+			InternalProvider provider = (InternalProvider) context.getProvider();
+			provider.fillChildren(context, parent, childrenList);
+		}
+	}
 
-  public ECPModelContext getModelContext(Object element)
-  {
-    while (element != null)
-    {
-      if (element instanceof ECPModelContext)
-      {
-        break;
-      }
+	public ECPModelContext getModelContext(Object element) {
+		while (element != null) {
+			if (element instanceof ECPModelContext) {
+				break;
+			}
 
-      element = getParent(element);
-    }
+			element = getParent(element);
+		}
 
-    return (ECPModelContext)element;
-  }
+		return (ECPModelContext) element;
+	}
 
-  public void notifyChanged(Notification notification)
-  {
-    TreeViewer viewer = getViewer();
-    if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed())
-    {
-      if (viewerRefresh == null)
-      {
-        viewerRefresh = new ViewerRefresh(viewer);
-      }
+	public void notifyChanged(Notification notification) {
+		TreeViewer viewer = getViewer();
+		if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed()) {
+			if (viewerRefresh == null) {
+				viewerRefresh = new ViewerRefresh(viewer);
+			}
 
-      if (viewerRefresh.addNotification((IViewerNotification)notification))
-      {
-        viewer.getControl().getDisplay().asyncExec(viewerRefresh);
-      }
-    }
-  }
+			if (viewerRefresh.addNotification((IViewerNotification) notification)) {
+				viewer.getControl().getDisplay().asyncExec(viewerRefresh);
+			}
+		}
+	}
 }
