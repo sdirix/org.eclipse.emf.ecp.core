@@ -99,7 +99,7 @@
 		  <target>
 		    <artifact>
 			  <groupId>org.eclipse.emf.ecp</groupId>
-              <artifactId>ecp-target</artifactId>
+              <artifactId>ecp</artifactId>
 			  <version>1.0.0-SNAPSHOT</version>
 			</artifact>
 		  </target>
