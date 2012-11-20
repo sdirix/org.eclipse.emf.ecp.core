@@ -11,14 +11,15 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.spi.ui;version="1.0.0.qualifier",
+ org.eclipse.emf.ecp.ui;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.common;version="1.0.0.qualifier",
- org.eclipse.emf.ecp.ui.common.dnd;x-internal:=true,
+ org.eclipse.emf.ecp.ui.common.dnd;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.dialogs;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.model;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.util;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.widgets;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.wizards;version="1.0.0.qualifier",
- org.eclipse.emf.ecp.wizards.page
+ org.eclipse.emf.ecp.wizards.page;version="1.0.0.qualifier"
 Import-Package: org.eclipse.core.commands,
  org.eclipse.emf.edit.ui.action,
  org.eclipse.emf.edit.ui.dnd,
