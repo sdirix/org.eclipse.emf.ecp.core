@@ -40,6 +40,7 @@
     <module>../org.eclipse.emf.ecp.validation</module>
     <module>../org.eclipse.emf.ecp.validation-feature</module>
     <module>../org.eclipse.emf.ecp.validation.connector</module>
+    <module>../org.eclipse.emf.ecp.validation.test</module>
     <module>../org.eclipse.emf.ecp.workspace-feature</module>
     <module>../org.eclipse.emf.ecp.workspace.core</module>
     <module>../org.eclipse.emf.ecp.workspace.ui</module>
