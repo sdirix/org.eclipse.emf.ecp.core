@@ -14,7 +14,7 @@
   </properties>
   
   <modules>
-    <module>../_target</module>
+    <!-- <module>../_target</module>-->
     <module>../org.eclipse.emf.ecp-feature</module>
     <module>../org.eclipse.emf.ecp.application3x</module>
     <module>../org.eclipse.emf.ecp.cdo-feature</module>
