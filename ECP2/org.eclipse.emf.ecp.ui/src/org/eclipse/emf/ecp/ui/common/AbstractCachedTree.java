@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.ui.common;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -77,15 +78,16 @@ public abstract class AbstractCachedTree<T> {
 	 * @param excludedObjects
 	 *            a set of excluded objects that are ignored during propagation of updated value
 	 */
-	public void update(EObject eObject, T value, Set<? extends Object> excludedObjects) {
+	public Set<EObject> update(EObject eObject, T value, Set<? extends Object> excludedObjects) {
 
 		if (excludedObjects.contains(eObject)) {
-			return;
+			return Collections.emptySet();
 		}
 
 		updateNode(eObject, value);
 		rootValue.putIntoCache(eObject, value);
 
+		Set<EObject> affectedElements = new HashSet<EObject>();
 		// propagate upwards
 		EObject parent = eObject.eContainer();
 
@@ -94,7 +96,9 @@ public abstract class AbstractCachedTree<T> {
 			updateParentNode(parent, eObject, value);
 			parent = parent.eContainer();
 			eObject = parent;
+			affectedElements.add(eObject);
 		}
+		return affectedElements;
 	}
 
 	/**

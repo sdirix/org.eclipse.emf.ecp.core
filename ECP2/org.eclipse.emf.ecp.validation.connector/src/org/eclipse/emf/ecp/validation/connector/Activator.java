@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
@@ -108,7 +109,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Project change observer that validates changed objects.
 	 */
-	private class ValidationObserver implements IECPProjectsChangedUIObserver {
+	private class ValidationObserver implements IECPProjectsChangedUIObserver, IECPProjectObjectsChangedObserver {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
@@ -123,6 +124,11 @@ public class Activator extends AbstractUIPlugin {
 
 		public void objectsChanged(ECPProject project, Object[] objects,boolean structural) throws Exception {
 			
+		}
+		
+		public Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception {
+			
+			Set<EObject> allAffectedElements=new HashSet<EObject>(); 
 			for (Object object : objects) {
 				
 				if (!(object instanceof EObject)) {
@@ -132,11 +138,13 @@ public class Activator extends AbstractUIPlugin {
 				EObject eObject = (EObject) object;
 				
 				if (project.contains(eObject)) {
-					getValidationService(project).validate((EObject) object, excludedObjects);
+					Set<EObject> affected=getValidationService(project).validate((EObject) object, excludedObjects);
+					allAffectedElements.addAll(affected);
 				} else {
 					getValidationService(project).remove(eObject, excludedObjects);
 				}
 			}
+			return allAffectedElements.toArray();
 		}
 		// END SUPRESS CATCH EXCEPTION
 	}

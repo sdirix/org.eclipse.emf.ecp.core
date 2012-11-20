@@ -2,7 +2,10 @@ package org.eclipse.emf.ecp.validation.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.emf.ecp.validation.test.test.Library;
@@ -66,7 +69,8 @@ public class ValidationTest {
 		
 		IValidationService validationService= validationServiceProvider.getValidationService(library);
 		
-		validationService.validate(writer);
+		Set<EObject> affectedElements=validationService.validate(writer);
+		assertEquals(1, affectedElements.size());
 		
 		Diagnostic diagnosticWriter= validationService.getDiagnostic(writer);
 		assertEquals(Diagnostic.ERROR, diagnosticWriter.getSeverity());

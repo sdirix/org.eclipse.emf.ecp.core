@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.internal.validation;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -72,31 +73,34 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	/**
 	 * {@inheritDoc}
 	 */
-	public void validate(Collection<EObject> eObjects) {
-		validate(eObjects, EMPTY_SET);
+	public Set<EObject> validate(Collection<EObject> eObjects) {
+		return validate(eObjects, EMPTY_SET);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void validate(Collection<EObject> eObjects, Set<? extends Object> excludedObjects) {
+	public Set<EObject> validate(Collection<EObject> eObjects, Set<? extends Object> excludedObjects) {
+		Set<EObject> allAffected=new HashSet<EObject>();
 		for(EObject eObject : eObjects) {
-			validate(eObject, excludedObjects);
+			Set<EObject> affected=validate(eObject, excludedObjects);
+			allAffected.addAll(affected);
 		}
+		return allAffected;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void validate(EObject eObject) {
-		validate(eObject, EMPTY_SET);		
+	public Set<EObject> validate(EObject eObject) {
+		return validate(eObject, EMPTY_SET);		
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void validate(EObject eObject, Set<? extends Object> excludedObjects) {
-		update(eObject, getSeverity(eObject), excludedObjects);
+	public Set<EObject> validate(EObject eObject, Set<? extends Object> excludedObjects) {
+		return update(eObject, getSeverity(eObject), excludedObjects);
 	}
 
 	/**

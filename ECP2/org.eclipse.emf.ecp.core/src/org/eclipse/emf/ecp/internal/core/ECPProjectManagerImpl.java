@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
@@ -34,7 +35,9 @@ import org.eclipse.core.runtime.Status;
 
 import java.io.IOException;
 import java.io.ObjectInput;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -147,8 +150,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	public void notifyObjectsChanged(ECPProject project, Object[] objects, boolean structural) {
 
 		try {
+			Object[] affected = ECPObserverBus.getInstance().notify(IECPProjectObjectsChangedObserver.class)
+				.objectsChanged(project, objects);
+			Set<Object> toUpdate = new HashSet<Object>(Arrays.asList(objects));
+			toUpdate.add(affected);
 			ECPObserverBus.getInstance().notify(IECPProjectsChangedUIObserver.class)
-				.objectsChanged(project, objects, structural);
+				.objectsChanged(project, toUpdate.toArray(), structural);
 		} catch (Exception ex) {
 			Activator.log(ex);
 		}
