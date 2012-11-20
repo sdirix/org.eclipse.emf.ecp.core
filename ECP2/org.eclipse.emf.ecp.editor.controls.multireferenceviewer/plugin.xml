@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.editor.referencecontrols">
+      <widget
+            class="org.eclipse.emf.ecp.controls.multireference.ViewerMEControl"
+            name="org.eclipse.emf.ecp.controls.multireference"
+            showLabel="true"
+            type="org.eclipse.emf.ecore.EObject">
+      </widget>
+   </extension>
+
+</plugin>
