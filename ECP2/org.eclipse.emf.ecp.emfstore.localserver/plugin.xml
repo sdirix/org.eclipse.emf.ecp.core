@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.eclipse.emf.ecp.emfstore.provider"
+         name="Local EMFStore"
+         point="org.eclipse.emf.ecp.core.repositories">
+      <repository
+            description="Default EMFStore"
+            provider="org.eclipse.emf.ecp.emfstore.provider">
+      </repository>
+   </extension>
+
+</plugin>
