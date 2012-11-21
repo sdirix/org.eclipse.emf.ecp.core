@@ -120,6 +120,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+<<<<<<< HEAD
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.9.1</version>
 				<executions>
@@ -145,4 +146,175 @@
 			</plugin>
 		</plugins>
 	</reporting>
+=======
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<reportPlugins>
+						<plugin>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<configuration>
+								<configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation>
+							</configuration>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.9.1</version>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- <reporting> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-checkstyle-plugin</artifactId> <version>2.9.1</version> 
+		<configuration> <configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation> 
+		</configuration> </plugin> </plugins> </reporting> -->
+>>>>>>> branch 'master' of ssh://eneufeld@git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.other.git
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>ecp-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho-version>0.16.0</tycho-version>
+		<javadoc-version>2.9</javadoc-version>
+	</properties>
+
+	<modules>
+		<module>../_target</module>
+		<module>../org.eclipse.emf.ecp-feature</module>
+		<module>../org.eclipse.emf.ecp.application3x</module>
+		<module>../org.eclipse.emf.ecp.cdo-feature</module>
+		<module>../org.eclipse.emf.ecp.cdo.core</module>
+		<module>../org.eclipse.emf.ecp.cdo.ui</module>
+		<module>../org.eclipse.emf.ecp.core</module>
+		<module>../org.eclipse.emf.ecp.core.emffilter</module>
+		<module>../org.eclipse.emf.ecp.doc</module>
+		<module>../org.eclipse.emf.ecp.editor</module>
+		<module>../org.eclipse.emf.ecp.editor.workbench</module>
+		<module>../org.eclipse.emf.ecp.editor.controls-feature</module>
+		<module>../org.eclipse.emf.ecp.editor.controls.multireferenceviewer</module>
+		<module>../org.eclipse.emf.ecp.emfstore-feature</module>
+		<module>../org.eclipse.emf.ecp.emfstore.core</module>
+		<module>../org.eclipse.emf.ecp.emfstore.ui</module>
+		<module>../org.eclipse.emf.ecp.emfstore.ui.search</module>
+		<module>../org.eclipse.emf.ecp.explorereditorbridge</module>
+		<module>../org.eclipse.emf.ecp.license-feature</module>
+		<module>../org.eclipse.emf.ecp.products</module>
+		<module>../org.eclipse.emf.ecp.site-feature</module>
+		<module>../org.eclipse.emf.ecp.target-feature</module>
+		<module>../org.eclipse.emf.ecp.ui</module>
+		<module>../org.eclipse.emf.ecp.ui.workbench</module>
+		<module>../org.eclipse.emf.ecp.ui3x-feature</module>
+		<module>../org.eclipse.emf.ecp.validation</module>
+		<module>../org.eclipse.emf.ecp.validation-feature</module>
+		<module>../org.eclipse.emf.ecp.validation.connector</module>
+		<module>../org.eclipse.emf.ecp.validation.test</module>
+		<module>../org.eclipse.emf.ecp.workspace-feature</module>
+		<module>../org.eclipse.emf.ecp.workspace.core</module>
+		<module>../org.eclipse.emf.ecp.workspace.ui</module>
+	</modules>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<outputDirectory>bin</outputDirectory>
+
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+					<target>
+						<artifact>
+							<groupId>org.eclipse.emf.ecp</groupId>
+							<artifactId>ecp</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${javadoc-version}</version>
+				<configuration>
+					<reportOutputDirectory>../org.eclipse.emf.ecp.doc/</reportOutputDirectory>
+					<destDir>target/ecp-doc</destDir>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<reportPlugins>
+						<plugin>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<configuration>
+								<configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation>
+							</configuration>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.9.1</version>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- <reporting> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-checkstyle-plugin</artifactId> <version>2.9.1</version> 
+		<configuration> <configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation> 
+		</configuration> </plugin> </plugins> </reporting> -->
 </project>
