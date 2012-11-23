@@ -25,6 +25,8 @@ import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
  */
 public class ValidationServiceProvider implements IValidationServiceProvider {
 	
+	
+	
 	private Map<Object, IValidationService> mapping;
 	
 	/**
@@ -37,23 +39,22 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 	/**
 	 * {@inheritDoc}
 	 */
-	public IValidationService getValidationService(Object object) {
-		if(!ECPProject.class.isInstance(object)){
-			return null;
-		}
-		final ECPProject project=(ECPProject)object;
-		if (!mapping.containsKey(project)) {
+	public IValidationService getValidationService(final Object validationServiceObject) {
+		if (!mapping.containsKey(validationServiceObject)) {
 			IValidationService validationService = new ValidationService(new IExcludedObjectsCallback() {
 				
 				public boolean isExcluded(Object object) {
-					return project.isModelRoot(object);
+					if(ECPProject.class.isInstance(validationServiceObject)){
+						return ((ECPProject)validationServiceObject).isModelRoot(object);
+					}
+					return false;
 				}
 			});
-			mapping.put(project, validationService);
+			mapping.put(validationServiceObject, validationService);
 			return validationService;
 		}
 		
-		return mapping.get(project);
+		return mapping.get(validationServiceObject);
 	}
 
 }
