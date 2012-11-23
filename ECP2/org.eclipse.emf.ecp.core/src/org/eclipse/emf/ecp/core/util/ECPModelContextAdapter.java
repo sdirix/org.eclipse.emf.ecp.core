@@ -10,7 +10,6 @@
 package org.eclipse.emf.ecp.core.util;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecp.core.ECPProvider;
 
 /**
  * @author Eike Stepper
@@ -30,13 +29,7 @@ public class ECPModelContextAdapter extends AdapterImpl {
 	@Override
 	public boolean isAdapterForType(Object type) {
 		if (type instanceof Class<?>) {
-			Class<?> clazz = (Class<?>) type;
-			// if we want a provider then this is ok
-			if (ECPProvider.class.isAssignableFrom(clazz)) {
-				return true;
-			}
-			// check if the context is of the right type
-			return ((Class<?>) type).isInstance(context);
+			return ((Class<?>) type).isInstance(this);
 		}
 		return context.equals(type);
 	}

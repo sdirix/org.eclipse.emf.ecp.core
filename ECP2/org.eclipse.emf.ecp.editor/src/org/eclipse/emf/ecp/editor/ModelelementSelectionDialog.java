@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.ui.dialogs;
+package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;

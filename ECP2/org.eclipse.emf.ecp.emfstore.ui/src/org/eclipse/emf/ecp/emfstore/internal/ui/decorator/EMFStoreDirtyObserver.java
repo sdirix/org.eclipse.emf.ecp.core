@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -46,44 +45,22 @@ public class EMFStoreDirtyObserver implements IECPProjectsChangedUIObserver {
 
 	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 
-		loadExcludedObjects();
-
 		if (EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) project).isShared()) {
 			return;
 		}
-
+		// for all changed objects
 		for (Object object : objects) {
-
+			// not an eobject then do nothing
 			if (!(object instanceof EObject)) {
 				continue;
 			}
 
 			EObject eObject = (EObject) object;
 
-			if (project.contains(eObject)) {
-				EMFStoreDirtyDecoratorCachedTree.getInstance().update(eObject, Boolean.TRUE, excludedObjects);
-			} else {
-				if (eObject.eContainer() != null) {
-					EMFStoreDirtyDecoratorCachedTree.getInstance().update(eObject.eContainer(), Boolean.TRUE,
-						excludedObjects);
-					EMFStoreDirtyDecoratorCachedTree.getInstance().remove(eObject, excludedObjects);
-				}
-			}
+			EMFStoreDirtyDecoratorCachedTree.getInstance(project).update(eObject, Boolean.TRUE);
+
 		}
 	}
 
 	// END SUPRESS CATCH EXCEPTION
-
-	/**
-	 * 
-	 */
-	private void loadExcludedObjects() {
-		if (excludedObjects == null) {
-			excludedObjects = new HashSet<Object>();
-			for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
-				excludedObjects.add(project);
-				excludedObjects.add(project.getModelRoot());
-			}
-		}
-	}
 }

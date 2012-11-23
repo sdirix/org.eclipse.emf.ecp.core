@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -44,7 +45,9 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 	public void decorate(Object element, IDecoration decoration) {
 
 		if (element instanceof EObject) {
-			if (EMFStoreDirtyDecoratorCachedTree.getInstance().getCachedValue(element) == Boolean.TRUE) {
+			InternalProject project = ECPUtil.getECPProject(element, InternalProject.class);
+			if (EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element) == Boolean.TRUE) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 
@@ -53,7 +56,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 
 		if (element instanceof ECPProject) {
 			if (EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance().getRootValue() == Boolean.TRUE) {
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance((ECPProject) element).getRootValue() == Boolean.TRUE) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 		}
@@ -104,6 +107,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 	 * {@inheritDoc}
 	 */
 	public void commitCompleted(ProjectSpace projectSpace, PrimaryVersionSpec newRevision) {
-		EMFStoreDirtyDecoratorCachedTree.getInstance().clear();
+		ECPProject project = EMFStoreProvider.INSTANCE.getProject(projectSpace);
+		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
 	}
 }

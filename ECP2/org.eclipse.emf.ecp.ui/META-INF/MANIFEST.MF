@@ -14,10 +14,10 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.0.0.qualifier";x-inte
  org.eclipse.emf.ecp.ui;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.common;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.common.dnd;version="1.0.0.qualifier",
- org.eclipse.emf.ecp.ui.dialogs;version="1.0.0.qualifier",
+ org.eclipse.emf.ecp.ui.dialogs,
  org.eclipse.emf.ecp.ui.model;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.ui.util;version="1.0.0.qualifier",
- org.eclipse.emf.ecp.ui.widgets;version="1.0.0.qualifier";x-internal:=true,
+ org.eclipse.emf.ecp.ui.widgets;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.wizards;version="1.0.0.qualifier",
  org.eclipse.emf.ecp.wizards.page;version="1.0.0.qualifier"
 Import-Package: org.eclipse.core.commands,

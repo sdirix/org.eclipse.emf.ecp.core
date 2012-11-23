@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -118,7 +117,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param project the project to get the root elements for
 	 * @return list of root elements of this project
 	 */
-	EList<EObject> getElements(InternalProject project);
+	EList<Object> getElements(InternalProject project);
 
 	/**
 	 * {@link EPackage}s that are not supported by this provider.
@@ -184,18 +183,6 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	void cloneProject(final InternalProject projectToClone, InternalProject targetProject);
 
 	/**
-	 * Whether the given {@link EObject} is contained in the project managed by the provider.
-	 * 
-	 * @param project
-	 *            the project that is supposed to contain the given {@link EObject}
-	 * @param eObject
-	 *            the object whose containment within the project should be checked
-	 * 
-	 * @return true, if the project managed by the provider contains the given {@link EObject}, false otherwise
-	 */
-	boolean contains(InternalProject project, EObject eObject);
-
-	/**
 	 * Checks whether the data of the project still exists, method is called on startup. {@link DefaultProvider}
 	 * implements this by returning true, adopt if needed.
 	 * 
@@ -205,10 +192,11 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	boolean modelExists(InternalProject project);
 
 	/**
-	 * Method returning the model container.
+	 * Method checking whether an object is the root of the model container.
 	 * 
-	 * @param project the project to get the root container for
-	 * @return the container object
+	 * @param project to check the root container for
+	 * @param object to check whether it is the root container
+	 * @return true if the object is the root container of this project
 	 */
-	Notifier getRoot(InternalProject project);
+	boolean isRoot(InternalProject project, Object object);
 }

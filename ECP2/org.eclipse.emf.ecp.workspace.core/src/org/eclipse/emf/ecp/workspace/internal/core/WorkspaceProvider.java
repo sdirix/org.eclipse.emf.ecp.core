@@ -9,7 +9,6 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.core;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -108,7 +107,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		}
 	}
 
-	public EList<EObject> getElements(InternalProject project) {
+	public EList<Object> getElements(InternalProject project) {
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
 		throw new UnsupportedOperationException();
 	}
@@ -254,8 +253,26 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
 	// FIXME
-	public Notifier getRoot(InternalProject project) {
-		return null;
+	public boolean isRoot(InternalProject project, Object object) {
+		return true;
+	}
+
+	@Override
+	public void doSave(InternalProject project) {
+		// TODO Auto-generated method stub
+		super.doSave(project);
+	}
+
+	@Override
+	public boolean isDirty(InternalProject project) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean hasAutosave(InternalProject project) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

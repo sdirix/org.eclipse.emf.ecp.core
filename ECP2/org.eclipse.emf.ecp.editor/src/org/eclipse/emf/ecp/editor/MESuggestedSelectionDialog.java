@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.ui.dialogs.ModelelementSelectionDialog;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 

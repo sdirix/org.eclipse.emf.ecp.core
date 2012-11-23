@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,18 +36,17 @@ public abstract class AbstractCachedTree<T> {
 
 	private Map<Object, CachedTreeNode<T>> nodes;
 	private CachedTreeNode<T> rootValue;
-
-	/**
-	 * Empty set provided for convenience reasons.
-	 */
-	protected static final Set<? extends Object> EMPTY_SET = Collections.emptySet();
+	private IExcludedObjectsCallback excludedCallback;
 
 	/**
 	 * Private constructor.
+	 * 
+	 * @param callback the {@link IExcludedObjectsCallback} to use when checking when to stop
 	 */
-	public AbstractCachedTree() {
+	public AbstractCachedTree(IExcludedObjectsCallback callback) {
 		nodes = new LinkedHashMap<Object, CachedTreeNode<T>>();
 		rootValue = createdCachedTreeNode(getDefaultValue());
+		this.excludedCallback = callback;
 	}
 
 	/**
@@ -75,12 +74,11 @@ public abstract class AbstractCachedTree<T> {
 	 *            the {@link EObject}
 	 * @param value
 	 *            the value associated with the {@link EObject}
-	 * @param excludedObjects
-	 *            a set of excluded objects that are ignored during propagation of updated value
+	 * @return set of affected eobjects
 	 */
-	public Set<EObject> update(EObject eObject, T value, Set<? extends Object> excludedObjects) {
+	public Set<EObject> update(EObject eObject, T value) {
 
-		if (excludedObjects.contains(eObject)) {
+		if (excludedCallback.isExcluded(eObject)) {
 			return Collections.emptySet();
 		}
 
@@ -91,7 +89,7 @@ public abstract class AbstractCachedTree<T> {
 		// propagate upwards
 		EObject parent = eObject.eContainer();
 
-		while (parent != null && !excludedObjects.contains(parent)) {// !isExcludedType(excludedTypes,
+		while (parent != null && !excludedCallback.isExcluded(parent)) {// !isExcludedType(excludedTypes,
 																		// parent.getClass())
 			updateParentNode(parent, eObject, value);
 			parent = parent.eContainer();
@@ -135,10 +133,8 @@ public abstract class AbstractCachedTree<T> {
 	 * 
 	 * @param eObject
 	 *            the {@link EObject} that needs to be removed from the cached tree
-	 * @param excludedObjects
-	 *            a set of excluded objects that are ignored during propagation of updates values
 	 */
-	public void remove(EObject eObject, Set<? extends Object> excludedObjects) {
+	public void remove(EObject eObject) {
 
 		CachedTreeNode<T> node = nodes.get(eObject);
 		CachedTreeNode<T> parentNode = nodes.get(node.parent);
@@ -154,8 +150,7 @@ public abstract class AbstractCachedTree<T> {
 		parentNode.removeFromCache(eObject);
 		EObject parent = eObject.eContainer();
 
-		while (parent != null && !excludedObjects.contains(parent)) {// !isExcludedType(excludedTypes,
-																		// parent.getClass())
+		while (parent != null && !excludedCallback.isExcluded(parent)) {
 
 			node = nodes.get(parent);
 			node.removeFromCache(eObject);
@@ -163,16 +158,6 @@ public abstract class AbstractCachedTree<T> {
 			parent = parent.eContainer();
 			eObject = parent;
 		}
-	}
-
-	/**
-	 * Removes the cache entry that contains the given {@link EObject}.
-	 * 
-	 * @param eObject
-	 *            the {@link EObject} that needs to be removed from the cached tree
-	 */
-	public void remove(EObject eObject) {
-		remove(eObject, EMPTY_SET);
 	}
 
 	private void updateNode(Object object, T t) {

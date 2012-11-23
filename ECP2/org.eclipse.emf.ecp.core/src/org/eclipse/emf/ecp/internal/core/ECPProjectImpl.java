@@ -9,7 +9,6 @@
  */
 package org.eclipse.emf.ecp.internal.core;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -26,7 +25,6 @@ import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.IFilterProvider;
@@ -374,12 +372,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	public void notifyProvider(LifecycleEvent event) {
 		InternalProvider provider = getProvider();
 		provider.handleLifecycle(this, event);
-		if (event == LifecycleEvent.INIT) {
-			Notifier root = provider.getRoot(this);
-			if (root != null) {
-				root.eAdapters().add(new ECPModelContextAdapter(this));
-			}
-		}
+		// if (event == LifecycleEvent.INIT) {
+		// Notifier root = provider.isRoot(this);
+		// if (root != null) {
+		// root.eAdapters().add(new ECPModelContextAdapter(this));
+		// }
+		// }
 	}
 
 	public void undispose(InternalRepository repository) {
@@ -497,7 +495,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 	}
 
-	public EList<EObject> getElements() {
+	public EList<Object> getElements() {
 		return getProvider().getElements(this);
 	}
 
@@ -591,17 +589,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#contains(org.eclipse.emf.ecore.EObject)
-	 */
-	public boolean contains(EObject eObject) {
-		return getProvider().contains(this, eObject);
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.core.ECPProject#getModelRoot()
 	 */
-	public Notifier getModelRoot() {
-		return getProvider().getRoot(this);
+	public boolean isModelRoot(Object object) {
+		return getProvider().isRoot(this, object);
 	}
 }

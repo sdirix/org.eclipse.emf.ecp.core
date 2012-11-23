@@ -1,13 +1,15 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -60,7 +62,7 @@ public class EMFStoreProvider extends DefaultProvider {
    * 
    */
 	private void configureEMFStore() {
-		Configuration.setAutoSave(true);
+		Configuration.setAutoSave(false);
 	}
 
 	// @Override
@@ -121,9 +123,9 @@ public class EMFStoreProvider extends DefaultProvider {
 		return true;
 	}
 
-	public EList<EObject> getElements(InternalProject project) {
+	public EList<Object> getElements(InternalProject project) {
 		ProjectSpace projectSpace = getProjectSpace(project);
-		return projectSpace.getProject().getModelElements();
+		return new BasicEList<Object>(projectSpace.getProject().getModelElements());
 	}
 
 	@Override
@@ -230,7 +232,7 @@ public class EMFStoreProvider extends DefaultProvider {
 				// 3
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement.eContainer() == null) {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, true);
+						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement, context }, true);
 					}
 				}
 
@@ -319,7 +321,7 @@ public class EMFStoreProvider extends DefaultProvider {
 
 			}
 			internalProject.setProviderSpecificData(projectSpace);
-
+			projectSpace.getProject().eResource().eAdapters().add(new ECPModelContextAdapter(internalProject));
 		}
 		return projectSpace;
 	}
@@ -430,7 +432,21 @@ public class EMFStoreProvider extends DefaultProvider {
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
-	public Notifier getRoot(InternalProject project) {
-		return getProjectSpace(project).getProject();
+	public boolean isRoot(InternalProject project, Object object) {
+		return object.equals(getProjectSpace(project).getProject());
+	}
+
+	/**
+	 * @param projectSpace
+	 * @return
+	 */
+	public ECPProject getProject(ProjectSpace projectSpace) {
+		for (InternalProject project : getOpenProjects()) {
+			ProjectSpace localProjectSpace = (ProjectSpace) project.getProviderSpecificData();
+			if (localProjectSpace.equals(projectSpace)) {
+				return project;
+			}
+		}
+		return null;
 	}
 }

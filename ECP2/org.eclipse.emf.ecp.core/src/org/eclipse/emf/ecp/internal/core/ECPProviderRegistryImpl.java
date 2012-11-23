@@ -11,7 +11,6 @@ package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -221,7 +220,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		 * @see
 		 * org.eclipse.emf.ecp.spi.core.InternalProvider#getElements(org.eclipse.emf.ecp.internal.core.ECPProjectImpl)
 		 */
-		public EList<EObject> getElements(InternalProject project) {
+		public EList<Object> getElements(InternalProject project) {
 			return getResolvedElement().getElements(project);
 		}
 
@@ -289,15 +288,6 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 
 		/*
 		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
-		 * org.eclipse.emf.ecore.EObject)
-		 */
-		public boolean contains(InternalProject project, EObject eObject) {
-			return getResolvedElement().contains(project, eObject);
-		}
-
-		/*
-		 * (non-Javadoc)
 		 * @see
 		 * org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(org.eclipse.emf.ecp.spi.core.InternalProject)
 		 */
@@ -309,8 +299,8 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		 * (non-Javadoc)
 		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 		 */
-		public Notifier getRoot(InternalProject project) {
-			return getResolvedElement().getRoot(project);
+		public boolean isRoot(InternalProject project, Object object) {
+			return getResolvedElement().isRoot(project, object);
 		}
 	}
 }

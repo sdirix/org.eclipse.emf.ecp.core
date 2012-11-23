@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.validation;
+package org.eclipse.emf.ecp.validation.connector;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.ui.common.AbstractCachedTree;
 import org.eclipse.emf.ecp.ui.common.CachedTreeNode;
+import org.eclipse.emf.ecp.ui.common.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 
 /**
@@ -29,7 +30,14 @@ import org.eclipse.emf.ecp.validation.api.IValidationService;
  */
 public final class ValidationService extends AbstractCachedTree<Diagnostic> implements IValidationService {
 	
-	
+	/**
+	 * Constructor for the ECP ValidationService.
+	 * @param callback to use
+	 */
+	public ValidationService(IExcludedObjectsCallback callback) {
+		super(callback);
+	}
+
 	/**
 	 * Tree node that caches the severity of its children.
 	 */
@@ -74,16 +82,9 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	 * {@inheritDoc}
 	 */
 	public Set<EObject> validate(Collection<EObject> eObjects) {
-		return validate(eObjects, EMPTY_SET);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Set<EObject> validate(Collection<EObject> eObjects, Set<? extends Object> excludedObjects) {
 		Set<EObject> allAffected=new HashSet<EObject>();
 		for(EObject eObject : eObjects) {
-			Set<EObject> affected=validate(eObject, excludedObjects);
+			Set<EObject> affected=validate(eObject);
 			allAffected.addAll(affected);
 		}
 		return allAffected;
@@ -93,14 +94,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	 * {@inheritDoc}
 	 */
 	public Set<EObject> validate(EObject eObject) {
-		return validate(eObject, EMPTY_SET);		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Set<EObject> validate(EObject eObject, Set<? extends Object> excludedObjects) {
-		return update(eObject, getSeverity(eObject), excludedObjects);
+		return update(eObject, getSeverity(eObject));
 	}
 
 	/**

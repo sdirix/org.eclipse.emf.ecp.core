@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -44,13 +43,13 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	String TYPE = "Project";
 
 	/**
-	 * Returns the list of the direct content objects; each is of type EObject.
-	 * The contents may be directly modified. Removing an object will have the same effect as EcoreUtil.remove(EObject).
+	 * Returns the list of the direct content objects; each is of type Object.
+	 * The contents may be directly modified.
 	 * Adding an object will remove it from the previous container;
 	 * 
-	 * @return A list of {@link EObject}
+	 * @return A list of {@link Object}
 	 */
-	EList<EObject> getElements();
+	EList<Object> getElements();
 
 	/**
 	 * Returns a collection of {@link EPackage}s which are not supported by the provider. EObjects from these packages
@@ -135,19 +134,10 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	void delete(Collection<EObject> eObjects);
 
 	/**
-	 * Whether the given {@link EObject} is contained in the project, call is delegated to the provider.
+	 * This method checks whether the provided object is the model root of the project.
 	 * 
-	 * @param eObject
-	 *            the object whose containment within the project should be checked
-	 * 
-	 * @return true, if the project contains the given {@link EObject}, false otherwise
+	 * @param object the object to check
+	 * @return true if the object is the root of the model of this project, false otherwise
 	 */
-	boolean contains(EObject eObject);
-
-	/**
-	 * This method return the model root of the project.
-	 * 
-	 * @return the root object of the underlying model
-	 */
-	Notifier getModelRoot();
+	boolean isModelRoot(Object object);
 }

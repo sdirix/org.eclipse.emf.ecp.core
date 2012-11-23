@@ -1,7 +1,12 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.common.AbstractCachedTree;
 import org.eclipse.emf.ecp.ui.common.CachedTreeNode;
+import org.eclipse.emf.ecp.ui.common.IExcludedObjectsCallback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Cached tree implementation for dirty decorators of model elements managed by EMFStore.
@@ -11,27 +16,30 @@ import org.eclipse.emf.ecp.ui.common.CachedTreeNode;
  */
 public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<Boolean> {
 
-	/**
-	 * Initializes the singleton instance statically.
-	 */
-	private static class SingletonHolder {
-		public static final EMFStoreDirtyDecoratorCachedTree INSTANCE = new EMFStoreDirtyDecoratorCachedTree();
-	}
+	private static Map<ECPProject, EMFStoreDirtyDecoratorCachedTree> cashedTrees = new HashMap<ECPProject, EMFStoreDirtyDecoratorCachedTree>();
 
 	/**
 	 * Static {@link EMFStoreDirtyDecoratorCachedTree} singleton.
 	 * 
 	 * @return Static instance of the {@link EMFStoreDirtyDecoratorCachedTree}
 	 */
-	public static EMFStoreDirtyDecoratorCachedTree getInstance() {
-		return SingletonHolder.INSTANCE;
+	public static EMFStoreDirtyDecoratorCachedTree getInstance(final ECPProject project) {
+		if (!cashedTrees.containsKey(project)) {
+			cashedTrees.put(project, new EMFStoreDirtyDecoratorCachedTree(new IExcludedObjectsCallback() {
+
+				public boolean isExcluded(Object object) {
+					return project.isModelRoot(object);
+				}
+			}));
+		}
+		return cashedTrees.get(project);
 	}
 
 	/**
 	 * Private constructor.
 	 */
-	private EMFStoreDirtyDecoratorCachedTree() {
-
+	private EMFStoreDirtyDecoratorCachedTree(IExcludedObjectsCallback callback) {
+		super(callback);
 	}
 
 	/**

@@ -17,8 +17,13 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
+import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
+
+import org.eclipse.core.runtime.Platform;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,17 +49,31 @@ public final class ECPUtil {
 				return context.getProvider();
 			}
 		}
-		return null;
+		return (ECPProvider) Platform.getAdapterManager().getAdapter(object, ECPProvider.class);
 	}
 
 	public static <T extends ECPProject> T getECPProject(Object object, Class<T> clazz) {
 		if (clazz.isInstance(object)) {
 			return (T) object;
 		}
-		if (EObject.class.isInstance(object)) {
-			ECPModelContext context = getModelContext((EObject) object, clazz);
-			if (context != null && clazz.isInstance(context)) {
-				return (T) context;
+
+		// if (EObject.class.isInstance(object)) {
+		// ECPModelContext context = getModelContext((EObject) object, clazz);
+		// if (context != null && clazz.isInstance(context)) {
+		// return (T) context;
+		// }
+		// }
+		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+			InternalProvider internalProvider;
+			if (provider instanceof ExtensionDescriptor) {
+				ExtensionDescriptor<InternalProvider> descriptor = (ExtensionDescriptor<InternalProvider>) provider;
+				internalProvider = descriptor.getResolvedElement();
+			} else {
+				internalProvider = (InternalProvider) provider;
+			}
+			ECPModelContext modelContext = internalProvider.getModelContext(object);
+			if (clazz.isInstance(modelContext)) {
+				return (T) modelContext;
 			}
 		}
 		return null;

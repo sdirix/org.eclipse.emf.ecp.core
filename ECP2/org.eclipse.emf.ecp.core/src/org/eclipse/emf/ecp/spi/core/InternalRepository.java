@@ -1,12 +1,13 @@
-/*
+/**
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.spi.core;
 
@@ -17,13 +18,32 @@ import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 /**
  * @author Eike Stepper
  */
-public interface InternalRepository extends ECPRepository, StorableElement, InternalRegistryElement
-{
-  public InternalProvider getProvider();
+public interface InternalRepository extends ECPRepository, StorableElement, InternalRegistryElement {
+	/**
+	 * This method returns the provider of this repository.
+	 * 
+	 * @return the provider of the repository
+	 */
+	InternalProvider getProvider();
 
-  public Object getProviderSpecificData();
+	/**
+	 * This method returns provider specific data of this repository.
+	 * 
+	 * @return the provider specific data
+	 */
+	Object getProviderSpecificData();
 
-  public void setProviderSpecificData(Object data);
+	/**
+	 * This method sets the provider specific data for this repository.
+	 * 
+	 * @param data the provider specific data to set
+	 */
+	void setProviderSpecificData(Object data);
 
-  public void notifyObjectsChanged(Object[] objects);
+	/**
+	 * This is a callback method used to notify the repository about changes.
+	 * 
+	 * @param objects that have changed
+	 */
+	void notifyObjectsChanged(Object[] objects);
 }

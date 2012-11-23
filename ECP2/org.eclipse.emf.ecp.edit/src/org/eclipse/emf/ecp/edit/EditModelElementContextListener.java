@@ -10,24 +10,28 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
+package org.eclipse.emf.ecp.edit;
 
-package org.eclipse.emf.ecp.wizards;
-
-import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
-
-import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.emf.ecore.EObject;
 
 /**
+ * Listens to the changes of a context. notify ui provider to close
+ * 
  * @author Eugen Neufeld
+ * @author helming
  */
-public abstract class ECPWizard<T extends ICompositeProvider> extends Wizard {
-	private T uiProvider;
+public interface EditModelElementContextListener {
 
-	public void setUIProvider(T uiProvider) {
-		this.uiProvider = uiProvider;
-	}
+	/**
+	 * Called if a model element is deleted. Is only called for the root node if
+	 * a tree of model elements is deleted.
+	 * @param deleted the {@link EObject} that was deleted
+	 */
+	void onModelElementDeleted(EObject deleted);
 
-	protected T getUIProvider() {
-		return uiProvider;
-	}
+	/**
+	 * Call if the context gets deleted.
+	 */
+	void onContextDeleted();
+
 }

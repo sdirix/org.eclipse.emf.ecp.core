@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.validation.connector;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -41,7 +41,7 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 		
 		if (element instanceof EObject) {
 
-			ECPProject project = getProject((EObject) element);
+			ECPProject project = ECPUtil.getECPProject(element, ECPProject.class);
 			
 			if (project != null) {
 				severity = Activator.getDefault().getValidationService(project).getDiagnostic(element).getSeverity();
@@ -70,14 +70,4 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 
 	}
 
-	// TODO: replace with util method, when available
-	private ECPProject getProject(EObject element) {
-		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
-			if (project.contains(element)) {
-				return project;
-			}
-		}
-		
-		return null;
-	}
 }
