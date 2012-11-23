@@ -12,18 +12,18 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
-import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
-
-import javax.naming.NameAlreadyBoundException;
 
 /**
  * @author Eike Stepper
  */
 public interface ECPProjectManager {
 
-	public static final ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
+	/**
+	 * Instance of the ECPProjectManager.
+	 */
+	ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
 
 	/**
 	 * Method to construct an offline Project, this method calls
@@ -32,12 +32,10 @@ public interface ECPProjectManager {
 	 * @param provider the {@link ECPProvider} of this project
 	 * @param name the name of the project
 	 * @return created {@link ECPProject}
-	 * @throws NameAlreadyBoundException
 	 * @throws ProjectWithNameExistsException when a project with the same name already exists
 	 */
 
-	ECPProject createProject(ECPProvider provider, String name) throws NameAlreadyBoundException,
-		ProjectWithNameExistsException;
+	ECPProject createProject(ECPProvider provider, String name) throws ProjectWithNameExistsException;
 
 	/**
 	 * Method to construct an offline Project and notify listeners about this add.
@@ -73,7 +71,8 @@ public interface ECPProjectManager {
 	ECPProject cloneProject(ECPProject project);
 
 	/**
-	 * This method checks whether the adaptable is {@link ECPProjectAware} and else uses the AdapterUtil to adapt to a
+	 * This method checks whether the adaptable is {@link org.eclipse.emf.ecp.core.util.ECPProjectAware ECPProjectAware}
+	 * and else uses the AdapterUtil to adapt to a
 	 * project.
 	 * 
 	 * @param adaptable the Object to adapt
@@ -97,7 +96,17 @@ public interface ECPProjectManager {
 	 */
 	ECPProject[] getProjects();
 
-	void addObserver(IECPProjectsChangedUIObserver changeObserver);
+	/**
+	 * This method adds a observer to the observer of the ECPProjectManager.
+	 * 
+	 * @param observer the {@link IECPProjectsChangedUIObserver} to add
+	 */
+	void addObserver(IECPProjectsChangedUIObserver observer);
 
-	void removeObserver(IECPProjectsChangedUIObserver changeObserver);
+	/**
+	 * This method removes a observer from the observer of the ECPProjectManager.
+	 * 
+	 * @param observer the {@link IECPProjectsChangedUIObserver} to remove
+	 */
+	void removeObserver(IECPProjectsChangedUIObserver observer);
 }
