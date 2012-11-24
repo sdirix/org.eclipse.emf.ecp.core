@@ -12,6 +12,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.16.0</tycho-version>
 		<javadoc-version>2.9</javadoc-version>
+		<ecp-version-release>1.0.0.M4</ecp-version-release>
+		<ecp-version>1.0.0-SNAPSHOT</ecp-version>
 	</properties>
 
 	<modules>
@@ -117,6 +119,9 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-versions-plugin</artifactId>
 				<version>${tycho-version}</version>
+				<configuration>
+					<newVersion>${ecp-version}</newVersion>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
