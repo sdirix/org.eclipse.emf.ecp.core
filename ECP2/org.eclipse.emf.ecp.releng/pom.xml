@@ -110,7 +110,7 @@
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
 							<artifactId>ecp</artifactId>
-							<version>1.0.0-SNAPSHOT</version>
+							<version>${ecp-version}</version>
 						</artifact>
 					</target>
 				</configuration>
