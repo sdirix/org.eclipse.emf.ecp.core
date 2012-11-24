@@ -139,5 +139,5 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * @param object the object to check
 	 * @return true if the object is the root of the model of this project, false otherwise
 	 */
-	boolean isModelRoot(Object object);
+	boolean getModelRoot(Object object);
 }

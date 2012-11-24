@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -65,27 +66,7 @@ public class EMFStoreProvider extends DefaultProvider {
 		Configuration.setAutoSave(false);
 	}
 
-	// @Override
-	// public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages)
-	// {
-	// Set<EPackage> unsupported = new HashSet<EPackage>();
-	// for (EPackage ePackage : packages)
-	// {
-	// if (ePackage.getNsURI().equalsIgnoreCase("http://org/eclipse/example/bowling")
-	// || ePackage.getNsURI().equals("http://eclipse.org/emf/emfstore/common/model")
-	// || ePackage.getNsURI().equals("http://www4.in.tum.de/~af3/model")
-	// || ePackage.getNsURI().equals("http://www.cksw.de/model/birequirements/0.1")
-	// || ePackage.getESuperPackage() != null
-	// && ePackage.getESuperPackage().getNsURI().equals("http://www.cksw.de/model/birequirements/0.1"))
-	// {
-	// continue;
-	// }
-	// unsupported.add(ePackage);
-	//
-	// }
-	// return unsupported;
-	// }
-
+	/** {@inheritDoc} */
 	@Override
 	public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
@@ -123,11 +104,13 @@ public class EMFStoreProvider extends DefaultProvider {
 		return true;
 	}
 
+	/** {@inheritDoc} */
 	public EList<Object> getElements(InternalProject project) {
 		ProjectSpace projectSpace = getProjectSpace(project);
 		return new BasicEList<Object>(projectSpace.getProject().getModelElements());
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void handleLifecycle(ECPModelContext context, LifecycleEvent event) {
 		switch (event) {
@@ -253,41 +236,7 @@ public class EMFStoreProvider extends DefaultProvider {
 
 	}
 
-	// /**
-	// * @param repository
-	// */
-	// // TODO remove
-	// public EList<ProjectInfo> getAllProjects(ECPRepository repository, String user, String password)
-	// {
-	// ServerInfo serverInfo = getServerInfo((InternalRepository)repository);
-	// if (serverInfo.getLastUsersession() == null)
-	// {
-	// Usersession usersession = ModelFactory.eINSTANCE.createUsersession();
-	// usersession.setServerInfo(serverInfo);
-	// usersession.setUsername(user);
-	// usersession.setPassword(password);
-	// serverInfo.setLastUsersession(usersession);
-	// }
-	// if (!serverInfo.getLastUsersession().isLoggedIn())
-	// {
-	// try
-	// {
-	// serverInfo.getLastUsersession().logIn();
-	// }
-	// catch (Exception ex)
-	// {
-	// Activator.log(ex);
-	// }
-	// }
-	//
-	// return serverInfo.getProjectInfos();
-	// }
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#getLinkElements(org.eclipse.emf.ecore.EObject,
-	 * org.eclipse.emf.ecore.EReference)
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		Collection<EObject> result = new HashSet<EObject>();
@@ -368,38 +317,25 @@ public class EMFStoreProvider extends DefaultProvider {
 			&& info.getCertificateAlias().equalsIgnoreCase(certificate);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#doSave(org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public void doSave(InternalProject project) {
 		getProjectSpace(project).save();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#isDirty(org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public boolean isDirty(InternalProject project) {
 		return getProjectSpace(project).hasUnsavedChanges();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#hasAutosave(org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public boolean hasAutosave(InternalProject project) {
 		return Configuration.isAutoSaveEnabled();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#delete(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * java.util.Collection)
-	 */
+	/** {@inheritDoc} */
 	public void delete(InternalProject project, Collection<EObject> eObjects) {
 		ProjectSpace projectSpace = getProjectSpace(project);
 		for (EObject eObject : eObjects) {
@@ -407,33 +343,22 @@ public class EMFStoreProvider extends DefaultProvider {
 		}
 	}
 
+	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		ProjectSpace toClone = getProjectSpace(projectToClone);
 		ProjectSpace target = getProjectSpace(targetProject);
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#contains(org.eclipse.emf.ecore.EObject)
-	 */
-
-	public boolean contains(InternalProject internalProject, EObject eObject) {
-		ProjectSpace projectSpace = getProjectSpace(internalProject);
-		return projectSpace.getProject().containsInstance(eObject);
-	}
-
+	/** {@inheritDoc} */
 	@Override
 	public boolean modelExists(InternalProject project) {
 		return getProjectSpace(project, false) != null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
-	public boolean isRoot(InternalProject project, Object object) {
-		return object.equals(getProjectSpace(project).getProject());
+	/** {@inheritDoc} */
+	public Notifier getRoot(InternalProject project) {
+		return getProjectSpace(project).getProject();
 	}
 
 	/**

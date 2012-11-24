@@ -28,7 +28,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<B
 			cashedTrees.put(project, new EMFStoreDirtyDecoratorCachedTree(new IExcludedObjectsCallback() {
 
 				public boolean isExcluded(Object object) {
-					return project.isModelRoot(object);
+					return project.getModelRoot(object);
 				}
 			}));
 		}

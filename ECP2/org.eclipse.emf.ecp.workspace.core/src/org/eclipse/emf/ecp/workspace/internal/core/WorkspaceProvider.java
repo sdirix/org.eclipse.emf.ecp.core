@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.core;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -253,8 +254,8 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
 	 */
 	// FIXME
-	public boolean isRoot(InternalProject project, Object object) {
-		return true;
+	public Notifier getRoot(InternalProject project) {
+		return null;
 	}
 
 	@Override

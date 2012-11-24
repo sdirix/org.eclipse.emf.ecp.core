@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -195,8 +196,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * Method checking whether an object is the root of the model container.
 	 * 
 	 * @param project to check the root container for
-	 * @param object to check whether it is the root container
-	 * @return true if the object is the root container of this project
+	 * @return a {@link Notifier} that is the model root of this project
 	 */
-	boolean isRoot(InternalProject project, Object object);
+	Notifier getRoot(InternalProject project);
 }
