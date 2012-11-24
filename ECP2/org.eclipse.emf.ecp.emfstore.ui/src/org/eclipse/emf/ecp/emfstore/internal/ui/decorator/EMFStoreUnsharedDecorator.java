@@ -37,7 +37,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 *            decoration
 	 */
 	public void decorate(Object element, IDecoration decoration) {
-		if (element instanceof ECPProject) {
+		if (element instanceof ECPProject && ((ECPProject) element).getProvider().getName() == EMFStoreProvider.NAME) {
 			if (!EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()) {
 				decoration.addOverlay(Activator.getImageDescriptor(imagePath), IDecoration.BOTTOM_LEFT);
 			}

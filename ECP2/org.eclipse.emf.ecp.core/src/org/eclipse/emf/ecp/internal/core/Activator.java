@@ -29,6 +29,7 @@ public final class Activator extends Plugin {
 	public Activator() {
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		super.start(bundleContext);
@@ -43,6 +44,7 @@ public final class Activator extends Plugin {
 		ECPProjectManagerImpl.INSTANCE.activate();
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		ECPProjectManagerImpl.INSTANCE.deactivate();

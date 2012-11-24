@@ -1,12 +1,15 @@
-/*
+/*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.emf.common.util.EList;
@@ -17,7 +20,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -36,7 +38,6 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -76,7 +77,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/**
 	 * Constructor used when an offline project is created.
 	 * 
-	 * @param provider the {@link ECPProvider} of this project
+	 * @param provider the {@link InternalProvider} of this project
 	 * @param name the name of the project
 	 * @param properties the properties of the project
 	 */
@@ -220,24 +221,29 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 	}
 
+	/** {@inheritDoc} */
 	public String getType() {
 		return TYPE;
 	}
 
+	/** {@inheritDoc} */
 	public void disposed(ECPDisposable disposable) {
 		if (disposable == repository) {
 			dispose();
 		}
 	}
 
+	/** {@inheritDoc} */
 	public boolean isStorable() {
 		return true;
 	}
 
+	/** {@inheritDoc} */
 	public InternalProject getProject() {
 		return this;
 	}
 
+	/** {@inheritDoc} */
 	public InternalRepository getRepository() {
 		return repository;
 	}
@@ -255,24 +261,29 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 	}
 
+	/** {@inheritDoc} */
 	public InternalProvider getProvider() {
 		return provider;
 	}
 
+	/** {@inheritDoc} */
 	public Object getProviderSpecificData() {
 		return providerSpecificData;
 	}
 
+	/** {@inheritDoc} */
 	public void setProviderSpecificData(Object providerSpecificData) {
 		this.providerSpecificData = providerSpecificData;
 	}
 
+	/** {@inheritDoc} */
 	public void notifyObjectsChanged(Object[] objects, boolean structural) {
 		if (objects != null && objects.length != 0) {
 			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects, structural);
 		}
 	}
 
+	/** {@inheritDoc} */
 	public synchronized EditingDomain getEditingDomain() {
 		if (editingDomain == null) {
 			editingDomain = getProvider().createEditingDomain(this);
@@ -295,7 +306,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
-	 * @see IAdaptable#getAdapter(Class)
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class) IAdaptable#getAdapter(Class)
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object getAdapter(Class adapterType) {
@@ -310,34 +321,35 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
+	/** {@inheritDoc} */
 	public ECPModelContext getContext() {
 		return this;
 	}
 
+	/** {@inheritDoc} */
 	public boolean canDelete() {
 		return true;
 	}
 
+	/** {@inheritDoc} */
 	public void delete() {
-		try {
-			getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
-		} catch (Exception ex) {
-			Activator.log(ex);
-		}
-
+		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
 		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
 	}
 
+	/** {@inheritDoc} */
 	public synchronized boolean isOpen() {
 		return !isRepositoryDisposed() && open;
 	}
 
+	/** {@inheritDoc} */
 	public synchronized void open() {
 		if (!isRepositoryDisposed()) {
 			setOpen(true);
 		}
 	}
 
+	/** {@inheritDoc} */
 	public synchronized void close() {
 		if (!isRepositoryDisposed()) {
 			setOpen(false);
@@ -369,6 +381,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 	}
 
+	/** {@inheritDoc} */
 	public void notifyProvider(LifecycleEvent event) {
 		InternalProvider provider = getProvider();
 		provider.handleLifecycle(this, event);
@@ -380,6 +393,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		// }
 	}
 
+	/** {@inheritDoc} */
 	public void undispose(InternalRepository repository) {
 		setRepository(repository);
 		notifyProvider(LifecycleEvent.INIT);
@@ -495,83 +509,72 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 	}
 
+	/** {@inheritDoc} */
 	public EList<Object> getElements() {
 		return getProvider().getElements(this);
 	}
 
+	/** {@inheritDoc} */
 	public Collection<EPackage> getUnsupportedEPackages() {
 		return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages(), getRepository());
 	}
 
+	/** {@inheritDoc} */
 	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
 		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
 	}
 
+	/** {@inheritDoc} */
 	public Set<EPackage> getVisiblePackages() {
 		return filteredEPackages;
 	}
 
-	/**
-	 * @return the filteredEClasses
-	 */
+	/** {@inheritDoc} */
 	public Set<EClass> getVisibleEClasses() {
 		return filteredEClasses;
 	}
 
-	/**
-	 * @param filteredEClasses
-	 *            the filteredEClasses to set
-	 */
+	/** {@inheritDoc} */
 	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
 		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#getLinkElements(org.eclipse.emf.ecore.EObject,
-	 * org.eclipse.emf.ecore.EReference)
-	 */
+	/** {@inheritDoc} */
 	public Iterator<EObject> getReferenceCandidates(EObject modelElement, EReference eReference) {
 		return getProvider().getLinkElements(this, modelElement, eReference);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#doSave()
-	 */
+	/** {@inheritDoc} */
 	public void saveModel() {
 		getProvider().doSave(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#isDirty()
-	 */
+	/** {@inheritDoc} */
 	public boolean isModelDirty() {
 		return getProvider().isDirty(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#hasAutosave()
-	 */
+	/** {@inheritDoc} */
 	public boolean isModelAutoSave() {
 		return getProvider().hasAutosave(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#delete(java.util.Collection)
-	 */
+	/** {@inheritDoc} */
 	public void delete(Collection<EObject> eObjects) {
 		getProvider().delete(this, eObjects);
 		notifyObjectsChanged(new Object[] { this }, true);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public InternalProject clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException ex) {
+			Activator.log(ex);
+		}
 		InternalProject project = new ECPProjectImpl(getProvider(), getName() + "(Copy)", ECPUtil.createProperties());
 		project.setVisibleEClasses(getVisibleEClasses());
 		project.setVisiblePackages(getVisiblePackages());
@@ -579,18 +582,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		return project;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#saveProject()
-	 */
+	/** {@inheritDoc} */
 	public void saveProperties() {
 		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.core.ECPProject#getModelRoot()
-	 */
+	/** {@inheritDoc} */
 	public boolean isModelRoot(Object object) {
 		return getProvider().isRoot(this, object);
 	}
