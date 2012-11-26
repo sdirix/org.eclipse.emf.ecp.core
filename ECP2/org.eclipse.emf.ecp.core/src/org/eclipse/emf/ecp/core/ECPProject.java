@@ -49,7 +49,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * 
 	 * @return A list of {@link Object}
 	 */
-	EList<? extends Object> getElements();
+	EList<Object> getElements();
 
 	/**
 	 * Returns a collection of {@link EPackage}s which are not supported by the provider. EObjects from these packages

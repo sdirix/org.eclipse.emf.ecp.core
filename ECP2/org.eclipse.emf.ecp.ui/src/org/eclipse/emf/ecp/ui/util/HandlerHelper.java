@@ -13,7 +13,6 @@
 
 package org.eclipse.emf.ecp.ui.util;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -177,8 +176,7 @@ public class HandlerHelper {
 
 					@Override
 					protected void doExecute() {
-						EList<Object> list = (EList<Object>) ecpProject.getElements();
-						list.add(newMEInstance);
+						ecpProject.getElements().add(newMEInstance);
 					}
 				});
 

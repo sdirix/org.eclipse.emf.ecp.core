@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.explorereditorbridge;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -150,8 +149,7 @@ public class EditorContext implements EditorModelelementContext {
 	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(EObject newMEInstance) {
-		EList<Object> list = (EList<Object>) ecpProject.getElements();
-		list.add(newMEInstance);
+		ecpProject.getElements().add(newMEInstance);
 	}
 
 	/*

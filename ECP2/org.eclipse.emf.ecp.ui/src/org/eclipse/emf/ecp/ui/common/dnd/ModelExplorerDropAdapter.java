@@ -13,7 +13,6 @@
 
 package org.eclipse.emf.ecp.ui.common.dnd;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -142,11 +141,10 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 
 					@Override
 					protected void doExecute() {
-						EList<Object> list = (EList<Object>) project.getElements();
 						if (event.detail == DND.DROP_MOVE) {
-							list.add(sourceObject);
+							project.getElements().add(sourceObject);
 						} else if (event.detail == DND.DROP_COPY) {
-							list.add(EcoreUtil.copy((EObject) sourceObject));
+							project.getElements().add(EcoreUtil.copy((EObject) sourceObject));
 						}
 					}
 				});

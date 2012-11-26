@@ -512,8 +512,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public EList<? extends Object> getElements() {
-		return getProvider().getElements(this);
+	@SuppressWarnings("unchecked")
+	public EList<Object> getElements() {
+		return (EList<Object>) getProvider().getElements(this);
 	}
 
 	/** {@inheritDoc} */
