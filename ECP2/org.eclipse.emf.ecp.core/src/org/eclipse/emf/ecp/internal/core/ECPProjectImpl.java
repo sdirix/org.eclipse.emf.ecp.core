@@ -512,7 +512,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public EList<Object> getElements() {
+	public EList<? extends Object> getElements() {
 		return getProvider().getElements(this);
 	}
 

@@ -3,7 +3,6 @@ package org.eclipse.emf.ecp.emfstore.core.internal;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -105,9 +104,8 @@ public class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
-	public EList<Object> getElements(InternalProject project) {
-		ProjectSpace projectSpace = getProjectSpace(project);
-		return new BasicEList<Object>(projectSpace.getProject().getModelElements());
+	public EList<? extends Object> getElements(InternalProject project) {
+		return getProjectSpace(project).getProject().getModelElements();
 	}
 
 	/** {@inheritDoc} */

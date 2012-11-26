@@ -46,7 +46,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 
 		if (element instanceof EObject) {
 			InternalProject project = ECPUtil.getECPProject(element, InternalProject.class);
-			if (EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
+			if (project != null && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
 				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element) == Boolean.TRUE) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}

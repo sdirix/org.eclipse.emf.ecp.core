@@ -145,7 +145,7 @@ public class Activator extends AbstractUIPlugin {
 			return allAffectedElements.toArray();
 		}
 
-		private Collection<EObject> getOnlyEobjects(EList<Object> elements) {
+		private Collection<EObject> getOnlyEobjects(EList<? extends Object> elements) {
 			List<EObject> result = new ArrayList<EObject>();
 			for (Object o : elements) {
 				if (EObject.class.isInstance(o)) {

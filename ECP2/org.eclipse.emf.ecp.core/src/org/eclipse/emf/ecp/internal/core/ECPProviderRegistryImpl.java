@@ -221,7 +221,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		 * @see
 		 * org.eclipse.emf.ecp.spi.core.InternalProvider#getElements(org.eclipse.emf.ecp.internal.core.ECPProjectImpl)
 		 */
-		public EList<Object> getElements(InternalProject project) {
+		public EList<? extends Object> getElements(InternalProject project) {
 			return getResolvedElement().getElements(project);
 		}
 

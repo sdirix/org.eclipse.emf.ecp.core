@@ -118,7 +118,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param project the project to get the root elements for
 	 * @return list of root elements of this project
 	 */
-	EList<Object> getElements(InternalProject project);
+	EList<? extends Object> getElements(InternalProject project);
 
 	/**
 	 * {@link EPackage}s that are not supported by this provider.
