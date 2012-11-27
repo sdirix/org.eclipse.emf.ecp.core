@@ -182,7 +182,9 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	public static void update(TreeViewer viewer, Object... objects) {
 		if (!viewer.getControl().isDisposed()) {
 			for (Object object : objects) {
-				viewer.update(object, null);
+				if (object != null) {
+					viewer.update(object, null);
+				}
 			}
 		}
 	}

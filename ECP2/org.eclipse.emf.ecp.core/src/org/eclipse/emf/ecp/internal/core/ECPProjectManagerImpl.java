@@ -1,12 +1,15 @@
-/*
+/*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -53,10 +56,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	private ECPProjectManagerImpl() {
 	}
 
+	/** {@inheritDoc} */
 	public ECPProject createProject(ECPProvider provider, String name) throws ProjectWithNameExistsException {
 		return this.createProject(provider, name, ECPUtil.createProperties());
 	}
 
+	/** {@inheritDoc} */
 	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
 		throws ProjectWithNameExistsException {
 		if (projectExists(name)) {
@@ -66,6 +71,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return createProject(project);
 	}
 
+	/** {@inheritDoc} */
 	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
 		throws ProjectWithNameExistsException {
 		if (projectExists(name)) {
@@ -79,10 +85,6 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return getProject(name) != null;
 	}
 
-	/**
-	 * @param project
-	 * @return
-	 */
 	private ECPProject createProject(InternalProject project) {
 		project.getProvider().handleLifecycle(project, LifecycleEvent.CREATE);
 		changeElements(null, Collections.singleton(project));
@@ -90,12 +92,14 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return project;
 	}
 
+	/** {@inheritDoc} */
 	public ECPProject cloneProject(ECPProject project) {
 		InternalProject internalProject = (InternalProject) project;
 		InternalProject newProject = internalProject.clone();
 		return createProject(newProject);
 	}
 
+	/** {@inheritDoc} */
 	public InternalProject getProject(Object adaptable) {
 		if (adaptable instanceof ECPProjectAware) {
 			ECPProjectAware projectAware = (ECPProjectAware) adaptable;
@@ -105,10 +109,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		return AdapterUtil.adapt(adaptable, InternalProject.class);
 	}
 
+	/** {@inheritDoc} */
 	public InternalProject getProject(String name) {
 		return getElement(name);
 	}
 
+	/** {@inheritDoc} */
 	public InternalProject[] getProjects() {
 		InternalProject[] projects = getElements();
 		if (!initializedProjects) {
@@ -153,7 +159,11 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 			Object[] affected = ECPObserverBus.getInstance().notify(IECPProjectObjectsChangedObserver.class)
 				.objectsChanged(project, objects);
 			Set<Object> toUpdate = new HashSet<Object>(Arrays.asList(objects));
-			toUpdate.add(affected);
+			if (affected != null) {
+				for (Object o : affected) {
+					toUpdate.add(o);
+				}
+			}
 			ECPObserverBus.getInstance().notify(IECPProjectsChangedUIObserver.class)
 				.objectsChanged(project, toUpdate.toArray(), structural);
 		} catch (Exception ex) {
