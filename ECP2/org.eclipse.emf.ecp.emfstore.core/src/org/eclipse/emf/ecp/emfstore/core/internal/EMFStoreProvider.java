@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -62,7 +61,7 @@ public class EMFStoreProvider extends DefaultProvider {
    * 
    */
 	private void configureEMFStore() {
-		Configuration.setAutoSave(false);
+		Configuration.setAutoSave(true);
 	}
 
 	/** {@inheritDoc} */
@@ -268,7 +267,6 @@ public class EMFStoreProvider extends DefaultProvider {
 
 			}
 			internalProject.setProviderSpecificData(projectSpace);
-			projectSpace.getProject().eResource().eAdapters().add(new ECPModelContextAdapter(internalProject));
 		}
 		return projectSpace;
 	}
