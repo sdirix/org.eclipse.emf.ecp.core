@@ -40,6 +40,10 @@
             id="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations"
             name="Revert">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
+            name="showHistoryView">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -162,6 +166,30 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
+               icon="icons/historyview.png"
+               label="Show Historyview"
+               style="push"
+               tooltip="Shows the HistoryView">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelRepositoriesView?after=additions">
@@ -226,7 +254,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.core.project.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
                         value="true">
                   </test>
                </iterate>
@@ -260,7 +288,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.core.project.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
                         value="true">
                   </test>
                </iterate>
@@ -282,6 +310,23 @@
       <handler
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.RevertAllOperationsHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ShowHistoryHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.showHistoryView">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
       </handler>
    </extension>
    <extension

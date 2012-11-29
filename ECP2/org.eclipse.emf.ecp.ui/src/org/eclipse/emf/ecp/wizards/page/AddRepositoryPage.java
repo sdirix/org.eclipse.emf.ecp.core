@@ -15,61 +15,49 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eugen Neufeld
  */
-public class AddRepositoryPage extends WizardPage
-{
+public class AddRepositoryPage extends WizardPage {
 
-  /**
-   * @param pageName
-   */
-  public AddRepositoryPage(String pageName, AddRepositoryComposite addRepositoryComposite)
-  {
-    super(pageName);
-    this.addRepositoryComposite = addRepositoryComposite;
-  }
+	/**
+	 * @param pageName
+	 */
+	public AddRepositoryPage(String pageName, AddRepositoryComposite addRepositoryComposite) {
+		super(pageName);
+		this.addRepositoryComposite = addRepositoryComposite;
+	}
 
-  private AddRepositoryComposite addRepositoryComposite;
+	private AddRepositoryComposite addRepositoryComposite;
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-   */
-  public void createControl(Composite parent)
-  {
-    setTitle(Messages.AddRepositoryPage_PageTitle_AddRepository);
-    setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$
-    setMessage(Messages.AddRepositoryPage_PageMessage_AddRepository);
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
+	 */
+	public void createControl(Composite parent) {
+		setPageComplete(false);
+		setTitle(Messages.AddRepositoryPage_PageTitle_AddRepository);
+		setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$
+		setMessage(Messages.AddRepositoryPage_PageMessage_AddRepository);
 
-    Composite composite = addRepositoryComposite.createUI(parent);
-    addRepositoryComposite.setListener(new AddRepositoryChangeListener()
-    {
+		addRepositoryComposite.setListener(new AddRepositoryChangeListener() {
 
-      public void repositoryProviderChanged(ECPProvider provider)
-      {
-      }
+			public void repositoryProviderChanged(ECPProvider provider) {
+			}
 
-      public void repositoryNameChanged(String repositoryName)
-      {
-        if (repositoryName != null)
-        {
-          setPageComplete(true);
-        }
-        else
-        {
-          setPageComplete(false);
-        }
-      }
+			public void repositoryNameChanged(String repositoryName) {
+				if (repositoryName != null && !repositoryName.isEmpty()) {
+					setPageComplete(true);
+				} else {
+					setPageComplete(false);
+				}
+			}
 
-      public void repositoryLabelChanged(String repositoryLabel)
-      {
-      }
+			public void repositoryLabelChanged(String repositoryLabel) {
+			}
 
-      public void repositoryDescriptionChanged(String repositoryDescription)
-      {
-      }
-    });
-
-    setControl(composite);
-    setPageComplete(false);
-  }
+			public void repositoryDescriptionChanged(String repositoryDescription) {
+			}
+		});
+		Composite composite = addRepositoryComposite.createUI(parent);
+		setControl(composite);
+	}
 
 }

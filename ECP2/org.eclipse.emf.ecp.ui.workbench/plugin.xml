@@ -185,7 +185,7 @@
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
          <command
                commandId="org.eclipse.emf.ecp.ui.project.createProject"
-               icon="icons/add.gif"
+               icon="icons/checkout_project_old.gif"
                label="%CreateNewProject"
                style="push">
          </command>

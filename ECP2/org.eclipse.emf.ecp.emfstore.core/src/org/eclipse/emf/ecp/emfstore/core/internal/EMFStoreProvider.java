@@ -74,22 +74,11 @@ public class EMFStoreProvider extends DefaultProvider {
 			}
 		} else if (parent instanceof InternalRepository) {
 			ServerInfo serverInfo = getServerInfo((InternalRepository) parent);
-			if (serverInfo.getLastUsersession() != null) {
-				try {
-					if (!serverInfo.getLastUsersession().isLoggedIn()
-						&& serverInfo.getLastUsersession().getSessionId() != null) {
-						serverInfo.getLastUsersession().logIn();
-					}
-					EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
-					for (ProjectInfo projectInfo : projectInfos) {
-						childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent,
-							new EMFStoreCheckoutData(serverInfo, projectInfo)));
-					}
-
-				} catch (AccessControlException ex) {
-					Activator.log(ex);
-				} catch (EmfStoreException e) {
-					Activator.log(e);
+			if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn()) {
+				EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
+				for (ProjectInfo projectInfo : projectInfos) {
+					childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent,
+						new EMFStoreCheckoutData(serverInfo, projectInfo)));
 				}
 
 			}
@@ -295,7 +284,7 @@ public class EMFStoreProvider extends DefaultProvider {
 					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
 				workspace.addServerInfo(serverInfo);
 				workspace.save();
-			} else {
+			} else if (!foundExisting && !internalRepository.getProperties().hasProperties()) {
 				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080);
 			}
 			internalRepository.setProviderSpecificData(serverInfo);

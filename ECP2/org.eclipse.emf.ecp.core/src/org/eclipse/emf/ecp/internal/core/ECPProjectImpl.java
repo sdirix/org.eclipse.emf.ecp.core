@@ -107,8 +107,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 		setRepository((InternalRepository) repository);
 		provider = getRepository().getProvider();
-		notifyProvider(LifecycleEvent.INIT);
 		open = true;
+		setupFilteredEPackages();
+		notifyProvider(LifecycleEvent.INIT);
 	}
 
 	/**

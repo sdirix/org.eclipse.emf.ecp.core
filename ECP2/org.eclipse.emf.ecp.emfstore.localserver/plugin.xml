@@ -8,6 +8,18 @@
       <repository
             description="Default EMFStore"
             provider="org.eclipse.emf.ecp.emfstore.provider">
+         <property
+               key="repositoryUrl"
+               value="localhost">
+         </property>
+         <property
+               key="port"
+               value="8080">
+         </property>
+         <property
+               key="certificate"
+               value="emfstore test certificate (do not use in production!)">
+         </property>
       </repository>
    </extension>
 
