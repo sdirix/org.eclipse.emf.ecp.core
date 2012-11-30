@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,17 +20,17 @@ import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
 public interface IEditorCompositeProvider extends ICompositeProvider {
 
 	/**
-	 * 
+	 * Dispose the ModelElement controls.
 	 */
 	void dispose();
 
 	/**
-	 * 
-	 */
+	 * Triggers live validation of the model attributes.
+	 **/
 	void updateLiveValidation();
 
 	/**
-	 * 
+	 * Set focus to the controls.
 	 */
 	void focus();
 

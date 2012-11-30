@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH & others.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -118,10 +118,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private Composite bottomComposite;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#createUI(org.eclipse.swt.widgets.Composite)
-	 */
+	/** {@inheritDoc} */
 	public Composite createUI(Composite parent) {
 		Composite topComposite = toolkit.createComposite(parent);
 		topComposite.setLayout(new GridLayout());
@@ -166,7 +163,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	}
 
 	/**
-	 * Filters attributes marked with "hidden=true" annotation
+	 * Filters attributes marked with "hidden=true" annotation.
 	 * 
 	 * @param propertyDescriptors
 	 *            property descriptors to filter
@@ -256,7 +253,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 				label.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
 				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
 					modelElementContext.getModelElement(), modelElementContext, toolkit);
-				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).hint(100, 20).applyTo(label);
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
 				GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 					.applyTo(control);
 				meControl.applyCustomLayoutData();
@@ -272,9 +269,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	}
 
-	/**
-	 * Dispose the ModelElement controls.
-	 */
+	/** {@inheritDoc} */
 	public void dispose() {
 		for (AbstractMEControl control : meControls.values()) {
 			control.dispose();
@@ -282,23 +277,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		modelElementChangeListener.remove();
 	}
 
-	/**
-	 * Set focus to the controls.
-	 */
-	public void setFocus() {
-		// set keyboard focus on the first Text control
-		for (AbstractMEControl meControl : meControls.values()) {
-			if (meControl instanceof METextControl) {
-				((METextControl) meControl).setFocus();
-				return;
-			}
-		}
-		leftColumnComposite.setFocus();
-	}
-
-	/**
-	 * Triggers live validation of the model attributes.
-	 **/
+	/** {@inheritDoc} */
 	public void updateLiveValidation() {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElementContext.getModelElement());
 		List<AbstractMEControl> affectedControls = new ArrayList<AbstractMEControl>();
@@ -341,13 +320,16 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.IEditorCompositeProvider#focus()
-	 */
+	/** {@inheritDoc} */
 	public void focus() {
-		// TODO Auto-generated method stub
-
+		// set keyboard focus on the first Text control
+		for (AbstractMEControl meControl : meControls.values()) {
+			if (meControl instanceof METextControl) {
+				((METextControl) meControl).setFocus();
+				return;
+			}
+		}
+		leftColumnComposite.setFocus();
 	}
 
 }
