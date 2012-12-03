@@ -100,6 +100,9 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 	 * {@inheritDoc}
 	 **/
 	public void resetValidation() {
+		if (labelWidgetImage == null || labelWidgetImage.isDisposed()) {
+			return;
+		}
 		labelWidgetImage.setImage(null);
 		labelWidgetImage.setToolTipText("");
 
