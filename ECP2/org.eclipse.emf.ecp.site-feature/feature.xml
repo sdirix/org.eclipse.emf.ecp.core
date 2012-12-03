@@ -52,7 +52,8 @@
 
    <includes
          id="org.eclipse.emf.ecp.validation.feature"
-         version="0.0.0"/>
+         version="0.0.0"
+         name="org.eclipse.emf.ecp.validation"/>
 
    <includes
          id="org.eclipse.emf.ecp.editor.controls"
