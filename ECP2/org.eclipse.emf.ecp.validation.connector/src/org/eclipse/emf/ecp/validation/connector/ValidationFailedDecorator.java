@@ -43,10 +43,10 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 
 			ECPProject project = ECPUtil.getECPProject(element, ECPProject.class);
 			
-			if (project != null) {
+			if (project != null&&project.isOpen()) {
 				severity = Activator.getDefault().getValidationService(project).getDiagnostic(element).getSeverity();
 			}
-		} else if (element instanceof ECPProject) {
+		} else if (element instanceof ECPProject && ((ECPProject)element).isOpen()) {
 			severity = Activator.getDefault().getValidationService((ECPProject) element).getRootDiagnostic().getSeverity();
 		}
 		

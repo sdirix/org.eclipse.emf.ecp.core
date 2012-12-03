@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,6 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
+ * Tobias Verhoeven - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
@@ -37,9 +38,12 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 *            decoration
 	 */
 	public void decorate(Object element, IDecoration decoration) {
-		if (element instanceof ECPProject && ((ECPProject) element).getProvider().getName() == EMFStoreProvider.NAME) {
-			if (!EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()) {
-				decoration.addOverlay(Activator.getImageDescriptor(imagePath), IDecoration.BOTTOM_LEFT);
+		if (element instanceof ECPProject) {
+			ECPProject project = (ECPProject) element;
+			if (project.isOpen() && project.getProvider().getName() == EMFStoreProvider.NAME) {
+				if (!EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()) {
+					decoration.addOverlay(Activator.getImageDescriptor(imagePath), IDecoration.BOTTOM_LEFT);
+				}
 			}
 		}
 	}

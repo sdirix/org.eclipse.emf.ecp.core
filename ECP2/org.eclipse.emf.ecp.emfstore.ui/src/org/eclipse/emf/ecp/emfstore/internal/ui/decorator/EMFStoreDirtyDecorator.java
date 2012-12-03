@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,6 +7,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
@@ -32,21 +34,12 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 
 	private String dirtyPath = "icons/dirty.png";
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.jface.viewers.ILightweightLabelDecorator#decorate(java.lang .Object,
-	 *      org.eclipse.jface.viewers.IDecoration)
-	 * @param element
-	 *            element
-	 * @param decoration
-	 *            decoration
-	 */
+	/** {@inheritDoc} */
 	public void decorate(Object element, IDecoration decoration) {
 
 		if (element instanceof EObject) {
 			InternalProject project = ECPUtil.getECPProject(element, InternalProject.class);
-			if (project != null && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
+			if (project != null && project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
 				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element) == Boolean.TRUE) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
@@ -55,57 +48,37 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 		}
 
 		if (element instanceof ECPProject) {
-			if (EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance((ECPProject) element).getRootValue() == Boolean.TRUE) {
+			InternalProject project = (InternalProject) element;
+			if (project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue() == Boolean.TRUE) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse. jface.viewers.ILabelProviderListener)
-	 */
+	/** {@inheritDoc} */
 	public void addListener(ILabelProviderListener listener) {
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
-	 */
+	/** {@inheritDoc} */
 	public void dispose() {
 	}
 
-	/**
-	 * . {@inheritDoc}
-	 * 
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang .Object, java.lang.String)
-	 */
+	/** {@inheritDoc} */
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
-	/**
-	 * . {@inheritDoc}
-	 * 
-	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
-	 *      .jface.viewers.ILabelProviderListener)
-	 */
+	/** {@inheritDoc} */
 	public void removeListener(ILabelProviderListener listener) {
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	public boolean inspectChanges(ProjectSpace projectSpace, ChangePackage changePackage) {
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	public void commitCompleted(ProjectSpace projectSpace, PrimaryVersionSpec newRevision) {
 		ECPProject project = EMFStoreProvider.INSTANCE.getProject(projectSpace);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
