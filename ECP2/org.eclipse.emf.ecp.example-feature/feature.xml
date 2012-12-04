@@ -21,24 +21,14 @@
          version="0.0.0"
          search-location="self"/>
 
+   <includes
+         id="org.eclipse.emf.emfstore.example.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.emfstore.localserver"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.example.bowlingmodel"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.example.bowlingmodel.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
 </feature>
