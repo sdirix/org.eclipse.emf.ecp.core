@@ -9,6 +9,9 @@
  */
 package org.eclipse.emf.ecp.ui.views;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -21,6 +24,7 @@ import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
+import org.eclipse.emf.ecp.ui.util.ModelElementOpener;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -32,6 +36,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
@@ -110,6 +115,20 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 				}
 			}
 		});
+		
+		IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
+		if(modelExplorerSettings.length==1){
+			if(modelExplorerSettings[0].getAttribute("viewSorter")!=null){//$NON-NLS-1$
+				try {
+					ViewerSorter sorter = (ViewerSorter) modelExplorerSettings[0].createExecutableExtension("viewSorter");
+					viewer.setSorter(sorter);
+				} catch (CoreException e) {
+					Activator.log(e);
+				} //$NON-NLS-1$
+				
+			}
+		}
 		return viewer;
 	}
 
