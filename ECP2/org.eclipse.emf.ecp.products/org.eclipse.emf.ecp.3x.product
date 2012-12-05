@@ -3,7 +3,6 @@
 
 <product name="ECP 3.x" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application3x.product" application="org.eclipse.emf.ecp.application3x.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -13,14 +12,12 @@
 
    <windowImages i16="/org.eclipse.emf.ecp.ui.workbench/icons/bricks.png"/>
 
-
    <launcher name="ecp">
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
@@ -36,8 +33,8 @@
       <feature id="org.eclipse.emf.ecp.workspace"/>
       <feature id="org.eclipse.emf.ecp.license"/>
       <feature id="org.eclipse.emf.ecp.target"/>
-      <feature id="org.eclipse.emf.ecp.validation.feature"/>
       <feature id="org.eclipse.emf.ecp.example"/>
+      <feature id="org.eclipse.emf.ecp.validation-feature"/>
    </features>
 
    <configurations>

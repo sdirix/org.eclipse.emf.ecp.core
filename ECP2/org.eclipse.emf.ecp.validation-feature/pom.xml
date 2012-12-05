@@ -9,7 +9,7 @@
     <relativePath>../org.eclipse.emf.ecp.releng/</relativePath>
   </parent>
   <groupId>org.eclipse.emf.ecp</groupId>
-  <artifactId>org.eclipse.emf.ecp.validation.feature</artifactId>
+  <artifactId>org.eclipse.emf.ecp.validation-feature</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 </project>
