@@ -79,8 +79,16 @@ public class HandlerHelper {
 		}
 	}
 
+	/**
+	 * This helper method is used to delete model elements from a project.
+	 * 
+	 * @param project the project to delete from
+	 * @param eObjects the model elements to delete
+	 */
 	public static void deleteModelElement(ECPProject project, Collection<EObject> eObjects) {
-		project.delete(eObjects);
+		if (project != null) {
+			project.delete(eObjects);
+		}
 	}
 
 	public static ECPProject createProject(final AbstractUICallback callback) {

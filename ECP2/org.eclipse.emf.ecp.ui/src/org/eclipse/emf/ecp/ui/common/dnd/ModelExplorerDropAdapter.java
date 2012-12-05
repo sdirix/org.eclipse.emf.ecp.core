@@ -103,7 +103,9 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 			}
 			// TODO delegate to provider?
 			else if (project.getElements().contains(sourceObject)) {
-				event.detail = DND.DROP_NONE;
+				if (originalOperation != DND.DROP_COPY) {
+					event.detail = DND.DROP_NONE;
+				}
 			} else {
 				event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
 				if (sourceProjectDomain == targetProjectDomain) {
