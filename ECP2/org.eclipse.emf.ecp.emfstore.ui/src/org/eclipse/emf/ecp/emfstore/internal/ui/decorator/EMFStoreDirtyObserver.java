@@ -13,53 +13,61 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-
-import java.util.HashSet;
+import org.eclipse.emf.emfstore.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.model.observers.OperationObserver;
+import org.eclipse.emf.emfstore.common.model.ModelElementId;
+import org.eclipse.emf.emfstore.common.model.Project;
+import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
 /**
  * Project change observer that marks elements as dirty.
  */
-public class EMFStoreDirtyObserver implements IECPProjectsChangedUIObserver {
+public class EMFStoreDirtyObserver implements OperationObserver {
 
-	private HashSet<Object> excludedObjects;
+	private ProjectSpace projectSpace;
+	private InternalProject internalProject;
 
 	/**
 	 * Default constructor.
+	 * 
+	 * @param project
 	 */
-	public EMFStoreDirtyObserver() {
-
+	public EMFStoreDirtyObserver(ProjectSpace projectSpace, InternalProject project) {
+		this.projectSpace = projectSpace;
+		internalProject = project;
 	}
 
-	// BEGIN SUPRESS CATCH EXCEPTION
-	public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.emfstore.client.model.observers.OperationObserver#operationExecuted(org.eclipse.emf.emfstore.
+	 * server.model.versioning.operations.AbstractOperation)
+	 */
+	public void operationExecuted(AbstractOperation operation) {
+		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
+			Project project = projectSpace.getProject();
+			EObject element = project.getModelElement(modelElementId);
 
-	}
-
-	public void projectChanged(ECPProject project, boolean opened) throws Exception {
-
-	}
-
-	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
-
-		if (EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) project).isShared()) {
-			return;
+			EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
 		}
-		// for all changed objects
-		for (Object object : objects) {
-			// not an eobject then do nothing
-			if (!(object instanceof EObject)) {
-				continue;
-			}
 
-			EObject eObject = (EObject) object;
+	}
 
-			EMFStoreDirtyDecoratorCachedTree.getInstance(project).update(eObject, Boolean.TRUE);
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.emfstore.client.model.observers.OperationObserver#operationUnDone(org.eclipse.emf.emfstore.server
+	 * .model.versioning.operations.AbstractOperation)
+	 */
+	public void operationUnDone(AbstractOperation operation) {
+		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
+			Project project = projectSpace.getProject();
+			EObject element = project.getModelElement(modelElementId);
 
+			EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
 		}
+
 	}
 
 	// END SUPRESS CATCH EXCEPTION

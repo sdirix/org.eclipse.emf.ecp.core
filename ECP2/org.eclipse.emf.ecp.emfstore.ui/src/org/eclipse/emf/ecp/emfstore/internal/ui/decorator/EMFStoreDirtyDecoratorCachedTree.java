@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.common.AbstractCachedTree;
 import org.eclipse.emf.ecp.ui.common.CachedTreeNode;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @author emueller
  * 
  */
-public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<Boolean> {
+public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<Integer> {
 
 	private static Map<ECPProject, EMFStoreDirtyDecoratorCachedTree> cashedTrees = new HashMap<ECPProject, EMFStoreDirtyDecoratorCachedTree>();
 
@@ -57,7 +58,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<B
 	/**
 	 * Cached tree node that stores the dirty state of a model element managed by EMFStore.
 	 */
-	public class CachedDirtyStateTreeNode extends CachedTreeNode<Boolean> {
+	public class CachedDirtyStateTreeNode extends CachedTreeNode<Integer> {
 
 		/**
 		 * Constructor.
@@ -65,7 +66,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<B
 		 * @param value
 		 *            the initial value for this entry
 		 */
-		public CachedDirtyStateTreeNode(Boolean value) {
+		public CachedDirtyStateTreeNode(Integer value) {
 			super(value);
 		}
 
@@ -74,14 +75,14 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<B
 		 */
 		@Override
 		public void update() {
-			for (Boolean isDirty : values()) {
-				if (isDirty) {
+			for (Integer isDirty : values()) {
+				if (isDirty > 0) {
 					setValue(isDirty);
 					return;
 				}
 			}
 
-			setValue(false);
+			setValue(0);
 		}
 	}
 
@@ -89,16 +90,23 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<B
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean getDefaultValue() {
-		return Boolean.FALSE;
+	public Integer getDefaultValue() {
+		return 0;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CachedTreeNode<Boolean> createdCachedTreeNode(Boolean t) {
+	public CachedTreeNode<Integer> createdCachedTreeNode(Integer t) {
 		return new CachedDirtyStateTreeNode(t);
 	}
 
+	public void addOperation(EObject eObject) {
+		update(eObject, getCachedValue(eObject) + 1);
+	}
+
+	public void removeOperation(EObject eObject) {
+		update(eObject, getCachedValue(eObject) - 1);
+	}
 }

@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyObserver;
 
 import org.eclipse.core.runtime.CoreException;
@@ -26,14 +25,10 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		instance = this;
-
-		dirtyObserver = new EMFStoreDirtyObserver();
-		ECPObserverBus.getInstance().register(dirtyObserver);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		ECPObserverBus.getInstance().unregister(dirtyObserver);
 		instance = null;
 		super.stop(context);
 	}

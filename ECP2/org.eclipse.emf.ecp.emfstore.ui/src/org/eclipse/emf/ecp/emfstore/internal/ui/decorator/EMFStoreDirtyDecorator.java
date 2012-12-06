@@ -37,23 +37,27 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 	/** {@inheritDoc} */
 	public void decorate(Object element, IDecoration decoration) {
 
+		if (element instanceof ECPProject) {
+			InternalProject project = (InternalProject) element;
+			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			projectSpace.getOperationManager().addOperationListener(new EMFStoreDirtyObserver(projectSpace, project));
+
+			if (project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue() > 0) {
+				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
+			}
+		}
+
 		if (element instanceof EObject) {
 			InternalProject project = ECPUtil.getECPProject(element, InternalProject.class);
 			if (project != null && project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element) == Boolean.TRUE) {
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element) > 0) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 
 			return;
 		}
 
-		if (element instanceof ECPProject) {
-			InternalProject project = (InternalProject) element;
-			if (project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue() == Boolean.TRUE) {
-				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
-			}
-		}
 	}
 
 	/** {@inheritDoc} */
