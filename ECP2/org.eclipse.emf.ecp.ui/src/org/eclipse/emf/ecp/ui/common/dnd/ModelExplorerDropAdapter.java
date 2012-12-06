@@ -24,6 +24,8 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
@@ -78,7 +80,18 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 			return;
 		}
 		source = getDragSource(event);
-		Object sourceObject = source.iterator().next();
+
+		Object sourceObject = null;
+
+		if (source == null) {
+			ISelection selection = viewer.getSelection();
+			if (selection instanceof IStructuredSelection) {
+				sourceObject = ((IStructuredSelection) viewer.getSelection()).getFirstElement();
+			}
+
+		} else {
+			sourceObject = source.iterator().next();
+		}
 
 		EditingDomain sourceProjectDomain = getProjectDomain(sourceObject);
 		EditingDomain targetProjectDomain = getProjectDomain(target);
