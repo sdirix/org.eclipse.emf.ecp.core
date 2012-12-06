@@ -92,8 +92,16 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		composite.setLayout(mainLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
+		// use label width of main composite as minimum label width
 		Label url = new Label(composite, 0);
 		url.setText("Url:");
+		int mcLabelWidth = parent.getParent().getChildren()[0].getSize().x;
+		if (mcLabelWidth > url.getSize().x) {
+			GridData gdUrl = new GridData();
+			gdUrl.widthHint = mcLabelWidth;
+			url.setLayoutData(gdUrl);
+		}
+
 		final Text urlText = new Text(composite, SWT.BORDER);
 		urlText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 		urlText.addModifyListener(new ModifyListener() {

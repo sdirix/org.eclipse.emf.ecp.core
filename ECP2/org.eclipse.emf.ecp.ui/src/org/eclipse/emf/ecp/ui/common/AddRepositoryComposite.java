@@ -13,8 +13,6 @@
 
 package org.eclipse.emf.ecp.ui.common;
 
-import org.eclipse.net4j.util.ObjectUtil;
-
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -73,8 +71,6 @@ public class AddRepositoryComposite implements ICompositeProvider {
 
 	private StackLayout providerStackLayout;
 
-	private Text repositoryLabelText;
-
 	private Text repositoryDescriptionText;
 
 	private Text repositoryNameText;
@@ -85,8 +81,6 @@ public class AddRepositoryComposite implements ICompositeProvider {
 
 	private String repositoryName;
 
-	private String repositoryLabel;
-
 	private String repositoryDescription;
 
 	public Composite createUI(Composite parent) {
@@ -96,7 +90,7 @@ public class AddRepositoryComposite implements ICompositeProvider {
 
 		if (provider == null) {
 			Label label = new Label(composite, SWT.NONE);
-			label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+			label.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 			label.setText(Messages.AddRepositoryComposite_RepositoryProvider);
 
 			ComboViewer providersViewer = new ComboViewer(composite, SWT.NONE);
@@ -130,14 +124,13 @@ public class AddRepositoryComposite implements ICompositeProvider {
 		}
 
 		GridData gd_providerStack = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_providerStack.heightHint = 136;
 		providerStackLayout = new StackLayout();
 		providerStack = new Composite(composite, SWT.NONE);
 		providerStack.setLayout(providerStackLayout);
 		providerStack.setLayoutData(gd_providerStack);
 		{
 			Label repositoryNameLabel = new Label(composite, SWT.NONE);
-			repositoryNameLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+			repositoryNameLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 			repositoryNameLabel.setText(Messages.AddRepositoryComposite_RepositoryName);
 
 			repositoryNameText = new Text(composite, SWT.BORDER);
@@ -145,11 +138,7 @@ public class AddRepositoryComposite implements ICompositeProvider {
 			repositoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			repositoryNameText.addModifyListener(new ModifyListener() {
 				public void modifyText(ModifyEvent e) {
-					boolean labelUnchanged = ObjectUtil.equals(repositoryName, repositoryLabel);
 					repositoryName = repositoryNameText.getText();
-					if (labelUnchanged) {
-						repositoryLabelText.setText(repositoryName);
-					}
 					if (listener != null) {
 						listener.repositoryNameChanged(repositoryName);
 					}
@@ -157,25 +146,8 @@ public class AddRepositoryComposite implements ICompositeProvider {
 			});
 		}
 		{
-			Label repositoryLabelLabel = new Label(composite, SWT.NONE);
-			repositoryLabelLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-			repositoryLabelLabel.setText(Messages.AddRepositoryComposite_RepositoryLabel);
-
-			repositoryLabelText = new Text(composite, SWT.BORDER);
-			// repositoryLabelText.setText(repositoryLabel);
-			repositoryLabelText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			repositoryLabelText.addModifyListener(new ModifyListener() {
-				public void modifyText(ModifyEvent e) {
-					repositoryLabel = repositoryLabelText.getText();
-					if (listener != null) {
-						listener.repositoryLabelChanged(repositoryLabel);
-					}
-				}
-			});
-		}
-		{
 			Label repositoryDescriptionLabel = new Label(composite, SWT.NONE);
-			repositoryDescriptionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+			repositoryDescriptionLabel.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 			repositoryDescriptionLabel.setText(Messages.AddRepositoryComposite_RepositoryDescription);
 
 			repositoryDescriptionText = new Text(composite, SWT.BORDER);
@@ -214,8 +186,9 @@ public class AddRepositoryComposite implements ICompositeProvider {
 			ECPProperties properties = ECPUtil.createProperties();
 
 			UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(name);
+			// since we don't have a dedicated Label-Text but use the Name-Text, we use repositoryNameText twice
 			control = uiProvider.createAddRepositoryUI(providerStack, properties, repositoryNameText,
-				repositoryLabelText, repositoryDescriptionText);
+				repositoryNameText, repositoryDescriptionText);
 			providerControls.put(name, control);
 			providerProperties.put(name, properties);
 		}
@@ -260,7 +233,8 @@ public class AddRepositoryComposite implements ICompositeProvider {
 	 * @return
 	 */
 	public String getRepositoryLabel() {
-		return repositoryLabel;
+		// since we don't have a dedicated label-textfield we use the repository name
+		return repositoryName;
 	}
 
 	/**
