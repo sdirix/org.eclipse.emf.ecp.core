@@ -9,7 +9,6 @@
  */
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -17,11 +16,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
+import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
-import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
 
 import org.eclipse.core.runtime.Platform;
 
@@ -56,16 +56,18 @@ public final class ECPUtil {
 		if (clazz.isInstance(object)) {
 			return (T) object;
 		}
-		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
-			InternalProject internalProject = (InternalProject) project;
-			Notifier notifier = internalProject.getProvider().getRoot(internalProject);
-			ECPModelContextAdapter adapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(notifier.eAdapters(),
-				ECPModelContextAdapter.class);
-			if (adapter != null) {
-				ECPModelContext modelContext = adapter.getContext();
-				if (clazz.isInstance(modelContext)) {
-					return (T) modelContext;
-				}
+
+		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+			InternalProvider internalProvider;
+			if (provider instanceof ExtensionDescriptor) {
+				ExtensionDescriptor<InternalProvider> descriptor = (ExtensionDescriptor<InternalProvider>) provider;
+				internalProvider = descriptor.getResolvedElement();
+			} else {
+				internalProvider = (InternalProvider) provider;
+			}
+			ECPModelContext modelContext = internalProvider.getModelContext(object);
+			if (modelContext != null && clazz.isInstance(modelContext)) {
+				return (T) modelContext;
 			}
 		}
 

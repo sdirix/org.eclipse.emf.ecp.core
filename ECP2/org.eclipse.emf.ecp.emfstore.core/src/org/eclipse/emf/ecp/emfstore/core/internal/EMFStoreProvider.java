@@ -6,13 +6,17 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
@@ -357,6 +361,53 @@ public class EMFStoreProvider extends DefaultProvider {
 				return project;
 			}
 		}
+		return null;
+	}
+
+	@Override
+	public ECPModelContext getModelContext(Object element) {
+		if (element instanceof ECPModelContext) {
+			return (ECPModelContext) element;
+		}
+
+		if (element instanceof ECPModelContextProvider) {
+			return ((ECPModelContextProvider) element).getModelContext(element);
+		}
+
+		if (element instanceof ModelWrapper) {
+			return ((ModelWrapper<?, ?>) element).getContext();
+		}
+
+		if (element instanceof EObject) {
+			EObject eObject = (EObject) element;
+			ProjectSpace ps = WorkspaceManager.getProjectSpace(eObject);
+			if (ps != null) {
+				ECPModelContext context = getModelContextFromAdapter(ps.getProject());
+				if (context != null) {
+					return context;
+				}
+			}
+			element = eObject.eResource();
+		}
+
+		if (element instanceof Resource) {
+			Resource resource = (Resource) element;
+			ECPModelContext context = getModelContextFromAdapter(resource);
+			if (context != null) {
+				return context;
+			}
+
+			element = resource.getResourceSet();
+		}
+
+		if (element instanceof ResourceSet) {
+			ResourceSet resourceSet = (ResourceSet) element;
+			ECPModelContext context = getModelContextFromAdapter(resourceSet);
+			if (context != null) {
+				return context;
+			}
+		}
+
 		return null;
 	}
 }

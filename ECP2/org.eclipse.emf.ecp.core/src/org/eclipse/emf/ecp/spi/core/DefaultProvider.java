@@ -260,7 +260,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return null;
 	}
 
-	private ECPModelContext getModelContextFromAdapter(Notifier notifier) {
+	protected final ECPModelContext getModelContextFromAdapter(Notifier notifier) {
 		ECPModelContextAdapter adapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(notifier.eAdapters(),
 			ECPModelContextAdapter.class);
 		if (adapter != null) {
