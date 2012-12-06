@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -118,6 +118,8 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 			else if (project.getElements().contains(sourceObject)) {
 				if (originalOperation != DND.DROP_COPY) {
 					event.detail = DND.DROP_NONE;
+				} else {
+					event.detail = DND.DROP_COPY;
 				}
 			} else {
 				event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
