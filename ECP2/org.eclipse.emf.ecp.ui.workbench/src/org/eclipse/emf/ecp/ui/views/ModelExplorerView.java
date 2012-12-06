@@ -56,18 +56,24 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	public class DoubleClickListener implements IDoubleClickListener {
 
 		/**
-		 * Opens an EObject using the ActionHelper
+		 * Opens an EObject using the ActionHelper or opens a closed ECPProject.
 		 */
 		public void doubleClick(DoubleClickEvent event) {
 			if (event.getSelection() instanceof IStructuredSelection) {
 				IStructuredSelection structuredSelection = (IStructuredSelection) event.getSelection();
 				Object firstElement = structuredSelection.getFirstElement();
-				if (firstElement instanceof EObject) {
+				
+				if (firstElement instanceof ECPProject) {
+					ECPProject project = (ECPProject) firstElement;
+					if (!project.isOpen()) {
+						project.open();
+					}
+				}
+				else if (firstElement instanceof EObject) {
 					ECPModelContext context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
 					ActionHelper.openModelElement((EObject) firstElement, "modelexplorer", (ECPProject) context);
-				}
+				} 
 			}
-
 		}
 	}
 
