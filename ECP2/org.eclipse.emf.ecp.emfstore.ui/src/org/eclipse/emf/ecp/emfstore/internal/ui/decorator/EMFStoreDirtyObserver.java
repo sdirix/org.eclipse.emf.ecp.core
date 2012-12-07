@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,8 @@ import org.eclipse.emf.emfstore.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
+import java.util.Set;
+
 /**
  * Project change observer that marks elements as dirty.
  */
@@ -31,7 +33,8 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	/**
 	 * Default constructor.
 	 * 
-	 * @param project
+	 * @param projectSpace the ProjectSpace of the decorator
+	 * @param project the ecpproject of the decorator
 	 */
 	public EMFStoreDirtyObserver(ProjectSpace projectSpace, InternalProject project) {
 		this.projectSpace = projectSpace;
@@ -49,12 +52,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.emf.emfstore.client.model.observers.OperationObserver#operationExecuted(org.eclipse.emf.emfstore.
-	 * server.model.versioning.operations.AbstractOperation)
-	 */
+	private Set<EObject> lastAffected = null;
+
+	/** {@inheritDoc} */
 	public void operationExecuted(AbstractOperation operation) {
 
 		if (!projectSpace.isShared()) {
@@ -67,18 +67,13 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 			EObject element = project.getModelElement(modelElementId);
 
 			if (element != null) {
-				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+				lastAffected = EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
 			}
 		}
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.emf.emfstore.client.model.observers.OperationObserver#operationUnDone(org.eclipse.emf.emfstore.server
-	 * .model.versioning.operations.AbstractOperation)
-	 */
+	/** {@inheritDoc} */
 	public void operationUnDone(AbstractOperation operation) {
 
 		if (!projectSpace.isShared()) {
@@ -90,11 +85,14 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 			EObject element = project.getModelElement(modelElementId);
 
 			if (element != null) {
-				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
+				lastAffected = EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
 			}
 		}
 
 	}
 
-	// END SUPRESS CATCH EXCEPTION
+	public Set<EObject> getLastAffected() {
+		return lastAffected;
+	}
+
 }

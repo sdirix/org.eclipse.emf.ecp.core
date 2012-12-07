@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -27,7 +29,9 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,7 +40,25 @@ import java.util.Set;
 public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, CommitObserver {
 
 	private String dirtyPath = "icons/dirty.png";
-	private Set<InternalProject> observers = new HashSet<InternalProject>();
+	private Map<InternalProject, EMFStoreDirtyObserver> observers = new HashMap<InternalProject, EMFStoreDirtyObserver>();
+
+	public EMFStoreDirtyDecorator() {
+		EMFStoreDirtyDecoratorConnector con = new EMFStoreDirtyDecoratorConnector();
+		ECPObserverBus.getInstance().register(con);
+	}
+
+	private class EMFStoreDirtyDecoratorConnector implements IECPProjectObjectsChangedObserver {
+
+		/** {@inheritDoc} */
+		public Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception {
+			Set<EObject> allObjects = new HashSet<EObject>();
+			for (EMFStoreDirtyObserver observer : observers.values()) {
+				allObjects.addAll(observer.getLastAffected());
+			}
+			return allObjects.toArray();
+		}
+
+	}
 
 	/** {@inheritDoc} */
 	public void decorate(Object element, IDecoration decoration) {
@@ -45,10 +67,10 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 			InternalProject project = (InternalProject) element;
 			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 
-			if (!observers.contains(element)) {
-				projectSpace.getOperationManager().addOperationListener(
-					new EMFStoreDirtyObserver(projectSpace, project));
-				observers.add(project);
+			if (!observers.containsKey(element)) {
+				EMFStoreDirtyObserver emfStoreDirtyObserver = new EMFStoreDirtyObserver(projectSpace, project);
+				projectSpace.getOperationManager().addOperationListener(emfStoreDirtyObserver);
+				observers.put(project, emfStoreDirtyObserver);
 			}
 			if (project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
 				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue().shouldDisplayDirtyIndicator()) {

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.ui.common.IExcludedObjectsCallback;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Cached tree implementation for dirty decorators of model elements managed by EMFStore.
@@ -101,15 +102,15 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		return new CachedDirtyStateTreeNode(t);
 	}
 
-	public void addOperation(EObject eObject) {
+	public Set<EObject> addOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() + 1);
-		update(eObject, node);
+		return update(eObject, node);
 	}
 
-	public void removeOperation(EObject eObject) {
+	public Set<EObject> removeOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() - 1);
-		update(eObject, node);
+		return update(eObject, node);
 	}
 }

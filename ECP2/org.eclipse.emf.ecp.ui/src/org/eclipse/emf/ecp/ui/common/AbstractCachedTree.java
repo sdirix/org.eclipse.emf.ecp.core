@@ -92,8 +92,8 @@ public abstract class AbstractCachedTree<T> {
 		while (parent != null && !excludedCallback.isExcluded(parent)) {// !isExcludedType(excludedTypes,
 																		// parent.getClass())
 			updateParentNode(parent, eObject, value);
-			parent = parent.eContainer();
 			eObject = parent;
+			parent = parent.eContainer();
 			affectedElements.add(eObject);
 		}
 		return affectedElements;
