@@ -36,6 +36,17 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	public EMFStoreDirtyObserver(ProjectSpace projectSpace, InternalProject project) {
 		this.projectSpace = projectSpace;
 		internalProject = project;
+
+		if (!projectSpace.isShared()) {
+			return;
+		}
+		for (AbstractOperation operation : projectSpace.getOperations()) {
+			for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
+				EObject element = projectSpace.getProject().getModelElement(modelElementId);
+				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+			}
+		}
+
 	}
 
 	/*
@@ -45,11 +56,19 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	 * server.model.versioning.operations.AbstractOperation)
 	 */
 	public void operationExecuted(AbstractOperation operation) {
+
+		if (!projectSpace.isShared()) {
+			return;
+		}
+
 		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 			Project project = projectSpace.getProject();
+
 			EObject element = project.getModelElement(modelElementId);
 
-			EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+			if (element != null) {
+				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+			}
 		}
 
 	}
@@ -61,11 +80,18 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	 * .model.versioning.operations.AbstractOperation)
 	 */
 	public void operationUnDone(AbstractOperation operation) {
+
+		if (!projectSpace.isShared()) {
+			return;
+		}
+
 		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 			Project project = projectSpace.getProject();
 			EObject element = project.getModelElement(modelElementId);
 
-			EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
+			if (element != null) {
+				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
+			}
 		}
 
 	}

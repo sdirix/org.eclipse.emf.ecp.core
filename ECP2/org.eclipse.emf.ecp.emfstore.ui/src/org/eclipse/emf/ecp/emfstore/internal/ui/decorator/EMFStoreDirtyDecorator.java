@@ -27,12 +27,16 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Eugen Neufeld
  */
 public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, CommitObserver {
 
 	private String dirtyPath = "icons/dirty.png";
+	private Set<InternalProject> observers = new HashSet<InternalProject>();
 
 	/** {@inheritDoc} */
 	public void decorate(Object element, IDecoration decoration) {
@@ -40,18 +44,30 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 		if (element instanceof ECPProject) {
 			InternalProject project = (InternalProject) element;
 			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-			projectSpace.getOperationManager().addOperationListener(new EMFStoreDirtyObserver(projectSpace, project));
 
+			if (!observers.contains(element)) {
+				projectSpace.getOperationManager().addOperationListener(
+					new EMFStoreDirtyObserver(projectSpace, project));
+				observers.add(project);
+			}
 			if (project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue() > 0) {
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue().shouldDisplayDirtyIndicator()) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 		}
 
 		if (element instanceof EObject) {
-			InternalProject project = ECPUtil.getECPProject(element, InternalProject.class);
-			if (project != null && project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element) > 0) {
+			InternalProject project = null;
+			try {
+				project = ECPUtil.getECPProject(element, InternalProject.class);
+			} catch (IllegalArgumentException iae) {
+				// ignore
+			}
+			if (project != null
+				&& project.isOpen()
+				&& EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
+				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element)
+					.shouldDisplayDirtyIndicator()) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 

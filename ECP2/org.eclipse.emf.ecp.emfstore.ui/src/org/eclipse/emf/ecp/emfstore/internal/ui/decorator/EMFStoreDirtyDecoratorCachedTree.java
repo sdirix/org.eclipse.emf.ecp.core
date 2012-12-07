@@ -27,7 +27,7 @@ import java.util.Map;
  * @author emueller
  * 
  */
-public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<Integer> {
+public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<EMFStoreDirtyTreeNode> {
 
 	private static Map<ECPProject, EMFStoreDirtyDecoratorCachedTree> cashedTrees = new HashMap<ECPProject, EMFStoreDirtyDecoratorCachedTree>();
 
@@ -58,7 +58,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	/**
 	 * Cached tree node that stores the dirty state of a model element managed by EMFStore.
 	 */
-	public class CachedDirtyStateTreeNode extends CachedTreeNode<Integer> {
+	public class CachedDirtyStateTreeNode extends CachedTreeNode<EMFStoreDirtyTreeNode> {
 
 		/**
 		 * Constructor.
@@ -66,7 +66,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 		 * @param value
 		 *            the initial value for this entry
 		 */
-		public CachedDirtyStateTreeNode(Integer value) {
+		public CachedDirtyStateTreeNode(EMFStoreDirtyTreeNode value) {
 			super(value);
 		}
 
@@ -75,14 +75,13 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 		 */
 		@Override
 		public void update() {
-			for (Integer isDirty : values()) {
-				if (isDirty > 0) {
-					setValue(isDirty);
+			for (EMFStoreDirtyTreeNode node : values()) {
+				if (node.getChangeCount() > 0 || node.isChildChanges()) {
+					getValue().setChildChanges(true);
 					return;
 				}
 			}
-
-			setValue(0);
+			getValue().setChildChanges(false);
 		}
 	}
 
@@ -90,23 +89,27 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Integer getDefaultValue() {
-		return 0;
+	public EMFStoreDirtyTreeNode getDefaultValue() {
+		return new EMFStoreDirtyTreeNode(0, false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CachedTreeNode<Integer> createdCachedTreeNode(Integer t) {
+	public CachedTreeNode<EMFStoreDirtyTreeNode> createdCachedTreeNode(EMFStoreDirtyTreeNode t) {
 		return new CachedDirtyStateTreeNode(t);
 	}
 
 	public void addOperation(EObject eObject) {
-		update(eObject, getCachedValue(eObject) + 1);
+		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
+		node.setChangeCount(node.getChangeCount() + 1);
+		update(eObject, node);
 	}
 
 	public void removeOperation(EObject eObject) {
-		update(eObject, getCachedValue(eObject) - 1);
+		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
+		node.setChangeCount(node.getChangeCount() - 1);
+		update(eObject, node);
 	}
 }
