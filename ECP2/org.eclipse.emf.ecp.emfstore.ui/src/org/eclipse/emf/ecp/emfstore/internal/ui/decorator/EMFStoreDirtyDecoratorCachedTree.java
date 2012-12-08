@@ -108,7 +108,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	@Override
 	protected void updateParentNode(Object parent, Object object, EMFStoreDirtyTreeNode value) {
 		EMFStoreDirtyTreeNode parentValue = getCachedValue(parent);
-		parentValue.setChildChanges(value.isChildChanges() || value.getChangeCount() > 0);
+		parentValue.setChildChanges(value.shouldDisplayDirtyIndicator());
 		super.updateParentNode(parent, object, parentValue);
 	}
 
@@ -121,6 +121,15 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	public Set<EObject> removeOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() - 1);
+		boolean hasChanges = false;
+		for (EObject child : eObject.eContents()) {
+			EMFStoreDirtyTreeNode childNode = getCachedValue(child);
+			if (childNode.shouldDisplayDirtyIndicator()) {
+				hasChanges = true;
+				break;
+			}
+		}
+		node.setChildChanges(hasChanges);
 		return update(eObject, node);
 	}
 }

@@ -82,8 +82,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 			Project project = projectSpace.getProject();
-			EObject element = project.getModelElement(modelElementId);
-
+			EObject element = project.getIdToEObjectMapping().get(modelElementId.getId());
 			if (element != null) {
 				lastAffected = EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
 			}
@@ -92,7 +91,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	public Set<EObject> getLastAffected() {
-		return lastAffected;
+		Set<EObject> result = lastAffected;
+		lastAffected = null;
+		return result;
 	}
 
 }
