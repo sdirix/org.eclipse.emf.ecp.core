@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -29,6 +30,7 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -47,7 +49,8 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 		ECPObserverBus.getInstance().register(con);
 	}
 
-	private class EMFStoreDirtyDecoratorConnector implements IECPProjectObjectsChangedObserver {
+	private class EMFStoreDirtyDecoratorConnector implements IECPProjectObjectsChangedObserver,
+		IECPProjectsChangedUIObserver {
 
 		/** {@inheritDoc} */
 		public Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception {
@@ -56,6 +59,27 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 				allObjects.addAll(observer.getLastAffected());
 			}
 			return allObjects.toArray();
+		}
+
+		/** {@inheritDoc} */
+		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
+			Set<ECPProject> removed = new HashSet<ECPProject>(Arrays.asList(oldProjects));
+			removed.removeAll(Arrays.asList(newProjects));
+
+			for (ECPProject project : removed) {
+				observers.remove(project);
+				EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
+			}
+		}
+
+		/** {@inheritDoc} */
+		public void projectChanged(ECPProject project, boolean opened) throws Exception {
+			// Do nothing
+		}
+
+		/** {@inheritDoc} */
+		public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
+			// Do nothing
 		}
 
 	}
