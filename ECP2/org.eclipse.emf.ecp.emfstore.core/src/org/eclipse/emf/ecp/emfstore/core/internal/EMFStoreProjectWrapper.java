@@ -48,4 +48,8 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 		ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);
 	}
 
+	public EMFStoreCheckoutData getCheckoutData() {
+		return checkoutData;
+	}
+
 }

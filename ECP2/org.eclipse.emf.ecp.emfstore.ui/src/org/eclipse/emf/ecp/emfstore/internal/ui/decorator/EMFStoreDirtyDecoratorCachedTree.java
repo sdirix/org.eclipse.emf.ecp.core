@@ -102,6 +102,16 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		return new CachedDirtyStateTreeNode(t);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void updateParentNode(Object parent, Object object, EMFStoreDirtyTreeNode value) {
+		EMFStoreDirtyTreeNode parentValue = getCachedValue(parent);
+		parentValue.setChildChanges(value.isChildChanges() || value.getChangeCount() > 0);
+		super.updateParentNode(parent, object, parentValue);
+	}
+
 	public Set<EObject> addOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() + 1);

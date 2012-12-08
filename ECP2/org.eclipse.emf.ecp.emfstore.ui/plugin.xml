@@ -44,6 +44,10 @@
             id="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
             name="showHistoryView">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer"
+            name="Delete on Server">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -227,16 +231,36 @@
                <iterate
                      ifEmpty="false"
                      operator="and">
-                  <and>
-                     <test
-                           property="org.eclipse.emf.ecp.core.repository.providerName"
-                           value="org.eclipse.emf.ecp.emfstore.provider">
-                     </test>
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
-                           value="true">
-                     </test></and>
+                  <test
+                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                        value="org.eclipse.emf.ecp.emfstore.provider">
+                  </test>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                        value="true">
+                  </test>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer"
+               icon="icons/database_delete.png"
+               label="Delete on server"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <test
+                        forcePluginActivation="true"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                        value="true">
+                  </test>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                  </instanceof>
                </iterate>
             </visibleWhen>
          </command>
@@ -328,6 +352,10 @@
             </with>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.DeleteOnServerHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.decorators">
@@ -397,6 +425,13 @@
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
             properties="isShared"
             type="org.eclipse.emf.ecp.core.ECPProject">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreIsServerAdminTester"
+            id="org.eclipse.emf.ecp.emfstore.ui.isServerAdmin"
+            namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
+            properties="isServerAdmin"
+            type="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
       </propertyTester>
    </extension>
 	<extension

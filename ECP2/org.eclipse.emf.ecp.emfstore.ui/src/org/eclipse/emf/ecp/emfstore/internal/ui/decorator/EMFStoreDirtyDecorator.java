@@ -78,7 +78,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 			}
 		}
 
-		if (element instanceof EObject) {
+		else if (element instanceof EObject) {
 			InternalProject project = null;
 			try {
 				project = ECPUtil.getECPProject(element, InternalProject.class);

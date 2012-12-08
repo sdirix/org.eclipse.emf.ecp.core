@@ -176,7 +176,7 @@ public abstract class AbstractCachedTree<T> {
 		return node;
 	}
 
-	private void updateParentNode(Object parent, Object object, T value) {
+	protected void updateParentNode(Object parent, Object object, T value) {
 		CachedTreeNode<T> node = nodes.get(object);
 		CachedTreeNode<T> parentNode = nodes.get(parent);
 		node.parent = parent;
