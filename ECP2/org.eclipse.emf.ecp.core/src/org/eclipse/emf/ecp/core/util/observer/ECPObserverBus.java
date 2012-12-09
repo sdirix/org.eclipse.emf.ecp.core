@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -222,7 +223,8 @@ public class ECPObserverBus {
 	@SuppressWarnings("unchecked")
 	private <T extends IECPObserver> T createProxy(Class<T> clazz, boolean prioritized) {
 		ProxyHandler handler = new ProxyHandler((Class<IECPObserver>) clazz, prioritized);
-		return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz, ECPObserverCall.class }, handler);
+		return (T) Proxy
+			.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz, ECPObserverCall.class }, handler);
 
 	}
 
@@ -264,7 +266,18 @@ public class ECPObserverBus {
 			}
 
 			lastResults = notifiyObservers(observers, method, args);
-			return lastResults.get(0).getResultOrDefaultValue();
+			List<Object> result = new ArrayList<Object>();
+			for (Result resultObject : lastResults) {
+				Object res = resultObject.getResultOrDefaultValue();
+				if (res instanceof Object[]) {
+					Object[] arrayRes = (Object[]) res;
+					result.addAll(Arrays.asList(arrayRes));
+				} else {
+					result.add(res);
+				}
+
+			}
+			return result.toArray();
 		}
 
 		private Object accessObserverCall(Method method, Object[] args) throws IllegalArgumentException,

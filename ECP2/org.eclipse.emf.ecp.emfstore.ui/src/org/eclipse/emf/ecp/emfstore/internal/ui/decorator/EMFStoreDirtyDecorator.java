@@ -54,6 +54,9 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 
 		/** {@inheritDoc} */
 		public Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception {
+			if (project.getRepository() == null) {
+				return null;
+			}
 			Set<EObject> allObjects = new HashSet<EObject>();
 			for (EMFStoreDirtyObserver observer : observers.values()) {
 				allObjects.addAll(observer.getLastAffected());

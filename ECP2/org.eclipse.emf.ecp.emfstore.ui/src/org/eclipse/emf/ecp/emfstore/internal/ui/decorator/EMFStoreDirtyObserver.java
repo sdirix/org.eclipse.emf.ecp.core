@@ -20,6 +20,7 @@ import org.eclipse.emf.emfstore.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -60,14 +61,15 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		if (!projectSpace.isShared()) {
 			return;
 		}
-
+		lastAffected = new HashSet<EObject>();
 		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 			Project project = projectSpace.getProject();
 
 			EObject element = project.getModelElement(modelElementId);
 
 			if (element != null) {
-				lastAffected = EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+				lastAffected
+					.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element));
 			}
 		}
 
@@ -91,9 +93,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	public Set<EObject> getLastAffected() {
-		Set<EObject> result = lastAffected;
-		lastAffected = null;
-		return result;
+		return lastAffected;
 	}
 
 }
