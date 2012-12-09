@@ -1,0 +1,127 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Context-Type: com.xored.q7.ecl.context
+Element-Name: CreateAdvancedElements
+Element-Type: context
+Element-Version: 2.0
+Id: _tr1AYEJMEeKQh80wtWssKQ
+Save-Time: 12/9/12 11:15 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create EMFStore Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text TestProject
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+    get-tree | select "bowling/League"
+    get-button Finish | click
+}
+get-editor League | get-editbox -after [get-label Name] | set-text America
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+    get-tree | select "bowling/League"
+    get-button Finish | click
+}
+get-editor League | get-editbox -after [get-label Name] | set-text Europe
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Jonas
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Maximilian
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+    get-tree | select "bowling/Tournament"
+    get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Tournament Pro" | get-menu Matchup | click
+    select "TestProject/Tournament Pro/Matchup" | get-menu Game | click
+    select TestProject | get-menu "New Model Element" | click
+}
+get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+    | key-type "TRAVERSE_ESCAPE"
+get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup/Game" | double-click
+get-editor Game | get-button "Link Player" | click
+get-window "Select Elements" | get-table | select "Player Jonas" | double-click
+get-editor "League America" | close
+get-editor "Player Jonas" | close
+get-editor "Player Maximilian" | close
+get-editor "Tournament Pro" | close
+get-editor "League Europe" | close
+get-editor Matchup | close
+get-editor Game | close
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+    | select "bowling/Area" | double-click
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Area" | get-menu Tournament | click
+    select "TestProject/Area" | get-menu Area | click
+    select "TestProject/Area/Area" | get-menu Area | click
+    select "TestProject/Area/Area/Area" | get-menu Area | click
+    select "TestProject/Area/Tournament Pro" | double-click
+    select "TestProject/Tournament Pro" | double-click
+    select "TestProject/League Europe" | double-click
+}
+get-editor "League Europe" | get-editbox -after [get-label Name] | set-focus
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Tournament Pro" | double-click
+    select TestProject | get-menu "New Model Element" | click
+}
+get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+    | select "bowling/PlayerToPointsMap" | double-click
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+    | select "bowling/Referee" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject/Referee"
+get-editor Referee | get-button "Link League" | click
+get-window "Select Elements" | get-table | select "League America" | double-click
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Referee" | double-click
+    select TestProject | get-menu "New Model Element" | click
+}
+get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+    | select "bowling/RefereeToGamesMap" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject/null -> null" | double-click
+with [get-editor "null -> null"] {
+    get-editbox -after [get-label Value] | set-text test
+    get-button "Link Key" | click
+}
+get-window "Select Elements" | get-table | select "Player Jonas" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject/null -> null" | double-click
+get-editor "null -> null" | get-button "Link Value" | click
+get-window "Select Elements" | get-table | select Game | double-click
+get-editor "null -> org.eclipse.emf.emfsto[...]" | get-button "Link Value" | key-type "M1+s"
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Area/Area/Area/Area" | get-menu Tournament | click
+    select "TestProject/Area/Area/Area/Area" | get-menu Area | click
+    select "TestProject/Area/Area/Area/Area/Area" | get-menu Area | click
+    select "TestProject/Area/Area/Area/Area/Tournament Pro" | double-click
+}
+get-editor "Tournament Pro" | get-section Players | get-button "Link Player" | click
+get-window "Select Elements" | get-table | select "Player Jonas" | double-click
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Area" | double-click
+    select TestProject
+}
+get-editor Area | close
+get-editor "League Europe" | close
+get-editor "org.eclipse.emf.emfstore.bowli[...]" | close
+get-tab-folder -index 1 | double-click
+get-editor "Tournament Pro" | click
+get-tab-folder -index 1 | double-click
+get-editor "Tournament Pro" | close
+get-editor Area | close
+get-editor Area | close
+get-editor Area | close
+get-editor "Tournament Pro" | close
+get-editor Referee | close
+get-editor "null -> org.eclipse.emf.emfsto[...]" | close
+get-editor "Tournament Pro" | close
+get-editor Area | close
+get-editor Area | close
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
