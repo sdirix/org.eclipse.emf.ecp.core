@@ -5,7 +5,7 @@ Element-Name: Failing
 Element-Type: testsuite
 Element-Version: 2.0
 Id: _txLLUD-XEeK-yuKsz0Lang
-Save-Time: 12/10/12 12:13 AM
+Save-Time: 12/10/12 12:23 AM
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
 Content-Type: text/testcase
@@ -16,6 +16,7 @@ _8um0IEItEeKQh80wtWssKQ	// kind: 'test' name: 'TestDateWidget' path: 'failing/Te
 _zP_LUEIyEeKQh80wtWssKQ	// kind: 'test' name: 'NumberOfChangesInCommitDialog' path: 'failing/NumberOfChangesInCommitDialog.test'
 _xD-A4EJMEeKQh80wtWssKQ	// kind: 'test' name: 'MultiIntWidget' path: 'failing/MultiIntWidget.test'
 _zBFtgEJPEeKQh80wtWssKQ	// kind: 'test' name: 'Undo' path: 'failing/Undo.test'
-_c88SIEJVEeKQh80wtWssKQ	// kind: 'test' name: 'FilterModeelements' path: 'FilterModeelements.test'
+_c88SIEJVEeKQh80wtWssKQ	// kind: 'test' name: 'FilterModeelements' path: 'failing/FilterModeelements.test'
+_p5cIUEJWEeKQh80wtWssKQ	// kind: 'test' name: 'NoRefreshButtons' path: 'NoRefreshButtons.test'
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--
