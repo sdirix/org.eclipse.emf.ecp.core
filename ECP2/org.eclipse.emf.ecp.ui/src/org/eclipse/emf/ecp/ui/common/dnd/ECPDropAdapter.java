@@ -22,6 +22,10 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 
+	public ECPDropAdapter() {
+		this(null, null);
+	}
+
 	/**
 	 * @param domain
 	 * @param viewer
@@ -32,5 +36,9 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 
 	public void setEditingDomain(EditingDomain editingDomain) {
 		domain = editingDomain;
+	}
+
+	public void setViewer(Viewer viewer) {
+		this.viewer = viewer;
 	}
 }

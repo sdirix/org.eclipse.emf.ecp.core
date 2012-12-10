@@ -194,7 +194,7 @@
                   </count>
                   <iterate>
                      <test
-                           args="org.eclipse.emf.ecp.navigator.exportModel"
+                           args="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
                            property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
                            value="true">
                      </test>

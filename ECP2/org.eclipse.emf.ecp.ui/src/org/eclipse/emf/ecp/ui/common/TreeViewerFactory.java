@@ -104,6 +104,7 @@ public class TreeViewerFactory {
 			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
 				dropAdapter = (ECPDropAdapter) configurationElement.createExecutableExtension("class");
+				dropAdapter.setViewer(viewer);
 				break;
 			} catch (CoreException ex) {
 				Activator.log(ex);

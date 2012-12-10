@@ -279,7 +279,7 @@
                               value="org.eclipse.emf.ecore.EObject">
                         </instanceof>
                         <test
-                              args="org.eclipse.emf.ecp.navigator.exportModel"
+                              args="org.eclipse.emf.ecp.ui.workbench.import"
                               property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
                               value="true">
                         </test>
@@ -305,7 +305,7 @@
                                  value="org.eclipse.emf.ecore.EObject">
                            </instanceof>
                            <test
-                                 args="org.eclipse.emf.ecp.navigator.exportModel"
+                                 args="org.eclipse.emf.ecp.ui.workbench.export"
                                  property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
                                  value="true">
                            </test>
