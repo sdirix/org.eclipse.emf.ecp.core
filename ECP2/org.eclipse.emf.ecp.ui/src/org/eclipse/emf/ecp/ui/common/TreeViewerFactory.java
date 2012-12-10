@@ -19,6 +19,8 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.ui.common.dnd.ECPDropAdapter;
 import org.eclipse.emf.ecp.ui.common.dnd.ModelExplorerDropAdapter;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.model.ModelLabelProvider;
@@ -27,6 +29,11 @@ import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -51,7 +58,7 @@ public class TreeViewerFactory {
 		final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
 			ECPProjectManager.INSTANCE, labelDecorator, false);
 		if (hasDnD) {
-			final ModelExplorerDropAdapter dropAdapter = new ModelExplorerDropAdapter(contentProvider, viewer);
+			final ECPDropAdapter dropAdapter = getDropAdapter(contentProvider, viewer);
 
 			int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
 			Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
@@ -81,6 +88,31 @@ public class TreeViewerFactory {
 			});
 		}
 		return viewer;
+	}
+
+	/**
+	 * @param contentProvider
+	 * @param viewer
+	 * @return
+	 */
+	private static ECPDropAdapter getDropAdapter(ModelContentProvider contentProvider, TreeViewer viewer) {
+		ECPDropAdapter dropAdapter = null;
+		// read extensionpoint, if no defined take default
+		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+			"org.eclipse.emf.ecp.ui.dropadapter");
+		for (IExtension extension : extensionPoint.getExtensions()) {
+			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+			try {
+				dropAdapter = (ECPDropAdapter) configurationElement.createExecutableExtension("class");
+				break;
+			} catch (CoreException ex) {
+				Activator.log(ex);
+			}
+		}
+		if (dropAdapter == null) {
+			dropAdapter = new ModelExplorerDropAdapter(contentProvider, viewer);
+		}
+		return dropAdapter;
 	}
 
 	public static TreeViewer createRepositoryExplorerViewer(Composite parent, ILabelDecorator labelDecorator) {

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,7 +32,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 /**
  * @author Eugen Neufeld
  */
-public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
+public class ModelExplorerDropAdapter extends ECPDropAdapter {
 
 	private ECPModelContextProvider contextProvider;
 
@@ -187,10 +186,6 @@ public class ModelExplorerDropAdapter extends EditingDomainViewerDropAdapter {
 		} else {
 			super.dropAccept(event);
 		}
-	}
-
-	public void setEditingDomain(EditingDomain editingDomain) {
-		domain = editingDomain;
 	}
 
 }
