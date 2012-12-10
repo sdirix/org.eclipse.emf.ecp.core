@@ -111,7 +111,7 @@ public class TreeViewerFactory {
 			}
 		}
 		if (dropAdapter == null) {
-			dropAdapter = new ModelExplorerDropAdapter(contentProvider, viewer);
+			dropAdapter = new ModelExplorerDropAdapter(viewer);
 		}
 		return dropAdapter;
 	}

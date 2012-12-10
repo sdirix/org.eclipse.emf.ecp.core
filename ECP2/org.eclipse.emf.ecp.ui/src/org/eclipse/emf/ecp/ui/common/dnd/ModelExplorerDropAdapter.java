@@ -17,8 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -34,14 +32,11 @@ import org.eclipse.swt.dnd.DropTargetEvent;
  */
 public class ModelExplorerDropAdapter extends ECPDropAdapter {
 
-	private ECPModelContextProvider contextProvider;
-
 	/*
 	 * @param viewer
 	 */
-	public ModelExplorerDropAdapter(ECPModelContextProvider contextProvider, Viewer viewer) {
+	public ModelExplorerDropAdapter(Viewer viewer) {
 		super(null, viewer);
-		this.contextProvider = contextProvider;
 	}
 
 	/*
@@ -54,18 +49,6 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 			return;
 		}
 		super.dragEnter(event);
-	}
-
-	/**
-	 * @param object
-	 * @return
-	 */
-	private EditingDomain getProjectDomain(Object object) {
-		ECPProject project = (ECPProject) ECPUtil.getModelContext(contextProvider, object);
-		if (project != null) {
-			return project.getEditingDomain();
-		}
-		return null;
 	}
 
 	/*
