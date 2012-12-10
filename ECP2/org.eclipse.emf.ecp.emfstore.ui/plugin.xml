@@ -142,6 +142,11 @@
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.navigator.exportModel"
+                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
             </visibleWhen>
@@ -166,6 +171,11 @@
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.navigator.exportModel"
+                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
             </visibleWhen>
@@ -183,6 +193,11 @@
                         value="1">
                   </count>
                   <iterate>
+                     <test
+                           args="org.eclipse.emf.ecp.navigator.exportModel"
+                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           value="true">
+                     </test>
                      <instanceof
                            value="org.eclipse.emf.ecp.core.ECPProject">
                      </instanceof>
