@@ -13,12 +13,18 @@ package org.eclipse.emf.ecp.editor.mecontrols;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -28,7 +34,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
@@ -43,7 +48,7 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 
 	private AdapterImpl eAdapter;
 
-	private static final int PRIORITY = 2;
+	private static final int PRIORITY = -1;
 
 	private Label labelWidgetImage; // Label for diagnostic image
 
@@ -69,10 +74,25 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(2, 0).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
 
-		labelWidgetImage = getToolkit().createLabel(composite, "     ");
+		labelWidgetImage = getToolkit().createLabel(composite, "    ");
 		labelWidgetImage.setBackground(composite.getBackground());
+		GridDataFactory.fillDefaults().hint(20, 20).applyTo(labelWidgetImage);
 
 		createText();
+
+		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.RIGHT | SWT.TOP);
+		controlDecoration.setDescriptionText("Invalid input");
+		controlDecoration.setShowHover(true);
+		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
+			FieldDecorationRegistry.DEC_ERROR);
+		controlDecoration.setImage(fieldDecoration.getImage());
+		controlDecoration.hide();
+
+		IObservableValue model = EMFEditObservables.observeValue(getContext().getEditingDomain(), getModelElement(),
+			getStructuralFeature());
+		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		getContext().getDataBindingContext().bindValue(value, model);
+
 		eAdapter = new AdapterImpl() {
 			@Override
 			public void notifyChanged(Notification msg) {
@@ -89,10 +109,10 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 
 	private void createText() {
 
-		text = new Text(composite, SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+		text = getToolkit().createText(composite, new String(), SWT.BORDER | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
 
-		text.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
-		text.setSize(10, 100);
+		// text.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		// text.setSize(10, 100);
 		text.addFocusListener(new FocusAdapter() {
 
 			@Override
@@ -202,7 +222,7 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 	 */
 	public void resetValidation() {
 		labelWidgetImage.setImage(null);
-		labelWidgetImage.setToolTipText("");
+		labelWidgetImage.setToolTipText("    ");
 	}
 
 	/*
@@ -211,7 +231,7 @@ public class MERichTextControl extends AbstractMEControl implements IValidatable
 	 */
 	@Override
 	protected int getPriority() {
-		return 2;
+		return PRIORITY;
 	}
 
 	/*
