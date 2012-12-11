@@ -1,0 +1,58 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Context-Type: com.xored.q7.ecl.context
+Element-Name: CreateBasicElements
+Element-Type: context
+Element-Version: 2.0
+Id: _YQj0cT-VEeK-yuKsz0Lang
+Save-Time: 12/6/12 12:14 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create EMFStore Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text TestProject
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+    get-tree | select "bowling/League"
+    get-button Finish | click
+}
+get-editor League | get-editbox -after [get-label Name] | set-text America
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+    get-tree | select "bowling/League"
+    get-button Finish | click
+}
+get-editor League | get-editbox -after [get-label Name] | set-text Europe
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Jonas
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Maximilian
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+    get-tree | select "bowling/Tournament"
+    get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Tournament Pro" | get-menu Matchup | click
+    select "TestProject/Tournament Pro/Matchup" | get-menu Game | click
+    select TestProject | get-menu "New Model Element" | click
+}
+get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+    | key-type "TRAVERSE_ESCAPE"
+get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup/Game" | double-click
+get-editor Game | get-button "Link Player" | click
+get-window "Select Elements" | get-table | select "Player Jonas" | double-click
+get-editor "League America" | close
+get-editor "Player Jonas" | close
+get-editor "Player Maximilian" | close
+get-editor "Tournament Pro" | close
+get-editor "League Europe" | close
+get-editor Matchup | close
+get-editor Game | close
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

@@ -1,0 +1,37 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: __UtTgD-XEeK-yuKsz0Lang
+Element-Name: DeleteLocalProjectOnServer
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _S6lNoEJbEeKQh80wtWssKQ
+Save-Time: 12/10/12 12:53 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Delete on server" | click
+get-window Confirmation | get-button Yes | click
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
+get-window -from "Window.createShell()" | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+with [get-editor "Player Jonas"] {
+    get-editbox -after [get-label Name] | set-text Jonasiuiugiug
+    with [get-editbox -after [get-label EMail]] {
+        click-text
+        set-focus
+    }
+}
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
+get-window "Commit failed" | get-button OK | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Logout | click
+get-editor "Player Jonasiuiugiug" | close
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Delete | click
+get-window Delete | get-button OK | click
+get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Delete | click
+get-window Delete | get-button OK | click
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
