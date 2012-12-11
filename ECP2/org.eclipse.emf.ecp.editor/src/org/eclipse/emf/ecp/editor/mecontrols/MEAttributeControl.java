@@ -60,6 +60,8 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 
 		labelWidgetImage = getToolkit().createLabel(composite, "    ");
 		labelWidgetImage.setBackground(parent.getBackground());
+		// FIXME
+		GridDataFactory.fillDefaults().hint(20, 20).applyTo(labelWidgetImage);
 
 		ECPAttributeWidget widget = getAttributeWidget(getContext().getDataBindingContext());
 		Control control = widget.createWidget(getToolkit(), composite, style);
@@ -104,7 +106,7 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 			return;
 		}
 		labelWidgetImage.setImage(null);
-		labelWidgetImage.setToolTipText("");
+		labelWidgetImage.setToolTipText("    ");
 
 	}
 
