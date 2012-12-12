@@ -6,11 +6,5 @@
    <extension-point id="modelelementopener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
    <extension-point id="dropadapter" name="ECP UI DropAdapaters" schema="schema/dropadapter.exsd"/>
    <extension-point id="modelExplorerSettings" name="ECP Model Explorer Settings" schema="schema/modelExplorerSettings.exsd"/>
-   <extension
-         point="org.eclipse.emf.ecp.ui.dropadapter">
-      <MEDropAdapter
-            class="org.eclipse.emf.ecp.ui.common.dnd.DefaultMEDropAdapter">
-      </MEDropAdapter>
-   </extension>
 	
 </plugin>

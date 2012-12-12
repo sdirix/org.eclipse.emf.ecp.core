@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.ecp.example.internal.leagueview.LeagueSelectionHandler"
+            id="org.eclipse.emf.ecp.example.leagueView.open"
+            name="Show League">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
+         <command
+               commandId="org.eclipse.emf.ecp.example.leagueView.open"
+               label="Show League"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.emfstore.bowling.League">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.emf.ecp.example.internal.leagueview.LeagueViewPart"
+            id="org.eclipse.emf.ecp.example.leagueView"
+            name="LeagueView"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>

@@ -40,7 +40,7 @@ import java.lang.reflect.Type;
  * @author Eugen Neufeld
  */
 public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
-	private Text text;
+	protected Text text;
 
 	private boolean doVerify;
 
@@ -84,11 +84,20 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	public Control createWidget(FormToolkit toolkit, Composite composite, int style) {
 		// TODO: activate verification once again
 		doVerify = false;
-		text = toolkit.createText(composite, new String(), style | SWT.SINGLE | SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		createTextWidget(toolkit, composite, style);
 		addFocusListener();
 		addVerifyListener();
 		return text;
+	}
+
+	/**
+	 * @param toolkit
+	 * @param composite
+	 * @param style
+	 */
+	protected void createTextWidget(FormToolkit toolkit, Composite composite, int style) {
+		text = toolkit.createText(composite, new String(), style | SWT.SINGLE | SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	}
 
 	private void addFocusListener() {

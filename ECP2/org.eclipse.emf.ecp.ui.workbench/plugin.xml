@@ -196,9 +196,26 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <reference
-                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
-               </reference>
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.project.filterModelElements"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
             </visibleWhen>
          </command>
          <command
@@ -262,7 +279,7 @@
                               value="org.eclipse.emf.ecore.EObject">
                         </instanceof>
                         <test
-                              args="org.eclipse.emf.ecp.navigator.exportModel"
+                              args="org.eclipse.emf.ecp.ui.workbench.import"
                               property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
                               value="true">
                         </test>
@@ -288,7 +305,7 @@
                                  value="org.eclipse.emf.ecore.EObject">
                            </instanceof>
                            <test
-                                 args="org.eclipse.emf.ecp.navigator.exportModel"
+                                 args="org.eclipse.emf.ecp.ui.workbench.export"
                                  property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
                                  value="true">
                            </test>

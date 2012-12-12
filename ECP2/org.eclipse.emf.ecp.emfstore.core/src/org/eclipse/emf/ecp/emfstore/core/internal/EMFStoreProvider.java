@@ -31,6 +31,7 @@ import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -113,6 +114,9 @@ public class EMFStoreProvider extends DefaultProvider {
 		case CREATE:
 			handleCreate(context);
 			break;
+		case REMOVE:
+			handleRemove(context);
+			break;
 		default:
 			break;
 		}
@@ -120,6 +124,22 @@ public class EMFStoreProvider extends DefaultProvider {
 		String providerClass = getClass().getSimpleName();
 		String contextClass = context.getClass().getSimpleName();
 		System.out.println(providerClass + " received " + event + " for " + contextClass + " " + context);
+	}
+
+	/**
+	 * @param context
+	 */
+	private void handleRemove(ECPModelContext context) {
+		if (context instanceof InternalProject) {
+			InternalProject project = (InternalProject) context;
+			ProjectSpace ps = (ProjectSpace) project.getProviderSpecificData();
+			try {
+				ps.delete();
+			} catch (IOException ex) {
+				Activator.log(ex);
+			}
+		}
+
 	}
 
 	/**
