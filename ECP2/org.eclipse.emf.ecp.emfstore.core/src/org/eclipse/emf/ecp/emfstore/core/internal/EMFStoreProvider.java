@@ -134,7 +134,7 @@ public class EMFStoreProvider extends DefaultProvider {
 			InternalProject project = (InternalProject) context;
 			ProjectSpace ps = (ProjectSpace) project.getProviderSpecificData();
 			try {
-				ps.delete();
+				WorkspaceManager.getInstance().getCurrentWorkspace().deleteProjectSpace(ps);
 			} catch (IOException ex) {
 				Activator.log(ex);
 			}
