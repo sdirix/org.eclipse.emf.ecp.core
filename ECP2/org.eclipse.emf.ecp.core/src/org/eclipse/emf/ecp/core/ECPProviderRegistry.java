@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,12 +8,16 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
 
 /**
+ * Registry class to manage the registered providers.
+ * 
  * @author Eike Stepper
  */
 public interface ECPProviderRegistry {
@@ -60,9 +64,24 @@ public interface ECPProviderRegistry {
 	 */
 	void addProvider(ECPProvider provider);
 
+	/**
+	 * Delete a provider programmatically from the list of available providers by its name.
+	 * 
+	 * @param name the name of the provider to delete
+	 */
 	void removeProvider(String name);
 
+	/**
+	 * Add an {@link IECPProvidersChangedObserver} to be notified.
+	 * 
+	 * @param changeObserver the observer to add
+	 */
 	void addObserver(IECPProvidersChangedObserver changeObserver);
 
+	/**
+	 * Remove an {@link IECPProvidersChangedObserver} from the list of the providers to be notified.
+	 * 
+	 * @param changeObserver the observer to remove
+	 */
 	void removeObserver(IECPProvidersChangedObserver changeObserver);
 }
