@@ -32,6 +32,8 @@ import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.IFilterProvider;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.IECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -336,6 +338,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/** {@inheritDoc} */
 	public void delete() {
+		ECPObserverBus.getInstance().notify(IECPProjectPreDeleteObserver.class).projectDelete(this);
 		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
 		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
 	}
