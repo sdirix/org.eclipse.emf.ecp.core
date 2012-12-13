@@ -189,4 +189,17 @@ public class DateTimeWidget extends ECPAttributeWidget {
 		return parentComposite;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#dispose()
+	 */
+	@Override
+	public void dispose() {
+		dateDeleteButton.dispose();
+		dateWidget.dispose();
+		timeWidget.dispose();
+		parentComposite.dispose();
+		unsetLabel.dispose();
+	}
+
 }

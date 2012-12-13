@@ -55,6 +55,8 @@ public class MELinkControl extends AbstractMEControl {
 
 	private ModelElementChangeListener modelElementChangeListener;
 
+	private ECPWidget widget;
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
@@ -125,7 +127,7 @@ public class MELinkControl extends AbstractMEControl {
 		}
 		final EObject opposite = (EObject) getModelElement().eGet(getStructuralFeature());
 		if (opposite != null) {
-			ECPWidget widget = getWidget(opposite);
+			widget = getWidget(opposite);
 			control = widget.createWidget(getToolkit(), composite, style);
 			widget.setEditable(isEditable());
 		} else {
@@ -208,6 +210,7 @@ public class MELinkControl extends AbstractMEControl {
 		}
 		labelWidgetImage.dispose();
 		modelElementChangeListener.remove();
+		widget.dispose();
 	}
 
 }

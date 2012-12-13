@@ -65,6 +65,12 @@ public class LinkWidget extends ECPWidget {
 
 	private EditorModelelementContext context;
 
+	private ComposedAdapterFactory composedAdapterFactory;
+
+	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+
+	private ShortLabelProvider shortLabelProvider;
+
 	/**
 	 * @param dbc
 	 */
@@ -106,8 +112,9 @@ public class LinkWidget extends ECPWidget {
 	}
 
 	private void createHyperlink(FormToolkit toolkit, final Composite parent) {
-		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 		IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
 		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
 		labelProviderListener = new ILabelProviderListener() {
@@ -124,7 +131,7 @@ public class LinkWidget extends ECPWidget {
 
 					public void run() {
 						if (hyperlink != null && !hyperlink.isDisposed()) {
-							ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
+
 							String text = shortLabelProvider.getText(linkModelElement);
 							hyperlink.setText(text);
 							hyperlink.setToolTipText(text);
@@ -144,7 +151,6 @@ public class LinkWidget extends ECPWidget {
 		imageHyperlink.setData(linkModelElement.eClass());
 		// TODO: Reactivate
 		// ModelElementClassTooltip.enableFor(imageHyperlink);
-		ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
 		hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(linkModelElement), SWT.NONE);
 		hyperlink.setToolTipText(shortLabelProvider.getText(linkModelElement));
 		IHyperlinkListener listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(),
@@ -171,4 +177,11 @@ public class LinkWidget extends ECPWidget {
 		return linkComposite;
 	}
 
+	@Override
+	public void dispose() {
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
+		shortLabelProvider.dispose();
+		labelProvider.dispose();
+	}
 }

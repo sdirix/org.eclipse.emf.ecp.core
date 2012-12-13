@@ -52,6 +52,14 @@ public class MEEditorPage extends FormPage {
 
 	private IEditorCompositeProvider editorPageContent;
 
+	private ShortLabelProvider shortLabelProvider;
+
+	private ComposedAdapterFactory composedAdapterFactory;
+
+//	private ISourceProvider sourceProvider;
+
+//	private IEvaluationService service;
+
 	/**
 	 * Default constructor.
 	 * 
@@ -100,7 +108,8 @@ public class MEEditorPage extends FormPage {
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		super.createFormContent(managedForm);
-
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 		FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();
 		toolkit.decorateFormHeading(form.getForm());
@@ -108,9 +117,8 @@ public class MEEditorPage extends FormPage {
 		body.setLayout(new GridLayout());
 		editorPageContent = new FormEditorComposite(modelElementContext, form.getShell(),toolkit);
 		editorPageContent.createUI(body);
-
-		form.setImage(new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(modelElementContext.getModelElement()));
+		
+		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
@@ -121,7 +129,8 @@ public class MEEditorPage extends FormPage {
 	 */
 	public void updateSectionTitle() {
 		// Layout form
-		ShortLabelProvider shortLabelProvider = new ShortLabelProvider();
+		
+		
 		String name = shortLabelProvider.getText(modelElementContext.getModelElement());
 
 		name += " [" + modelElementContext.getModelElement().eClass().getName() + "]";
@@ -134,28 +143,29 @@ public class MEEditorPage extends FormPage {
 
 	private void createToolbar() {
 		IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
-		ISourceProvider sourceProvider = new AbstractSourceProvider() {
-			public void dispose() {
-			}
-
-			@SuppressWarnings("rawtypes")
-			public Map getCurrentState() {
-				HashMap<Object, Object> map = new HashMap<Object, Object>();
-				map.put(activeModelelement, modelElementContext.getModelElement());
-				return map;
-			}
-
-			public String[] getProvidedSourceNames() {
-				String[] namens = new String[1];
-				namens[0] = activeModelelement;
-				return namens;
-			}
-
-		};
-
-		IEvaluationService service = (IEvaluationService) PlatformUI.getWorkbench()
-			.getService(IEvaluationService.class);
-		service.addSourceProvider(sourceProvider);
+//		sourceProvider = new AbstractSourceProvider() {
+//			public void dispose() {
+//			}
+//
+//			@SuppressWarnings("rawtypes")
+//			public Map getCurrentState() {
+//				HashMap<Object, Object> map = new HashMap<Object, Object>();
+//				map.put(activeModelelement, modelElementContext.getModelElement());
+//				return map;
+//			}
+//
+//			public String[] getProvidedSourceNames() {
+//				String[] namens = new String[1];
+//				namens[0] = activeModelelement;
+//				return namens;
+//			}
+//
+//		};
+//
+//		service = (IEvaluationService) PlatformUI.getWorkbench()
+//			.getService(IEvaluationService.class);
+//		service.addSourceProvider(sourceProvider);
+		
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor("icons/delete.gif")) {
 
 			@Override
@@ -183,6 +193,9 @@ public class MEEditorPage extends FormPage {
 	@Override
 	public void dispose() {
 		editorPageContent.dispose();
+		composedAdapterFactory.dispose();
+		shortLabelProvider.dispose();
+		form.dispose();
 		super.dispose();
 	}
 

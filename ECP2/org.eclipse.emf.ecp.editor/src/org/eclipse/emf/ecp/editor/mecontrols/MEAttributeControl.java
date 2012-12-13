@@ -41,6 +41,8 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 
 	private ControlDecoration controlDecoration;
 
+	private ECPAttributeWidget widget;
+
 	@Override
 	protected Class<EAttribute> getEStructuralFeatureType() {
 		return EAttribute.class;
@@ -63,7 +65,7 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 		// FIXME
 		GridDataFactory.fillDefaults().hint(20, 20).applyTo(labelWidgetImage);
 
-		ECPAttributeWidget widget = getAttributeWidget(getContext().getDataBindingContext());
+		widget = getAttributeWidget(getContext().getDataBindingContext());
 		Control control = widget.createWidget(getToolkit(), composite, style);
 		widget.setEditable(isEditable());
 
@@ -108,6 +110,14 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 		labelWidgetImage.setImage(null);
 		labelWidgetImage.setToolTipText("    ");
 
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		labelWidgetImage.dispose();
+		widget.dispose();
+		controlDecoration.dispose();
 	}
 
 }

@@ -9,26 +9,25 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
  * @author Eugen Neufeld
- *
+ * 
  */
-public abstract class ECPWidget
-{
+public abstract class ECPWidget {
 
-  /**
+	/**
    * 
    */
-  public ECPWidget()
-  {
-    super();
-  }
+	public ECPWidget() {
+		super();
+	}
 
-  public abstract Control createWidget(final FormToolkit toolkit, final Composite composite, final int style);
+	public abstract Control createWidget(final FormToolkit toolkit, final Composite composite, final int style);
 
-  public abstract void setEditable(boolean isEditable);
+	public abstract void setEditable(boolean isEditable);
 
-  /**
-   * @return the Control
-   */
-  public abstract Control getControl();
+	/**
+	 * @return the Control
+	 */
+	public abstract Control getControl();
 
+	public abstract void dispose();
 }

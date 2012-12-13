@@ -25,7 +25,7 @@ public class BooleanWidget extends ECPAttributeWidget {
 		super(dbc);
 	}
 
-	Button check;
+	private Button check;
 
 	@Override
 	public Control createWidget(final FormToolkit toolkit, final Composite composite, final int style) {
@@ -55,5 +55,14 @@ public class BooleanWidget extends ECPAttributeWidget {
 	@Override
 	public Control getControl() {
 		return check;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#dispose()
+	 */
+	@Override
+	public void dispose() {
+		check.dispose();
 	}
 }

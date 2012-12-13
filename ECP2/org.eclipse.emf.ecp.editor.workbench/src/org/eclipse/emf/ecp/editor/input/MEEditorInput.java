@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.editor.input;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.editor.MEEditor;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -38,8 +39,11 @@ import org.eclipse.ui.PlatformUI;
 public class MEEditorInput implements IEditorInput {
 
 	private EStructuralFeature problemFeature;
-	private DecoratingLabelProvider labelProvider;
+//	private DecoratingLabelProvider labelProvider;
 	private EditorModelelementContext modelElementContext;
+//	private ComposedAdapterFactory composedAdapterFactory;
+//	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+//	private IDecoratorManager decoratorManager;
 
 	/**
 	 * Constructor to add a probleFeature.
@@ -59,39 +63,42 @@ public class MEEditorInput implements IEditorInput {
 	 */
 	public MEEditorInput(EditorModelelementContext context) {
 		super();
-		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
-		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
 		this.modelElementContext = context;
-		if (labelProvider.getLabelProvider().getText(modelElementContext.getModelElement()) == null) {
-			final Shell activeShell = Display.getCurrent().getActiveShell();
-			boolean doSetName = MessageDialog
-				.openQuestion(
-					activeShell,
-					"Missing title",
-					"The element you are trying to open does not have a proper name and cannot be opened.\nDo you want to set a custom name for it or use a default one?");
-			String newName = "new " + modelElementContext.getModelElement().eClass().getName();
-			if (doSetName) {
-				final InputDialog inputDialog = new InputDialog(activeShell, "New title",
-					"Please enter the new name for this element", newName, null);
-				inputDialog.setBlockOnOpen(true);
-				if (inputDialog.open() == IDialogConstants.OK_ID && inputDialog.getValue() != "") {
-					newName = inputDialog.getValue();
-				}
-
-			}
-		}
+		
+//		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+//		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+//			composedAdapterFactory);
+//		decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+//		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
+//	
+//		if (labelProvider.getLabelProvider().getText(modelElementContext.getModelElement()) == null) {
+//			final Shell activeShell = Display.getCurrent().getActiveShell();
+//			boolean doSetName = MessageDialog
+//				.openQuestion(
+//					activeShell,
+//					"Missing title",
+//					"The element you are trying to open does not have a proper name and cannot be opened.\nDo you want to set a custom name for it or use a default one?");
+//			String newName = "new " + modelElementContext.getModelElement().eClass().getName();
+//			if (doSetName) {
+//				final InputDialog inputDialog = new InputDialog(activeShell, "New title",
+//					"Please enter the new name for this element", newName, null);
+//				inputDialog.setBlockOnOpen(true);
+//				if (inputDialog.open() == IDialogConstants.OK_ID && inputDialog.getValue() != "") {
+//					newName = inputDialog.getValue();
+//				}
+//
+//			}
+//		}
 	}
 
-	/**
-	 * Getter for the label provider.
-	 * 
-	 * @return the label provider
-	 */
-	public DecoratingLabelProvider getLabelProvider() {
-		return labelProvider;
-	}
+//	/**
+//	 * Getter for the label provider.
+//	 * 
+//	 * @return the label provider
+//	 */
+//	public DecoratingLabelProvider getLabelProvider() {
+//		return labelProvider;
+//	}
 
 	/**
 	 * {@inheritDoc}
@@ -101,24 +108,24 @@ public class MEEditorInput implements IEditorInput {
 		return false;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ImageDescriptor getImageDescriptor() {
-		Image image = labelProvider.getImage(modelElementContext.getModelElement());
-		if (image != null) {
-			ImageDescriptor descriptor = ImageDescriptor.createFromImage(image);
-			return descriptor;
-		}
-		return null;
-	}
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	public ImageDescriptor getImageDescriptor() {
+//		Image image = labelProvider.getImage(modelElementContext.getModelElement());
+//		if (image != null) {
+//			ImageDescriptor descriptor = ImageDescriptor.createFromImage(image);
+//			return descriptor;
+//		}
+//		return null;
+//	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getName() {
-		return labelProvider.getLabelProvider().getText(modelElementContext.getModelElement());
-	}
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	public String getName() {
+//		return labelProvider.getLabelProvider().getText(modelElementContext.getModelElement());
+//	}
 
 	/**
 	 * {@inheritDoc}
@@ -128,12 +135,12 @@ public class MEEditorInput implements IEditorInput {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getToolTipText() {
-		return getName();
-	}
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	public String getToolTipText() {
+//		return getName();
+//	}
 
 	/**
 	 * @return the problemFeature
@@ -193,4 +200,28 @@ public class MEEditorInput implements IEditorInput {
 		return modelElementContext;
 	}
 
+	
+	public void dispose(){
+//		labelProvider.dispose();
+//		adapterFactoryLabelProvider.dispose();
+//		composedAdapterFactory.dispose();
+//		decoratorManager.dispose();
+	}
+
+	public ImageDescriptor getImageDescriptor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getName() {
+		return modelElementContext.getModelElement().eClass().getName();
+	}
+
+	public String getToolTipText() {
+		return getName();
+	}
+
+//	public ComposedAdapterFactory getComposedAdapterFactory() {
+//		return composedAdapterFactory;
+//	}
 }

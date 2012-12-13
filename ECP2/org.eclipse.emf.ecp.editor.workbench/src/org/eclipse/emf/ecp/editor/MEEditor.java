@@ -22,6 +22,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.editor.input.MEEditorInput;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
@@ -59,6 +60,13 @@ public class MEEditor extends SharedHeaderFormEditor {
 	private EditorModelelementContext modelElementContext;
 
 	private EditorModelelementContextListener modelElementContextListener;
+
+	private MEEditorInput meInput;
+
+	private ShortLabelProvider shortLabelProvider;
+
+
+	private ComposedAdapterFactory composedAdapterFactory;
 
 	/**
 	 * Default constructor.
@@ -188,13 +196,14 @@ public class MEEditor extends SharedHeaderFormEditor {
 		super.init(site, input);
 		if (input instanceof MEEditorInput) {
 			setInput(input);
-			final MEEditorInput meInput = (MEEditorInput) input;
+			meInput = (MEEditorInput) input;
+			
 			this.modelElementContext = meInput.getModelElementContext();
-			setPartName((new ShortLabelProvider()).getText(modelElementContext.getModelElement()));
-			ImageDescriptor imageDescriptor = input.getImageDescriptor();
-			if (imageDescriptor != null) {
-				setTitleImage(imageDescriptor.createImage());
-			}
+			composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			shortLabelProvider=new ShortLabelProvider(composedAdapterFactory);
+			setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
+				setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+			
 
 			modelElementContextListener = new EditorModelelementContextListener() {
 
@@ -221,8 +230,8 @@ public class MEEditor extends SharedHeaderFormEditor {
 				public void onChange(Notification notification) {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
-							updateIcon(input);
-							setPartName((new ShortLabelProvider()).getText(modelElementContext.getModelElement()));
+							updateIcon();
+							setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
 							if (mePage != null) {
 								mePage.updateSectionTitle();
 								// mePage.updateLiveValidation();
@@ -237,12 +246,15 @@ public class MEEditor extends SharedHeaderFormEditor {
 			initStatusProvider();
 			updateStatusMessage();
 
-			labelProviderListener = new ILabelProviderListener() {
-				public void labelProviderChanged(LabelProviderChangedEvent event) {
-					updateIcon(meInput);
-				}
-			};
-			meInput.getLabelProvider().addListener(labelProviderListener);
+//			labelProviderListener = new ILabelProviderListener() {
+//				public void labelProviderChanged(LabelProviderChangedEvent event) {
+//					if(!titleImage.isDisposed())
+//						titleImage.dispose();
+//					titleImage=meInput.getImageDescriptor().createImage();
+//					updateIcon();
+//				}
+//			};
+//			meInput.getLabelProvider().addListener(labelProviderListener);
 
 		} else {
 			throw new PartInitException("MEEditor is only appliable for MEEditorInputs");
@@ -306,17 +318,22 @@ public class MEEditor extends SharedHeaderFormEditor {
 	public void dispose() {
 		modelElementChangeListener.remove();
 		modelElementContext.removeModelElementContextListener(modelElementContextListener);
-		((MEEditorInput) getEditorInput()).getLabelProvider().removeListener(labelProviderListener);
+//		((MEEditorInput) getEditorInput()).getLabelProvider().removeListener(labelProviderListener);
+		composedAdapterFactory.dispose();
+		shortLabelProvider.dispose();
+//		meInput.dispose();
+		getSite().setSelectionProvider(null);
 		super.dispose();
+		
 	}
 
-	private void updateIcon(IEditorInput input) {
-		Image titleImage = input.getImageDescriptor().createImage();
-		setTitleImage(titleImage);
+	private void updateIcon() {
+		
+		setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		// TODO AS: Debug why sometimes the page is null - not disposed Adapter?
 		if (mePage != null) {
 			try {
-				mePage.getManagedForm().getForm().setImage(titleImage);
+				mePage.getManagedForm().getForm().setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 			} catch (SWTException e) {
 				// Catch in case Editor is directly closed after change.
 			}

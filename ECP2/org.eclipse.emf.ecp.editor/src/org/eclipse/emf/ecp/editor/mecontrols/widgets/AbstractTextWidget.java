@@ -274,4 +274,9 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	 * @return the string representation of the converted model value
 	 */
 	protected abstract String convertModelToString(T modelValue);
+
+	@Override
+	public void dispose() {
+		this.text.dispose();
+	}
 }

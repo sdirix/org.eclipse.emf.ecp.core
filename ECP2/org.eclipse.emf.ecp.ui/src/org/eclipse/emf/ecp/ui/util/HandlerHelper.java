@@ -135,8 +135,11 @@ public class HandlerHelper {
 
 	public static void createNewReferenceElement(EditingDomain editingDomain, EObject eObject, EReference eReference,
 		Object input, AbstractUICallback callBack) {
-		SelectModelElementComposite composite = new SelectModelElementComposite(new AdapterFactoryLabelProvider(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE)), input);
+		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+			composedAdapterFactory);
+		SelectModelElementComposite composite = new SelectModelElementComposite(adapterFactoryLabelProvider, input);
 		callBack.setCompositeUIProvider(composite);
 		if (AbstractUICallback.OK == callBack.open()) {
 			Object[] results = composite.getSelection();
@@ -155,6 +158,8 @@ public class HandlerHelper {
 				}
 			}
 		}
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 	/**

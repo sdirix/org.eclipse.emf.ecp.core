@@ -98,4 +98,13 @@ public class EEnumWidget extends ECPAttributeWidget {
 		return combo.getControl();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget#dispose()
+	 */
+	@Override
+	public void dispose() {
+		combo.getCombo().dispose();
+	}
+
 }

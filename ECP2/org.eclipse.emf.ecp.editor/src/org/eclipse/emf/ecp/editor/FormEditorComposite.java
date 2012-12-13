@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +103,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private final EditorModelelementContext modelElementContext;
 
-	private Map<EStructuralFeature, AbstractMEControl> meControls = new HashMap<EStructuralFeature, AbstractMEControl>();
+	private Map<EStructuralFeature, AbstractMEControl> meControls = new LinkedHashMap<EStructuralFeature, AbstractMEControl>();
 
 	private Map<AbstractMEControl, Diagnostic> valdiatedControls = new HashMap<AbstractMEControl, Diagnostic>();
 
@@ -117,6 +118,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	private Composite rightColumnComposite;
 
 	private Composite bottomComposite;
+	private ComposedAdapterFactory composedAdapterFactory;
 
 	/** {@inheritDoc} */
 	public Composite createUI(Composite parent) {
@@ -184,9 +186,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private void sortAndOrderAttributes() {
 
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-
+			composedAdapterFactory);
 		List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
 			.getPropertyDescriptors(modelElementContext.getModelElement());
 		if (propertyDescriptors != null) {
@@ -274,7 +276,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		for (AbstractMEControl control : meControls.values()) {
 			control.dispose();
 		}
+		meControls.clear();
 		modelElementChangeListener.remove();
+		composedAdapterFactory.dispose();
 	}
 
 	/** {@inheritDoc} */
