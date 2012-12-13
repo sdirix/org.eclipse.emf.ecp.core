@@ -1,37 +1,100 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * Eugen Neufeld - javaDoc
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 
 /**
+ * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
+ * 
  * @author Eike Stepper
  */
 public interface ECPRepositoryManager {
 
-	public static final ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
+	/**
+	 * The {@link ECPRepositoryManager} instance.
+	 */
+	ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
 
-	public ECPRepository getRepository(Object adaptable);
+	/**
+	 * This method returns a {@link ECPRepository} from an adaptable. The adaptable must be of type:
+	 * {@link org.eclipse.emf.ecp.core.util.ECPRepositoryAware ECPRepositoryAware}. Otherwise the
+	 * {@link org.eclipse.net4j.util.AdapterUtil AdapterUtil} will be used.
+	 * 
+	 * @param adaptable the adaptable to adapt
+	 * @return {@link ECPRepository} or null if the adaptable could not be adapted
+	 */
 
-	public ECPRepository getRepository(String name);
+	ECPRepository getRepository(Object adaptable);
 
-	public ECPRepository[] getRepositories();
+	/**
+	 * This method returns a repository by its name.
+	 * 
+	 * @param name the name of the repository
+	 * @return the {@link ECPRepository} or null if no repository with such name exists.
+	 */
 
-	public boolean hasRepositories();
+	ECPRepository getRepository(String name);
 
-	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
+	/**
+	 * Returns all known repositories.
+	 * 
+	 * @return an array of all known {@link ECPRepository ECPRepositories}
+	 */
+
+	ECPRepository[] getRepositories();
+
+	/**
+	 * Checks whether any repositories are available.
+	 * 
+	 * @return true if any repository is available, false otherwise
+	 */
+	boolean hasRepositories();
+
+	/**
+	 * This method allows the user to create a repository.
+	 * 
+	 * @param provider the {@link ECPProvider} of this repository
+	 * @param name the name of the new repository
+	 * @param label the label of the new repository
+	 * @param description the description of the new repository
+	 * @param properties the {@link ECPProperties} of this repository
+	 * @return the created {@link ECPRepository}
+	 */
+	ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties);
 
-	public void addObserver(IECPRepositoriesChangedObserver changeObserver);
+	/**
+	 * Register an {@link IECPRepositoriesChangedObserver} observer.
+	 * 
+	 * @deprecated use {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus} instead
+	 * @param changeObserver the observer to register
+	 */
+	@Deprecated
+	// TODO remove
+	void addObserver(IECPRepositoriesChangedObserver changeObserver);
 
-	public void removeObserver(IECPRepositoriesChangedObserver changeObserver);
+	/**
+	 * Unregister an {@link IECPRepositoriesChangedObserver} observer.
+	 * 
+	 * @deprecated use {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus} instead
+	 * @param changeObserver the observer to register
+	 */
+	@Deprecated
+	// TODO remove
+	void removeObserver(IECPRepositoriesChangedObserver changeObserver);
 
 }
