@@ -67,6 +67,49 @@ public class EEnumWidget extends ECPAttributeWidget {
 		return combo.getControl();
 	}
 
+	// ALTERNATIVe
+	// EStructuralFeature feature = propDescriptor.getFeature();
+	// ComboViewer combo = new ComboViewer(composite, SWT.DROP_DOWN);
+	// combo.setContentProvider(ArrayContentProvider.getInstance());
+	// combo.setLabelProvider(new LabelProvider() {
+	// @Override
+	// public String getText(Object element) {
+	// return ((EEnumLiteral)element).getName();
+	// }
+	// });
+	//
+	// final EEnum eEnum = (EEnum) feature.getEType();
+	// combo.setInput(eEnum.getELiterals());
+	// combo.setSelection(new StructuredSelection(obj.eGet(feature)));
+	// combo.getCombo().setLayoutData(
+	// new GridData(SWT.FILL, SWT.NULL, true, false));
+	//
+	// IObservableValue observeNumber = ViewersObservables
+	// .observeSingleSelection(combo);
+	// IObservableValue observeValue = EMFEditObservables.observeValue(
+	// editingDomain, obj, feature);
+	// dataBindingContext.bindValue(observeNumber, observeValue,new UpdateValueStrategy(){
+	//
+	// @Override
+	// public Object convert(Object value) {
+	// if(value instanceof EEnumLiteral){
+	// return ((EEnumLiteral)value).getInstance();
+	// }
+	// return super.convert(value);
+	// }
+	//
+	// },new UpdateValueStrategy(){
+	// @Override
+	// public Object convert(Object value) {
+	// if(value instanceof Enumerator){
+	// Enumerator enumerator=(Enumerator)value;
+	// return eEnum.getEEnumLiteralByLiteral(enumerator.getLiteral());
+	// }
+	// return super.convert(value);
+	// }
+	// });
+	// return combo.getCombo();
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget#setEditable(boolean)

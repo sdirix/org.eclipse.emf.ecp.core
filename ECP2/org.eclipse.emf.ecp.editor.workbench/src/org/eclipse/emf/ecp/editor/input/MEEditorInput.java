@@ -90,7 +90,6 @@ public class MEEditorInput implements IEditorInput {
 //			}
 //		}
 	}
-
 //	/**
 //	 * Getter for the label provider.
 //	 * 

@@ -31,6 +31,7 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
@@ -67,9 +68,19 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 
 	private int upperBound;
 
-	private AddAction addAction;
+	private ActionContributionItem addActionItem;
 
 	private Section section;
+
+	private IListChangeListener changeListener;
+
+	private IObservableList model;
+
+	private ToolBar toolbar;
+
+	private DisposeListener disposeListener;
+
+	private ToolBarManager toolBarManager;
 
 	@Override
 	protected Class<EAttribute> getEStructuralFeatureType() {
@@ -120,9 +131,9 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 		final Composite sectionComposite = getToolkit().createComposite(section, style);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(sectionComposite);
 
-		final IObservableList model = EMFEditObservables.observeList(getContext().getEditingDomain(),
-			getModelElement(), getStructuralFeature());
-		model.addListChangeListener(new IListChangeListener() {
+		model = EMFEditObservables.observeList(getContext().getEditingDomain(), getModelElement(),
+			getStructuralFeature());
+		changeListener = new IListChangeListener() {
 
 			public void handleListChange(ListChangeEvent event) {
 				ListDiff diff = event.diff;
@@ -135,7 +146,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 					}
 				}
 			}
-		});
+		};
 		for (int i = 0; i < model.size(); i++) {
 			addControl(sectionComposite, style, model, i);
 		}
@@ -153,23 +164,26 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 	}
 
 	private void createSectionToolbar(Section section, FormToolkit toolkit) {
-		ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
-		ToolBar toolbar = toolBarManager.createControl(section);
+		toolBarManager = new ToolBarManager(SWT.FLAT);
+		toolbar = toolBarManager.createControl(section);
 		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
 		toolbar.setCursor(handCursor);
 		// Cursor needs to be explicitly disposed
-		toolbar.addDisposeListener(new DisposeListener() {
+		disposeListener = new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				if (!handCursor.isDisposed()) {
 					handCursor.dispose();
 				}
 			}
-		});
-		addAction = new AddAction();
+		};
+		toolbar.addDisposeListener(disposeListener);
+
+		AddAction addAction = new AddAction();
 		addAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
 			.getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
 		addAction.setToolTipText("Add Entry");
-		toolBarManager.add(addAction);
+		addActionItem = new ActionContributionItem(addAction);
+		toolBarManager.add(addActionItem);
 		toolBarManager.update(true);
 		section.setTextClient(toolbar);
 	}
@@ -183,7 +197,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 
 	private void isFull() {
 		boolean full = controlHelpers.size() >= upperBound && upperBound != -1;
-		addAction.setEnabled(!full);
+		addActionItem.getAction().setEnabled(!full);
 	}
 
 	/**
@@ -364,5 +378,14 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 		ECPObservableValue getModelValue() {
 			return modelValue;
 		}
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		model.removeListChangeListener(changeListener);
+		toolbar.removeDisposeListener(disposeListener);
+		toolBarManager.remove(addActionItem);
+		addActionItem.dispose();
 	}
 }

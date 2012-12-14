@@ -71,6 +71,14 @@ public class LinkWidget extends ECPWidget {
 
 	private ShortLabelProvider shortLabelProvider;
 
+	private ModelElementChangeListener modelElementChangeListener;
+
+	private ImageHyperlink deleteLink;
+
+	private MEHyperLinkDeleteAdapter linkAdapter;
+
+	private IDecoratorManager decoratorManager;
+
 	/**
 	 * @param dbc
 	 */
@@ -101,21 +109,23 @@ public class LinkWidget extends ECPWidget {
 	}
 
 	private void createDeleteAction(FormToolkit toolkit) {
-		ImageHyperlink deleteLink = toolkit.createImageHyperlink(linkComposite, SWT.NONE);
+		deleteLink = toolkit.createImageHyperlink(linkComposite, SWT.NONE);
 		Image deleteImage = null;
 
 		deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 
 		deleteLink.setImage(deleteImage);
 
-		deleteLink.addMouseListener(new MEHyperLinkDeleteAdapter(modelElement, eReference, linkModelElement, context));
+		linkAdapter = new MEHyperLinkDeleteAdapter(modelElement, eReference, linkModelElement, context);
+		deleteLink.addMouseListener(linkAdapter);
 	}
 
 	private void createHyperlink(FormToolkit toolkit, final Composite parent) {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-		IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+		decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+
 		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
 		labelProviderListener = new ILabelProviderListener() {
 			public void labelProviderChanged(LabelProviderChangedEvent event) {
@@ -123,7 +133,7 @@ public class LinkWidget extends ECPWidget {
 			}
 		};
 		labelProvider.addListener(labelProviderListener);
-		ModelElementChangeListener modelElementChangeListener = new ModelElementChangeListener(linkModelElement) {
+		modelElementChangeListener = new ModelElementChangeListener(linkModelElement) {
 
 			@Override
 			public void onChange(Notification notification) {
@@ -183,5 +193,8 @@ public class LinkWidget extends ECPWidget {
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		labelProvider.dispose();
+		modelElementChangeListener.remove();
+		deleteLink.removeMouseListener(linkAdapter);
+		decoratorManager.dispose();
 	}
 }
