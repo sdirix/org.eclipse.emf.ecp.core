@@ -187,7 +187,6 @@ public class MELinkControl extends AbstractMEControl {
 	 * @return
 	 */
 	private ECPWidget getWidget(EObject opposite) {
-
 		return new LinkWidget(getModelElement(), opposite, (EReference) getStructuralFeature(), getContext());
 	}
 
@@ -210,7 +209,9 @@ public class MELinkControl extends AbstractMEControl {
 		}
 		labelWidgetImage.dispose();
 		modelElementChangeListener.remove();
-		widget.dispose();
+		if (widget != null) {
+			widget.dispose();
+		}
 	}
 
 }

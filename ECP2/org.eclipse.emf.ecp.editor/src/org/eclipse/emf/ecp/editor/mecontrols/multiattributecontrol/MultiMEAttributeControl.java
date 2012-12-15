@@ -82,6 +82,8 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 
 	private ToolBarManager toolBarManager;
 
+	private Cursor handCursor;
+
 	@Override
 	protected Class<EAttribute> getEStructuralFeatureType() {
 		return EAttribute.class;
@@ -133,6 +135,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 
 		model = EMFEditObservables.observeList(getContext().getEditingDomain(), getModelElement(),
 			getStructuralFeature());
+
 		changeListener = new IListChangeListener() {
 
 			public void handleListChange(ListChangeEvent event) {
@@ -147,6 +150,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 				}
 			}
 		};
+		model.addListChangeListener(changeListener);
 		for (int i = 0; i < model.size(); i++) {
 			addControl(sectionComposite, style, model, i);
 		}
@@ -166,17 +170,16 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 	private void createSectionToolbar(Section section, FormToolkit toolkit) {
 		toolBarManager = new ToolBarManager(SWT.FLAT);
 		toolbar = toolBarManager.createControl(section);
-		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+		handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
 		toolbar.setCursor(handCursor);
 		// Cursor needs to be explicitly disposed
-		disposeListener = new DisposeListener() {
+		toolbar.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				if (!handCursor.isDisposed()) {
 					handCursor.dispose();
 				}
 			}
-		};
-		toolbar.addDisposeListener(disposeListener);
+		});
 
 		AddAction addAction = new AddAction();
 		addAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
@@ -378,14 +381,27 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 		ECPObservableValue getModelValue() {
 			return modelValue;
 		}
+
+		public void dispose() {
+			composite.dispose();
+			controlDecoration.dispose();
+			modelValue.dispose();
+		}
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
 		model.removeListChangeListener(changeListener);
-		toolbar.removeDisposeListener(disposeListener);
+		model.dispose();
+
 		toolBarManager.remove(addActionItem);
 		addActionItem.dispose();
+		for (AttributeControlHelper helper : controlHelpers) {
+			helper.dispose();
+		}
+		section.dispose();
+		handCursor.dispose();
+
 	}
 }

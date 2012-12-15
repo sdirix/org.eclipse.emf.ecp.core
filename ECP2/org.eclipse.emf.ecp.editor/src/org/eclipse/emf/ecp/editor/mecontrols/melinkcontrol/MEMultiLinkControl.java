@@ -15,9 +15,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 
 import org.eclipse.jface.action.ToolBarManager;
@@ -54,71 +52,78 @@ public class MEMultiLinkControl extends AbstractMEControl {
 	 * 
 	 * @author helming
 	 */
-	private final class RebuildLinksCommand extends ECPCommand {
-		private final int sizeLimit;
-
-		public RebuildLinksCommand(EObject modelElement, EditingDomain domain, int sizeLimit) {
-			super(modelElement, domain);
-			this.sizeLimit = sizeLimit;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected void doRun() {
-			Object objectList = getModelElement().eGet(getStructuralFeature());
-			if (objectList instanceof EList) {
-				EList<EObject> eList = (EList<EObject>) objectList;
-				if (eList.size() <= sizeLimit) {
-					linkArea = getToolkit().createComposite(composite, style);
-					linkArea.setLayout(tableLayout);
-					linkArea.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));// GridData.FILL_HORIZONTAL
-				} else {
-
-					scrollPane = new ScrolledComposite(composite, SWT.V_SCROLL | SWT.H_SCROLL);
-					scrollPane.setBackgroundMode(SWT.INHERIT_FORCE);
-					scrollClient = new Composite(scrollPane, style);
-					scrollPane.setContent(scrollClient);
-					getToolkit().getColors().createColor("white", 255, 255, 255);
-					scrollClient.setBackground(getToolkit().getColors().getColor("white"));
-					scrollPane.setExpandVertical(true);
-					scrollPane.setExpandHorizontal(true);
-					RowLayout layout = new RowLayout(SWT.VERTICAL);
-					layout.wrap = true;
-					scrollClient.setLayout(layout);
-					GridData spec = new GridData(400, 150);
-					spec.horizontalAlignment = GridData.FILL;
-					spec.grabExcessHorizontalSpace = true;
-					scrollPane.setLayoutData(spec);
-					scrollPane.setMinSize(150, 150);
-				}
-
-				for (EObject object : eList) {
-
-					MELinkControlFactory controlFactory = new MELinkControlFactory();
-					MELinkControl meControl = controlFactory.createMELinkControl(getItemPropertyDescriptor(), object,
-						getModelElement(), getContext());
-					meControl.createControl(eList.size() <= sizeLimit ? linkArea : scrollClient, style,
-						getItemPropertyDescriptor(), object, getModelElement(), getToolkit(), getContext());
-					linkControls.add(meControl);
-
-				}
-				if (scrollPane != null && !scrollPane.isDisposed()) {
-					scrollPane.setMinSize(scrollClient.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-					scrollClient.layout();
-					scrollPane.layout();
-				} else {
-					linkArea.layout();
-				}
-				if (eList.size() > 0) {
-					section.setExpanded(false);
-					section.setExpanded(true);
-				}
-			}
-		}
-	}
+	// private final class RebuildLinksCommand extends ChangeCommand {
+	// private final int sizeLimit;
+	//
+	// public RebuildLinksCommand(EObject modelElement, int sizeLimit) {
+	// super(modelElement);
+	// this.sizeLimit = sizeLimit;
+	// }
+	//
+	// private void doRun() {
+	// Object objectList = getModelElement().eGet(getStructuralFeature());
+	// if (objectList instanceof EList) {
+	// EList<EObject> eList = (EList<EObject>) objectList;
+	// if (eList.size() <= sizeLimit) {
+	// linkArea = getToolkit().createComposite(composite, style);
+	// linkArea.setLayout(tableLayout);
+	// linkArea.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));// GridData.FILL_HORIZONTAL
+	// } else {
+	//
+	// scrollPane = new ScrolledComposite(composite, SWT.V_SCROLL | SWT.H_SCROLL);
+	// scrollPane.setBackgroundMode(SWT.INHERIT_FORCE);
+	// scrollClient = new Composite(scrollPane, style);
+	// scrollPane.setContent(scrollClient);
+	// getToolkit().getColors().createColor("white", 255, 255, 255);
+	// scrollClient.setBackground(getToolkit().getColors().getColor("white"));
+	// scrollPane.setExpandVertical(true);
+	// scrollPane.setExpandHorizontal(true);
+	// RowLayout layout = new RowLayout(SWT.VERTICAL);
+	// layout.wrap = true;
+	// scrollClient.setLayout(layout);
+	// GridData spec = new GridData(400, 150);
+	// spec.horizontalAlignment = GridData.FILL;
+	// spec.grabExcessHorizontalSpace = true;
+	// scrollPane.setLayoutData(spec);
+	// scrollPane.setMinSize(150, 150);
+	// }
+	//
+	// for (EObject object : eList) {
+	//
+	// MELinkControlFactory controlFactory = MELinkControlFactory.getInstance();
+	// MELinkControl meControl = controlFactory.createMELinkControl(getItemPropertyDescriptor(), object,
+	// getModelElement(), getContext());
+	// meControl.createControl(eList.size() <= sizeLimit ? linkArea : scrollClient, style,
+	// getItemPropertyDescriptor(), object, getModelElement(), getToolkit(), getContext());
+	// linkControls.add(meControl);
+	//
+	// }
+	// if (scrollPane != null && !scrollPane.isDisposed()) {
+	// scrollPane.setMinSize(scrollClient.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	// scrollClient.layout();
+	// scrollPane.layout();
+	// } else {
+	// linkArea.layout();
+	// }
+	// if (eList.size() > 0) {
+	// section.setExpanded(false);
+	// section.setExpanded(true);
+	// }
+	// }
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// * @see org.eclipse.emf.edit.command.ChangeCommand#doExecute()
+	// */
+	// @Override
+	// protected void doExecute() {
+	// doRun();
+	// }
+	// }
 
 	// private EReference eReference;
-
+	final int sizeLimit = 5;
 	private int style;
 
 	private ScrolledComposite scrollPane;
@@ -143,10 +148,66 @@ public class MEMultiLinkControl extends AbstractMEControl {
 
 	private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
 
+	private Cursor handCursor;
+
+	// private RebuildLinksCommand rebuildLinksCommand;
+
+	private void doRun() {
+		Object objectList = getModelElement().eGet(getStructuralFeature());
+		if (objectList instanceof EList) {
+			EList<EObject> eList = (EList<EObject>) objectList;
+			if (eList.size() <= sizeLimit) {
+				linkArea = getToolkit().createComposite(composite, style);
+				linkArea.setLayout(tableLayout);
+				linkArea.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));// GridData.FILL_HORIZONTAL
+			} else {
+
+				scrollPane = new ScrolledComposite(composite, SWT.V_SCROLL | SWT.H_SCROLL);
+				scrollPane.setBackgroundMode(SWT.INHERIT_FORCE);
+				scrollClient = new Composite(scrollPane, style);
+				scrollPane.setContent(scrollClient);
+				getToolkit().getColors().createColor("white", 255, 255, 255);
+				scrollClient.setBackground(getToolkit().getColors().getColor("white"));
+				scrollPane.setExpandVertical(true);
+				scrollPane.setExpandHorizontal(true);
+				RowLayout layout = new RowLayout(SWT.VERTICAL);
+				layout.wrap = true;
+				scrollClient.setLayout(layout);
+				GridData spec = new GridData(400, 150);
+				spec.horizontalAlignment = GridData.FILL;
+				spec.grabExcessHorizontalSpace = true;
+				scrollPane.setLayoutData(spec);
+				scrollPane.setMinSize(150, 150);
+			}
+
+			for (EObject object : eList) {
+
+				MELinkControlFactory controlFactory = MELinkControlFactory.getInstance();
+				MELinkControl meControl = controlFactory.createMELinkControl(getItemPropertyDescriptor(), object,
+					getModelElement(), getContext());
+				meControl.createControl(eList.size() <= sizeLimit ? linkArea : scrollClient, style,
+					getItemPropertyDescriptor(), object, getModelElement(), getToolkit(), getContext());
+				linkControls.add(meControl);
+
+			}
+			if (scrollPane != null && !scrollPane.isDisposed()) {
+				scrollPane.setMinSize(scrollClient.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				scrollClient.layout();
+				scrollPane.layout();
+			} else {
+				linkArea.layout();
+			}
+			if (eList.size() > 0) {
+				section.setExpanded(false);
+				section.setExpanded(true);
+			}
+		}
+	}
+
 	private void createSectionToolbar(Section section, FormToolkit toolkit) {
 		ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
 		ToolBar toolbar = toolBarManager.createControl(section);
-		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+		handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
 		toolbar.setCursor(handCursor);
 		// Cursor needs to be explicitly disposed
 		toolbar.addDisposeListener(new DisposeListener() {
@@ -226,8 +287,15 @@ public class MEMultiLinkControl extends AbstractMEControl {
 			linkArea.dispose();
 		}
 		linkControls.clear();
+		doRun();
 		// JH: TransactionUtil.getEditingDomain(modelElement);
-		new RebuildLinksCommand(getModelElement(), getContext().getEditingDomain(), sizeLimit).run(false);
+		// if (rebuildLinksCommand != null) {
+		// rebuildLinksCommand.dispose();
+		// rebuildLinksCommand = null;
+		// }
+
+		// getContext().getEditingDomain().getCommandStack()
+		// .execute(new RebuildLinksCommand(getModelElement(), sizeLimit));
 	}
 
 	/**
@@ -242,6 +310,12 @@ public class MEMultiLinkControl extends AbstractMEControl {
 		if (sectionDropTarget != null) {
 			sectionDropTarget.dispose();
 		}
+		handCursor.dispose();
+		// if (rebuildLinksCommand != null) {
+		// rebuildLinksCommand.dispose();
+		// rebuildLinksCommand = null;
+		// }
+		section.dispose();
 	}
 
 	// @Override

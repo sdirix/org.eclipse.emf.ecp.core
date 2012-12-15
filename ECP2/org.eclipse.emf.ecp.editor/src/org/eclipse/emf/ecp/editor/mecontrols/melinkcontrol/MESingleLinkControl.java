@@ -139,7 +139,7 @@ public class MESingleLinkControl extends AbstractMEControl {
 
 		EObject opposite = (EObject) getModelElement().eGet(getStructuralFeature());
 		if (opposite != null) {
-			MELinkControlFactory meLinkControlFactory = new MELinkControlFactory();
+			MELinkControlFactory meLinkControlFactory = MELinkControlFactory.getInstance();
 			meControl = meLinkControlFactory.createMELinkControl(getItemPropertyDescriptor(), opposite,
 				getModelElement(), getContext());
 			meControl.createControl(linkArea, style, getItemPropertyDescriptor(), opposite, getModelElement(),

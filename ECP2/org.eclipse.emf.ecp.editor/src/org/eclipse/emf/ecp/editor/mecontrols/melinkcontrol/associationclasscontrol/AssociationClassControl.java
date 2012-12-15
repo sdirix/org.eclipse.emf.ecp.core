@@ -107,7 +107,7 @@ public class AssociationClassControl extends AbstractMEControl {
 				scrollPane.setMinSize(150, 150);
 			}
 			for (Object association : associations) {
-				MELinkControlFactory controlFactory = new MELinkControlFactory();
+				MELinkControlFactory controlFactory = MELinkControlFactory.getInstance();
 				MELinkControl meControl = controlFactory.createMELinkControl(getItemPropertyDescriptor(),
 					(EObject) association, getModelElement(), getContext());
 				meControl.createControl(associations.size() <= sizeLimit ? linkArea : scrollClient, style,

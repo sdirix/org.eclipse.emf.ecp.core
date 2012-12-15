@@ -205,6 +205,8 @@ public class MEEditorInput implements IEditorInput {
 //		adapterFactoryLabelProvider.dispose();
 //		composedAdapterFactory.dispose();
 //		decoratorManager.dispose();
+		modelElementContext.dispose();
+		modelElementContext=null;
 	}
 
 	public ImageDescriptor getImageDescriptor() {

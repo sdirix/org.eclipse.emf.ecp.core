@@ -10,22 +10,33 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 public class MELinkControlFactory {
+
+	private static MELinkControlFactory INSTANCE;
+
+	public static MELinkControlFactory getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new MELinkControlFactory();
+		}
+		return INSTANCE;
+	}
+
 	private HashMap<Class<?>, ArrayList<MELinkControl>> controlRegistry;
 
-	public MELinkControlFactory() {
+	private MELinkControlFactory() {
 		controlRegistry = new HashMap<Class<?>, ArrayList<MELinkControl>>();
 		initializeMEControls();
 	}

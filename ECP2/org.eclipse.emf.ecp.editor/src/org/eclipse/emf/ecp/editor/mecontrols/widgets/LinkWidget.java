@@ -79,6 +79,8 @@ public class LinkWidget extends ECPWidget {
 
 	private IDecoratorManager decoratorManager;
 
+	private IHyperlinkListener listener;
+
 	/**
 	 * @param dbc
 	 */
@@ -163,8 +165,7 @@ public class LinkWidget extends ECPWidget {
 		// ModelElementClassTooltip.enableFor(imageHyperlink);
 		hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(linkModelElement), SWT.NONE);
 		hyperlink.setToolTipText(shortLabelProvider.getText(linkModelElement));
-		IHyperlinkListener listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(),
-			context);
+		listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(), context);
 		hyperlink.addHyperlinkListener(listener);
 		imageHyperlink.addHyperlinkListener(listener);
 	}
@@ -194,7 +195,9 @@ public class LinkWidget extends ECPWidget {
 		shortLabelProvider.dispose();
 		labelProvider.dispose();
 		modelElementChangeListener.remove();
-		deleteLink.removeMouseListener(linkAdapter);
+		deleteLink.dispose();
+		hyperlink.removeHyperlinkListener(listener);
+		hyperlink.dispose();
 		decoratorManager.dispose();
 	}
 }
