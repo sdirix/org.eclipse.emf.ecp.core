@@ -11,17 +11,17 @@
 package org.eclipse.emf.ecp.ui.model;
 
 // TODO: Revise
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
 /**
  * @author Hodaie ContentProvider for TreeViewer which is shown on ModelTreePage
@@ -38,9 +38,10 @@ public class ModelTreeContentProvider extends AdapterFactoryContentProvider {
 	/**
 	 * Constructor.
 	 */
-	public ModelTreeContentProvider(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
-		Collection<EPackage> projectFilteredEPackages, Collection<EClass> projectFilteredEClasss) {
-		super(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+	public ModelTreeContentProvider(AdapterFactory adapterFactory, Collection<EPackage> ePackages,
+		Collection<EPackage> unsupportedEPackages, Collection<EPackage> projectFilteredEPackages,
+		Collection<EClass> projectFilteredEClasss) {
+		super(adapterFactory);
 		modelElementClasses = new HashSet<EClass>();
 		rootPackages = new HashSet<EPackage>();
 		for (EPackage ePackage : ePackages) {

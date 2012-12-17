@@ -59,4 +59,13 @@ public class WizardUICallback<T extends ICompositeProvider> extends AbstractUICa
 		MessageDialog.openError(shell, title, message);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.AbstractUICallback#dispose()
+	 */
+	@Override
+	public void dispose() {
+		wizard.getUIProvider().dispose();
+	}
+
 }

@@ -136,4 +136,13 @@ public class SelectModelElementComposite extends AbstractFilteredSelectionCompos
 		return lv;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#dispose()
+	 */
+	public void dispose() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

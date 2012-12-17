@@ -244,4 +244,13 @@ public class AddRepositoryComposite implements ICompositeProvider {
 	public void setListener(AddRepositoryChangeListener listener) {
 		this.listener = listener;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#dispose()
+	 */
+	public void dispose() {
+		// TODO Auto-generated method stub
+
+	}
 }

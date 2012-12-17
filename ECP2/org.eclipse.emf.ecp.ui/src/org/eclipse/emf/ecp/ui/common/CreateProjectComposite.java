@@ -158,4 +158,13 @@ public class CreateProjectComposite implements ICompositeProvider {
 	public void setListener(CreateProjectChangeListener listener) {
 		this.listener = listener;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#dispose()
+	 */
+	public void dispose() {
+		// TODO Auto-generated method stub
+
+	}
 }

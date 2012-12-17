@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -45,6 +47,10 @@ public class MESingleLinkControl extends AbstractMEControl {
 	private Label labelWidget;
 
 	private ModelElementChangeListener modelElementChangeListener;
+
+	private ComposedAdapterFactory composedAdapterFactory;
+
+	protected AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
 	/**
 	 * Standard Constructor.
@@ -76,6 +82,9 @@ public class MESingleLinkControl extends AbstractMEControl {
 		linkArea.setLayout(new FillLayout());
 		updateLink(linkArea, composite);
 
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+
 		for (Action action : initActions()) {
 			createButtonForAction(action, composite);
 		}
@@ -102,10 +111,10 @@ public class MESingleLinkControl extends AbstractMEControl {
 	protected List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
 		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell());
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
 		result.add(addAction);
 		ReferenceAction newAction = new NewReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell());
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
 		result.add(newAction);
 		return result;
 	}
@@ -162,7 +171,8 @@ public class MESingleLinkControl extends AbstractMEControl {
 		if (meControl != null) {
 			meControl.dispose();
 		}
-
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 	/*

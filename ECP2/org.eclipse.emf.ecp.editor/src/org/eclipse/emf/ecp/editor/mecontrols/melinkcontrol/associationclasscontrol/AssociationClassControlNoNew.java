@@ -48,7 +48,7 @@ public class AssociationClassControlNoNew extends MESingleLinkControl {
 	protected List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
 		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell());
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
 		result.add(addAction);
 		return result;
 	}

@@ -57,9 +57,11 @@ public class SearchModelElementHandler extends AbstractHandler {
 			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "Information",
 				"You must first select the Project.");
 		} else {
+			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 			ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event),
-				new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE)));
+				adapterFactoryLabelProvider);
 			dialog.setElements(eObjects.toArray());
 			dialog.setMultipleSelection(false);
 			dialog.setMessage("Enter model element name prefix or pattern (e.g. *Trun?)");
@@ -72,6 +74,8 @@ public class SearchModelElementHandler extends AbstractHandler {
 						"org.eclipse.emf.ecp.ui.commands.SearchModelElementHandler", project);
 				}
 			}
+			adapterFactoryLabelProvider.dispose();
+			composedAdapterFactory.dispose();
 		}
 
 		return null;

@@ -3,7 +3,6 @@
  */
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.ui.util.Messages;
@@ -43,6 +42,10 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 
 	private Collection<EObject> modelElements;
 
+	protected ComposedAdapterFactory composedAdapterFactory;
+
+	protected AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+
 	/**
 	 * Constructor which calls another constructor with parameter false for multiple selection of elements.
 	 */
@@ -79,11 +82,14 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 
 		super(shell, multiSelection);
 
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		if (modelElements != null) {
 			this.modelElements = modelElements;
 		}
 
-		setLabelProvider(createLabelProvider());
+		setLabelProvider(adapterFactoryLabelProvider);
+
 		setListLabelProvider(getLabelProvider());
 		setDetailsLabelProvider(getLabelProvider());
 
@@ -91,41 +97,6 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 		setTitle(DIALOG_TITLE);
 		setMessage(DIALOG_MESSAGE);
 		this.setInitialPattern(DIALOG_INITIAL_PATTERN);
-	}
-
-	/**
-	 * Constructor which calls another constructor and sets the model elements collection of the dialog only to a
-	 * specified class type.
-	 * 
-	 * @param classType
-	 *            which should be shown in the dialog
-	 * @param multiSelection
-	 *            indicates whether dialog allows to select more than one item
-	 */
-	public ModelelementSelectionDialog(Collection<EObject> modelElements, EClass classType, boolean multiSelection,
-		Shell shell) {
-		this(multiSelection, shell);
-		this.modelElements = modelElements;
-	}
-
-	/**
-	 * Constructor which calls another constructor.
-	 * 
-	 * @param classType
-	 *            of the model elements which should be shown in the dialog
-	 */
-	public ModelelementSelectionDialog(Collection<EObject> modelElements, EClass classType, Shell shell) {
-		this(modelElements, classType, false, shell);
-	}
-
-	/**
-	 * Creates a new label provider to be used for this dialog.
-	 * 
-	 * @return a label provider for the dialog
-	 */
-	protected ILabelProvider createLabelProvider() {
-		return new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
 	}
 
 	/**
@@ -304,6 +275,13 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 			return matches(label);
 		}
 
+	}
+
+	@Override
+	public boolean close() {
+		composedAdapterFactory.dispose();
+		adapterFactoryLabelProvider.dispose();
+		return super.close();
 	}
 
 }

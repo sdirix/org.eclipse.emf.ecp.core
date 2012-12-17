@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
 import org.eclipse.emf.ecp.ui.model.ModelClassFilter;
 import org.eclipse.emf.ecp.ui.model.ModelTreeContentProvider;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -40,6 +41,9 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	private final Collection<EPackage> filteredEPackages;
 
 	private final Collection<EClass> filteredEClasses;
+	private ComposedAdapterFactory composedAdapterFactory;
+	private MEClassLabelProvider meClassLabelProvider;
+	private ModelTreeContentProvider modelTreeContentProvider;
 
 	public AbstractEClassTreeSelectionComposite(Collection<EPackage> ePackages,
 		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
@@ -49,6 +53,10 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 		this.unsupportedEPackages = unsupportedEPackages;
 		this.filteredEPackages = filteredEPackages;
 		this.filteredEClasses = filteredEClasses;
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		meClassLabelProvider = new MEClassLabelProvider(composedAdapterFactory);
+		modelTreeContentProvider = new ModelTreeContentProvider(composedAdapterFactory, ePackages,
+			unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
 	/**
@@ -60,11 +68,11 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	}
 
 	private ILabelProvider getLabelProvider() {
-		return new MEClassLabelProvider();
+		return meClassLabelProvider;
 	}
 
 	private ITreeContentProvider getContentProvider() {
-		return new ModelTreeContentProvider(ePackages, unsupportedEPackages, filteredEPackages, filteredEClasses);
+		return modelTreeContentProvider;
 	}
 
 	private Object getInput() {
@@ -108,5 +116,11 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	@Override
 	protected void collapsViewer() {
 		getViewer().collapseAll();
+	}
+
+	public void dispose() {
+		composedAdapterFactory.dispose();
+		meClassLabelProvider.dispose();
+		modelTreeContentProvider.dispose();
 	}
 }

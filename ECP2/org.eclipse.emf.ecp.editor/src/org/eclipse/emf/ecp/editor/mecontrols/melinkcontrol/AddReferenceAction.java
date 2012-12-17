@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.edit.command.ChangeCommand;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -162,7 +161,7 @@ public class AddReferenceAction extends ReferenceAction {
 	 * @param shell the {@link Shell} to create the dialog in
 	 */
 	public AddReferenceAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-		EditorModelelementContext context, Shell shell) {
+		EditorModelelementContext context, Shell shell, AdapterFactoryLabelProvider labelProvider) {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.context = context;
@@ -173,8 +172,7 @@ public class AddReferenceAction extends ReferenceAction {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(obj);
+		Image image = labelProvider.getImage(obj);
 		String overlayString = "icons/link_overlay.png";
 		if (eReference.isContainment()) {
 			overlayString = "icons/containment_overlay.png";

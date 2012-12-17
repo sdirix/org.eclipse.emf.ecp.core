@@ -51,6 +51,10 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.forms.widgets.Section;
 
 public class ViewerMEControl extends AbstractMEControl {
+	private ComposedAdapterFactory adapterFactory;
+	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+	private AdapterFactoryContentProvider contentProvider;
+
 	@Override
 	public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
 		Object feature = itemPropertyDescriptor.getFeature(modelElement);
@@ -81,10 +85,10 @@ public class ViewerMEControl extends AbstractMEControl {
 			Tree control = viewer.getTree();
 			control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-			ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+			adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-			AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-			AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory) {
+			adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+			contentProvider = new AdapterFactoryContentProvider(adapterFactory) {
 				@SuppressWarnings("unchecked")
 				public Object[] getElements(Object object) {
 					// force this content adapter to listen to notifications on
@@ -168,9 +172,9 @@ public class ViewerMEControl extends AbstractMEControl {
 		});
 
 		tbm.add(new AddReferenceAction(getModelElement(), ref, getItemPropertyDescriptor(), getContext(), this
-			.getShell()));
+			.getShell(),adapterFactoryLabelProvider));
 		tbm.add(new NewReferenceAction(getModelElement(), ref, getItemPropertyDescriptor(), getContext(), this
-			.getShell()));
+			.getShell(),adapterFactoryLabelProvider));
 
 		tbm.add(new Action("Up", Activator.getImageDescriptor("icons/arrow_up.png")) {
 			@Override
@@ -237,5 +241,13 @@ public class ViewerMEControl extends AbstractMEControl {
 	@Override
 	protected boolean isMulti() {
 		return true;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		adapterFactory.dispose();
+		adapterFactoryLabelProvider.dispose();
+		contentProvider.dispose();
 	}
 }

@@ -41,4 +41,14 @@ public class DialogUICallback<T extends ICompositeProvider> extends AbstractUICa
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.AbstractUICallback#dispose()
+	 */
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

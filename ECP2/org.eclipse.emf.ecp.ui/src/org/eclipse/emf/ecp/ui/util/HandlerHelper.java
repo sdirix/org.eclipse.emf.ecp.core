@@ -158,8 +158,10 @@ public class HandlerHelper {
 				}
 			}
 		}
+
 		adapterFactoryLabelProvider.dispose();
 		composedAdapterFactory.dispose();
+		composite.dispose();
 	}
 
 	/**
@@ -184,15 +186,15 @@ public class HandlerHelper {
 				// 1.create ME
 				EPackage ePackage = newMEType.getEPackage();
 				final EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
-
-				ecpProject.getEditingDomain().getCommandStack().execute(new ChangeCommand(newMEInstance) {
+				ChangeCommand changeCommand = new ChangeCommand(newMEInstance) {
 
 					@Override
 					protected void doExecute() {
 						ecpProject.getElements().add(newMEInstance);
 					}
-				});
-
+				};
+				ecpProject.getEditingDomain().getCommandStack().execute(changeCommand);
+				changeCommand.dispose();
 				if (open) {
 					// 3.open the newly created ME
 					ActionHelper.openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);

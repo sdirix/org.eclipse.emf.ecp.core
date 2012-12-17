@@ -41,137 +41,123 @@ import java.util.Set;
  * @author Michael Haeger
  * @author Eugen Neufeld
  */
-public class NewAssociationClassAction extends Action
-{
+public class NewAssociationClassAction extends Action {
 
-  private static final String DIALOG_MESSAGE = "Select a model element type to be created:";
+	private static final String DIALOG_MESSAGE = "Select a model element type to be created:";
 
-  private EReference eReference;
+	private EReference eReference;
 
-  private EObject modelElement;
+	private EObject modelElement;
 
-  private final EditorModelelementContext context;
+	private final EditorModelelementContext context;
 
-  /**
-   * The create command.
-   * 
-   * @author Michael Haeger
-   */
-  private final class NewAssociationClassCommand extends ECPCommand
-  {
+	/**
+	 * The create command.
+	 * 
+	 * @author Michael Haeger
+	 */
+	private final class NewAssociationClassCommand extends ECPCommand {
 
-    public NewAssociationClassCommand(EObject eObject, EditingDomain domain)
-    {
-      super(eObject, domain);
-    }
+		public NewAssociationClassCommand(EObject eObject, EditingDomain domain) {
+			super(eObject, domain);
+		}
 
-    @SuppressWarnings({ "unchecked" })
-    @Override
-    protected void doRun()
-    {
-      EClass relatedModelElementClass = null;
-      Set<EClass> subclasses = context.getMetaModelElementContext().getAllSubEClasses(modelElement.eClass(), false);
-      // select object type to create
-      if (subclasses.size() == 1)
-      {
-        relatedModelElementClass = subclasses.iterator().next();
-      }
-      else
-      {
-        ElementListSelectionDialog dlg = new ElementListSelectionDialog(PlatformUI.getWorkbench()
-            .getActiveWorkbenchWindow().getShell(), new MEClassLabelProvider());
-        dlg.setMessage(DIALOG_MESSAGE);
-        dlg.setElements(subclasses.toArray());
-        dlg.setTitle("Select Element type");
-        dlg.setBlockOnOpen(true);
-        if (dlg.open() != Window.OK)
-        {
-          return;
-        }
-        Object result = dlg.getFirstResult();
-        if (result instanceof EClass)
-        {
-          relatedModelElementClass = (EClass)result;
-        }
-      }
-      // create the other side of the association
-      EPackage ePackage = relatedModelElementClass.getEPackage();
-      final EObject relatedModelElement = ePackage.getEFactoryInstance().create(relatedModelElementClass);
-      if (!eReference.isContainer())
-      {
-        EObject parent = modelElement.eContainer();
-        while (!(parent == null) && relatedModelElement.eContainer() == null)
-        {
-          EReference reference = context.getMetaModelElementContext().getPossibleContainingReference(
-              relatedModelElement, parent);
-          if (reference != null && reference.isMany())
-          {
-            Object object = parent.eGet(reference);
-            EList<EObject> eList = (EList<EObject>)object;
-            eList.add(relatedModelElement);
-          }
-          parent = parent.eContainer();
-        }
-        if (relatedModelElement.eContainer() == null)
-        {
-          throw new RuntimeException("No matching container for model element found");
-        }
-      }
-      // create the association
-      AssociationClassHelper.createAssociation(eReference, modelElement, relatedModelElement,
-          context.getMetaModelElementContext());
-      context.openEditor(relatedModelElement, this.getClass().getName());
-    }
-  }
+		@SuppressWarnings({ "unchecked" })
+		@Override
+		protected void doRun() {
+			EClass relatedModelElementClass = null;
+			Set<EClass> subclasses = context.getMetaModelElementContext().getAllSubEClasses(modelElement.eClass(),
+				false);
+			// select object type to create
+			if (subclasses.size() == 1) {
+				relatedModelElementClass = subclasses.iterator().next();
+			} else {
+				ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+				ElementListSelectionDialog dlg = new ElementListSelectionDialog(PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getShell(), new MEClassLabelProvider(composedAdapterFactory));
+				dlg.setMessage(DIALOG_MESSAGE);
+				dlg.setElements(subclasses.toArray());
+				dlg.setTitle("Select Element type");
+				dlg.setBlockOnOpen(true);
+				if (dlg.open() != Window.OK) {
+					composedAdapterFactory.dispose();
+					return;
+				}
+				Object result = dlg.getFirstResult();
+				if (result instanceof EClass) {
+					relatedModelElementClass = (EClass) result;
+				}
+				composedAdapterFactory.dispose();
+			}
+			// create the other side of the association
+			EPackage ePackage = relatedModelElementClass.getEPackage();
+			final EObject relatedModelElement = ePackage.getEFactoryInstance().create(relatedModelElementClass);
+			if (!eReference.isContainer()) {
+				EObject parent = modelElement.eContainer();
+				while (!(parent == null) && relatedModelElement.eContainer() == null) {
+					EReference reference = context.getMetaModelElementContext().getPossibleContainingReference(
+						relatedModelElement, parent);
+					if (reference != null && reference.isMany()) {
+						Object object = parent.eGet(reference);
+						EList<EObject> eList = (EList<EObject>) object;
+						eList.add(relatedModelElement);
+					}
+					parent = parent.eContainer();
+				}
+				if (relatedModelElement.eContainer() == null) {
+					throw new RuntimeException("No matching container for model element found");
+				}
+			}
+			// create the association
+			AssociationClassHelper.createAssociation(eReference, modelElement, relatedModelElement,
+				context.getMetaModelElementContext());
+			context.openEditor(relatedModelElement, this.getClass().getName());
+		}
+	}
 
-  /**
-   * Default constructor.
-   * 
-   * @param modelElement
-   *          the object
-   * @param eReference
-   *          the reference to the AssociationClassElement
-   * @param descriptor
-   *          the descriptor used to generate display content
-   * @param context
-   *          model element context
-   */
-  public NewAssociationClassAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-      EditorModelelementContext context)
-  {
-    this.modelElement = modelElement;
-    this.eReference = eReference;
-    this.context = context;
-    Object obj = null;
-    if (!eReference.getEReferenceType().isAbstract())
-    {
-      obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance().create(eReference.getEReferenceType());
-    }
-    Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-        ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(obj);
-    ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");
-    OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
-        OverlayImageDescriptor.LOWER_RIGHT);
-    setImageDescriptor(imageDescriptor);
-    String attribute = descriptor.getDisplayName(eReference);
-    // make singular attribute labels
-    if (attribute.endsWith("ies"))
-    {
-      attribute = attribute.substring(0, attribute.length() - 3) + "y";
-    }
-    else if (attribute.endsWith("s"))
-    {
-      attribute = attribute.substring(0, attribute.length() - 1);
-    }
-    setToolTipText("Create and link new " + attribute);
-  }
+	/**
+	 * Default constructor.
+	 * 
+	 * @param modelElement
+	 *            the object
+	 * @param eReference
+	 *            the reference to the AssociationClassElement
+	 * @param descriptor
+	 *            the descriptor used to generate display content
+	 * @param context
+	 *            model element context
+	 */
+	public NewAssociationClassAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
+		EditorModelelementContext context, AdapterFactoryLabelProvider labelProvider) {
+		this.modelElement = modelElement;
+		this.eReference = eReference;
+		this.context = context;
+		Object obj = null;
+		if (!eReference.getEReferenceType().isAbstract()) {
+			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
+				.create(eReference.getEReferenceType());
+		}
+		Image image = labelProvider.getImage(obj);
+		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");
+		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
+			OverlayImageDescriptor.LOWER_RIGHT);
+		setImageDescriptor(imageDescriptor);
+		String attribute = descriptor.getDisplayName(eReference);
+		// make singular attribute labels
+		if (attribute.endsWith("ies")) {
+			attribute = attribute.substring(0, attribute.length() - 3) + "y";
+		} else if (attribute.endsWith("s")) {
+			attribute = attribute.substring(0, attribute.length() - 1);
+		}
+		setToolTipText("Create and link new " + attribute);
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void run()
-  {
-    new NewAssociationClassCommand(modelElement, context.getEditingDomain()).run(true);
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void run() {
+		new NewAssociationClassCommand(modelElement, context.getEditingDomain()).run(true);
+	}
 }

@@ -16,7 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
@@ -149,6 +151,8 @@ public class MEMultiLinkControl extends AbstractMEControl {
 	private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
 
 	private Cursor handCursor;
+	private ComposedAdapterFactory composedAdapterFactory;
+	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
 	// private RebuildLinksCommand rebuildLinksCommand;
 
@@ -219,9 +223,9 @@ public class MEMultiLinkControl extends AbstractMEControl {
 		});
 
 		toolBarManager.add(new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell()));
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider));
 		toolBarManager.add(new NewReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell()));
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider));
 		toolBarManager.update(true);
 		section.setTextClient(toolbar);
 	}
@@ -246,6 +250,8 @@ public class MEMultiLinkControl extends AbstractMEControl {
 			}
 
 		};
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 
 		this.style = style;
 		tableLayout = new GridLayout(1, false);
@@ -316,6 +322,8 @@ public class MEMultiLinkControl extends AbstractMEControl {
 		// rebuildLinksCommand = null;
 		// }
 		section.dispose();
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 	// @Override

@@ -12,8 +12,6 @@ package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
@@ -47,6 +45,10 @@ public class MESuggestedSelectionDialog extends ModelelementSelectionDialog {
 	private Label label;
 	private boolean warning;
 
+	private RelevanceWrappedLabelProvider relevanceWrappedLabelProvider;
+
+	private RelevanceDetailsLabelProvider relevanceDetailsLabelProvider;
+
 	/**
 	 * The constructor.
 	 * 
@@ -77,9 +79,18 @@ public class MESuggestedSelectionDialog extends ModelelementSelectionDialog {
 		relevanceMap = new HashMap<EObject, Double>();
 		// }
 
-		setLabelProvider(new RelevanceWrappedLabelProvider(relevanceMap));
+		relevanceWrappedLabelProvider = new RelevanceWrappedLabelProvider(composedAdapterFactory, relevanceMap);
+		setLabelProvider(relevanceWrappedLabelProvider);
 		setListLabelProvider(getLabelProvider());
-		setDetailsLabelProvider(new RelevanceDetailsLabelProvider());
+		relevanceDetailsLabelProvider = new RelevanceDetailsLabelProvider();
+		setDetailsLabelProvider(relevanceDetailsLabelProvider);
+	}
+
+	@Override
+	public boolean close() {
+		relevanceWrappedLabelProvider.dispose();
+		relevanceDetailsLabelProvider.dispose();
+		return super.close();
 	}
 
 	/**
@@ -127,18 +138,11 @@ public class MESuggestedSelectionDialog extends ModelelementSelectionDialog {
 		 */
 		public int compare(EObject o1, EObject o2) {
 			Double val1, val2;
-			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-			AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-				composedAdapterFactory);
 			String name1 = adapterFactoryLabelProvider.getText(o1);
 			String name2 = adapterFactoryLabelProvider.getText(o2);
 
 			val1 = relevanceMap.get(o1);
 			val2 = relevanceMap.get(o2);
-
-			adapterFactoryLabelProvider.dispose();
-			composedAdapterFactory.dispose();
 
 			if (!isRelevant(val1) && !isRelevant(val2)) {
 

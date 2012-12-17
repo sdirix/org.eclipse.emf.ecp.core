@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.editor.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -95,7 +94,7 @@ public class AddAssociationClassAction extends Action {
 	 *            model element context
 	 */
 	public AddAssociationClassAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-		EditorModelelementContext context) {
+		EditorModelelementContext context, AdapterFactoryLabelProvider labelProvider) {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.context = context;
@@ -104,8 +103,7 @@ public class AddAssociationClassAction extends Action {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(obj);
+		Image image = labelProvider.getImage(obj);
 		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/link_overlay.png");
 		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
 			OverlayImageDescriptor.LOWER_RIGHT);

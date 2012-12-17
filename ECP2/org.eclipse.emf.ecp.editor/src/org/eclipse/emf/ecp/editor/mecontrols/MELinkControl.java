@@ -23,6 +23,8 @@ import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.NewReferenceAction;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.ReferenceAction;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPWidget;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.LinkWidget;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -56,6 +58,10 @@ public class MELinkControl extends AbstractMEControl {
 	private ModelElementChangeListener modelElementChangeListener;
 
 	private ECPWidget widget;
+
+	private ComposedAdapterFactory composedAdapterFactory;
+
+	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
 	/*
 	 * (non-Javadoc)
@@ -113,6 +119,9 @@ public class MELinkControl extends AbstractMEControl {
 			}
 		};
 
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+
 		for (Action action : initActions()) {
 			createButtonForAction(action, composite);
 		}
@@ -156,10 +165,10 @@ public class MELinkControl extends AbstractMEControl {
 	private List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
 		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell());
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
 		result.add(addAction);
 		ReferenceAction newAction = new NewReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell());
+			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
 		result.add(newAction);
 		return result;
 	}
@@ -212,6 +221,8 @@ public class MELinkControl extends AbstractMEControl {
 		if (widget != null) {
 			widget.dispose();
 		}
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 }

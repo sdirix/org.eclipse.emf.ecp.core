@@ -111,7 +111,8 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 		// {
 		// adapterFactory.dispose();
 		// }
-
+		adapterFactory.dispose();
+		adapterFactoryLabelProvider.dispose();
 		return confirm;
 	}
 }

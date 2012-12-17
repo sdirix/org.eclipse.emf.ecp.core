@@ -19,7 +19,9 @@ import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControl;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControlFactory;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
@@ -150,6 +152,12 @@ public class AssociationClassControl extends AbstractMEControl {
 
 	private ArrayList<MELinkControl> linkControls;
 
+	private Cursor handCursor;
+
+	private ComposedAdapterFactory composedAdapterFactory;
+
+	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -174,6 +182,9 @@ public class AssociationClassControl extends AbstractMEControl {
 		for (MELinkControl link : linkControls) {
 			link.dispose();
 		}
+		handCursor.dispose();
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 	/**
@@ -209,7 +220,7 @@ public class AssociationClassControl extends AbstractMEControl {
 	private void createSectionToolbar(Section section, FormToolkit toolkit) {
 		ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
 		ToolBar toolbar = toolBarManager.createControl(section);
-		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+		handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
 		toolbar.setCursor(handCursor);
 		// Cursor needs to be explicitly disposed
 		toolbar.addDisposeListener(new DisposeListener() {
@@ -219,10 +230,14 @@ public class AssociationClassControl extends AbstractMEControl {
 				}
 			}
 		});
+
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+
 		toolBarManager.add(new AddAssociationClassAction(getModelElement(), eReference, getItemPropertyDescriptor(),
-			getContext()));
+			getContext(), adapterFactoryLabelProvider));
 		toolBarManager.add(new NewAssociationClassAction(getModelElement(), eReference, getItemPropertyDescriptor(),
-			getContext()));
+			getContext(), adapterFactoryLabelProvider));
 		toolBarManager.update(true);
 		section.setTextClient(toolbar);
 	}

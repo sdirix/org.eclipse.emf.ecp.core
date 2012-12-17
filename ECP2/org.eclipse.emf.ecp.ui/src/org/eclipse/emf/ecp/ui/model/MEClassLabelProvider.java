@@ -10,10 +10,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.model;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.swt.graphics.Image;
@@ -21,85 +21,73 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @author Hodaie LabelProvider for TreeViewer that is shown on ModelTreePage
  */
-public class MEClassLabelProvider extends AdapterFactoryLabelProvider
-{
+public class MEClassLabelProvider extends AdapterFactoryLabelProvider {
 
-  /**
-   * Constructor.
-   */
-  public MEClassLabelProvider()
-  {
-    super(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
+	/**
+	 * Constructor.
+	 */
+	public MEClassLabelProvider(AdapterFactory adapterFactory) {
+		super(adapterFactory);
 
-  }
+	}
 
-  /**
-   * . ({@inheritDoc}) If argument is instance of EClass then return its display name.
-   */
-  @Override
-  public String getText(Object object)
-  {
-    if (object instanceof EPackage)
-    {
-      return super.getText(object);
-    }
-    if (object instanceof EClass)
-    {
-      return ((EClass)object).getName();
-    }
-    return ""; //$NON-NLS-1$
-  }
+	/**
+	 * . ({@inheritDoc}) If argument is instance of EClass then return its display name.
+	 */
+	@Override
+	public String getText(Object object) {
+		if (object instanceof EPackage) {
+			return super.getText(object);
+		}
+		if (object instanceof EClass) {
+			return ((EClass) object).getName();
+		}
+		return ""; //$NON-NLS-1$
+	}
 
-  /**
-   * . ({@inheritDoc})
-   */
-  @Override
-  public Image getImage(Object object)
-  {
-    if (object instanceof EClass)
-    {
-      EClass eClass = (EClass)object;
-      EPackage ePackage = eClass.getEPackage();
-      if (!eClass.isAbstract() && !eClass.isInterface())
-      {
-        EObject newMEInstance = ePackage.getEFactoryInstance().create(eClass);
-        return super.getImage(newMEInstance);
-      }
-      return super.getImage(object);
+	/**
+	 * . ({@inheritDoc})
+	 */
+	@Override
+	public Image getImage(Object object) {
+		if (object instanceof EClass) {
+			EClass eClass = (EClass) object;
+			EPackage ePackage = eClass.getEPackage();
+			if (!eClass.isAbstract() && !eClass.isInterface()) {
+				EObject newMEInstance = ePackage.getEFactoryInstance().create(eClass);
+				return super.getImage(newMEInstance);
+			}
+			return super.getImage(object);
 
-    }
-    return super.getImage(object);
+		}
+		return super.getImage(object);
 
-  }
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Image getColumnImage(Object object, int columnIndex)
-  {
-    if (columnIndex == 0)
-    {
-      return getImage(object);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image getColumnImage(Object object, int columnIndex) {
+		if (columnIndex == 0) {
+			return getImage(object);
+		}
 
-    return super.getImage(object);
+		return super.getImage(object);
 
-  }
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getColumnText(Object object, int columnIndex)
-  {
-    if (columnIndex == 0)
-    {
-      return getText(object);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getColumnText(Object object, int columnIndex) {
+		if (columnIndex == 0) {
+			return getText(object);
+		}
 
-    return super.getText(object);
+		return super.getText(object);
 
-  }
+	}
 
 }

@@ -38,4 +38,6 @@ public abstract class AbstractUICallback {
 	public abstract int open();
 
 	public abstract void showError(String title, String message);
+
+	public abstract void dispose();
 }

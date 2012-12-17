@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.ChangeCommand;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -192,7 +191,7 @@ public class NewReferenceAction extends ReferenceAction {
 	 *            the model element context
 	 */
 	public NewReferenceAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-		EditorModelelementContext modelElementContext, Shell shell) {
+		EditorModelelementContext modelElementContext, Shell shell, AdapterFactoryLabelProvider labelProvider) {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.modelElementContext = modelElementContext;
@@ -205,8 +204,7 @@ public class NewReferenceAction extends ReferenceAction {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		Image image = new AdapterFactoryLabelProvider(new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE)).getImage(obj);
+		Image image = labelProvider.getImage(obj);
 
 		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");
 		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,

@@ -26,4 +26,9 @@ public interface ICompositeProvider {
 	 * @return the created {@link Composite}
 	 */
 	Composite createUI(Composite parent);
+
+	/**
+	 * Disposes this composite provider.
+	 */
+	void dispose();
 }

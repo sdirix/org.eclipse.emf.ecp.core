@@ -30,73 +30,65 @@ import org.eclipse.swt.widgets.Composite;
  *         wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
  *         tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
  */
-public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite>
-{
+public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite> {
 
-  public NewModelElementWizard(String title)
-  {
-    setWindowTitle(title);
-  }
+	public NewModelElementWizard(String title) {
+		setWindowTitle(title);
+	}
 
-  /**
-   * . ({@inheritDoc})
-   */
-  @Override
-  public void addPages()
-  {
-    super.addPages();
-    WizardPage wp = new WizardPage(Messages.NewModelElementWizard_WizardTitle_AddModelElement)
-    {
+	/**
+	 * . ({@inheritDoc})
+	 */
+	@Override
+	public void addPages() {
+		super.addPages();
+		WizardPage wp = new WizardPage(Messages.NewModelElementWizard_WizardTitle_AddModelElement) {
 
-      public void createControl(Composite parent)
-      {
-        Composite composite = getUIProvider().createUI(parent);
-        getUIProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener()
-        {
+			public void createControl(Composite parent) {
+				Composite composite = getUIProvider().createUI(parent);
+				getUIProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
-          public void selectionChanged(SelectionChangedEvent event)
-          {
-            IStructuredSelection sel = (IStructuredSelection)getUIProvider().getViewer().getSelection();
-            if (sel != null && sel.getFirstElement() instanceof EClass)
-            {
-              setPageComplete(true);
-            }
-            else
-            {
-              setPageComplete(false);
-            }
-          }
-        });
-        getUIProvider().getViewer().addDoubleClickListener(new IDoubleClickListener()
-        {
+					public void selectionChanged(SelectionChangedEvent event) {
+						IStructuredSelection sel = (IStructuredSelection) getUIProvider().getViewer().getSelection();
+						if (sel != null && sel.getFirstElement() instanceof EClass) {
+							setPageComplete(true);
+						} else {
+							setPageComplete(false);
+						}
+					}
+				});
+				getUIProvider().getViewer().addDoubleClickListener(new IDoubleClickListener() {
 
-          public void doubleClick(DoubleClickEvent event)
-          {
-            if (isPageComplete() && performFinish())
-            {
-              ((WizardDialog)getContainer()).close();
-            }
+					public void doubleClick(DoubleClickEvent event) {
+						if (isPageComplete() && performFinish()) {
+							((WizardDialog) getContainer()).close();
+						}
 
-          }
+					}
 
-        });
-        setPageComplete(false);
-        setControl(composite);
-      }
-    };
-    addPage(wp);
-    wp.setTitle(Messages.NewModelElementWizard_PageTitle_AddModelElement);
-    wp.setDescription(Messages.NewModelElementWizard_PageDescription_AddModelElement);
+				});
+				setPageComplete(false);
+				setControl(composite);
+			}
+		};
+		addPage(wp);
+		wp.setTitle(Messages.NewModelElementWizard_PageTitle_AddModelElement);
+		wp.setDescription(Messages.NewModelElementWizard_PageDescription_AddModelElement);
 
-  }
+	}
 
-  /**
-   * . ({@inheritDoc}) This method creates a model element instance from selected type, adds it to Leaf- or
-   * CompositeSection, and opens it.
-   */
-  @Override
-  public boolean performFinish()
-  {
-    return true;
-  }
+	/**
+	 * . ({@inheritDoc}) This method creates a model element instance from selected type, adds it to Leaf- or
+	 * CompositeSection, and opens it.
+	 */
+	@Override
+	public boolean performFinish() {
+		return true;
+	}
+
+	@Override
+	public void dispose() {
+		getUIProvider().dispose();
+		super.dispose();
+	}
 }

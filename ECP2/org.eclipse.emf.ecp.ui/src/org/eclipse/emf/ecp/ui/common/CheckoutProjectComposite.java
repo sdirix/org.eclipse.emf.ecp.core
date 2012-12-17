@@ -108,4 +108,13 @@ public class CheckoutProjectComposite implements ICompositeProvider {
 	public UIProvider getUiProvider() {
 		return uiProvider;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#dispose()
+	 */
+	public void dispose() {
+		// TODO Auto-generated method stub
+
+	}
 }

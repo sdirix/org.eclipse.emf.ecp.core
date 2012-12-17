@@ -193,6 +193,7 @@ public class LinkWidget extends ECPWidget {
 		adapterFactoryLabelProvider.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
+		labelProvider.removeListener(labelProviderListener);
 		labelProvider.dispose();
 		modelElementChangeListener.remove();
 		deleteLink.dispose();

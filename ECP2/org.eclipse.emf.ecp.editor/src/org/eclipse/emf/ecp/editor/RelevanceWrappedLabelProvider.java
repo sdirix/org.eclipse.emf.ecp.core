@@ -10,12 +10,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+
 import java.text.NumberFormat;
 import java.util.Map;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 /**
  * Wraps the relevance around an element if present.
@@ -31,9 +31,9 @@ public class RelevanceWrappedLabelProvider extends AdapterFactoryLabelProvider {
 	 * 
 	 * @param relevanceVals the relevance map: element->double value
 	 */
-	public RelevanceWrappedLabelProvider(Map<EObject, Double> relevanceVals) {
-		super(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE));
-		this.relevanceValues = relevanceVals;
+	public RelevanceWrappedLabelProvider(AdapterFactory adapterFactry, Map<EObject, Double> relevanceVals) {
+		super(adapterFactry);
+		relevanceValues = relevanceVals;
 	}
 
 	/**
