@@ -91,6 +91,7 @@ public class ExportHandler extends AbstractHandler {
 		if (adapterFactory!=null) {
 			adapterFactory.dispose();
 		}
+		labelProvider.dispose();
 		return text;
 	}
 	

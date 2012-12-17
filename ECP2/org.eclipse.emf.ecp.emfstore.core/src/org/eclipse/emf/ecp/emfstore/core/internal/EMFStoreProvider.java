@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
@@ -428,6 +429,19 @@ public class EMFStoreProvider extends DefaultProvider {
 			}
 		}
 
+		return null;
+	}
+
+	public ECPRepository getRepository(ServerInfo serverInfo) {
+		if (serverInfo != null) {
+			for (InternalRepository internalRepository : getAllRepositories()) {
+				if (internalRepository.getProvider().equals(this)) {
+					if (serverInfo.equals(internalRepository.getProviderSpecificData())) {
+						return internalRepository;
+					}
+				}
+			}
+		}
 		return null;
 	}
 }

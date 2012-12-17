@@ -155,6 +155,8 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		urlText.setText("localhost");
 		portText.setText("8080");
 		certificateText.setText(KeyStoreManager.getInstance().getDefaultCertificate());
+		// else the certificate is not set
+		repositoryProperties.addProperty(EMFStoreProvider.PROP_CERTIFICATE, certificateText.getText());
 		return composite;
 	}
 

@@ -24,8 +24,8 @@ import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @see ILightweightLabelDecorator
@@ -95,7 +95,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	 * @see org.eclipse.emf.emfstore.client.model.observers.LoginObserver#loginCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
 	 */
 	public void loginCompleted(Usersession session) {
-		update();
+		update(session);
 	}
 
 	/**
@@ -104,14 +104,20 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	 * @see org.eclipse.emf.emfstore.client.model.observers.LogoutObserver#logoutCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
 	 */
 	public void logoutCompleted(Usersession session) {
-		update();
+		update(session);
 	}
 
-	private void update() {
+	private void update(final Usersession usersession) {
+
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				PlatformUI.getWorkbench().getDecoratorManager()
-					.update("org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator");
+				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
+					EMFStoreProvider.INSTANCE.getRepository(usersession.getServerInfo())));
+				// // FIXME BUGREPORT
+				// if (PlatformUI.isWorkbenchRunning()) {
+				// PlatformUI.getWorkbench().getDecoratorManager()
+				// .update("org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator");
+				// }
 			}
 		});
 	}
