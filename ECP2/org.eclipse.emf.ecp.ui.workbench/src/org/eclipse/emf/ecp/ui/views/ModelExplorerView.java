@@ -81,7 +81,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	private IPartListener2 linkWithEditorPartListener=new LinkedWithEditorPartListener(this);
 	
-	private boolean linkingActive=false;
+	private boolean linkingActive=true;
 	
 	private ModelContentProvider contentProvider;
 
@@ -141,7 +141,9 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	@Override
 	protected void fillLocalToolBar(IToolBarManager manager) {
 		super.fillLocalToolBar(manager);
-		linkingActive = getDialogSettings().getBoolean("LinkWithEditor");
+		if(getDialogSettings().getBoolean("LinkWithEditorSet")){
+			linkingActive = getDialogSettings().getBoolean("LinkWithEditor");
+		}
 		if (linkingActive) {
 			getSite().getPage().addPartListener(linkWithEditorPartListener);
 		}
@@ -163,13 +165,14 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 				}
 
 				getDialogSettings().put("LinkWithEditor", this.isChecked());
+				getDialogSettings().put("LinkWithEditorSet", true);
 			}
 
 		};
 
 		linkWithEditorAction.setImageDescriptor(Activator.getImageDescriptor("icons/link_with_editor.gif"));
 		linkWithEditorAction.setToolTipText("Link with editor");
-		linkWithEditorAction.setChecked(getDialogSettings().getBoolean("LinkWithEditor"));
+		linkWithEditorAction.setChecked(getDialogSettings().getBoolean("LinkWithEditorSet")?getDialogSettings().getBoolean("LinkWithEditor"):true);
 		manager.add(linkWithEditorAction);
 	}
 
