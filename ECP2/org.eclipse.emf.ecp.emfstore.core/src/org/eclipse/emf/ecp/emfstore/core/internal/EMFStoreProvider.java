@@ -67,7 +67,7 @@ public class EMFStoreProvider extends DefaultProvider {
    * 
    */
 	private void configureEMFStore() {
-		Configuration.setAutoSave(true);
+		Configuration.setAutoSave(false);
 	}
 
 	/** {@inheritDoc} */
