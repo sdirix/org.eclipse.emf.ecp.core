@@ -2,6 +2,7 @@ package org.eclipse.emf.ecp.example.internal.leagueview;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.bowling.League;
@@ -22,16 +23,18 @@ public class LeagueViewPart extends ViewPart {
 
 	public static final String ID="org.eclipse.emf.ecp.example.leagueView";
 	private League league;
+	private ComposedAdapterFactory composedAdapterFactory;
 	
 	public LeagueViewPart() {
-		// TODO Auto-generated constructor stub
+		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
 		ListViewer tv=new ListViewer(parent);
-		tv.setContentProvider(ArrayContentProvider.getInstance());
-		tv.setLabelProvider(new LabelProvider());
+		
+		tv.setContentProvider(new AdapterFactoryContentProvider(composedAdapterFactory));
+		tv.setLabelProvider(new AdapterFactoryLabelProvider(composedAdapterFactory));
 		tv.setInput(league.getPlayers());
 		GridDataFactory.fillDefaults().grab(true, true).span(SWT.FILL, SWT.FILL).applyTo(tv.getControl());
 	}
@@ -58,6 +61,12 @@ public class LeagueViewPart extends ViewPart {
 		sb.append("-Players");
 		setPartName(sb.toString());
 		
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 }
