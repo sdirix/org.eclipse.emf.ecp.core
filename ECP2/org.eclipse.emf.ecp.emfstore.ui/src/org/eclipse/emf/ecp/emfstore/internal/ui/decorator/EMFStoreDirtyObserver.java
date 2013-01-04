@@ -47,7 +47,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		for (AbstractOperation operation : projectSpace.getOperations()) {
 			for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 				EObject element = projectSpace.getProject().getModelElement(modelElementId);
-				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+				if (element != null) {
+					EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
+				}
 			}
 		}
 
