@@ -13,6 +13,7 @@
 
 package org.eclipse.emf.ecp.wizards;
 
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -64,10 +65,14 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 					}
 
 					public void projectNameChanged(String projectName) {
-						if (projectName != null) {
-							setPageComplete(true);
-						} else {
+						if (projectName == null) {
 							setPageComplete(false);
+						} else if (ECPProjectManager.INSTANCE.getProject(projectName) != null) {
+							setPageComplete(false);
+							setErrorMessage("A project with name " + projectName + " already exists in the workspace.");
+						} else {
+							setErrorMessage(null);
+							setPageComplete(true);
 						}
 					}
 				});

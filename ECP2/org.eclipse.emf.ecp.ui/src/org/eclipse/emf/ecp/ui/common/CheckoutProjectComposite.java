@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,6 +35,21 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  */
 public class CheckoutProjectComposite implements ICompositeProvider {
+
+	/**
+	 * Listener interface that will be notified if the projectName changes.
+	 */
+	public interface CheckoutProjectChangeListener {
+		/**
+		 * Callback method providing the new project name.
+		 * 
+		 * @param projectName the new project name
+		 */
+		void projectNameChanged(String projectName);
+	}
+
+	private CheckoutProjectChangeListener listener;
+
 	private String projectName;
 
 	private ECPProperties projectProperties = ECPUtil.createProperties();
@@ -66,6 +81,9 @@ public class CheckoutProjectComposite implements ICompositeProvider {
 		projectNameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				projectName = projectNameText.getText();
+				if (listener != null) {
+					listener.projectNameChanged(projectName);
+				}
 			}
 		});
 		StackLayout providerStackLayout = new StackLayout();
@@ -109,12 +127,15 @@ public class CheckoutProjectComposite implements ICompositeProvider {
 		return uiProvider;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#dispose()
+	/**
+	 * @param listener
+	 *            the listener to set
 	 */
-	public void dispose() {
-		// TODO Auto-generated method stub
+	public void setListener(CheckoutProjectChangeListener listener) {
+		this.listener = listener;
+	}
 
+	/** {@inheritDoc} **/
+	public void dispose() {
 	}
 }

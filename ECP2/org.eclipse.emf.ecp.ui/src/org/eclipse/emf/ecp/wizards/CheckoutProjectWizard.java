@@ -13,10 +13,12 @@
 
 package org.eclipse.emf.ecp.wizards;
 
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
+import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite.CheckoutProjectChangeListener;
 import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -44,8 +46,25 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 			public void createControl(Composite parent) {
 				Composite composite = getUIProvider().createUI(parent);
 
-				setPageComplete(true);
+				getUIProvider().setListener(new CheckoutProjectChangeListener() {
+					public void projectNameChanged(String projectName) {
+						validateName(projectName);
+					}
+				});
+
+				// validate initial project name
+				validateName(getUIProvider().getProjectName());
 				setControl(composite);
+			}
+
+			private void validateName(String projectName) {
+				if (ECPProjectManager.INSTANCE.getProject(projectName) != null) {
+					setPageComplete(false);
+					setErrorMessage("A project with name " + projectName + " already exists in the workspace.");
+				} else {
+					setErrorMessage(null);
+					setPageComplete(true);
+				}
 			}
 		};
 		addPage(wp);
