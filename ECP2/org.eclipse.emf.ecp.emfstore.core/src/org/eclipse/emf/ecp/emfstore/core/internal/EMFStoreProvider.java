@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.emfstore.client.model.Configuration;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
@@ -68,6 +69,12 @@ public class EMFStoreProvider extends DefaultProvider {
    */
 	private void configureEMFStore() {
 		Configuration.setAutoSave(false);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public EditingDomain createEditingDomain(InternalProject project) {
+		return WorkspaceManager.getInstance().getCurrentWorkspace().getEditingDomain();
 	}
 
 	/** {@inheritDoc} */
@@ -401,7 +408,12 @@ public class EMFStoreProvider extends DefaultProvider {
 
 		if (element instanceof EObject) {
 			EObject eObject = (EObject) element;
-			ProjectSpace ps = WorkspaceManager.getProjectSpace(eObject);
+			ProjectSpace ps = null;
+			try {
+				ps = WorkspaceManager.getProjectSpace(eObject);
+			} catch (IllegalArgumentException iae) {
+				return null;
+			}
 			if (ps != null) {
 				ECPModelContext context = getModelContextFromAdapter(ps.getProject());
 				if (context != null) {

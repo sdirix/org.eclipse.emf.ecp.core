@@ -10,9 +10,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.validation.connector;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.common.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
@@ -51,10 +56,23 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 				}
 			});
 			mapping.put(validationServiceObject, validationService);
+			if (validationServiceObject instanceof ECPProject) {
+				ECPProject project = (ECPProject) validationServiceObject;
+				validationService.validate(getOnlyEobjects(project.getElements()));
+			}
 			return validationService;
 		}
 		
 		return mapping.get(validationServiceObject);
 	}
-
+	
+	private Collection<EObject> getOnlyEobjects(EList<? extends Object> elements) {
+		List<EObject> result = new ArrayList<EObject>();
+		for (Object o : elements) {
+			if (EObject.class.isInstance(o)) {
+				result.add((EObject) o);
+			}
+		}
+		return result;
+	}
 }
