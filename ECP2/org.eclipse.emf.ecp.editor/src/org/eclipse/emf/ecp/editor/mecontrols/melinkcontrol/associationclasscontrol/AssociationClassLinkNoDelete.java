@@ -11,9 +11,9 @@
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.ECPAssociationClassElement;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControl;
-import org.eclipse.emf.ecp.ui.model.ECPAssociationClassElement;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**

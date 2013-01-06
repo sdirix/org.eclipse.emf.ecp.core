@@ -186,15 +186,13 @@ public class HandlerHelper {
 				// 1.create ME
 				EPackage ePackage = newMEType.getEPackage();
 				final EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
-				ChangeCommand changeCommand = new ChangeCommand(newMEInstance) {
+				ecpProject.getEditingDomain().getCommandStack().execute(new ChangeCommand(newMEInstance) {
 
 					@Override
 					protected void doExecute() {
 						ecpProject.getElements().add(newMEInstance);
 					}
-				};
-				ecpProject.getEditingDomain().getCommandStack().execute(changeCommand);
-				changeCommand.dispose();
+				});
 				if (open) {
 					// 3.open the newly created ME
 					ActionHelper.openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);

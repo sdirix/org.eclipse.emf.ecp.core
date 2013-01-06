@@ -40,6 +40,6 @@ public class MEDoubleControl extends MEAttributeControl {
 	 */
 	@Override
 	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new DoubleWidget(dbc);
+		return new DoubleWidget(dbc, getContext().getEditingDomain(), getModelElement());
 	}
 }

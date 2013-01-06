@@ -3,6 +3,9 @@
  */
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.eclipse.core.databinding.DataBindingContext;
 
 /**
@@ -12,8 +15,8 @@ public class DoubleWidget extends AbstractTextWidget<Double> {
 	/**
 	 * @param dbc
 	 */
-	public DoubleWidget(DataBindingContext dbc) {
-		super(dbc);
+	public DoubleWidget(DataBindingContext dbc, EditingDomain editingDomain, EObject eObject) {
+		super(dbc, editingDomain, eObject);
 	}
 
 	@Override

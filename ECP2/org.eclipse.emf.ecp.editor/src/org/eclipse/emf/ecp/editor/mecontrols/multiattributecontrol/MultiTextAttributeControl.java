@@ -20,7 +20,7 @@ public class MultiTextAttributeControl extends MultiMEAttributeControl {
 	 */
 	@Override
 	protected ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc) {
-		return new StringWidget(dbc, getItemPropertyDescriptor(), getModelElement());
+		return new StringWidget(dbc, getContext().getEditingDomain(), getItemPropertyDescriptor(), getModelElement());
 	}
 
 	/*

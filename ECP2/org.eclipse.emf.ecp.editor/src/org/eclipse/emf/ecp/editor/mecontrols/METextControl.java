@@ -45,7 +45,7 @@ public class METextControl extends MEAttributeControl {
 	 */
 	@Override
 	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		widget = new StringWidget(dbc, getItemPropertyDescriptor(), getModelElement());
+		widget = new StringWidget(dbc, getContext().getEditingDomain(), getItemPropertyDescriptor(), getModelElement());
 		return widget;
 	}
 

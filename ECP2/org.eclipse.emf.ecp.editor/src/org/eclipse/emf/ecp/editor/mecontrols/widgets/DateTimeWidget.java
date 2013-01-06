@@ -55,8 +55,6 @@ public class DateTimeWidget extends ECPAttributeWidget {
 
 	private EStructuralFeature feature;
 
-	private EditingDomain domain;
-
 	private StackLayout sl;
 
 	private Label unsetLabel;
@@ -70,10 +68,9 @@ public class DateTimeWidget extends ECPAttributeWidget {
 	 * @param domain the {@link EditingDomain} of the edited {@link EObject}
 	 */
 	public DateTimeWidget(DataBindingContext dbc, EObject modelElement, EStructuralFeature feature, EditingDomain domain) {
-		super(dbc);
+		super(dbc, domain);
 		this.modelElement = modelElement;
 		this.feature = feature;
-		this.domain = domain;
 	}
 
 	/*
@@ -139,12 +136,12 @@ public class DateTimeWidget extends ECPAttributeWidget {
 		dateDeleteButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				new ECPCommand(modelElement, domain) {
+				new ECPCommand(modelElement, getEditingDomain()) {
 
 					@Override
 					protected void doRun() {
-						domain.getCommandStack().execute(
-							new RemoveCommand(domain, modelElement, feature, modelElement.eGet(feature)));
+						getEditingDomain().getCommandStack().execute(
+							new RemoveCommand(getEditingDomain(), modelElement, feature, modelElement.eGet(feature)));
 
 						sl.topControl = unsetLabel;
 						parentComposite.layout();

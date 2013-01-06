@@ -39,7 +39,7 @@ public class MEBoolControl extends MEAttributeControl {
 	 */
 	@Override
 	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new BooleanWidget(dbc);
+		return new BooleanWidget(dbc, getContext().getEditingDomain());
 	}
 
 }

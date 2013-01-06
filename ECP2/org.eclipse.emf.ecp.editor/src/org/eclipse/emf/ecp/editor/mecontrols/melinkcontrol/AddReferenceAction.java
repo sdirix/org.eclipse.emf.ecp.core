@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.edit.command.ChangeCommand;
@@ -43,7 +43,7 @@ public class AddReferenceAction extends ReferenceAction {
 
 	private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)";
 
-	private final EditorModelelementContext context;
+	private final EditModelElementContext context;
 
 	private Shell shell;
 
@@ -161,7 +161,7 @@ public class AddReferenceAction extends ReferenceAction {
 	 * @param shell the {@link Shell} to create the dialog in
 	 */
 	public AddReferenceAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-		EditorModelelementContext context, Shell shell, AdapterFactoryLabelProvider labelProvider) {
+		EditModelElementContext context, Shell shell, AdapterFactoryLabelProvider labelProvider) {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.context = context;

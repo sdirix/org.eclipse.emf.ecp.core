@@ -14,6 +14,7 @@
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -28,7 +29,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 public class StringWidget extends AbstractTextWidget<String> {
 
 	private IItemPropertyDescriptor itemPropertyDescriptor;
-	private EObject eObject;
 
 	/**
 	 * Constructor for StringWidgets.
@@ -37,10 +37,10 @@ public class StringWidget extends AbstractTextWidget<String> {
 	 * @param iItemPropertyDescriptor the {@link IItemPropertyDescriptor} to identify multiline properties
 	 * @param eObject the {@link EObject} to check the multiline for
 	 */
-	public StringWidget(DataBindingContext dbc, IItemPropertyDescriptor iItemPropertyDescriptor, EObject eObject) {
-		super(dbc);
+	public StringWidget(DataBindingContext dbc, EditingDomain editingDomain,
+		IItemPropertyDescriptor iItemPropertyDescriptor, EObject eObject) {
+		super(dbc, editingDomain, eObject);
 		itemPropertyDescriptor = iItemPropertyDescriptor;
-		this.eObject = eObject;
 	}
 
 	/** {@inheritDoc} */
@@ -48,7 +48,7 @@ public class StringWidget extends AbstractTextWidget<String> {
 	protected void createTextWidget(FormToolkit toolkit, Composite composite, int style) {
 		int textStyle = style | SWT.BORDER;
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		if (itemPropertyDescriptor.isMultiLine(eObject)) {
+		if (itemPropertyDescriptor.isMultiLine(getEObject())) {
 			textStyle = textStyle | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL;
 			gridData.heightHint = 200;
 		} else {

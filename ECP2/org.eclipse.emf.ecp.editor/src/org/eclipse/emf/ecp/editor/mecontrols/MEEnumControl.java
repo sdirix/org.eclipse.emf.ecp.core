@@ -49,6 +49,7 @@ public class MEEnumControl extends MEAttributeControl {
 	 */
 	@Override
 	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new EEnumWidget(dbc, getItemPropertyDescriptor(), getModelElement(), getStructuralFeature());
+		return new EEnumWidget(dbc, getContext().getEditingDomain(), getItemPropertyDescriptor(), getModelElement(),
+			getStructuralFeature());
 	}
 }

@@ -3,6 +3,9 @@
  */
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.eclipse.core.databinding.DataBindingContext;
 
 /**
@@ -13,8 +16,8 @@ public class IntegerWidget extends AbstractTextWidget<Integer> {
 	/**
 	 * @param dbc
 	 */
-	public IntegerWidget(DataBindingContext dbc) {
-		super(dbc);
+	public IntegerWidget(DataBindingContext dbc, EditingDomain editingDomain, EObject eObject) {
+		super(dbc, editingDomain, eObject);
 	}
 
 	@Override

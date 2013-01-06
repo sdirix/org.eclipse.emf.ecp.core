@@ -1,16 +1,14 @@
 package org.eclipse.emf.ecp.explorereditorbridge;
 
-import java.util.Set;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.editor.EditorMetamodelContext;
-import org.eclipse.emf.ecp.ui.model.ECPAssociationClassElement;
+import org.eclipse.emf.ecp.edit.ECPAssociationClassElement;
+import org.eclipse.emf.ecp.edit.EditMetaModelContext;
 
-public class MetaModeElementContext implements EditorMetamodelContext {
+import java.util.Set;
 
-	
+public class MetaModeElementContext implements EditMetaModelContext {
 
 	public Set<EClass> getAllSubEClasses(EClass eClass, boolean association) {
 		// TODO Auto-generated method stub
@@ -27,10 +25,7 @@ public class MetaModeElementContext implements EditorMetamodelContext {
 		return false;
 	}
 
-	
-
-	public EReference getPossibleContainingReference(EObject newMEInstance,
-			EObject parent) {
+	public EReference getPossibleContainingReference(EObject newMEInstance, EObject parent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -39,6 +34,5 @@ public class MetaModeElementContext implements EditorMetamodelContext {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

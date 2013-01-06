@@ -3,6 +3,8 @@
  */
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -21,8 +23,8 @@ public class BooleanWidget extends ECPAttributeWidget {
 	/**
 	 * @param dbc
 	 */
-	public BooleanWidget(DataBindingContext dbc) {
-		super(dbc);
+	public BooleanWidget(DataBindingContext dbc, EditingDomain editingDomain) {
+		super(dbc, editingDomain);
 	}
 
 	private Button check;

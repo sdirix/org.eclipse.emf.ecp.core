@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.descriptor.AnnotationHiddenDescriptor;
 import org.eclipse.emf.ecp.editor.descriptor.AnnotationPositionDescriptor;
 import org.eclipse.emf.ecp.editor.descriptor.AnnotationPriorityDescriptor;
@@ -63,7 +64,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	 * @param modelElementContext the {@link EditorModelelementContext}
 	 * @param shell the shell used for callbacks
 	 */
-	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell) {
+	public FormEditorComposite(EditModelElementContext modelElementContext, Shell shell) {
 		this(modelElementContext, shell, new FormToolkit(shell.getDisplay()));
 	}
 
@@ -74,7 +75,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	 * @param shell the {@link Shell} for callback
 	 * @param toolkit the {@link FormToolkit}
 	 */
-	public FormEditorComposite(EditorModelelementContext modelElementContext, Shell shell, FormToolkit toolkit) {
+	public FormEditorComposite(EditModelElementContext modelElementContext, Shell shell, FormToolkit toolkit) {
 		this.modelElementContext = modelElementContext;
 		this.toolkit = toolkit;
 		this.shell = shell;
@@ -101,7 +102,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	private Shell shell;
 	private final FormToolkit toolkit;
 
-	private final EditorModelelementContext modelElementContext;
+	private final EditModelElementContext modelElementContext;
 
 	private Map<EStructuralFeature, AbstractMEControl> meControls = new LinkedHashMap<EStructuralFeature, AbstractMEControl>();
 

@@ -11,8 +11,8 @@
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.runtime.CoreException;
@@ -72,7 +72,7 @@ public class MELinkControlFactory {
 	}
 
 	public MELinkControl createMELinkControl(IItemPropertyDescriptor itemPropertyDescriptor, final EObject link,
-		EObject contextModelElement, EditorModelelementContext context) {
+		EObject contextModelElement, EditModelElementContext context) {
 		ArrayList<MELinkControl> candidates = new ArrayList<MELinkControl>();
 		Set<Class<?>> keySet = controlRegistry.keySet();
 		for (Class<?> clazz : keySet) {
@@ -98,7 +98,7 @@ public class MELinkControlFactory {
 
 	private MELinkControl getBestCandidate(ArrayList<MELinkControl> candidates,
 		IItemPropertyDescriptor itemPropertyDescriptor, final EObject link, EObject contextModelElement,
-		EditorModelelementContext context) {
+		EditModelElementContext context) {
 		int bestValue = 0;
 		MELinkControl bestCandidate = null;
 		for (MELinkControl abstractMEControl : candidates) {

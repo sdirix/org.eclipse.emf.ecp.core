@@ -16,7 +16,7 @@ package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEHyperLinkAdapter;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEHyperLinkDeleteAdapter;
@@ -63,7 +63,7 @@ public class LinkWidget extends ECPWidget {
 
 	private EReference eReference;
 
-	private EditorModelelementContext context;
+	private EditModelElementContext context;
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
@@ -85,7 +85,7 @@ public class LinkWidget extends ECPWidget {
 	 * @param dbc
 	 */
 	public LinkWidget(EObject modelElement, EObject linkModelElement, EReference eReference,
-		EditorModelelementContext context) {
+		EditModelElementContext context) {
 
 		this.modelElement = modelElement;
 		this.linkModelElement = linkModelElement;

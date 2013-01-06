@@ -14,15 +14,15 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.ECPAssociationClassElement;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.ControlFactory;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEHyperLinkAdapter;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEHyperLinkDeleteAdapter;
 import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControl;
-import org.eclipse.emf.ecp.ui.model.ECPAssociationClassElement;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -125,7 +125,7 @@ public class AssociationClassLink extends MELinkControl {
 	 */
 	@Override
 	public Control createControl(final Composite parent, int style, IItemPropertyDescriptor itemPropertyDescriptor,
-		final EObject link, EObject contextModelElement, FormToolkit toolkit, EditorModelelementContext context) {
+		final EObject link, EObject contextModelElement, FormToolkit toolkit, EditModelElementContext context) {
 		association = link;
 		modelElement = contextModelElement;
 		eReference = (EReference) itemPropertyDescriptor.getFeature(association);

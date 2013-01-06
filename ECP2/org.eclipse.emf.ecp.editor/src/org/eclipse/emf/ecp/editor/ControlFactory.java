@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
@@ -32,229 +33,180 @@ import java.util.Set;
  * @author shterev
  * @author Eugen Neufeld
  */
-public class ControlFactory
-{
-  private static ControlFactory INSTANCE;
+public class ControlFactory {
+	private static ControlFactory INSTANCE;
 
-  public static ControlFactory getInstance()
-  {
-    if (INSTANCE == null)
-    {
-      INSTANCE = new ControlFactory();
-    }
-    return INSTANCE;
-  }
+	public static ControlFactory getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new ControlFactory();
+		}
+		return INSTANCE;
+	}
 
-  private HashMap<Class<?>, ArrayList<AbstractMEControl>> controlRegistry;
+	private HashMap<Class<?>, ArrayList<AbstractMEControl>> controlRegistry;
 
-  /**
-   * Default constructor.
-   */
-  public ControlFactory()
-  {
-    controlRegistry = new HashMap<Class<?>, ArrayList<AbstractMEControl>>();
-    initializeMEControls();
-  }
+	/**
+	 * Default constructor.
+	 */
+	public ControlFactory() {
+		controlRegistry = new HashMap<Class<?>, ArrayList<AbstractMEControl>>();
+		initializeMEControls();
+	}
 
-  private void initializeMEControls()
-  {
-    IConfigurationElement[] attributecontrols = Platform.getExtensionRegistry().getConfigurationElementsFor(
-        "org.eclipse.emf.ecp.editor.attributecontrols");
-    IConfigurationElement[] referencecontrols = Platform.getExtensionRegistry().getConfigurationElementsFor(
-        "org.eclipse.emf.ecp.editor.referencecontrols");
-    ArrayList<IConfigurationElement> allControls = new ArrayList<IConfigurationElement>();
-    allControls.addAll(Arrays.asList(attributecontrols));
-    allControls.addAll(Arrays.asList(referencecontrols));
-    for (IConfigurationElement e : allControls)
-    {
-      String type = e.getAttribute("type");
-      try
-      {
-        Class<?> resolvedType = Class.forName(type);
-        AbstractMEControl control = (AbstractMEControl)e.createExecutableExtension("class");
-        boolean showLabel = Boolean.parseBoolean(e.getAttribute("showLabel"));
-        control.setShowLabel(showLabel);
-        ArrayList<AbstractMEControl> list = controlRegistry.get(resolvedType);
-        if (list == null)
-        {
-          list = new ArrayList<AbstractMEControl>();
-        }
-        list.add(control);
-        controlRegistry.put(resolvedType, list);
+	private void initializeMEControls() {
+		IConfigurationElement[] attributecontrols = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.emf.ecp.editor.attributecontrols");
+		IConfigurationElement[] referencecontrols = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.emf.ecp.editor.referencecontrols");
+		ArrayList<IConfigurationElement> allControls = new ArrayList<IConfigurationElement>();
+		allControls.addAll(Arrays.asList(attributecontrols));
+		allControls.addAll(Arrays.asList(referencecontrols));
+		for (IConfigurationElement e : allControls) {
+			String type = e.getAttribute("type");
+			try {
+				Class<?> resolvedType = Class.forName(type);
+				AbstractMEControl control = (AbstractMEControl) e.createExecutableExtension("class");
+				boolean showLabel = Boolean.parseBoolean(e.getAttribute("showLabel"));
+				control.setShowLabel(showLabel);
+				ArrayList<AbstractMEControl> list = controlRegistry.get(resolvedType);
+				if (list == null) {
+					list = new ArrayList<AbstractMEControl>();
+				}
+				list.add(control);
+				controlRegistry.put(resolvedType, list);
 
-      }
-      catch (ClassNotFoundException e1)
-      {
-        Activator.logException(e1);
-      }
-      catch (CoreException e2)
-      {
-        Activator.logException(e2);
-      }
-    }
+			} catch (ClassNotFoundException e1) {
+				Activator.logException(e1);
+			} catch (CoreException e2) {
+				Activator.logException(e2);
+			}
+		}
 
-  }
+	}
 
-  /**
-   * Creates a {@link AbstractMEControl} according to the {@link IItemPropertyDescriptor}.
-   * 
-   * @param itemPropertyDescriptor
-   *          the descriptor
-   * @param modelElement
-   *          model element
-   * @return the {@link AbstractMEControl}
-   */
-  public AbstractMEControl createControl(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
-  {
-    return createControl(itemPropertyDescriptor, modelElement, null);
-  }
+	/**
+	 * Creates a {@link AbstractMEControl} according to the {@link IItemPropertyDescriptor}.
+	 * 
+	 * @param itemPropertyDescriptor
+	 *            the descriptor
+	 * @param modelElement
+	 *            model element
+	 * @return the {@link AbstractMEControl}
+	 */
+	public AbstractMEControl createControl(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement) {
+		return createControl(itemPropertyDescriptor, modelElement, null);
+	}
 
-  /**
-   * Creates a {@link AbstractMEControl} according to the {@link IItemPropertyDescriptor}.
-   * 
-   * @param itemPropertyDescriptor
-   *          the descriptor
-   * @param modelElement
-   *          model element
-   * @param context
-   *          model element context
-   * @return the {@link AbstractMEControl}
-   */
-  public AbstractMEControl createControl(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement,
-      EditorModelelementContext context)
-  {
+	/**
+	 * Creates a {@link AbstractMEControl} according to the {@link IItemPropertyDescriptor}.
+	 * 
+	 * @param itemPropertyDescriptor
+	 *            the descriptor
+	 * @param modelElement
+	 *            model element
+	 * @param context
+	 *            model element context
+	 * @return the {@link AbstractMEControl}
+	 */
+	public AbstractMEControl createControl(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement,
+		EditModelElementContext context) {
 
-    EStructuralFeature feature = (EStructuralFeature)itemPropertyDescriptor.getFeature(modelElement);
-    if (feature instanceof EAttribute)
-    {
-      return createAttribute(itemPropertyDescriptor, feature, modelElement, context);
-    }
-    else if (feature instanceof EReference)
-    {
-      return createReferenceControl(itemPropertyDescriptor, (EReference)feature, modelElement, context);
-    }
+		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElement);
+		if (feature instanceof EAttribute) {
+			return createAttribute(itemPropertyDescriptor, feature, modelElement, context);
+		} else if (feature instanceof EReference) {
+			return createReferenceControl(itemPropertyDescriptor, (EReference) feature, modelElement, context);
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  private AbstractMEControl createReferenceControl(IItemPropertyDescriptor itemPropertyDescriptor, EReference feature,
-      EObject modelElement, EditorModelelementContext context)
-  {
-    Class<?> instanceClass = feature.getEType().getInstanceClass();
-    Set<Class<?>> keySet = controlRegistry.keySet();
-    ArrayList<AbstractMEControl> candidates = new ArrayList<AbstractMEControl>();
-    for (Class<?> clazz : keySet)
-    {
-      if (clazz.isAssignableFrom(instanceClass))
-      {
-        candidates.addAll(controlRegistry.get(clazz));
-      }
-    }
-    AbstractMEControl control = getBestCandidate(candidates, itemPropertyDescriptor, feature, modelElement, context);
-    AbstractMEControl ret = null;
-    if (control == null)
-    {
-      return null;
-    }
-    try
-    {
-      ret = control.getClass().newInstance();
-      ret.setShowLabel(control.getShowLabel());
-    }
-    catch (InstantiationException e)
-    {
-      // Do nothing
-    }
-    catch (IllegalAccessException e)
-    {
-      // Do nothing
-    }
-    return ret;
-  }
+	private AbstractMEControl createReferenceControl(IItemPropertyDescriptor itemPropertyDescriptor,
+		EReference feature, EObject modelElement, EditModelElementContext context) {
+		Class<?> instanceClass = feature.getEType().getInstanceClass();
+		Set<Class<?>> keySet = controlRegistry.keySet();
+		ArrayList<AbstractMEControl> candidates = new ArrayList<AbstractMEControl>();
+		for (Class<?> clazz : keySet) {
+			if (clazz.isAssignableFrom(instanceClass)) {
+				candidates.addAll(controlRegistry.get(clazz));
+			}
+		}
+		AbstractMEControl control = getBestCandidate(candidates, itemPropertyDescriptor, feature, modelElement, context);
+		AbstractMEControl ret = null;
+		if (control == null) {
+			return null;
+		}
+		try {
+			ret = control.getClass().newInstance();
+			ret.setShowLabel(control.getShowLabel());
+		} catch (InstantiationException e) {
+			// Do nothing
+		} catch (IllegalAccessException e) {
+			// Do nothing
+		}
+		return ret;
+	}
 
-  private AbstractMEControl createAttribute(IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-      EObject modelElement, EditorModelelementContext context)
-  {
-    Class<?> instanceClass = ((EAttribute)feature).getEAttributeType().getInstanceClass();
-    // Test which controls have a fitting type
-    // TODO: could be chached?
-    Set<Class<?>> keySet = controlRegistry.keySet();
-    ArrayList<AbstractMEControl> candidates = new ArrayList<AbstractMEControl>();
-    for (Class<?> clazz : keySet)
-    {
-      if (instanceClass.isPrimitive())
-      {
-        try
-        {
-          Class<?> primitive = (Class<?>)clazz.getField("TYPE").get(null);
-          if (primitive.equals(instanceClass))
-          {
-            candidates.addAll(controlRegistry.get(clazz));
-          }
+	private AbstractMEControl createAttribute(IItemPropertyDescriptor itemPropertyDescriptor,
+		EStructuralFeature feature, EObject modelElement, EditModelElementContext context) {
+		Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
+		// Test which controls have a fitting type
+		// TODO: could be chached?
+		Set<Class<?>> keySet = controlRegistry.keySet();
+		ArrayList<AbstractMEControl> candidates = new ArrayList<AbstractMEControl>();
+		for (Class<?> clazz : keySet) {
+			if (instanceClass.isPrimitive()) {
+				try {
+					Class<?> primitive = (Class<?>) clazz.getField("TYPE").get(null);
+					if (primitive.equals(instanceClass)) {
+						candidates.addAll(controlRegistry.get(clazz));
+					}
 
-        }
-        catch (IllegalArgumentException e)
-        {
-          // Do nothing
-        }
-        catch (SecurityException e)
-        {
-          // Do nothing
-        }
-        catch (IllegalAccessException e)
-        {
-          // Do nothing
-        }
-        catch (NoSuchFieldException e)
-        {
-          // Do nothing
-        }
-      }
-      if (clazz.isAssignableFrom(instanceClass))
-      {
-        candidates.addAll(controlRegistry.get(clazz));
-      }
-    }
-    AbstractMEControl control = getBestCandidate(candidates, itemPropertyDescriptor, feature, modelElement, context);
-    AbstractMEControl ret = null;
-    if (control == null)
-    {
-      return null;
-    }
-    try
-    {
-      ret = control.getClass().newInstance();
-      ret.setShowLabel(control.getShowLabel());
-    }
-    catch (InstantiationException e)
-    {
-      // Do nothing
-    }
-    catch (IllegalAccessException e)
-    {
-      // Do nothing
-    }
-    return ret;
+				} catch (IllegalArgumentException e) {
+					// Do nothing
+				} catch (SecurityException e) {
+					// Do nothing
+				} catch (IllegalAccessException e) {
+					// Do nothing
+				} catch (NoSuchFieldException e) {
+					// Do nothing
+				}
+			}
+			if (clazz.isAssignableFrom(instanceClass)) {
+				candidates.addAll(controlRegistry.get(clazz));
+			}
+		}
+		AbstractMEControl control = getBestCandidate(candidates, itemPropertyDescriptor, feature, modelElement, context);
+		AbstractMEControl ret = null;
+		if (control == null) {
+			return null;
+		}
+		try {
+			ret = control.getClass().newInstance();
+			ret.setShowLabel(control.getShowLabel());
+		} catch (InstantiationException e) {
+			// Do nothing
+		} catch (IllegalAccessException e) {
+			// Do nothing
+		}
+		return ret;
 
-  }
+	}
 
-  private AbstractMEControl getBestCandidate(ArrayList<AbstractMEControl> candidates,
-      IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature, EObject modelElement,
-      EditorModelelementContext context)
-  {
-    int bestValue = 0;
-    AbstractMEControl bestCandidate = null;
-    for (AbstractMEControl abstractMEControl : candidates)
-    {
-      abstractMEControl.setContext(context);
-      int newValue = abstractMEControl.canRender(itemPropertyDescriptor, modelElement);
-      if (newValue > bestValue)
-      {
-        bestCandidate = abstractMEControl;
-        bestValue = newValue;
-      }
-    }
-    return bestCandidate;
-  }
+	private AbstractMEControl getBestCandidate(ArrayList<AbstractMEControl> candidates,
+		IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature, EObject modelElement,
+		EditModelElementContext context) {
+		int bestValue = 0;
+		AbstractMEControl bestCandidate = null;
+		for (AbstractMEControl abstractMEControl : candidates) {
+			abstractMEControl.setContext(context);
+			int newValue = abstractMEControl.canRender(itemPropertyDescriptor, modelElement);
+			if (newValue > bestValue) {
+				bestCandidate = abstractMEControl;
+				bestValue = newValue;
+			}
+		}
+		return bestCandidate;
+	}
 
 }

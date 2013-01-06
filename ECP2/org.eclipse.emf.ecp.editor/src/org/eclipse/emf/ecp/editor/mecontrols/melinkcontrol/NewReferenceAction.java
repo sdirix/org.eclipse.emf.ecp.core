@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
@@ -142,6 +142,7 @@ public class NewReferenceAction extends ReferenceAction {
 			// newMEInstance = ePackage.getEFactoryInstance().create(newClass);
 
 			if (!eReference.isContainer()) {
+
 				// Returns the value of the Container
 				EObject parent = modelElement.eContainer();
 				while (!(parent == null) && newMEInstance.eContainer() == null) {
@@ -175,7 +176,7 @@ public class NewReferenceAction extends ReferenceAction {
 		}
 	}
 
-	private final EditorModelelementContext modelElementContext;
+	private final EditModelElementContext modelElementContext;
 	private Shell shell;
 
 	/**
@@ -191,7 +192,7 @@ public class NewReferenceAction extends ReferenceAction {
 	 *            the model element context
 	 */
 	public NewReferenceAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-		EditorModelelementContext modelElementContext, Shell shell, AdapterFactoryLabelProvider labelProvider) {
+		EditModelElementContext modelElementContext, Shell shell, AdapterFactoryLabelProvider labelProvider) {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.modelElementContext = modelElementContext;

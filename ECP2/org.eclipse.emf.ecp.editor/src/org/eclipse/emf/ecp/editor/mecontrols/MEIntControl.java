@@ -40,7 +40,7 @@ public class MEIntControl extends MEAttributeControl {
 	 */
 	@Override
 	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new IntegerWidget(dbc);
+		return new IntegerWidget(dbc, getContext().getEditingDomain(), getModelElement());
 	}
 
 }

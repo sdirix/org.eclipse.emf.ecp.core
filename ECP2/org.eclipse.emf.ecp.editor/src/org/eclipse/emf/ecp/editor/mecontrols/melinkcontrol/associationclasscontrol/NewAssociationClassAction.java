@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
 import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
@@ -49,7 +49,7 @@ public class NewAssociationClassAction extends Action {
 
 	private EObject modelElement;
 
-	private final EditorModelelementContext context;
+	private final EditModelElementContext context;
 
 	/**
 	 * The create command.
@@ -129,7 +129,7 @@ public class NewAssociationClassAction extends Action {
 	 *            model element context
 	 */
 	public NewAssociationClassAction(EObject modelElement, EReference eReference, IItemPropertyDescriptor descriptor,
-		EditorModelelementContext context, AdapterFactoryLabelProvider labelProvider) {
+		EditModelElementContext context, AdapterFactoryLabelProvider labelProvider) {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.context = context;

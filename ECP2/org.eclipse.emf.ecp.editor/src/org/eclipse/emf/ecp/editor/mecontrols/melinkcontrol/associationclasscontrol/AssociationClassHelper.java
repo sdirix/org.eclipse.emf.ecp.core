@@ -10,18 +10,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.EditorMetamodelContext;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
-import org.eclipse.emf.ecp.ui.model.ECPAssociationClassElement;
+import org.eclipse.emf.ecp.edit.ECPAssociationClassElement;
+import org.eclipse.emf.ecp.edit.EditMetaModelContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class contains some utility methods for adding or deleting elements related to {@link AssociationClassElement}.
@@ -45,7 +45,7 @@ public final class AssociationClassHelper {
 	 * @return The the {@link AssociationClassElement}'s which should be added.
 	 */
 	public static List<EObject> getRelatedAssociationClassToDrop(List<EObject> objectsToDrop, List<EObject> elements,
-		EditorMetamodelContext context) {
+		EditMetaModelContext context) {
 		List<EObject> result = new LinkedList<EObject>();
 		for (EObject objectToDrop : objectsToDrop) {
 			// get all features and try to find a AssociationClassElement
@@ -73,7 +73,7 @@ public final class AssociationClassHelper {
 	}
 
 	private static void handleAssociationClass(EObject objectToDrop, List<EObject> objectsToDrop, EObject association,
-		List<EObject> elements, List<EObject> result, EditorMetamodelContext context) {
+		List<EObject> elements, List<EObject> result, EditMetaModelContext context) {
 
 		ECPAssociationClassElement ecpAssociation = context.getAssociationClassElement(association);
 
@@ -101,8 +101,7 @@ public final class AssociationClassHelper {
 	 * @param context The context.
 	 * @return The the {@link AssociationClassElement}'s which should be also deleted.
 	 */
-	public static List<EObject> getRelatedAssociationClassToDelete(EObject objectToDelete,
-			EditorMetamodelContext context) {
+	public static List<EObject> getRelatedAssociationClassToDelete(EObject objectToDelete, EditMetaModelContext context) {
 		List<EObject> result = new LinkedList<EObject>();
 		// get all features and try to find a AssociationClassElement
 		EList<EStructuralFeature> features = objectToDelete.eClass().getEAllStructuralFeatures();
@@ -140,7 +139,7 @@ public final class AssociationClassHelper {
 	 * @param context The context.
 	 * @return The other side of the association or {@code null} if the element not belongs to the association
 	 */
-	public static EObject getRelatedModelElement(EObject element, EObject association, EditorModelelementContext context) {
+	public static EObject getRelatedModelElement(EObject element, EObject association, EditModelElementContext context) {
 
 		ECPAssociationClassElement ecpAssociation = context.getMetaModelElementContext().getAssociationClassElement(
 			association);
@@ -167,7 +166,7 @@ public final class AssociationClassHelper {
 	 * @return The other side of the association or {@code null} if the reference not belongs to the association
 	 */
 	public static EReference getRelatedEReference(EReference eReference, EObject association,
-			EditorMetamodelContext context) {
+		EditMetaModelContext context) {
 		ECPAssociationClassElement ecpAssociation = context.getAssociationClassElement(association);
 		if (eReference.equals(ecpAssociation.getTargetFeature().getEOpposite())) {
 			return ecpAssociation.getSourceFeature().getEOpposite();
@@ -184,8 +183,7 @@ public final class AssociationClassHelper {
 	 * @param context the context.
 	 * @return a list of features.
 	 */
-	public static List<EStructuralFeature> getAssociationFeatures(EObject association,
-			EditorMetamodelContext context) {
+	public static List<EStructuralFeature> getAssociationFeatures(EObject association, EditMetaModelContext context) {
 
 		ECPAssociationClassElement ecpAssociation = context.getAssociationClassElement(association);
 
@@ -202,7 +200,7 @@ public final class AssociationClassHelper {
 	 * @param context The context.
 	 */
 	public static void createAssociation(EReference eReference, EObject modelElement, EObject relatedModelElement,
-			EditorMetamodelContext context) {
+		EditMetaModelContext context) {
 
 		EClass eClazz = eReference.getEReferenceType();
 		EPackage ePackage = eClazz.getEPackage();

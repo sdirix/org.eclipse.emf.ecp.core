@@ -12,22 +12,11 @@ package org.eclipse.emf.ecp.editor.input;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.MEEditor;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * The {@link IEditorInput} for the {@link MEEditor}.
@@ -40,7 +29,7 @@ public class MEEditorInput implements IEditorInput {
 
 	private EStructuralFeature problemFeature;
 //	private DecoratingLabelProvider labelProvider;
-	private EditorModelelementContext modelElementContext;
+	private EditModelElementContext modelElementContext;
 //	private ComposedAdapterFactory composedAdapterFactory;
 //	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 //	private IDecoratorManager decoratorManager;
@@ -51,7 +40,7 @@ public class MEEditorInput implements IEditorInput {
 	 * @param context context of the model element
 	 * @param problemFeature the problem feature
 	 */
-	public MEEditorInput(EditorModelelementContext context, EStructuralFeature problemFeature) {
+	public MEEditorInput(EditModelElementContext context, EStructuralFeature problemFeature) {
 		this(context);
 		this.problemFeature = problemFeature;
 	}
@@ -61,7 +50,7 @@ public class MEEditorInput implements IEditorInput {
 	 * 
 	 * @param context context of the modelelement
 	 */
-	public MEEditorInput(EditorModelelementContext context) {
+	public MEEditorInput(EditModelElementContext context) {
 		super();
 		this.modelElementContext = context;
 		
@@ -193,9 +182,9 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * Returns the {@link ECPModelelemenContext}.
 	 * 
-	 * @return {@link EditorModelelementContext}
+	 * @return {@link EditModelElementContext}
 	 */
-	public EditorModelelementContext getModelElementContext() {
+	public EditModelElementContext getModelElementContext() {
 		return modelElementContext;
 	}
 

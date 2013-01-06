@@ -12,15 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
-
-import org.eclipse.core.databinding.DataBindingContext;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Context for a modelelement.
@@ -131,5 +130,8 @@ public interface EditModelElementContext {
 	 * @return the {@link EObject} of this context
 	 */
 	EObject getModelElement();
+
+	
+	EditMetaModelContext getMetaModelElementContext();
 
 }

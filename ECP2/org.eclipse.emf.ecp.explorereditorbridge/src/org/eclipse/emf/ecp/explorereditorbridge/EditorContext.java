@@ -19,9 +19,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
-import org.eclipse.emf.ecp.editor.EditorMetamodelContext;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
-import org.eclipse.emf.ecp.editor.EditorModelelementContextListener;
+import org.eclipse.emf.ecp.edit.EditMetaModelContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -38,7 +38,7 @@ import java.util.List;
  * @author Eugen Neufeld
  * 
  */
-public class EditorContext implements EditorModelelementContext {
+public class EditorContext implements EditModelElementContext {
 
 	private final EObject modelElement;
 
@@ -47,7 +47,7 @@ public class EditorContext implements EditorModelelementContext {
 	// TODO what is it god for
 	private MetaModeElementContext metaModeElementContext;
 
-	private List<EditorModelelementContextListener> contextListeners = new ArrayList<EditorModelelementContextListener>();
+	private List<EditModelElementContextListener> contextListeners = new ArrayList<EditModelElementContextListener>();
 
 	private IECPProjectsChangedUIObserver projectObserver;
 
@@ -65,7 +65,7 @@ public class EditorContext implements EditorModelelementContext {
 
 			public void projectChanged(ECPProject project, boolean opened) throws Exception {
 				if (!opened) {
-					for (EditorModelelementContextListener contextListener : contextListeners) {
+					for (EditModelElementContextListener contextListener : contextListeners) {
 						contextListener.onContextDeleted();
 					}
 					dispose();
@@ -77,7 +77,7 @@ public class EditorContext implements EditorModelelementContext {
 				for (Object object : objects) {
 					if (EObject.class.isInstance(object) && object.equals(getModelElement())
 						&& ((EObject) object).eContainer() == null) {
-						for (EditorModelelementContextListener contextListener : contextListeners) {
+						for (EditModelElementContextListener contextListener : contextListeners) {
 							contextListener.onContextDeleted();
 						}
 						dispose();
@@ -89,11 +89,11 @@ public class EditorContext implements EditorModelelementContext {
 		ECPProjectManager.INSTANCE.addObserver(projectObserver);
 	}
 
-	public void addModelElementContextListener(EditorModelelementContextListener modelElementContextListener) {
+	public void addModelElementContextListener(EditModelElementContextListener modelElementContextListener) {
 		contextListeners.add(modelElementContextListener);
 	}
 
-	public void removeModelElementContextListener(EditorModelelementContextListener modelElementContextListener) {
+	public void removeModelElementContextListener(EditModelElementContextListener modelElementContextListener) {
 		contextListeners.remove(modelElementContextListener);
 	}
 
@@ -110,7 +110,7 @@ public class EditorContext implements EditorModelelementContext {
 
 	}
 
-	public EditorMetamodelContext getMetaModelElementContext() {
+	public EditMetaModelContext getMetaModelElementContext() {
 		// TODO Auto-generated method stub
 		return metaModeElementContext;
 	}

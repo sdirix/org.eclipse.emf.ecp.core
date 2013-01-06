@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -38,7 +38,7 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 
 	private EObject opposite;
 
-	private final EditorModelelementContext context;
+	private final EditModelElementContext context;
 
 	/**
 	 * Default constructor.
@@ -53,7 +53,7 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 	 *            the model element context
 	 */
 	public MEHyperLinkDeleteAdapter(EObject modelElement, EReference reference, EObject opposite,
-		EditorModelelementContext context) {
+		EditModelElementContext context) {
 		this.modelElement = modelElement;
 		this.reference = reference;
 		this.opposite = opposite;

@@ -5,6 +5,7 @@ package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
@@ -35,9 +36,9 @@ public class EEnumWidget extends ECPAttributeWidget {
 	/**
 	 * @param dbc
 	 */
-	public EEnumWidget(DataBindingContext dbc, IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement,
-		EStructuralFeature feature) {
-		super(dbc);
+	public EEnumWidget(DataBindingContext dbc, EditingDomain editingDomain,
+		IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement, EStructuralFeature feature) {
+		super(dbc, editingDomain);
 		this.modelElement = modelElement;
 		this.itemPropertyDescriptor = itemPropertyDescriptor;
 		this.feature = feature;

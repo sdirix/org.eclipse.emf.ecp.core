@@ -13,6 +13,9 @@
 
 package org.eclipse.emf.ecp.editor.mecontrols.widgets;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.IConverter;
@@ -23,8 +26,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -41,14 +42,19 @@ import java.lang.reflect.Type;
  */
 public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	protected Text text;
-
+	private final EObject eObject;
 	private boolean doVerify;
 
 	/**
 	 * @param dbc
 	 */
-	public AbstractTextWidget(DataBindingContext dbc) {
-		super(dbc);
+	public AbstractTextWidget(DataBindingContext dbc, EditingDomain editingDomain, EObject eObject) {
+		super(dbc, editingDomain);
+		this.eObject = eObject;
+	}
+
+	protected EObject getEObject() {
+		return eObject;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,7 +91,7 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 		// TODO: activate verification once again
 		doVerify = false;
 		createTextWidget(toolkit, composite, style);
-		addFocusListener();
+		// addFocusListener();
 		addVerifyListener();
 		return text;
 	}
@@ -100,25 +106,30 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	}
 
-	private void addFocusListener() {
-		text.addFocusListener(new FocusListener() {
-
-			public void focusLost(FocusEvent e) {
-				if (text.getText().equals("")) {
-					setUnvalidatedString(convertModelToString(getDefaultValue()));
-				} else {
-					postValidate(text.getText());
-				}
-
-				getDbc().updateModels();
-				getDbc().updateTargets();
-			}
-
-			public void focusGained(FocusEvent e) {
-				// do nothing
-			}
-		});
-	}
+	// private void addFocusListener() {
+	// text.addFocusListener(new FocusListener() {
+	//
+	// public void focusLost(FocusEvent e) {
+	// if (text.getText().equals("")) {
+	// setUnvalidatedString(convertModelToString(getDefaultValue()));
+	// } else {
+	// postValidate(text.getText());
+	// }
+	// getEditingDomain().getCommandStack().execute(new ChangeCommand(eObject) {
+	// @Override
+	// protected void doExecute() {
+	// getDbc().updateModels();
+	// getDbc().updateTargets();
+	// }
+	// });
+	//
+	// }
+	//
+	// public void focusGained(FocusEvent e) {
+	// // do nothing
+	// }
+	// });
+	// }
 
 	private void addVerifyListener() {
 		text.addVerifyListener(new VerifyListener() {

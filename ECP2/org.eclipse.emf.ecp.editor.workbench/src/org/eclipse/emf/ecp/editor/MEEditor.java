@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
 import org.eclipse.emf.ecp.editor.input.MEEditorInput;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -57,9 +59,9 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private ModelElementChangeListener modelElementChangeListener;
 
-	private EditorModelelementContext modelElementContext;
+	private EditModelElementContext modelElementContext;
 
-	private EditorModelelementContextListener modelElementContextListener;
+	private EditModelElementContextListener modelElementContextListener;
 
 	private MEEditorInput meInput;
 
@@ -205,7 +207,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 				setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 			
 
-			modelElementContextListener = new EditorModelelementContextListener() {
+			modelElementContextListener = new EditModelElementContextListener() {
 
 				public void onModelElementDeleted(EObject deleted) {
 					if (modelElementContext.getModelElement().equals(deleted)) {

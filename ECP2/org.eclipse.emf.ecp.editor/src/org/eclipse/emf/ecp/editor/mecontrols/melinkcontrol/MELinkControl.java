@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
 import org.eclipse.emf.ecp.ui.util.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -68,7 +68,7 @@ public class MELinkControl {
 
 	private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
 
-	private EditorModelelementContext context;
+	private EditModelElementContext context;
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
@@ -76,11 +76,11 @@ public class MELinkControl {
 
 	private ShortLabelProvider shortLabelProvider;
 
-	public EditorModelelementContext getContext() {
+	public EditModelElementContext getContext() {
 		return context;
 	}
 
-	public void setContext(EditorModelelementContext context) {
+	public void setContext(EditModelElementContext context) {
 		this.context = context;
 	}
 
@@ -88,7 +88,7 @@ public class MELinkControl {
 	 * {@inheritDoc}
 	 */
 	public Control createControl(final Composite parent, int style, IItemPropertyDescriptor itemPropertyDescriptor,
-		final EObject link, EObject contextModelElement, FormToolkit toolkit, EditorModelelementContext context) {
+		final EObject link, EObject contextModelElement, FormToolkit toolkit, EditModelElementContext context) {
 		this.context = context;
 		Object feature = itemPropertyDescriptor.getFeature(link);
 		eReference = (EReference) feature;

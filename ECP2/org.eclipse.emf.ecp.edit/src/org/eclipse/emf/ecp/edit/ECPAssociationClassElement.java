@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.model;
+package org.eclipse.emf.ecp.edit;
 
 import java.util.List;
 

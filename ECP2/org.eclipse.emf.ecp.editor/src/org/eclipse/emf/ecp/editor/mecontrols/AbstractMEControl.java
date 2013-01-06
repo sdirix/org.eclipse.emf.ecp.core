@@ -12,7 +12,7 @@ package org.eclipse.emf.ecp.editor.mecontrols;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.EditorModelelementContext;
+import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.swt.widgets.Composite;
@@ -61,7 +61,7 @@ public abstract class AbstractMEControl {
 
 	private IItemPropertyDescriptor itemPropertyDescriptor;
 
-	private EditorModelelementContext context;
+	private EditModelElementContext context;
 
 	private EStructuralFeature structuralFeature;
 
@@ -209,7 +209,7 @@ public abstract class AbstractMEControl {
 	 * @param context
 	 *            the {@link EditorModelelementContext}
 	 */
-	public void setContext(EditorModelelementContext context) {
+	public void setContext(EditModelElementContext context) {
 		this.context = context;
 	}
 
@@ -218,7 +218,7 @@ public abstract class AbstractMEControl {
 	 * 
 	 * @return the {@link EditorModelelementContext}
 	 */
-	public EditorModelelementContext getContext() {
+	public EditModelElementContext getContext() {
 		return context;
 	}
 
@@ -258,7 +258,7 @@ public abstract class AbstractMEControl {
 	 * @return the widget
 	 */
 	public Control createControl(Composite parent, int style, IItemPropertyDescriptor itemPropertyDescriptor,
-		EObject modelElement, EditorModelelementContext context, FormToolkit toolkit) {
+		EObject modelElement, EditModelElementContext context, FormToolkit toolkit) {
 		setContext(context);
 		setModelElement(modelElement);
 		setToolkit(toolkit);

@@ -26,10 +26,13 @@
 		<module>../org.eclipse.emf.ecp.core</module>
 		<module>../org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../org.eclipse.emf.ecp.example-feature</module>
+		<!-- 
 		<module>../org.eclipse.emf.ecp.example.bowlingmodel</module>
 		<module>../org.eclipse.emf.ecp.example.bowlingmodel.edit</module>
+		-->
 		<module>../org.eclipse.emf.ecp.example.leagueView</module>
 		<module>../org.eclipse.emf.ecp.doc</module>
+		<module>../org.eclipse.emf.ecp.edit</module>
 		<module>../org.eclipse.emf.ecp.editor</module>
 		<module>../org.eclipse.emf.ecp.editor.workbench</module>
 		<module>../org.eclipse.emf.ecp.editor.controls-feature</module>
