@@ -466,7 +466,7 @@
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
       </handler>
       <handler
-            class="org.eclipse.emf.ecp.ui.commands.DeleteModelElement"
+            class="org.eclipse.emf.ecp.ui.commands.DeleteModelElementHandler"
             commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
       </handler>
       <handler

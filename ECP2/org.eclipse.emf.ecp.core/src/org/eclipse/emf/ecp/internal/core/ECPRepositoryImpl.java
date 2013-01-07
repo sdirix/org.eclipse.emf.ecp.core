@@ -1,13 +1,16 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
- */
+ * Eike Stepper - initial API and implementation
+ * Eugen Neufeld - JavaDoc
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -26,7 +29,6 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
@@ -37,222 +39,221 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * This Class describes a repository.
+ * 
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public final class ECPRepositoryImpl extends PropertiesElement implements InternalRepository, DisposeListener
-{
-  private final Disposable disposable = new Disposable(this)
-  {
-    @Override
-    protected void doDispose()
-    {
-      provider = null;
-      providerSpecificData = null;
-    }
-  };
+public final class ECPRepositoryImpl extends PropertiesElement implements InternalRepository, DisposeListener {
+	private final Disposable disposable = new Disposable(this) {
+		@Override
+		protected void doDispose() {
+			provider = null;
+			providerSpecificData = null;
+		}
+	};
 
-  private String label;
+	private String label;
 
-  private String description;
+	private String description;
 
-  private InternalProvider provider;
+	private InternalProvider provider;
 
-  private Object providerSpecificData;
+	private Object providerSpecificData;
 
-  public ECPRepositoryImpl(ECPProvider provider, String name, ECPProperties properties)
-  {
-    super(name, properties);
-    label = name;
-    description = "";
+	/**
+	 * Constructor used to create an instance through user input.
+	 * 
+	 * @param provider the {@link ECPProvider} for this repository
+	 * @param name the name of this repository
+	 * @param properties the {@link ECPProperties} of this repository
+	 */
+	public ECPRepositoryImpl(ECPProvider provider, String name, ECPProperties properties) {
+		super(name, properties);
+		label = name;
+		description = "";
 
-    if (provider == null)
-    {
-      throw new IllegalArgumentException("Provider is null");
-    }
+		if (provider == null) {
+			throw new IllegalArgumentException("Provider is null");
+		}
 
-    this.provider = (InternalProvider)provider;
-    this.provider.addDisposeListener(this);
-  }
+		this.provider = (InternalProvider) provider;
+		this.provider.addDisposeListener(this);
+	}
 
-  public ECPRepositoryImpl(ObjectInput in) throws IOException
-  {
-    super(in);
+	/**
+	 * Constructor used by the {@link org.eclipse.emf.ecp.core.ECPRepositoryManager ECPRepositoryManager} when loading
+	 * existing repositories during startup.
+	 * 
+	 * @param in the {@link ObjectInput} to parse
+	 * @throws IOException when an error occurs
+	 */
+	public ECPRepositoryImpl(ObjectInput in) throws IOException {
+		super(in);
 
-    label = in.readUTF();
-    description = in.readUTF();
+		label = in.readUTF();
+		description = in.readUTF();
 
-    String providerName = in.readUTF();
-    provider = (InternalProvider)ECPProviderRegistry.INSTANCE.getProvider(providerName);
-    if (provider == null)
-    {
-      throw new IllegalStateException("Provider not found: " + providerName);
-    }
+		String providerName = in.readUTF();
+		provider = (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);
+		if (provider == null) {
+			throw new IllegalStateException("Provider not found: " + providerName);
+		}
 
-    provider.addDisposeListener(this);
-  }
+		provider.addDisposeListener(this);
+	}
 
-  public String getType()
-  {
-    return ECPRepository.TYPE;
-  }
+	/** {@inheritDoc} **/
+	public String getType() {
+		return ECPRepository.TYPE;
+	}
 
-  public void disposed(ECPDisposable disposable) throws Exception
-  {
-    if (disposable == provider)
-    {
-      dispose();
-    }
-  }
+	/** {@inheritDoc} **/
+	public void disposed(ECPDisposable disposable) throws Exception {
+		if (disposable == provider) {
+			dispose();
+		}
+	}
 
-  public boolean isStorable()
-  {
-    return true;
-  }
+	/** {@inheritDoc} **/
+	public boolean isStorable() {
+		return true;
+	}
 
-  @Override
-  public void write(ObjectOutput out) throws IOException
-  {
-    super.write(out);
-    out.writeUTF(label);
-    out.writeUTF(description);
-    out.writeUTF(provider.getName());
-  }
+	@Override
+	public void write(ObjectOutput out) throws IOException {
+		super.write(out);
+		out.writeUTF(label);
+		out.writeUTF(description);
+		out.writeUTF(provider.getName());
+	}
 
-  public final String getLabel()
-  {
-    return label;
-  }
+	/** {@inheritDoc} **/
+	public String getLabel() {
+		return label;
+	}
 
-  public final void setLabel(String label)
-  {
-    this.label = label;
-  }
+	/** {@inheritDoc} **/
+	public void setLabel(String label) {
+		this.label = label;
+	}
 
-  public final String getDescription()
-  {
-    return description;
-  }
+	/** {@inheritDoc} **/
+	public String getDescription() {
+		return description;
+	}
 
-  public final void setDescription(String description)
-  {
-    this.description = description;
-  }
+	/** {@inheritDoc} **/
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  public final boolean isDisposed()
-  {
-    return disposable.isDisposed();
-  }
+	/** {@inheritDoc} **/
+	public boolean isDisposed() {
+		return disposable.isDisposed();
+	}
 
-  /**
-   * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code> if
-   * no such object can be found.
-   * <p>
-   * This implementation of the method declared by <code>IAdaptable</code> passes the request along to the platform's
-   * adapter manager; roughly <code>Platform.getAdapterManager().getAdapter(this, adapter)</code>. Subclasses may
-   * override this method (however, if they do so, they should invoke the method on their superclass to ensure that the
-   * Platform's adapter manager is consulted).
-   * </p>
-   * 
-   * @param adapterType
-   *          the class to adapt to
-   * @return the adapted object or <code>null</code>
-   * @see IAdaptable#getAdapter(Class)
-   */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public Object getAdapter(Class adapterType)
-  {
-    InternalProvider provider = getProvider();
-    if (!provider.isDisposed())
-    {
-      Object result = provider.getAdapter(this, adapterType);
-      if (result != null)
-      {
-        return result;
-      }
-    }
+	/**
+	 * Returns an object which is an instance of the given class associated with this object. Returns <code>null</code>
+	 * if
+	 * no such object can be found.
+	 * <p>
+	 * This implementation of the method declared by <code>IAdaptable</code> passes the request along to the platform's
+	 * adapter manager; roughly <code>Platform.getAdapterManager().getAdapter(this, adapter)</code>. Subclasses may
+	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
+	 * the Platform's adapter manager is consulted).
+	 * </p>
+	 * 
+	 * @param adapterType
+	 *            the class to adapt to
+	 * @return the adapted object or <code>null</code>
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Object getAdapter(Class adapterType) {
+		InternalProvider provider = getProvider();
+		if (!provider.isDisposed()) {
+			Object result = provider.getAdapter(this, adapterType);
+			if (result != null) {
+				return result;
+			}
+		}
 
-    return Platform.getAdapterManager().getAdapter(this, adapterType);
-  }
+		return Platform.getAdapterManager().getAdapter(this, adapterType);
+	}
 
-  public final void dispose()
-  {
-    disposable.dispose();
-  }
+	/** {@inheritDoc} **/
+	public void dispose() {
+		disposable.dispose();
+	}
 
-  public final void addDisposeListener(DisposeListener listener)
-  {
-    disposable.addDisposeListener(listener);
-  }
+	/** {@inheritDoc} **/
+	public void addDisposeListener(DisposeListener listener) {
+		disposable.addDisposeListener(listener);
+	}
 
-  public final void removeDisposeListener(DisposeListener listener)
-  {
-    disposable.removeDisposeListener(listener);
-  }
+	/** {@inheritDoc} **/
+	public void removeDisposeListener(DisposeListener listener) {
+		disposable.removeDisposeListener(listener);
+	}
 
-  public InternalProvider getProvider()
-  {
-    return provider;
-  }
+	/** {@inheritDoc} **/
+	public InternalProvider getProvider() {
+		return provider;
+	}
 
-  public Object getProviderSpecificData()
-  {
-    return providerSpecificData;
-  }
+	/** {@inheritDoc} **/
+	public Object getProviderSpecificData() {
+		return providerSpecificData;
+	}
 
-  public void setProviderSpecificData(Object providerSpecificData)
-  {
-    this.providerSpecificData = providerSpecificData;
-  }
+	/** {@inheritDoc} **/
+	public void setProviderSpecificData(Object providerSpecificData) {
+		this.providerSpecificData = providerSpecificData;
+	}
 
-  public ECPModelContext getContext()
-  {
-    return this;
-  }
+	/** {@inheritDoc} **/
+	public ECPModelContext getContext() {
+		return this;
+	}
 
-  public boolean canDelete()
-  {
-    return isStorable();
-  }
+	/** {@inheritDoc} **/
+	public boolean canDelete() {
+		return isStorable();
+	}
 
-  public void delete()
-  {
-    if (!canDelete())
-    {
-      throw new UnsupportedOperationException();
-    }
+	/** {@inheritDoc} **/
+	public void delete() {
+		if (!canDelete()) {
+			throw new UnsupportedOperationException();
+		}
 
-    try
-    {
-      provider.handleLifecycle(this, LifecycleEvent.REMOVE);
-    }
-    catch (Exception ex)
-    {
-      Activator.log(ex);
-    }
+		try {
+			provider.handleLifecycle(this, LifecycleEvent.REMOVE);
+		} catch (Exception ex) {
+			Activator.log(ex);
+		}
 
-    ECPRepositoryManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
-  }
+		ECPRepositoryManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
+	}
 
-  public void notifyObjectsChanged(Object[] objects)
-  {
-    if (objects != null && objects.length != 0)
-    {
-      ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
-    }
-  }
+	/** {@inheritDoc} **/
+	public void notifyObjectsChanged(Object[] objects) {
+		if (objects != null && objects.length != 0) {
+			ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+		}
+	}
 
-  public InternalProject[] getOpenProjects()
-  {
-    List<InternalProject> result = new ArrayList<InternalProject>();
-    for (ECPProject project : ECPProjectManager.INSTANCE.getProjects())
-    {
-      if (project.isOpen() && project.getRepository().equals(this))
-      {
-        result.add((InternalProject)project);
-      }
-    }
+	/** {@inheritDoc} **/
+	public InternalProject[] getOpenProjects() {
+		List<InternalProject> result = new ArrayList<InternalProject>();
+		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
+			if (project.isOpen() && project.getRepository().equals(this)) {
+				result.add((InternalProject) project);
+			}
+		}
 
-    // TODO Consider to cache the result
-    return result.toArray(new InternalProject[result.size()]);
-  }
+		// TODO Consider to cache the result
+		return result.toArray(new InternalProject[result.size()]);
+	}
 }

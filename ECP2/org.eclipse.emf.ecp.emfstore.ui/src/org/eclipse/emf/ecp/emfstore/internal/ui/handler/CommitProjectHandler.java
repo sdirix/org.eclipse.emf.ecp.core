@@ -24,6 +24,12 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ * This is the EMFStore Commit Handler delegating to the EMFStore {@link UICommitProjectController}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class CommitProjectHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */

@@ -35,6 +35,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	/**
 	 * Static {@link EMFStoreDirtyDecoratorCachedTree} singleton.
 	 * 
+	 * @param project the {@link ECPProject} to initialize this CashedTree on
 	 * @return Static instance of the {@link EMFStoreDirtyDecoratorCachedTree}
 	 */
 	public static EMFStoreDirtyDecoratorCachedTree getInstance(final ECPProject project) {
@@ -112,12 +113,24 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		super.updateParentNode(parent, object, parentValue);
 	}
 
+	/**
+	 * Call to indicate that an {@link EObject} was added.
+	 * 
+	 * @param eObject the new {@link EObject}
+	 * @return the {@link Set} of {@link EObject} affected by this change
+	 */
 	public Set<EObject> addOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() + 1);
 		return update(eObject, node);
 	}
 
+	/**
+	 * Call to indicate that an {@link EObject} was removed.
+	 * 
+	 * @param eObject the removed {@link EObject}
+	 * @return the {@link Set} of {@link EObject} affected by this change
+	 */
 	public Set<EObject> removeOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() - 1);

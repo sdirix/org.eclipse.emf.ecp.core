@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
-import org.eclipse.emf.ecp.ui.util.ModelElementOpener;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;

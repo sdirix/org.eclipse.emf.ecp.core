@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- * 
+ * Eugen Neufeld - JavaDoc and changes
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -34,7 +33,6 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -44,13 +42,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * This class manages the available {@link ECPProject ECPProjects}.
+ * 
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedUIObserver> implements
-	ECPProjectManager, IECPRepositoriesChangedObserver {
+public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECPProjectsChangedUIObserver>
+	implements ECPProjectManager, IECPRepositoriesChangedObserver {
 
+	/**
+	 * The singleton that is returned by the {@link ECPProjectManager#INSTANCE}.
+	 */
 	public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
+	/**
+	 * This variable defines whether the projects where already initialized.
+	 */
 	private boolean initializedProjects = false;
 
 	private ECPProjectManagerImpl() {
@@ -123,8 +129,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 
 				if (!project.getProvider().modelExists(project)) {
 					project.close();
-					Activator.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-						"Project Data was deleted since last start. Project is now closed."));
+					Activator.log(IStatus.ERROR, "Project Data was deleted since last start. Project is now closed.");
 
 					continue;
 				}
@@ -141,6 +146,13 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		super.storeElement(project);
 	}
 
+	/**
+	 * This is called by projects to notify observers about project changes.
+	 * 
+	 * @param project the project that called this method
+	 * @param opened whether the project is open
+	 * @param store whether to store the change
+	 */
 	public void changeProject(ECPProject project, boolean opened, boolean store) {
 		if (store) {
 			storeElement((InternalProject) project);
@@ -153,6 +165,15 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		}
 	}
 
+	/**
+	 * This is called by projects to notify observers about object changes.
+	 * First the {@link IECPProjectObjectsChangedObserver IECPProjectObjectsChangedObservers} are notified then the
+	 * {@link IECPProjectsChangedUIObserver IECPProjectsChangedUIObservers}.
+	 * 
+	 * @param project the project that called this method
+	 * @param objects the objects that changed
+	 * @param structural whether the changes where structural
+	 */
 	public void notifyObjectsChanged(ECPProject project, Object[] objects, boolean structural) {
 
 		try {
@@ -171,6 +192,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		}
 	}
 
+	/** {@inheritDoc} */
 	public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception {
 		Set<ECPRepository> addedRepositories = ECPUtil.getAddedElements(oldRepositories, newRepositories);
 		InternalProject[] projects = getProjects();
@@ -184,6 +206,7 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 		}
 	}
 
+	/** {@inheritDoc} */
 	public void objectsChanged(ECPRepository repository, Object[] objects) throws Exception {
 		// Do nothing
 	}
@@ -196,12 +219,12 @@ public class ECPProjectManagerImpl extends PropertiesStore<InternalProject, IECP
 	@Override
 	protected void doActivate() throws Exception {
 		super.doActivate();
-		ECPRepositoryManager.INSTANCE.addObserver(this);
+		ECPObserverBus.getInstance().register(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPRepositoryManager.INSTANCE.removeObserver(this);
+		ECPObserverBus.getInstance().unregister(this);
 		super.doDeactivate();
 	}
 

@@ -1,12 +1,16 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * Eugen Neufeld - JavaDoc
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -39,10 +43,17 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
+ * This class manages the repositories.
+ * 
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, IECPRepositoriesChangedObserver>
-	implements ECPRepositoryManager, IECPProvidersChangedObserver {
+public final class ECPRepositoryManagerImpl extends
+	PropertiesStore<InternalRepository, IECPRepositoriesChangedObserver> implements ECPRepositoryManager,
+	IECPProvidersChangedObserver {
+	/**
+	 * This Singleton is used by the {@link ECPRepositoryManager#INSTANCE}.
+	 */
 	public static final ECPRepositoryManagerImpl INSTANCE = new ECPRepositoryManagerImpl();
 
 	private final RepositoryParser extensionParser = new RepositoryParser();
@@ -50,6 +61,7 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
 	private ECPRepositoryManagerImpl() {
 	}
 
+	/** {@inheritDoc} **/
 	public InternalRepository getRepository(Object adaptable) {
 		if (adaptable instanceof ECPRepositoryAware) {
 			ECPRepositoryAware repositoryAware = (ECPRepositoryAware) adaptable;
@@ -59,18 +71,22 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
 		return AdapterUtil.adapt(adaptable, InternalRepository.class);
 	}
 
+	/** {@inheritDoc} **/
 	public InternalRepository getRepository(String name) {
 		return getElement(name);
 	}
 
+	/** {@inheritDoc} **/
 	public InternalRepository[] getRepositories() {
 		return getElements();
 	}
 
+	/** {@inheritDoc} **/
 	public boolean hasRepositories() {
 		return hasElements();
 	}
 
+	/** {@inheritDoc} **/
 	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties) {
 		InternalRepository repository = new ECPRepositoryImpl(provider, name, properties);
@@ -82,6 +98,12 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
 		return repository;
 	}
 
+	/**
+	 * This is called by the {@link ECPRepository} to notificate observers about chnages it its objects.
+	 * 
+	 * @param repository the repository where the changes occured
+	 * @param objects the changed objects
+	 */
 	public void notifyObjectsChanged(ECPRepository repository, Object[] objects) {
 
 		try {
@@ -92,6 +114,7 @@ public class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository
 		}
 	}
 
+	/** {@inheritDoc} **/
 	public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception {
 		Set<ECPProvider> addedProviders = ECPUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {

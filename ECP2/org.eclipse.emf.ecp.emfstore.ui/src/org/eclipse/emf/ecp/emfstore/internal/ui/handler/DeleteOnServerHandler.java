@@ -25,6 +25,12 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ * This is the EMFStore DeleteOnServer Handler delegating to the EMFStore {@link UIDeleteRemoteProjectController}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class DeleteOnServerHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */

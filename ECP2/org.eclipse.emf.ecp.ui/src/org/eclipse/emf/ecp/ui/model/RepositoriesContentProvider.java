@@ -13,6 +13,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
@@ -46,12 +47,12 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	@Override
 	protected void connectInput(ECPRepositoryManager input) {
 		super.connectInput(input);
-		input.addObserver(this);
+		ECPObserverBus.getInstance().register(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPRepositoryManager input) {
-		input.removeObserver(this);
+		ECPObserverBus.getInstance().unregister(this);
 		super.disconnectInput(input);
 	}
 

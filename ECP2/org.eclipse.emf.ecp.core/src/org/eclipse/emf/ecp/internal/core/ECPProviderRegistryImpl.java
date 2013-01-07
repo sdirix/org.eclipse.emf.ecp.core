@@ -1,12 +1,16 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * Eugen Neufeld - JavaDoc
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -40,10 +44,16 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /**
+ * This class manages {@link ECPProvider}.
+ * 
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, IECPProvidersChangedObserver> implements
-	ECPProviderRegistry {
+public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, IECPProvidersChangedObserver>
+	implements ECPProviderRegistry {
+	/**
+	 * The Singleton used in {@link ECPProviderRegistry#INSTANCE}.
+	 */
 	public static final ECPProviderRegistryImpl INSTANCE = new ECPProviderRegistryImpl();
 
 	private final ProviderParser extensionParser = new ProviderParser();
@@ -51,6 +61,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 	private ECPProviderRegistryImpl() {
 	}
 
+	/** {@inheritDoc} **/
 	public InternalProvider getProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
 			ECPProviderAware providerAware = (ECPProviderAware) adaptable;
@@ -60,22 +71,27 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		return AdapterUtil.adapt(adaptable, InternalProvider.class);
 	}
 
+	/** {@inheritDoc} **/
 	public InternalProvider getProvider(String name) {
 		return getElement(name);
 	}
 
+	/** {@inheritDoc} **/
 	public InternalProvider[] getProviders() {
 		return getElements();
 	}
 
+	/** {@inheritDoc} **/
 	public boolean hasProviders() {
 		return hasElements();
 	}
 
+	/** {@inheritDoc} **/
 	public void addProvider(ECPProvider provider) {
 		changeElements(null, Collections.singleton((InternalProvider) provider));
 	}
 
+	/** {@inheritDoc} **/
 	public void removeProvider(String name) {
 		changeElements(Collections.singleton(name), null);
 	}
@@ -85,12 +101,7 @@ public class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, I
 		return new InternalProvider[size];
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.emf.ecp.internal.core.util.Registry#notifyObservers(org.eclipse.emf.ecp.core.util.observer.IECPObserver
-	 * , ELEMENT[], ELEMENT[])
-	 */
+	/** {@inheritDoc} **/
 	@Override
 	protected void notifyObservers(IECPProvidersChangedObserver observer, InternalProvider[] oldProviders,
 		InternalProvider[] newProviders) throws Exception {

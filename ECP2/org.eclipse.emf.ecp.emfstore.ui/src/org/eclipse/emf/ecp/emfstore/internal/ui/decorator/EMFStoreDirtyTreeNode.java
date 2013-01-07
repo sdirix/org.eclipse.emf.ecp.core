@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Tobias Verhoeven - initial API and implementation
  * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;

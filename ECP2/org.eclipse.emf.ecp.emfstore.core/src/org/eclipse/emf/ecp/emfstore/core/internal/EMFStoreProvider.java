@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -33,34 +45,54 @@ import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 
+import org.eclipse.core.runtime.IStatus;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
 /**
+ * This is the EMFStore Provider for ECP.
+ * 
  * @author Eugen Neufeld
  */
-public class EMFStoreProvider extends DefaultProvider {
+public final class EMFStoreProvider extends DefaultProvider {
+	/**
+	 * This is the name of the EMFStore Provider.
+	 */
 	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider";
 
-	public static EMFStoreProvider INSTANCE = new EMFStoreProvider();
+	/**
+	 * EMFStore Provider Singleton.
+	 */
+	public static final EMFStoreProvider INSTANCE = new EMFStoreProvider();
 
+	/**
+	 * Property constant for Repository URL.
+	 */
 	public static final String PROP_REPOSITORY_URL = "repositoryUrl";
-
+	/**
+	 * Property constant for Repository Port.
+	 */
 	public static final String PROP_PORT = "port";
-
+	/**
+	 * Property constant for Repository Certificate.
+	 */
 	public static final String PROP_CERTIFICATE = "certificate";
-
+	/**
+	 * Property constant for ProjectSpaceID.
+	 */
 	public static final String PROP_PROJECTSPACEID = "projectSpaceID";
-
+	/**
+	 * Property constant for ServerInfoID.
+	 */
 	public static final String PROP_SERVERINFOID = "serverInfoID";
 
 	private AdapterImpl adapter;
 
-	public EMFStoreProvider() {
+	private EMFStoreProvider() {
 		super(NAME);
-		INSTANCE = this;
 		configureEMFStore();
 	}
 
@@ -128,14 +160,15 @@ public class EMFStoreProvider extends DefaultProvider {
 		default:
 			break;
 		}
-		// TODO Trace properly
 		String providerClass = getClass().getSimpleName();
 		String contextClass = context.getClass().getSimpleName();
-		System.out.println(providerClass + " received " + event + " for " + contextClass + " " + context);
+		Activator.log(IStatus.INFO, providerClass + " received " + event + " for " + contextClass + " " + context);
 	}
 
 	/**
-	 * @param context
+	 * Called to handle the remove operation on an {@link ECPModelContext}.
+	 * 
+	 * @param context the {@link ECPModelContext} to remove
 	 */
 	private void handleRemove(ECPModelContext context) {
 		if (context instanceof InternalProject) {
@@ -167,37 +200,6 @@ public class EMFStoreProvider extends DefaultProvider {
 			}
 		} else if (context instanceof InternalProject) {
 			getProjectSpace((InternalProject) context);
-			// InternalProject project = (InternalProject)context;
-			// if (project.getRepository() != null)
-			// {
-			// ServerInfo serverInfo = getServerInfo(project.getRepository());
-			// if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn())
-			// {
-			// for (ProjectInfo projectInfo :
-			// WorkspaceManager.getInstance().getCurrentWorkspace().getp.getProjectInfos())
-			// {
-			// if (projectInfo.getProjectId().getId().equals(project.getProperties().getValue(PROP_PROJECTSPACEID)))
-			// {
-			// try
-			// {
-			// ProjectSpace projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
-			// .checkout(serverInfo.getLastUsersession(), projectInfo);
-			//
-			// WorkspaceManager.getInstance().getCurrentWorkspace().save();
-			// if (project.getProviderSpecificData() == null)
-			// {
-			// project.setProviderSpecificData(projectSpace);
-			// }
-			// }
-			// catch (EmfStoreException ex)
-			// {
-			// Activator.log(ex);
-			// }
-			//
-			// }
-			// }
-			// }
-			// }
 		}
 	}
 
@@ -263,67 +265,6 @@ public class EMFStoreProvider extends DefaultProvider {
 		return result.iterator();
 	}
 
-	public ProjectSpace getProjectSpace(InternalProject internalProject) {
-		return getProjectSpace(internalProject, true);
-	}
-
-	private ProjectSpace getProjectSpace(InternalProject internalProject, boolean createNewIfNeeded) {
-		ProjectSpace projectSpace = (ProjectSpace) internalProject.getProviderSpecificData();
-		if (projectSpace == null) {
-			boolean found = false;
-			EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
-			for (ProjectSpace ps : projectSpaces) {
-				String projectSpaceID = internalProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
-				if (ps.getIdentifier().equals(projectSpaceID)) {
-					found = true;
-					projectSpace = ps;
-					break;
-				}
-			}
-			if (!found && createNewIfNeeded) {
-				projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
-					.createLocalProject(internalProject.getName(), "");
-				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
-					projectSpace.getIdentifier());
-
-			}
-			internalProject.setProviderSpecificData(projectSpace);
-		}
-		return projectSpace;
-	}
-
-	public ServerInfo getServerInfo(InternalRepository internalRepository) {
-		ServerInfo serverInfo = (ServerInfo) internalRepository.getProviderSpecificData();
-		if (serverInfo == null) {
-			Workspace workspace = WorkspaceManager.getInstance().getCurrentWorkspace();
-
-			boolean foundExisting = false;
-			for (ServerInfo info : workspace.getServerInfos()) {
-				if (internalRepository.getProperties().hasProperties()
-					&& isSameServerInfo(info,
-						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
-						Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
-						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE))) {
-					serverInfo = info;
-					foundExisting = true;
-					break;
-				}
-			}
-			if (!foundExisting && internalRepository.getProperties().hasProperties()) {
-				serverInfo = EMFStoreClientUtil.createServerInfo(
-					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
-					Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
-					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
-				workspace.addServerInfo(serverInfo);
-				workspace.save();
-			} else if (!foundExisting && !internalRepository.getProperties().hasProperties()) {
-				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080);
-			}
-			internalRepository.setProviderSpecificData(serverInfo);
-		}
-		return serverInfo;
-	}
-
 	/**
 	 * @param info
 	 * @param ecpProperties
@@ -378,20 +319,6 @@ public class EMFStoreProvider extends DefaultProvider {
 		return getProjectSpace(project).getProject();
 	}
 
-	/**
-	 * @param projectSpace
-	 * @return
-	 */
-	public ECPProject getProject(ProjectSpace projectSpace) {
-		for (InternalProject project : getOpenProjects()) {
-			ProjectSpace localProjectSpace = (ProjectSpace) project.getProviderSpecificData();
-			if (localProjectSpace.equals(projectSpace)) {
-				return project;
-			}
-		}
-		return null;
-	}
-
 	@Override
 	public ECPModelContext getModelContext(Object element) {
 		if (element instanceof ECPModelContext) {
@@ -444,6 +371,107 @@ public class EMFStoreProvider extends DefaultProvider {
 		return null;
 	}
 
+	/**
+	 * This retrieves the {@link ProjectSpace} from an {@link InternalProject}.
+	 * First it checks whether the {@link InternalProject} has a ProjectSpaceID attached.
+	 * If an ID is attached, a ProjectSpace is searched with this ID.
+	 * If no ID is attached or now ProjectSpace was found a LocalProject is created.
+	 * 
+	 * @param internalProject the project to get the ProjectSpace for
+	 * @return the corresponding ProjectSpace
+	 */
+	public ProjectSpace getProjectSpace(InternalProject internalProject) {
+		return getProjectSpace(internalProject, true);
+	}
+
+	private ProjectSpace getProjectSpace(InternalProject internalProject, boolean createNewIfNeeded) {
+		ProjectSpace projectSpace = (ProjectSpace) internalProject.getProviderSpecificData();
+		if (projectSpace == null) {
+			boolean found = false;
+			EList<ProjectSpace> projectSpaces = WorkspaceManager.getInstance().getCurrentWorkspace().getProjectSpaces();
+			for (ProjectSpace ps : projectSpaces) {
+				String projectSpaceID = internalProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
+				if (ps.getIdentifier().equals(projectSpaceID)) {
+					found = true;
+					projectSpace = ps;
+					break;
+				}
+			}
+			if (!found && createNewIfNeeded) {
+				projectSpace = WorkspaceManager.getInstance().getCurrentWorkspace()
+					.createLocalProject(internalProject.getName(), "");
+				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
+					projectSpace.getIdentifier());
+
+			}
+			internalProject.setProviderSpecificData(projectSpace);
+		}
+		return projectSpace;
+	}
+
+	/**
+	 * This retrieves the {@link ServerInfo} from an {@link InternalRepository}.
+	 * First it checks whether the {@link InternalRepository} has a ServerInfoID attached.
+	 * If an ID is attached, a ServerInfo is searched with this ID.
+	 * If no ID is attached or now ServerInfo was found a default ServerInfo is created.
+	 * 
+	 * @param internalRepository the repository to get the ServerInfo for
+	 * @return the corresponding ServerInfo
+	 */
+	public ServerInfo getServerInfo(InternalRepository internalRepository) {
+		ServerInfo serverInfo = (ServerInfo) internalRepository.getProviderSpecificData();
+		if (serverInfo == null) {
+			Workspace workspace = WorkspaceManager.getInstance().getCurrentWorkspace();
+
+			boolean foundExisting = false;
+			for (ServerInfo info : workspace.getServerInfos()) {
+				if (internalRepository.getProperties().hasProperties()
+					&& isSameServerInfo(info,
+						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
+						Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
+						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE))) {
+					serverInfo = info;
+					foundExisting = true;
+					break;
+				}
+			}
+			if (!foundExisting && internalRepository.getProperties().hasProperties()) {
+				serverInfo = EMFStoreClientUtil.createServerInfo(
+					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
+					Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
+					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
+				workspace.addServerInfo(serverInfo);
+				workspace.save();
+			} else if (!foundExisting && !internalRepository.getProperties().hasProperties()) {
+				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080);
+			}
+			internalRepository.setProviderSpecificData(serverInfo);
+		}
+		return serverInfo;
+	}
+
+	/**
+	 * This gets the ECPProject based on a ProjectSpace.
+	 * 
+	 * @param projectSpace the {@link ProjectSpace} to get the {@link ECPProject} for
+	 * @return the {@link ECPProject} corresponding to this ProjectSpace or null if none found
+	 */
+	public ECPProject getProject(ProjectSpace projectSpace) {
+		for (InternalProject project : getOpenProjects()) {
+			ProjectSpace localProjectSpace = (ProjectSpace) project.getProviderSpecificData();
+			if (localProjectSpace.equals(projectSpace)) {
+				return project;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * This gets the ECPRepository based on a ServerInfo.
+	 * 
+	 * @param serverInfo the {@link ServerInfo} to get the {@link ECPRepository} for
+	 * @return the {@link ECPRepository} corresponding to this ServerInfo or null if none found
+	 */
 	public ECPRepository getRepository(ServerInfo serverInfo) {
 		if (serverInfo != null) {
 			for (InternalRepository internalRepository : getAllRepositories()) {

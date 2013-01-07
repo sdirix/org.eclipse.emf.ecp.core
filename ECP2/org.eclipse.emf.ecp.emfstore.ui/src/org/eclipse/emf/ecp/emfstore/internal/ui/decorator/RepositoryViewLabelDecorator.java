@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -28,13 +31,16 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.widgets.Display;
 
 /**
+ * Decorates the label of a {@link ServerInfo} object according to its login state.
+ * 
+ * @author Eugen Neufeld
  * @see ILightweightLabelDecorator
  */
 public class RepositoryViewLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, LoginObserver,
 	LogoutObserver {
 
 	/**
-	 * {@inheritDoc} Decorates the label of a {@link ServerInfo} object according to its login state.
+	 * {@inheritDoc}
 	 */
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPRepository) {
@@ -113,11 +119,6 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 			public void run() {
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
 					EMFStoreProvider.INSTANCE.getRepository(usersession.getServerInfo())));
-				// // FIXME BUGREPORT
-				// if (PlatformUI.isWorkbenchRunning()) {
-				// PlatformUI.getWorkbench().getDecoratorManager()
-				// .update("org.eclipse.emf.ecp.emfstore.ui.decorators.LoginDecorator");
-				// }
 			}
 		});
 	}

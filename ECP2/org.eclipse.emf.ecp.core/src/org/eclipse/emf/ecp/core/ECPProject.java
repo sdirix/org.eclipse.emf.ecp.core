@@ -31,9 +31,12 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * This class describes a Project. A project has a name, a label. It has zero or one {@link ECPRepository} and one
+ * {@link ECPProvider}.
+ * 
  * @author Eike Stepper
  * @author Eugen Neufeld
- * @author Jonas
+ * @author Jonas Helming
  */
 public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAware, ECPPropertiesAware, ECPCloseable,
 	ECPDeletable, IEditingDomainProvider, IAdaptable {

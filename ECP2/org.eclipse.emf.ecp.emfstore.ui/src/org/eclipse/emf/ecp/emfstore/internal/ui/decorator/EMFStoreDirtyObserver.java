@@ -55,7 +55,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	}
 
-	private Set<EObject> lastAffected = null;
+	private Set<EObject> lastAffected;
 
 	/** {@inheritDoc} */
 	public void operationExecuted(AbstractOperation operation) {
@@ -94,6 +94,11 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	}
 
+	/**
+	 * The Collection of {@link EObject} that were affected during last operation.
+	 * 
+	 * @return a {@link Set} of {@link EObject} affected or null if none
+	 */
 	public Set<EObject> getLastAffected() {
 		return lastAffected;
 	}

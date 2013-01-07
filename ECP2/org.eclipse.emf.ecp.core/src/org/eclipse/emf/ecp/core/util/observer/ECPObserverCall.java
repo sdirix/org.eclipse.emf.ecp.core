@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * wesendon - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.core.util.observer;
 
 import java.lang.reflect.Method;
@@ -16,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ProxyObserver, returned by the {@link ECPObserverBus} when calling {@link ObserverBus#notify(Class))}, normally it has
+ * ProxyObserver, returned by the {@link ECPObserverBus} when calling {@link ECPObserverBus#notify(Class)}, normally it
+ * has
  * the type of the class extending IObserver in order to call the observer interface with type safety.
  * However, the same proxies can be casted into {@link ECPObserverCall} in order to access the results by all registered
  * observers.
@@ -60,7 +64,7 @@ public interface ECPObserverCall {
 			this.observer = observer;
 			this.method = method;
 			this.result = result;
-			this.exception = null;
+			exception = null;
 		}
 
 		/**
@@ -72,9 +76,9 @@ public interface ECPObserverCall {
 		 */
 		public Result(IECPObserver observer, Throwable e, Method method) {
 			this.observer = observer;
-			this.exception = e;
+			exception = e;
 			this.method = method;
-			this.result = null;
+			result = null;
 		}
 
 		/**
@@ -83,7 +87,7 @@ public interface ECPObserverCall {
 		 * @return boolean
 		 */
 		public boolean exceptionOccurred() {
-			return this.exception != null;
+			return exception != null;
 		}
 
 		/**
@@ -92,7 +96,7 @@ public interface ECPObserverCall {
 		 * @return exception or null
 		 */
 		public Throwable getException() {
-			return this.exception;
+			return exception;
 		}
 
 		/**
@@ -101,7 +105,7 @@ public interface ECPObserverCall {
 		 * @return this can't be null
 		 */
 		public IECPObserver getObserver() {
-			return this.observer;
+			return observer;
 		}
 
 		/**
@@ -110,7 +114,7 @@ public interface ECPObserverCall {
 		 * @return the result or null
 		 */
 		public Object getResult() {
-			return this.result;
+			return result;
 		}
 
 		/**
@@ -121,7 +125,7 @@ public interface ECPObserverCall {
 		public Object getResultOrDefaultValue() {
 			Object result = getResult();
 			if (result == null) {
-				result = getDefaultValue(this.method);
+				result = getDefaultValue(method);
 			}
 			return result;
 		}

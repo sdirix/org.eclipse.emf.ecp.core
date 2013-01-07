@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.ui.commands;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -24,20 +27,15 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * @author Hodaie This is the handler for "Add new model element" context menu command. The command is only shown on
- *         LeafSections. The handler initializes and shows the AddNewModelElementWizard
+ * This Handler uses the {@link HandlerHelper#addModelElement(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback, boolean)} method
+ * to add a model element to a project.
+ * 
  * @author Eugen Neufeld
  */
 public class NewModelElementWizardHandler extends AbstractHandler
 {
-
-   /**
-   * String to pass the eclass which containments shall be shown in the new element wizard.
-   */
-  public static final String COMMAND_ECLASS_PARAM = "org.eclipse.emf.ecp.navigator.eClassParameter"; //$NON-NLS-1$
-
   /**
-   * . ({@inheritDoc})
+   * {@inheritDoc}
    */
   public Object execute(final ExecutionEvent event) throws ExecutionException
   {

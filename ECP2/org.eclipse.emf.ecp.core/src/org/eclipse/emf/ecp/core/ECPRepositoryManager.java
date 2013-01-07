@@ -15,7 +15,6 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 
 /**
  * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
@@ -76,25 +75,5 @@ public interface ECPRepositoryManager {
 	 */
 	ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties);
-
-	/**
-	 * Register an {@link IECPRepositoriesChangedObserver} observer.
-	 * 
-	 * @deprecated use {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus} instead
-	 * @param changeObserver the observer to register
-	 */
-	@Deprecated
-	// TODO remove
-	void addObserver(IECPRepositoriesChangedObserver changeObserver);
-
-	/**
-	 * Unregister an {@link IECPRepositoriesChangedObserver} observer.
-	 * 
-	 * @deprecated use {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus} instead
-	 * @param changeObserver the observer to register
-	 */
-	@Deprecated
-	// TODO remove
-	void removeObserver(IECPRepositoriesChangedObserver changeObserver);
 
 }

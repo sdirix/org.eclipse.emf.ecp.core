@@ -25,7 +25,6 @@ public interface IECPProjectObjectsChangedObserver extends IECPObserver {
 	 * 
 	 * @param project
 	 * @param objects
-	 * @param structural
 	 * @return array of affected objects.
 	 * @throws Exception
 	 */

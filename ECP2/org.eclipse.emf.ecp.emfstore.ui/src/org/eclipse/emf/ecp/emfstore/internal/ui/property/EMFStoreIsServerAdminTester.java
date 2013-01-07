@@ -23,11 +23,12 @@ import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 
 import org.eclipse.core.expressions.PropertyTester;
 
+/**
+ * This tests whether a user is the serveradmin on a specific repository.
+ * 
+ * @author Eugen Neufeld
+ */
 public final class EMFStoreIsServerAdminTester extends PropertyTester {
-
-	public EMFStoreIsServerAdminTester() {
-		// TODO Auto-generated constructor stub
-	}
 
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
