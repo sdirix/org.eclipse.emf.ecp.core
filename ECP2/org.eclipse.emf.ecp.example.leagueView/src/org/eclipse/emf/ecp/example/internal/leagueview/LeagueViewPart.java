@@ -1,19 +1,15 @@
 package org.eclipse.emf.ecp.example.internal.leagueview;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -33,10 +29,13 @@ public class LeagueViewPart extends ViewPart {
 	public void createPartControl(Composite parent) {
 		ListViewer tv=new ListViewer(parent);
 		
-		tv.setContentProvider(new AdapterFactoryContentProvider(composedAdapterFactory));
+		tv.setContentProvider(ArrayContentProvider.getInstance());
 		tv.setLabelProvider(new AdapterFactoryLabelProvider(composedAdapterFactory));
 		tv.setInput(league.getPlayers());
-		GridDataFactory.fillDefaults().grab(true, true).span(SWT.FILL, SWT.FILL).applyTo(tv.getControl());
+		GridDataFactory.fillDefaults().grab(true, true).span(SWT.FILL, SWT.FILL).applyTo(tv.getList());
+		
+		Label l=new Label(parent,SWT.NONE);
+		l.setText("BLA");
 	}
 
 	@Override
