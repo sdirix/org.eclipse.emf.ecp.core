@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Jonas Helming - initial API and implementation
  * 
  *******************************************************************************/
 

@@ -1,13 +1,15 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Eugen Neufeld - initial API and implementation
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.edit;
 
 import java.util.List;
@@ -16,9 +18,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 public class ECPAssociationClassElement {
-	private EReference targetFeature;
-	private EReference sourceFeature;
-	private List<EStructuralFeature> associationFeatures;
+	private final EReference targetFeature;
+	private final EReference sourceFeature;
+	private final List<EStructuralFeature> associationFeatures;
 
 	public ECPAssociationClassElement(EReference sourceFeature, EReference targetFeature,
 		List<EStructuralFeature> associationFeatures) {
