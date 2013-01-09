@@ -17,9 +17,9 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
-import org.eclipse.emf.ecp.ui.common.CreateProjectComposite.CreateProjectChangeListener;
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.ui.composites.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.composites.CreateProjectComposite.CreateProjectChangeListener;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -58,8 +58,8 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 		{
 
 			public void createControl(Composite parent) {
-				Composite composite = getUIProvider().createUI(parent);
-				getUIProvider().setListener(new CreateProjectChangeListener() {
+				Composite composite = getCompositeProvider().createUI(parent);
+				getCompositeProvider().setListener(new CreateProjectChangeListener() {
 
 					public void providerChanged(ECPProvider provider) {
 					}

@@ -116,7 +116,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	public void resourceChanged(IResourceChangeEvent event) {
 		IResourceDelta delta = event.getDelta();
 		if (delta != null) {
-			InternalRepository repository = getAllRepositories()[0];
+			InternalRepository repository = getRepositories()[0];
 			Object[] objects = getChangedObjects(delta, repository);
 			repository.notifyObjectsChanged(objects);
 

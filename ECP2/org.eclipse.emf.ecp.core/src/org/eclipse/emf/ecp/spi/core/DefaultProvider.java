@@ -117,7 +117,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		this.uiProvider = uiProvider;
 	}
 
-	public final InternalRepository[] getAllRepositories() {
+	public final InternalRepository[] getRepositories() {
 		List<InternalRepository> result = new ArrayList<InternalRepository>();
 		for (ECPRepository repository : ECPRepositoryManager.INSTANCE.getRepositories()) {
 			if (!ECPUtil.isDisposed(repository)) {

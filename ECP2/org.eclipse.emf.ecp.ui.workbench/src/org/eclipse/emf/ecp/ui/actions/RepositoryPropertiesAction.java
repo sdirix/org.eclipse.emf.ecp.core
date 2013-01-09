@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.ui.actions;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.ui.dialogs.RepositoryPropertiesDialog;
-
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.IStructuredSelection;
 

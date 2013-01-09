@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,12 +10,11 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.ui.composites;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
-import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -67,6 +66,11 @@ public class CreateProjectComposite implements ICompositeProvider {
 		void providerChanged(ECPProvider provider);
 	}
 
+	/**
+	 * Constructor for the Project composite.
+	 * 
+	 * @param providers list of valid providers
+	 */
 	public CreateProjectComposite(List<ECPProvider> providers) {
 		this.providers = providers;
 	}
@@ -75,12 +79,11 @@ public class CreateProjectComposite implements ICompositeProvider {
 
 	private final List<ECPProvider> providers;
 
-	private ComboViewer providersViewer;
-
 	private ECPProvider provider;
 
 	private String projectName;
 
+	/** {@inheritDoc} **/
 	public Composite createUI(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
@@ -91,15 +94,15 @@ public class CreateProjectComposite implements ICompositeProvider {
 			label.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 			label.setText(Messages.UICreateProject_ProjectProvider + ":");//$NON-NLS-1$
 
-			providersViewer = new ComboViewer(composite, SWT.NONE);
+			ComboViewer providersViewer = new ComboViewer(composite, SWT.NONE);
 			Combo combo = providersViewer.getCombo();
-			GridData gd_combo = new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1);
-			gd_combo.minimumWidth = 150;
-			combo.setLayoutData(gd_combo);
+			GridData gdCombo = new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1);
+			gdCombo.minimumWidth = 150;
+			combo.setLayoutData(gdCombo);
 			providersViewer.setContentProvider(new ArrayContentProvider());
 			providersViewer.setLabelProvider(new ProvidersLabelProvider());
 			providersViewer.setSorter(new ViewerSorter());
-			providersViewer.setInput(ECPProviderRegistry.INSTANCE);
+			providersViewer.setInput(providers);
 			providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 				public void selectionChanged(SelectionChangedEvent event) {
 					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
@@ -109,6 +112,9 @@ public class CreateProjectComposite implements ICompositeProvider {
 					}
 				}
 			});
+			if (providers.size() > 1) {
+				providersViewer.setSelection(new StructuredSelection(providers.get(0)));
+			}
 		} else if (providers.size() == 1) {
 			provider = providers.get(0);
 		}
@@ -131,9 +137,7 @@ public class CreateProjectComposite implements ICompositeProvider {
 				}
 			}
 		});
-		if (providers.size() > 1) {
-			providersViewer.setSelection(new StructuredSelection(providers.get(0)));
-		}
+
 		return composite;
 	}
 
@@ -159,12 +163,7 @@ public class CreateProjectComposite implements ICompositeProvider {
 		this.listener = listener;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.ui.common.ICompositeProvider#dispose()
-	 */
+	/** {@inheritDoc} **/
 	public void dispose() {
-		// TODO Auto-generated method stub
-
 	}
 }

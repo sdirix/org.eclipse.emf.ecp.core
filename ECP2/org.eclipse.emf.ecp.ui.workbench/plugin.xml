@@ -452,11 +452,6 @@
                         property="org.eclipse.emf.ecp.core.project.isDirty"
                         value="true">
                   </test>
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.core.project.hasAutosave"
-                        value="false">
-                  </test>
                </iterate>
             </with>
          </enabledWhen>

@@ -5,9 +5,9 @@ package org.eclipse.emf.ecp.wizards.page;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.ui.model.RepositoriesLabelProvider;
-import org.eclipse.emf.ecp.ui.util.Messages;
 import org.eclipse.emf.ecp.wizards.ShareWizard;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;

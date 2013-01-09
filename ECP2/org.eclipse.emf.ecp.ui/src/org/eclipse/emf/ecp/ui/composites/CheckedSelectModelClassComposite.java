@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,11 +10,11 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.ui.composites;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -34,20 +34,24 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * This {@link ICompositeProvider} provides a CheckedTree that allows the user to select {@link EPackage EPackages} and
+ * {@link EClass EClasses}.
  * 
  * @author Eugen Neufeld
  * 
  */
 public class CheckedSelectModelClassComposite extends AbstractEClassTreeSelectionComposite {
-	private Object[] checked = null;
+	private Object[] checked;
 
-	private Object[] initialSelection = null;
+	private Object[] initialSelection;
 
 	/**
-	 * @param ePackages
-	 * @param unsupportedEPackages
-	 * @param filteredEPackages
-	 * @param filteredEClasses
+	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
+	 * 
+	 * @param ePackages the available {@link EPackage EPackages}
+	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
+	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
+	 * @param filteredEClasses {@link EClass EClasses} selected by the user
 	 */
 	public CheckedSelectModelClassComposite(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
 		Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses) {
@@ -107,21 +111,27 @@ public class CheckedSelectModelClassComposite extends AbstractEClassTreeSelectio
 		return (CheckboxTreeViewer) super.getViewer();
 	}
 
-	/**
-	   * 
-	   */
 	private void setChecked() {
 		List<Object> objects = new ArrayList<Object>(Arrays.asList(getViewer().getCheckedElements()));
 		objects.removeAll(Arrays.asList(getViewer().getGrayedElements()));
 		checked = objects.toArray();
 	}
 
+	/**
+	 * Returns the checked Elements.
+	 * 
+	 * @return an array containing the checked elements
+	 */
 	public Object[] getChecked() {
-
 		return checked;
 
 	}
 
+	/**
+	 * Initialize the selection by setting the checked elements.
+	 * 
+	 * @param selection the objects to check
+	 */
 	public void setInitialSelection(Object[] selection) {
 		if (getViewer() != null) {
 			getViewer().setCheckedElements(selection);

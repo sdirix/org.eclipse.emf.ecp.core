@@ -10,21 +10,12 @@
  */
 package org.eclipse.emf.ecp.ui.actions;
 
-import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.ecp.wizards.AddRepositoryWizard;
-import org.eclipse.emf.ecp.wizards.CreateProjectWizard;
 import org.eclipse.emf.ecp.wizards.WizardUICallback;
-import org.eclipse.emf.ecp.wizards.page.AddRepositoryPage;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Eike Stepper
@@ -44,7 +35,7 @@ public class AddRepositoryAction extends Action
   public void run()
   {
 	  
-	  HandlerHelper.createRepository(new WizardUICallback<AddRepositoryComposite>(shell, new AddRepositoryWizard()));
+	  HandlerHelper.createRepository(new WizardUICallback(shell, new AddRepositoryWizard()));
   }
 
 }

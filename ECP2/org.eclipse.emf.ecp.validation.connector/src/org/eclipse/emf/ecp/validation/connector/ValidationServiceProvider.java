@@ -50,7 +50,7 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 				
 				public boolean isExcluded(Object object) {
 					if(ECPProject.class.isInstance(validationServiceObject)){
-						return ((ECPProject)validationServiceObject).getModelRoot(object);
+						return ((ECPProject)validationServiceObject).isModelRoot(object);
 					}
 					return false;
 				}

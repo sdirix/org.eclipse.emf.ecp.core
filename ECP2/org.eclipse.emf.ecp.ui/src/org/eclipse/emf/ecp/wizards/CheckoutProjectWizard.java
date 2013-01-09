@@ -17,9 +17,9 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
-import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite.CheckoutProjectChangeListener;
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.ui.composites.CheckoutProjectComposite;
+import org.eclipse.emf.ecp.ui.composites.CheckoutProjectComposite.CheckoutProjectChangeListener;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -44,16 +44,16 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 		{
 
 			public void createControl(Composite parent) {
-				Composite composite = getUIProvider().createUI(parent);
+				Composite composite = getCompositeProvider().createUI(parent);
 
-				getUIProvider().setListener(new CheckoutProjectChangeListener() {
+				getCompositeProvider().setListener(new CheckoutProjectChangeListener() {
 					public void projectNameChanged(String projectName) {
 						validateName(projectName);
 					}
 				});
 
 				// validate initial project name
-				validateName(getUIProvider().getProjectName());
+				validateName(getCompositeProvider().getProjectName());
 				setControl(composite);
 			}
 
@@ -72,14 +72,14 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 		wp.setTitle(Messages.CheckoutProjectWizard_PageTitle_CheckoutProject);
 		wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$
 
-		ECPCheckoutSource checkoutSource = getUIProvider().getCheckoutSource();
+		ECPCheckoutSource checkoutSource = getCompositeProvider().getCheckoutSource();
 
 		ECPRepository repository = checkoutSource.getRepository();
 		if (checkoutSource == repository) {
 			wp.setMessage(Messages.CheckoutProjectWizard_PageMessage_CheckoutRepositrory + repository.getLabel() + "."); //$NON-NLS-1$
 		} else {
 			wp.setMessage(Messages.CheckoutProjectWizard_PageMessage_CheckoutProject
-				+ getUIProvider().getUiProvider().getText(checkoutSource)
+				+ getCompositeProvider().getUiProvider().getText(checkoutSource)
 				+ Messages.CheckoutProjectWizard_PageMessage_CheckoutFrom + repository.getLabel() + "."); //$NON-NLS-1$
 		}
 		setWindowTitle(Messages.CheckoutProjectWizard_Title_Checkout);

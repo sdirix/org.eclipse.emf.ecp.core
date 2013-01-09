@@ -1,18 +1,21 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
 
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -24,11 +27,12 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * @author Hodaie
- * @author Eugen Neufeld This is implementation of New Model Element wizard. This wizard is show through
- *         "Add new model element..." command in context menu of Navigator (only on right click on LeafSection). The
- *         wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
- *         tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
+ * This is implementation of New Model Element wizard. This wizard is show through
+ * "Add new model element..." command in context menu of Navigator (only on right click on LeafSection). The
+ * wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
+ * tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
+ * 
+ * @author Eugen Neufeld
  */
 public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite> {
 
@@ -37,7 +41,7 @@ public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite> 
 	}
 
 	/**
-	 * . ({@inheritDoc})
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addPages() {
@@ -45,11 +49,12 @@ public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite> 
 		WizardPage wp = new WizardPage(Messages.NewModelElementWizard_WizardTitle_AddModelElement) {
 
 			public void createControl(Composite parent) {
-				Composite composite = getUIProvider().createUI(parent);
-				getUIProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+				Composite composite = getCompositeProvider().createUI(parent);
+				getCompositeProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
 					public void selectionChanged(SelectionChangedEvent event) {
-						IStructuredSelection sel = (IStructuredSelection) getUIProvider().getViewer().getSelection();
+						IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
+							.getSelection();
 						if (sel != null && sel.getFirstElement() instanceof EClass) {
 							setPageComplete(true);
 						} else {
@@ -57,7 +62,7 @@ public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite> 
 						}
 					}
 				});
-				getUIProvider().getViewer().addDoubleClickListener(new IDoubleClickListener() {
+				getCompositeProvider().getViewer().addDoubleClickListener(new IDoubleClickListener() {
 
 					public void doubleClick(DoubleClickEvent event) {
 						if (isPageComplete() && performFinish()) {
@@ -88,7 +93,7 @@ public class NewModelElementWizard extends ECPWizard<SelectModelClassComposite> 
 
 	@Override
 	public void dispose() {
-		getUIProvider().dispose();
+		getCompositeProvider().dispose();
 		super.dispose();
 	}
 }

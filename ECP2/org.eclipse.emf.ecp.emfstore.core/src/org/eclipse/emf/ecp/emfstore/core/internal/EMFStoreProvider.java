@@ -91,7 +91,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	private AdapterImpl adapter;
 
-	private EMFStoreProvider() {
+	public EMFStoreProvider() {
 		super(NAME);
 		configureEMFStore();
 	}
@@ -474,7 +474,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	public ECPRepository getRepository(ServerInfo serverInfo) {
 		if (serverInfo != null) {
-			for (InternalRepository internalRepository : getAllRepositories()) {
+			for (InternalRepository internalRepository : getRepositories()) {
 				if (internalRepository.getProvider().equals(this)) {
 					if (serverInfo.equals(internalRepository.getProviderSpecificData())) {
 						return internalRepository;

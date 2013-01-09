@@ -32,35 +32,21 @@ public interface ECPProvider extends ECPElement, IAdaptable {
 	String getLabel();
 
 	/**
-	 * Description of the ECPProvider.
-	 * 
-	 * @return text describing this provider
-	 */
-	String getDescription();
-
-	/**
 	 * Array of all {@link ECPRepository}s known to this ECPProvider.
 	 * 
 	 * @return repositories using this ECPProvider
 	 */
-	ECPRepository[] getAllRepositories();
+	ECPRepository[] getRepositories();
 
 	/**
-	 * Array of all ECPProjects based on this ECPProvider which are open.
-	 * 
-	 * @return open projects using this ECPProvider
-	 */
-	ECPProject[] getOpenProjects();
-
-	/**
-	 * Check whether this new repositories can be added to this ECPProvider.
+	 * Check whether a new repository can be added to this ECPProvider.
 	 * 
 	 * @return true if new repositories can be added.
 	 */
 	boolean canAddRepositories();
 
 	/**
-	 * Wether this ECPProvider can have an offline project.
+	 * Whether this ECPProvider can have an offline project.
 	 * 
 	 * @return true if offline projects are allowed, false otherwise.
 	 */

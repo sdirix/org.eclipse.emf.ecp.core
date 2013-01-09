@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.ui.util;
+package org.eclipse.emf.ecp.internal.ui;
 
 import org.eclipse.osgi.util.NLS;
 

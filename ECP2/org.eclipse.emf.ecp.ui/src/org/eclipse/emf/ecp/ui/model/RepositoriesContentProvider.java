@@ -72,11 +72,13 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 			if (allowedProvider == null) {
 				childrenList.addChildren(ECPRepositoryManager.INSTANCE.getRepositories());
 			} else {
-				for (ECPRepository ecpRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
-					if (allowedProvider.equals(ecpRepository.getProvider())) {
-						childrenList.addChild(ecpRepository);
-					}
-				}
+				childrenList.addChildren(allowedProvider.getRepositories());
+				// TODO test
+				// for (ECPRepository ecpRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
+				// if (allowedProvider.equals(ecpRepository.getProvider())) {
+				// childrenList.addChild(ecpRepository);
+				// }
+				// }
 			}
 		} else {
 			super.fillChildren(parent, childrenList);

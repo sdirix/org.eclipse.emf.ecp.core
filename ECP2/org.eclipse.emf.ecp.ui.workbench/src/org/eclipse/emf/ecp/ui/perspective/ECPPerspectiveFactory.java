@@ -2,7 +2,6 @@ package org.eclipse.emf.ecp.ui.perspective;
 
 import org.eclipse.emf.ecp.ui.views.ModelExplorerView;
 import org.eclipse.emf.ecp.ui.views.ModelRepositoriesView;
-
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 

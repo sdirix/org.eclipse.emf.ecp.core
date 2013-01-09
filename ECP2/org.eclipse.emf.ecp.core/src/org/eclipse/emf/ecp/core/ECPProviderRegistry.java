@@ -41,6 +41,7 @@ public interface ECPProviderRegistry {
 	 * @param name the name of the {@link ECPProvider} to search for
 	 * @return the {@link ECPProvider}
 	 */
+	// FIXME is needed?
 	ECPProvider getProvider(String name);
 
 	/**
@@ -51,17 +52,11 @@ public interface ECPProviderRegistry {
 	ECPProvider[] getProviders();
 
 	/**
-	 * Whether any provider is registered.
-	 * 
-	 * @return true if at least one provider is available, false otherwise
-	 */
-	boolean hasProviders();
-
-	/**
 	 * Method to programmatically add an {@link ECPProvider} to list of available provider.
 	 * 
 	 * @param provider the {@link ECPProvider} to add
 	 */
+	// TODO is needed?
 	void addProvider(ECPProvider provider);
 
 	/**
@@ -69,6 +64,7 @@ public interface ECPProviderRegistry {
 	 * 
 	 * @param name the name of the provider to delete
 	 */
+	// TODO is needed?
 	void removeProvider(String name);
 
 	/**
@@ -76,6 +72,7 @@ public interface ECPProviderRegistry {
 	 * 
 	 * @param changeObserver the observer to add
 	 */
+	// TODO is needed?
 	void addObserver(IECPProvidersChangedObserver changeObserver);
 
 	/**
@@ -83,5 +80,6 @@ public interface ECPProviderRegistry {
 	 * 
 	 * @param changeObserver the observer to remove
 	 */
+	// TODO is needed?
 	void removeObserver(IECPProvidersChangedObserver changeObserver);
 }

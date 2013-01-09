@@ -123,13 +123,6 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	boolean isModelDirty();
 
 	/**
-	 * Returns whether the model is autosaved or has to be saved manually.
-	 * 
-	 * @return true if the model is saved automaticly, false otherwise
-	 */
-	boolean isModelAutoSave();
-
-	/**
 	 * Deletes a collection of {@link EObject}s by delegating the task to the provider.
 	 * 
 	 * @param eObjects the collection of {@link EObject}s to delete
@@ -142,5 +135,5 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * @param object the object to check
 	 * @return true if the object is the root of the model of this project, false otherwise
 	 */
-	boolean getModelRoot(Object object);
+	boolean isModelRoot(Object object);
 }

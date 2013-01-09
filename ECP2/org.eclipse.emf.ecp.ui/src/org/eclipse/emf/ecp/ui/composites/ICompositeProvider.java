@@ -11,7 +11,7 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.ui.composites;
 
 import org.eclipse.swt.widgets.Composite;
 

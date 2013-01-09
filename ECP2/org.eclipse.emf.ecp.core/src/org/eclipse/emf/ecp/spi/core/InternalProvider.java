@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
@@ -199,4 +200,11 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @return a {@link Notifier} that is the model root of this project
 	 */
 	Notifier getRoot(InternalProject project);
+
+	/**
+	 * Array of all ECPProjects based on this ECPProvider which are open.
+	 * 
+	 * @return open projects using this ECPProvider
+	 */
+	ECPProject[] getOpenProjects();
 }

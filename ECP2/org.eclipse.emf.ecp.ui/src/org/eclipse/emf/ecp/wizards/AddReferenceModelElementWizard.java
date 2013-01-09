@@ -13,7 +13,7 @@
 
 package org.eclipse.emf.ecp.wizards;
 
-import org.eclipse.emf.ecp.ui.common.SelectModelElementComposite;
+import org.eclipse.emf.ecp.ui.composites.SelectModelElementComposite;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -41,7 +41,7 @@ public class AddReferenceModelElementWizard extends ECPWizard<SelectModelElement
 		WizardPage page = new WizardPage("AddReferencePage") {
 
 			public void createControl(Composite parent) {
-				Composite composite = getUIProvider().createUI(parent);
+				Composite composite = getCompositeProvider().createUI(parent);
 
 				setPageComplete(true);
 				setControl(composite);

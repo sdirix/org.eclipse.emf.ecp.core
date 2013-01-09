@@ -57,13 +57,6 @@ public interface ECPRepositoryManager {
 	ECPRepository[] getRepositories();
 
 	/**
-	 * Checks whether any repositories are available.
-	 * 
-	 * @return true if any repository is available, false otherwise
-	 */
-	boolean hasRepositories();
-
-	/**
 	 * This method allows the user to create a repository.
 	 * 
 	 * @param provider the {@link ECPProvider} of this repository

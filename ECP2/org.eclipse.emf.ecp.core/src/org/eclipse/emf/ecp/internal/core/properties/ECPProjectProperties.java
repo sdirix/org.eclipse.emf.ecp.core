@@ -76,12 +76,6 @@ public class ECPProjectProperties extends Properties<ECPProject> {
 				return project.isModelDirty();
 			}
 		});
-		add(new Property<ECPProject>("hasAutosave", "Autosave", "Has this project an autosave?") {
-			@Override
-			protected Object eval(ECPProject project) {
-				return project.isModelAutoSave();
-			}
-		});
 	}
 
 	public static void main(String[] args) {

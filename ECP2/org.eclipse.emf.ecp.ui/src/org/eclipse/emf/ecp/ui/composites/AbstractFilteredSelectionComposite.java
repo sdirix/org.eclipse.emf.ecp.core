@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,9 +10,10 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.ui.composites;
 
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFilter;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -27,16 +28,30 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * This {@link ICompositeProvider} provides Composite containing a {@link Text} widget and a viewer.
+ * The contents of the viewer can be filtered by typing a text into the Text widget.
+ * 
+ * @author Eugen Neufeld
+ * 
+ * @param <T> the type of the Viewer. This must extend a {@link StructuredViewer}
+ */
 public abstract class AbstractFilteredSelectionComposite<T extends StructuredViewer> implements ICompositeProvider {
 
 	private T viewer;
 
 	private Object[] selection;
 
+	/**
+	 * Default Constructor.
+	 */
 	public AbstractFilteredSelectionComposite() {
 		super();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Composite createUI(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NULL);
 
@@ -77,16 +92,21 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 	}
 
 	/**
-	 * 
+	 * Subclasses can redefine the expand behavior of the viewer.
 	 */
 	protected void expandViewer() {
 
 	}
 
+	/**
+	 * Subclasses can redefine the collaps behavior of the viewer.
+	 */
 	protected void collapsViewer() {
 	}
 
 	/**
+	 * Returns the used {@link StructuredViewer}.
+	 * 
 	 * @return the viewer
 	 */
 	public T getViewer() {
@@ -94,16 +114,27 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 	}
 
 	/**
+	 * Returns the selected objects.
+	 * 
 	 * @return the selection
 	 */
 	public Object[] getSelection() {
 		return selection;
 	}
 
+	/**
+	 * Creates a {@link StructuredViewer} on top of the provided {@link Composite}. The result is the created
+	 * {@link StructuredViewer}.
+	 * 
+	 * @param composite the {@link Composite} to create the viewer on
+	 * @return the created {@link StructuredViewer}
+	 */
 	protected abstract T createViewer(Composite composite);
 
 	/**
-	 * @return
+	 * Returns a Filter to use.
+	 * 
+	 * @return the {@link ECPViewerFilter} to use
 	 */
 	protected abstract ECPViewerFilter getFilter();
 }

@@ -1,26 +1,36 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.wizards;
 
 import org.eclipse.emf.ecp.ui.common.AbstractUICallback;
-import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
+import org.eclipse.emf.ecp.ui.composites.ICompositeProvider;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 /**
+ * This is an Wizard implementation for the {@link AbstractUICallback}.
+ * 
+ * @param <T> the Generic type for this Callback
  * @author Eugen Neufeld
  */
-public class WizardUICallback<T extends ICompositeProvider> extends AbstractUICallback {
+public class WizardUICallback extends AbstractUICallback {
 
-	private final Shell shell;
+	private final ECPWizard<?> wizard;
 
-	private final ECPWizard<T> wizard;
-
-	public WizardUICallback(Shell shell, ECPWizard<T> wizard) {
-		this.shell = shell;
+	public <T extends ICompositeProvider> WizardUICallback(Shell shell, ECPWizard<T> wizard) {
+		super(shell);
 		this.wizard = wizard;
 	}
 
@@ -30,7 +40,7 @@ public class WizardUICallback<T extends ICompositeProvider> extends AbstractUICa
 	 */
 	@Override
 	public int open() {
-		WizardDialog wd = new WizardDialog(shell, wizard);
+		WizardDialog wd = new WizardDialog(getShell(), wizard);
 
 		int result = wd.open();
 		if (result == WizardDialog.OK) {
@@ -44,19 +54,9 @@ public class WizardUICallback<T extends ICompositeProvider> extends AbstractUICa
 	 * @see org.eclipse.emf.ecp.ui.common.AbstractUICallback#setCompositeUIProvider(org.eclipse.emf.ecp.ui.common.
 	 * ICompositeProvider)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void setCompositeUIProvider(ICompositeProvider uiProvider) {
-		wizard.setUIProvider((T) uiProvider);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.ui.common.AbstractUICallback#showError(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void showError(String title, String message) {
-		MessageDialog.openError(shell, title, message);
+		wizard.setCompositeProvider(uiProvider);
 	}
 
 	/*
@@ -65,7 +65,7 @@ public class WizardUICallback<T extends ICompositeProvider> extends AbstractUICa
 	 */
 	@Override
 	public void dispose() {
-		wizard.getUIProvider().dispose();
+		wizard.getCompositeProvider().dispose();
 	}
 
 }

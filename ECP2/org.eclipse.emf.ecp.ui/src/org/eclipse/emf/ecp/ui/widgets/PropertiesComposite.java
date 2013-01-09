@@ -11,10 +11,10 @@
 package org.eclipse.emf.ecp.ui.widgets;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.dialogs.PropertyDialog;
 import org.eclipse.emf.ecp.ui.model.PropertiesContentProvider;
 import org.eclipse.emf.ecp.ui.model.PropertiesLabelProvider;
-import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;

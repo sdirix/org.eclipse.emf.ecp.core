@@ -45,11 +45,4 @@ public interface ECPRepository extends ECPElement, ECPModelContext, ECPPropertie
 	 */
 	String getDescription();
 
-	/**
-	 * Return all open projects of that are shared on this repository.
-	 * 
-	 * @return array of currently open {@link ECPProject ECPProjects} that are shared on this repository
-	 */
-	// TODO remove or use
-	ECPProject[] getOpenProjects();
 }

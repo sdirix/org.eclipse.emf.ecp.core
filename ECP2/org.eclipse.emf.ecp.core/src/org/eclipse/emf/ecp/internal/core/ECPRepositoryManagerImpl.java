@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -81,7 +80,11 @@ public final class ECPRepositoryManagerImpl extends
 		return getElements();
 	}
 
-	/** {@inheritDoc} **/
+	/**
+	 * Checks whether any repositories are available.
+	 * 
+	 * @return true if any repository is available, false otherwise
+	 */
 	public boolean hasRepositories() {
 		return hasElements();
 	}
@@ -210,10 +213,6 @@ public final class ECPRepositoryManagerImpl extends
 
 		public void setProviderSpecificData(Object data) {
 			getResolvedElement().setProviderSpecificData(data);
-		}
-
-		public ECPProject[] getOpenProjects() {
-			return getResolvedElement().getOpenProjects();
 		}
 
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {

@@ -13,21 +13,37 @@
 
 package org.eclipse.emf.ecp.wizards;
 
-import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
+import org.eclipse.emf.ecp.ui.composites.ICompositeProvider;
 
 import org.eclipse.jface.wizard.Wizard;
 
 /**
+ * An abstract class for all Wizard with only one page that use an {@link ICompositeProvider} to create this page.
+ * 
+ * @param <T> the {@link ICompositeProvider} to use during build
+ * 
  * @author Eugen Neufeld
  */
 public abstract class ECPWizard<T extends ICompositeProvider> extends Wizard {
 	private T uiProvider;
 
-	public void setUIProvider(T uiProvider) {
-		this.uiProvider = uiProvider;
+	/**
+	 * Sets the {@link ICompositeProvider} for this wizard.
+	 * 
+	 * @param compositeProvider the {@link ICompositeProvider} to set
+	 */
+	@SuppressWarnings("unchecked")
+	public void setCompositeProvider(ICompositeProvider compositeProvider) {
+		this.uiProvider = (T) compositeProvider;
 	}
 
-	protected T getUIProvider() {
+	/**
+	 * Returns the set {@link ICompositeProvider}.
+	 * 
+	 * @return the {@link ICompositeProvider} that was set
+	 */
+
+	protected T getCompositeProvider() {
 		return uiProvider;
 	}
 }

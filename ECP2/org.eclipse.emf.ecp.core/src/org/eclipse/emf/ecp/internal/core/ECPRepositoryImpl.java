@@ -244,7 +244,11 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 		}
 	}
 
-	/** {@inheritDoc} **/
+	/**
+	 * Return all open projects of that are shared on this repository.
+	 * 
+	 * @return array of currently open {@link ECPProject ECPProjects} that are shared on this repository
+	 */
 	public InternalProject[] getOpenProjects() {
 		List<InternalProject> result = new ArrayList<InternalProject>();
 		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {

@@ -21,7 +21,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
-import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.ecp.wizards.CheckoutProjectWizard;
 import org.eclipse.emf.ecp.wizards.WizardUICallback;
@@ -50,7 +49,7 @@ public class CheckoutHandler extends AbstractHandler {
 			}
 		}
 		HandlerHelper.checkout(checkouts,
-			new WizardUICallback<CheckoutProjectComposite>(HandlerUtil.getActiveShell(event),
+			new WizardUICallback(HandlerUtil.getActiveShell(event),
 				new CheckoutProjectWizard()));
 
 		return null;

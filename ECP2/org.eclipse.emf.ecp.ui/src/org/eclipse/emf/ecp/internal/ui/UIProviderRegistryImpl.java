@@ -157,6 +157,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 			super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 
+		// TODO Debug
 		public InternalProvider getProvider() {
 			String providerName = getConfigurationElement().getAttribute("provider");
 			return (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);

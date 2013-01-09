@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
+import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
 import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -74,7 +74,7 @@ public class NewReferenceAction extends ReferenceAction {
 			NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
 			SelectModelClassComposite helper = new SelectModelClassComposite(ePackages, new HashSet<EPackage>(),
 				new HashSet<EPackage>(), classes);
-			wizard.setUIProvider(helper);
+			wizard.setCompositeProvider(helper);
 			// wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 
 			// ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,14 +9,16 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.ui.composites;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFilter;
+import org.eclipse.emf.ecp.ui.common.ModelClassFilter;
+import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
-import org.eclipse.emf.ecp.ui.model.ModelClassFilter;
 import org.eclipse.emf.ecp.ui.model.ModelTreeContentProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
@@ -28,31 +30,30 @@ import org.eclipse.swt.widgets.Composite;
 import java.util.Collection;
 
 /**
+ * This {@link ICompositeProvider} provides an abstract implementation for displaying EClasses in a Tree.
+ * 
  * @author Eugen Neufeld
  * 
  */
 public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilteredSelectionComposite<TreeViewer> {
 
 	private final ModelClassFilter filter = new ModelClassFilter();
-	private final Collection<EPackage> ePackages;
-
-	private final Collection<EPackage> unsupportedEPackages;
-
-	private final Collection<EPackage> filteredEPackages;
-
-	private final Collection<EClass> filteredEClasses;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private MEClassLabelProvider meClassLabelProvider;
 	private ModelTreeContentProvider modelTreeContentProvider;
 
+	/**
+	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
+	 * 
+	 * @param ePackages the available {@link EPackage EPackages}
+	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
+	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
+	 * @param filteredEClasses {@link EClass EClasses} selected by the user
+	 */
 	public AbstractEClassTreeSelectionComposite(Collection<EPackage> ePackages,
 		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
 		Collection<EClass> filteredEClasses) {
 		super();
-		this.ePackages = ePackages;
-		this.unsupportedEPackages = unsupportedEPackages;
-		this.filteredEPackages = filteredEPackages;
-		this.filteredEClasses = filteredEClasses;
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		meClassLabelProvider = new MEClassLabelProvider(composedAdapterFactory);
 		modelTreeContentProvider = new ModelTreeContentProvider(composedAdapterFactory, ePackages,
@@ -60,7 +61,11 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	}
 
 	/**
-	 * @param project
+	 * Constructor that delegates to the
+	 * {@link AbstractEClassTreeSelectionComposite#AbstractEClassTreeSelectionComposite(Collection, Collection, Collection, Collection)}
+	 * by reading the data from the project.
+	 * 
+	 * @param project the {@link ECPProject} to read the data from
 	 */
 	public AbstractEClassTreeSelectionComposite(ECPProject project) {
 		this(ECPUtil.getAllRegisteredEPackages(), project.getUnsupportedEPackages(), project.getVisiblePackages(),
@@ -85,6 +90,11 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 		return filter;
 	}
 
+	/**
+	 * Whether the Tree is a checked tree.
+	 * 
+	 * @return true if a checked tree, false otherwise
+	 */
 	protected abstract boolean isCheckedTree();
 
 	@Override
@@ -118,6 +128,7 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 		getViewer().collapseAll();
 	}
 
+	/** {@inheritDoc} **/
 	public void dispose() {
 		composedAdapterFactory.dispose();
 		meClassLabelProvider.dispose();

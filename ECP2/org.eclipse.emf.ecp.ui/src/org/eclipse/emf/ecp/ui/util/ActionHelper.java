@@ -1,18 +1,23 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Jonas Helming - initial API and implementation
+ * Eugen Neufeld - simplification of class
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.ui.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -25,26 +30,6 @@ import org.eclipse.swt.widgets.Display;
  * @author Eugen Neufeld
  */
 public final class ActionHelper {
-	// TODO: move constants
-	/**
-	 * The ID of the meeditor.
-	 */
-	// public static final String MEEDITOR_ID = "org.eclipse.emf.ecp.editor";
-
-	/**
-	 * Constant for the open model element command.
-	 */
-	// public static final String MEEDITOR_OPENMODELELEMENT_COMMAND_ID = "org.eclipse.emf.ecp.editor.openModelElement";
-
-	/**
-	 * Constant for the modelelement context.
-	 */
-	// public static final String MECONTEXT_EVALUATIONCONTEXT_VARIABLE = "meContext";
-
-	/**
-	 * Constant for the modelelement to be opened.
-	 */
-	// public static final String ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE = "meToOpen";
 
 	private ActionHelper() {
 

@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.ecp.ui.common.ICompositeProvider;
+import org.eclipse.emf.ecp.ui.composites.ICompositeProvider;
 
 /**
  * @author Eugen Neufeld

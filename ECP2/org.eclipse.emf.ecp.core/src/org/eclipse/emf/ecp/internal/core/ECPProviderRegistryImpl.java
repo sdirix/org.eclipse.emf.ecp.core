@@ -177,8 +177,8 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 			return getResolvedElement().getAdapter(adapterType);
 		}
 
-		public ECPRepository[] getAllRepositories() {
-			return getResolvedElement().getAllRepositories();
+		public ECPRepository[] getRepositories() {
+			return getResolvedElement().getRepositories();
 		}
 
 		public ECPProject[] getOpenProjects() {

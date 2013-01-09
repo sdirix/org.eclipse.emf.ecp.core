@@ -12,7 +12,7 @@ package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.widgets.PropertiesComposite;
 
 import org.eclipse.jface.dialogs.IDialogConstants;

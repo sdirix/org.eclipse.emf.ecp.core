@@ -8,12 +8,12 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.model;
+package org.eclipse.emf.ecp.ui.common;
 
 // TODO: Revise
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.ui.common.ECPViewerFilter;
+import org.eclipse.emf.ecp.ui.model.ModelTreeContentProvider;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;

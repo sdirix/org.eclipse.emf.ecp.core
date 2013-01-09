@@ -11,8 +11,8 @@
 package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecp.ui.Messages;
-import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.actions.RefreshViewerAction;
+import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;

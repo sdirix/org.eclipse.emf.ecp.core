@@ -11,14 +11,14 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.ui.composites;
 
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
-import org.eclipse.emf.ecp.ui.util.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -58,6 +58,11 @@ public class CheckoutProjectComposite implements ICompositeProvider {
 
 	private final UIProvider uiProvider;
 
+	/**
+	 * Constructor for creating a checkout composite.
+	 * 
+	 * @param checkoutSource the object to checkout
+	 */
 	public CheckoutProjectComposite(ECPCheckoutSource checkoutSource) {
 		this.checkoutSource = checkoutSource;
 		projectName = this.checkoutSource.getDefaultCheckoutName();
@@ -67,6 +72,7 @@ public class CheckoutProjectComposite implements ICompositeProvider {
 		uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(checkoutSource);
 	}
 
+	/** {@inheritDoc} **/
 	public Composite createUI(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.ecp.ui.dialogs;
 
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;

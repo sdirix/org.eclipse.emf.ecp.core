@@ -51,7 +51,7 @@ public interface ECPProjectManager {
 		throws ProjectWithNameExistsException;
 
 	/**
-	 * Method to construct an online Project and notify listeners about this add.
+	 * Method to construct an shared Project, e.g. during a checkout, and notify listeners about this add.
 	 * 
 	 * @param repository the {@link ECPRepository} of this project
 	 * @param name the name of the project

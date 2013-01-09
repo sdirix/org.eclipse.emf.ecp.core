@@ -11,7 +11,7 @@
 package org.eclipse.emf.ecp.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.util.Messages;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;

@@ -33,19 +33,17 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.ui.common.AbstractUICallback;
-import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.common.CheckedSelectModelClassComposite;
-import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
-import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
-import org.eclipse.emf.ecp.ui.common.SelectModelClassComposite;
-import org.eclipse.emf.ecp.ui.common.SelectModelElementComposite;
+import org.eclipse.emf.ecp.ui.composites.AddRepositoryComposite;
+import org.eclipse.emf.ecp.ui.composites.CheckedSelectModelClassComposite;
+import org.eclipse.emf.ecp.ui.composites.CheckoutProjectComposite;
+import org.eclipse.emf.ecp.ui.composites.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
+import org.eclipse.emf.ecp.ui.composites.SelectModelElementComposite;
 import org.eclipse.emf.ecp.ui.dialogs.DeleteDialog;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
@@ -135,11 +133,8 @@ public class HandlerHelper {
 
 	public static void createNewReferenceElement(EditingDomain editingDomain, EObject eObject, EReference eReference,
 		Object input, AbstractUICallback callBack) {
-		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-			composedAdapterFactory);
-		SelectModelElementComposite composite = new SelectModelElementComposite(adapterFactoryLabelProvider, input);
+
+		SelectModelElementComposite composite = new SelectModelElementComposite(input);
 		callBack.setCompositeUIProvider(composite);
 		if (AbstractUICallback.OK == callBack.open()) {
 			Object[] results = composite.getSelection();
@@ -158,9 +153,6 @@ public class HandlerHelper {
 				}
 			}
 		}
-
-		adapterFactoryLabelProvider.dispose();
-		composedAdapterFactory.dispose();
 		composite.dispose();
 	}
 

@@ -1,13 +1,17 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
- */
+ * Eike Stepper - initial API and implementation
+ * Eugen Neufeld - JavaDoc
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.spi.ui;
 
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
@@ -29,23 +33,66 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @author Eike Stepper
  */
-public interface UIProvider extends InternalRegistryElement, IAdaptable, AdapterProvider
-{
-  public static final String TYPE = "UIProvider";
+public interface UIProvider extends InternalRegistryElement, IAdaptable, AdapterProvider {
+	/** The Type of the Element. **/
+	String TYPE = "UIProvider";
+	/** The LabelProvider to use in UIProviders. **/
+	ILabelProvider EMF_LABEL_PROVIDER = new AdapterFactoryLabelProvider(InternalProvider.EMF_ADAPTER_FACTORY);
 
-  public static final ILabelProvider EMF_LABEL_PROVIDER = new AdapterFactoryLabelProvider(
-      InternalProvider.EMF_ADAPTER_FACTORY);
+	/**
+	 * Returns the corresponding Provider for this UI Provider.
+	 * 
+	 * @return the corresponding {@link InternalProvider}
+	 */
+	InternalProvider getProvider();
 
-  public InternalProvider getProvider();
+	/**
+	 * Returns the name for an element.
+	 * 
+	 * @param element the object to return the name for
+	 * @return the name of this element
+	 */
+	String getText(Object element);
 
-  public String getText(Object element);
+	/**
+	 * Returns the image for an element.
+	 * 
+	 * @param element the object to return the image for
+	 * @return the name of this element
+	 */
+	Image getImage(Object element);
 
-  public Image getImage(Object element);
+	/**
+	 * Allows the UIProvider to fill the context menu specifically.
+	 * 
+	 * @param manager the {@link IMenuManager} to fill
+	 * @param context the current selected {@link ECPModelContext}
+	 * @param elements the selected elements
+	 */
+	void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements);
 
-  public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements);
+	/**
+	 * The UIProvider can return its provider specific UI to allow the user to fill in provider specific data during the
+	 * creation of an Repository.
+	 * 
+	 * @param parent the {@link Composite} to fill
+	 * @param repositoryProperties the {@link ECPProperties} of the repository to create
+	 * @param repositoryNameText the {@link Text} widget handling the repository name
+	 * @param repositoryLabelText the {@link Text} widget handling the repository label
+	 * @param repositoryDescriptionText the {@link Text} widget handling the repository description
+	 * @return the created control
+	 */
+	Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
+		Text repositoryLabelText, Text repositoryDescriptionText);
 
-  public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
-      Text repositoryLabelText, Text repositoryDescriptionText);
-
-  public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties);
+	/**
+	 * The UIProvider can return a provider specific UI to allow the user to fill in provider specific data for a
+	 * checkout.
+	 * 
+	 * @param parent the {@link Composite} to fill
+	 * @param checkoutSource the Object to checkout
+	 * @param projectProperties the {@link ECPProperties} of the project to create
+	 * @return the created control
+	 */
+	Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties);
 }
