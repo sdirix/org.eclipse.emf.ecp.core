@@ -66,7 +66,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * EMFStore Provider Singleton.
 	 */
-	public static final EMFStoreProvider INSTANCE = new EMFStoreProvider();
+	public static EMFStoreProvider INSTANCE;
 
 	/**
 	 * Property constant for Repository URL.
@@ -94,6 +94,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	public EMFStoreProvider() {
 		super(NAME);
 		configureEMFStore();
+		INSTANCE = this;
 	}
 
 	/**
