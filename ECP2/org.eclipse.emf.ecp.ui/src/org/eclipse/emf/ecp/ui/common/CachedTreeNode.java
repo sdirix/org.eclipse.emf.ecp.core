@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.ui.common;
 
 import java.util.Collection;
@@ -10,21 +21,22 @@ import java.util.Map;
  * @param <T> the type of the value stored by this node
  * 
  * @author emueller
+ * @author Tobias Verhoeven
  */
 public abstract class CachedTreeNode<T> {
 
-	private T value;
+	private T ownValue;
+	private T cachedChildrenValue;
 	private Map<Object, T> cache;
-	public Object parent;
+	private Object parent;
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param initialValue
-	 *            the initial value
+	 * @param initialValue the initial value
 	 */
 	public CachedTreeNode(T initialValue) {
-		this.value = initialValue;
+		this.ownValue = initialValue;
 		cache = new HashMap<Object, T>();
 	}
 
@@ -63,8 +75,8 @@ public abstract class CachedTreeNode<T> {
 	 * 
 	 * @return the value stored within this node
 	 */
-	public T getValue() {
-		return value;
+	public T getOwnValue() {
+		return ownValue;
 	}
 
 	/**
@@ -73,8 +85,8 @@ public abstract class CachedTreeNode<T> {
 	 * @param newValue
 	 *            the new value to be associated with this node
 	 */
-	public void setValue(T newValue) {
-		this.value = newValue;
+	public void setOwnValue(T newValue) {
+		this.ownValue = newValue;
 	}
 
 	/**
@@ -84,5 +96,45 @@ public abstract class CachedTreeNode<T> {
 	 */
 	public Collection<T> values() {
 		return cache.values();
+	}
+
+	/**
+	 * Returns the most severe cached value of all children.
+	 * 
+	 * @return the childValue
+	 */
+	public T getChildValue() {
+		return cachedChildrenValue;
+	}
+
+	/**
+	 * Sets the the most severe cached value of all children.
+	 * 
+	 * @param childValue the childValue to set
+	 */
+	protected void setChildValue(T childValue) {
+		this.cachedChildrenValue = childValue;
+	}
+
+	/**
+	 * Returns the value that this node should represent.
+	 * This value is also passed to parents in case of changes to the tree.
+	 * 
+	 * @return the display value
+	 */
+	public abstract T getDisplayValue();
+
+	/**
+	 * @return the parent object, this is not the parent tree node.
+	 */
+	public Object getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent the parent to set, this is not the parent tree node.
+	 */
+	public void setParent(Object parent) {
+		this.parent = parent;
 	}
 }

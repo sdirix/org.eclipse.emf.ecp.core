@@ -10,13 +10,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.validation.connector;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
@@ -116,45 +112,31 @@ public class Activator extends AbstractUIPlugin {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
-			for (ECPProject project : newProjects) {
-				getValidationService(project).validate(getOnlyEobjects(project.getElements()));
-			}
 		}
 
 		public void projectChanged(ECPProject project, boolean opened) throws Exception {
-			getValidationService(project).validate(getOnlyEobjects(project.getElements()));
 		}
 
 		public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
-
 		}
 
 		public Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception {
-
 			Set<EObject> allAffectedElements = new HashSet<EObject>();
+			
 			for (Object object : objects) {
-
-				if (!(object instanceof EObject)) {
-					continue;
+				if (object instanceof EObject) {
+					EObject eObject = (EObject) object;
+					
+					if (eObject.eContainer() == null) {
+						getValidationService(project).remove(eObject);
+					} else {
+					  Set<EObject> affected = getValidationService(project).validate(eObject);
+					  allAffectedElements.addAll(affected);
+					}
 				}
-
-				Set<EObject> affected = getValidationService(project).validate((EObject) object);
-				allAffectedElements.addAll(affected);
-
 			}
 			return allAffectedElements.toArray();
-		}
-
-		private Collection<EObject> getOnlyEobjects(EList<? extends Object> elements) {
-			List<EObject> result = new ArrayList<EObject>();
-			for (Object o : elements) {
-				if (EObject.class.isInstance(o)) {
-					result.add((EObject) o);
-				}
-			}
-			return result;
-		}
-		// END SUPRESS CATCH EXCEPTION
+		}		
 	}
 
 	/**

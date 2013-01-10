@@ -31,6 +31,7 @@ import java.util.Set;
  * @param <T> the actual value type that is stored by the tree
  * 
  * @author emueller
+ * @author Tobias Verhoeven
  */
 public abstract class AbstractCachedTree<T> {
 
@@ -85,16 +86,35 @@ public abstract class AbstractCachedTree<T> {
 		updateNode(eObject, value);
 		rootValue.putIntoCache(eObject, value);
 
-		Set<EObject> affectedElements = new HashSet<EObject>();
+		Set<EObject> affectedElements = removeOutdatedParentCacheIfNeeded(eObject);
 		// propagate upwards
 		EObject parent = eObject.eContainer();
 
 		while (parent != null && !excludedCallback.isExcluded(parent)) {// !isExcludedType(excludedTypes,
 																		// parent.getClass())
-			updateParentNode(parent, eObject, value);
+			updateParentNode(parent, eObject, nodes.get(eObject).getDisplayValue());
 			eObject = parent;
 			parent = parent.eContainer();
 			affectedElements.add(eObject);
+		}
+		return affectedElements;
+	}
+
+	// If an object has been moved the cached entries must be removed from old parents.
+	private Set<EObject> removeOutdatedParentCacheIfNeeded(EObject eObject) {
+
+		Set<EObject> affectedElements = new HashSet<EObject>();
+		CachedTreeNode<T> node = nodes.get(eObject);
+
+		if (node.getParent() != null && node.getParent() != eObject.eContainer()) {
+			EObject oldParent = (EObject) node.getParent();
+			while (oldParent != null && !excludedCallback.isExcluded(oldParent)) {
+				affectedElements.add(oldParent);
+				node = nodes.get(oldParent);
+				node.removeFromCache(eObject);
+				oldParent = oldParent.eContainer();
+				eObject = oldParent;
+			}
 		}
 		return affectedElements;
 	}
@@ -106,7 +126,7 @@ public abstract class AbstractCachedTree<T> {
 	 * @return the node
 	 */
 	public T getRootValue() {
-		return rootValue.getValue();
+		return rootValue.getDisplayValue();
 	}
 
 	/**
@@ -122,7 +142,7 @@ public abstract class AbstractCachedTree<T> {
 		CachedTreeNode<T> nodeEntry = nodes.get(eObject);
 
 		if (nodeEntry != null) {
-			return nodes.get(eObject).getValue();
+			return nodes.get(eObject).getDisplayValue();
 		}
 
 		return getDefaultValue();
@@ -137,7 +157,7 @@ public abstract class AbstractCachedTree<T> {
 	public void remove(EObject eObject) {
 
 		CachedTreeNode<T> node = nodes.get(eObject);
-		CachedTreeNode<T> parentNode = nodes.get(node.parent);
+		CachedTreeNode<T> parentNode = nodes.get(node.getParent());
 
 		nodes.remove(eObject);
 		rootValue.removeFromCache(eObject);
@@ -167,7 +187,7 @@ public abstract class AbstractCachedTree<T> {
 			node = createNodeEntry(object, t);
 		}
 
-		node.setValue(t);
+		node.setOwnValue(t);
 	}
 
 	private CachedTreeNode<T> createNodeEntry(Object object, T t) {
@@ -176,17 +196,24 @@ public abstract class AbstractCachedTree<T> {
 		return node;
 	}
 
+	/**
+	 * Updates the passed parent nodes cached value.
+	 * 
+	 * @param parent the parent object to be updated
+	 * @param object the object for which the cached value should be changed.
+	 * @param value the the cached value for the object
+	 */
 	protected void updateParentNode(Object parent, Object object, T value) {
 		CachedTreeNode<T> node = nodes.get(object);
 		CachedTreeNode<T> parentNode = nodes.get(parent);
-		node.parent = parent;
+		node.setParent(parent);
 
 		if (parentNode == null) {
 			parentNode = createNodeEntry(parent, value);
 		}
 
 		parentNode.putIntoCache(object, value);
-		rootValue.putIntoCache(parent, value);
+		rootValue.putIntoCache(parent, parentNode.getDisplayValue());
 	}
 
 	/**

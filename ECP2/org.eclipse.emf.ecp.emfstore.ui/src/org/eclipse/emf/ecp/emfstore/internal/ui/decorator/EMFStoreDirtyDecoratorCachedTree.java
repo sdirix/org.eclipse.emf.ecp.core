@@ -79,11 +79,20 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		public void update() {
 			for (EMFStoreDirtyTreeNode node : values()) {
 				if (node.getChangeCount() > 0 || node.isChildChanges()) {
-					getValue().setChildChanges(true);
+					getOwnValue().setChildChanges(true);
 					return;
 				}
 			}
-			getValue().setChildChanges(false);
+			getOwnValue().setChildChanges(false);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.ecp.ui.common.CachedTreeNode#getDisplayValue()
+		 */
+		@Override
+		public EMFStoreDirtyTreeNode getDisplayValue() {
+			return getOwnValue();
 		}
 	}
 
