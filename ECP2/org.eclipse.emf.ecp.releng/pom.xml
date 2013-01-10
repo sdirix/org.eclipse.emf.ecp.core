@@ -57,6 +57,7 @@
 		<module>../org.eclipse.emf.ecp.workspace-feature</module>
 		<module>../org.eclipse.emf.ecp.workspace.core</module>
 		<module>../org.eclipse.emf.ecp.workspace.ui</module>
+		<module>../../ECPQ7Tests</module>
 	</modules>
 
 	<build>
