@@ -82,4 +82,11 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 		}
 		return result; 
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void deleteValidationService(Object key) {
+		mapping.remove(key);
+	}
 }

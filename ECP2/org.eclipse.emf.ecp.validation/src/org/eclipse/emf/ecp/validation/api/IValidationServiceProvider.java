@@ -29,4 +29,11 @@ public interface IValidationServiceProvider {
 	 */
 	IValidationService getValidationService(Object key);
 	
+	/**
+	 * Deletes the validation service for the given object.
+	 *
+	 * @param key the object for which to delete the validation service
+	 */
+	void deleteValidationService(Object key);
+	
 }

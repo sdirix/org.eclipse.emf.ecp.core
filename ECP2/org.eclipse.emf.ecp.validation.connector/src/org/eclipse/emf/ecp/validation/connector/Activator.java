@@ -10,7 +10,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.validation.connector;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -96,15 +98,19 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the validation service
 	 */
 	public IValidationService getValidationService(ECPProject project) {
+		return getValidationServiceProvider().getValidationService(project);
+	}
+	
+	private IValidationServiceProvider getValidationServiceProvider() {
 		if (validationServiceProvider == null) {
 			// Register directly with the service
 			ServiceReference<IValidationServiceProvider> reference = context
 				.getServiceReference(IValidationServiceProvider.class);
 			validationServiceProvider = (IValidationServiceProvider) context.getService(reference);
 		}
-		return validationServiceProvider.getValidationService(project);
+		return validationServiceProvider;
 	}
-
+	
 	/**
 	 * Project change observer that validates changed objects.
 	 */
@@ -112,6 +118,12 @@ public class Activator extends AbstractUIPlugin {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
+			List<ECPProject> newProjectList = Arrays.asList(newProjects);
+			for (ECPProject project : oldProjects) {
+				if (!newProjectList.contains(project)) {
+					getValidationServiceProvider().deleteValidationService(project);
+				}
+			}
 		}
 
 		public void projectChanged(ECPProject project, boolean opened) throws Exception {
