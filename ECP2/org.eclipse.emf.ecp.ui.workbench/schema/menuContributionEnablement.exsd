@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.ecp.ui.workbench" id="menuContributionEnablement" name="Menu Contribution Enablement"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This ExtensionPoint allows to modify the enablement of menus.
       </documentation>
    </annotation>
 

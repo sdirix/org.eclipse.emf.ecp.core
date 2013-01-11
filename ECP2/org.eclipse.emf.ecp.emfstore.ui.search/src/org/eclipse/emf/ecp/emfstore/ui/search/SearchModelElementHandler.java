@@ -19,8 +19,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.ActionHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -44,7 +45,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-		InternalProject project = ECPUtil.getECPProject(selection.getFirstElement(), InternalProject.class);
+		InternalProject project = (InternalProject)ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 
 		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 

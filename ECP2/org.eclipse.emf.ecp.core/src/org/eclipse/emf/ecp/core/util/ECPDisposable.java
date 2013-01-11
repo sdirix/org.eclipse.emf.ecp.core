@@ -32,6 +32,7 @@ public interface ECPDisposable {
 	 */
 	void dispose();
 
+	// TODO use Observerbus?
 	/**
 	 * Adds a {@link DisposeListener} to this instance.
 	 * 
@@ -51,14 +52,46 @@ public interface ECPDisposable {
 	 * 
 	 * @author Eike Stepper
 	 */
-	// TODO needed or use ObserverBus?
 	public interface DisposeListener {
 		/**
 		 * Callback method being used to notify listeners about a dispose.
 		 * 
 		 * @param disposable the object being disposed
-		 * @throws Exception is thrown when something goes wrong
+		 * @throws DisposeException is thrown when something goes wrong
 		 */
-		void disposed(ECPDisposable disposable) throws Exception;
+		// TODO Exception to DisposeException
+		void disposed(ECPDisposable disposable) throws DisposeException;
+	}
+
+	/**
+	 * This is an Exception that is thrown during dispose actions.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	public class DisposeException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * Constructs a new exception with the specified detail message and cause.
+		 * 
+		 * @param message the detail message (which is saved for later retrieval by the getMessage() method).
+		 * @param cause the cause (which is saved for later retrieval by the getCause() method). (A null value is
+		 *            permitted, and indicates that the cause is nonexistent or unknown.)
+		 */
+		public DisposeException(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		/**
+		 * Constructs a new exception with the specified cause and a detail message of (cause==null ? null :
+		 * cause.toString())
+		 * 
+		 * @param cause the cause (which is saved for later retrieval by the getCause() method).
+		 */
+		public DisposeException(Throwable cause) {
+			super(cause);
+		}
+
 	}
 }

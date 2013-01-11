@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.core.util.IFilterProvider;
+import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
 
 /**
  * This class provides all EPackages that are per default in an Eclipse Modeling
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.core.util.IFilterProvider;
  * @author Eugen Neufeld
  * 
  */
-public class DefaultFilter implements IFilterProvider {
+public class DefaultFilter implements ECPFilterProvider {
 
 	/**
 	 * Convenient constructor.

@@ -1,89 +1,52 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * Eugen Neufeld - JavaDoc
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.core.util;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
-import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
-import org.eclipse.emf.ecp.spi.core.InternalProvider;
-
-import org.eclipse.core.runtime.Platform;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO doc
+
 /**
+ * This class provides common functionality.
+ * 
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
 public final class ECPUtil {
-	public static final int NOT_FOUND = -1;
+
+	private static final int NOT_FOUND = -1;
 
 	private ECPUtil() {
 	}
 
-	public static ECPProvider getECPProvider(Object object) {
-		if (ECPProvider.class.isInstance(object)) {
-			return (ECPProvider) object;
-		}
-		if (EObject.class.isInstance(object)) {
-			ECPModelContext context = getModelContext((EObject) object, ECPProvider.class);
-			if (context != null) {
-				return context.getProvider();
-			}
-		}
-		return (ECPProvider) Platform.getAdapterManager().getAdapter(object, ECPProvider.class);
-	}
-
-	public static <T extends ECPProject> T getECPProject(Object object, Class<T> clazz) {
-		if (clazz.isInstance(object)) {
-			return (T) object;
-		}
-
-		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-			InternalProvider internalProvider;
-			if (provider instanceof ExtensionDescriptor) {
-				ExtensionDescriptor<InternalProvider> descriptor = (ExtensionDescriptor<InternalProvider>) provider;
-				internalProvider = descriptor.getResolvedElement();
-			} else {
-				internalProvider = (InternalProvider) provider;
-			}
-			ECPModelContext modelContext = internalProvider.getModelContext(object);
-			if (modelContext != null && clazz.isInstance(modelContext)) {
-				return (T) modelContext;
-			}
-		}
-
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static ECPModelContext getModelContext(EObject eObject, Class<?> clazz) {
-		ECPModelContextAdapter contextAdapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(eObject.eAdapters(),
-			clazz);
-		if (contextAdapter != null) {
-			return contextAdapter.getContext();
-		}
-		return getModelContext(eObject.eContainer(), clazz);
-	}
-
+	/**
+	 * Return the common {@link ECPModelContext} for the provided elements.
+	 * 
+	 * @param contextProvider the {@link ECPModelContextProvider} to use
+	 * @param elements the elements to check
+	 * @return the common {@link ECPModelContext} for the elements or null
+	 */
 	public static ECPModelContext getModelContext(ECPModelContextProvider contextProvider, Object... elements) {
 		ECPModelContext commonContext = null;
 		for (Object element : elements) {
@@ -104,10 +67,22 @@ public final class ECPUtil {
 		return commonContext;
 	}
 
+	/**
+	 * This creates an empty {@link ECPProperties}.
+	 * 
+	 * @return an empry {@link ECPProperties}
+	 */
 	public static ECPProperties createProperties() {
 		return new Properties();
 	}
 
+	/**
+	 * Checks whether an object is an {@link ECPDisposable} and disposed.
+	 * 
+	 * @param object the object to check
+	 * @return true if the object is an instance of {@link ECPDisposable} and {@link ECPDisposable#isDisposed()} returns
+	 *         true, false otherwise
+	 */
 	public static boolean isDisposed(Object object) {
 		if (object instanceof ECPDisposable) {
 			ECPDisposable disposable = (ECPDisposable) object;
@@ -117,6 +92,12 @@ public final class ECPUtil {
 		return false;
 	}
 
+	/**
+	 * Checks whether an object is an {@link ECPCloseable} and closed.
+	 * 
+	 * @param object the object to check
+	 * @return true if the object is an instance of {@link ECPCloseable} and not open, false otherwise
+	 */
 	public static boolean isClosed(Object object) {
 		if (object instanceof ECPCloseable) {
 			ECPCloseable closeable = (ECPCloseable) object;
@@ -126,6 +107,12 @@ public final class ECPUtil {
 		return false;
 	}
 
+	/**
+	 * Checks whether the {@link ECPElement} is an {@link ElementDescriptor} and resolves it when necessary.
+	 * 
+	 * @param elementOrDescriptor the {@link ECPElement} to check
+	 * @return the resolved Object or the original object if it is not an descriptor
+	 */
 	public static ECPElement getResolvedElement(ECPElement elementOrDescriptor) {
 		if (elementOrDescriptor instanceof ElementDescriptor) {
 			ElementDescriptor<?> descriptor = (ElementDescriptor<?>) elementOrDescriptor;
@@ -135,10 +122,28 @@ public final class ECPUtil {
 		return elementOrDescriptor;
 	}
 
+	/**
+	 * Checks whether an array contains an element.
+	 * 
+	 * @param elements the array to check
+	 * @param element the element to find
+	 * @param <E> the type of the elements
+	 * @return true if the element is in the array, false otherwise
+	 */
+	// TODO only used in ECPUtil
 	public static <E> boolean containsElement(E[] elements, E element) {
 		return getElementIndex(elements, element) != NOT_FOUND;
 	}
 
+	/**
+	 * Returns the index of an Element inside the array.
+	 * 
+	 * @param elements the array to search
+	 * @param element the element to search
+	 * @param <E> the generic type of the element and the array
+	 * @return the index of the element in the array or {@link #NOT_FOUND} if the element is not in the array
+	 */
+	// TODO only used in ECPUtil
 	public static <E> int getElementIndex(E[] elements, E element) {
 		for (int i = 0; i < elements.length; i++) {
 			if (elements[i] == element) {
@@ -149,6 +154,13 @@ public final class ECPUtil {
 		return NOT_FOUND;
 	}
 
+	/**
+	 * Returns the Set of names of a set of {@link ECPElement ECPElements}.
+	 * 
+	 * @param elements the set of elements to get the names for
+	 * @return the set of names of this elements
+	 */
+	// TODO never used
 	public static Set<String> getElementNames(Set<? extends ECPElement> elements) {
 		Set<String> names = new HashSet<String>();
 		for (ECPElement element : elements) {
@@ -158,10 +170,28 @@ public final class ECPUtil {
 		return names;
 	}
 
+	/**
+	 * Finds the set of all Elements that are in the new array but not in the old.
+	 * 
+	 * @param oldElements the array containing the old elements
+	 * @param newElements the array containing the new elements
+	 * @param <E> the type of the elements
+	 * @return the Set<E> of elements which are only in the newElements array
+	 */
+	// TODO only used internally
 	public static <E> Set<E> getAddedElements(E[] oldElements, E[] newElements) {
 		return getRemovedElements(newElements, oldElements);
 	}
 
+	/**
+	 * Finds the set of all Elements that are in the old array but not in the new.
+	 * 
+	 * @param oldElements the array containing the old elements
+	 * @param newElements the array containing the new elements
+	 * @param <E> the type of the elements
+	 * @return the Set<E> of elements which are only in the oldElements array
+	 */
+	// TODO only used internally
 	public static <E> Set<E> getRemovedElements(E[] oldElements, E[] newElements) {
 		Set<E> removed = new HashSet<E>();
 		for (int i = 0; i < oldElements.length; i++) {
@@ -174,13 +204,13 @@ public final class ECPUtil {
 		return removed;
 	}
 
-	// TODO move to another helper
+	// TODO only used by editor
 	/**
 	 * This method looks through all known {@link EPackage}s to find all subclasses for the provided super class.
 	 * 
 	 * @param superClass
 	 *            - the class for which to get the subclasses
-	 * @return a {@link Collection} of {@link EClass}es
+	 * @return a {@link Collection} of {@link EClass EClasses}
 	 */
 	public static Collection<EClass> getSubClasses(EClass superClass) {
 		Collection<EClass> classes = new HashSet<EClass>();
@@ -198,14 +228,17 @@ public final class ECPUtil {
 		return classes;
 	}
 
-	// TODO move to another helper
+	/**
+	 * Returns the set of all known {@link EPackage EPackages}.
+	 * 
+	 * @return the Set of all known {@link EPackage Epackages}
+	 */
+	// TODO only used internally
 	public static Set<EPackage> getAllRegisteredEPackages() {
 		Set<EPackage> ePackages = new HashSet<EPackage>();
-		for (Object object : Registry.INSTANCE.values()) {
-			if (object instanceof EPackage) {
-				EPackage ePackage = (EPackage) object;
-				ePackages.add(ePackage);
-			}
+		for (String nsURI : Registry.INSTANCE.keySet()) {
+			EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			ePackages.add(ePackage);
 		}
 		return ePackages;
 	}

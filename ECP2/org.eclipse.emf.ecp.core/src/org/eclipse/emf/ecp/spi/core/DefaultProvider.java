@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
@@ -39,7 +40,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 
 import java.util.ArrayList;
@@ -79,44 +79,58 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	private AdapterProvider uiProvider;
 
+	/**
+	 * Convenient constructor for an {@link ECPProvider}.
+	 * 
+	 * @param name the name of the implementing provider
+	 */
 	protected DefaultProvider(String name) {
 		super(name);
 		label = name;
 		description = "";
 	}
 
+	/** {@inheritDoc} */
 	public final String getType() {
 		return TYPE;
 	}
 
+	/** {@inheritDoc} */
 	public final InternalProvider getProvider() {
 		return this;
 	}
 
+	/** {@inheritDoc} */
 	public final String getLabel() {
 		return label;
 	}
 
+	/** {@inheritDoc} */
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
+	/** {@inheritDoc} */
 	public final String getDescription() {
 		return description;
 	}
 
+	/** {@inheritDoc} */
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
+	/** {@inheritDoc} */
 	public final AdapterProvider getUIProvider() {
 		return uiProvider;
 	}
 
+	/** {@inheritDoc} */
 	public final void setUIProvider(AdapterProvider uiProvider) {
 		this.uiProvider = uiProvider;
 	}
 
+	/** {@inheritDoc} */
 	public final InternalRepository[] getRepositories() {
 		List<InternalRepository> result = new ArrayList<InternalRepository>();
 		for (ECPRepository repository : ECPRepositoryManager.INSTANCE.getRepositories()) {
@@ -132,6 +146,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return result.toArray(new InternalRepository[result.size()]);
 	}
 
+	/** {@inheritDoc} */
 	public final InternalProject[] getOpenProjects() {
 		List<InternalProject> result = new ArrayList<InternalProject>();
 		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
@@ -149,25 +164,33 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return result.toArray(new InternalProject[result.size()]);
 	}
 
+	/** {@inheritDoc} */
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
+	/** {@inheritDoc} */
 	public final void dispose() {
 		disposable.dispose();
 	}
 
+	/** {@inheritDoc} */
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
+	/** {@inheritDoc} */
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
 
+	/**
+	 * This method is called when a provider is disposed. Subclasses which need to dispose should overwrite this.
+	 */
 	protected void doDispose() {
 	}
 
+	/** {@inheritDoc} */
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		if (uiProvider != null) {
 			return uiProvider.getAdapter(adaptable, adapterType);
@@ -190,12 +213,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
-	 * @see IAdaptable#getAdapter(Class)
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
+	/** {@inheritDoc} */
 	public EditingDomain createEditingDomain(InternalProject project) {
 		CommandStack commandStack = createCommandStack(project);
 		EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
@@ -204,18 +228,28 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return editingDomain;
 	}
 
+	/**
+	 * This is used during the creation of the {@link EditingDomain}. This implementation creates an
+	 * {@link BasicCommandStack}.
+	 * 
+	 * @param project the project to create the {@link CommandStack} for
+	 * @return the created {@link CommandStack}
+	 */
 	protected CommandStack createCommandStack(InternalProject project) {
 		return new BasicCommandStack();
 	}
 
+	/** {@inheritDoc} */
 	public boolean canAddRepositories() {
 		return true;
 	}
 
+	/** {@inheritDoc} */
 	public boolean isSlow(Object parent) {
 		return false;
 	}
 
+	/** {@inheritDoc} */
 	public ECPModelContext getModelContext(Object element) {
 		if (element instanceof ECPModelContext) {
 			return (ECPModelContext) element;
@@ -260,6 +294,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return null;
 	}
 
+	/**
+	 * This allows to get the {@link ECPModelContext} from a {@link Notifier} using the EcoreUtil.
+	 * This first gets the {@link ECPModelContextAdapter} and from it it gets the {@link ECPModelContext}.
+	 * 
+	 * @param notifier the {@link Notifier} to get the {@link ECPModelContext} from
+	 * @return the {@link ECPModelContext} registered as an Adapter on this {@link Notifier} or null
+	 */
 	protected final ECPModelContext getModelContextFromAdapter(Notifier notifier) {
 		ECPModelContextAdapter adapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(notifier.eAdapters(),
 			ECPModelContextAdapter.class);
@@ -270,6 +311,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return null;
 	}
 
+	/** {@inheritDoc} */
 	public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList) {
 		if (parent == ECPProjectManager.INSTANCE) {
 			childrenList.addChildren(ECPProjectManager.INSTANCE.getProjects());
@@ -288,18 +330,24 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 	}
 
+	/** {@inheritDoc} */
 	public void handleLifecycle(ECPModelContext context, LifecycleEvent event) {
-		// TODO Trace properly
 		String providerClass = getClass().getSimpleName();
 		String contextClass = context.getClass().getSimpleName();
-		System.out.println(providerClass + " received " + event + " for " + contextClass + " " + context);
+		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context);
 	}
 
 	/**
-	 * Convenient implementation of the {@link #getUnsupportedEPackages(Collection)} method to return an empty list. The
+	 * Convenient implementation of the {@link #getUnsupportedEPackages(Collection,InternalRepository)} method to return
+	 * an empty list. The
 	 * provider has to {@link Override} this method if not all {@link EPackage}s are supported.
+	 * 
+	 * @param packages available packages
+	 * @param repository the repository to check
+	 * 
+	 * @return the {@link Collection} of {@link EPackage EPackages} unsupported by this provider for the specified
+	 *         repository
 	 */
-	@SuppressWarnings("javadoc")
 	public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages, InternalRepository repository) {
 		return Collections.emptyList();
 	}
@@ -307,6 +355,14 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/**
 	 * Convenient implementation of the {@link #getLinkElements(InternalProject, EObject, EReference)} method to use the
 	 * {@link ItemPropertyDescriptor} to get all object of an object.
+	 * 
+	 * @param project
+	 *            the project the call is from
+	 * @param modelElement
+	 *            {@link EObject} to add the {@link EReference} to
+	 * @param eReference
+	 *            the {@link EReference} to add
+	 * @return {@link Iterator} of {@link EObject} that can be linked
 	 */
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
@@ -314,34 +370,41 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	/**
 	 * Convenient implementation where nothing happens.
+	 * 
+	 * @param project
+	 *            the project to save
 	 */
 	public void doSave(InternalProject project) {
 		// do nothing
 	}
 
 	/**
-	 * Convenient implementation where the project is autosaved
+	 * Convenient implementation where the provider saves changes of the project automatically, so a project never gets
+	 * dirty. Thus this returns false.
+	 * 
+	 * @param project
+	 *            the project to check
+	 * @return false
 	 */
 	public boolean isDirty(InternalProject project) {
 		return false;
 	}
 
 	/**
-	 * Convenient implementation where the project has autosave
-	 */
-	public boolean hasAutosave(InternalProject project) {
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(
-	 * org.eclipse.emf.ecp.spi.core.InternalProvider,org.eclipse.emf.ecore.EObject)
+	 * Convenient implementation that return true during this check.
+	 * 
+	 * @param project the project to check
+	 * @return true
 	 */
 	public boolean modelExists(InternalProject project) {
 		return true;
 	}
 
+	/**
+	 * Convenient implementation that return false.
+	 * 
+	 * @return false
+	 */
 	public boolean hasUnsharedProjectSupport() {
 		return false;
 	}

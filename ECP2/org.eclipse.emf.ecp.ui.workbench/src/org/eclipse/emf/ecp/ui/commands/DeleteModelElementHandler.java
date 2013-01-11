@@ -18,7 +18,8 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -36,7 +37,7 @@ public class DeleteModelElementHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 
-		InternalProject project=ECPUtil.getECPProject(selection.getFirstElement(), InternalProject.class);
+		InternalProject project=(InternalProject)ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 			
 		HandlerHelper.deleteModelElement(project, (List<EObject>)selection.toList());
 		return null;

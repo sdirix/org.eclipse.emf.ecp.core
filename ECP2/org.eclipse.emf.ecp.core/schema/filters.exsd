@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.core.util.IFilterProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.core.util.ECPFilterProvider"/>
                </appinfo>
             </annotation>
          </attribute>

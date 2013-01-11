@@ -161,14 +161,6 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	boolean isDirty(InternalProject project);
 
 	/**
-	 * This method checks, whether a specific project has autosave or not.
-	 * 
-	 * @param project the project to check
-	 * @return true if autosave is enabled, false otherwise
-	 */
-	boolean hasAutosave(InternalProject project);
-
-	/**
 	 * Deletes a collection of EObjects from the model.
 	 * 
 	 * @param project the project from where to delete

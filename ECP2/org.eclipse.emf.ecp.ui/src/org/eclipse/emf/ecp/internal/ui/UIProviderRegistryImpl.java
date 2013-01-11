@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.internal.ui;
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -157,10 +156,8 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 			super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 
-		// TODO Debug
 		public InternalProvider getProvider() {
-			String providerName = getConfigurationElement().getAttribute("provider");
-			return (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);
+			return getResolvedElement().getProvider();
 		}
 
 		public <T> T getAdapter(Object adaptable, Class<T> adapterType) {

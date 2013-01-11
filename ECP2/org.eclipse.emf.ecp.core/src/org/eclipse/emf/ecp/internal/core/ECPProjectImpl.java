@@ -27,11 +27,11 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
+import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.IFilterProvider;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
@@ -170,13 +170,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * this method sets all known {@link EPackage}s as the filter.
 	 */
 	private void setupFilteredEPackages() {
-		List<IFilterProvider> filterProviders = new ArrayList<IFilterProvider>();
+		List<ECPFilterProvider> filterProviders = new ArrayList<ECPFilterProvider>();
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.core.filters");
 		for (IExtension extension : extensionPoint.getExtensions()) {
 			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				IFilterProvider filterProvider = (IFilterProvider) configurationElement
+				ECPFilterProvider filterProvider = (ECPFilterProvider) configurationElement
 					.createExecutableExtension("class");
 				filterProviders.add(filterProvider);
 			} catch (CoreException ex) {
@@ -186,7 +186,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 		Set<EPackage> ePackages = new HashSet<EPackage>();
 		Set<String> filteredNsUris = new HashSet<String>();
-		for (IFilterProvider filterProvider : filterProviders) {
+		for (ECPFilterProvider filterProvider : filterProviders) {
 			filteredNsUris.addAll(filterProvider.getFilteredPackages());
 		}
 
@@ -564,11 +564,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public boolean isModelDirty() {
 		return getProvider().isDirty(this);
-	}
-
-	/** {@inheritDoc} */
-	public boolean isModelAutoSave() {
-		return getProvider().hasAutosave(this);
 	}
 
 	/** {@inheritDoc} */

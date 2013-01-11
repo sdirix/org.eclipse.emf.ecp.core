@@ -17,8 +17,10 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -111,8 +113,28 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 			ECPProjectAware projectAware = (ECPProjectAware) adaptable;
 			return (InternalProject) projectAware.getProject();
 		}
-
+		InternalProject result = getInternalProject(adaptable);
+		if (result != null) {
+			return result;
+		}
 		return AdapterUtil.adapt(adaptable, InternalProject.class);
+	}
+
+	// TODO integrate in getProject
+	private InternalProject getInternalProject(Object object) {
+		if (InternalProject.class.isInstance(object)) {
+			return (InternalProject) object;
+		}
+
+		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+			InternalProvider internalProvider = (InternalProvider) ECPUtil.getResolvedElement(provider);
+			ECPModelContext modelContext = internalProvider.getModelContext(object);
+			if (modelContext != null && InternalProject.class.isInstance(modelContext)) {
+				return (InternalProject) modelContext;
+			}
+		}
+
+		return null;
 	}
 
 	/** {@inheritDoc} */

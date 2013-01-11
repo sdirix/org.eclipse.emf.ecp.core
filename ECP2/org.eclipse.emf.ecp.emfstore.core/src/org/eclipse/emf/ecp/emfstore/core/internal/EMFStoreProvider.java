@@ -289,12 +289,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
-	@Override
-	public boolean hasAutosave(InternalProject project) {
-		return Configuration.isAutoSaveEnabled();
-	}
-
-	/** {@inheritDoc} */
 	public void delete(InternalProject project, Collection<EObject> eObjects) {
 		ProjectSpace projectSpace = getProjectSpace(project);
 		for (EObject eObject : eObjects) {

@@ -109,7 +109,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
-	public void disposed(ECPDisposable disposable) throws Exception {
+	public void disposed(ECPDisposable disposable) throws DisposeException {
 		if (disposable == provider) {
 			dispose();
 		}

@@ -7,25 +7,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Eike Stepper - initial API and implementation
+ * Eugen Neufeld - JavaDoc
  * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util;
 
-import java.util.Collection;
-
 /**
- * Interface to provide a collection of nsUris that should not be available.
+ * A ModelContextAware knows its {@link ECPModelContext}.
  * 
- * @author Eugen Neufeld
- * 
+ * @author Eike Stepper
  */
-public interface IFilterProvider {
-
+public interface ECPModelContextAware extends ECPProviderAware {
 	/**
-	 * Returns the {@link Collection} of nsUris that should be by default not visible in ecp.
+	 * Returns the {@link ECPModelContext} this interface is aware of.
 	 * 
-	 * @return the Collection of nsUris
+	 * @return {@link ECPModelContext}
 	 */
-	Collection<String> getFilteredPackages();
+	ECPModelContext getContext();
 }

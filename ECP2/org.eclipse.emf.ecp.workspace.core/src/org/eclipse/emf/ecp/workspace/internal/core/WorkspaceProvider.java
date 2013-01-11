@@ -270,10 +270,4 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		return true;
 	}
 
-	@Override
-	public boolean hasAutosave(InternalProject project) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

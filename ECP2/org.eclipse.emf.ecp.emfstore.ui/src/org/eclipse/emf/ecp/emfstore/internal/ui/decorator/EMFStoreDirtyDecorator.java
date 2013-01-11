@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
@@ -108,7 +108,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 		else if (element instanceof EObject) {
 			InternalProject project = null;
 			try {
-				project = ECPUtil.getECPProject(element, InternalProject.class);
+				project = (InternalProject) ECPProjectManager.INSTANCE.getProject(element);
 			} catch (IllegalArgumentException iae) {
 				// ignore
 			}

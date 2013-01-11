@@ -67,7 +67,6 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 			ECPProviderAware providerAware = (ECPProviderAware) adaptable;
 			return (InternalProvider) providerAware.getProvider();
 		}
-
 		return AdapterUtil.adapt(adaptable, InternalProvider.class);
 	}
 
@@ -269,14 +268,6 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		 */
 		public boolean isDirty(InternalProject project) {
 			return getResolvedElement().isDirty(project);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#hasAutosave(org.eclipse.emf.ecp.spi.core.InternalProject)
-		 */
-		public boolean hasAutosave(InternalProject project) {
-			return getResolvedElement().hasAutosave(project);
 		}
 
 		/*
