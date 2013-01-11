@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.ui.common.AbstractCachedTree;
 import org.eclipse.emf.ecp.ui.common.CachedTreeNode;
 import org.eclipse.emf.ecp.ui.common.IExcludedObjectsCallback;
@@ -136,19 +137,20 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	}
 
 	private Diagnostic getSeverity(EObject object) {
-		 EValidator validator = EValidator.Registry.INSTANCE.getEValidator(object.eClass().getEPackage());
-		 BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
-		 
-		 if (validator != null) {
-			 Map<Object, Object> context = new HashMap<Object, Object>();
-			 context.put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
-		     context.put(EValidator.class, validator);
-			  	 
-		   validator.validate(object, diagnostics, context);
-		   return diagnostics;
-		 }
+		EValidator validator = EValidator.Registry.INSTANCE.getEValidator(object.eClass().getEPackage());
+		BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
+
+		if (validator == null) {
+			validator = new EObjectValidator();
+		}
+		Map<Object, Object> context = new HashMap<Object, Object>();
+		context.put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
+		context.put(EValidator.class, validator);
+
+		validator.validate(object, diagnostics, context);
 		return diagnostics;
-	}	
+
+	}
 
 }
 
