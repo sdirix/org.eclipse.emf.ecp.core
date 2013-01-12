@@ -305,5 +305,14 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		public Notifier getRoot(InternalProject project) {
 			return getResolvedElement().getRoot(project);
 		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
+		 * java.lang.Object)
+		 */
+		public boolean contains(InternalProject project, Object object) {
+			return getResolvedElement().contains(project, object);
+		}
 	}
 }

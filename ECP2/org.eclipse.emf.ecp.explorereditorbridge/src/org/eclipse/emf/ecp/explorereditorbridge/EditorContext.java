@@ -73,18 +73,18 @@ public class EditorContext implements EditModelElementContext {
 			}
 
 			public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
-				// TODO talk about
-				for (Object object : objects) {
-					if (EObject.class.isInstance(object) && object.equals(getModelElement())
-						&& ((EObject) object).eContainer() == null) {
-						for (EditModelElementContextListener contextListener : contextListeners) {
-							contextListener.onContextDeleted();
-						}
-						dispose();
-						break;
+				// if we have a structural change (otherwise nothing should be closed), and the change is in our project
+				// and our model element is no longer contained
+				// then we notify about deletion and dispose ourself
+				if (structural && EditorContext.this.ecpProject.equals(project)
+					&& !project.contains(EditorContext.this.modelElement)) {
+					for (EditModelElementContextListener contextListener : contextListeners) {
+						contextListener.onModelElementDeleted(EditorContext.this.modelElement);
 					}
+					dispose();
 				}
 			}
+
 		};
 		ECPProjectManager.INSTANCE.addObserver(projectObserver);
 	}
@@ -116,8 +116,7 @@ public class EditorContext implements EditModelElementContext {
 	}
 
 	public boolean contains(EObject eObject) {
-		// return ecpProject.contains(eObject);
-		return false;
+		return ecpProject.contains(eObject);
 	}
 
 	/**

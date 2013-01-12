@@ -136,4 +136,12 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * @return true if the object is the root of the model of this project, false otherwise
 	 */
 	boolean isModelRoot(Object object);
+
+	/**
+	 * Check whether a project contains an Object.
+	 * 
+	 * @param object the object to check for containment
+	 * @return true if the object is in the project, false otherwise
+	 */
+	boolean contains(Object object);
 }

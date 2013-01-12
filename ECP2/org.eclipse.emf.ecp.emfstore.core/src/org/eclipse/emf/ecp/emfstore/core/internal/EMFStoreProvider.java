@@ -314,6 +314,14 @@ public final class EMFStoreProvider extends DefaultProvider {
 		return getProjectSpace(project).getProject();
 	}
 
+	public boolean contains(InternalProject project, Object object) {
+		if (!EObject.class.isInstance(object)) {
+			return false;
+		}
+		ProjectSpace projectSpace = getProjectSpace(project);
+		return projectSpace.getProject().containsInstance((EObject) object);
+	}
+
 	@Override
 	public ECPModelContext getModelContext(Object element) {
 		if (element instanceof ECPModelContext) {
@@ -479,4 +487,5 @@ public final class EMFStoreProvider extends DefaultProvider {
 		}
 		return null;
 	}
+
 }

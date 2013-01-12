@@ -596,4 +596,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	public boolean isModelRoot(Object object) {
 		return getProvider().getRoot(this).equals(object);
 	}
+
+	/** {@inheritDoc} */
+	public boolean contains(Object object) {
+		return getProvider().contains(this, object);
+	}
 }

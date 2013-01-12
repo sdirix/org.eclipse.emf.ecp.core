@@ -408,4 +408,9 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	public boolean hasUnsharedProjectSupport() {
 		return false;
 	}
+
+	// FIXME implement only in provider
+	public boolean contains(InternalProject project, Object object) {
+		return false;
+	}
 }

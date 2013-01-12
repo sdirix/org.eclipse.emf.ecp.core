@@ -199,4 +199,13 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @return open projects using this ECPProvider
 	 */
 	ECPProject[] getOpenProjects();
+
+	/**
+	 * Checks whether a specific project contains a specific object.
+	 * 
+	 * @param project the project to check
+	 * @param object the object to check
+	 * @return true if the project contains such an object, false otherwise
+	 */
+	boolean contains(InternalProject project, Object object);
 }

@@ -209,14 +209,9 @@ public class MEEditor extends SharedHeaderFormEditor {
 			modelElementContextListener = new EditModelElementContextListener() {
 
 				public void onModelElementDeleted(EObject deleted) {
-					if (modelElementContext.getModelElement().equals(deleted)) {
+					if(modelElementContext.getModelElement().equals(deleted)){
 						close(false);
-					} else {
-						if (!modelElementContext.contains(modelElementContext.getModelElement())) {
-							close(false);
-						}
 					}
-
 				}
 
 				public void onContextDeleted() {
