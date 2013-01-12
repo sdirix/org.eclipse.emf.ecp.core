@@ -310,6 +310,10 @@
                      ifEmpty="false"
                      operator="or">
                   <test
+                        property="org.eclipse.emf.ecp.core.closeable.open"
+                        value="true">
+                  </test>
+                  <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
                         value="false">
                   </test>
@@ -352,6 +356,10 @@
                      ifEmpty="false"
                      operator="or">
                   <test
+                        property="org.eclipse.emf.ecp.core.closeable.open"
+                        value="true">
+                  </test>
+                  <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.canUndo"
                         value="true">
                   </test>
@@ -368,6 +376,10 @@
                <iterate
                      ifEmpty="false"
                      operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.core.closeable.open"
+                        value="true">
+                  </test>
                   <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.canUndo"
                         value="true">

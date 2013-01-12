@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.edit.EditMetaModelContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
@@ -60,7 +61,12 @@ public class EditorContext implements EditModelElementContext {
 
 			public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 				// TODO Auto-generated method stub
-
+				if (!ECPUtil.containsElement(newProjects, EditorContext.this.ecpProject)) {
+					for (EditModelElementContextListener contextListener : contextListeners) {
+						contextListener.onContextDeleted();
+					}
+					dispose();
+				}
 			}
 
 			public void projectChanged(ECPProject project, boolean opened) throws Exception {

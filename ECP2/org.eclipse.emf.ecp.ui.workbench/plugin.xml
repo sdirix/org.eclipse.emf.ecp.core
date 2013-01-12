@@ -336,7 +336,6 @@
             name="New Model Element">
       </command>
       <command
-            defaultHandler="org.eclipse.emf.ecp.ui.commands.ProjectFilterdPackagesHandler"
             id="org.eclipse.emf.ecp.ui.project.filterModelElements"
             name="Filter Modelelements">
       </command>
@@ -459,6 +458,24 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.eclipse.emf.ecp.core.closeable.open"
+                           value="true">
+                     </test>
+                  </iterate>
+               </and>
+            </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.emf.ecp.ui.commands.DeleteModelElementHandler"
@@ -471,6 +488,28 @@
       <handler
             class="org.eclipse.emf.ecp.ui.commands.ExportHandler"
             commandId="org.eclipse.emf.ecp.ui.workbench.export">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ProjectFilterdPackagesHandler"
+            commandId="org.eclipse.emf.ecp.ui.project.filterModelElements">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.eclipse.emf.ecp.core.closeable.open"
+                           value="true">
+                     </test>
+                  </iterate>
+               </and>
+            </with>
+         </enabledWhen>
       </handler>
    </extension>
    <extension
