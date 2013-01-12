@@ -5,7 +5,7 @@ Element-Name: Sucessfull
 Element-Type: testsuite
 Element-Version: 2.0
 Id: _hHKMQD-WEeK-yuKsz0Lang
-Save-Time: 1/3/13 11:39 AM
+Save-Time: 1/12/13 3:08 PM
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
 Content-Type: text/testcase
@@ -22,5 +22,9 @@ _OPeisEJWEeKQh80wtWssKQ	// kind: 'test' name: 'RevertAll' path: 'successfull/Rev
 _oiZ8kEJZEeKQh80wtWssKQ	// kind: 'test' name: 'HistoryView' path: 'successfull/HistoryView.test'
 _S6lNoEJbEeKQh80wtWssKQ	// kind: 'test' name: 'DeleteLocalProjectOnServer' path: 'successfull/DeleteLocalProjectOnServer.test'
 _GS__4EJMEeKQh80wtWssKQ	// kind: 'test' name: 'TestBoolWidget' path: 'successfull/TestBoolWidget.test'
+_0JrbIEIsEeKQh80wtWssKQ	// kind: 'test' name: 'DeleteElements' path: 'successfull/DeleteElements.test'
+_z2GgIEBxEeKAxsN-kffdlw	// kind: 'test' name: 'DirtyDecorator' path: 'successfull/DirtyDecorator.test'
+__Kh34EQ5EeKQgL6LoFFWrA	// kind: 'test' name: 'EnablementOnClose' path: 'successfull/EnablementOnClose.test'
+_xD-A4EJMEeKQh80wtWssKQ	// kind: 'test' name: 'MultiIntWidget' path: 'successfull/MultiIntWidget.test'
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

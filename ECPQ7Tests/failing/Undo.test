@@ -1,13 +1,13 @@
 --- Q7 testcase ---
 Format-Version: 1.0
 Q7-vendor: www.xored.com/q7
-Contexts: __UtTgD-XEeK-yuKsz0Lang
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
 Element-Name: Undo
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _zBFtgEJPEeKQh80wtWssKQ
-Save-Time: 1/9/13 7:39 PM
+Save-Time: 1/12/13 4:04 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -15,7 +15,7 @@ Testcase-Type: ecl
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Undo Last Operation" | click
+//get-view "Model Explorer" | get-tree | select TestProject | get-menu "Undo Last Operation" | click
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
     get-editbox -after [get-label Name] | set-text Jonas1
