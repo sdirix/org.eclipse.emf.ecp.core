@@ -345,10 +345,36 @@
       <handler
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.UndoLastOperationHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.canUndo"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.RevertAllOperationsHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.canUndo"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ShowHistoryHandler"
@@ -447,6 +473,13 @@
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
             properties="isServerAdmin"
             type="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreProjectCanUndoTester"
+            id="org.eclipse.emf.ecp.emfstore.ui.canUndo"
+            namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
+            properties="canUndo"
+            type="org.eclipse.emf.ecp.core.ECPProject">
       </propertyTester>
    </extension>
 	<extension
