@@ -70,6 +70,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 			EObject element = project.getModelElement(modelElementId);
 
 			if (element != null) {
+				lastAffected.add(element);
 				lastAffected
 					.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element));
 			}
@@ -83,12 +84,15 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		if (!projectSpace.isShared()) {
 			return;
 		}
-
+		lastAffected = new HashSet<EObject>();
 		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 			Project project = projectSpace.getProject();
 			EObject element = project.getIdToEObjectMapping().get(modelElementId.getId());
+
 			if (element != null) {
-				lastAffected = EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(element);
+				lastAffected.add(element);
+				lastAffected.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(
+					element));
 			}
 		}
 

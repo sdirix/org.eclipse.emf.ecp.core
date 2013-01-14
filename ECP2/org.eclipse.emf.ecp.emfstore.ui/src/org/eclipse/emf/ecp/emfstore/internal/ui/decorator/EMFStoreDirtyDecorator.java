@@ -118,8 +118,9 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getCachedValue(element)
 					.shouldDisplayDirtyIndicator()) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
+			} else {
+				decoration.addOverlay(null);
 			}
-
 			return;
 		}
 

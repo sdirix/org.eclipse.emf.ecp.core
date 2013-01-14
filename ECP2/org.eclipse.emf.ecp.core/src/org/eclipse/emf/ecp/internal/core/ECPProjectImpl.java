@@ -284,9 +284,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void notifyObjectsChanged(Object[] objects, boolean structural) {
 		if (objects != null && objects.length != 0) {
-			if (getProvider().isDirty(this)) {
-				getProvider().doSave(this);
-			}
+			// if (getProvider().isDirty(this)) {
+			// getProvider().doSave(this);
+			// }
 			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects, structural);
 		}
 	}

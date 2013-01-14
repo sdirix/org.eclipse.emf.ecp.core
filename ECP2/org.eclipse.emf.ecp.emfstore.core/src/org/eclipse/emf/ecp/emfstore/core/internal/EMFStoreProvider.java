@@ -37,6 +37,7 @@ import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
+import org.eclipse.emf.emfstore.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.common.model.Project;
@@ -44,6 +45,7 @@ import org.eclipse.emf.emfstore.common.model.util.IdEObjectCollectionChangeObser
 import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
 import org.eclipse.emf.emfstore.server.model.ProjectInfo;
+import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
 import org.eclipse.core.runtime.IStatus;
 
@@ -106,8 +108,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public EditingDomain createEditingDomain(InternalProject project) {
-		return WorkspaceManager.getInstance().getCurrentWorkspace().getEditingDomain();
+	public EditingDomain createEditingDomain(final InternalProject project) {
+		EditingDomain domain = WorkspaceManager.getInstance().getCurrentWorkspace().getEditingDomain();
+		return domain;
 	}
 
 	/** {@inheritDoc} */
@@ -226,6 +229,16 @@ public final class EMFStoreProvider extends DefaultProvider {
 			if (projectSpace == null) {
 				return;
 			}
+			projectSpace.getOperationManager().addOperationListener(new OperationObserver() {
+
+				public void operationUnDone(AbstractOperation operation) {
+					doSave((InternalProject) context);
+				}
+
+				public void operationExecuted(AbstractOperation operation) {
+					doSave((InternalProject) context);
+				}
+			});
 			projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
 				// 2
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
@@ -314,6 +327,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 		return getProjectSpace(project).getProject();
 	}
 
+	@Override
 	public boolean contains(InternalProject project, Object object) {
 		if (!EObject.class.isInstance(object)) {
 			return false;
