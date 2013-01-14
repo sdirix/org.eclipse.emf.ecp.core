@@ -143,15 +143,16 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	public Set<EObject> removeOperation(EObject eObject) {
 		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
 		node.setChangeCount(node.getChangeCount() - 1);
-		boolean hasChanges = false;
-		for (EObject child : eObject.eContents()) {
-			EMFStoreDirtyTreeNode childNode = getCachedValue(child);
-			if (childNode.shouldDisplayDirtyIndicator()) {
-				hasChanges = true;
-				break;
-			}
-		}
-		node.setChildChanges(hasChanges);
+		// TODO @TOBI: why?
+		// boolean hasChanges = false;
+		// for (EObject child : eObject.eContents()) {
+		// EMFStoreDirtyTreeNode childNode = getCachedValue(child);
+		// if (childNode.shouldDisplayDirtyIndicator()) {
+		// hasChanges = true;
+		// break;
+		// }
+		// }
+		// node.setChildChanges(hasChanges);
 		return update(eObject, node);
 	}
 }
