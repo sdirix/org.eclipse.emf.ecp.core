@@ -7,27 +7,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
+ * Edgar Mueller
  ******************************************************************************/
 package org.eclipse.emf.ecp.common.util;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.DelegatingWrapperItemProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -36,8 +31,29 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author shterev
  * @author hodaie
  * @author denglerm
+ * @author emueller
  */
 public final class UiUtil {
+	
+	/**
+	 * The ID of the ME Editor.
+	 */
+	public static final String MEEDITOR_ID = "org.eclipse.emf.ecp.editor";
+	
+	/**
+	 * Constant for the open model element command.
+	 */
+	public static final String MEEDITOR_OPENMODELELEMENT_COMMAND_ID = "org.eclipse.emf.ecp.editor.openModelElement";
+	
+	/**
+	 * Constant for the model element context.
+	 */
+	public static final String MECONTEXT_EVALUATIONCONTEXT_VARIABLE = "meContext";
+	
+	/**
+	 * Constant for the model element to be opened.
+	 */
+	public static final String ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE = "meToOpen";
 
 	private UiUtil() {
 		// do nothing
@@ -51,105 +67,33 @@ public final class UiUtil {
 	 */
 	public static EObject getModelElement(ExecutionEvent event) {
 
-		EObject me = null;
+		EObject modelElement = null;
 
 		// ZH: determine the place from which
 		// the command is run (UC Navigator context menu or MEEeditor)
 		// This decision is should be made to extract the model element
 		// for attaching action item accordingly.
 		String partId = HandlerUtil.getActivePartId(event);
+		
 		if (partId != null && partId.equals(MEEDITOR_ID)) {
 			// extract model element from editor input
 			IEditorInput editorInput = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.getActiveEditor().getEditorInput();
 			Object obj = editorInput.getAdapter(EObject.class);
-			me = (EObject) obj;
+			modelElement = (EObject) obj;
 		} else {
 			// extract model element from current selection in navigator
-
 			EObject eObject = UiUtil.getSelection(event);
 			if (eObject == null) {
 				return null;
 			}
 
-			me = eObject;
+			modelElement = eObject;
 		}
 
-		return me;
+		return modelElement;
 	}
 
-	/**
-	 * . This shows a standard dialog with some given initial contents to select model elements.
-	 * 
-	 * @param shell shell
-	 * @param initialContent initilaContents
-	 * @param title title
-	 * @param multiSelection if multiSelection is allowed
-	 * @return The selected objects
-	 */
-	// ZH Why does this return Objects?:
-	public static Object[] showMESelectionDialog(Shell shell, Collection<?> initialContent, String title,
-		boolean multiSelection) {
-
-		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		ElementListSelectionDialog dlg = new ElementListSelectionDialog(shell.getShell(),
-			new AdapterFactoryLabelProvider(adapterFactory));
-
-		dlg.setElements(initialContent.toArray(new Object[initialContent.size()]));
-		dlg.setTitle(title);
-		dlg.setBlockOnOpen(true);
-		dlg.setMultipleSelection(multiSelection);
-		Object[] result = new Object[0];
-		if (dlg.open() == Window.OK) {
-			result = dlg.getResult();
-		}
-		adapterFactory.dispose();
-		return result;
-	}
-
-	private static AdapterFactoryLabelProvider labelProvider;
-
-	/**
-	 * Get the name of a model element.
-	 * 
-	 * @param modelElement the model element
-	 * @return the name for the model element
-	 */
-	public static String getNameForModelElement(EObject modelElement) {
-		ComposedAdapterFactory adapterFactory=null;
-		if (labelProvider == null) {
-			adapterFactory = new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-			labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-		}
-		
-		String text = labelProvider.getText(modelElement);
-		if (adapterFactory!=null) {
-			adapterFactory.dispose();
-		}
-		
-		return text;
-	}
-
-	/**
-	 * The ID of the meeditor.
-	 */
-	public static final String MEEDITOR_ID = "org.eclipse.emf.ecp.editor";
-	/**
-	 * Constant for the open model element command.
-	 */
-	public static final String MEEDITOR_OPENMODELELEMENT_COMMAND_ID = "org.eclipse.emf.ecp.editor.openModelElement";
-
-	/**
-	 * Constant for the modelelement context.
-	 */
-	public static final String MECONTEXT_EVALUATIONCONTEXT_VARIABLE = "meContext";
-
-	/**
-	 * Constant for the modelelement to be opened.
-	 */
-	public static final String ME_TO_OPEN_EVALUATIONCONTEXT_VARIABLE = "meToOpen";
 
 	/**
 	 * Extract the selected ModelElement from a viewer which is selection provider. This will be called from Handler
@@ -178,11 +122,11 @@ public final class UiUtil {
 	}
 
 	/**
-	 * Extract the selected Object in navigator or other StructuredViewer. This method uses the general
-	 * ISelectionService of Workbench to extract the selection. Beware that the part providing the selection should have
-	 * registered its SelectionProvider.
+	 * Extracts the selected Object from the currently active StructuredViewer.<br>
+	 * This method uses the general {@link ISelectionService} of the Workbench to extract the selection. 
+	 * Beware that the part providing the selection should have registered its SelectionProvider.
 	 * 
-	 * @return the selected Object or null if selection is not an IStructuredSelection
+	 * @return the selected object or <code>null</code> the if selection is not an {@link IStructuredSelection}
 	 */
 	public static Object getSelection() {
 		ISelectionService selectionService = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
@@ -200,16 +144,44 @@ public final class UiUtil {
 		Object o = ssel.getFirstElement();
 		return o;
 	}
+	
+	/**
+	 * Extracts the selected {@link EObject} from the currently active StructuredViewer.<br>
+	 * This method uses the general {@link ISelectionService} of the Workbench to extract the selection. 
+	 * Beware that the part providing the selection should have registered its SelectionProvider.
+	 * 
+	 * @return the selected {@link EObject} or <code>null</code> the if selection is not an {@link IStructuredSelection}
+	 */
+	public static EObject getSelectedModelelement() {
+		
+		Object obj = getSelection();
+		
+		if (obj instanceof EObject) {
+			return (EObject) obj;
+		} else if (obj instanceof DelegatingWrapperItemProvider) {
+			DelegatingWrapperItemProvider delegatingProvider = (DelegatingWrapperItemProvider) obj;
+			if (delegatingProvider.getValue() instanceof EObject) {
+				return (EObject) delegatingProvider.getValue();
+			} else {
+				return null;
+			}
+
+		} else {
+			return null;
+		}
+	}
 
 	/**
-	 * Extract the selected EObject in navigator or other StructuredViewer. This method uses the general
-	 * ISelectionService of Workbench to extract the selection. Beware that the part providing the selection should have
-	 * registered its SelectionProvider.
+	 * Extracts the selected {@link EObject} from the currently active StructuredViewer.<br>
+	 * This method uses the general {@link ISelectionService} of the Workbench to extract the selection. 
+	 * Beware that the part providing the selection should have registered its SelectionProvider.
 	 * 
-	 * @return the selected Object or null if selection is not an IStructuredSelection
+	 * @return the selected {@link EObject} or <code>null</code> the if selection is not an {@link IStructuredSelection}
 	 */
 	public static EObject getSelectedEObject() {
+		
 		Object obj = getSelection();
+		
 		if (obj instanceof EObject) {
 			return (EObject) obj;
 		} else {
@@ -244,43 +216,24 @@ public final class UiUtil {
 	}
 
 	/**
-	 * Extract the selected ModelElement in navigator or other StructuredViewer. This method uses the general
-	 * ISelectionService of Workbench to extract the selection. Beware that the part providing the selection should have
-	 * registered its SelectionProvider.
+	 * Extracts an element from an event by its type.
 	 * 
-	 * @return the selected Object or null if selection is not an IStructuredSelection
-	 */
-	public static EObject getSelectedModelelement() {
-		Object obj = getSelection();
-		if (obj instanceof EObject) {
-			return (EObject) obj;
-		} else if (obj instanceof DelegatingWrapperItemProvider) {
-			if (((DelegatingWrapperItemProvider) obj).getValue() instanceof EObject) {
-				return (EObject) ((DelegatingWrapperItemProvider) obj).getValue();
-			} else {
-				return null;
-			}
-
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Extracts element from event.
-	 * 
-	 * @param event the event
-	 * @param clazz class type of the object to extract
-	 * @param <T> the type of the object to extract
-	 * @return the object
+	 * @param event 
+	 * 			the event from which to extract
+	 * @param clazz 
+	 * 			the class type of the object to be extracted
+	 * @param <T> the type of the object to be extracted
+	 * @return the extracted object, if any
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getEventElementByClass(ExecutionEvent event, Class<T> clazz) {
 
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		
 		if (sel == null) {
 			sel = HandlerUtil.getActiveMenuSelection(event);
 		}
+		
 		if (!(sel instanceof IStructuredSelection)) {
 			return null;
 		}
@@ -291,9 +244,11 @@ public final class UiUtil {
 		}
 
 		Object selectedElement = structuredSelection.getFirstElement();
+		
 		if (!(clazz.isInstance(selectedElement))) {
 			return null;
 		}
+		
 		return (T) selectedElement;
 	}
 

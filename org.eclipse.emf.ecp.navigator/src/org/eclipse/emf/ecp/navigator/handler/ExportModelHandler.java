@@ -27,7 +27,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.util.DialogHandler;
 import org.eclipse.emf.ecp.common.util.PreferenceHelper;
-import org.eclipse.emf.ecp.common.util.UiUtil;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -55,6 +56,7 @@ public class ExportModelHandler extends AbstractHandler {
 	public static final String[] FILTER_EXTS = { "*." + FILE_EXTENSION + ", *.*" };
 
 	private static final String EXPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.exportModelPath";
+	
 
 	/**
 	 * {@inheritDoc}
@@ -67,7 +69,7 @@ public class ExportModelHandler extends AbstractHandler {
 
 		if (exportModelElements.size() > 0) {
 
-			String filePath = getFilePathByFileDialog(UiUtil.getNameForModelElement(exportModelElements.get(0)));
+			String filePath = getFilePathByFileDialog(getNameForModelElement(exportModelElements.get(0)));
 
 			if (filePath == null) {
 				return null;
@@ -80,6 +82,26 @@ public class ExportModelHandler extends AbstractHandler {
 		}
 
 		return null;
+	}
+	
+
+	/**
+	 * Get the name of a model element.
+	 * 
+	 * @param modelElement the model element
+	 * @return the name for the model element
+	 */
+	public static String getNameForModelElement(EObject modelElement) {
+		// TODO: moved here from UiUtil since only user
+		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+		
+		String text = labelProvider.getText(modelElement);
+		labelProvider.dispose();
+		adapterFactory.dispose();
+		
+		return text;
 	}
 
 	private void runCommand(final List<EObject> exportModelElements, String filePath) {
