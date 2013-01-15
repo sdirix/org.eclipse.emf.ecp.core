@@ -11,13 +11,21 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.ecp.ui.composites.ICompositeProvider;
+import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Eugen Neufeld
  * 
  */
-public interface IEditorCompositeProvider extends ICompositeProvider {
+public interface IEditorCompositeProvider {
+
+	/**
+	 * This method creates a UI bundled into a {@link Composite} that can be used anywhere.
+	 * 
+	 * @param parent the parent {@link Composite}
+	 * @return the created {@link Composite}
+	 */
+	Composite createUI(Composite parent);
 
 	/**
 	 * Dispose the ModelElement controls.

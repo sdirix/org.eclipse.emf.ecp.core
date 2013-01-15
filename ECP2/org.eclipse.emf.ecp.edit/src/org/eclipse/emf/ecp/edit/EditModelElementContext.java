@@ -133,5 +133,7 @@ public interface EditModelElementContext {
 
 	
 	EditMetaModelContext getMetaModelElementContext();
+	
+	void getNewModelElement(EReference reference);
 
 }

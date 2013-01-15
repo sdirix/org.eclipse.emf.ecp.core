@@ -10,32 +10,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
-import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * An Action for adding reference links to a model element. It is mainly used in the {@link MEMultiLinkControl}
@@ -61,118 +49,13 @@ public class NewReferenceAction extends ReferenceAction {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void doExecute() {
-
-			// TOOD extract
 			if (!checkMultiplicity(false)) {
 				return;
 			}
-			Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
-			List<EPackage> ePackages = new ArrayList<EPackage>();
-			ePackages.add(modelElement.eClass().getEPackage());
-			ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
+			modelElementContext.getNewModelElement(eReference);
 
-			NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
-			SelectModelClassComposite helper = new SelectModelClassComposite(ePackages, new HashSet<EPackage>(),
-				new HashSet<EPackage>(), classes);
-			wizard.setCompositeProvider(helper);
-			// wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
+			// TOOD extract
 
-			// ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()
-			// .getActiveWorkbenchWindow().getShell(), ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(),
-			// classes);
-			//
-			// dialog.setAllowMultiple(false);
-			// int result = dialog.open();
-			WizardDialog wd = new WizardDialog(shell, wizard);
-			// wizard.setWindowTitle("New Reference Element");
-			EObject newMEInstance = null;
-			int result = wd.open();
-
-			if (result == WizardDialog.OK) {
-				// Object[] dialogSelection = dialog.getResult();
-				// for (Object object : dialogSelection)
-				// {
-				// if (object instanceof EClass)
-				// {
-				// EClass eClasse = (EClass)object;
-				Object[] selection = helper.getSelection();
-				if (selection == null || selection.length == 0) {
-					return;
-				}
-				EClass eClasse = (EClass) selection[0];
-				// 1.create ME
-				EPackage ePackage = eClasse.getEPackage();
-				newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
-
-				// }
-				// }
-			}
-			if (newMEInstance == null) {
-				return;
-				// EClass clazz = eReference.getEReferenceType();
-				// EClass newClass = null;
-				// Set<EClass> subclasses = modelElementContext..getMetaModelElementContext().getAllSubEClasses(clazz,
-				// false);
-				// if (subclasses.size() == 1)
-				// {
-				// newClass = subclasses.iterator().next();
-				// }
-				// else
-				// {
-				// ElementListSelectionDialog dlg = new ElementListSelectionDialog(PlatformUI.getWorkbench()
-				// .getActiveWorkbenchWindow().getShell(), new MEClassLabelProvider());
-				// dlg.setMessage(DIALOG_MESSAGE);
-				// dlg.setElements(subclasses.toArray());
-				//
-				// dlg.setTitle("Select Element type");
-				// dlg.setBlockOnOpen(true);
-				// if (dlg.open() != Window.OK)
-				// {
-				// return;
-				// }
-				// Object result = dlg.getFirstResult();
-				// if (result instanceof EClass)
-				// {
-				// newClass = (EClass)result;
-				// }
-				// }
-			}
-
-			// EPackage ePackage = newClass.getEPackage();
-			// newMEInstance = ePackage.getEFactoryInstance().create(newClass);
-
-			if (!eReference.isContainer()) {
-
-				// Returns the value of the Container
-				EObject parent = modelElement.eContainer();
-				while (!(parent == null) && newMEInstance.eContainer() == null) {
-					EReference reference = modelElementContext.getMetaModelElementContext()
-						.getPossibleContainingReference(newMEInstance, parent);
-					if (reference != null && reference.isMany()) {
-						Object object = parent.eGet(reference);
-						EList<EObject> eList = (EList<EObject>) object;
-						eList.add(newMEInstance);
-					}
-					parent = parent.eContainer();
-				}
-
-				if (newMEInstance.eContainer() == null) {
-					// throw new RuntimeException("No matching container for model element found");
-					modelElementContext.addModelElement(newMEInstance);
-				}
-
-			}
-
-			// add the new object to the reference
-			Object object = modelElement.eGet(eReference);
-			if (isMultiReference()) {
-				EList<EObject> eList = (EList<EObject>) object;
-				eList.add(newMEInstance);
-			} else {
-				modelElement.eSet(eReference, newMEInstance);
-			}
-
-			modelElementContext.openEditor(newMEInstance, this.getClass().getName());
 		}
 	}
 
@@ -238,7 +121,4 @@ public class NewReferenceAction extends ReferenceAction {
 		modelElementContext.getEditingDomain().getCommandStack().execute(new NewReferenceCommand(modelElement));
 	}
 
-	private boolean isMultiReference() {
-		return eReference.getUpperBound() != 1 && eReference.getUpperBound() != 0;
-	}
 }

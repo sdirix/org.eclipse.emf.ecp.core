@@ -4,8 +4,6 @@
 package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -189,9 +187,9 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 	 */
 	@Override
 	protected IDialogSettings getDialogSettings() {
-		IDialogSettings settings = Activator.getInstance().getDialogSettings().getSection(DIALOG_SETTINGS);
+		IDialogSettings settings = Activator.getDefault().getDialogSettings().getSection(DIALOG_SETTINGS);
 		if (settings == null) {
-			settings = Activator.getInstance().getDialogSettings().addNewSection(DIALOG_SETTINGS);
+			settings = Activator.getDefault().getDialogSettings().addNewSection(DIALOG_SETTINGS);
 		}
 		return settings;
 	}

@@ -51,7 +51,8 @@ public class EditorModelElementOpener implements ModelElementOpener {
 	 * @param ecpProject the {@link ECPProject} to open the Editor for
 	 */
 	public void openModelElement(EObject modelElement, ECPProject ecpProject) {
-		MEEditorInput input = new MEEditorInput(new EditorContext(modelElement, ecpProject));
+		MEEditorInput input = new MEEditorInput(new EditorContext(modelElement, ecpProject, PlatformUI.getWorkbench()
+			.getActiveWorkbenchWindow().getShell()));
 		try {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.openEditor(input, "org.eclipse.emf.ecp.editor", true);

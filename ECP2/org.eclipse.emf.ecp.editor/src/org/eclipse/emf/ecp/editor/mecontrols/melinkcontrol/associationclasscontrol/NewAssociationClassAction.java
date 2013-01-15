@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
-import org.eclipse.emf.ecp.ui.model.MEClassLabelProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -75,7 +74,8 @@ public class NewAssociationClassAction extends Action {
 				ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 				ElementListSelectionDialog dlg = new ElementListSelectionDialog(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getShell(), new MEClassLabelProvider(composedAdapterFactory));
+					.getActiveWorkbenchWindow().getShell(), new AdapterFactoryLabelProvider(composedAdapterFactory));
+				// Used an MEClassLabelProvider
 				dlg.setMessage(DIALOG_MESSAGE);
 				dlg.setElements(subclasses.toArray());
 				dlg.setTitle("Select Element type");
