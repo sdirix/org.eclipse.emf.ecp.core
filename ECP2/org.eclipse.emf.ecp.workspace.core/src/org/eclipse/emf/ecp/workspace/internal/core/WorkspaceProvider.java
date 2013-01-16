@@ -9,6 +9,8 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.core;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -18,10 +20,14 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -32,8 +38,13 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -108,21 +119,40 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		}
 	}
 
-	public EList<Object> getElements(InternalProject project) {
+	public EList<? extends Object> getElements(InternalProject project) {
+		// ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+		// return resourceSet.getResources().get(0).getContents();
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
 		throw new UnsupportedOperationException();
 	}
 
 	public void resourceChanged(IResourceChangeEvent event) {
-		IResourceDelta delta = event.getDelta();
-		if (delta != null) {
-			InternalRepository repository = getRepositories()[0];
-			Object[] objects = getChangedObjects(delta, repository);
-			repository.notifyObjectsChanged(objects);
 
-			for (InternalProject project : getOpenProjects()) {
-				objects = getChangedObjects(delta, project);
-				project.notifyObjectsChanged(objects, true);
+		// IResourceDelta delta = event.getDelta();
+		// if (delta != null) {
+		// InternalRepository repository = getRepositories()[0];
+		// Object[] objects = getChangedObjects(delta, repository);
+		// repository.notifyObjectsChanged(objects);
+		//
+		// for (InternalProject project : getOpenProjects()) {
+		// objects = getChangedObjects(delta, project);
+		// project.notifyObjectsChanged(objects, true);
+		// }
+		// }
+	}
+
+	private void reload(InternalProject project) {
+		List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
+		for (Resource resource : resources) {
+			if (resource.getURI().equals(getRootURI(project)) && resource.isLoaded()) {
+				resource.unload();
+
+				try {
+					resource.load(Collections.EMPTY_MAP);
+				} catch (IOException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
 			}
 		}
 	}
@@ -153,6 +183,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	}
 
 	private Object[] getChangedObjects(IResourceDelta delta, InternalProject project) {
+
 		IPath rootPath = getRootResource(project).getFullPath();
 		IPath deltaPath = delta.getResource().getFullPath();
 		if (rootPath.equals(deltaPath)) {
@@ -245,7 +276,6 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	 * org.eclipse.emf.ecore.EObject)
 	 */
 	public boolean contains(InternalProject project, EObject eObject) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 
@@ -256,18 +286,66 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	// FIXME
 	public Notifier getRoot(InternalProject project) {
 		return null;
+		// return project.getEditingDomain().getResourceSet().getResources().get(0).getContents().get(0);
 	}
 
 	@Override
 	public void doSave(InternalProject project) {
-		// TODO Auto-generated method stub
+		try {
+			final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+			saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+			List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
+			for (Resource resource : resources) {
+				if (resource.getURI().equals(getRootURI(project))) {
+					resource.save(saveOptions);
+
+				}
+			}
+			((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
 		super.doSave(project);
 	}
 
 	@Override
 	public boolean isDirty(InternalProject project) {
-		// TODO Auto-generated method stub
-		return true;
+		return ((BasicCommandStack) project.getEditingDomain().getCommandStack()).isSaveNeeded();
 	}
+
+	private EditingDomain editingDomain;
+
+	@Override
+	public EditingDomain createEditingDomain(InternalProject project) {
+		if (editingDomain == null) {
+			CommandStack commandStack = new BasicCommandStack();
+			editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY, commandStack);
+
+		}
+		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
+		return editingDomain;
+	}
+
+	// public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
+	//
+	//
+	// Collection<EObject> visited = new HashSet<EObject>();
+	// Collection<EObject> result = new ArrayList<EObject>();
+	// for(InternalProject internalProject: getOpenProjects()){
+	// for (TreeIterator<?> i = resourceSet.getAllContents(); i.hasNext(); )
+	// {
+	// Object child = i.next();
+	// if (child instanceof EObject)
+	// {
+	// ItemPropertyDescriptor.collectReachableObjectsOfType(visited, result, (EObject)child, eReference.getEType());
+	// // ItemPropertyDescriptor.collectReachableObjectsOfType(visited, itemQueue, result, (EObject)child,
+	// eReference.getEType());
+	// i.prune();
+	// }
+	// }
+	// }
+	// return result.iterator();
+	// }
 
 }
