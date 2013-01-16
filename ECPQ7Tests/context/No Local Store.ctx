@@ -6,7 +6,7 @@ Element-Name: No Local Store
 Element-Type: context
 Element-Version: 2.0
 Id: _IuFcgFpZEeKcnaHGSt8OwA
-Save-Time: 1/12/13 2:48 PM
+Save-Time: 1/16/13 10:10 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -21,7 +21,7 @@ try {
 		click
 		with [get-tree] {
 			with[ get-item "Local EMFStore"]{
-			collapse-all
+				expand-all
 				get-items | foreach {
 					select-item | get-menu "Delete on server" | click
 					get-window Confirmation | get-button Yes | click
