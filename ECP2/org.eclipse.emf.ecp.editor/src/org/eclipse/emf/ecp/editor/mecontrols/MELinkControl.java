@@ -61,7 +61,7 @@ public class MELinkControl extends AbstractMEControl {
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
-	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+	protected AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
 	/*
 	 * (non-Javadoc)
@@ -162,7 +162,7 @@ public class MELinkControl extends AbstractMEControl {
 	 * 
 	 * @return list of actions
 	 */
-	private List<Action> initActions() {
+	protected List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
 		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
 			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
