@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -256,8 +257,9 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	 * java.util.Collection)
 	 */
 	public void delete(InternalProject project, Collection<EObject> eObjects) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		for (EObject eObject : eObjects) {
+			EcoreUtil.delete(eObject, true);
+		}
 	}
 
 	/*
