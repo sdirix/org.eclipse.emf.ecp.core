@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor;
+package org.eclipse.emf.ecp.editor.internal.e3;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

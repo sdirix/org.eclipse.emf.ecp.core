@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.internal.core.util;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.IECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
@@ -117,7 +116,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		}
 
 		if (isActive()) {
-			for (ELEMENT element : ECPUtil.getRemovedElements(oldElements, newElements)) {
+			for (ELEMENT element : InternalUtil.getRemovedElements(oldElements, newElements)) {
 				try {
 					File file = getFile(element);
 					file.delete();
@@ -126,7 +125,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 				}
 			}
 
-			for (ELEMENT element : ECPUtil.getAddedElements(oldElements, newElements)) {
+			for (ELEMENT element : InternalUtil.getAddedElements(oldElements, newElements)) {
 				if (element.isStorable()) {
 					storeElement(element);
 				}

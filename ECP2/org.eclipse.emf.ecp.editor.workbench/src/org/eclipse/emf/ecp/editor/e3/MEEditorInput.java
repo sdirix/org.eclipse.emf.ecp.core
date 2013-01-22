@@ -8,12 +8,12 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor.input;
+package org.eclipse.emf.ecp.editor.e3;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.MEEditor;
+import org.eclipse.emf.ecp.editor.internal.e3.MEEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.controls.multireference;
 
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -35,6 +37,7 @@ public class Activator extends AbstractUIPlugin {
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * @generated
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -44,6 +47,7 @@ public class Activator extends AbstractUIPlugin {
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * @generated
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
@@ -57,6 +61,26 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+	
+	/**
+	 * Returns an image descriptor for the image file at the given. plug-in relative path
+	 * 
+	 * @param path the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+
+	/**
+	 * Logs exception.
+	 * 
+	 * @param e
+	 */
+	public static void logException(Exception e) {
+		getDefault().getLog().log(
+			new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 	}
 
 }

@@ -17,10 +17,10 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
 import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
 import org.eclipse.emf.ecp.editor.mecontrols.widgets.ECPAttributeWidget;
+import org.eclipse.emf.ecp.internal.editor.Activator;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -283,7 +283,7 @@ public abstract class MultiMEAttributeControl extends AbstractMEControl implemen
 
 		void handleValidation(Diagnostic diagnostic) {
 			if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-				Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png")
+				Image image = org.eclipse.emf.ecp.internal.editor.Activator.getImageDescriptor("icons/validation_error.png")
 					.createImage();
 				labelWidgetImage.setImage(image);
 				labelWidgetImage.setToolTipText(diagnostic.getMessage());

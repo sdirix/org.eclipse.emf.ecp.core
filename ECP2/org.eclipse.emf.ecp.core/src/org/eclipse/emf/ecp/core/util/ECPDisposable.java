@@ -59,7 +59,6 @@ public interface ECPDisposable {
 		 * @param disposable the object being disposed
 		 * @throws DisposeException is thrown when something goes wrong
 		 */
-		// TODO Exception to DisposeException
 		void disposed(ECPDisposable disposable) throws DisposeException;
 	}
 

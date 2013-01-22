@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.ecp.spi.core.util;
+package org.eclipse.emf.ecp.workspace.internal.core;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.util.ECPDelegating;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAware;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 

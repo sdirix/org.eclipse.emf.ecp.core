@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.editor;
+package org.eclipse.emf.ecp.editor.e3;
 
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 

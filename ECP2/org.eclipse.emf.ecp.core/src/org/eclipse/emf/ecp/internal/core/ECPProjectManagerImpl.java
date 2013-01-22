@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
+import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -216,7 +217,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/** {@inheritDoc} */
 	public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception {
-		Set<ECPRepository> addedRepositories = ECPUtil.getAddedElements(oldRepositories, newRepositories);
+		Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
 		InternalProject[] projects = getProjects();
 
 		for (ECPRepository repository : addedRepositories) {

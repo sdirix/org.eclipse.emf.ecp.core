@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eclipse.emf.ecp.editor;
+package org.eclipse.emf.ecp.internal.editor.labelprovider;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;

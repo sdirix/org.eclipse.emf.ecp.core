@@ -8,10 +8,11 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor;
+package org.eclipse.emf.ecp.internal.editor.dialog;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.internal.editor.labelprovider.RelevanceWrappedLabelProvider;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;

@@ -329,6 +329,14 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		return editingDomain;
 	}
 
+	@Override
+	public ECPModelContext getModelContext(Object element) {
+		if (element instanceof ModelWrapper) {
+			return ((ModelWrapper<?, ?>) element).getContext();
+		}
+		return super.getModelContext(element);
+	}
+
 	// public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 	//
 	//

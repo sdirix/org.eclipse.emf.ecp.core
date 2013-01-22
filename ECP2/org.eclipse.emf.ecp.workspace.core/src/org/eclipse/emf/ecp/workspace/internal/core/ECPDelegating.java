@@ -12,7 +12,7 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.core.util;
+package org.eclipse.emf.ecp.workspace.internal.core;
 
 /**
  * This interface allows to get a delegate.

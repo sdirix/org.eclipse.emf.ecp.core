@@ -14,8 +14,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.Activator;
-import org.eclipse.emf.ecp.editor.ShortLabelProvider;
+import org.eclipse.emf.ecp.internal.editor.Activator;
+import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -111,7 +111,7 @@ public class MELinkControl {
 	protected void createDeleteAction(int style) {
 		ImageHyperlink deleteLink = toolkit.createImageHyperlink(linkComposite, style);
 		Image deleteImage = null;
-		if (eReference.isContainment() && context.getMetaModelElementContext().isNonDomainElement(link.eClass())) {
+		if (eReference.isContainment()) { // && context.getMetaModelElementContext().isNonDomainElement(link.eClass())
 			deleteImage = Activator.getImageDescriptor("icons/delete.gif").createImage();
 		} else {
 			deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);

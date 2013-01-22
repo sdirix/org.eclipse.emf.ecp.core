@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.eclipse.emf.ecp.editor.workbench</name>
+	<name>org.eclipse.emf.ecp.editor.internal.e3.workbench</name>
 	<comment></comment>
 	<projects>
 	</projects>

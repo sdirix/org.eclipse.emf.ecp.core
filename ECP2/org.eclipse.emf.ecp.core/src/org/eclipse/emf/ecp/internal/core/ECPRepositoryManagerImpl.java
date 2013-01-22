@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
+import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
@@ -119,7 +120,7 @@ public final class ECPRepositoryManagerImpl extends
 
 	/** {@inheritDoc} **/
 	public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception {
-		Set<ECPProvider> addedProviders = ECPUtil.getAddedElements(oldProviders, newProviders);
+		Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {
 			load();
 		}

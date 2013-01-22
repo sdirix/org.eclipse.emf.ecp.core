@@ -12,6 +12,7 @@ package org.eclipse.emf.ecp.ui.views;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
@@ -120,7 +121,6 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 				}
 			}
 		});
-		
 		IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
 		if(modelExplorerSettings.length==1){

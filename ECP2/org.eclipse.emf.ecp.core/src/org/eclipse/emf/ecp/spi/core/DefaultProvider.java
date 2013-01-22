@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -257,10 +256,6 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 		if (element instanceof ECPModelContextProvider) {
 			return ((ECPModelContextProvider) element).getModelContext(element);
-		}
-
-		if (element instanceof ModelWrapper) {
-			return ((ModelWrapper<?, ?>) element).getContext();
 		}
 
 		if (element instanceof EObject) {

@@ -29,7 +29,6 @@ import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.emfstore.client.model.Configuration;
@@ -344,10 +343,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (element instanceof ECPModelContextProvider) {
 			return ((ECPModelContextProvider) element).getModelContext(element);
-		}
-
-		if (element instanceof ModelWrapper) {
-			return ((ModelWrapper<?, ?>) element).getContext();
 		}
 
 		if (element instanceof EObject) {

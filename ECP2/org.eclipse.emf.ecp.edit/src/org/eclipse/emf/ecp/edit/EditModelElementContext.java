@@ -70,14 +70,6 @@ public interface EditModelElementContext {
 	EditingDomain getEditingDomain();
 
 	/**
-	 * Returns the {@link EditorMetamodelContext}.
-	 * 
-	 * @return the {@link EditorMetamodelContext}.
-	 */
-	//FIXME needed?
-//	EditorMetamodelContext getMetaModelElementContext();
-
-	/**
 	 * Called if the context is not used anymore. Use for cleanup.
 	 */
 	void dispose();
@@ -120,7 +112,7 @@ public interface EditModelElementContext {
 	boolean isDirty();
 
 	/**
-	 * 
+	 * Triggers the save of the changes.
 	 */
 	void save();
 
@@ -131,9 +123,10 @@ public interface EditModelElementContext {
 	 */
 	EObject getModelElement();
 
-	
-	EditMetaModelContext getMetaModelElementContext();
-	
-	void getNewModelElement(EReference reference);
+	/**
+	 * Creates a new Model Element and references it from the model element of this context using the provided reference.
+	 * @param reference the reference to set the new model element for
+	 */
+	void createAndReferenceNewModelElement(EReference reference);
 
 }

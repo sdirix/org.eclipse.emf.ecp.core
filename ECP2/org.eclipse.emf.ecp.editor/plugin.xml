@@ -3,7 +3,6 @@
 <plugin>
    <extension-point id="org.eclipse.emf.ecp.editor.attributecontrols" name="org.eclipse.emf.ecp.editor.attributecontrols" schema="schema/org.eclipse.emf.ecp.editor.attributecontrol.exsd"/>
    <extension-point id="org.eclipse.emf.ecp.editor.referencecontrols" name="org.eclipse.emf.ecp.editor.referencecontrols" schema="schema/org.eclipse.emf.ecp.editor.referencecontrol.exsd"/>
-   <extension-point id="org.eclipse.emf.ecp.editor.pages" name="org.eclipse.emf.ecp.editor.pages" schema="schema/org.eclipse.emf.ecp.editor.pages.exsd"/>
    <extension-point id="org.eclipse.emf.ecp.editor.melinkcontrols" name="org.eclipse.emf.ecp.editor.melinkcontrols" schema="schema/org.eclipse.emf.ecp.editor.melinkcontrol.exsd"/>
    <extension-point id="org.eclipse.emf.ecp.editor.statusmessage" name="Status Message" schema="schema/org.eclipse.emf.ecp.editor.statusmessage.exsd"/>
    <extension
@@ -70,13 +69,13 @@
              type="org.eclipse.emf.ecore.EObject">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol.AssociationClassControl"
+            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassControl"
             name="org.eclipse.emf.ecp.editor.associationclasscontrol"
             showLabel="false"
             type="org.eclipse.emf.ecore.EObject">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol.AssociationClassControlNoNew"
+            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassControlNoNew"
             name="org.eclipse.emf.ecp.editor.associationclasscontrolnonew"
             showLabel="true"
             type="org.eclipse.emf.ecore.EObject">
@@ -91,17 +90,17 @@
    <extension
          point="org.eclipse.emf.ecp.editor.melinkcontrols">
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol.AssociationClassLink"
+            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassLink"
             name="org.eclipse.emf.ecp.editor.associationclasslink"
             type="org.eclipse.emf.ecore.EObject">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol.AssociationClassLinkNoDelete"
+            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassLinkNoDelete"
             name="org.eclipse.emf.ecp.editor.associationclasslinknodelete"
             type="org.eclipse.emf.ecore.EObject">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.associationclasscontrol.AssociationClassLinkNotShow"
+            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassLinkNotShow"
             name="org.eclipse.emf.ecp.editor.associationclasslinknotshow"
             type="org.eclipse.emf.ecore.EObject">
       </widget>

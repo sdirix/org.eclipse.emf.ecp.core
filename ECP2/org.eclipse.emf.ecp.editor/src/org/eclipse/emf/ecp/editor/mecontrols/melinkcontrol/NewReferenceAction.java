@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.Activator;
 import org.eclipse.emf.ecp.editor.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.internal.editor.Activator;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -52,7 +52,7 @@ public class NewReferenceAction extends ReferenceAction {
 			if (!checkMultiplicity(false)) {
 				return;
 			}
-			modelElementContext.getNewModelElement(eReference);
+			modelElementContext.createAndReferenceNewModelElement(eReference);
 
 			// TOOD extract
 

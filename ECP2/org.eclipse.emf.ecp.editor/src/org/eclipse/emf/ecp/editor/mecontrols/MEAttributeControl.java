@@ -93,7 +93,7 @@ public abstract class MEAttributeControl extends AbstractMEControl implements IV
 	 **/
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = org.eclipse.emf.ecp.editor.Activator.getImageDescriptor("icons/validation_error.png")
+			Image image = org.eclipse.emf.ecp.internal.editor.Activator.getImageDescriptor("icons/validation_error.png")
 				.createImage();
 			labelWidgetImage.setImage(image);
 			labelWidgetImage.setToolTipText(diagnostic.getMessage());

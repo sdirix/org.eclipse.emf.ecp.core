@@ -8,32 +8,28 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor;
-
-import java.util.HashMap;
-import java.util.Map;
+package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.editor.FormEditorComposite;
+import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
+import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.AbstractSourceProvider;
-import org.eclipse.ui.ISourceProvider;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.menus.IMenuService;
-import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * The editor page for the {@link MEEditor}.
@@ -183,7 +179,7 @@ public class MEEditorPage extends FormPage {
 			}
 		});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
-			"toolbar:org.eclipse.emf.ecp.editor.MEEditorPage");
+			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage");
 		form.getToolBarManager().update(true);
 	}
 

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
-import org.eclipse.emf.ecp.edit.EditMetaModelContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
 import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
@@ -52,9 +51,6 @@ public class EditorContext implements EditModelElementContext {
 
 	private final ECPProject ecpProject;
 
-	// TODO what is it god for
-	private MetaModeElementContext metaModeElementContext;
-
 	private List<EditModelElementContextListener> contextListeners = new ArrayList<EditModelElementContextListener>();
 
 	private IECPProjectsChangedUIObserver projectObserver;
@@ -65,7 +61,6 @@ public class EditorContext implements EditModelElementContext {
 		this.modelElement = modelElement;
 		this.shell = shell;
 		this.ecpProject = ecpProject;
-		metaModeElementContext = new MetaModeElementContext();
 
 		projectObserver = new IECPProjectsChangedUIObserver() {
 
@@ -126,11 +121,6 @@ public class EditorContext implements EditModelElementContext {
 
 	}
 
-	public EditMetaModelContext getMetaModelElementContext() {
-		// TODO Auto-generated method stub
-		return metaModeElementContext;
-	}
-
 	public boolean contains(EObject eObject) {
 		return ecpProject.contains(eObject);
 	}
@@ -144,7 +134,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference)
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference)
 	 */
 	public Iterator<EObject> getLinkElements(EReference eReference) {
 		return ecpProject.getReferenceCandidates(modelElement, eReference);
@@ -152,7 +142,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#openEditor(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#openEditor(org.eclipse.emf.ecore.EObject)
 	 */
 	public void openEditor(EObject o, String source) {
 		// TODO only elements of the same project?
@@ -161,7 +151,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(EObject newMEInstance) {
 		ecpProject.getElements().add(newMEInstance);
@@ -169,7 +159,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#isDirty()
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#isDirty()
 	 */
 	public boolean isDirty() {
 		// auto save
@@ -178,7 +168,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#save()
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#save()
 	 */
 	public void save() {
 		// do nothing
@@ -186,7 +176,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getModelElement()
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getModelElement()
 	 */
 	public EObject getModelElement() {
 		return modelElement;
@@ -196,7 +186,7 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.EditorModelelementContext#getDataBindingContext()
+	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getDataBindingContext()
 	 */
 	public DataBindingContext getDataBindingContext() {
 		return dataBindingContext;
@@ -207,7 +197,7 @@ public class EditorContext implements EditModelElementContext {
 	 * @see org.eclipse.emf.ecp.edit.EditModelElementContext#getNewModelElement(org.eclipse.emf.ecore.EObject,
 	 * org.eclipse.emf.ecore.EReference)
 	 */
-	public void getNewModelElement(EReference eReference) {
+	public void createAndReferenceNewModelElement(EReference eReference) {
 		Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
 		List<EPackage> ePackages = new ArrayList<EPackage>();
 		ePackages.add(modelElement.eClass().getEPackage());
@@ -280,30 +270,27 @@ public class EditorContext implements EditModelElementContext {
 			// }
 		}
 
-		// EPackage ePackage = newClass.getEPackage();
-		// newMEInstance = ePackage.getEFactoryInstance().create(newClass);
-
-		if (!eReference.isContainer()) {
-
-			// Returns the value of the Container
-			EObject parent = modelElement.eContainer();
-			while (!(parent == null) && newMEInstance.eContainer() == null) {
-				EReference reference = getMetaModelElementContext().getPossibleContainingReference(newMEInstance,
-					parent);
-				if (reference != null && reference.isMany()) {
-					Object object = parent.eGet(reference);
-					EList<EObject> eList = (EList<EObject>) object;
-					eList.add(newMEInstance);
-				}
-				parent = parent.eContainer();
-			}
-
-			if (newMEInstance.eContainer() == null) {
-				// throw new RuntimeException("No matching container for model element found");
-				addModelElement(newMEInstance);
-			}
-
-		}
+		// if (!eReference.isContainer()) {
+		//
+		// // Returns the value of the Container
+		// EObject parent = modelElement.eContainer();
+		// while (!(parent == null) && newMEInstance.eContainer() == null) {
+		// EReference reference = getMetaModelElementContext().getPossibleContainingReference(newMEInstance,
+		// parent);
+		// if (reference != null && reference.isMany()) {
+		// Object object = parent.eGet(reference);
+		// EList<EObject> eList = (EList<EObject>) object;
+		// eList.add(newMEInstance);
+		// }
+		// parent = parent.eContainer();
+		// }
+		//
+		// if (newMEInstance.eContainer() == null) {
+		// // throw new RuntimeException("No matching container for model element found");
+		// addModelElement(newMEInstance);
+		// }
+		//
+		// }
 
 		// add the new object to the reference
 		Object object = modelElement.eGet(eReference);

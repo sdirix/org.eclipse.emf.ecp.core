@@ -25,8 +25,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO doc
-
 /**
  * This class provides common functionality.
  * 
@@ -130,7 +128,6 @@ public final class ECPUtil {
 	 * @param <E> the type of the elements
 	 * @return true if the element is in the array, false otherwise
 	 */
-	// TODO only used in ECPUtil
 	public static <E> boolean containsElement(E[] elements, E element) {
 		return getElementIndex(elements, element) != NOT_FOUND;
 	}
@@ -143,7 +140,6 @@ public final class ECPUtil {
 	 * @param <E> the generic type of the element and the array
 	 * @return the index of the element in the array or {@link #NOT_FOUND} if the element is not in the array
 	 */
-	// TODO only used in ECPUtil
 	public static <E> int getElementIndex(E[] elements, E element) {
 		for (int i = 0; i < elements.length; i++) {
 			if (elements[i] == element) {
@@ -154,57 +150,6 @@ public final class ECPUtil {
 		return NOT_FOUND;
 	}
 
-	/**
-	 * Returns the Set of names of a set of {@link ECPElement ECPElements}.
-	 * 
-	 * @param elements the set of elements to get the names for
-	 * @return the set of names of this elements
-	 */
-	// TODO never used
-	public static Set<String> getElementNames(Set<? extends ECPElement> elements) {
-		Set<String> names = new HashSet<String>();
-		for (ECPElement element : elements) {
-			names.add(element.getName());
-		}
-
-		return names;
-	}
-
-	/**
-	 * Finds the set of all Elements that are in the new array but not in the old.
-	 * 
-	 * @param oldElements the array containing the old elements
-	 * @param newElements the array containing the new elements
-	 * @param <E> the type of the elements
-	 * @return the Set<E> of elements which are only in the newElements array
-	 */
-	// TODO only used internally
-	public static <E> Set<E> getAddedElements(E[] oldElements, E[] newElements) {
-		return getRemovedElements(newElements, oldElements);
-	}
-
-	/**
-	 * Finds the set of all Elements that are in the old array but not in the new.
-	 * 
-	 * @param oldElements the array containing the old elements
-	 * @param newElements the array containing the new elements
-	 * @param <E> the type of the elements
-	 * @return the Set<E> of elements which are only in the oldElements array
-	 */
-	// TODO only used internally
-	public static <E> Set<E> getRemovedElements(E[] oldElements, E[] newElements) {
-		Set<E> removed = new HashSet<E>();
-		for (int i = 0; i < oldElements.length; i++) {
-			E element = oldElements[i];
-			if (!containsElement(newElements, element)) {
-				removed.add(element);
-			}
-		}
-
-		return removed;
-	}
-
-	// TODO only used by editor
 	/**
 	 * This method looks through all known {@link EPackage}s to find all subclasses for the provided super class.
 	 * 
@@ -233,7 +178,6 @@ public final class ECPUtil {
 	 * 
 	 * @return the Set of all known {@link EPackage Epackages}
 	 */
-	// TODO only used internally
 	public static Set<EPackage> getAllRegisteredEPackages() {
 		Set<EPackage> ePackages = new HashSet<EPackage>();
 		for (String nsURI : Registry.INSTANCE.keySet()) {

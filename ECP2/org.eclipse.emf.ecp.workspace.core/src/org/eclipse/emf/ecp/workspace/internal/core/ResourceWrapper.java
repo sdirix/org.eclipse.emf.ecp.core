@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-import org.eclipse.emf.ecp.spi.core.util.ModelWrapper;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;

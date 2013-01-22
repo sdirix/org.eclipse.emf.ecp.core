@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor;
+package org.eclipse.emf.ecp.editor.internal.e3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
-import org.eclipse.emf.ecp.editor.input.MEEditorInput;
+import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
+import org.eclipse.emf.ecp.editor.StatusMessageProvider;
+import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
+import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
+import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -48,7 +52,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	/**
 	 * The Id for MEEditor. We need this to open a model element.
 	 */
-	public static final String ID = "org.eclipse.emf.ecp.editor";
+	public static final String ID = "org.eclipse.emf.ecp.editor.internal.e3";
 
 	private MEEditorPage mePage;
 
@@ -86,7 +90,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 		// add pages from the extension point
 		IConfigurationElement[] configTemp = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.editor.pages");
+			"org.eclipse.emf.ecp.editor.internal.e3.pages");
 		IConfigurationElement[] configIn = null;
 
 		boolean replaceMEEditor = false;
@@ -259,7 +263,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private void initStatusProvider() {
 		IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.editor.statusmessage");
+			"org.eclipse.emf.ecp.editor.internal.e3.statusmessage");
 		ArrayList<IConfigurationElement> provider = new ArrayList<IConfigurationElement>();
 		provider.addAll(Arrays.asList(configurationElements));
 		int priority = 0;

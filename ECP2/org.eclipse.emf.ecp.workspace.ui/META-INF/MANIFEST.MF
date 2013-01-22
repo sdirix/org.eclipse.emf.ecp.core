@@ -8,19 +8,24 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.workspace.core;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.ecp.ui;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)"
+ org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)",
+ org.eclipse.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.workspace.internal.ui;version="1.0.0.qualifier";x-internal:=true
 Import-Package: org.eclipse.core.commands,
- org.eclipse.jface,
  org.eclipse.jface.action,
+ org.eclipse.jface.dialogs,
  org.eclipse.jface.resource,
  org.eclipse.jface.viewers,
+ org.eclipse.jface.window,
  org.eclipse.swt,
+ org.eclipse.swt.events,
  org.eclipse.swt.graphics,
  org.eclipse.swt.widgets,
- org.eclipse.ui,
+ org.eclipse.ui;ui.workbench=split,
  org.eclipse.ui.actions,
+ org.eclipse.ui.dialogs;ui.workbench=split,
+ org.eclipse.ui.handlers,
  org.eclipse.ui.model,
  org.eclipse.ui.plugin
