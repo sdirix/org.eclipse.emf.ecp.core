@@ -14,8 +14,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.ModelElementChangeListener;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
+import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.AddReferenceAction;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.NewReferenceAction;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceAction;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
@@ -38,7 +41,7 @@ import java.util.List;
  * 
  * @author helming
  */
-public class MESingleLinkControl extends AbstractMEControl {
+public class MESingleLinkControl extends AbstractControl {
 
 	private int style;
 
@@ -61,7 +64,7 @@ public class MESingleLinkControl extends AbstractMEControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getEStructuralFeatureType()
 	 */
 	@Override
 	protected Class<? extends EStructuralFeature> getEStructuralFeatureType() {
@@ -177,7 +180,7 @@ public class MESingleLinkControl extends AbstractMEControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getClassType()
 	 */
 	@Override
 	protected Class<?> getClassType() {
@@ -197,6 +200,6 @@ public class MESingleLinkControl extends AbstractMEControl {
 	// {
 	// return PRIORITY;
 	// }
-	// return AbstractMEControl.DO_NOT_RENDER;
+	// return AbstractControl.DO_NOT_RENDER;
 	// }
 }

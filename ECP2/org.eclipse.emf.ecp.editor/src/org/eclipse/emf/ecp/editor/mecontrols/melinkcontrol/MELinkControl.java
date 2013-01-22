@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.internal.editor.Activator;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkAdapter;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkDeleteAdapter;
 import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -66,7 +68,7 @@ public class MELinkControl {
 
 	protected FormToolkit toolkit;
 
-	private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
+	private org.eclipse.emf.ecp.editor.util.ModelElementChangeListener modelElementChangeListener;
 
 	private EditModelElementContext context;
 
@@ -136,7 +138,7 @@ public class MELinkControl {
 
 		ArrayList<EObject> list = new ArrayList<EObject>();
 		list.add(link);
-		modelElementChangeListener = new org.eclipse.emf.ecp.editor.ModelElementChangeListener(link) {
+		modelElementChangeListener = new org.eclipse.emf.ecp.editor.util.ModelElementChangeListener(link) {
 
 			@Override
 			public void onChange(Notification notification) {
@@ -176,7 +178,7 @@ public class MELinkControl {
 	}
 
 	/**
-	 * Disposes the Composite of this {@link MELinkControl}.
+	 * Disposes the Composite of this {@link ReferenceControl}.
 	 */
 
 	public void dispose() {

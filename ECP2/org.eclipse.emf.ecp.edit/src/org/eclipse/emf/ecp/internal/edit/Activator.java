@@ -31,12 +31,18 @@ public class Activator implements BundleActivator {
 		return context;
 	}
 
-	/**{@inheritDoc} */
+	/**
+	 * @see BundleActivator#start(org.osgi.framework.BundleContext)
+	 * @generated
+	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
 	}
 
-	/**{@inheritDoc} */
+	/**
+	 * @see BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * @generated
+	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
 	}

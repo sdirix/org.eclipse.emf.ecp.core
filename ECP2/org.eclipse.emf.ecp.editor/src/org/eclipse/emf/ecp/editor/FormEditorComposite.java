@@ -22,9 +22,10 @@ import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.descriptor.AnnotationHiddenDescriptor;
 import org.eclipse.emf.ecp.editor.descriptor.AnnotationPositionDescriptor;
 import org.eclipse.emf.ecp.editor.descriptor.AnnotationPriorityDescriptor;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
+import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
 import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
-import org.eclipse.emf.ecp.editor.mecontrols.METextControl;
+import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.internal.editor.controls.attribute.METextControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -104,9 +105,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private final EditModelElementContext modelElementContext;
 
-	private Map<EStructuralFeature, AbstractMEControl> meControls = new LinkedHashMap<EStructuralFeature, AbstractMEControl>();
+	private Map<EStructuralFeature, AbstractControl> meControls = new LinkedHashMap<EStructuralFeature, AbstractControl>();
 
-	private Map<AbstractMEControl, Diagnostic> valdiatedControls = new HashMap<AbstractMEControl, Diagnostic>();
+	private Map<AbstractControl, Diagnostic> valdiatedControls = new HashMap<AbstractControl, Diagnostic>();
 
 	private List<IItemPropertyDescriptor> leftColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
 
@@ -239,7 +240,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		ControlFactory controlFactory = ControlFactory.getInstance();
 
 		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {
-			AbstractMEControl meControl = controlFactory.createControl(itemPropertyDescriptor,
+			AbstractControl meControl = controlFactory.createControl(itemPropertyDescriptor,
 				modelElementContext.getModelElement(), modelElementContext);
 			if (meControl == null) {
 				continue;
@@ -274,7 +275,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	/** {@inheritDoc} */
 	public void dispose() {
-		for (AbstractMEControl control : meControls.values()) {
+		for (AbstractControl control : meControls.values()) {
 			control.dispose();
 		}
 		meControls.clear();
@@ -285,7 +286,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/** {@inheritDoc} */
 	public void updateLiveValidation() {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElementContext.getModelElement());
-		List<AbstractMEControl> affectedControls = new ArrayList<AbstractMEControl>();
+		List<AbstractControl> affectedControls = new ArrayList<AbstractControl>();
 
 		for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();) {
 			Diagnostic childDiagnostic = i.next();
@@ -299,7 +300,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			if (childDiagnostic.getData().size() < 2) {
 				continue;
 			}
-			AbstractMEControl meControl = meControls.get(childDiagnostic.getData().get(1));
+			AbstractControl meControl = meControls.get(childDiagnostic.getData().get(1));
 			affectedControls.add(meControl);
 			if (meControl instanceof IValidatableControl) {
 				if (valdiatedControls.containsKey(meControl)) {
@@ -314,10 +315,10 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			}
 		}
 
-		Map<AbstractMEControl, Diagnostic> temp = new HashMap<AbstractMEControl, Diagnostic>();
+		Map<AbstractControl, Diagnostic> temp = new HashMap<AbstractControl, Diagnostic>();
 		temp.putAll(valdiatedControls);
-		for (Map.Entry<AbstractMEControl, Diagnostic> entry : temp.entrySet()) {
-			AbstractMEControl meControl = entry.getKey();
+		for (Map.Entry<AbstractControl, Diagnostic> entry : temp.entrySet()) {
+			AbstractControl meControl = entry.getKey();
 			if (!affectedControls.contains(meControl)) {
 				valdiatedControls.remove(meControl);
 				((IValidatableControl) meControl).resetValidation();
@@ -328,7 +329,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/** {@inheritDoc} */
 	public void focus() {
 		// set keyboard focus on the first Text control
-		for (AbstractMEControl meControl : meControls.values()) {
+		for (AbstractControl meControl : meControls.values()) {
 			if (meControl instanceof METextControl) {
 				((METextControl) meControl).setFocus();
 				return;

@@ -4,8 +4,8 @@
 package org.eclipse.emf.ecp.internal.editor.dialog;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.editor.Messages;
 import org.eclipse.emf.ecp.internal.editor.Activator;
+import org.eclipse.emf.ecp.internal.editor.Messages;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 

@@ -15,7 +15,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
+import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.AddReferenceAction;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.NewReferenceAction;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -47,7 +49,7 @@ import java.util.ArrayList;
  * @author helming
  * @author Eugen Neufeld
  */
-public class MEMultiLinkControl extends AbstractMEControl {
+public class MEMultiLinkControl extends AbstractControl {
 
 	/**
 	 * Command to rebuild the links.
@@ -148,7 +150,7 @@ public class MEMultiLinkControl extends AbstractMEControl {
 
 	// private Object feature;
 
-	private org.eclipse.emf.ecp.editor.ModelElementChangeListener modelElementChangeListener;
+	private org.eclipse.emf.ecp.editor.util.ModelElementChangeListener modelElementChangeListener;
 
 	private Cursor handCursor;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -238,7 +240,7 @@ public class MEMultiLinkControl extends AbstractMEControl {
 		linkControls = new ArrayList<MELinkControl>();
 		// feature = getItemPropertyDescriptor().getFeature(getModelElement());
 		// eReference = (EReference)feature;
-		modelElementChangeListener = new org.eclipse.emf.ecp.editor.ModelElementChangeListener(getModelElement()) {
+		modelElementChangeListener = new org.eclipse.emf.ecp.editor.util.ModelElementChangeListener(getModelElement()) {
 
 			@Override
 			public void onChange(Notification notification) {
@@ -337,12 +339,12 @@ public class MEMultiLinkControl extends AbstractMEControl {
 	//
 	// return PRIORITY;
 	// }
-	// return AbstractMEControl.DO_NOT_RENDER;
+	// return AbstractControl.DO_NOT_RENDER;
 	// }
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getPriority()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -352,7 +354,7 @@ public class MEMultiLinkControl extends AbstractMEControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getEStructuralFeatureType()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getEStructuralFeatureType()
 	 */
 	@Override
 	protected Class<? extends EStructuralFeature> getEStructuralFeatureType() {
@@ -361,7 +363,7 @@ public class MEMultiLinkControl extends AbstractMEControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl#getClassType()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getClassType()
 	 */
 	@Override
 	protected Class<?> getClassType() {

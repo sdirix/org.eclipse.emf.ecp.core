@@ -62,7 +62,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl:"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.editor.mecontrols.AbstractControl:"/>
                </appinfo>
             </annotation>
          </attribute>

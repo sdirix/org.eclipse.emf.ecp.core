@@ -8,37 +8,37 @@
    <extension
          point="org.eclipse.emf.ecp.editor.attributecontrols">
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MEBoolControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEBoolControl"
             name="org.eclipse.emf.ecp.editor.meboolcontrol"
             showLabel="true"
             type="java.lang.Boolean">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MEIntControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEIntControl"
             name="org.eclipse.emf.ecp.editor.meintcontrol"
             showLabel="true"
             type="java.lang.Integer">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MESWTDateAndTimeControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MESWTDateAndTimeControl"
             name="org.eclipse.emf.ecp.editor.medatecontrol"
             showLabel="true"
             type="java.util.Date">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MEEnumControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEEnumControl"
             name="org.eclipse.emf.ecp.editor.meenumcontrol"
             showLabel="true"
             type="java.lang.Enum">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MERichTextControl"
+            class="org.eclipse.emf.ecp.internal.editor.unused.MERichTextControl"
             name="org.eclipse.emf.ecp.editor.merichtextcontrol"
             showLabel="true"
             type="java.lang.String">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.METextControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.METextControl"
             name="org.eclipse.emf.ecp.editor.metextcontrol"
             showLabel="true"
             type="java.lang.String">
@@ -81,7 +81,7 @@
             type="org.eclipse.emf.ecore.EObject">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MELinkControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceControl"
             name="org.eclipse.emf.ecp.editor.mesinglelinkcontrol2"
             showLabel="true"
             type="org.eclipse.emf.ecore.EObject">
@@ -108,7 +108,7 @@
    <extension
          point="org.eclipse.emf.ecp.editor.attributecontrols">
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.MEDoubleControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEDoubleControl"
             name="org.eclipse.emf.ecp.editor.medoublecontrol"
             showLabel="true"
             type="java.lang.Double">
@@ -117,19 +117,19 @@
    <extension
          point="org.eclipse.emf.ecp.editor.attributecontrols">
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.MultiIntegerAttributeControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.multi.MultiIntegerAttributeControl"
             name="org.eclipse.emf.ecp.editor.multiintegercontrol"
             showLabel="false"
             type="java.lang.Integer">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.MultiDateTimeAttributeControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.multi.MultiDateTimeAttributeControl"
             name="org.eclipse.emf.ecp.editor.multidatecontrol3"
             showLabel="false"
             type="java.util.Date">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.multiattributecontrol.MultiTextAttributeControl"
+            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.multi.MultiTextAttributeControl"
             name="org.eclipse.emf.ecp.editor.multistringcontrol4"
             showLabel="false"
             type="java.lang.String">

@@ -18,10 +18,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractMEControl;
-import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.AddReferenceAction;
-import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEHyperLinkDeleteAdapter;
-import org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.NewReferenceAction;
+import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.AddReferenceAction;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkDeleteAdapter;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.NewReferenceAction;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.forms.widgets.Section;
 
-public class ViewerMEControl extends AbstractMEControl {
+public class ViewerMEControl extends AbstractControl {
 	private ComposedAdapterFactory adapterFactory;
 	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 	private AdapterFactoryContentProvider contentProvider;
@@ -64,7 +64,7 @@ public class ViewerMEControl extends AbstractMEControl {
 			return 2;
 		}
 
-		return AbstractMEControl.DO_NOT_RENDER;
+		return AbstractControl.DO_NOT_RENDER;
 	}
 
 	@Override
