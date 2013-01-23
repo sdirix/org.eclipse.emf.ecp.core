@@ -8,13 +8,13 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol;
+package org.eclipse.emf.ecp.internal.editor.unused;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.editor.controls.AbstractControl;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.NewReferenceAction;
@@ -64,7 +64,7 @@ public class MESingleLinkControl extends AbstractControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getEStructuralFeatureType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getEStructuralFeatureType()
 	 */
 	@Override
 	protected Class<? extends EStructuralFeature> getEStructuralFeatureType() {
@@ -92,7 +92,7 @@ public class MESingleLinkControl extends AbstractControl {
 			createButtonForAction(action, composite);
 		}
 
-		modelElementChangeListener = new ModelElementChangeListener(getModelElement()) {
+		modelElementChangeListener = new ModelElementChangeListener(getContext().getModelElement()) {
 
 			@Override
 			public void onChange(Notification notification) {
@@ -113,11 +113,13 @@ public class MESingleLinkControl extends AbstractControl {
 	 */
 	protected List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
-		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
+		AddReferenceAction addAction = new AddReferenceAction(getContext().getModelElement(),
+			(EReference) getStructuralFeature(), getItemPropertyDescriptor(), getContext(), getShell(),
+			adapterFactoryLabelProvider);
 		result.add(addAction);
-		ReferenceAction newAction = new NewReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
+		ReferenceAction newAction = new NewReferenceAction(getContext().getModelElement(),
+			(EReference) getStructuralFeature(), getItemPropertyDescriptor(), getContext(), getShell(),
+			adapterFactoryLabelProvider);
 		result.add(newAction);
 		return result;
 	}
@@ -149,13 +151,13 @@ public class MESingleLinkControl extends AbstractControl {
 			labelWidget.dispose();
 		}
 
-		EObject opposite = (EObject) getModelElement().eGet(getStructuralFeature());
+		EObject opposite = (EObject) getContext().getModelElement().eGet(getStructuralFeature());
 		if (opposite != null) {
 			MELinkControlFactory meLinkControlFactory = MELinkControlFactory.getInstance();
-			meControl = meLinkControlFactory.createMELinkControl(getItemPropertyDescriptor(), opposite,
-				getModelElement(), getContext());
-			meControl.createControl(linkArea, style, getItemPropertyDescriptor(), opposite, getModelElement(),
-				getToolkit(), getContext());
+			meControl = meLinkControlFactory.createMELinkControl(getItemPropertyDescriptor(), opposite, getContext()
+				.getModelElement(), getContext());
+			meControl.createControl(linkArea, style, getItemPropertyDescriptor(), opposite, getContext()
+				.getModelElement(), getToolkit(), getContext());
 		} else {
 			labelWidget = getToolkit().createLabel(linkArea, "(Not Set)");
 			labelWidget.setBackground(composite.getBackground());
@@ -180,10 +182,10 @@ public class MESingleLinkControl extends AbstractControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getClassType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getClassType()
 	 */
 	@Override
-	protected Class<?> getClassType() {
+	protected Class<?> getSupportedClassType() {
 		return EObject.class;
 	}
 
@@ -191,6 +193,7 @@ public class MESingleLinkControl extends AbstractControl {
 	protected boolean isMulti() {
 		return false;
 	}
+
 	// @Override
 	// public int canRender(IItemPropertyDescriptor itemPropertyDescriptor, EObject modelElement)
 	// {
@@ -202,4 +205,9 @@ public class MESingleLinkControl extends AbstractControl {
 	// }
 	// return AbstractControl.DO_NOT_RENDER;
 	// }
+
+	@Override
+	protected int getPriority() {
+		return -1;
+	}
 }

@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
-import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
+import org.eclipse.emf.ecp.editor.controls.AbstractControl;
+import org.eclipse.emf.ecp.editor.controls.IValidatableControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -63,12 +63,11 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#createControl(org.eclipse.swt.widgets.Composite,
-	 *      int)
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite, int)
 	 */
 	@Override
 	public Control createControl(Composite parent, int style) {
-		Object feature = getItemPropertyDescriptor().getFeature(getModelElement());
+		Object feature = getItemPropertyDescriptor().getFeature(getContext().getModelElement());
 		attribute = (EAttribute) feature;
 		composite = getToolkit().createComposite(parent, style);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
@@ -90,8 +89,8 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 		controlDecoration.setImage(fieldDecoration.getImage());
 		controlDecoration.hide();
 
-		IObservableValue model = EMFEditObservables.observeValue(getContext().getEditingDomain(), getModelElement(),
-			getStructuralFeature());
+		IObservableValue model = EMFEditObservables.observeValue(getContext().getEditingDomain(), getContext()
+			.getModelElement(), getStructuralFeature());
 		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
 		getContext().getDataBindingContext().bindValue(value, model);
 
@@ -104,7 +103,7 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 				super.notifyChanged(msg);
 			}
 		};
-		getModelElement().eAdapters().add(eAdapter);
+		getContext().getModelElement().eAdapters().add(eAdapter);
 		load();
 		return composite;
 	}
@@ -132,7 +131,7 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 		spec.heightHint = 200;
 		text.setLayoutData(spec);
 
-		if (!getItemPropertyDescriptor().canSetProperty(getModelElement())) {
+		if (!getItemPropertyDescriptor().canSetProperty(getContext().getModelElement())) {
 			text.setEnabled(false);
 		}
 	}
@@ -147,10 +146,10 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 	}
 
 	private void save() {
-		new ECPCommand(getModelElement(), getContext().getEditingDomain()) {
+		new ECPCommand(getContext().getModelElement(), getContext().getEditingDomain()) {
 			@Override
 			protected void doRun() {
-				getModelElement().eSet(attribute, text.getText());
+				getContext().getModelElement().eSet(attribute, text.getText());
 			}
 		}.run(true);
 	}
@@ -159,13 +158,13 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 
 		String txt = "";
 		final StringBuffer value = new StringBuffer();
-		new ECPCommand(getModelElement(), getContext().getEditingDomain()) {
+		new ECPCommand(getContext().getModelElement(), getContext().getEditingDomain()) {
 			@Override
 			protected void doRun() {
-				if (getModelElement().eGet(attribute) == null) {
+				if (getContext().getModelElement().eGet(attribute) == null) {
 					value.append("");
 				} else {
-					value.append(getModelElement().eGet(attribute));
+					value.append(getContext().getModelElement().eGet(attribute));
 				}
 			}
 		}.run(true);
@@ -178,7 +177,7 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 	 */
 	@Override
 	public void dispose() {
-		getModelElement().eAdapters().remove(eAdapter);
+		getContext().getModelElement().eAdapters().remove(eAdapter);
 	}
 
 	/**
@@ -192,7 +191,7 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#canRender(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
@@ -212,8 +211,8 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = org.eclipse.emf.ecp.internal.editor.Activator.getImageDescriptor("icons/validation_error.png")
-				.createImage();
+			Image image = org.eclipse.emf.ecp.internal.editor.Activator
+				.getImageDescriptor("icons/validation_error.png").createImage();
 			labelWidgetImage.setImage(image);
 			labelWidgetImage.setToolTipText(diagnostic.getMessage());
 		}
@@ -229,7 +228,7 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getPriority()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -238,7 +237,7 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getEStructuralFeatureType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getEStructuralFeatureType()
 	 */
 	@Override
 	protected Class<? extends EStructuralFeature> getEStructuralFeatureType() {
@@ -247,10 +246,10 @@ public class MERichTextControl extends AbstractControl implements IValidatableCo
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getClassType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getClassType()
 	 */
 	@Override
-	protected Class<?> getClassType() {
+	protected Class<?> getSupportedClassType() {
 		return String.class;
 	}
 

@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.editor.controls.AbstractControl;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkDeleteAdapter;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.NewReferenceAction;
@@ -72,12 +72,12 @@ public class ViewerMEControl extends AbstractControl {
 		Section section = getToolkit().createSection(parent,
 			Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED | Section.DESCRIPTION);
 		section.setDescription("Double click element to edit it.");
-		section.setText(getItemPropertyDescriptor().getDisplayName(getModelElement()));
+		section.setText(getItemPropertyDescriptor().getDisplayName(getContext().getModelElement()));
 		Composite comp = getToolkit().createComposite(section);
 		section.setClient(comp);
 		comp.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
 
-		final EReference ref = (EReference) getItemPropertyDescriptor().getFeature(getModelElement());
+		final EReference ref = (EReference) getItemPropertyDescriptor().getFeature(getContext().getModelElement());
 
 		TreeViewer viewer = new TreeViewer(comp, SWT.BORDER | SWT.FULL_SELECTION | SWT.SINGLE);
 		{
@@ -95,10 +95,10 @@ public class ViewerMEControl extends AbstractControl {
 					super.getElements(object);
 
 					// root object must be model element
-					assert object == getModelElement();
+					assert object == getContext().getModelElement();
 
 					// see TableViewerMEControl.canRender()
-					EObject modelElement = getModelElement();
+					EObject modelElement = getContext().getModelElement();
 					EList<EObject> input = (EList<EObject>) modelElement.eGet(ref);
 					return input.toArray();
 				}
@@ -110,7 +110,7 @@ public class ViewerMEControl extends AbstractControl {
 			};
 			viewer.setLabelProvider(adapterFactoryLabelProvider);
 			viewer.setContentProvider(contentProvider);
-			viewer.setInput(getModelElement());
+			viewer.setInput(getContext().getModelElement());
 		}
 
 		// set up tool bar to handle commands
@@ -161,7 +161,7 @@ public class ViewerMEControl extends AbstractControl {
 					if (MEHyperLinkDeleteAdapter.askConfirmation(list.get(0))) {
 
 						Command deleteCommand = RemoveCommand.create(getContext().getEditingDomain(),
-							getModelElement(), ref, list);
+							getContext().getModelElement(), ref, list);
 						getContext().getEditingDomain().getCommandStack().execute(deleteCommand);
 
 						viewer.refresh();
@@ -170,15 +170,15 @@ public class ViewerMEControl extends AbstractControl {
 			}
 		});
 
-		tbm.add(new AddReferenceAction(getModelElement(), ref, getItemPropertyDescriptor(), getContext(), this
+		tbm.add(new AddReferenceAction(getContext().getModelElement(), ref, getItemPropertyDescriptor(), getContext(), this
 			.getShell(),adapterFactoryLabelProvider));
-		tbm.add(new NewReferenceAction(getModelElement(), ref, getItemPropertyDescriptor(), getContext(), this
+		tbm.add(new NewReferenceAction(getContext().getModelElement(), ref, getItemPropertyDescriptor(), getContext(), this
 			.getShell(),adapterFactoryLabelProvider));
 
 		tbm.add(new Action("Up", Activator.getImageDescriptor("icons/arrow_up.png")) {
 			@Override
 			public void run() {
-				getContext().getEditingDomain().getCommandStack().execute(new ChangeCommand(getModelElement()) {
+				getContext().getEditingDomain().getCommandStack().execute(new ChangeCommand(getContext().getModelElement()) {
 					@Override
 					protected void doExecute() {
 						move(viewer, ref, -1);
@@ -190,7 +190,7 @@ public class ViewerMEControl extends AbstractControl {
 		tbm.add(new Action("Down", Activator.getImageDescriptor("icons/arrow_down.png")) {
 			@Override
 			public void run() {
-				getContext().getEditingDomain().getCommandStack().execute(new ChangeCommand(getModelElement()) {
+				getContext().getEditingDomain().getCommandStack().execute(new ChangeCommand(getContext().getModelElement()) {
 					@Override
 					protected void doExecute() {
 						move(viewer, ref, +1);
@@ -209,7 +209,7 @@ public class ViewerMEControl extends AbstractControl {
 		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
 			EObject eo = (EObject) ((IStructuredSelection) selection).getFirstElement();
 
-			EList<EObject> containmentList = (EList<EObject>) getModelElement().eGet(ref);
+			EList<EObject> containmentList = (EList<EObject>) getContext().getModelElement().eGet(ref);
 
 			if (containmentList != null) {
 				int pos = containmentList.indexOf(eo);
@@ -233,7 +233,7 @@ public class ViewerMEControl extends AbstractControl {
 	}
 
 	@Override
-	protected Class<?> getClassType() {
+	protected Class<?> getSupportedClassType() {
 		return EObject.class;
 	}
 

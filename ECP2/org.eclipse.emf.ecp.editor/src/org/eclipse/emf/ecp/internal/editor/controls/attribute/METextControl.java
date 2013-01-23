@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,14 +13,13 @@
 
 package org.eclipse.emf.ecp.internal.editor.controls.attribute;
 
+import org.eclipse.emf.ecp.editor.controls.AttributeControl;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.StringWidget;
 
 /**
  * Standard widgets to edit a single line text attribute.
  * 
- * @author helming
- * @author emueller
  * @author Eugen Neufeld
  */
 public class METextControl extends AttributeControl {
@@ -29,22 +28,22 @@ public class METextControl extends AttributeControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getClassType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getClassType()
 	 */
 	@Override
-	protected Class<?> getClassType() {
+	protected Class<?> getSupportedClassType() {
 		return String.class;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
+	 * @see org.eclipse.emf.ecp.editor.controls.MEAttributeControl#getAttributeWidget(org.eclipse.emf.databinding.
 	 * EMFDataBindingContext)
 	 */
 	@Override
 	protected ECPAttributeWidget getWidget() {
 		widget = new StringWidget(getContext().getDataBindingContext(), getContext().getEditingDomain(),
-			getItemPropertyDescriptor(), getModelElement());
+			getItemPropertyDescriptor(), getContext().getModelElement());
 		return widget;
 	}
 

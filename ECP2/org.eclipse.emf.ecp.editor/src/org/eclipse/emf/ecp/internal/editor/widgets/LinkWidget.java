@@ -14,9 +14,12 @@
 package org.eclipse.emf.ecp.internal.editor.widgets;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.editor.controls.ECPObservableValue;
+import org.eclipse.emf.ecp.editor.controls.ECPWidget;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkAdapter;
 import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
@@ -77,6 +80,8 @@ public class LinkWidget extends ECPWidget {
 
 	private ModelElementChangeListener modelElementChangeListener2;
 
+	private ECPObservableValue observableValue;
+
 	/**
 	 * @param dbc
 	 */
@@ -86,8 +91,6 @@ public class LinkWidget extends ECPWidget {
 		this.modelElement = modelElement;
 		this.eReference = eReference;
 		this.context = context;
-
-		linkModelElement = (EObject) modelElement.eGet(eReference);
 
 	}
 
@@ -149,7 +152,7 @@ public class LinkWidget extends ECPWidget {
 					public void run() {
 						if (modelElement.eIsSet(eReference)) {
 							stackLayout.topControl = linkComposite;
-							linkModelElement = (EObject) modelElement.eGet(eReference);
+							setLinkModelElement();
 							setLinkChangeListener();
 						} else {
 							stackLayout.topControl = unsetLabel;
@@ -169,10 +172,7 @@ public class LinkWidget extends ECPWidget {
 		// ModelElementClassTooltip.enableFor(imageHyperlink);
 		hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(linkModelElement), SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(hyperlink);
-		if (linkModelElement != null) {
-			setLinkChangeListener();
-		}
-		updateValues();
+
 	}
 
 	private void updateValues() {
@@ -190,6 +190,8 @@ public class LinkWidget extends ECPWidget {
 				hyperlink.removeHyperlinkListener(listener);
 				imageHyperlink.removeHyperlinkListener(listener);
 				listener = null;
+			}
+			if (listener == null) {
 				listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(), context);
 				hyperlink.addHyperlinkListener(listener);
 				imageHyperlink.addHyperlinkListener(listener);
@@ -198,6 +200,9 @@ public class LinkWidget extends ECPWidget {
 	}
 
 	private void setLinkChangeListener() {
+		if (modelElementChangeListener2 != null) {
+			modelElementChangeListener2.remove();
+		}
 		modelElementChangeListener2 = new ModelElementChangeListener(linkModelElement) {
 
 			@Override
@@ -215,9 +220,22 @@ public class LinkWidget extends ECPWidget {
 		};
 	}
 
+	private void setLinkModelElement() {
+		if (eReference.isMany()) {
+			linkModelElement = ((EList<EObject>) modelElement.eGet(eReference)).get(observableValue.getIndex());
+		} else {
+			linkModelElement = (EObject) modelElement.eGet(eReference);
+		}
+		updateValues();
+	}
+
 	@Override
 	public void bindValue(final IObservableValue modelValue, final ControlDecoration controlDecoration) {
-
+		if (ECPObservableValue.class.isInstance(modelValue)) {
+			observableValue = (ECPObservableValue) modelValue;
+		}
+		setLinkModelElement();
+		setLinkChangeListener();
 		// IObservableValue targetValue = SWTObservables.observeText(hyperlink);
 		// context.getDataBindingContext().bindValue(targetValue, modelValue);
 	}
@@ -246,7 +264,9 @@ public class LinkWidget extends ECPWidget {
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		modelElementChangeListener.remove();
-		modelElementChangeListener2.remove();
+		if (modelElementChangeListener2 != null) {
+			modelElementChangeListener2.remove();
+		}
 		hyperlink.dispose();
 	}
 }

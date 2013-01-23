@@ -11,17 +11,10 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.internal.editor.controls.attribute.multi;
+package org.eclipse.emf.ecp.editor.controls;
 
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
-import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
 import org.eclipse.emf.ecp.internal.editor.Activator;
-import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 
@@ -31,7 +24,6 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
@@ -57,60 +49,30 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
+ * The Abstract implementation for multi controls. This class already implements support for deleting and moving the
+ * items inside the list.
+ * 
  * @author Eugen Neufeld
  */
-public abstract class MultiMEAttributeControl extends AbstractControl implements IValidatableControl {
+public abstract class AbstractMultiControl extends AbstractControl {
 
-	private static final Map<Class<?>, Class<?>> PRIMITIVES = new HashMap<Class<?>, Class<?>>();
-	static {
-		PRIMITIVES.put(Boolean.class, boolean.class);
-		PRIMITIVES.put(Byte.class, byte.class);
-		PRIMITIVES.put(Short.class, short.class);
-		PRIMITIVES.put(Character.class, char.class);
-		PRIMITIVES.put(Integer.class, int.class);
-		PRIMITIVES.put(Long.class, long.class);
-		PRIMITIVES.put(Float.class, float.class);
-		PRIMITIVES.put(Double.class, double.class);
-	}
-	private List<AttributeControlHelper> controlHelpers = new ArrayList<MultiMEAttributeControl.AttributeControlHelper>();
+	// list of controls
+	private List<WidgetWrapper> widgetWrappers = new ArrayList<AbstractMultiControl.WidgetWrapper>();
 
-	private int upperBound;
-
-	private ActionContributionItem addActionItem;
-
+	// the section
 	private Section section;
 
+	// listener to track changes in the list
 	private IListChangeListener changeListener;
 
 	private IObservableList model;
 
-	private ToolBar toolbar;
-
-	private ToolBarManager toolBarManager;
-
-	private Cursor handCursor;
-
-	@Override
-	protected Class<EAttribute> getEStructuralFeatureType() {
-		return EAttribute.class;
-	}
-
 	@Override
 	protected boolean isMulti() {
 		return true;
-	}
-
-	@Override
-	protected boolean isAssignable(Class<?> featureClass) {
-		if (featureClass.isPrimitive()) {
-			return PRIMITIVES.get(getClassType()).isAssignableFrom(featureClass);
-		}
-		return super.isAssignable(featureClass);
 	}
 
 	private void refreshSection() {
@@ -121,7 +83,7 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 
 	private void updateIndicesAfterRemove(int indexRemoved) {
 		int i = 0;
-		for (AttributeControlHelper h : controlHelpers) {
+		for (WidgetWrapper h : widgetWrappers) {
 			if (i < indexRemoved) {
 				i++;
 				continue;
@@ -132,27 +94,26 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 	}
 
 	private void shiftIndecesToRight(int index) {
-		ECPObservableValue modelValue = controlHelpers.get(index + 1).getModelValue();
+		ECPObservableValue modelValue = widgetWrappers.get(index + 1).getModelValue();
 		modelValue.setIndex(modelValue.getIndex() + 1);
 
 	}
 
 	private void shiftIndecesToLeft(int index) {
-		ECPObservableValue modelValue = controlHelpers.get(index - 1).getModelValue();
+		ECPObservableValue modelValue = widgetWrappers.get(index - 1).getModelValue();
 		modelValue.setIndex(modelValue.getIndex() - 1);
 
 	}
 
 	@Override
 	protected Control createControl(Composite parent, final int style) {
-		upperBound = getStructuralFeature().getUpperBound();
 		section = getToolkit().createSection(parent, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
-		section.setText(getItemPropertyDescriptor().getDisplayName(getModelElement()));
+		section.setText(getItemPropertyDescriptor().getDisplayName(getContext().getModelElement()));
 		createSectionToolbar(section, getToolkit());
 		final Composite sectionComposite = getToolkit().createComposite(section, style);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(sectionComposite);
 
-		model = EMFEditObservables.observeList(getContext().getEditingDomain(), getModelElement(),
+		model = EMFEditObservables.observeList(getContext().getEditingDomain(), getContext().getModelElement(),
 			getStructuralFeature());
 
 		changeListener = new IListChangeListener() {
@@ -179,17 +140,17 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 	}
 
 	private void addControl(Composite sectionComposite, int style, final IObservableList model, int position) {
-		ECPObservableValue modelValue = new ECPObservableValue(model, position, getClassType());
-		AttributeControlHelper h = new AttributeControlHelper(modelValue);
+		ECPObservableValue modelValue = new ECPObservableValue(model, position, getSupportedClassType());
+		WidgetWrapper h = new WidgetWrapper(modelValue);
 
 		h.createControl(sectionComposite, style);
-		controlHelpers.add(h);
+		widgetWrappers.add(h);
 	}
 
 	private void createSectionToolbar(Section section, FormToolkit toolkit) {
-		toolBarManager = new ToolBarManager(SWT.FLAT);
-		toolbar = toolBarManager.createControl(section);
-		handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+		ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
+		ToolBar toolbar = toolBarManager.createControl(section);
+		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
 		toolbar.setCursor(handCursor);
 		// Cursor needs to be explicitly disposed
 		toolbar.addDisposeListener(new DisposeListener() {
@@ -200,64 +161,51 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 			}
 		});
 
-		AddAction addAction = new AddAction();
-		addAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
-			.getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
-		addAction.setToolTipText("Add Entry");
-		addActionItem = new ActionContributionItem(addAction);
-		toolBarManager.add(addActionItem);
+		for (Action action : getToolbarActions()) {
+			toolBarManager.add(action);
+		}
 		toolBarManager.update(true);
 		section.setTextClient(toolbar);
 	}
 
 	/**
-   * 
-   */
-	private EMFDataBindingContext getDataBindingContext() {
-		return new EMFDataBindingContext();
-	}
+	 * Returns the Actions for the toolbar, the actions mustn't be created on each call.
+	 * 
+	 * @return the array of {@link Action Actions} for the {@link ToolBar}
+	 */
+	protected abstract Action[] getToolbarActions();
 
 	private void isFull() {
-		boolean full = controlHelpers.size() >= upperBound && upperBound != -1;
-		addActionItem.getAction().setEnabled(!full);
+		int upperBound = getStructuralFeature().getUpperBound();
+		boolean full = widgetWrappers.size() >= upperBound && upperBound != -1;
+		for (Action action : getToolbarActions()) {
+			action.setEnabled(!full);
+		}
 	}
 
 	/**
-	 * @return
+	 * Creates the widget for the WidgetWrapper.
+	 * 
+	 * @return the created {@link ECPWidget}
 	 */
-	protected abstract ECPAttributeWidget getAttributeWidget(EMFDataBindingContext dbc);
+	protected abstract ECPWidget createWidget();
 
 	/**
-	 * {@inheritDoc}
-	 **/
-	public void handleValidation(Diagnostic diagnostic) {
-		for (int i = 0; i < controlHelpers.size(); i++) {
-			controlHelpers.get(i).handleValidation(diagnostic);
-		}
+	 * Returns the current size of Widgets, this corresponds to the number of elements in the multi feature.
+	 * 
+	 * @return number of widgets
+	 */
+	protected final int getNumElements() {
+		return widgetWrappers.size();
 	}
 
 	/**
-	 * {@inheritDoc}
-	 **/
-	public void resetValidation() {
-		for (int i = 0; i < controlHelpers.size(); i++) {
-			controlHelpers.get(i).resetValidation();
-		}
-	}
-
-	protected abstract Object getDefaultValue();
-
-	private class AddAction extends Action {
-
-		@Override
-		public void run() {
-			AddCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
-				getDefaultValue(), controlHelpers.size()).execute();
-			super.run();
-		}
-	}
-
-	private class AttributeControlHelper {
+	 * This class is the common wrapper for multi controls. It adds a remove, move up and move down button.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	private final class WidgetWrapper {
 		private final ECPObservableValue modelValue;
 
 		private Label labelWidgetImage; // Label for diagnostic image
@@ -266,11 +214,11 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 
 		private Composite composite;
 
-		public AttributeControlHelper(ECPObservableValue modelValue) {
+		public WidgetWrapper(ECPObservableValue modelValue) {
 			this.modelValue = modelValue;
 		}
 
-		private AttributeControlHelper getThis() {
+		private WidgetWrapper getThis() {
 			return this;
 		}
 
@@ -283,7 +231,7 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 			labelWidgetImage = getToolkit().createLabel(composite, "    ");
 			labelWidgetImage.setBackground(parent.getBackground());
 
-			ECPAttributeWidget widget = getAttributeWidget(getDataBindingContext());
+			ECPWidget widget = createWidget();
 			Control control = widget.createWidget(getToolkit(), composite, style);
 			widget.setEditable(isEditable());
 
@@ -300,19 +248,20 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 			widget.bindValue(modelValue, controlDecoration);
 		}
 
-		void handleValidation(Diagnostic diagnostic) {
-			if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-				Image image = org.eclipse.emf.ecp.internal.editor.Activator.getImageDescriptor(
-					"icons/validation_error.png").createImage();
-				labelWidgetImage.setImage(image);
-				labelWidgetImage.setToolTipText(diagnostic.getMessage());
-			}
-		}
-
-		void resetValidation() {
-			labelWidgetImage.setImage(null);
-			labelWidgetImage.setToolTipText("");
-		}
+		// TODO activate for validation puposes
+		// private void handleValidation(Diagnostic diagnostic) {
+		// if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
+		// Image image = org.eclipse.emf.ecp.internal.editor.Activator.getImageDescriptor(
+		// "icons/validation_error.png").createImage();
+		// labelWidgetImage.setImage(image);
+		// labelWidgetImage.setToolTipText(diagnostic.getMessage());
+		// }
+		// }
+		//
+		// private void resetValidation() {
+		// labelWidgetImage.setImage(null);
+		// labelWidgetImage.setToolTipText("");
+		// }
 
 		/**
 		 * Initializes the delete button.
@@ -328,9 +277,9 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					controlHelpers.remove(getThis());
-					RemoveCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
-						modelValue.getValue()).execute();
+					widgetWrappers.remove(getThis());
+					RemoveCommand.create(getContext().getEditingDomain(), getContext().getModelElement(),
+						getStructuralFeature(), modelValue.getValue()).execute();
 					getThis().composite.dispose();
 					refreshSection();
 					updateIndicesAfterRemove(modelValue.getIndex());
@@ -359,11 +308,11 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					controlHelpers.get(currentIndex).composite.moveAbove(controlHelpers.get(currentIndex - 1).composite);
-					controlHelpers.remove(currentIndex);
-					MoveCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
-						modelValue.getValue(), currentIndex - 1).execute();
-					controlHelpers.add(--currentIndex, getThis());
+					widgetWrappers.get(currentIndex).composite.moveAbove(widgetWrappers.get(currentIndex - 1).composite);
+					widgetWrappers.remove(currentIndex);
+					MoveCommand.create(getContext().getEditingDomain(), getContext().getModelElement(),
+						getStructuralFeature(), modelValue.getValue(), currentIndex - 1).execute();
+					widgetWrappers.add(--currentIndex, getThis());
 					getThis().getModelValue().setIndex(currentIndex);
 					shiftIndecesToRight(currentIndex);
 					refreshSection();
@@ -378,15 +327,15 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					if (getThis().getModelValue().getIndex() + 1 == controlHelpers.size()) {
+					if (getThis().getModelValue().getIndex() + 1 == widgetWrappers.size()) {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					controlHelpers.get(currentIndex).composite.moveBelow(controlHelpers.get(currentIndex + 1).composite);
-					controlHelpers.remove(currentIndex);
-					MoveCommand.create(getContext().getEditingDomain(), getModelElement(), getStructuralFeature(),
-						modelValue.getValue(), currentIndex + 1).execute();
-					controlHelpers.add(++currentIndex, getThis());
+					widgetWrappers.get(currentIndex).composite.moveBelow(widgetWrappers.get(currentIndex + 1).composite);
+					widgetWrappers.remove(currentIndex);
+					MoveCommand.create(getContext().getEditingDomain(), getContext().getModelElement(),
+						getStructuralFeature(), modelValue.getValue(), currentIndex + 1).execute();
+					widgetWrappers.add(++currentIndex, getThis());
 					getThis().getModelValue().setIndex(currentIndex);
 					shiftIndecesToLeft(currentIndex);
 					refreshSection();
@@ -414,13 +363,10 @@ public abstract class MultiMEAttributeControl extends AbstractControl implements
 		model.removeListChangeListener(changeListener);
 		model.dispose();
 
-		toolBarManager.remove(addActionItem);
-		addActionItem.dispose();
-		for (AttributeControlHelper helper : controlHelpers) {
+		for (WidgetWrapper helper : widgetWrappers) {
 			helper.dispose();
 		}
 		section.dispose();
-		handCursor.dispose();
 
 	}
 }

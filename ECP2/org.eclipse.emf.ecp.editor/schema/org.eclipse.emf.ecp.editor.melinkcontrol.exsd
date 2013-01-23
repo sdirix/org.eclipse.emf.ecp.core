@@ -62,7 +62,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MELinkControl:"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.internal.editor.unused.MELinkControl:"/>
                </appinfo>
             </annotation>
          </attribute>

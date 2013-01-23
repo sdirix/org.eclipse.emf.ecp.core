@@ -11,12 +11,10 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.internal.editor.controls.attribute;
+package org.eclipse.emf.ecp.editor.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl;
-import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.graphics.Image;
@@ -60,14 +58,14 @@ public abstract class AttributeControl extends AbstractSingleControl implements 
 	@Override
 	protected boolean isAssignable(Class<?> featureClass) {
 		if (featureClass.isPrimitive()) {
-			return PRIMITIVES.get(getClassType()).isAssignableFrom(featureClass);
+			return PRIMITIVES.get(getSupportedClassType()).isAssignableFrom(featureClass);
 		}
 		return super.isAssignable(featureClass);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#getNumberOfAddtionalElements()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractSingleControl#getNumberOfAddtionalElements()
 	 */
 	@Override
 	protected int getNumberOfAddtionalElements() {
@@ -77,7 +75,7 @@ public abstract class AttributeControl extends AbstractSingleControl implements 
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#createControlActions(org.eclipse.swt.widgets.Composite
+	 * org.eclipse.emf.ecp.editor.controls.AbstractSingleControl#createControlActions(org.eclipse.swt.widgets.Composite
 	 * )
 	 */
 	@Override

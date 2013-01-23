@@ -57,13 +57,13 @@
    <extension
          point="org.eclipse.emf.ecp.editor.referencecontrols">
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MESingleLinkControl"
+            class="org.eclipse.emf.ecp.internal.editor.unused.MESingleLinkControl"
             name="org.eclipse.emf.ecp.editor.mesinglelinkcontrol"
             showLabel="true"
             type="org.eclipse.emf.ecore.EObject">
       </widget>
       <widget
-            class="org.eclipse.emf.ecp.editor.mecontrols.melinkcontrol.MEMultiLinkControl"
+            class="org.eclipse.emf.ecp.internal.editor.unused.MEMultiLinkControl"
             name="org.eclipse.emf.ecp.editor.memultilinkcontrol"
             showLabel="false"
              type="org.eclipse.emf.ecore.EObject">
@@ -84,6 +84,12 @@
             class="org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceControl"
             name="org.eclipse.emf.ecp.editor.mesinglelinkcontrol2"
             showLabel="true"
+            type="org.eclipse.emf.ecore.EObject">
+      </widget>
+      <widget
+            class="org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceMultiControl"
+            name="org.eclipse.emf.ecp.editor.memultilinkcontrol2"
+            showLabel="false"
             type="org.eclipse.emf.ecore.EObject">
       </widget>
    </extension>

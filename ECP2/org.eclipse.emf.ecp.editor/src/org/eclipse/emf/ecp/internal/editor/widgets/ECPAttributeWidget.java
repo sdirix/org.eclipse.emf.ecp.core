@@ -3,6 +3,7 @@
  */
 package org.eclipse.emf.ecp.internal.editor.widgets;
 
+import org.eclipse.emf.ecp.editor.controls.ECPWidget;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.databinding.DataBindingContext;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,9 +15,9 @@ package org.eclipse.emf.ecp.internal.editor.controls.reference;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl;
+import org.eclipse.emf.ecp.editor.controls.AbstractSingleControl;
+import org.eclipse.emf.ecp.editor.controls.ECPWidget;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
-import org.eclipse.emf.ecp.internal.editor.widgets.ECPWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.LinkWidget;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * An implementation for a single reference control.
+ * 
  * @author Eugen Neufeld
  */
 public class ReferenceControl extends AbstractSingleControl {
@@ -53,7 +55,7 @@ public class ReferenceControl extends AbstractSingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getEStructuralFeatureType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getEStructuralFeatureType()
 	 */
 	@Override
 	protected Class<EReference> getEStructuralFeatureType() {
@@ -62,20 +64,20 @@ public class ReferenceControl extends AbstractSingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getClassType()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getClassType()
 	 */
 	@Override
-	protected Class<?> getClassType() {
+	protected Class<?> getSupportedClassType() {
 		return EObject.class;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getPriority()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractControl#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
-		return 2;
+		return 1;
 	}
 
 	@Override
@@ -88,7 +90,7 @@ public class ReferenceControl extends AbstractSingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#getNumberOfAddtionalElements()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractSingleControl#getNumberOfAddtionalElements()
 	 */
 	@Override
 	protected int getNumberOfAddtionalElements() {
@@ -98,7 +100,7 @@ public class ReferenceControl extends AbstractSingleControl {
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#createControlActions(org.eclipse.swt.widgets.Composite
+	 * org.eclipse.emf.ecp.editor.controls.AbstractSingleControl#createControlActions(org.eclipse.swt.widgets.Composite
 	 * )
 	 */
 	@Override
@@ -121,8 +123,8 @@ public class ReferenceControl extends AbstractSingleControl {
 
 		deleteLink.setImage(deleteImage);
 
-		linkAdapter = new MEHyperLinkDeleteAdapter(getModelElement(), (EReference) getStructuralFeature(),
-			(EObject) getModelElement().eGet(getStructuralFeature()), getContext());
+		linkAdapter = new MEHyperLinkDeleteAdapter(getContext().getModelElement(), (EReference) getStructuralFeature(),
+			(EObject) getContext().getModelElement().eGet(getStructuralFeature()), getContext());
 		deleteLink.addMouseListener(linkAdapter);
 	}
 
@@ -133,11 +135,13 @@ public class ReferenceControl extends AbstractSingleControl {
 	 */
 	private List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
-		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
+		AddReferenceAction addAction = new AddReferenceAction(getContext().getModelElement(),
+			(EReference) getStructuralFeature(), getItemPropertyDescriptor(), getContext(), getShell(),
+			adapterFactoryLabelProvider);
 		result.add(addAction);
-		ReferenceAction newAction = new NewReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
+		ReferenceAction newAction = new NewReferenceAction(getContext().getModelElement(),
+			(EReference) getStructuralFeature(), getItemPropertyDescriptor(), getContext(), getShell(),
+			adapterFactoryLabelProvider);
 		result.add(newAction);
 		return result;
 	}
@@ -163,11 +167,11 @@ public class ReferenceControl extends AbstractSingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#getWidget()
+	 * @see org.eclipse.emf.ecp.editor.controls.AbstractSingleControl#getWidget()
 	 */
 	@Override
 	protected ECPWidget getWidget() {
-		return new LinkWidget(getModelElement(), (EReference) getStructuralFeature(), getContext(),
+		return new LinkWidget(getContext().getModelElement(), (EReference) getStructuralFeature(), getContext(),
 			getItemPropertyDescriptor());
 	}
 }
