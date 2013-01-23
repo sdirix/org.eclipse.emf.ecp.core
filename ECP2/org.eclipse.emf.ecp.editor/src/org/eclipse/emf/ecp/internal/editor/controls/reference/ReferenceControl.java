@@ -115,7 +115,12 @@ public class ReferenceControl extends AbstractSingleControl {
 		}
 	}
 
-	private void createDeleteAction(Composite composite) {
+	/**
+	 * Creates a delete action as a link.
+	 * 
+	 * @param composite the composite to create the action on
+	 */
+	protected void createDeleteAction(Composite composite) {
 		deleteLink = getToolkit().createImageHyperlink(composite, SWT.NONE);
 		Image deleteImage = null;
 
@@ -149,10 +154,10 @@ public class ReferenceControl extends AbstractSingleControl {
 	/**
 	 * Creates a button for an action.
 	 * 
-	 * @param action
-	 *            the action
+	 * @param action the action to create the button from
+	 * @param composite the composite to create the button on
 	 */
-	private void createButtonForAction(final Action action, Composite composite) {
+	protected void createButtonForAction(final Action action, Composite composite) {
 		Button selectButton = getToolkit().createButton(composite, "", SWT.PUSH);
 		selectButton.setImage(action.getImageDescriptor().createImage());
 		selectButton.setToolTipText(action.getToolTipText());
