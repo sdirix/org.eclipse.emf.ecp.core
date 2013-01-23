@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,21 +38,37 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
+ * The widget implementation of a text widget used for for editing Strings, Double and Integer values.
+ * 
+ * @param <T> the generic type of the widget
  * @author Eugen Neufeld
  */
 public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
+
+	/**
+	 * The {@link Text} holding the value.
+	 */
 	protected Text text;
 	private final EObject eObject;
 	private boolean doVerify;
 
 	/**
-	 * @param dbc
+	 * Constructor for the {@link IntegerWidget}.
+	 * 
+	 * @param dbc the {@link DataBindingContext} to use
+	 * @param editingDomain the {@link EditingDomain} to use
+	 * @param eObject the {@link EObject} of this widget
 	 */
 	public AbstractTextWidget(DataBindingContext dbc, EditingDomain editingDomain, EObject eObject) {
 		super(dbc, editingDomain);
 		this.eObject = eObject;
 	}
 
+	/**
+	 * Returns the {@link EObject} set in the constructor.
+	 * 
+	 * @return the {@link EObject}
+	 */
 	protected EObject getEObject() {
 		return eObject;
 	}
@@ -97,9 +113,11 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	}
 
 	/**
-	 * @param toolkit
-	 * @param composite
-	 * @param style
+	 * this create the {@link Text} widget itself.
+	 * 
+	 * @param toolkit the {@link FormToolkit} to use
+	 * @param composite the parent {@link Composite} for the {@link Text}
+	 * @param style the style to use on the created widget
 	 */
 	protected void createTextWidget(FormToolkit toolkit, Composite composite, int style) {
 		text = toolkit.createText(composite, new String(), style | SWT.SINGLE | SWT.BORDER);
@@ -167,7 +185,8 @@ public abstract class AbstractTextWidget<T> extends ECPAttributeWidget {
 	@Override
 	public void bindValue(final IObservableValue modelValue, final ControlDecoration controlDecoration) {
 		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
-		getDbc().bindValue(value, modelValue, getTargetToModelStrategy(controlDecoration), getModelToTargetStrategy());
+		getDataBindingContext().bindValue(value, modelValue, getTargetToModelStrategy(controlDecoration),
+			getModelToTargetStrategy());
 	}
 
 	/**

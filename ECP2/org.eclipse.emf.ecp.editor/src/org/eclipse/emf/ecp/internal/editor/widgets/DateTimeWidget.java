@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,10 +7,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.internal.editor.widgets;
 
-import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
@@ -62,7 +64,7 @@ public class DateTimeWidget extends ECPAttributeWidget {
 	/**
 	 * Constructor of the DateTimeWidget.
 	 * 
-	 * @param dbc the {@link EMFDataBindingContext}
+	 * @param dbc the {@link DataBindingContext}
 	 * @param modelElement the {@link EObject} to edit
 	 * @param feature the {@link EStructuralFeature} edited in this widget
 	 * @param domain the {@link EditingDomain} of the edited {@link EObject}
@@ -162,7 +164,7 @@ public class DateTimeWidget extends ECPAttributeWidget {
 		IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
 		IObservableValue timeObserver = SWTObservables.observeSelection(timeWidget);
 		IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		getDbc().bindValue(target, modelValue);
+		getDataBindingContext().bindValue(target, modelValue);
 
 	}
 

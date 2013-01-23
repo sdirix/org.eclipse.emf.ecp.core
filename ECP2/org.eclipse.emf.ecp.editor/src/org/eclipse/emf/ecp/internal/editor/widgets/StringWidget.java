@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,6 +24,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 /**
+ * The widget implementation for editing a String value.
+ * 
  * @author Eugen Neufeld
  */
 public class StringWidget extends AbstractTextWidget<String> {
@@ -34,6 +36,7 @@ public class StringWidget extends AbstractTextWidget<String> {
 	 * Constructor for StringWidgets.
 	 * 
 	 * @param dbc the {@link DataBindingContext} to use
+	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param iItemPropertyDescriptor the {@link IItemPropertyDescriptor} to identify multiline properties
 	 * @param eObject the {@link EObject} to check the multiline for
 	 */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,6 +44,8 @@ import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 /**
+ * The Widget for editing {@link EReference}.
+ * 
  * @author Eugen Neufeld
  */
 public class LinkWidget extends ECPWidget {
@@ -83,7 +85,12 @@ public class LinkWidget extends ECPWidget {
 	private ECPObservableValue observableValue;
 
 	/**
-	 * @param dbc
+	 * Constructor for the {@link LinkWidget}.
+	 * 
+	 * @param modelElement the {@link EObject} to use
+	 * @param eReference the {@link EReference} of this widget
+	 * @param context the {@link EditModelElementContext} to use
+	 * @param propertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 */
 	public LinkWidget(EObject modelElement, EReference eReference, EditModelElementContext context,
 		IItemPropertyDescriptor propertyDescriptor) {
@@ -109,7 +116,7 @@ public class LinkWidget extends ECPWidget {
 		stackLayout = new StackLayout();
 		mainComposite.setLayout(stackLayout);
 
-		unsetLabel = toolkit.createLabel(mainComposite, "Not set!");
+		unsetLabel = toolkit.createLabel(mainComposite, "(Not Set)");
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(toolkit.getColors().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -133,16 +140,6 @@ public class LinkWidget extends ECPWidget {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-		// decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
-
-		// labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider,
-		// decoratorManager.getLabelDecorator());
-		// labelProviderListener = new ILabelProviderListener() {
-		// public void labelProviderChanged(LabelProviderChangedEvent event) {
-		// imageHyperlink.setImage(labelProvider.getImage(linkModelElement));
-		// }
-		// };
-		// labelProvider.addListener(labelProviderListener);
 		modelElementChangeListener = new ModelElementChangeListener(modelElement) {
 
 			@Override
@@ -223,6 +220,7 @@ public class LinkWidget extends ECPWidget {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void setLinkModelElement() {
 		if (eReference.isMany()) {
 			linkModelElement = ((EList<EObject>) modelElement.eGet(eReference)).get(observableValue.getIndex());
@@ -239,8 +237,6 @@ public class LinkWidget extends ECPWidget {
 		}
 		setLinkModelElement();
 		setLinkChangeListener();
-		// IObservableValue targetValue = SWTObservables.observeText(hyperlink);
-		// context.getDataBindingContext().bindValue(targetValue, modelValue);
 	}
 
 	/*
