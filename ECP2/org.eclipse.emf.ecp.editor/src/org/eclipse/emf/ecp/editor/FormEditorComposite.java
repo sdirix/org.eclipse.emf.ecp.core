@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -62,7 +62,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/**
 	 * Constructor to initialize the {@link FormToolkit} on its own.
 	 * 
-	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param modelElementContext the {@link EditModelElementContext}
 	 * @param shell the shell used for callbacks
 	 */
 	public FormEditorComposite(EditModelElementContext modelElementContext, Shell shell) {
@@ -72,7 +72,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/**
 	 * Constructor where the {@link FormToolkit} is provided.
 	 * 
-	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param modelElementContext the {@link EditModelElementContext}
 	 * @param shell the {@link Shell} for callback
 	 * @param toolkit the {@link FormToolkit}
 	 */

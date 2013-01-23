@@ -8,23 +8,29 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor.descriptor;
+package org.eclipse.emf.ecp.internal.editor.unused;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * Provides the priorities for a given attribute of a ME.
+ * A {@link IAttributeDescriptor} using the category property in the genmodel.
  * 
- * @param <A> the type of description (integer/string/double/etc.) for this attribute
  * @author shterevg
  */
-public interface IAttributeDescriptor<A> {
+// FIXME unused
+public class CategoryDescriptor implements IAttributeDescriptor<Double> {
 
 	/**
-	 * @param propertyDescriptor the property descriptor
-	 * @param modelElement the model element
-	 * @return Returns the property from a given propertyDescriptor as an A value.
+	 * {@inheritDoc}
 	 */
-	A getValue(IItemPropertyDescriptor propertyDescriptor, EObject modelElement);
+	public Double getValue(IItemPropertyDescriptor propertyDescriptor, EObject modelElement) {
+		String s = propertyDescriptor.getCategory(modelElement);
+		if (s == null) {
+			s = "100.0";
+		}
+		double ret = Double.parseDouble(s);
+		return ret;
+	}
+
 }

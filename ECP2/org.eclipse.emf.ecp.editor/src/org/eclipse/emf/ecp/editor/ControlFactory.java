@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2008-2011 Chair for Applied Software Engineering,
- * Technische Universitaet Muenchen.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- ******************************************************************************/
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.editor;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -34,13 +37,16 @@ import java.util.Set;
  * @author shterev
  * @author Eugen Neufeld
  */
-public class ControlFactory {
-	private static ControlFactory INSTANCE;
+// TODO look through class
+public final class ControlFactory {
+	private static final ControlFactory INSTANCE = new ControlFactory();
 
+	/**
+	 * Static method to get the ControlFactory Singleton.
+	 * 
+	 * @return the {@link ControlFactory}
+	 */
 	public static ControlFactory getInstance() {
-		if (INSTANCE == null) {
-			INSTANCE = new ControlFactory();
-		}
 		return INSTANCE;
 	}
 
@@ -49,7 +55,7 @@ public class ControlFactory {
 	/**
 	 * Default constructor.
 	 */
-	public ControlFactory() {
+	private ControlFactory() {
 		controlRegistry = new HashMap<Class<?>, ArrayList<AbstractControl>>();
 		initializeMEControls();
 	}
@@ -122,8 +128,8 @@ public class ControlFactory {
 		return null;
 	}
 
-	private AbstractControl createReferenceControl(IItemPropertyDescriptor itemPropertyDescriptor,
-		EReference feature, EObject modelElement, EditModelElementContext context) {
+	private AbstractControl createReferenceControl(IItemPropertyDescriptor itemPropertyDescriptor, EReference feature,
+		EObject modelElement, EditModelElementContext context) {
 		Class<?> instanceClass = feature.getEType().getInstanceClass();
 		Set<Class<?>> keySet = controlRegistry.keySet();
 		ArrayList<AbstractControl> candidates = new ArrayList<AbstractControl>();
@@ -148,8 +154,8 @@ public class ControlFactory {
 		return ret;
 	}
 
-	private AbstractControl createAttribute(IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, EObject modelElement, EditModelElementContext context) {
+	private AbstractControl createAttribute(IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
+		EObject modelElement, EditModelElementContext context) {
 		Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 		// Test which controls have a fitting type
 		// TODO: could be chached?

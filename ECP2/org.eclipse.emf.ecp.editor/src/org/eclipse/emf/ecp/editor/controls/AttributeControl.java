@@ -109,8 +109,12 @@ public abstract class AttributeControl extends AbstractSingleControl implements 
 
 	@Override
 	public void dispose() {
-		labelWidgetImage.dispose();
-		controlDecoration.dispose();
+		if (labelWidgetImage != null) {
+			labelWidgetImage.dispose();
+		}
+		if (controlDecoration != null) {
+			controlDecoration.dispose();
+		}
 		super.dispose();
 	}
 
