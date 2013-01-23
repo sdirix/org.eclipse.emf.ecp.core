@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.internal.editor.Activator;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkAdapter;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkDeleteAdapter;
+import org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceControl;
 import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -168,7 +169,7 @@ public class MELinkControl {
 		// ModelElementClassTooltip.enableFor(imageHyperlink);
 		hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(link), style);
 		hyperlink.setToolTipText(shortLabelProvider.getText(link));
-		IHyperlinkListener listener = new MEHyperLinkAdapter(link, contextModelElement, eReference.getName(), context);
+		IHyperlinkListener listener = new MEHyperLinkAdapter(link, context);
 		hyperlink.addHyperlinkListener(listener);
 		imageHyperlink.addHyperlinkListener(listener);
 	}

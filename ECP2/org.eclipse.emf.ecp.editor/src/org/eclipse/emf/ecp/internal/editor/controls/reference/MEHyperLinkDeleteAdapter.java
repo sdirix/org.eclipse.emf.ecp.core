@@ -70,7 +70,7 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 										// context.getMetaModelElementContext().isNonDomainElement(opposite.eClass())||
 										// context.getMetaModelElementContext().isAssociationClassElement(opposite)
 		{
-			if (askConfirmation(opposite)) {
+			if (askConfirmation((EObject) modelElement.eGet(reference))) {
 				delete();
 			}
 		} else {
@@ -88,7 +88,7 @@ public class MEHyperLinkDeleteAdapter extends MouseAdapter {
 		context.getEditingDomain().getCommandStack().execute(removeCommand);
 	}
 
-	public static boolean askConfirmation(EObject toBeDeleted) {
+	private boolean askConfirmation(EObject toBeDeleted) {
 		String question = null;
 		ComposedAdapterFactory adapterFactory = null;
 		// if (toBeDeleted.size() == 1) {

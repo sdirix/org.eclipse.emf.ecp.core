@@ -189,7 +189,7 @@ public class LinkWidget extends ECPWidget {
 				listener = null;
 			}
 			if (listener == null) {
-				listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(), context);
+				listener = new MEHyperLinkAdapter(linkModelElement, context);
 				hyperlink.addHyperlinkListener(listener);
 				imageHyperlink.addHyperlinkListener(listener);
 			}

@@ -82,9 +82,15 @@ public class ReferenceControl extends AbstractSingleControl {
 
 	@Override
 	public void dispose() {
-		modelElementChangeListener.remove();
-		adapterFactoryLabelProvider.dispose();
-		composedAdapterFactory.dispose();
+		if (modelElementChangeListener != null) {
+			modelElementChangeListener.remove();
+		}
+		if (adapterFactoryLabelProvider != null) {
+			adapterFactoryLabelProvider.dispose();
+		}
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
+		}
 		super.dispose();
 	}
 

@@ -109,9 +109,9 @@ public abstract class AbstractSingleControl extends AbstractControl {
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		labelWidgetImage.dispose();
 		controlDecoration.dispose();
 		widget.dispose();
+		super.dispose();
 	}
 }
