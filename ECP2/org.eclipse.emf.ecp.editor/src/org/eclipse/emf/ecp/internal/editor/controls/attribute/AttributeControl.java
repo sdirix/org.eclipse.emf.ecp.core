@@ -14,23 +14,13 @@
 package org.eclipse.emf.ecp.internal.editor.controls.attribute;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl;
 import org.eclipse.emf.ecp.editor.mecontrols.IValidatableControl;
-import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import java.util.HashMap;
@@ -43,7 +33,7 @@ import java.util.Map;
  * @author emueller
  * @author Eugen Neufeld
  */
-public abstract class AttributeControl extends AbstractControl implements IValidatableControl {
+public abstract class AttributeControl extends AbstractSingleControl implements IValidatableControl {
 
 	private static final Map<Class<?>, Class<?>> PRIMITIVES = new HashMap<Class<?>, Class<?>>();
 
@@ -62,16 +52,9 @@ public abstract class AttributeControl extends AbstractControl implements IValid
 
 	private ControlDecoration controlDecoration;
 
-	private ECPAttributeWidget widget;
-
 	@Override
 	protected Class<EAttribute> getEStructuralFeatureType() {
 		return EAttribute.class;
-	}
-
-	@Override
-	protected boolean isMulti() {
-		return false;
 	}
 
 	@Override
@@ -82,40 +65,25 @@ public abstract class AttributeControl extends AbstractControl implements IValid
 		return super.isAssignable(featureClass);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#getNumberOfAddtionalElements()
+	 */
 	@Override
-	protected Control createControl(Composite parent, int style) {
-		Composite composite = getToolkit().createComposite(parent, style);
-		composite.setBackgroundMode(SWT.INHERIT_FORCE);
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(composite);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
-
-		labelWidgetImage = getToolkit().createLabel(composite, "    ");
-		labelWidgetImage.setBackground(parent.getBackground());
-		// FIXME
-		GridDataFactory.fillDefaults().hint(20, 20).applyTo(labelWidgetImage);
-
-		widget = getAttributeWidget(getContext().getDataBindingContext());
-		Control control = widget.createWidget(getToolkit(), composite, style);
-		widget.setEditable(isEditable());
-
-		controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
-		controlDecoration.setDescriptionText("Invalid input");
-		controlDecoration.setShowHover(true);
-		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-			FieldDecorationRegistry.DEC_ERROR);
-		controlDecoration.setImage(fieldDecoration.getImage());
-		controlDecoration.hide();
-
-		IObservableValue model = EMFEditObservables.observeValue(getContext().getEditingDomain(), getModelElement(),
-			getStructuralFeature());
-		widget.bindValue(model, controlDecoration);
-		return composite;
+	protected int getNumberOfAddtionalElements() {
+		return 0;
 	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#createControlActions(org.eclipse.swt.widgets.Composite
+	 * )
 	 */
-	protected abstract ECPAttributeWidget getAttributeWidget(DataBindingContext dbc);
+	@Override
+	protected void createControlActions(Composite composite) {
+
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -145,7 +113,6 @@ public abstract class AttributeControl extends AbstractControl implements IValid
 	public void dispose() {
 		super.dispose();
 		labelWidgetImage.dispose();
-		widget.dispose();
 		controlDecoration.dispose();
 	}
 

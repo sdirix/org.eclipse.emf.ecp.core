@@ -13,8 +13,6 @@ package org.eclipse.emf.ecp.internal.editor.controls.attribute;
 import org.eclipse.emf.ecp.internal.editor.widgets.DateTimeWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 
-import org.eclipse.core.databinding.DataBindingContext;
-
 import java.util.Date;
 
 /**
@@ -39,8 +37,9 @@ public class MESWTDateAndTimeControl extends AttributeControl {
 	 * EMFDataBindingContext)
 	 */
 	@Override
-	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new DateTimeWidget(dbc, getModelElement(), getStructuralFeature(), getContext().getEditingDomain());
+	protected ECPAttributeWidget getWidget() {
+		return new DateTimeWidget(getContext().getDataBindingContext(), getModelElement(), getStructuralFeature(),
+			getContext().getEditingDomain());
 	}
 
 }

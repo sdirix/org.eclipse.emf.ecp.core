@@ -16,8 +16,6 @@ package org.eclipse.emf.ecp.internal.editor.controls.attribute;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.StringWidget;
 
-import org.eclipse.core.databinding.DataBindingContext;
-
 /**
  * Standard widgets to edit a single line text attribute.
  * 
@@ -44,8 +42,9 @@ public class METextControl extends AttributeControl {
 	 * EMFDataBindingContext)
 	 */
 	@Override
-	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		widget = new StringWidget(dbc, getContext().getEditingDomain(), getItemPropertyDescriptor(), getModelElement());
+	protected ECPAttributeWidget getWidget() {
+		widget = new StringWidget(getContext().getDataBindingContext(), getContext().getEditingDomain(),
+			getItemPropertyDescriptor(), getModelElement());
 		return widget;
 	}
 

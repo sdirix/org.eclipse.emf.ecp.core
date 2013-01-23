@@ -19,26 +19,22 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkAdapter;
-import org.eclipse.emf.ecp.internal.editor.controls.reference.MEHyperLinkDeleteAdapter;
 import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IDecoratorManager;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.forms.events.IHyperlinkListener;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Hyperlink;
@@ -52,10 +48,6 @@ public class LinkWidget extends ECPWidget {
 	private Composite linkComposite;
 
 	private Hyperlink hyperlink;
-
-	private ILabelProvider labelProvider;
-
-	private ILabelProviderListener labelProviderListener;
 
 	private ImageHyperlink imageHyperlink;
 
@@ -75,24 +67,28 @@ public class LinkWidget extends ECPWidget {
 
 	private ModelElementChangeListener modelElementChangeListener;
 
-	private ImageHyperlink deleteLink;
-
-	private MEHyperLinkDeleteAdapter linkAdapter;
-
-	private IDecoratorManager decoratorManager;
-
 	private IHyperlinkListener listener;
+
+	private Label unsetLabel;
+
+	private StackLayout stackLayout;
+
+	private Composite mainComposite;
+
+	private ModelElementChangeListener modelElementChangeListener2;
 
 	/**
 	 * @param dbc
 	 */
-	public LinkWidget(EObject modelElement, EObject linkModelElement, EReference eReference,
-		EditModelElementContext context) {
+	public LinkWidget(EObject modelElement, EReference eReference, EditModelElementContext context,
+		IItemPropertyDescriptor propertyDescriptor) {
 
 		this.modelElement = modelElement;
-		this.linkModelElement = linkModelElement;
 		this.eReference = eReference;
 		this.context = context;
+
+		linkModelElement = (EObject) modelElement.eGet(eReference);
+
 	}
 
 	/*
@@ -104,54 +100,62 @@ public class LinkWidget extends ECPWidget {
 	 */
 	@Override
 	public Control createWidget(FormToolkit toolkit, Composite composite, int style) {
-		linkComposite = toolkit.createComposite(composite);
-		linkComposite.setLayout(new GridLayout(3, false));
+		mainComposite = toolkit.createComposite(composite);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
 
-		createHyperlink(toolkit, composite);
-		createDeleteAction(toolkit);
-		return linkComposite;
-	}
+		stackLayout = new StackLayout();
+		mainComposite.setLayout(stackLayout);
 
-	private void createDeleteAction(FormToolkit toolkit) {
-		deleteLink = toolkit.createImageHyperlink(linkComposite, SWT.NONE);
-		Image deleteImage = null;
+		unsetLabel = toolkit.createLabel(mainComposite, "Not set!");
+		unsetLabel.setBackground(composite.getBackground());
+		unsetLabel.setForeground(toolkit.getColors().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+		unsetLabel.setAlignment(SWT.CENTER);
 
-		deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
+		linkComposite = toolkit.createComposite(mainComposite);
+		linkComposite.setLayout(new GridLayout(2, false));
 
-		deleteLink.setImage(deleteImage);
+		createHyperlink(toolkit, mainComposite);
 
-		linkAdapter = new MEHyperLinkDeleteAdapter(modelElement, eReference, linkModelElement, context);
-		deleteLink.addMouseListener(linkAdapter);
+		if (modelElement.eIsSet(eReference)) {
+			stackLayout.topControl = linkComposite;
+		} else {
+			stackLayout.topControl = unsetLabel;
+		}
+		mainComposite.layout();
+
+		return mainComposite;
 	}
 
 	private void createHyperlink(FormToolkit toolkit, final Composite parent) {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-		decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+		// decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
 
-		labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider, decoratorManager.getLabelDecorator());
-		labelProviderListener = new ILabelProviderListener() {
-			public void labelProviderChanged(LabelProviderChangedEvent event) {
-				imageHyperlink.setImage(labelProvider.getImage(linkModelElement));
-			}
-		};
-		labelProvider.addListener(labelProviderListener);
-		modelElementChangeListener = new ModelElementChangeListener(linkModelElement) {
+		// labelProvider = new DecoratingLabelProvider(adapterFactoryLabelProvider,
+		// decoratorManager.getLabelDecorator());
+		// labelProviderListener = new ILabelProviderListener() {
+		// public void labelProviderChanged(LabelProviderChangedEvent event) {
+		// imageHyperlink.setImage(labelProvider.getImage(linkModelElement));
+		// }
+		// };
+		// labelProvider.addListener(labelProviderListener);
+		modelElementChangeListener = new ModelElementChangeListener(modelElement) {
 
 			@Override
 			public void onChange(Notification notification) {
 				Display.getDefault().asyncExec(new Runnable() {
 
 					public void run() {
-						if (hyperlink != null && !hyperlink.isDisposed()) {
-
-							String text = shortLabelProvider.getText(linkModelElement);
-							hyperlink.setText(text);
-							hyperlink.setToolTipText(text);
-							linkComposite.layout(true);
-							parent.getParent().layout(true);
+						if (modelElement.eIsSet(eReference)) {
+							stackLayout.topControl = linkComposite;
+							linkModelElement = (EObject) modelElement.eGet(eReference);
+							setLinkChangeListener();
+						} else {
+							stackLayout.topControl = unsetLabel;
+							linkModelElement = null;
 						}
+						mainComposite.layout();
 					}
 
 				});
@@ -159,21 +163,61 @@ public class LinkWidget extends ECPWidget {
 			}
 		};
 
-		Image image = labelProvider.getImage(linkModelElement);
 		imageHyperlink = toolkit.createImageHyperlink(linkComposite, SWT.NONE);
-		imageHyperlink.setImage(image);
-		imageHyperlink.setData(linkModelElement.eClass());
+
 		// TODO: Reactivate
 		// ModelElementClassTooltip.enableFor(imageHyperlink);
 		hyperlink = toolkit.createHyperlink(linkComposite, shortLabelProvider.getText(linkModelElement), SWT.NONE);
-		hyperlink.setToolTipText(shortLabelProvider.getText(linkModelElement));
-		listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(), context);
-		hyperlink.addHyperlinkListener(listener);
-		imageHyperlink.addHyperlinkListener(listener);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(hyperlink);
+		if (linkModelElement != null) {
+			setLinkChangeListener();
+		}
+		updateValues();
+	}
+
+	private void updateValues() {
+		if (linkModelElement != null) {
+			Image image = shortLabelProvider.getImage(linkModelElement);
+			imageHyperlink.setImage(image);
+			imageHyperlink.setData(linkModelElement.eClass());
+			String text = shortLabelProvider.getText(linkModelElement);
+			hyperlink.setText(text);
+			hyperlink.setToolTipText(text);
+			hyperlink.update();
+			imageHyperlink.layout(true);
+
+			if (listener != null) {
+				hyperlink.removeHyperlinkListener(listener);
+				imageHyperlink.removeHyperlinkListener(listener);
+				listener = null;
+				listener = new MEHyperLinkAdapter(linkModelElement, modelElement, eReference.getName(), context);
+				hyperlink.addHyperlinkListener(listener);
+				imageHyperlink.addHyperlinkListener(listener);
+			}
+		}
+	}
+
+	private void setLinkChangeListener() {
+		modelElementChangeListener2 = new ModelElementChangeListener(linkModelElement) {
+
+			@Override
+			public void onChange(Notification notification) {
+				Display.getDefault().asyncExec(new Runnable() {
+
+					public void run() {
+						updateValues();
+
+					}
+
+				});
+
+			}
+		};
 	}
 
 	@Override
 	public void bindValue(final IObservableValue modelValue, final ControlDecoration controlDecoration) {
+
 		// IObservableValue targetValue = SWTObservables.observeText(hyperlink);
 		// context.getDataBindingContext().bindValue(targetValue, modelValue);
 	}
@@ -201,12 +245,8 @@ public class LinkWidget extends ECPWidget {
 		adapterFactoryLabelProvider.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
-		labelProvider.removeListener(labelProviderListener);
-		labelProvider.dispose();
 		modelElementChangeListener.remove();
-		deleteLink.dispose();
-		hyperlink.removeHyperlinkListener(listener);
+		modelElementChangeListener2.remove();
 		hyperlink.dispose();
-		decoratorManager.dispose();
 	}
 }

@@ -13,8 +13,6 @@ package org.eclipse.emf.ecp.internal.editor.controls.attribute;
 import org.eclipse.emf.ecp.internal.editor.widgets.BooleanWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 
-import org.eclipse.core.databinding.DataBindingContext;
-
 /**
  * This is the standard Control to edit boolean values.
  * 
@@ -38,8 +36,8 @@ public class MEBoolControl extends AttributeControl {
 	 * EMFDataBindingContext)
 	 */
 	@Override
-	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new BooleanWidget(dbc, getContext().getEditingDomain());
+	protected ECPAttributeWidget getWidget() {
+		return new BooleanWidget(getContext().getDataBindingContext(), getContext().getEditingDomain());
 	}
 
 }

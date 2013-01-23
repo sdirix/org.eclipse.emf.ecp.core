@@ -54,21 +54,10 @@ public abstract class AbstractControl {
 	private EStructuralFeature structuralFeature;
 
 	/**
-	 * @return the attribute
+	 * Default constructor.
 	 */
-	public EStructuralFeature getStructuralFeature() {
-		return structuralFeature;
-	}
-
-	protected abstract Class<? extends EStructuralFeature> getEStructuralFeatureType();
-
-	protected abstract Class<?> getClassType();
-
-	/**
-	 * @return the toolkit
-	 */
-	public FormToolkit getToolkit() {
-		return toolkit;
+	public AbstractControl() {
+		super();
 	}
 
 	/**
@@ -90,6 +79,24 @@ public abstract class AbstractControl {
 		}
 
 		return AbstractControl.DO_NOT_RENDER;
+	}
+
+	/**
+	 * @return the attribute
+	 */
+	public EStructuralFeature getStructuralFeature() {
+		return structuralFeature;
+	}
+
+	protected abstract Class<? extends EStructuralFeature> getEStructuralFeatureType();
+
+	protected abstract Class<?> getClassType();
+
+	/**
+	 * @return the toolkit
+	 */
+	public FormToolkit getToolkit() {
+		return toolkit;
 	}
 
 	/**
@@ -206,15 +213,8 @@ public abstract class AbstractControl {
 		return context;
 	}
 
-	/**
-	 * Default constructor.
-	 */
-	public AbstractControl() {
-		super();
-	}
-
 	public void dispose() {
-
+		toolkit.dispose();
 	}
 
 	/**

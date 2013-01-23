@@ -13,11 +13,9 @@
 
 package org.eclipse.emf.ecp.internal.editor.controls.reference;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.mecontrols.AbstractControl;
+import org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.LinkWidget;
@@ -25,19 +23,15 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,28 +39,24 @@ import java.util.List;
 /**
  * @author Eugen Neufeld
  */
-public class ReferenceControl extends AbstractControl {
-
-	private Label labelWidgetImage;
-
-	private ControlDecoration controlDecoration;
-
-	private Control control;
+public class ReferenceControl extends AbstractSingleControl {
 
 	private ModelElementChangeListener modelElementChangeListener;
 
-	private ECPWidget widget;
-
 	private ComposedAdapterFactory composedAdapterFactory;
 
-	protected AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+
+	private ImageHyperlink deleteLink;
+
+	private MEHyperLinkDeleteAdapter linkAdapter;
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getEStructuralFeatureType()
 	 */
 	@Override
-	protected Class<? extends EStructuralFeature> getEStructuralFeatureType() {
+	protected Class<EReference> getEStructuralFeatureType() {
 		return EReference.class;
 	}
 
@@ -81,41 +71,39 @@ public class ReferenceControl extends AbstractControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#isMulti()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getPriority()
 	 */
 	@Override
-	protected boolean isMulti() {
-		return false;
+	protected int getPriority() {
+		return 2;
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		modelElementChangeListener.remove();
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#createControl(org.eclipse.swt.widgets.Composite,
-	 * int)
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#getNumberOfAddtionalElements()
 	 */
 	@Override
-	protected Control createControl(Composite parent, final int style) {
-		final Composite composite = getToolkit().createComposite(parent, style);
-		composite.setBackgroundMode(SWT.INHERIT_FORCE);
-		GridLayoutFactory.fillDefaults().numColumns(4).spacing(2, 0).applyTo(composite);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
+	protected int getNumberOfAddtionalElements() {
+		return 3;
+	}
 
-		labelWidgetImage = getToolkit().createLabel(composite, "    ");
-		labelWidgetImage.setBackground(parent.getBackground());
-		final Composite linkComposite = getToolkit().createComposite(composite, SWT.NONE);
-		linkComposite.setLayout(new FillLayout());
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(linkComposite);
-		createWidgetControl(linkComposite, style);
-
-		modelElementChangeListener = new ModelElementChangeListener(getModelElement()) {
-
-			@Override
-			public void onChange(Notification notification) {
-				if (notification.getFeature() == getStructuralFeature()) {
-					createWidgetControl(linkComposite, style);
-				}
-			}
-		};
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#createControlActions(org.eclipse.swt.widgets.Composite
+	 * )
+	 */
+	@Override
+	protected void createControlActions(Composite composite) {
+		createDeleteAction(composite);
 
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
@@ -123,39 +111,19 @@ public class ReferenceControl extends AbstractControl {
 		for (Action action : initActions()) {
 			createButtonForAction(action, composite);
 		}
-
-		return composite;
 	}
 
-	private void createWidgetControl(final Composite composite, final int style) {
-		if (control != null) {
-			control.dispose();
-			controlDecoration.dispose();
-		}
-		final EObject opposite = (EObject) getModelElement().eGet(getStructuralFeature());
-		if (opposite != null) {
-			widget = getWidget(opposite);
-			control = widget.createWidget(getToolkit(), composite, style);
-			widget.setEditable(isEditable());
-		} else {
-			control = getToolkit().createLabel(composite, "(Not Set)");
-			control.setBackground(composite.getBackground());
-			control.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-		}
+	private void createDeleteAction(Composite composite) {
+		deleteLink = getToolkit().createImageHyperlink(composite, SWT.NONE);
+		Image deleteImage = null;
 
-		controlDecoration = new ControlDecoration(control, SWT.RIGHT | SWT.TOP);
-		controlDecoration.setDescriptionText("Invalid input");
-		controlDecoration.setShowHover(true);
-		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-			FieldDecorationRegistry.DEC_ERROR);
-		controlDecoration.setImage(fieldDecoration.getImage());
-		controlDecoration.hide();
+		deleteImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 
-		// IObservableValue model = EMFEditObservables.observeValue(getContext().getEditingDomain(), getModelElement(),
-		// getStructuralFeature());
-		// widget.bindValue(model, controlDecoration);
+		deleteLink.setImage(deleteImage);
 
-		composite.layout();
+		linkAdapter = new MEHyperLinkDeleteAdapter(getModelElement(), (EReference) getStructuralFeature(),
+			(EObject) getModelElement().eGet(getStructuralFeature()), getContext());
+		deleteLink.addMouseListener(linkAdapter);
 	}
 
 	/**
@@ -163,7 +131,7 @@ public class ReferenceControl extends AbstractControl {
 	 * 
 	 * @return list of actions
 	 */
-	protected List<Action> initActions() {
+	private List<Action> initActions() {
 		List<Action> result = new ArrayList<Action>();
 		AddReferenceAction addAction = new AddReferenceAction(getModelElement(), (EReference) getStructuralFeature(),
 			getItemPropertyDescriptor(), getContext(), getShell(), adapterFactoryLabelProvider);
@@ -193,37 +161,13 @@ public class ReferenceControl extends AbstractControl {
 		});
 	}
 
-	/**
-	 * @return
-	 */
-	private ECPWidget getWidget(EObject opposite) {
-		return new LinkWidget(getModelElement(), opposite, (EReference) getStructuralFeature(), getContext());
-	}
-
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractControl#getPriority()
+	 * @see org.eclipse.emf.ecp.editor.mecontrols.AbstractSingleControl#getWidget()
 	 */
 	@Override
-	protected int getPriority() {
-		// TODO Auto-generated method stub
-		return 2;
+	protected ECPWidget getWidget() {
+		return new LinkWidget(getModelElement(), (EReference) getStructuralFeature(), getContext(),
+			getItemPropertyDescriptor());
 	}
-
-	@Override
-	public void dispose() {
-		super.dispose();
-		if (control != null) {
-			control.dispose();
-			controlDecoration.dispose();
-		}
-		labelWidgetImage.dispose();
-		modelElementChangeListener.remove();
-		if (widget != null) {
-			widget.dispose();
-		}
-		adapterFactoryLabelProvider.dispose();
-		composedAdapterFactory.dispose();
-	}
-
 }

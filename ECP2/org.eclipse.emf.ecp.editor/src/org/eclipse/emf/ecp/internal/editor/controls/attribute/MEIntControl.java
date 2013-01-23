@@ -13,8 +13,6 @@ package org.eclipse.emf.ecp.internal.editor.controls.attribute;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.IntegerWidget;
 
-import org.eclipse.core.databinding.DataBindingContext;
-
 /**
  * Standard widgets to edit a integer attribute.
  * 
@@ -39,8 +37,9 @@ public class MEIntControl extends AttributeControl {
 	 * EMFDataBindingContext)
 	 */
 	@Override
-	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new IntegerWidget(dbc, getContext().getEditingDomain(), getModelElement());
+	protected ECPAttributeWidget getWidget() {
+		return new IntegerWidget(getContext().getDataBindingContext(), getContext().getEditingDomain(),
+			getModelElement());
 	}
 
 }

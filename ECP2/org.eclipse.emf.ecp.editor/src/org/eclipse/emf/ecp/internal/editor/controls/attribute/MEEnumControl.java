@@ -15,8 +15,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.editor.widgets.ECPAttributeWidget;
 import org.eclipse.emf.ecp.internal.editor.widgets.EEnumWidget;
 
-import org.eclipse.core.databinding.DataBindingContext;
-
 /**
  * This is the standard Control to enum values.
  * 
@@ -48,8 +46,8 @@ public class MEEnumControl extends AttributeControl {
 	 * EMFDataBindingContext)
 	 */
 	@Override
-	protected ECPAttributeWidget getAttributeWidget(DataBindingContext dbc) {
-		return new EEnumWidget(dbc, getContext().getEditingDomain(), getItemPropertyDescriptor(), getModelElement(),
-			getStructuralFeature());
+	protected ECPAttributeWidget getWidget() {
+		return new EEnumWidget(getContext().getDataBindingContext(), getContext().getEditingDomain(),
+			getItemPropertyDescriptor(), getModelElement(), getStructuralFeature());
 	}
 }
