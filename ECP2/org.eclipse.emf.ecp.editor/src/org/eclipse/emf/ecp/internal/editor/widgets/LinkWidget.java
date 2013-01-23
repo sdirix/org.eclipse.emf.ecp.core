@@ -200,24 +200,27 @@ public class LinkWidget extends ECPWidget {
 	}
 
 	private void setLinkChangeListener() {
+
 		if (modelElementChangeListener2 != null) {
 			modelElementChangeListener2.remove();
 		}
-		modelElementChangeListener2 = new ModelElementChangeListener(linkModelElement) {
+		if (linkModelElement != null) {
+			modelElementChangeListener2 = new ModelElementChangeListener(linkModelElement) {
 
-			@Override
-			public void onChange(Notification notification) {
-				Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void onChange(Notification notification) {
+					Display.getDefault().asyncExec(new Runnable() {
 
-					public void run() {
-						updateValues();
+						public void run() {
+							updateValues();
 
-					}
+						}
 
-				});
+					});
 
-			}
-		};
+				}
+			};
+		}
 	}
 
 	private void setLinkModelElement() {
