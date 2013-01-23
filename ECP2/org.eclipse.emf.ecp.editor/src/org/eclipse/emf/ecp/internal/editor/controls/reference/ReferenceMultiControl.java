@@ -88,9 +88,9 @@ public class ReferenceMultiControl extends AbstractMultiControl {
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		adapterFactoryLabelProvider.dispose();
 		composedAdapterFactory.dispose();
+		super.dispose();
 	}
 
 	@Override
