@@ -35,7 +35,7 @@ import java.util.Set;
  */
 public abstract class AbstractCachedTree<T> {
 
-	private Map<Object, CachedTreeNode<T>> nodes;
+	protected Map<Object, CachedTreeNode<T>> nodes;
 	private CachedTreeNode<T> rootValue;
 	private IExcludedObjectsCallback excludedCallback;
 
@@ -209,7 +209,7 @@ public abstract class AbstractCachedTree<T> {
 		node.setParent(parent);
 
 		if (parentNode == null) {
-			parentNode = createNodeEntry(parent, value);
+			parentNode = createNodeEntry(parent, getDefaultValue());
 		}
 
 		parentNode.putIntoCache(object, value);

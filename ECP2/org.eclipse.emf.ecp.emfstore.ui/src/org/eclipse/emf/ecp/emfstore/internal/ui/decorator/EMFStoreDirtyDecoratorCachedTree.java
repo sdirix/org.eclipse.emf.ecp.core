@@ -28,7 +28,7 @@ import java.util.Set;
  * @author emueller
  * 
  */
-public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<EMFStoreDirtyTreeNode> {
+public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<Integer> {
 
 	private static Map<ECPProject, EMFStoreDirtyDecoratorCachedTree> cashedTrees = new HashMap<ECPProject, EMFStoreDirtyDecoratorCachedTree>();
 
@@ -60,7 +60,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	/**
 	 * Cached tree node that stores the dirty state of a model element managed by EMFStore.
 	 */
-	public class CachedDirtyStateTreeNode extends CachedTreeNode<EMFStoreDirtyTreeNode> {
+	public class CachedDirtyStateTreeNode extends CachedTreeNode<Integer> {
 
 		/**
 		 * Constructor.
@@ -68,8 +68,9 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		 * @param value
 		 *            the initial value for this entry
 		 */
-		public CachedDirtyStateTreeNode(EMFStoreDirtyTreeNode value) {
-			super(value);
+		public CachedDirtyStateTreeNode(Integer value) {
+			super(0);
+			setChildValue(getDefaultValue());
 		}
 
 		/**
@@ -77,13 +78,13 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		 */
 		@Override
 		public void update() {
-			for (EMFStoreDirtyTreeNode node : values()) {
-				if (node.getChangeCount() > 0 || node.isChildChanges()) {
-					getOwnValue().setChildChanges(true);
-					return;
+			setChildValue(getDefaultValue());
+			for (Integer value : values()) {
+				if (value > getChildValue()) {
+					setChildValue(value);
+					break;
 				}
 			}
-			getOwnValue().setChildChanges(false);
 		}
 
 		/*
@@ -91,8 +92,8 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 		 * @see org.eclipse.emf.ecp.ui.common.CachedTreeNode#getDisplayValue()
 		 */
 		@Override
-		public EMFStoreDirtyTreeNode getDisplayValue() {
-			return getOwnValue();
+		public Integer getDisplayValue() {
+			return getChildValue() > 0 || getOwnValue() > 0 ? 1 : 0;
 		}
 	}
 
@@ -100,26 +101,16 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EMFStoreDirtyTreeNode getDefaultValue() {
-		return new EMFStoreDirtyTreeNode(0, false);
+	public Integer getDefaultValue() {
+		return 0;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CachedTreeNode<EMFStoreDirtyTreeNode> createdCachedTreeNode(EMFStoreDirtyTreeNode t) {
+	public CachedTreeNode<Integer> createdCachedTreeNode(Integer t) {
 		return new CachedDirtyStateTreeNode(t);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void updateParentNode(Object parent, Object object, EMFStoreDirtyTreeNode value) {
-		EMFStoreDirtyTreeNode parentValue = getCachedValue(parent);
-		parentValue.setChildChanges(value.shouldDisplayDirtyIndicator());
-		super.updateParentNode(parent, object, parentValue);
 	}
 
 	/**
@@ -129,9 +120,12 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	 * @return the {@link Set} of {@link EObject} affected by this change
 	 */
 	public Set<EObject> addOperation(EObject eObject) {
-		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
-		node.setChangeCount(node.getChangeCount() + 1);
-		return update(eObject, node);
+		int value = 0;
+		CachedTreeNode<Integer> node = nodes.get(eObject);
+		if (node != null) {
+			value = node.getOwnValue();
+		}
+		return update(eObject, ++value);
 	}
 
 	/**
@@ -141,18 +135,11 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<E
 	 * @return the {@link Set} of {@link EObject} affected by this change
 	 */
 	public Set<EObject> removeOperation(EObject eObject) {
-		EMFStoreDirtyTreeNode node = getCachedValue(eObject);
-		node.setChangeCount(node.getChangeCount() - 1);
-		// TODO @TOBI: why?
-		// boolean hasChanges = false;
-		// for (EObject child : eObject.eContents()) {
-		// EMFStoreDirtyTreeNode childNode = getCachedValue(child);
-		// if (childNode.shouldDisplayDirtyIndicator()) {
-		// hasChanges = true;
-		// break;
-		// }
-		// }
-		// node.setChildChanges(hasChanges);
-		return update(eObject, node);
+		int value = 0;
+		CachedTreeNode<Integer> node = nodes.get(eObject);
+		if (node != null) {
+			value = node.getOwnValue();
+		}
+		return update(eObject, Math.max(0, --value));
 	}
 }

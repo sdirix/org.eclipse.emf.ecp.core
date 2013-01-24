@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * @author Eugen Neufeld
  */
+// TODO remove
 public abstract class AbstractUICallback {
 	/**
 	 * return code when the callback was closed successfully.

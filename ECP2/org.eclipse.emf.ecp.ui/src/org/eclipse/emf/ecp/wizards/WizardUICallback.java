@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
  * @param <T> the Generic type for this Callback
  * @author Eugen Neufeld
  */
+// TODO remove
 public class WizardUICallback extends AbstractUICallback {
 
 	private final ECPWizard<?> wizard;

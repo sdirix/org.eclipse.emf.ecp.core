@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Shell;
  * 
  * @author Eugen Neufeld
  */
+// TODO remove
 public class DialogUICallback extends AbstractUICallback {
 
 	/**

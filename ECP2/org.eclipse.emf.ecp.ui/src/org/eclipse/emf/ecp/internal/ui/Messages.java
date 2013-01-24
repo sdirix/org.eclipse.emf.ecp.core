@@ -7,7 +7,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author Eugen Neufeld
- *
+ * 
  */
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.messages"; //$NON-NLS-1$
@@ -50,6 +50,7 @@ public class Messages extends NLS {
 	public static String NewModelElementWizard_PageDescription_AddModelElement;
 	public static String NewModelElementWizard_PageTitle_AddModelElement;
 	public static String NewModelElementWizard_WizardTitle_AddModelElement;
+	public static String NewModelElementWizardHandler_Title;
 	public static String ProjectPropertiesDialog_DialogTitle_Closed;
 	public static String ProjectPropertiesDialog_DialogTitle;
 	public static String ProjectPropertiesDialog_DialogTitle_Open;

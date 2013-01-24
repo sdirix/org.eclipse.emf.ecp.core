@@ -40,7 +40,7 @@ public class NewModelElementWizardHandler extends AbstractHandler
   {
     ISelection selection = HandlerUtil.getCurrentSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
-    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), new WizardUICallback(HandlerUtil.getActiveShell(event), new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title)),true);
+    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), HandlerUtil.getActiveShell(event),true);
     
     return null;
   }

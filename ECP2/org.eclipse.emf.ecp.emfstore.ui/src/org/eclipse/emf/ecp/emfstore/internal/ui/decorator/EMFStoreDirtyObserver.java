@@ -20,6 +20,9 @@ import org.eclipse.emf.emfstore.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
+import org.eclipse.ui.IDecoratorManager;
+import org.eclipse.ui.PlatformUI;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -74,13 +77,14 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 				lastAffected
 					.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element));
 			}
+			IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+			decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
 		}
 
 	}
 
 	/** {@inheritDoc} */
 	public void operationUnDone(AbstractOperation operation) {
-
 		if (!projectSpace.isShared()) {
 			return;
 		}
@@ -94,8 +98,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 				lastAffected.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(
 					element));
 			}
+			IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+			decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
 		}
-
 	}
 
 	/**

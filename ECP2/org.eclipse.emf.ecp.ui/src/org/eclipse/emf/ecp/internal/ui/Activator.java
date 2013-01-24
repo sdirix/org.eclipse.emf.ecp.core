@@ -1,12 +1,17 @@
-/*
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ * Eugen Neufeld - JavaDoc
+ * 
+ *******************************************************************************/
+
 package org.eclipse.emf.ecp.internal.ui;
 
 import org.eclipse.core.runtime.CoreException;
@@ -28,6 +33,9 @@ import java.net.URL;
  * @author Eugen Neufeld
  */
 public final class Activator extends AbstractUIPlugin {
+	/**
+	 * The PlugIn ID.
+	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.ui"; //$NON-NLS-1$
 
 	private static Activator instance;

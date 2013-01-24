@@ -17,8 +17,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
-import org.eclipse.emf.ecp.wizards.CreateProjectWizard;
-import org.eclipse.emf.ecp.wizards.WizardUICallback;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -31,8 +29,7 @@ public class CreateProjectHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		HandlerHelper.createProject(new WizardUICallback(HandlerUtil.getActiveShell(event),
-			new CreateProjectWizard()));
+		HandlerHelper.createProject(HandlerUtil.getActiveShell(event));
 		return null;
 	}
 }

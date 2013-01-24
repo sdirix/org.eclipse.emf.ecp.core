@@ -23,7 +23,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the {@link HandlerHelper#close(ECPCloseable[], String)} method
+ * This Handler uses the {@link HandlerHelper#changeCloseState(ECPCloseable[], String)} method
  * to close selected projects.
  * 
  * @author Eugen Neufeld
@@ -42,7 +42,7 @@ public class CloseableHandler extends AbstractHandler {
 			closeable[i] = (ECPCloseable) selectionArray[i];
 		}
 		
-		HandlerHelper.close(closeable, currentType);
+		HandlerHelper.changeCloseState(closeable, currentType);
 
 		return null;
 	}

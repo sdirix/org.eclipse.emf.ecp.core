@@ -16,7 +16,6 @@ package org.eclipse.emf.ecp.ui.util;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
@@ -30,9 +29,9 @@ import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
-import org.eclipse.emf.ecp.ui.common.AbstractUICallback;
 import org.eclipse.emf.ecp.ui.composites.AddRepositoryComposite;
 import org.eclipse.emf.ecp.ui.composites.CheckedSelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.composites.CheckoutProjectComposite;
@@ -40,37 +39,62 @@ import org.eclipse.emf.ecp.ui.composites.CreateProjectComposite;
 import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
 import org.eclipse.emf.ecp.ui.composites.SelectModelElementComposite;
 import org.eclipse.emf.ecp.ui.dialogs.DeleteDialog;
+import org.eclipse.emf.ecp.wizards.AddRepositoryWizard;
+import org.eclipse.emf.ecp.wizards.CheckoutProjectWizard;
+import org.eclipse.emf.ecp.wizards.CreateProjectWizard;
+import org.eclipse.emf.ecp.wizards.FilterModelElementWizard;
+import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 /**
+ * This is a utility class providing commonly necessary methods.
+ * 
  * @author Eugen Neufeld
  */
-public class HandlerHelper {
-	public static void checkout(final List<ECPCheckoutSource> checkoutObjects, final AbstractUICallback callback) {
+public final class HandlerHelper {
+	private HandlerHelper() {
+	}
+
+	private static void showError(Shell shell, String title, String message) {
+		MessageDialog.openError(shell, title, message);
+	}
+
+	/**
+	 * This method allows to checkout a list of {@link ECPCheckoutSource} into the workspace.
+	 * 
+	 * @param checkoutObjects the List of {@link ECPCheckoutSource} to checkout
+	 * @param shell the {@link Shell} to use for diplaying UI
+	 */
+	public static void checkout(final List<ECPCheckoutSource> checkoutObjects, final Shell shell) {
 		for (ECPCheckoutSource checkoutSource : checkoutObjects) {
 			CheckoutProjectComposite checkoutCompposite = new CheckoutProjectComposite(checkoutSource);
-			callback.setCompositeUIProvider(checkoutCompposite);
+			CheckoutProjectWizard wizard = new CheckoutProjectWizard();
+			wizard.setCompositeProvider(checkoutCompposite);
 
-			if (AbstractUICallback.OK == callback.open()) {
+			WizardDialog wd = new WizardDialog(shell, wizard);
+
+			int result = wd.open();
+			if (result == WizardDialog.OK) {
+
 				String projectName = checkoutCompposite.getProjectName();
 				ECPProperties projectProperties = checkoutCompposite.getProjectProperties();
 				try {
 					checkoutSource.checkout(projectName, projectProperties);
 				} catch (ProjectWithNameExistsException ex) {
-					callback.showError("Cannot checkout project", "A project with name " + projectName
+					showError(shell, "Cannot checkout project", "A project with name " + projectName
 						+ " already exists in the workspace.");
 				}
 			}
@@ -83,13 +107,19 @@ public class HandlerHelper {
 	 * @param project the project to delete from
 	 * @param eObjects the model elements to delete
 	 */
-	public static void deleteModelElement(ECPProject project, Collection<EObject> eObjects) {
+	public static void deleteModelElement(final ECPProject project, final Collection<EObject> eObjects) {
 		if (project != null) {
 			project.delete(eObjects);
 		}
 	}
 
-	public static ECPProject createProject(final AbstractUICallback callback) {
+	/**
+	 * This method creates a new project.
+	 * 
+	 * @param shell the shell for displaying the wizard
+	 * @return the created {@link ECPProject}
+	 */
+	public static ECPProject createProject(final Shell shell) {
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
 			if (provider.hasUnsharedProjectSupport()) {
@@ -97,16 +127,20 @@ public class HandlerHelper {
 			}
 		}
 		if (providers.size() == 0) {
-			callback.showError("No Provider", "Please check if a suitable provider is installed.");
+			showError(shell, "No Provider", "Please check if a suitable provider is installed.");
 			return null;
 		}
 		CreateProjectComposite createProjectComposite = new CreateProjectComposite(providers);
-		callback.setCompositeUIProvider(createProjectComposite);
+		CreateProjectWizard wizard = new CreateProjectWizard();
+		wizard.setCompositeProvider(createProjectComposite);
 
-		if (AbstractUICallback.OK == callback.open()) {
+		WizardDialog wd = new WizardDialog(shell, wizard);
+
+		int result = wd.open();
+		if (result == WizardDialog.OK) {
 			ECPProvider selectedProvider = createProjectComposite.getProvider();
 			if (selectedProvider == null) {
-				callback.showError("No project created", "Please check if a suitable provider is installed.");
+				showError(shell, "No project created", "Please check if a suitable provider is installed.");
 				return null;
 			}
 			ECPProperties projectProperties = ECPUtil.createProperties();
@@ -116,12 +150,12 @@ public class HandlerHelper {
 			try {
 				project = ECPProjectManager.INSTANCE.createProject(selectedProvider, projectName, projectProperties);
 			} catch (ProjectWithNameExistsException ex) {
-				callback.showError("No project created", "A project with name " + projectName
+				showError(shell, "No project created", "A project with name " + projectName
 					+ " already exists in the workspace.");
 				return null;
 			}
 			if (project == null) {
-				callback.showError("No project created", "Please check the log.");
+				showError(shell, "No project created", "Please check the log.");
 				return null;
 			}
 			((InternalProvider) selectedProvider).handleLifecycle(project, LifecycleEvent.CREATE);
@@ -131,12 +165,17 @@ public class HandlerHelper {
 		return null;
 	}
 
-	public static void createNewReferenceElement(EditingDomain editingDomain, EObject eObject, EReference eReference,
-		Object input, AbstractUICallback callBack) {
+	// TODO never used
+	private static void createNewReferenceElement(final EditingDomain editingDomain, final EObject eObject,
+		final EReference eReference, final Object input, final Shell shell) {
 
 		SelectModelElementComposite composite = new SelectModelElementComposite(input);
-		callBack.setCompositeUIProvider(composite);
-		if (AbstractUICallback.OK == callBack.open()) {
+		NewModelElementWizard wizard = new NewModelElementWizard("");
+		wizard.setCompositeProvider(composite);
+		WizardDialog wd = new WizardDialog(shell, wizard);
+
+		int wizardResult = wd.open();
+		if (wizardResult == WizardDialog.OK) {
 			Object[] results = composite.getSelection();
 			if (eReference.isMany()) {
 				List<EObject> list = new ArrayList<EObject>();
@@ -160,19 +199,23 @@ public class HandlerHelper {
 	 * Add a new {@link EObject} to the root of an {@link ECPProject}.
 	 * 
 	 * @param ecpProject the {@link ECPProject} to add the {@link EObject} to
-	 * @param callback the {@link AbstractUICallback} to call for user input
+	 * @param shell the {@link Shell} used to display the UI
+	 * @param open whether to open the corresponding editor or not
 	 */
-	public static void addModelElement(final ECPProject ecpProject, final AbstractUICallback callback, boolean open) {
+	public static void addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
 		SelectModelClassComposite helper = new SelectModelClassComposite(ecpProject);
+		NewModelElementWizard wizard = new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title);
+		wizard.setCompositeProvider(helper);
+		WizardDialog wd = new WizardDialog(shell, wizard);
 
-		callback.setCompositeUIProvider(helper);
-
-		if (AbstractUICallback.OK == callback.open()) {
+		int wizardResult = wd.open();
+		if (wizardResult == WizardDialog.OK) {
 			Object[] selection = helper.getSelection();
 			if (selection == null || selection.length == 0) {
 				return;
 			}
 			EClass newMEType = (EClass) selection[0];
+			// TODO find childdescriptor
 
 			if (ecpProject != null && newMEType != null) {
 				// 1.create ME
@@ -193,27 +236,28 @@ public class HandlerHelper {
 		}
 	}
 
-	public static void filterProjectPackages(final ECPProject ecpProject, final AbstractUICallback callback) {
-		Set<EPackage> ePackages = new HashSet<EPackage>();
+	/**
+	 * This method allows the user to filter the visible packages and classes.
+	 * 
+	 * @param ecpProject the project to filter
+	 * @param shell the {@link Shell} to use for UI
+	 */
+	public static void filterProjectPackages(final ECPProject ecpProject, final Shell shell) {
+		Set<EPackage> ePackages = ECPUtil.getAllRegisteredEPackages();
 
-		for (Object object : Registry.INSTANCE.values()) {
-			if (object instanceof EPackage) {
-				EPackage ePackage = (EPackage) object;
-				ePackages.add(ePackage);
-			}
-
-		}
 		CheckedSelectModelClassComposite checkedModelComposite = new CheckedSelectModelClassComposite(ePackages,
 			new HashSet<EPackage>(), ePackages, new HashSet<EClass>());
-
-		callback.setCompositeUIProvider(checkedModelComposite);
-
 		Set<Object> initialSelectionSet = new HashSet<Object>();
 		initialSelectionSet.addAll(ecpProject.getVisiblePackages());
 		initialSelectionSet.addAll(ecpProject.getVisibleEClasses());
 		checkedModelComposite.setInitialSelection(initialSelectionSet.toArray());
 
-		if (AbstractUICallback.OK == callback.open()) {
+		FilterModelElementWizard wizard = new FilterModelElementWizard();
+		wizard.setCompositeProvider(checkedModelComposite);
+		WizardDialog wd = new WizardDialog(shell, wizard);
+
+		int wizardResult = wd.open();
+		if (wizardResult == WizardDialog.OK) {
 			Object[] dialogSelection = checkedModelComposite.getChecked();
 			Set<EPackage> filtererdPackages = new HashSet<EPackage>();
 			Set<EClass> filtererdEClasses = new HashSet<EClass>();
@@ -232,10 +276,20 @@ public class HandlerHelper {
 		}
 	}
 
-	public static ECPRepository createRepository(AbstractUICallback callback) {
+	/**
+	 * This method created a new Repository.
+	 * 
+	 * @param shell the shell for the Wizard
+	 * @return the created {@link ECPRepository}
+	 */
+	public static ECPRepository createRepository(final Shell shell) {
 		AddRepositoryComposite addRepositoryComposite = new AddRepositoryComposite();
-		callback.setCompositeUIProvider(addRepositoryComposite);
-		if (AbstractUICallback.OK == callback.open()) {
+		AddRepositoryWizard wizard = new AddRepositoryWizard();
+		wizard.setCompositeProvider(addRepositoryComposite);
+		WizardDialog wd = new WizardDialog(shell, wizard);
+
+		int wizardResult = wd.open();
+		if (wizardResult == WizardDialog.OK) {
 			ECPRepository ecpRepository = ECPRepositoryManager.INSTANCE.addRepository(
 				addRepositoryComposite.getProvider(), addRepositoryComposite.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
@@ -246,7 +300,13 @@ public class HandlerHelper {
 		return null;
 	}
 
-	public static void close(ECPCloseable[] closeables, String currentType) {
+	/**
+	 * This method closes/opens an array of closables.
+	 * 
+	 * @param closeables the {@link ECPCloseable}s to change the state for
+	 * @param currentType the action to do
+	 */
+	public static void changeCloseState(ECPCloseable[] closeables, String currentType) {
 		for (ECPCloseable closeable : closeables) {
 			if ("open".equalsIgnoreCase(currentType)) { //$NON-NLS-1$
 				closeable.open();
@@ -256,24 +316,13 @@ public class HandlerHelper {
 		}
 	}
 
-	public static void deleteHandlerHelper(final List<ECPDeletable> deletables, final AbstractUICallback callback) {
-		// TODO add DeleteComposite
-		callback.setCompositeUIProvider(null);
-		if (AbstractUICallback.OK == callback.open()) {
-			for (ECPDeletable deletable : deletables) {
-				deletable.delete();
-			}
-		}
-	}
-
-	public static void deleteHandlerHelper(IStructuredSelection selection, Shell shell) {
-		List<ECPDeletable> deletables = new ArrayList<ECPDeletable>();
-		for (Iterator<?> it = selection.iterator(); it.hasNext();) {
-			Object element = it.next();
-			if (element instanceof ECPDeletable) {
-				deletables.add((ECPDeletable) element);
-			}
-		}
+	/**
+	 * Deletes the provided {@link ECPDeletable} elements.
+	 * 
+	 * @param deletables the List of {@link ECPDeletable}s to delete
+	 * @param shell the shell to use for UI
+	 */
+	public static void deleteHandlerHelper(List<ECPDeletable> deletables, Shell shell) {
 
 		if (!deletables.isEmpty()) {
 			DeleteDialog dialog = new DeleteDialog(shell, deletables);
@@ -286,7 +335,9 @@ public class HandlerHelper {
 	}
 
 	/**
-	 * @param project
+	 * Triggers the save on an {@link ECPProject}.
+	 * 
+	 * @param project the project to save the changes on
 	 */
 	public static void saveProject(ECPProject project) {
 		project.saveModel();

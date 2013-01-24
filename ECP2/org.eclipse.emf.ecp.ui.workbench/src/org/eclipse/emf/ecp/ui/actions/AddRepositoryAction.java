@@ -35,7 +35,7 @@ public class AddRepositoryAction extends Action
   public void run()
   {
 	  
-	  HandlerHelper.createRepository(new WizardUICallback(shell, new AddRepositoryWizard()));
+	  HandlerHelper.createRepository(shell);
   }
 
 }
