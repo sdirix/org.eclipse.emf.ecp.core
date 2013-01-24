@@ -6,7 +6,7 @@ Element-Name: CreateTwoCheckOuts
 Element-Type: context
 Element-Version: 2.0
 Id: __UtTgD-XEeK-yuKsz0Lang
-Save-Time: 12/6/12 12:28 PM
+Save-Time: 1/24/13 12:19 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -18,13 +18,13 @@ with [get-window "Create EMFStore Project"] {
     get-button Finish | click
 }
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
-with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+with [get-window "Add new model element"] {
     get-tree | select "bowling/League"
     get-button Finish | click
 }
 get-editor League | get-editbox -after [get-label Name] | set-text America
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
-with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+with [get-window "Add new model element"] {
     get-tree | select "bowling/League"
     get-button Finish | click
 }
@@ -34,7 +34,7 @@ get-editor Player | get-editbox -after [get-label Name] | set-text Jonas
 get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
 get-editor Player | get-editbox -after [get-label Name] | set-text Maximilian
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
-with [get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages"] {
+with [get-window "Add new model element"] {
     get-tree | select "bowling/Tournament"
     get-button Finish | click
 }
@@ -43,7 +43,7 @@ with [get-view "Model Explorer" | get-tree] {
     select "TestProject/Tournament Pro/Matchup" | get-menu Game | click
     select TestProject | get-menu "New Model Element" | click
 }
-get-window "NLS missing message: NewModelElementWizardHandler_Title in: org.eclipse.emf.ecp.ui.messages" | get-tree 
+get-window "Add new model element" | get-tree 
     | key-type "TRAVERSE_ESCAPE"
 get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup/Game" | double-click
 get-editor Game | get-button "Link Player" | click

@@ -144,7 +144,7 @@ public class LinkWidget extends ECPWidget {
 
 			@Override
 			public void onChange(Notification notification) {
-				Display.getDefault().asyncExec(new Runnable() {
+				Display.getDefault().syncExec(new Runnable() {
 
 					public void run() {
 						if (modelElement.eIsSet(eReference)) {
@@ -206,7 +206,7 @@ public class LinkWidget extends ECPWidget {
 
 				@Override
 				public void onChange(Notification notification) {
-					Display.getDefault().asyncExec(new Runnable() {
+					Display.getDefault().syncExec(new Runnable() {
 
 						public void run() {
 							updateValues();
