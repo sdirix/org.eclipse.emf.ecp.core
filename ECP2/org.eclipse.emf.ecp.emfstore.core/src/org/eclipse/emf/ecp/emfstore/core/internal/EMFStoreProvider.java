@@ -38,6 +38,7 @@ import org.eclipse.emf.emfstore.client.model.Workspace;
 import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
 import org.eclipse.emf.emfstore.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.client.model.util.EMFStoreClientUtil;
+import org.eclipse.emf.emfstore.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.common.model.util.IdEObjectCollectionChangeObserver;
@@ -301,11 +302,18 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
-	public void delete(InternalProject project, Collection<EObject> eObjects) {
-		ProjectSpace projectSpace = getProjectSpace(project);
-		for (EObject eObject : eObjects) {
-			projectSpace.getProject().deleteModelElement(eObject);
-		}
+	public void delete(InternalProject project, final Collection<EObject> eObjects) {
+		final ProjectSpace projectSpace = getProjectSpace(project);
+		new EMFStoreCommand() {
+
+			@Override
+			protected void doRun() {
+				for (EObject eObject : eObjects) {
+					projectSpace.getProject().deleteModelElement(eObject);
+				}
+			}
+		}.run(false);
+
 	}
 
 	/** {@inheritDoc} */

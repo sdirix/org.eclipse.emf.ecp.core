@@ -205,7 +205,9 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 			Set<Object> toUpdate = new HashSet<Object>(Arrays.asList(objects));
 			if (affected != null) {
 				for (Object o : affected) {
-					toUpdate.add(o);
+					if (o != null) {
+						toUpdate.add(o);
+					}
 				}
 			}
 			ECPObserverBus.getInstance().notify(IECPProjectsChangedUIObserver.class)
