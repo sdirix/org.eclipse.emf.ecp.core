@@ -158,14 +158,15 @@ public class ViewerMEControl extends AbstractControl {
 					@SuppressWarnings("unchecked")
 					List<EObject> list = ((IStructuredSelection) selection).toList();
 
-					if (MEHyperLinkDeleteAdapter.askConfirmation(list.get(0))) {
+					//TODO check for user input
+//					if (MEHyperLinkDeleteAdapter.askConfirmation(list.get(0))) {
 
 						Command deleteCommand = RemoveCommand.create(getContext().getEditingDomain(),
 							getContext().getModelElement(), ref, list);
 						getContext().getEditingDomain().getCommandStack().execute(deleteCommand);
 
 						viewer.refresh();
-					}
+//					}
 				}
 			}
 		});
