@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -63,6 +64,11 @@ import java.util.Set;
  * @author Eugen Neufeld
  */
 public class DefaultUIProvider extends Element implements UIProvider {
+
+	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
+	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
+	private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
+
 	private final Disposable disposable = new Disposable(this) {
 		@Override
 		protected void doDispose() {
@@ -158,6 +164,15 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	public Image getImage(Object element) {
+		if (element instanceof ECPProject) {
+			ECPProject project = (ECPProject) element;
+			return project.isOpen() ? PROJECT_OPEN : PROJECT_CLOSED;
+		}
+
+		if (element instanceof ECPRepository) {
+			return REPOSITORY;
+		}
+
 		return UIProvider.EMF_LABEL_PROVIDER.getImage(element);
 	}
 

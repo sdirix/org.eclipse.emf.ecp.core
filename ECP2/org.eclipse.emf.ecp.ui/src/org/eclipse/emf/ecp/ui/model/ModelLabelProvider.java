@@ -13,18 +13,13 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
-import org.eclipse.emf.ecp.internal.ui.Activator;
 
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Eike Stepper
  */
 public class ModelLabelProvider extends ECPLabelProvider implements IECPProjectsChangedUIObserver {
-	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
-
-	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
 
 	public ModelLabelProvider(ECPModelContextProvider modelContextProvider) {
 		super(modelContextProvider);
@@ -44,16 +39,6 @@ public class ModelLabelProvider extends ECPLabelProvider implements IECPProjects
 		}
 
 		return super.getText(element);
-	}
-
-	@Override
-	public Image getImage(Object element) {
-		if (element instanceof ECPProject) {
-			ECPProject project = (ECPProject) element;
-			return project.isOpen() ? PROJECT_OPEN : PROJECT_CLOSED;
-		}
-
-		return super.getImage(element);
 	}
 
 	public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
