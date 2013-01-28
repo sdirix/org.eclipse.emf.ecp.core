@@ -48,6 +48,8 @@ import org.eclipse.emf.emfstore.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -220,6 +222,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	}
 
+	private boolean isAutosave() {
+		IPreferencesService service = Platform.getPreferencesService();
+		return service.getBoolean("org.eclipse.emf.ecp", "AUTOSAVE", true, null);
+
+	}
+
 	/**
 	 * @param context
 	 */
@@ -229,16 +237,18 @@ public final class EMFStoreProvider extends DefaultProvider {
 			if (projectSpace == null) {
 				return;
 			}
-			projectSpace.getOperationManager().addOperationListener(new OperationObserver() {
+			if (isAutosave()) {
+				projectSpace.getOperationManager().addOperationListener(new OperationObserver() {
 
-				public void operationUnDone(AbstractOperation operation) {
-					doSave((InternalProject) context);
-				}
+					public void operationUnDone(AbstractOperation operation) {
+						doSave((InternalProject) context);
+					}
 
-				public void operationExecuted(AbstractOperation operation) {
-					doSave((InternalProject) context);
-				}
-			});
+					public void operationExecuted(AbstractOperation operation) {
+						doSave((InternalProject) context);
+					}
+				});
+			}
 			projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
 				// 2
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
