@@ -13,13 +13,9 @@
 
 package org.eclipse.emf.ecp.editor.controls;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +27,7 @@ import java.util.Map;
  * @author emueller
  * @author Eugen Neufeld
  */
-public abstract class AttributeControl extends AbstractSingleControl implements IValidatableControl {
+public abstract class AttributeControl extends AbstractSingleControl {
 
 	private static final Map<Class<?>, Class<?>> PRIMITIVES = new HashMap<Class<?>, Class<?>>();
 
@@ -45,10 +41,6 @@ public abstract class AttributeControl extends AbstractSingleControl implements 
 		PRIMITIVES.put(Float.class, float.class);
 		PRIMITIVES.put(Double.class, double.class);
 	}
-
-	private Label labelWidgetImage; // Label for diagnostic image
-
-	private ControlDecoration controlDecoration;
 
 	@Override
 	protected Class<EAttribute> getEStructuralFeatureType() {
@@ -81,41 +73,6 @@ public abstract class AttributeControl extends AbstractSingleControl implements 
 	@Override
 	protected void createControlActions(Composite composite) {
 
-	}
-
-	/**
-	 * {@inheritDoc}
-	 **/
-	public void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = org.eclipse.emf.ecp.internal.editor.Activator
-				.getImageDescriptor("icons/validation_error.png").createImage();
-			labelWidgetImage.setImage(image);
-			labelWidgetImage.setToolTipText(diagnostic.getMessage());
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 **/
-	public void resetValidation() {
-		if (labelWidgetImage == null || labelWidgetImage.isDisposed()) {
-			return;
-		}
-		labelWidgetImage.setImage(null);
-		labelWidgetImage.setToolTipText("    ");
-
-	}
-
-	@Override
-	public void dispose() {
-		if (labelWidgetImage != null) {
-			labelWidgetImage.dispose();
-		}
-		if (controlDecoration != null) {
-			controlDecoration.dispose();
-		}
-		super.dispose();
 	}
 
 }

@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.controls;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -20,6 +21,7 @@ import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -30,9 +32,9 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public abstract class AbstractSingleControl extends AbstractControl {
+public abstract class AbstractSingleControl extends AbstractControl implements IValidatableControl {
 
-	private Label labelWidgetImage;
+	private Label labelWidgetImage;// Label for diagnostic image
 	private ECPWidget widget;
 	private ControlDecoration controlDecoration;
 
@@ -113,5 +115,29 @@ public abstract class AbstractSingleControl extends AbstractControl {
 		controlDecoration.dispose();
 		widget.dispose();
 		super.dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 **/
+	public void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
+			Image image = org.eclipse.emf.ecp.internal.editor.Activator
+				.getImageDescriptor("icons/validation_error.png").createImage();
+			labelWidgetImage.setImage(image);
+			labelWidgetImage.setToolTipText(diagnostic.getMessage());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 **/
+	public void resetValidation() {
+		if (labelWidgetImage == null || labelWidgetImage.isDisposed()) {
+			return;
+		}
+		labelWidgetImage.setImage(null);
+		labelWidgetImage.setToolTipText("    ");
+
 	}
 }
