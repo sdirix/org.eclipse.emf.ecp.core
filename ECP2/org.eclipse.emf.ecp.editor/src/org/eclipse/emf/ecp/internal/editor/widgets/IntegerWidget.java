@@ -43,8 +43,14 @@ public class IntegerWidget extends AbstractTextWidget<Integer> {
 
 	@Override
 	protected boolean validateString(String s) {
-		// TODO: perform validation
-		return true;
+		try {
+			// TODO regex?
+			Integer.parseInt(s);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+
 	}
 
 	@Override
