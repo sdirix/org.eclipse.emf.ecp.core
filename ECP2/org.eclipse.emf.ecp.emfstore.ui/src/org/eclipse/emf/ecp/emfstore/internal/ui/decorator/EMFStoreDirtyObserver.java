@@ -20,6 +20,7 @@ import org.eclipse.emf.emfstore.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.common.model.Project;
 import org.eclipse.emf.emfstore.server.model.versioning.operations.AbstractOperation;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
 
@@ -77,10 +78,24 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 				lastAffected
 					.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element));
 			}
-			IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
-			decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
+			updateDecoration();
+
 		}
 
+	}
+
+	private void updateDecoration() {
+		// TODO remove dependency to workbench
+		final IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
+		if (decoratorManager != null) {
+			Display.getDefault().syncExec(new Runnable() {
+
+				public void run() {
+					decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
+				}
+			});
+
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -98,8 +113,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 				lastAffected.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).removeOperation(
 					element));
 			}
-			IDecoratorManager decoratorManager = PlatformUI.getWorkbench().getDecoratorManager();
-			decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
+			updateDecoration();
 		}
 	}
 
