@@ -5,7 +5,7 @@ Element-Name: Sucessfull
 Element-Type: testsuite
 Element-Version: 2.0
 Id: _hHKMQD-WEeK-yuKsz0Lang
-Save-Time: 1/12/13 3:08 PM
+Save-Time: 1/29/13 12:14 PM
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
 Content-Type: text/testcase
@@ -26,5 +26,6 @@ _0JrbIEIsEeKQh80wtWssKQ	// kind: 'test' name: 'DeleteElements' path: 'successful
 _z2GgIEBxEeKAxsN-kffdlw	// kind: 'test' name: 'DirtyDecorator' path: 'successfull/DirtyDecorator.test'
 __Kh34EQ5EeKQgL6LoFFWrA	// kind: 'test' name: 'EnablementOnClose' path: 'successfull/EnablementOnClose.test'
 _xD-A4EJMEeKQh80wtWssKQ	// kind: 'test' name: 'MultiIntWidget' path: 'successfull/MultiIntWidget.test'
+_JQ0XUFWREeK9YIKRr24QYg	// kind: 'test' name: 'RemoveAdapterInEditor' path: 'successfull/RemoveAdapterInEditor.test'
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--
