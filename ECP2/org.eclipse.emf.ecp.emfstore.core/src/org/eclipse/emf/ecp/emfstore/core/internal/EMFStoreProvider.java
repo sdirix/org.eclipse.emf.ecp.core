@@ -185,6 +185,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			} catch (IOException ex) {
 				Activator.log(ex);
 			}
+			project.setProviderSpecificData(null);
 		}
 
 	}
