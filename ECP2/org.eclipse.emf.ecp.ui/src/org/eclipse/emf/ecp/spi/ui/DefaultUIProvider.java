@@ -193,7 +193,8 @@ public class DefaultUIProvider extends Element implements UIProvider {
 					if (descriptors != null) {
 						for (Object descriptor : descriptors) {
 							final CommandParameter cp = (CommandParameter) descriptor;
-							if (!cp.getEReference().isMany()) {
+							// TODO check containment?
+							if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
 								continue;
 							}
 							manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor) {
