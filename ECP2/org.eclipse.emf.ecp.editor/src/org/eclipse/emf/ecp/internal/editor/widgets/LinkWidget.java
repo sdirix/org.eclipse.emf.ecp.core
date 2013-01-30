@@ -147,6 +147,9 @@ public class LinkWidget extends ECPWidget {
 				Display.getDefault().syncExec(new Runnable() {
 
 					public void run() {
+						if (mainComposite.isDisposed()) {
+							return;
+						}
 						if (modelElement.eIsSet(eReference)) {
 							stackLayout.topControl = linkComposite;
 							setLinkModelElement();
@@ -266,6 +269,7 @@ public class LinkWidget extends ECPWidget {
 		if (modelElementChangeListener2 != null) {
 			modelElementChangeListener2.remove();
 		}
+		linkModelElement = null;
 		hyperlink.dispose();
 	}
 }
