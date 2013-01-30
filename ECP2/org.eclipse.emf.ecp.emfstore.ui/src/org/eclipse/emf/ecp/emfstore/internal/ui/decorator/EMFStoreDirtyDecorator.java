@@ -116,7 +116,8 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 
 	/** {@inheritDoc} */
 	public void projectDelete(ECPProject project) {
-		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
+		EMFStoreDirtyDecoratorCachedTree.removeProject(project);
+
 		observers.remove(project);
 	}
 }
