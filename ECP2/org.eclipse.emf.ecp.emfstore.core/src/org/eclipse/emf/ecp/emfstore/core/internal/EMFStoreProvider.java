@@ -233,7 +233,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handleInit(final ECPModelContext context) {
 		if (context instanceof InternalProject) {
-			ProjectSpace projectSpace = getProjectSpace((InternalProject) context);
+			ProjectSpace projectSpace = getProjectSpace((InternalProject) context, true);
 			if (projectSpace == null) {
 				return;
 			}
@@ -411,7 +411,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * @return the corresponding ProjectSpace
 	 */
 	public ProjectSpace getProjectSpace(InternalProject internalProject) {
-		return getProjectSpace(internalProject, true);
+		return getProjectSpace(internalProject, false);
 	}
 
 	private ProjectSpace getProjectSpace(InternalProject internalProject, boolean createNewIfNeeded) {
