@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.edit.swt.actions;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.util.ECPAction;
 import org.eclipse.emf.ecp.internal.edit.swt.Activator;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;

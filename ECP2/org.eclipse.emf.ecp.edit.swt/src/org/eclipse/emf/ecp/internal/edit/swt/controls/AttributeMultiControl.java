@@ -5,7 +5,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.internal.edit.StaticApplicableTester;
+import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 public class AttributeMultiControl extends MultiControl {

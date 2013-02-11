@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.swt.util.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.editor.util.ECPAction;
 import org.eclipse.emf.ecp.internal.edit.swt.Activator;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;

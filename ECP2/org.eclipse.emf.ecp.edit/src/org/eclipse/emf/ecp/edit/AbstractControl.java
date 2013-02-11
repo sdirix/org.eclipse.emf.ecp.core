@@ -21,8 +21,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * {@link org.eclipse.emf.ecp.internal.edit.swt.controls.MultiControl}.
  * This class provides the necessary common access methods.
  * 
- * @param <CONTROL> this binds the control to a specific rendering engine. e.g. for SWT this would be a
- *            {@link org.eclipse.swt.widgets.Control}
  * @param <COMPOSITE> this binds the composite to a specific rendering engine. e.g. for SWT this would be a
  *            {@link org.eclipse.swt.widgets.Composite}
  * 
@@ -109,7 +107,10 @@ public abstract class AbstractControl<COMPOSITE> {
 	protected boolean hasUnsetState() {
 		return feature.isUnsettable();
 	}
-
+	/**
+	 * Whether a control is embedded. An embedded control can be rendered in an other fashion then an not embedded version.
+	 * @return true if the control is embedded in another control
+	 */
 	protected boolean isEmbedded() {
 		return embedded;
 	}
@@ -147,7 +148,9 @@ public abstract class AbstractControl<COMPOSITE> {
 	 * @param isEditable whether to set the widget editable
 	 */
 	public abstract void setEditable(boolean isEditable);
-	
+	/**
+	 * Triggers the control to perform the databinding. 
+	 */
 	public abstract void bindValue();
 	
 }

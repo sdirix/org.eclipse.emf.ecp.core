@@ -13,16 +13,14 @@ package org.eclipse.emf.ecp.edit.swt.actions;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.util.ECPAction;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.jface.action.Action;
 
 /**
  * @author Eugen Neufeld
  * 
  */
-public abstract class ECPSWTAction extends Action implements ECPAction{
+public abstract class ECPSWTAction extends Action{
 	private EditModelElementContext modelElementContext;
 	private EStructuralFeature feature;
 	private IItemPropertyDescriptor itemPropertyDescriptor;

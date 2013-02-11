@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ControlDescription;
 import org.eclipse.emf.ecp.edit.ControlFactory;
 import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.internal.edit.StaticApplicableTester;
+import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.resource.ColorDescriptor;
 

@@ -15,9 +15,28 @@ package org.eclipse.emf.ecp.editor.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+/**
+ * This interface defines a {@link #isApplicable(IItemPropertyDescriptor, EObject)} method which is used to determine
+ * the priority of a control. The control with the highest priority for a combination of an {@link EObject} and a
+ * feature will be used.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public interface ECPApplicableTester {
+	/**
+	 * Return this whenever the control should not be drawn for the tested feature.
+	 */
+	int NOT_APPLICABLE = -1;
 
-	int NOT_APPLICABLE=-1;
-	
-	int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor,EObject eObject);
+	/**
+	 * Returns the priority of the corresponding control for the combination of the {@link EObject} and the
+	 * {@link IItemPropertyDescriptor}.
+	 * 
+	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to test
+	 * @param eObject the {@link EObject} to test
+	 * @return {@link #NOT_APPLICABLE} if the corresponding control should not be used, a positivie integer value
+	 *         otherwise. The control with the highest priority will be taken.
+	 */
+	int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
 }

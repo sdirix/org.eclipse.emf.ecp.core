@@ -30,8 +30,8 @@ import org.eclipse.swt.widgets.Link;
 public class LinkControl extends SingleControl {
 
 	public LinkControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		EditModelElementContext modelElementContext,boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,embedded);
+		EditModelElementContext modelElementContext, boolean embedded) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
 	private Composite linkComposite;
@@ -63,11 +63,15 @@ public class LinkControl extends SingleControl {
 	private Button addButton;
 
 	private Button newButton;
-	
+
 	@Override
 	protected void fillInnerComposite(Composite composite) {
-		GridLayoutFactory.fillDefaults().numColumns(4).spacing(0, 0).equalWidth(false).applyTo(composite);
-		
+		int numColumns = 4;
+		if (isEmbedded()) {
+			numColumns = 1;
+		}
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
+
 		mainComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(mainComposite);
 
@@ -82,7 +86,7 @@ public class LinkControl extends SingleControl {
 
 		linkComposite = new Composite(mainComposite, SWT.NONE);
 		linkComposite.setLayout(new GridLayout(2, false));
-		
+
 		createHyperlink();
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(linkComposite);
 		if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
@@ -90,10 +94,14 @@ public class LinkControl extends SingleControl {
 		} else {
 			stackLayout.topControl = unsetLabel;
 		}
-		
-		setNullButton = createButtonForAction(new DeleteReferenceAction(getModelElementContext(), getItemPropertyDescriptor(), getStructuralFeature()), composite);
-		addButton = createButtonForAction(new AddReferenceAction(getModelElementContext(), getItemPropertyDescriptor(), getStructuralFeature()), composite);
-		newButton = createButtonForAction(new NewReferenceAction(getModelElementContext(), getItemPropertyDescriptor(), getStructuralFeature()), composite);
+		if (!isEmbedded()) {
+			setNullButton = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
+				getItemPropertyDescriptor(), getStructuralFeature()), composite);
+			addButton = createButtonForAction(new AddReferenceAction(getModelElementContext(),
+				getItemPropertyDescriptor(), getStructuralFeature()), composite);
+			newButton = createButtonForAction(new NewReferenceAction(getModelElementContext(),
+				getItemPropertyDescriptor(), getStructuralFeature()), composite);
+		}
 	}
 
 	private void createHyperlink() {
@@ -152,7 +160,7 @@ public class LinkControl extends SingleControl {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(hyperlink);
 
 	}
-	
+
 	private void updateValues() {
 		if (linkModelElement != null) {
 			Image image = shortLabelProvider.getImage(linkModelElement);
@@ -207,7 +215,7 @@ public class LinkControl extends SingleControl {
 		}
 		updateValues();
 	}
-	
+
 	@Override
 	public void setEditable(boolean isEditable) {
 		setNullButton.setVisible(isEditable);

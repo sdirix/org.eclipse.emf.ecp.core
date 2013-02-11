@@ -28,14 +28,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.AbstractControl;
 import org.eclipse.emf.ecp.edit.ControlDescription;
 import org.eclipse.emf.ecp.edit.ControlFactory;
-import org.eclipse.emf.ecp.edit.ECPWidget;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.edit.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.edit.swt.actions.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.swt.util.SWTControl;
 import org.eclipse.emf.ecp.editor.util.ECPObservableValue;
-import org.eclipse.emf.ecp.internal.edit.StaticApplicableTester;
+import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.ecp.internal.edit.swt.Activator;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -205,9 +202,9 @@ public abstract class MultiControl extends SWTControl {
 
 	}
 	/**
-	 * Returns the {@link ECPWidget}.
+	 * Returns the {@link SWTControl}.
 	 * 
-	 * @return the created {@link ECPWidget}
+	 * @return the created {@link SWTControl}
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private SWTControl getSingleInstance() {
@@ -292,7 +289,6 @@ public abstract class MultiControl extends SWTControl {
 
 			SWTControl widget = getSingleInstance();
 			widget.createControl(composite);
-			widget.setEditable(false);
 			widget.setObservableValue(modelValue);
 			widget.bindValue();
 			

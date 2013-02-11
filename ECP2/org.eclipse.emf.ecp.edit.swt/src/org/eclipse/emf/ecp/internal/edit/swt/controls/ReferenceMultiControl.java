@@ -6,7 +6,7 @@ import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.swt.actions.NewReferenceAction;
-import org.eclipse.emf.ecp.internal.edit.StaticApplicableTester;
+import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 public class ReferenceMultiControl extends MultiControl {

@@ -11,12 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
-import java.awt.Composite;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
@@ -25,8 +22,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.ecp.internal.edit.Activator;
-import org.eclipse.emf.ecp.internal.edit.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.osgi.framework.Bundle;
 
@@ -132,7 +129,7 @@ public final class ControlFactory {
 	 * Creates an {@link AbstractControl} from the provided {@link IItemPropertyDescriptor} and the
 	 * {@link EditModelElementContext}.
 	 * 
-	 * @param <T> the Type of the Composite where we want to add the control onto
+	 * @param <T> the Type of the composite where we want to add the control onto
 	 * @param parent the Composite the control will be added to
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param context the {@link EditModelElementContext}
@@ -143,18 +140,23 @@ public final class ControlFactory {
 		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(context.getModelElement());
 
 		ControlDescription controlDescription = getControlCandidate(parent.getClass(),itemPropertyDescriptor, context.getModelElement());
-		if(controlDescription==null)
+		if(controlDescription==null){
 			return null;
+		}
 		AbstractControl<T> control = getControlInstance(controlDescription,itemPropertyDescriptor,feature,context);
 
 		
 		return control;
 	}
-
+	/**
+	 * A copy of all known {@link ControlDescription}.
+	 * @return a copy of the set of all known controlDescriptions
+	 */
 	public Set<ControlDescription> getControlDescriptors() {
-		return controlDescriptors;
+		return new HashSet<ControlDescription>(controlDescriptors);
 	}
 
+	@SuppressWarnings("unchecked")
 	private <T> AbstractControl<T> getControlInstance(ControlDescription controlDescription,
 		IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature, EditModelElementContext modelElementContext) {
 

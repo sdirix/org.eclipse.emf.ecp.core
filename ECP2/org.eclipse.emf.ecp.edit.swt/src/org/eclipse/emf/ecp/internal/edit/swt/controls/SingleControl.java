@@ -11,30 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.edit.swt.controls;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.AbstractControl;
-import org.eclipse.emf.ecp.edit.ECPWidget;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.edit.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.swt.util.SWTControl;
-import org.eclipse.emf.ecp.editor.util.ECPAction;
 import org.eclipse.emf.ecp.internal.edit.swt.Activator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
