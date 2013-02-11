@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
-import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
+import org.eclipse.emf.ecp.internal.edit.swt.provider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProviderListener;

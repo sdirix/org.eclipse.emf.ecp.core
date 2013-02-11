@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.FormEditorComposite;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.ecp.editor.commands.ECPCommand;
-import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
+import org.eclipse.emf.ecp.internal.edit.swt.provider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
@@ -111,7 +111,7 @@ public class MEEditorPage extends FormPage {
 		toolkit.decorateFormHeading(form.getForm());
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		editorPageContent = new FormEditorComposite(modelElementContext, form.getShell(),toolkit);
+		editorPageContent = new FormEditorComposite(modelElementContext,toolkit);
 		editorPageContent.createUI(body);
 		
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));

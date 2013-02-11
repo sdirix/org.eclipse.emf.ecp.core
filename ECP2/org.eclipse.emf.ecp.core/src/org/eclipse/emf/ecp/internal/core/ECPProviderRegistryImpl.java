@@ -81,11 +81,6 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	}
 
 	/** {@inheritDoc} **/
-	public boolean hasProviders() {
-		return hasElements();
-	}
-
-	/** {@inheritDoc} **/
 	public void addProvider(ECPProvider provider) {
 		changeElements(null, Collections.singleton((InternalProvider) provider));
 	}

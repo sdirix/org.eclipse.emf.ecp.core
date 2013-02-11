@@ -18,14 +18,13 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecp.edit.AbstractControl;
+import org.eclipse.emf.ecp.edit.ControlFactory;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.controls.AbstractControl;
-import org.eclipse.emf.ecp.editor.controls.IValidatableControl;
-import org.eclipse.emf.ecp.editor.descriptor.AnnotationHiddenDescriptor;
-import org.eclipse.emf.ecp.editor.descriptor.AnnotationPositionDescriptor;
-import org.eclipse.emf.ecp.editor.descriptor.AnnotationPriorityDescriptor;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
-import org.eclipse.emf.ecp.internal.editor.controls.attribute.METextControl;
+import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationHiddenDescriptor;
+import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPositionDescriptor;
+import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPriorityDescriptor;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -36,7 +35,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -66,20 +64,18 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	 * @param shell the shell used for callbacks
 	 */
 	public FormEditorComposite(EditModelElementContext modelElementContext, Shell shell) {
-		this(modelElementContext, shell, new FormToolkit(shell.getDisplay()));
+		this(modelElementContext, new FormToolkit(shell.getDisplay()));
 	}
 
 	/**
 	 * Constructor where the {@link FormToolkit} is provided.
 	 * 
 	 * @param modelElementContext the {@link EditModelElementContext}
-	 * @param shell the {@link Shell} for callback
 	 * @param toolkit the {@link FormToolkit}
 	 */
-	public FormEditorComposite(EditModelElementContext modelElementContext, Shell shell, FormToolkit toolkit) {
+	public FormEditorComposite(EditModelElementContext modelElementContext, FormToolkit toolkit) {
 		this.modelElementContext = modelElementContext;
 		this.toolkit = toolkit;
-		this.shell = shell;
 		addModelElementListener();
 	}
 
@@ -100,7 +96,6 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		};
 	}
 
-	private Shell shell;
 	private final FormToolkit toolkit;
 
 	private final EditModelElementContext modelElementContext;
@@ -232,45 +227,36 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private void createAttributes(FormToolkit toolkit, Composite column, List<IItemPropertyDescriptor> attributes) {
 		Composite attributeComposite = toolkit.createComposite(column);
+		attributeComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(attributeComposite);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 			.applyTo(attributeComposite);
 
-		// TODO add extensionpoint
-		ControlFactory controlFactory = ControlFactory.getInstance();
-
+		ControlFactory controlFactory = ControlFactory.INSTANCE;
 		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {
-			AbstractControl meControl = controlFactory.createControl(itemPropertyDescriptor,
-				modelElementContext.getModelElement(), modelElementContext);
-			if (meControl == null) {
+
+			AbstractControl<Composite> control = controlFactory.createControl(attributeComposite,
+				itemPropertyDescriptor, modelElementContext);
+			if (control == null) {
 				continue;
 			}
-			meControl.setShell(shell);
-			meControls.put(
-				(EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement()),
-				meControl);
-			Control control;
-			if (meControl.getShowLabel()) {
-				Label label = toolkit.createLabel(attributeComposite,
-					itemPropertyDescriptor.getDisplayName(modelElementContext.getModelElement()));
-				label.setData(modelElementContext.getModelElement());
+			int numColumnSpan = 2;
+			if (control.showLabel()) {
+				Label label = new Label(attributeComposite, SWT.NONE);
+				label.setBackground(attributeComposite.getBackground());
+				label.setText(itemPropertyDescriptor.getDisplayName(modelElementContext.getModelElement()));
 				label.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
-				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
-					modelElementContext.getModelElement(), modelElementContext, toolkit);
 				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
-				GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
-					.applyTo(control);
-				meControl.applyCustomLayoutData();
-			} else {
-				control = meControl.createControl(attributeComposite, SWT.WRAP, itemPropertyDescriptor,
-					modelElementContext.getModelElement(), modelElementContext, toolkit);
-				control.setData(modelElementContext.getModelElement());
-				control.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
-				GridDataFactory.fillDefaults().span(2, 1).grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
-					.applyTo(control);
+				numColumnSpan--;
 			}
-		}
+			Composite composite = control.createControl(attributeComposite);
 
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).span(numColumnSpan, 1)
+				.applyTo(composite);
+			meControls.put(
+				(EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement()), control);
+
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -301,18 +287,20 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 				continue;
 			}
 			AbstractControl meControl = meControls.get(childDiagnostic.getData().get(1));
+			if (meControl == null) {
+				continue;
+			}
 			affectedControls.add(meControl);
-			if (meControl instanceof IValidatableControl) {
-				if (valdiatedControls.containsKey(meControl)) {
-					if (childDiagnostic.getSeverity() != valdiatedControls.get(meControl).getSeverity()) {
-						((IValidatableControl) meControl).handleValidation(childDiagnostic);
-						valdiatedControls.put(meControl, childDiagnostic);
-					}
-				} else {
-					((IValidatableControl) meControl).handleValidation(childDiagnostic);
+			if (valdiatedControls.containsKey(meControl)) {
+				if (childDiagnostic.getSeverity() != valdiatedControls.get(meControl).getSeverity()) {
+					meControl.handleValidation(childDiagnostic);
 					valdiatedControls.put(meControl, childDiagnostic);
 				}
+			} else {
+				meControl.handleValidation(childDiagnostic);
+				valdiatedControls.put(meControl, childDiagnostic);
 			}
+
 		}
 
 		Map<AbstractControl, Diagnostic> temp = new HashMap<AbstractControl, Diagnostic>();
@@ -321,7 +309,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			AbstractControl meControl = entry.getKey();
 			if (!affectedControls.contains(meControl)) {
 				valdiatedControls.remove(meControl);
-				((IValidatableControl) meControl).resetValidation();
+				meControl.resetValidation();
 			}
 		}
 	}
@@ -329,12 +317,12 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/** {@inheritDoc} */
 	public void focus() {
 		// set keyboard focus on the first Text control
-		for (AbstractControl meControl : meControls.values()) {
-			if (meControl instanceof METextControl) {
-				((METextControl) meControl).setFocus();
-				return;
-			}
-		}
+		// for (AbstractControl meControl : meControls.values()) {
+		// if (meControl instanceof METextControl) {
+		// ((METextControl) meControl).setFocus();
+		// return;
+		// }
+		// }
 		leftColumnComposite.setFocus();
 	}
 

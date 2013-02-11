@@ -3,47 +3,8 @@
 <plugin>
    <extension-point id="org.eclipse.emf.ecp.editor.attributecontrols" name="org.eclipse.emf.ecp.editor.attributecontrols" schema="schema/org.eclipse.emf.ecp.editor.attributecontrol.exsd"/>
    <extension-point id="org.eclipse.emf.ecp.editor.referencecontrols" name="org.eclipse.emf.ecp.editor.referencecontrols" schema="schema/org.eclipse.emf.ecp.editor.referencecontrol.exsd"/>
-   <extension-point id="org.eclipse.emf.ecp.editor.melinkcontrols" name="org.eclipse.emf.ecp.editor.melinkcontrols" schema="schema/org.eclipse.emf.ecp.editor.melinkcontrol.exsd"/>
    
-   <extension
-         point="org.eclipse.emf.ecp.editor.attributecontrols">
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEBoolControl"
-            name="org.eclipse.emf.ecp.editor.meboolcontrol"
-            showLabel="true"
-            type="java.lang.Boolean">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEIntControl"
-            name="org.eclipse.emf.ecp.editor.meintcontrol"
-            showLabel="true"
-            type="java.lang.Integer">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MESWTDateAndTimeControl"
-            name="org.eclipse.emf.ecp.editor.medatecontrol"
-            showLabel="true"
-            type="java.util.Date">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEEnumControl"
-            name="org.eclipse.emf.ecp.editor.meenumcontrol"
-            showLabel="true"
-            type="java.lang.Enum">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.unused.MERichTextControl"
-            name="org.eclipse.emf.ecp.editor.merichtextcontrol"
-            showLabel="true"
-            type="java.lang.String">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.METextControl"
-            name="org.eclipse.emf.ecp.editor.metextcontrol"
-            showLabel="true"
-            type="java.lang.String">
-      </widget>
-   </extension>
+   
    <!--
    <extension
          point="org.eclipse.ui.commands">
@@ -54,47 +15,6 @@
       </command>
    </extension>
    -->
-   <extension
-         point="org.eclipse.emf.ecp.editor.referencecontrols">
-      <!--
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.unused.MESingleLinkControl"
-            name="org.eclipse.emf.ecp.editor.mesinglelinkcontrol"
-            showLabel="true"
-            type="org.eclipse.emf.ecore.EObject">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.unused.MEMultiLinkControl"
-            name="org.eclipse.emf.ecp.editor.memultilinkcontrol"
-            showLabel="false"
-             type="org.eclipse.emf.ecore.EObject">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassControl"
-            name="org.eclipse.emf.ecp.editor.associationclasscontrol"
-            showLabel="false"
-            type="org.eclipse.emf.ecore.EObject">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.editor.controls.internal.association.AssociationClassControlNoNew"
-            name="org.eclipse.emf.ecp.editor.associationclasscontrolnonew"
-            showLabel="true"
-            type="org.eclipse.emf.ecore.EObject">
-      </widget>
-      -->
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceControl"
-            name="org.eclipse.emf.ecp.editor.mesinglelinkcontrol2"
-            showLabel="true"
-            type="org.eclipse.emf.ecore.EObject">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.reference.ReferenceMultiControl"
-            name="org.eclipse.emf.ecp.editor.memultilinkcontrol2"
-            showLabel="false"
-            type="org.eclipse.emf.ecore.EObject">
-      </widget>
-   </extension>
    <!--
    <extension
          point="org.eclipse.emf.ecp.editor.melinkcontrols">
@@ -115,34 +35,5 @@
       </widget>
    </extension>
    -->
-   <extension
-         point="org.eclipse.emf.ecp.editor.attributecontrols">
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.MEDoubleControl"
-            name="org.eclipse.emf.ecp.editor.medoublecontrol"
-            showLabel="true"
-            type="java.lang.Double">
-      </widget>
-   </extension>
-   <extension
-         point="org.eclipse.emf.ecp.editor.attributecontrols">
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.multi.MultiIntegerAttributeControl"
-            name="org.eclipse.emf.ecp.editor.multiintegercontrol"
-            showLabel="false"
-            type="java.lang.Integer">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.multi.MultiDateTimeAttributeControl"
-            name="org.eclipse.emf.ecp.editor.multidatecontrol3"
-            showLabel="false"
-            type="java.util.Date">
-      </widget>
-      <widget
-            class="org.eclipse.emf.ecp.internal.editor.controls.attribute.multi.MultiTextAttributeControl"
-            name="org.eclipse.emf.ecp.editor.multistringcontrol4"
-            showLabel="false"
-            type="java.lang.String">
-      </widget>
-   </extension>
+   
 </plugin>
