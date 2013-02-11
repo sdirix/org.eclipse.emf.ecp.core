@@ -18,14 +18,12 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreCheckoutData;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-import org.eclipse.emf.emfstore.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.client.model.WorkspaceManager;
-import org.eclipse.emf.emfstore.client.model.connectionmanager.KeyStoreManager;
-import org.eclipse.emf.emfstore.client.model.exceptions.CertificateStoreException;
-import org.eclipse.emf.emfstore.client.model.observers.CheckoutObserver;
-import org.eclipse.emf.emfstore.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
-import org.eclipse.emf.emfstore.common.model.util.ModelUtil;
-import org.eclipse.emf.emfstore.server.exceptions.EmfStoreException;
+import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
+import org.eclipse.emf.emfstore.internal.client.model.exceptions.CertificateStoreException;
+import org.eclipse.emf.emfstore.internal.client.model.impl.RemoteProject;
+import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
+import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
@@ -66,15 +64,11 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		if (EMFStoreCheckoutData.class.isInstance(adaptable) && adapterType.equals(ProjectSpace.class)) {
 			EMFStoreCheckoutData checkoutData = (EMFStoreCheckoutData) adaptable;
 			try {
-				ProjectSpace projectSpace = WorkspaceManager
-					.getInstance()
-					.getCurrentWorkspace()
-					.checkout(checkoutData.getServerInfo().getLastUsersession(),
-						ModelUtil.clone(checkoutData.getProjectInfo()));
-				WorkspaceManager.getInstance().getCurrentWorkspace().save();
-				WorkspaceManager.getObserverBus().notify(CheckoutObserver.class).checkoutDone(projectSpace);
+				RemoteProject remoteProject = new RemoteProject(checkoutData.getServerInfo(),
+					checkoutData.getProjectInfo());
+				ProjectSpace projectSpace = remoteProject.checkout(checkoutData.getServerInfo().getLastUsersession());
 				return (T) projectSpace;
-			} catch (EmfStoreException e) {
+			} catch (EMFStoreException e) {
 				Activator.log(e);
 				// BEGIN SUPRESS CATCH EXCEPTION
 			} catch (RuntimeException e) {

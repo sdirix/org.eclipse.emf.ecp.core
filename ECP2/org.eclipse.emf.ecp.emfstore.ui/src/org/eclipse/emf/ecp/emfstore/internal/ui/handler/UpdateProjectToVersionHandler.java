@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import org.eclipse.emf.emfstore.client.ui.controller.UIUpdateProjectController;
+import org.eclipse.emf.emfstore.internal.client.ui.controller.UIUpdateProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
