@@ -33,6 +33,7 @@
 		<module>../org.eclipse.emf.ecp.example.leagueView</module>
 		<module>../org.eclipse.emf.ecp.doc</module>
 		<module>../org.eclipse.emf.ecp.edit</module>
+		<module>../org.eclipse.emf.ecp.edit.swt</module>
 		<module>../org.eclipse.emf.ecp.editor</module>
 		<module>../org.eclipse.emf.ecp.editor.workbench</module>
 		<module>../org.eclipse.emf.ecp.editor.controls-feature</module>
