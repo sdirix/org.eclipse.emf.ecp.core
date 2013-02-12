@@ -38,7 +38,6 @@ import org.eclipse.ui.menus.IMenuService;
  * @author naughton
  */
 public class MEEditorPage extends FormPage {
-	private static String activeModelelement = "activeModelelement";
 
 	//
 	private ScrolledForm form;

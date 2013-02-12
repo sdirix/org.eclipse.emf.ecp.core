@@ -28,11 +28,7 @@ import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -55,8 +51,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 	public static final String ID = "org.eclipse.emf.ecp.editor.internal.e3";
 
 	private MEEditorPage mePage;
-
-	private ILabelProviderListener labelProviderListener;
 
 	private StatusMessageProvider statusMessageProvider;
 
