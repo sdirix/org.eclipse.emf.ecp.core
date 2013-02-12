@@ -38,7 +38,7 @@ public class AddAttributeAction extends ECPSWTAction {
 		// TODO remove PlatformUI
 		setImageDescriptor(Activator.getDefault().getWorkbench().getSharedImages()
 			.getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
-		setToolTipText("Add Entry");
+		setToolTipText("Add Entry"); //$NON-NLS-1$
 	}
 
 	@Override

@@ -101,9 +101,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private final EditModelElementContext modelElementContext;
 
-	private Map<EStructuralFeature, AbstractControl> meControls = new LinkedHashMap<EStructuralFeature, AbstractControl>();
+	private Map<EStructuralFeature, AbstractControl<?>> meControls = new LinkedHashMap<EStructuralFeature, AbstractControl<?>>();
 
-	private Map<AbstractControl, Diagnostic> valdiatedControls = new HashMap<AbstractControl, Diagnostic>();
+	private Map<AbstractControl<?>, Diagnostic> valdiatedControls = new HashMap<AbstractControl<?>, Diagnostic>();
 
 	private List<IItemPropertyDescriptor> leftColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
 
@@ -262,7 +262,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	/** {@inheritDoc} */
 	public void dispose() {
-		for (AbstractControl control : meControls.values()) {
+		for (AbstractControl<?> control : meControls.values()) {
 			control.dispose();
 		}
 		meControls.clear();
@@ -273,7 +273,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/** {@inheritDoc} */
 	public void updateLiveValidation() {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElementContext.getModelElement());
-		List<AbstractControl> affectedControls = new ArrayList<AbstractControl>();
+		List<AbstractControl<?>> affectedControls = new ArrayList<AbstractControl<?>>();
 
 		for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();) {
 			Diagnostic childDiagnostic = i.next();
@@ -287,7 +287,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			if (childDiagnostic.getData().size() < 2) {
 				continue;
 			}
-			AbstractControl meControl = meControls.get(childDiagnostic.getData().get(1));
+			AbstractControl<?> meControl = meControls.get(childDiagnostic.getData().get(1));
 			if (meControl == null) {
 				continue;
 			}
@@ -304,10 +304,10 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 		}
 
-		Map<AbstractControl, Diagnostic> temp = new HashMap<AbstractControl, Diagnostic>();
+		Map<AbstractControl<?>, Diagnostic> temp = new HashMap<AbstractControl<?>, Diagnostic>();
 		temp.putAll(valdiatedControls);
-		for (Map.Entry<AbstractControl, Diagnostic> entry : temp.entrySet()) {
-			AbstractControl meControl = entry.getKey();
+		for (Map.Entry<AbstractControl<?>, Diagnostic> entry : temp.entrySet()) {
+			AbstractControl<?> meControl = entry.getKey();
 			if (!affectedControls.contains(meControl)) {
 				valdiatedControls.remove(meControl);
 				meControl.resetValidation();

@@ -133,4 +133,8 @@ public abstract class SingleControl extends SWTControl {
 		validationLabel.setImage(null);
 	}
 
+	@Override
+	public void dispose(){
+		validationLabel.dispose();
+	}
 }

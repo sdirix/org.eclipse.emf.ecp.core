@@ -31,9 +31,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -46,7 +46,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class AddReferenceAction extends ECPSWTAction {
 
-	private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)";
+	//TODO externalize
+	private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)"; //$NON-NLS-1$
 
 	/**
 	 * The constructor of an add reference action.
@@ -68,9 +69,9 @@ public class AddReferenceAction extends ECPSWTAction {
 
 		Image image = Activator.getImageDescriptor(((URL) labelProvider.getImage(obj)).toExternalForm()).createImage();
 
-		String overlayString = "icons/link_overlay.png";
+		String overlayString = "icons/link_overlay.png";//$NON-NLS-1$
 		if (eReference.isContainment()) {
-			overlayString = "icons/containment_overlay.png";
+			overlayString = "icons/containment_overlay.png";//$NON-NLS-1$
 		}
 		ImageDescriptor addOverlay = Activator.getImageDescriptor(overlayString);
 		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
@@ -79,13 +80,14 @@ public class AddReferenceAction extends ECPSWTAction {
 
 		String attribute = getItemPropertyDescriptor().getDisplayName(eReference);
 		// make singular attribute labels
-		if (attribute.endsWith("ies")) {
-			attribute = attribute.substring(0, attribute.length() - 3) + "y";
-		} else if (attribute.endsWith("s")) {
+		//TODO language dependent
+		if (attribute.endsWith("ies")) {//$NON-NLS-1$ 
+			attribute = attribute.substring(0, attribute.length() - 3) + "y"; //$NON-NLS-1$
+		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-
-		setToolTipText("Link " + attribute);
+		//TODO language dependent
+		setToolTipText("Link " + attribute);//$NON-NLS-1$
 	}
 
 	/**
@@ -154,16 +156,18 @@ public class AddReferenceAction extends ECPSWTAction {
 			// new WizardUICallback<SelectModelElementComposite>(shell, null));
 			// TODO remove PlatformUI
 			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-			MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,
+			//TODO language
+			MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,//$NON-NLS-1$
 				getModelElementContext().getModelElement(), (EReference) getFeature(), elements, shell);
 
 			int dialogResult = dlg.open();
-			if (dialogResult == Dialog.OK) {
+			if (dialogResult == Window.OK) {
 				if (getFeature().isMany()) {
 					Object[] results = dlg.getResult();
 					ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(shell);
 					progressDialog.open();
-					progressDialog.getProgressMonitor().beginTask("Adding references...", results.length * 10);
+					//TODO language
+					progressDialog.getProgressMonitor().beginTask("Adding references...", results.length * 10); //$NON-NLS-1$
 					List<EObject> list = new ArrayList<EObject>();
 					for (Object result : results) {
 						if (result instanceof EObject) {

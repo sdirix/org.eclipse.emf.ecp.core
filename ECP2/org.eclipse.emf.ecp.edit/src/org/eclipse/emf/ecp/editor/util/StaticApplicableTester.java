@@ -65,7 +65,7 @@ public class StaticApplicableTester implements ECPApplicableTester {
 			// if the attribute class is an primitive test the primitive types
 			if (instanceClass.isPrimitive()) {
 				try {
-					Class<?> primitive = (Class<?>) getSupportedClassType().getField("TYPE").get(null);
+					Class<?> primitive = (Class<?>) getSupportedClassType().getField("TYPE").get(null); //$NON-NLS-1$
 					if (!primitive.equals(instanceClass)) {
 						return NOT_APPLICABLE;
 					}

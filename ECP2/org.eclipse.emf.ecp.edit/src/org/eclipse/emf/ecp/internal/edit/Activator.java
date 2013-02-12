@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.edit;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
@@ -25,7 +26,7 @@ public class Activator extends Plugin {
 	/**
 	 * The plug-in ID.
 	 */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.edit";
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.edit"; //$NON-NLS-1$
 
 	/**
 	 * The shared instance.
@@ -67,7 +68,7 @@ public class Activator extends Plugin {
 	 */
 	public static void logException(Exception e) {
 		getDefault().getLog().log(
-			new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 	}
 	
 	

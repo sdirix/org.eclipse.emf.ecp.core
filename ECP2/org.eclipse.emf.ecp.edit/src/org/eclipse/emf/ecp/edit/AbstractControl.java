@@ -118,8 +118,7 @@ public abstract class AbstractControl<COMPOSITE> {
 	/**
 	 * This method should be triggered when the Composite containing this Control is disposed.
 	 */
-	public void dispose() {
-	}
+	public abstract void dispose();
 
 	/**
 	 * Handle live validation.

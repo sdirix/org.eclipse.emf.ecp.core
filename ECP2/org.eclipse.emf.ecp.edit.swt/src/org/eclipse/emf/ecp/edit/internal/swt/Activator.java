@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -63,7 +64,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static void logException(Exception e) {
 		getDefault().getLog().log(
-			new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 	}
 	/**
 	 * Returns an image descriptor for the image file at the given. plug-in relative path

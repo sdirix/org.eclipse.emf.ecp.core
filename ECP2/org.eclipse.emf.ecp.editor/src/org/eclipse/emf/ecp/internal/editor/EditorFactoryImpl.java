@@ -18,8 +18,17 @@ import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-public class EditorFactoryImpl implements EditorFactory {
+/**
+ * The Implementation of the {@link EditorFactory}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+public final class EditorFactoryImpl implements EditorFactory {
 
+	/**
+	 * The instance to access from the EditorFactory.
+	 */
 	public static final EditorFactory INSTANCE = new EditorFactoryImpl();
 
 	private EditorFactoryImpl() {

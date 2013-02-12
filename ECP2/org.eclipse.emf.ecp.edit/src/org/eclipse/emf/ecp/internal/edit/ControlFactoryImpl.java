@@ -40,21 +40,21 @@ import org.osgi.framework.Bundle;
  */
 public final class ControlFactoryImpl implements ControlFactory{
 
-	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls";
+	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
 	
-	private static final String CLASS_ATTRIBUTE = "class";
-	private static final String COMPOSITE_CLASS_ATTRIBUTE = "supportedCompositeClass";
-	private static final String LABEL_ATTRIBUTE = "showLabel";
+	private static final String CLASS_ATTRIBUTE = "class";//$NON-NLS-1$
+	private static final String COMPOSITE_CLASS_ATTRIBUTE = "supportedCompositeClass";//$NON-NLS-1$
+	private static final String LABEL_ATTRIBUTE = "showLabel";//$NON-NLS-1$
 	
-	private static final String TEST_DYNAMIC = "dynamicTest";
-	private static final String CONTROL_TESTER = "testClass";
+	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
+	private static final String CONTROL_TESTER = "testClass";//$NON-NLS-1$
 	
-	private static final String TEST_STATIC = "staticTest";
-	private static final String TESTER_PRIORITY = "priority";
-	private static final String TESTER_CLASSTYPE = "supportedClassType";
-	private static final String TESTER_EOBJECT = "supportedEObject";
-	private static final String TESTER_FEATURE = "supportedFeature";
-	private static final String TESTER_SINGLEVALUE = "singleValue";
+	private static final String TEST_STATIC = "staticTest";//$NON-NLS-1$
+	private static final String TESTER_PRIORITY = "priority";//$NON-NLS-1$
+	private static final String TESTER_CLASSTYPE = "supportedClassType";//$NON-NLS-1$
+	private static final String TESTER_EOBJECT = "supportedEObject";//$NON-NLS-1$
+	private static final String TESTER_FEATURE = "supportedFeature";//$NON-NLS-1$
+	private static final String TESTER_SINGLEVALUE = "singleValue";//$NON-NLS-1$
 	
 	private Set<ControlDescription> controlDescriptors = new HashSet<ControlDescription>();
 
@@ -92,7 +92,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 						
 						String eObject = testerExtension.getAttribute(TESTER_EOBJECT);
 						if (eObject == null) {
-							eObject = "org.eclipse.emf.ecore.EObject";
+							eObject = "org.eclipse.emf.ecore.EObject";//$NON-NLS-1$
 						}
 						Class<? extends EObject> supportedEObject = loadClass(testerExtension.getContributor().getName(), eObject);
 						
@@ -111,18 +111,13 @@ public final class ControlFactoryImpl implements ControlFactory{
 		}
 	}
 
-	/**
-	 * @param name
-	 * @param clazz
-	 * @return
-	 * @throws ClassNotFoundException
-	 */
 	@SuppressWarnings("unchecked")
-	private <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
+	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName
-				+ " cannot be resolved");
+			//TODO externalize strings
+			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
+				+ " cannot be resolved"); //$NON-NLS-1$
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
@@ -151,7 +146,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> AbstractControl<T> getControlInstance(ControlDescription controlDescription,
+	private static <T> AbstractControl<T> getControlInstance(ControlDescription controlDescription,
 		IItemPropertyDescriptor itemPropertyDescriptor,  EditModelElementContext modelElementContext) {
 		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement());
 		try {

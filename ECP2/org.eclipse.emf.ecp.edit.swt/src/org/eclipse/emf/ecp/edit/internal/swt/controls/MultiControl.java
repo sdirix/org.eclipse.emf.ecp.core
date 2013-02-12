@@ -458,7 +458,6 @@ public abstract class MultiControl extends SWTControl {
 			helper.dispose();
 		}
 		mainComposite.dispose();
-		super.dispose();
 	}
 
 	@Override
