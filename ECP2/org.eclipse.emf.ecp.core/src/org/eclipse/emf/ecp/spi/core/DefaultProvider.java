@@ -404,6 +404,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		return false;
 	}
 
+	/** {@inheritDoc} */
 	// FIXME implement only in provider
 	public boolean contains(InternalProject project, Object object) {
 		return false;
