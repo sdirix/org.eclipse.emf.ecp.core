@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _TgrUMUIiEeKQh80wtWssKQ
-Save-Time: 1/29/13 11:57 AM
+Save-Time: 2/12/13 2:06 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -27,7 +27,10 @@ with [get-view "Model Explorer" | get-tree] {
     select "TestProject/Tournament Pro/Matchup/Game" | double-click
     select "TestProject/Tournament Pro/Matchup"
 }
-get-button "Link with editor" | click
+// toggle 'Link with editor' on
+if [get-button "Link with editor" | get-property selected -raw | bool | not] {
+    get-button "Link with editor" | click
+}
 get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup"
 get-tab-folder -index 1 | get-property activePage | equals Matchup | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian"
