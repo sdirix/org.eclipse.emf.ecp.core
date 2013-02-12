@@ -40,9 +40,13 @@ public final class Activator extends AbstractUIPlugin {
 
 	private static Activator instance;
 
+	/**
+	 * The constructor.
+	 */
 	public Activator() {
 	}
 
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -57,14 +61,31 @@ public final class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	// END SUPRESS CATCH EXCEPTION
+	/**
+	 * Returns the shared instance.
+	 * 
+	 * @return the shared instance
+	 */
 	public static Activator getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Logs messages.
+	 * 
+	 * @param message the message
+	 */
 	public static void log(String message) {
 		instance.getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));
 	}
 
+	/**
+	 * Logs messages and {@link Throwable}.
+	 * 
+	 * @param message the message
+	 * @param t the throwable
+	 */
 	public static void log(String message, Throwable t) {
 		if (t instanceof CoreException) {
 			CoreException coreException = (CoreException) t;
@@ -74,16 +95,33 @@ public final class Activator extends AbstractUIPlugin {
 		}
 	}
 
+	/**
+	 * Logs {@link IStatus}.
+	 * 
+	 * @param status the {@link IStatus}
+	 */
 	public static void log(IStatus status) {
 		instance.getLog().log(status);
 	}
 
+	/**
+	 * Logs {@link Throwable}.
+	 * 
+	 * @param t the {@link Throwable}
+	 * @return the message of the created status
+	 */
 	public static String log(Throwable t) {
 		IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
 
+	/**
+	 * Gets a {@link IStatus} for a throwable.
+	 * 
+	 * @param t the {@link Throwable}
+	 * @return the created {@link IStatus}
+	 */
 	public static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
 			CoreException coreException = (CoreException) t;
@@ -98,6 +136,12 @@ public final class Activator extends AbstractUIPlugin {
 		return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
 	}
 
+	/**
+	 * Returns an {@link ImageDescriptor} for a path.
+	 * 
+	 * @param path the path to an image
+	 * @return the {@link ImageDescriptor}
+	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		// return ResourceManager.getPluginImageDescriptor(PLUGIN_ID, path);
 		ImageDescriptor id = getInstance().getImageRegistry().getDescriptor(path);
@@ -107,6 +151,12 @@ public final class Activator extends AbstractUIPlugin {
 		return id;
 	}
 
+	/**
+	 * Gets an {@link Image} for a path.
+	 * 
+	 * @param path the path to an image
+	 * @return the image
+	 */
 	public static Image getImage(String path) {
 		Image image = getInstance().getImageRegistry().get(path);
 		if (image == null) {
@@ -115,10 +165,6 @@ public final class Activator extends AbstractUIPlugin {
 		return image;
 	}
 
-	/**
-	 * @param path
-	 * @return
-	 */
 	private static Image loadImage(String path) {
 		ImageDescriptor id = loadImageDescriptor(path);
 		if (id == null) {
@@ -128,10 +174,6 @@ public final class Activator extends AbstractUIPlugin {
 		return getInstance().getImageRegistry().get(path);
 	}
 
-	/**
-	 * @param path
-	 * @return
-	 */
 	private static ImageDescriptor loadImageDescriptor(String path) {
 		URL url = FileLocator.find(Platform.getBundle(PLUGIN_ID), new Path(path), null);
 		if (url == null) {

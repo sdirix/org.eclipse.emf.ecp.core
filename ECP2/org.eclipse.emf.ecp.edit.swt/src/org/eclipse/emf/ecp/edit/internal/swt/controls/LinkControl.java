@@ -246,9 +246,6 @@ public class LinkControl extends SingleControl {
 
 	@Override
 	public void setEditable(boolean isEditable) {
-		setNullButton.setVisible(isEditable);
-		addButton.setVisible(isEditable);
-		newButton.setVisible(isEditable);
 		mainComposite.getParent().layout();
 	}
 
