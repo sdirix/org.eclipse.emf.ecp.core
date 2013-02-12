@@ -28,7 +28,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  */
 public class ReferenceMultiControlTester implements ECPApplicableTester {
 
-	@Override
+	/**{@inheritDoc} **/
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority=NOT_APPLICABLE;
 		for(ControlDescription description:ControlFactory.INSTANCE.getControlDescriptors()){
