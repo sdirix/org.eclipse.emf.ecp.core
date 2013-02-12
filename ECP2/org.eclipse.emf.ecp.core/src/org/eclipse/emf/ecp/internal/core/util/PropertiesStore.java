@@ -167,9 +167,9 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	/**
 	 * @author Eike Stepper
 	 */
-	public static interface StorableElement extends ECPElement {
-		public boolean isStorable();
+	public interface StorableElement extends ECPElement {
+		boolean isStorable();
 
-		public void write(ObjectOutput out) throws IOException;
+		void write(ObjectOutput out) throws IOException;
 	}
 }

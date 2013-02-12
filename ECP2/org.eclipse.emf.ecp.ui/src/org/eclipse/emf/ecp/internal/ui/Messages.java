@@ -17,7 +17,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author Eugen Neufeld
- * 
+ * @generated
  */
 public final class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.messages"; //$NON-NLS-1$

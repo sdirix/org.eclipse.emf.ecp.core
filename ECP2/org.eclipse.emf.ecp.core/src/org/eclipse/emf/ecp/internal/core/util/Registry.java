@@ -189,6 +189,6 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 
 	protected static boolean isDisposingElement() {
 		Boolean disposingElement = DISPOSING_ELEMENT.get();
-		return disposingElement != null && disposingElement == true;
+		return disposingElement != null && disposingElement;
 	}
 }

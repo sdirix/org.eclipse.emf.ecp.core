@@ -33,7 +33,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	private static Map<ECPProject, EMFStoreDirtyDecoratorCachedTree> cashedTrees = new HashMap<ECPProject, EMFStoreDirtyDecoratorCachedTree>();
 
 	/**
-	 * Removes an ECPProject from the Cache
+	 * Removes an ECPProject from the Cache.
 	 * 
 	 * @param project
 	 */
