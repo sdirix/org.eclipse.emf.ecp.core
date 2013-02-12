@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+
 /**
  * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a reference.
  * 
@@ -45,7 +46,7 @@ import org.eclipse.swt.widgets.Link;
  * 
  */
 public class LinkControl extends SingleControl {
-	private static final String EDITOR_ID = "org.eclipse.emf.ecp.editor";  //$NON-NLS-1$
+	private static final String EDITOR_ID = "org.eclipse.emf.ecp.editor"; //$NON-NLS-1$
 
 	/**
 	 * Constructor for a eenum control.
@@ -106,7 +107,7 @@ public class LinkControl extends SingleControl {
 		mainComposite.setLayout(stackLayout);
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
-		//TODO language
+		// TODO language
 		unsetLabel.setText("(Not Set)");//$NON-NLS-1$
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
@@ -246,6 +247,11 @@ public class LinkControl extends SingleControl {
 
 	@Override
 	public void setEditable(boolean isEditable) {
+		if (!isEmbedded()) {
+			setNullButton.setVisible(isEditable);
+			addButton.setVisible(isEditable);
+			newButton.setVisible(isEditable);
+		}
 		mainComposite.getParent().layout();
 	}
 
