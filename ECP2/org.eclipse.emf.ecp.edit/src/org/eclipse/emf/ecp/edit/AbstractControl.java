@@ -42,7 +42,7 @@ public abstract class AbstractControl<COMPOSITE> {
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param feature the {@link EStructuralFeature}
 	 * @param modelElementContext the {@link EditModelElementContext}
-	 * @param embedded whether this control will be embedded
+	 * @param embedded whether this control will be embedded in another control e.g. multicontrol
 	 */
 	public AbstractControl(boolean showLabel,IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
 		EditModelElementContext modelElementContext,boolean embedded) {
@@ -134,8 +134,8 @@ public abstract class AbstractControl<COMPOSITE> {
 	public abstract void resetValidation();
 	
 	/**
-	 * Wether a label should be shown for this control.
-	 * @return true if a label shoold be created, false otherwise
+	 * Whether a label should be shown for this control.
+	 * @return true if a label should be created, false otherwise
 	 */
 	public boolean showLabel(){
 		return showLabel;
@@ -148,9 +148,6 @@ public abstract class AbstractControl<COMPOSITE> {
 	 * @param isEditable whether to set the widget editable
 	 */
 	public abstract void setEditable(boolean isEditable);
-	/**
-	 * Triggers the control to perform the databinding. 
-	 */
-	public abstract void bindValue();
+	
 	
 }

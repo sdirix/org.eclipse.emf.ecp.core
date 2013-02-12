@@ -40,9 +40,9 @@ public class Activator extends AbstractUIPlugin {
 	public Activator() {
 	}
 
+	// BEGIN SUPRESS CATCH EXCEPTION
 	/**
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 * @generated
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -51,8 +51,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 * @generated
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
@@ -60,8 +59,9 @@ public class Activator extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	// END SUPRESS CATCH EXCEPTION
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance.
 	 * 
 	 * @return the shared instance
 	 */
@@ -82,7 +82,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Logs exception.
 	 * 
-	 * @param e
+	 * @param e the exception
 	 */
 	public static void logException(Exception e) {
 		getDefault().getLog().log(

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecp.edit.controls">
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.StringControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.StringControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -14,7 +14,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.DoubleControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.DoubleControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -24,7 +24,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.IntegerControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.IntegerControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -34,7 +34,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.BooleanControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.BooleanControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -44,7 +44,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.DateTimeControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.DateTimeControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -54,7 +54,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.EEnumControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.EEnumControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -64,7 +64,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.LinkControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -74,19 +74,19 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.ReferenceMultiControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.internal.edit.swt.controls.ReferenceMultiControlTester">
+               testClass="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControlTester">
          </dynamicTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.internal.edit.swt.controls.AttributeMultiControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.AttributeMultiControl"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.internal.edit.swt.controls.AttributeMultiControlTester">
+               testClass="org.eclipse.emf.ecp.edit.internal.swt.controls.AttributeMultiControlTester">
          </dynamicTest>
       </control>
    </extension>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,28 +10,24 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.internal.edit;
+package org.eclipse.emf.ecp.edit.internal.swt;
 
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
 /**
- * Activator class.
- * @author Eugen Neufeld
- *
+ * The activator class controls the plug-in life cycle.
  */
-public class Activator extends Plugin {
+public class Activator extends AbstractUIPlugin {
 
-	/**
-	 * The plug-in ID.
-	 */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.edit";
+	/** The plug-in ID. **/
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.edit.swt"; //$NON-NLS-1$
 
-	/**
-	 * The shared instance.
-	 */
+	/** The shared instance. **/
 	private static Activator plugin;
-
+	
 	/**
 	 * The constructor.
 	 */
@@ -45,16 +41,16 @@ public class Activator extends Plugin {
 		plugin = this;
 	}
 
+
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 	// END SUPRESS CATCH EXCEPTION
-
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -69,6 +65,13 @@ public class Activator extends Plugin {
 		getDefault().getLog().log(
 			new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 	}
-	
-	
+	/**
+	 * Returns an image descriptor for the image file at the given. plug-in relative path
+	 * 
+	 * @param path the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
 }
