@@ -32,7 +32,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * The ControlFactoryImpl is a Singelton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides a
- * method ({@link #createControl(Composite, IItemPropertyDescriptor, EditModelElementContext)}) for creating a suitable
+ * method ({@link #createControl(T, IItemPropertyDescriptor, EditModelElementContext)}) for creating a suitable
  * control for with the known widgets.
  * 
  * @author Eugen Neufeld

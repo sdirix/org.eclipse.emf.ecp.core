@@ -23,7 +23,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class Application implements IApplication {
 
-	/** {@inheritDoc} */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	public Object start(IApplicationContext context) throws Exception {
 		Display display = PlatformUI.createDisplay();
 		try {
@@ -38,7 +38,7 @@ public class Application implements IApplication {
 		}
 
 	}
-
+	// END SUPRESS CATCH EXCEPTION
 	/** {@inheritDoc} */
 	public void stop() {
 		if (!PlatformUI.isWorkbenchRunning()) {

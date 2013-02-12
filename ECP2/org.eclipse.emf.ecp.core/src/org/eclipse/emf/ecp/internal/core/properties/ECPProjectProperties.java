@@ -20,10 +20,10 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 /**
  * @author Eike Stepper
  */
-public class ECPProjectProperties extends Properties<ECPProject> {
-	public static final IProperties<ECPProject> INSTANCE = new ECPProjectProperties();
+public final class ECPProjectProperties extends Properties<ECPProject> {
+	private static final IProperties<ECPProject> INSTANCE = new ECPProjectProperties();
 
-	public ECPProjectProperties() {
+	private ECPProjectProperties() {
 		super(ECPProject.class);
 
 		add(new Property<ECPProject>("name", "Name", "The name of this project.") {
@@ -78,16 +78,13 @@ public class ECPProjectProperties extends Properties<ECPProject> {
 		});
 	}
 
-	public static void main(String[] args) {
-		new Tester().dumpContributionMarkup();
-	}
-
 	/**
 	 * @author Eike Stepper
 	 */
 	public static final class Tester extends DefaultPropertyTester<ECPProject> {
-		public static final String NAMESPACE = "org.eclipse.emf.ecp.core.project";
+		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.project";
 
+		/** The tester constructor. */
 		public Tester() {
 			super(NAMESPACE, INSTANCE);
 		}

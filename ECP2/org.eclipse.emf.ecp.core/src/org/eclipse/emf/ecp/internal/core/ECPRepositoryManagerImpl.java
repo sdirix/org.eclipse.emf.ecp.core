@@ -191,51 +191,63 @@ public final class ECPRepositoryManagerImpl extends
 			}
 		}
 
+		/** {@inheritDoc} */
 		public boolean isStorable() {
 			return false;
 		}
 
+		/** {@inheritDoc} */
 		public void write(ObjectOutput out) throws IOException {
 			throw new UnsupportedOperationException();
 		}
 
+		/** {@inheritDoc} */
 		public InternalProvider getProvider() {
 			String providerName = getConfigurationElement().getAttribute("provider");
 			return (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);
 		}
 
+		/** {@inheritDoc} */
 		public ECPProperties getProperties() {
 			return properties;
 		}
 
+		/** {@inheritDoc} */
 		public Object getProviderSpecificData() {
 			return getResolvedElement().getProviderSpecificData();
 		}
 
+		/** {@inheritDoc} */
 		public void setProviderSpecificData(Object data) {
 			getResolvedElement().setProviderSpecificData(data);
 		}
 
+		/** {@inheritDoc} */
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 			return getResolvedElement().getAdapter(adapterType);
 		}
 
+		/** {@inheritDoc} */
 		public ECPModelContext getContext() {
 			return this;
 		}
 
+		/** {@inheritDoc} */
 		public boolean canDelete() {
 			return false;
 		}
 
+		/** {@inheritDoc} */
 		public void delete() {
 			throw new UnsupportedOperationException();
 		}
 
+		/** {@inheritDoc} */
 		public void notifyObjectsChanged(Object[] objects) {
 			getResolvedElement().notifyObjectsChanged(objects);
 		}
 
+		/** {@inheritDoc} */
 		@Override
 		protected InternalRepository resolve() throws Exception {
 			return new ECPRepositoryImpl(getProvider(), getName(), getProperties());

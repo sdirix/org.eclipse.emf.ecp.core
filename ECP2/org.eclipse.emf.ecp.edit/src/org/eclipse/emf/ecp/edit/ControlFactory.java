@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.edit.ControlFactoryImpl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * The ControlFactory provides a
- * method ({@link #createControl(Composite, IItemPropertyDescriptor, EditModelElementContext)}) for creating a suitable
+ * method ({@link ControlFactory#createControl(T, IItemPropertyDescriptor, EditModelElementContext)}) for creating a suitable
  * control with the known widgets.
  * 
  * @author Eugen Neufeld

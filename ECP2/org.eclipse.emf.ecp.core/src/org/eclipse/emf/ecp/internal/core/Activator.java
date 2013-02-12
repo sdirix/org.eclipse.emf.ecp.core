@@ -42,7 +42,7 @@ public final class Activator extends Plugin {
 	public Activator() {
 	}
 
-	/** {@inheritDoc} */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		super.start(bundleContext);
@@ -57,7 +57,6 @@ public final class Activator extends Plugin {
 		ECPProjectManagerImpl.INSTANCE.activate();
 	}
 
-	/** {@inheritDoc} */
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		ECPProjectManagerImpl.INSTANCE.deactivate();
@@ -68,6 +67,7 @@ public final class Activator extends Plugin {
 		super.stop(bundleContext);
 	}
 
+	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Logs and Info message.
 	 * 

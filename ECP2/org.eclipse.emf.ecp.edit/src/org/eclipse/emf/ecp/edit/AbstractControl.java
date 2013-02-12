@@ -16,9 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * The {@link AbstractControl} is the common super class for the
- * {@link org.eclipse.emf.ecp.internal.edit.swt.controls.SingleControl} and the
- * {@link org.eclipse.emf.ecp.internal.edit.swt.controls.MultiControl}.
+ * The {@link AbstractControl} is the abstract class describing a control.
  * This class provides the necessary common access methods.
  * 
  * @param <COMPOSITE> this binds the composite to a specific rendering engine. e.g. for SWT this would be a

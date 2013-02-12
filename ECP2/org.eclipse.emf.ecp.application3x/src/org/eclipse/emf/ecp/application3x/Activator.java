@@ -33,18 +33,17 @@ public class Activator extends AbstractUIPlugin {
 	public Activator() {
 	}
 
-	/** {@inheritDoc} */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
-	/** {@inheritDoc} */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
-
+	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
 	 *
