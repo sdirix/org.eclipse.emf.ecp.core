@@ -45,6 +45,8 @@ import org.eclipse.swt.widgets.Link;
  * 
  */
 public class LinkControl extends SingleControl {
+	private static final String EDITOR_ID = "org.eclipse.emf.ecp.editor";  //$NON-NLS-1$
+
 	/**
 	 * Constructor for a eenum control.
 	 * 
@@ -104,7 +106,8 @@ public class LinkControl extends SingleControl {
 		mainComposite.setLayout(stackLayout);
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
-		unsetLabel.setText("(Not Set)");
+		//TODO language
+		unsetLabel.setText("(Not Set)");//$NON-NLS-1$
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -165,7 +168,7 @@ public class LinkControl extends SingleControl {
 		// ModelElementClassTooltip.enableFor(imageHyperlink);
 		hyperlink = new Link(linkComposite, SWT.NONE);
 		String text = shortLabelProvider.getText(linkModelElement);
-		hyperlink.setText("<a>" + text + "</a>");
+		hyperlink.setText("<a>" + text + "</a>");//$NON-NLS-1$ //$NON-NLS-2$
 		hyperlink.setToolTipText(text);
 		hyperlink.addSelectionListener(new SelectionAdapter() {
 
@@ -178,7 +181,7 @@ public class LinkControl extends SingleControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				getModelElementContext().openEditor(linkModelElement, "org.eclipse.emf.ecp.editor");
+				getModelElementContext().openEditor(linkModelElement, EDITOR_ID);
 			}
 
 		});
@@ -192,7 +195,7 @@ public class LinkControl extends SingleControl {
 			imageHyperlink.setImage(image);
 			imageHyperlink.setData(linkModelElement.eClass());
 			String text = shortLabelProvider.getText(linkModelElement);
-			hyperlink.setText("<a>" + text + "</a>");
+			hyperlink.setText("<a>" + text + "</a>");//$NON-NLS-1$ //$NON-NLS-2$
 			hyperlink.setToolTipText(text);
 			hyperlink.update();
 			// imageHyperlink.layout(true);

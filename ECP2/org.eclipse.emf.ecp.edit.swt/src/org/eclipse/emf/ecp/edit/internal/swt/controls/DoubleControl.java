@@ -41,15 +41,15 @@ public class DoubleControl extends AbstractTextControl<Double> {
 	/**
 	 * This block comes from {@link Double#valueOf(String)}.
 	 */
-	private static final String DIGITS = "(\\p{Digit}+)";
-	private static final String HEX_DIGITS = "(\\p{XDigit}+)";
+	private static final String DIGITS = "(\\p{Digit}+)";//$NON-NLS-1$
+	private static final String HEX_DIGITS = "(\\p{XDigit}+)";//$NON-NLS-1$
 	// an exponent is 'e' or 'E' followed by an optionally
 	// signed decimal integer.
-	private static final String EXP = "[eE][+-]?" + DIGITS;
-	private static final String FP_REGEX = "[\\x00-\\x20]*" + // Optional leading "whitespace"
-		"[+-]?(" + // Optional sign character
-		"NaN|" + // "NaN" string
-		"Infinity|" + // "Infinity" string
+	private static final String EXP = "[eE][+-]?" + DIGITS;//$NON-NLS-1$
+	private static final String FP_REGEX = "[\\x00-\\x20]*" + // Optional leading "whitespace"//$NON-NLS-1$
+		"[+-]?(" + // Optional sign character //$NON-NLS-1$
+		"NaN|" + // "NaN" string //$NON-NLS-1$
+		"Infinity|" + // "Infinity" string //$NON-NLS-1$
 
 		// A decimal floating-point string representing a finite positive
 		// number without a leading sign has at most five basic pieces:
@@ -62,20 +62,20 @@ public class DoubleControl extends AbstractTextControl<Double> {
 		// edition, section 3.10.2.
 
 		// Digits ._opt Digits_opt ExponentPart_opt FloatTypeSuffix_opt
-		"(((" + DIGITS + "(\\.)?(" + DIGITS + "?)(" + EXP + ")?)|" +
+		"(((" + DIGITS + "(\\.)?(" + DIGITS + "?)(" + EXP + ")?)|" + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	// . Digits ExponentPart_opt FloatTypeSuffix_opt
-		"(\\.(" + DIGITS + ")(" + EXP + ")?)|" +
+		"(\\.(" + DIGITS + ")(" + EXP + ")?)|" + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 		// Hexadecimal strings
-		"((" +
+		"((" + //$NON-NLS-1$
 		// 0[xX] HexDigits ._opt BinaryExponent FloatTypeSuffix_opt
-		"(0[xX]" + HEX_DIGITS + "(\\.)?)|" +
+		"(0[xX]" + HEX_DIGITS + "(\\.)?)|" + //$NON-NLS-1$ //$NON-NLS-2$
 
 		// 0[xX] HexDigits_opt . HexDigits BinaryExponent FloatTypeSuffix_opt
-		"(0[xX]" + HEX_DIGITS + "?(\\.)" + HEX_DIGITS + ")" +
+		"(0[xX]" + HEX_DIGITS + "?(\\.)" + HEX_DIGITS + ")" + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-		")[pP][+-]?" + DIGITS + "))" + "[fFdD]?))" + "[\\x00-\\x20]*";// Optional trailing "whitespace"
+		")[pP][+-]?" + DIGITS + "))" + "[fFdD]?))" + "[\\x00-\\x20]*";// Optional trailing "whitespace" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	private static final Pattern DOUBLE_PATTERN = Pattern.compile(FP_REGEX);
 	@Override

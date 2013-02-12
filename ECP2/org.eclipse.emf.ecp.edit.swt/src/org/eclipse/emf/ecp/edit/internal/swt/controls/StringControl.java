@@ -81,7 +81,7 @@ public class StringControl extends AbstractTextControl<String> {
 	/** {@inheritDoc} */
 	@Override
 	protected String getDefaultValue() {
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} */

@@ -57,20 +57,20 @@ public class NewReferenceAction extends ECPSWTAction {
 			modelElementContext.getModelElement());
 		Image image = Activator.getImageDescriptor(((URL) labelProvider.getImage(obj)).toExternalForm()).createImage();
 
-		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");
+		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
 		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
 			OverlayImageDescriptor.LOWER_RIGHT);
 		setImageDescriptor(imageDescriptor);
 
 		String attribute = getItemPropertyDescriptor().getDisplayName(eReference);
-
+		//TODO language, same text as in addreference
 		// make singular attribute labels
-		if (attribute.endsWith("ies")) {
-			attribute = attribute.substring(0, attribute.length() - 3) + "y";
-		} else if (attribute.endsWith("s")) {
+		if (attribute.endsWith("ies")) {//$NON-NLS-1$
+			attribute = attribute.substring(0, attribute.length() - 3) + "y";//$NON-NLS-1$
+		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText("Create and link new " + attribute);
+		setToolTipText("Create and link new " + attribute);//$NON-NLS-1$
 	}
 
 	/**
@@ -143,8 +143,9 @@ public class NewReferenceAction extends ECPSWTAction {
 	public void run() {
 		// checks if we try to create a container for ourself, this is not allowed
 		if (((EReference) getFeature()).isContainer()) {
-			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "",
-				"Operation not permitted for container references!");
+			//TODO PlatformUI dependency, language
+			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",//$NON-NLS-1$
+				"Operation not permitted for container references!");//$NON-NLS-1$
 			return;
 		}
 		getModelElementContext().getEditingDomain().getCommandStack()

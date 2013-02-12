@@ -23,6 +23,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.ui.ISharedImages;
 
 /**
@@ -45,7 +46,8 @@ public class DeleteReferenceAction extends ECPSWTAction {
 
 		setImageDescriptor(Activator.getDefault().getWorkbench().getSharedImages()
 			.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		setToolTipText("Delete Reference");
+		//TODO language
+		setToolTipText("Delete Reference");  //$NON-NLS-1$
 	}
 
 	@Override
@@ -78,22 +80,23 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		getModelElementContext().getEditingDomain().getCommandStack().execute(removeCommand);
 	}
 
-	private boolean askConfirmation(EObject toBeDeleted) {
+	private static boolean askConfirmation(EObject toBeDeleted) {
 		String question = null;
 		ComposedAdapterFactory adapterFactory = null;
 		// if (toBeDeleted.size() == 1) {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		String modelElementName = adapterFactoryLabelProvider.getText(toBeDeleted);
-		question = "Do you really want to delete the model element " + modelElementName + "?";
+		//TODO language
+		question = "Do you really want to delete the model element " + modelElementName + "?";//$NON-NLS-1$ //$NON-NLS-2$
 		// } else {
 		// question = "Do you really want to delete these " + toBeDeleted.size() + " model elements?";
 		// }
-		MessageDialog dialog = new MessageDialog(null, "Confirmation", null, question, MessageDialog.QUESTION,
-			new String[] { "Yes", "No" }, 0);
+		MessageDialog dialog = new MessageDialog(null, "Confirmation", null, question, MessageDialog.QUESTION,//$NON-NLS-1$
+			new String[] { "Yes", "No" }, 0);//$NON-NLS-1$//$NON-NLS-2$
 
 		boolean confirm = false;
-		if (dialog.open() == MessageDialog.OK) {
+		if (dialog.open() == Window.OK) {
 			confirm = true;
 		}
 

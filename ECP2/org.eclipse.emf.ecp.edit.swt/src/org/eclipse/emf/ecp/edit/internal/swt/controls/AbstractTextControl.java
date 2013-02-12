@@ -86,7 +86,8 @@ public abstract class AbstractTextControl<T> extends SingleControl {
 	}
 	private void addControlDecoration() {
 		controlDecoration = new ControlDecoration(text, SWT.RIGHT | SWT.TOP);
-		controlDecoration.setDescriptionText("Invalid input");
+		//TODO language
+		controlDecoration.setDescriptionText("Invalid input");//$NON-NLS-1$
 		controlDecoration.setShowHover(true);
 		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
 			FieldDecorationRegistry.DEC_ERROR);
@@ -195,7 +196,8 @@ public abstract class AbstractTextControl<T> extends SingleControl {
 				}
 
 				controlDecoration.show();
-				return ValidationStatus.error("Not a double.");
+				//TODO language
+				return ValidationStatus.error("Not a double.");//$NON-NLS-1$
 			}
 		};
 		UpdateValueStrategy strategy = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);

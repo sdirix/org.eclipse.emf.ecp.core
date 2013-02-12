@@ -72,7 +72,8 @@ public class DateTimeControl extends SingleControl {
 		createDateAndTimeWidget(dateTimeComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
-		unsetLabel.setText("No date set! Click to set date.");
+		//TODO language
+		unsetLabel.setText("No date set! Click to set date.");//$NON-NLS-1$
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -84,9 +85,11 @@ public class DateTimeControl extends SingleControl {
 			}
 
 			public void mouseDown(MouseEvent e) {
+				//nothing to do
 			}
 
 			public void mouseDoubleClick(MouseEvent e) {
+				//nothing to do
 			}
 		});
 		if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {

@@ -66,6 +66,10 @@ import org.eclipse.ui.PlatformUI;
  */
 public abstract class MultiControl extends SWTControl {
 
+	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+	private static final String ICONS_ARROW_DOWN_PNG = "icons/arrow_down.png";//$NON-NLS-1$
+	private static final String ICONS_ARROW_UP_PNG = "icons/arrow_up.png";//$NON-NLS-1$
+	
 	private IObservableList model;
 	private IListChangeListener changeListener;
 	// list of controls
@@ -279,6 +283,8 @@ public abstract class MultiControl extends SWTControl {
 	 * 
 	 */
 	private final class WidgetWrapper {
+		
+
 		private final ECPObservableValue modelValue;
 
 		private Composite composite;
@@ -337,8 +343,8 @@ public abstract class MultiControl extends SWTControl {
 		 * Initializes the up/down buttons.
 		 */
 		private void createUpDownButtons(Composite composite) {
-			Image up = Activator.getImageDescriptor("icons/arrow_up.png").createImage();
-			Image down = Activator.getImageDescriptor("icons/arrow_down.png").createImage();
+			Image up = Activator.getImageDescriptor(ICONS_ARROW_UP_PNG).createImage();
+			Image down = Activator.getImageDescriptor(ICONS_ARROW_DOWN_PNG).createImage();
 
 			Button upB = new Button(composite, SWT.PUSH);
 			upB.setImage(up);
@@ -432,7 +438,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImageDescriptor("icons/validation_error.png").createImage();
+			Image image = Activator.getImageDescriptor(MultiControl.VALIDATION_ERROR_ICON).createImage();
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
 		}

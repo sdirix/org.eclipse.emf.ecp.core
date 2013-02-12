@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public abstract class SingleControl extends SWTControl {
 
+	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private Label validationLabel;
 
 	/**
@@ -117,7 +118,7 @@ public abstract class SingleControl extends SWTControl {
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImageDescriptor("icons/validation_error.png").createImage();
+			Image image = Activator.getImageDescriptor(SingleControl.VALIDATION_ERROR_ICON).createImage(); 
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
 		}

@@ -62,7 +62,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 			Class<?> instanceClass = ((EAttribute)feature).getEAttributeType().getInstanceClass();
 			if (instanceClass.isPrimitive()) {
 				try {
-					Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);
+					Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
 					if (!primitive.equals(instanceClass)) {
 						return NOT_APPLICABLE;
 					}
