@@ -38,6 +38,9 @@ import org.eclipse.swt.widgets.Text;
  */
 public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IECPObserver> implements
 	UIProviderRegistry {
+	/**
+	 * This is the Instance used by the {@link UIProviderRegistry} for providing its instance.
+	 */
 	public static final UIProviderRegistryImpl INSTANCE = new UIProviderRegistryImpl();
 
 	private final UIProviderParser extensionParser = new UIProviderParser();
@@ -45,6 +48,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 	private UIProviderRegistryImpl() {
 	}
 
+	/** {@inheritDoc} */
 	public UIProvider getUIProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
 			ECPProvider provider = ((ECPProviderAware) adaptable).getProvider();
@@ -56,7 +60,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 		return AdapterUtil.adapt(adaptable, UIProvider.class);
 	}
 
-	public synchronized UIProvider getUIProvider(ECPProvider provider) {
+	private synchronized UIProvider getUIProvider(ECPProvider provider) {
 		UIProvider uiProvider = (UIProvider) ((InternalProvider) provider).getUIProvider();
 		if (uiProvider != null) {
 			return uiProvider;
@@ -77,34 +81,19 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 		return uiProvider;
 	}
 
+	/** {@inheritDoc} */
 	public UIProvider getUIProvider(String name) {
 		return getElement(name);
 	}
 
+	/** {@inheritDoc} */
 	public UIProvider[] getUIProviders() {
 		return getElements();
 	}
 
+	/** {@inheritDoc} */
 	public boolean hasUIProviders() {
 		return hasElements();
-	}
-
-	public String getText(ECPModelContext context, Object adaptable) {
-		UIProvider uiProvider = getUIProvider(adaptable);
-		if (uiProvider == null) {
-			return null;
-		}
-
-		return uiProvider.getText(adaptable);
-	}
-
-	public Image getImage(ECPModelContext context, Object adaptable) {
-		UIProvider uiProvider = getUIProvider(adaptable);
-		if (uiProvider == null) {
-			return null;
-		}
-
-		return uiProvider.getImage(adaptable);
 	}
 
 	@Override

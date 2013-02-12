@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * An EditorContext depending on an {@link ECPProject}.
  * 
  * @author Eugen Neufeld
  * 
@@ -134,7 +135,9 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference)
+	 * @see
+	 * org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference
+	 * )
 	 */
 	public Iterator<EObject> getLinkElements(EReference eReference) {
 		return ecpProject.getReferenceCandidates(modelElement, eReference);
@@ -151,7 +154,8 @@ public class EditorContext implements EditModelElementContext {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
+	 * @see
+	 * org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
 	 */
 	public void addModelElement(EObject newMEInstance) {
 		ecpProject.getElements().add(newMEInstance);

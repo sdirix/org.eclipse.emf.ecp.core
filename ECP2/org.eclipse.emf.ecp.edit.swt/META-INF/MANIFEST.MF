@@ -30,9 +30,9 @@ Import-Package: org.eclipse.core.commands,
  org.eclipse.ui;ui.workbench=split,
  org.eclipse.ui.dialogs;ui.workbench=split,
  org.eclipse.ui.plugin
-Export-Package: org.eclipse.emf.ecp.edit.internal.swt,
- org.eclipse.emf.ecp.edit.internal.swt.actions,
- org.eclipse.emf.ecp.edit.internal.swt.controls,
- org.eclipse.emf.ecp.edit.internal.swt.dialogs,
- org.eclipse.emf.ecp.edit.internal.swt.provider,
- org.eclipse.emf.ecp.edit.internal.swt.util
+Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.actions;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.dialogs;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.provider;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.util;version="1.0.0";x-internal:=true

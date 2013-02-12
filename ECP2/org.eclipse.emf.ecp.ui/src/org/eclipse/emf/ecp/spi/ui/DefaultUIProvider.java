@@ -33,7 +33,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
@@ -80,36 +79,48 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	private String description;
 
+	/**
+	 * Constructor of a {@link DefaultUIProvider}.
+	 * 
+	 * @param name the name for this {@link UIProvider}
+	 */
 	public DefaultUIProvider(String name) {
 		super(name);
 		label = name;
 		description = "";
 	}
 
+	/** {@inheritDoc} **/
 	public String getType() {
 		return TYPE;
 	}
 
+	/** {@inheritDoc} **/
 	public InternalProvider getProvider() {
 		return (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(getName());
 	}
 
+	/** {@inheritDoc} **/
 	public final String getLabel() {
 		return label;
 	}
 
+	/** {@inheritDoc} **/
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
+	/** {@inheritDoc} **/
 	public final String getDescription() {
 		return description;
 	}
 
+	/** {@inheritDoc} **/
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
+	/** {@inheritDoc} **/
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		return null;
 	}
@@ -128,24 +139,28 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
-	 * @see IAdaptable#getAdapter(Class)
+	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
+	/** {@inheritDoc} **/
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
+	/** {@inheritDoc} **/
 	public final void dispose() {
 		disposable.dispose();
 	}
 
+	/** {@inheritDoc} **/
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
+	/** {@inheritDoc} **/
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
@@ -154,6 +169,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		// Subclasses can override.
 	}
 
+	/** {@inheritDoc} **/
 	public String getText(Object element) {
 		if (element instanceof Resource) {
 			Resource resource = (Resource) element;
@@ -163,6 +179,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		return UIProvider.EMF_LABEL_PROVIDER.getText(element);
 	}
 
+	/** {@inheritDoc} **/
 	public Image getImage(Object element) {
 		if (element instanceof ECPProject) {
 			ECPProject project = (ECPProject) element;
@@ -176,56 +193,68 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		return UIProvider.EMF_LABEL_PROVIDER.getImage(element);
 	}
 
+	/** {@inheritDoc} **/
 	// TODO is this the right place for this implementation?
 	public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements) {
 		if (elements.length == 1) {
 			Object element = elements[0];
 			if (context instanceof ECPProject) {
-				final ECPProject project = (ECPProject) context;
-
-				if (element instanceof Resource) {
-					Resource resource = (Resource) element;
-					populateNewRoot(resource, manager);
-				} else if (element instanceof EObject) {
-					final EObject object = (EObject) element;
-					final EditingDomain domain = project.getEditingDomain();
-					Collection<?> descriptors = domain.getNewChildDescriptors(object, null);
-					if (descriptors != null) {
-						for (Object descriptor : descriptors) {
-							final CommandParameter cp = (CommandParameter) descriptor;
-							// TODO check containment?
-							if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
-								continue;
-							}
-							manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor) {
-								@Override
-								public void run() {
-									super.run();
-
-									// try {
-									// TODO what is correct
-									domain.getCommandStack().execute(
-										new AddCommand(domain, object, ((CommandParameter) descriptor)
-											.getEStructuralFeature(), new Object[] { cp.getEValue() }));
-									// object.eResource().save(null);
-									ActionHelper.openModelElement(cp.getEValue(), this.getClass().getName(), project);
-									// } catch (IOException ex) {
-									// Activator.log(ex);
-									// }
-								}
-							});
-						}
-					}
-				}
+				fillContextMenuForProject(manager, (ECPProject) context, element);
 			}
 		}
 	}
 
+	private void fillContextMenuForProject(IMenuManager manager, final ECPProject project, Object element) {
+		if (element instanceof Resource) {
+			Resource resource = (Resource) element;
+			populateNewRoot(resource, manager);
+		} else if (element instanceof EObject) {
+			final EditingDomain domain = project.getEditingDomain();
+			Collection<?> descriptors = domain.getNewChildDescriptors(element, null);
+			if (descriptors != null) {
+				fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
+			}
+		}
+	}
+
+	/**
+	 * @param descriptors
+	 */
+	private void fillContextMenuWithDescriptors(IMenuManager manager, Collection<?> descriptors,
+		final EditingDomain domain, final Object object, final ECPProject project) {
+		for (Object descriptor : descriptors) {
+			final CommandParameter cp = (CommandParameter) descriptor;
+			// TODO check containment?
+			if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
+				continue;
+			}
+			manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor) {
+				@Override
+				public void run() {
+					super.run();
+
+					// try {
+					// TODO what is correct
+					domain.getCommandStack().execute(
+						AddCommand.create(domain, object, ((CommandParameter) descriptor).getEStructuralFeature(),
+							new Object[] { cp.getEValue() }));
+					// object.eResource().save(null);
+					ActionHelper.openModelElement(cp.getEValue(), this.getClass().getName(), project);
+					// } catch (IOException ex) {
+					// Activator.log(ex);
+					// }
+				}
+			});
+		}
+	}
+
+	/** {@inheritDoc} **/
 	public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
 		Text repositoryLabelText, Text repositoryDescriptionText) {
 		return new PropertiesComposite(parent, true, repositoryProperties);
 	}
 
+	/** {@inheritDoc} **/
 	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
 		return new PropertiesComposite(parent, true, projectProperties);
 	}
