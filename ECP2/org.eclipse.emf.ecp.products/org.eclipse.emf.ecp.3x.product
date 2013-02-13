@@ -28,7 +28,6 @@
    <features>
       <feature id="org.eclipse.emf.ecp.ui3x"/>
       <feature id="org.eclipse.emf.ecp"/>
-      <feature id="org.eclipse.emf.ecp.cdo"/>
       <feature id="org.eclipse.emf.ecp.emfstore"/>
       <feature id="org.eclipse.emf.ecp.workspace"/>
       <feature id="org.eclipse.emf.ecp.license"/>
