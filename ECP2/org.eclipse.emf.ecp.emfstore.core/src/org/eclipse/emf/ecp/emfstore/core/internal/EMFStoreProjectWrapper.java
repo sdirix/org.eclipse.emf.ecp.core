@@ -19,7 +19,8 @@ import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ILocalProject;
+import org.eclipse.emf.emfstore.client.IRemoteProject;
 
 /**
  * This is the EMFStore implementation of a {@link ECPCheckoutSource}.
@@ -31,7 +32,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
 	private final InternalRepository repository;
 
-	private final EMFStoreCheckoutData checkoutData;
+	private final IRemoteProject remoteProject;
 
 	/**
 	 * The Constructor fro creating an {@link EMFStoreProjectWrapper}.
@@ -39,9 +40,9 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	 * @param repository the repository for this CheckoutSource
 	 * @param checkoutData the container holding relevant information
 	 */
-	public EMFStoreProjectWrapper(InternalRepository repository, EMFStoreCheckoutData checkoutData) {
+	public EMFStoreProjectWrapper(InternalRepository repository, IRemoteProject remoteProject) {
 		this.repository = repository;
-		this.checkoutData = checkoutData;
+		this.remoteProject = remoteProject;
 	}
 
 	/** {@inheritDoc} **/
@@ -56,15 +57,17 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
 	/** {@inheritDoc} **/
 	public String getDefaultCheckoutName() {
-		return checkoutData.getProjectInfo().getName();
+		return remoteProject.getProjectName();
 	}
 
 	/** {@inheritDoc} **/
 	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getUIProvider().getAdapter(checkoutData,
-			ProjectSpace.class);
+
+		ILocalProject projectSpace = EMFStoreProvider.INSTANCE.getUIProvider().getAdapter(remoteProject,
+			ILocalProject.class);
 		if (projectSpace != null) {
-			projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getIdentifier());
+			projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getLocalProjectId()
+				.getId());
 		}
 		ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);
 	}
@@ -74,8 +77,8 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	 * 
 	 * @return the {@link EMFStoreCheckoutData} used
 	 */
-	public EMFStoreCheckoutData getCheckoutData() {
-		return checkoutData;
+	public IRemoteProject getCheckoutData() {
+		return remoteProject;
 	}
 
 }

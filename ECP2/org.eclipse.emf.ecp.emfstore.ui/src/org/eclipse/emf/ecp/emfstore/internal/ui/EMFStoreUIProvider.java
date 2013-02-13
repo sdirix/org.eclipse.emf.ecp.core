@@ -14,14 +14,13 @@ package org.eclipse.emf.ecp.emfstore.internal.ui;
 
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreCheckoutData;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ILocalProject;
+import org.eclipse.emf.emfstore.client.IRemoteProject;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.internal.client.model.exceptions.CertificateStoreException;
-import org.eclipse.emf.emfstore.internal.client.model.impl.RemoteProject;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
 import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
 
@@ -62,14 +61,10 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
-		if (EMFStoreCheckoutData.class.isInstance(adaptable) && adapterType.equals(ProjectSpace.class)) {
-			EMFStoreCheckoutData checkoutData = (EMFStoreCheckoutData) adaptable;
+		if (IRemoteProject.class.isInstance(adaptable) && adapterType.equals(ILocalProject.class)) {
+			IRemoteProject checkoutData = (IRemoteProject) adaptable;
 			try {
-				RemoteProject remoteProject = new RemoteProject(checkoutData.getServerInfo(),
-					checkoutData.getProjectInfo());
-				// TODO: monitor
-				ProjectSpace projectSpace = remoteProject.checkout(new NullProgressMonitor());
-				return (T) projectSpace;
+				return (T) checkoutData.checkout(new NullProgressMonitor());
 			} catch (EMFStoreException e) {
 				Activator.log(e);
 				// BEGIN SUPRESS CATCH EXCEPTION

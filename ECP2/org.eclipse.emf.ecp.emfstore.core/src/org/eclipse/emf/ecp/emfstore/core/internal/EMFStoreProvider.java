@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.emfstore.client.ILocalProject;
+import org.eclipse.emf.emfstore.client.IRemoteProject;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
@@ -46,7 +47,6 @@ import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
-import org.eclipse.emf.emfstore.internal.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 
 import org.eclipse.core.runtime.IStatus;
@@ -129,10 +129,13 @@ public final class EMFStoreProvider extends DefaultProvider {
 		} else if (parent instanceof InternalRepository) {
 			ServerInfo serverInfo = getServerInfo((InternalRepository) parent);
 			if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn()) {
-				EList<ProjectInfo> projectInfos = serverInfo.getProjectInfos();
-				for (ProjectInfo projectInfo : projectInfos) {
-					childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent,
-						new EMFStoreCheckoutData(serverInfo, projectInfo)));
+				try {
+					List<IRemoteProject> projectInfos = serverInfo.getRemoteProjects();
+					for (IRemoteProject projectInfo : projectInfos) {
+						childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent, projectInfo));
+					}
+				} catch (EMFStoreException e) {
+					Activator.log(e);
 				}
 
 			}

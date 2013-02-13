@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIDeleteRemoteProjectController;
+import org.eclipse.emf.emfstore.internal.server.model.ProjectId;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -44,8 +45,8 @@ public class DeleteOnServerHandler extends AbstractHandler {
 
 				InternalRepository repo = (InternalRepository) projectWrapper.getRepository();
 				ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repo);
-				new UIDeleteRemoteProjectController(HandlerUtil.getActiveShell(event), serverInfo, projectWrapper
-					.getCheckoutData().getProjectInfo().getProjectId(), false).execute();
+				new UIDeleteRemoteProjectController(HandlerUtil.getActiveShell(event), serverInfo,
+					(ProjectId) projectWrapper.getCheckoutData().getGlobalProjectId(), false).execute();
 				repo.notifyObjectsChanged(new Object[] { repo });
 			}
 		}
