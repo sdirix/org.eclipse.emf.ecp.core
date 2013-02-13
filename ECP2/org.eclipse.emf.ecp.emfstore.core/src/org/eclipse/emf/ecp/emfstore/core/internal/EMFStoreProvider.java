@@ -130,7 +130,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			ServerInfo serverInfo = getServerInfo((InternalRepository) parent);
 			if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn()) {
 				try {
-					List<IRemoteProject> projectInfos = serverInfo.getRemoteProjects();
+					List<IRemoteProject> projectInfos = serverInfo.getRemoteProjects(serverInfo.getLastUsersession());
 					for (IRemoteProject projectInfo : projectInfos) {
 						childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent, projectInfo));
 					}
