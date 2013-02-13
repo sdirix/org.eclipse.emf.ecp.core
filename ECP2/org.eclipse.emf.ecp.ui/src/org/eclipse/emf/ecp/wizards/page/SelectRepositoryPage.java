@@ -45,10 +45,7 @@ public class SelectRepositoryPage extends WizardPage {
 		setDescription(Messages.SelectRepositoryPage_PageDescription_SelectRepository);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
+	/** {@inheritDoc} */
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, true));

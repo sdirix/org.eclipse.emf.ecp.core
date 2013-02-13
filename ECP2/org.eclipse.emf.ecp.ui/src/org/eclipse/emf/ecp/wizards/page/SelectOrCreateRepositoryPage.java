@@ -41,10 +41,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 
 	private boolean createNewRepository = true;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
+	/** {@inheritDoc} */
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, true));

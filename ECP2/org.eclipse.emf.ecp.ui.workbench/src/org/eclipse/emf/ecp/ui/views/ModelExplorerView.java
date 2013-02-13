@@ -56,6 +56,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 		/**
 		 * Opens an EObject using the ActionHelper or opens a closed ECPProject.
+		 * {@inheritDoc}
 		 */
 		public void doubleClick(DoubleClickEvent event) {
 			if (event.getSelection() instanceof IStructuredSelection) {
@@ -192,7 +193,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 		super.fillContextMenu(manager);
 	}
-
+	/** {@inheritDoc} */
 	public void editorActivated(IEditorPart activatedEditor) {
 		if(!linkingActive || !getViewSite().getPage().isPartVisible(this)){
 			return;

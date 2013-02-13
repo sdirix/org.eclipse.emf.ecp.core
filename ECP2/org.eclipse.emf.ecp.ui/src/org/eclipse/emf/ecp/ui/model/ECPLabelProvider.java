@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.ui.model;
 
@@ -26,108 +25,87 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Eike Stepper
  */
-public class ECPLabelProvider extends LabelProvider implements ECPModelContextProvider
-{
-  private final ECPModelContextProvider modelContextProvider;
+public class ECPLabelProvider extends LabelProvider implements ECPModelContextProvider {
+	private final ECPModelContextProvider modelContextProvider;
 
-  public ECPLabelProvider(ECPModelContextProvider modelContextProvider)
-  {
-    this.modelContextProvider = modelContextProvider;
-  }
+	public ECPLabelProvider(ECPModelContextProvider modelContextProvider) {
+		this.modelContextProvider = modelContextProvider;
+	}
 
-  @Override
-  public String getText(Object element)
-  {
-    UIProvider uiProvider = getUIProvider(element);
-    if (uiProvider != null)
-    {
-      String text = uiProvider.getText(element);
-      if (text != null)
-      {
-        return text;
-      }
-    }
+	@Override
+	public String getText(Object element) {
+		UIProvider uiProvider = getUIProvider(element);
+		if (uiProvider != null) {
+			String text = uiProvider.getText(element);
+			if (text != null) {
+				return text;
+			}
+		}
 
-    return super.getText(element);
-  }
+		return super.getText(element);
+	}
 
-  @Override
-  public Image getImage(Object element)
-  {
-    if (element instanceof SlowElement)
-    {
-      return Activator.getImage("icons/pending.gif"); //$NON-NLS-1$
-    }
+	@Override
+	public Image getImage(Object element) {
+		if (element instanceof SlowElement) {
+			return Activator.getImage("icons/pending.gif"); //$NON-NLS-1$
+		}
 
-    if (element instanceof ErrorElement)
-    {
-      return Activator.getImage("icons/error.gif"); //$NON-NLS-1$
-    }
+		if (element instanceof ErrorElement) {
+			return Activator.getImage("icons/error.gif"); //$NON-NLS-1$
+		}
 
-    UIProvider uiProvider = getUIProvider(element);
-    if (uiProvider != null)
-    {
-      Image image = uiProvider.getImage(element);
-      if (image != null)
-      {
-        return image;
-      }
-    }
+		UIProvider uiProvider = getUIProvider(element);
+		if (uiProvider != null) {
+			Image image = uiProvider.getImage(element);
+			if (image != null) {
+				return image;
+			}
+		}
 
-    return super.getImage(element);
-  }
+		return super.getImage(element);
+	}
 
-  public UIProvider getUIProvider(Object element)
-  {
-    UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(element);
-    if (uiProvider == null)
-    {
-      ECPModelContext modelContext = getModelContext(element);
-      if (modelContext != null)
-      {
-        uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(modelContext);
-      }
-    }
+	public UIProvider getUIProvider(Object element) {
+		UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(element);
+		if (uiProvider == null) {
+			ECPModelContext modelContext = getModelContext(element);
+			if (modelContext != null) {
+				uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(modelContext);
+			}
+		}
 
-    return uiProvider;
-  }
+		return uiProvider;
+	}
 
-  public ECPModelContext getModelContext(Object element)
-  {
-    if (modelContextProvider != null)
-    {
-      return modelContextProvider.getModelContext(element);
-    }
+	/** {@inheritDoc} */
+	public ECPModelContext getModelContext(Object element) {
+		if (modelContextProvider != null) {
+			return modelContextProvider.getModelContext(element);
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  /**
-   * @deprecated Call {@link #fireEvent(LabelProviderChangedEvent)}
-   */
-  @Deprecated
-  @Override
-  protected void fireLabelProviderChanged(LabelProviderChangedEvent event)
-  {
-    super.fireLabelProviderChanged(event);
-  }
+	/**
+	 * @deprecated Call {@link #fireEvent(LabelProviderChangedEvent)}
+	 */
+	@Deprecated
+	@Override
+	protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
+		super.fireLabelProviderChanged(event);
+	}
 
-  protected final void fireEvent(final LabelProviderChangedEvent event)
-  {
-    Display display = Display.getCurrent();
-    if (display == null)
-    {
-      Display.getDefault().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          fireLabelProviderChanged(event);
-        }
-      });
-    }
-    else
-    {
-      fireLabelProviderChanged(event);
-    }
-  }
+	protected final void fireEvent(final LabelProviderChangedEvent event) {
+		Display display = Display.getCurrent();
+		if (display == null) {
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					fireLabelProviderChanged(event);
+				}
+			});
+		} else {
+			fireLabelProviderChanged(event);
+		}
+	}
 }

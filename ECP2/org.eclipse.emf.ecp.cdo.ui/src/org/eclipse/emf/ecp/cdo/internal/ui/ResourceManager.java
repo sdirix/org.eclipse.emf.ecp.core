@@ -38,6 +38,7 @@ import java.util.Map;
  * 
  * @author scheglov_ke
  * @author Dan Rubel
+ * @generated
  */
 public class ResourceManager extends SWTResourceManager {
 	// //////////////////////////////////////////////////////////////////////////
