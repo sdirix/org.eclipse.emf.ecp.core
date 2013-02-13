@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="158">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="159">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.ide" version="4.2.1.M20120914-1800"/>
 <unit id="org.eclipse.equinox.sdk.feature.group" version="3.8.0.v20120522-1841-7M7fA78g5_y-g-jtHxcd5k8q8lFR"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.2"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.8.1.v20120917-0436"/>
-<unit id="org.eclipse.net4j.sdk.feature.group" version="4.1.1.v20120911-1146"/>
-<repository location="http://download.eclipse.org/releases/juno/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.9.3.v20130213-1605"/>
@@ -34,6 +29,12 @@
 <unit id="org.junit" version="4.10.0.v4_10_0_v20120426-0900"/>
 <unit id="org.junit.source" version="4.10.0.v4_10_0_v20120426-0900"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.1.1.v20120911-1146"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.8.1.v20120917-0436"/>
+<unit id="org.eclipse.net4j.sdk.feature.group" version="4.1.1.v20120911-1146"/>
+<repository location="http://download.eclipse.org/releases/juno/"/>
 </location>
 </locations>
 </target>

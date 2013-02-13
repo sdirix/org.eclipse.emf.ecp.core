@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.jface.viewers.StructuredViewer;
-import org.eclipse.jface.viewers.TreeViewer;
 
 /**
  * @author Eugen Neufeld
@@ -21,7 +20,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 public interface SelectionComposite<T extends StructuredViewer> extends CompositeProvider {
 
 	/**
-	 * Returns the {@link TreeViewer}.
+	 * Returns the {@link StructuredViewer}.
 	 * 
 	 * @return the viewer
 	 */

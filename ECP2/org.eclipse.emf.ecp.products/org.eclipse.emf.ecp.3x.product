@@ -34,6 +34,7 @@
       <feature id="org.eclipse.emf.ecp.target"/>
       <feature id="org.eclipse.emf.ecp.example"/>
       <feature id="org.eclipse.emf.ecp.validation.feature"/>
+      <feature id="org.eclipse.emf.ecp.cdo"/>
    </features>
 
    <configurations>
