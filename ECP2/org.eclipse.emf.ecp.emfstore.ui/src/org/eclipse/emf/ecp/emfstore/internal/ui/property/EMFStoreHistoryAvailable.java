@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,25 +10,27 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
-import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 
 import org.eclipse.core.expressions.PropertyTester;
 
 /**
- * @author Tobias Verhoeven
+ * This tests whether a historyview is available either for a project or for an EObject.
  * 
+ * @author Tobias Verhoeven
  */
-public class EMFStoreProjectCanUndoTester extends PropertyTester {
+public class EMFStoreHistoryAvailable extends PropertyTester {
 
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		ProjectSpace ps = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) receiver);
-		Boolean result = Boolean.valueOf(ps.hasUncommitedChanges());
-		return result;
+		ECPProvider provider = ECPProjectManager.INSTANCE.getProject(receiver).getProvider();
+		if (provider != null) {
+			return Boolean.valueOf(provider.getName().equals(EMFStoreProvider.NAME)).equals(expectedValue);
+		}
+		return false;
 	}
 }

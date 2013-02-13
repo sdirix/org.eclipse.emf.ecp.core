@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
@@ -19,17 +20,21 @@ import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.core.expressions.PropertyTester;
 
 /**
- * This tests whether a projectspace is shared.
+ * This tests whether an element is shared.
  * 
- * @author Eugen Neufeld
+ * @author Tobias Verhoeven
  */
-public class EMFStoreProjectIsShared extends PropertyTester {
+public class EMFStoreElementIsShared extends PropertyTester {
 
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		ProjectSpace ps = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) receiver);
-		Boolean result = Boolean.valueOf(ps.isShared());
-		return result.equals(expectedValue);
+		InternalProject project = (InternalProject) ECPProjectManager.INSTANCE.getProject(receiver);
+		if (project != null) {
+			ProjectSpace ps = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			if (ps != null) {
+				return Boolean.valueOf(ps.isShared()).equals(expectedValue);
+			}
+		}
+		return false;
 	}
-
 }

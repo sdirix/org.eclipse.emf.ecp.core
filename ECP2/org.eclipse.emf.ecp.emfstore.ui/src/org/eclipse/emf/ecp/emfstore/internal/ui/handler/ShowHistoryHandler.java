@@ -12,9 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIShowHistoryController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -26,22 +26,26 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * This is the EMFStore ShowHistory Handler delegating to the EMFStore {@link UIShowHistoryController}.
  * 
- * @author Johannes Faltermeier
+ * @author Tobias Verhoeven
  * 
  */
 public class ShowHistoryHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
-			.getFirstElement();
-		if (project == null) {
-			return null;
+		Object object = ((IStructuredSelection) HandlerUtil.getCurrentSelection(event)).getFirstElement();
+		EObject result = null;
+
+		if (object instanceof EObject) {
+			result = (EObject) object;
+		} else if (object instanceof InternalProject) {
+			result = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) object);
 		}
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-		if (projectSpace != null) {
-			new UIShowHistoryController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+
+		if (result != null) {
+			new UIShowHistoryController(HandlerUtil.getActiveShell(event), result).execute();
 		}
+
 		return null;
 	}
 }

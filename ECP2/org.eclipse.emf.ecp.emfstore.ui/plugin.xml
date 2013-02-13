@@ -68,6 +68,14 @@
             id="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups"
             name="manage user/groups">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.emfserverRegisterEPackage"
+            name="Register EPackage">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject"
+            name="Create Remote Project">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -308,10 +316,13 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <and>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
                      <test
                            property="org.eclipse.emf.ecp.core.repository.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
@@ -321,8 +332,8 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
                            value="false">
                      </test>
-                  </and>
-               </iterate>
+                  </iterate>
+               </and>
             </visibleWhen>
          </command>
          <command
@@ -332,19 +343,24 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
-                        value="true">
-                  </test>
-               </iterate>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="true">
+                     </test>
+                  </iterate>
+               </and>
             </visibleWhen>
          </command>
          <command
@@ -354,18 +370,23 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
-                        value="true">
-                  </test>
-                  <instanceof
-                        value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
-                  </instanceof>
-               </iterate>
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                           value="true">
+                     </test>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                     </instanceof>
+                  </iterate>
+               </and>
             </visibleWhen>
          </command>
          <command
@@ -374,16 +395,18 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <instanceof
-                        value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
-                  </instanceof>
+               <and>
                   <count
                         value="1">
                   </count>
-               </iterate>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                     </instanceof>
+                  </iterate>
+               </and>
             </visibleWhen>
          </command>
          <command
@@ -393,13 +416,13 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
+               <and>
                   <count
                         value="1">
                   </count>
-                  <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
                      <test
                            property="org.eclipse.emf.ecp.core.repository.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
@@ -414,8 +437,73 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
                            value="true">
                      </test>
-                  </and>
-               </iterate>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverRegisterEPackage"
+               icon="icons/arrow_up.png"
+               label="Register EPackage"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="true">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                           value="true">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject"
+               icon="icons/projectAdd.png"
+               label="Create new project..."
+               style="push"
+               tooltip="Creates a new project on the server">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="true">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                           value="true">
+                     </test>
+                  </iterate>
+               </and>
             </visibleWhen>
          </command>
       </menuContribution>
@@ -430,9 +518,17 @@
                   variable="selection">
                <iterate
                      ifEmpty="false"
-                     operator="or">
+                     operator="and">
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
+                        value="true">
+                  </test>
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
+                        value="true">
+                  </test>
+                  <test
+                        property="org.eclipse.emf.ecp.core.closeable.open"
                         value="true">
                   </test>
                </iterate>
@@ -447,13 +543,13 @@
                   variable="selection">
                <iterate
                      ifEmpty="false"
-                     operator="or">
+                     operator="and">
                   <test
                         property="org.eclipse.emf.ecp.core.closeable.open"
                         value="true">
                   </test>
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="false">
                   </test>
                </iterate>
@@ -470,7 +566,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
                </iterate>
@@ -499,7 +595,7 @@
                         value="true">
                   </test>
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.canUndo"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
                         value="true">
                   </test>
                </iterate>
@@ -520,7 +616,7 @@
                         value="true">
                   </test>
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.canUndo"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
                         value="true">
                   </test>
                </iterate>
@@ -537,7 +633,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
                </iterate>
@@ -558,7 +654,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
                </iterate>
@@ -575,7 +671,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
                </iterate>
@@ -592,7 +688,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
                </iterate>
@@ -606,6 +702,14 @@
       <handler
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ManagerUserGroupHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.RegisterEPackageHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverRegisterEPackage">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.CreateRemoteProjectHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject">
       </handler>
    </extension>
    <extension
@@ -671,25 +775,32 @@
             type="org.eclipse.emf.ecp.core.ECPRepository">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreProjectIsShared"
-            id="org.eclipse.emf.ecp.emfstore.ui.shared"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreElementIsShared"
+            id="org.eclipse.emf.ecp.emfstore.ui.elementShared"
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
-            properties="isShared"
-            type="org.eclipse.emf.ecp.core.ECPProject">
+            properties="elementShared"
+            type="java.lang.Object">
       </propertyTester>
       <propertyTester
             class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreIsServerAdminTester"
             id="org.eclipse.emf.ecp.emfstore.ui.isServerAdmin"
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
             properties="isServerAdmin"
-            type="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+            type="java.lang.Object">
       </propertyTester>
       <propertyTester
-            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreProjectCanUndoTester"
-            id="org.eclipse.emf.ecp.emfstore.ui.canUndo"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreProjectIsDirtyTester"
+            id="org.eclipse.emf.ecp.emfstore.ui.isDirty"
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
-            properties="canUndo"
+            properties="isDirty"
             type="org.eclipse.emf.ecp.core.ECPProject">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EMFStoreHistoryAvailable"
+            id="org.eclipse.emf.ecp.emfstore.ui.hasHistory"
+            namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
+            properties="hasHistory"
+            type="java.lang.Object">
       </propertyTester>
    </extension>
 	<extension
