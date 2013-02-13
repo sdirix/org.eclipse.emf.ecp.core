@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.ecp.ui.actions;
 
-import org.eclipse.emf.ecp.ui.model.TreeContentProvider;
+import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.IContentProvider;

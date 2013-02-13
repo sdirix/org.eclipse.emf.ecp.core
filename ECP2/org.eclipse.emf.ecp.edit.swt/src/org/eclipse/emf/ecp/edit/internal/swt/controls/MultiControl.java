@@ -328,9 +328,9 @@ public abstract class MultiControl extends SWTControl {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					widgetWrappers.remove(getThis());
+					getModelElementContext().getEditingDomain().getCommandStack().execute(
 					RemoveCommand.create(getModelElementContext().getEditingDomain(),
-						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue())
-						.execute();
+						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue()));
 					getThis().composite.dispose();
 					refreshSection();
 					updateIndicesAfterRemove(modelValue.getIndex());
@@ -361,9 +361,10 @@ public abstract class MultiControl extends SWTControl {
 					int currentIndex = getThis().getModelValue().getIndex();
 					widgetWrappers.get(currentIndex).composite.moveAbove(widgetWrappers.get(currentIndex - 1).composite);
 					widgetWrappers.remove(currentIndex);
+					getModelElementContext().getEditingDomain().getCommandStack().execute(
 					MoveCommand.create(getModelElementContext().getEditingDomain(),
 						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue(),
-						currentIndex - 1).execute();
+						currentIndex - 1));
 					widgetWrappers.add(--currentIndex, getThis());
 					getThis().getModelValue().setIndex(currentIndex);
 					shiftIndecesToRight(currentIndex);
@@ -385,9 +386,10 @@ public abstract class MultiControl extends SWTControl {
 					int currentIndex = getThis().getModelValue().getIndex();
 					widgetWrappers.get(currentIndex).composite.moveBelow(widgetWrappers.get(currentIndex + 1).composite);
 					widgetWrappers.remove(currentIndex);
+					getModelElementContext().getEditingDomain().getCommandStack().execute(
 					MoveCommand.create(getModelElementContext().getEditingDomain(),
 						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue(),
-						currentIndex + 1).execute();
+						currentIndex + 1));
 					widgetWrappers.add(++currentIndex, getThis());
 					getThis().getModelValue().setIndex(currentIndex);
 					shiftIndecesToLeft(currentIndex);

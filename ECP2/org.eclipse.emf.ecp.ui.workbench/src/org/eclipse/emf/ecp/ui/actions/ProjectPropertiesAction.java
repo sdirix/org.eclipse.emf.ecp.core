@@ -11,7 +11,7 @@
 package org.eclipse.emf.ecp.ui.actions;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.dialogs.ProjectPropertiesDialog;
+import org.eclipse.emf.ecp.internal.ui.dialogs.ProjectPropertiesDialog;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.IStructuredSelection;
 

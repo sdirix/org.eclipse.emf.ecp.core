@@ -24,13 +24,15 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
-import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
-import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
+import org.eclipse.emf.ecp.internal.wizards.NewModelElementWizard;
+import org.eclipse.emf.ecp.ui.common.CompositeFactory;
+import org.eclipse.emf.ecp.ui.common.SelectionComposite;
+import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -148,7 +150,7 @@ public class EditorContext implements EditModelElementContext {
 	/** {@inheritDoc} */
 	public void openEditor(EObject o, String source) {
 		// TODO only elements of the same project?
-		ActionHelper.openModelElement(o, source, ecpProject);
+		HandlerHelper.openModelElement(o, source, ecpProject);
 	}
 
 	/** {@inheritDoc} */
@@ -187,8 +189,8 @@ public class EditorContext implements EditModelElementContext {
 		ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
 
 		NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
-		SelectModelClassComposite helper = new SelectModelClassComposite(ePackages, new HashSet<EPackage>(),
-			new HashSet<EPackage>(), classes);
+		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ePackages,
+			new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 		wizard.setCompositeProvider(helper);
 		// wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 

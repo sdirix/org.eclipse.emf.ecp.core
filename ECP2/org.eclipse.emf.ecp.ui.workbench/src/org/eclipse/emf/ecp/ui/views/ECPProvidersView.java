@@ -11,9 +11,9 @@
 package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.internal.ui.model.ProvidersContentProvider;
+import org.eclipse.emf.ecp.internal.ui.model.ProvidersLabelProvider;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
-import org.eclipse.emf.ecp.ui.model.ProvidersContentProvider;
-import org.eclipse.emf.ecp.ui.model.ProvidersLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 

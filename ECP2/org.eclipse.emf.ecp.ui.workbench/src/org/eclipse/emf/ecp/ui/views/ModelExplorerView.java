@@ -16,14 +16,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
 import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
-import org.eclipse.emf.ecp.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.ui.platform.Activator;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
+import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -71,7 +71,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 				}
 				else if (firstElement instanceof EObject) {
 					ECPModelContext context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
-					ActionHelper.openModelElement((EObject) firstElement, "modelexplorer", (ECPProject) context);
+					HandlerHelper.openModelElement((EObject) firstElement, "modelexplorer", (ECPProject) context);
 				} 
 			}
 		}

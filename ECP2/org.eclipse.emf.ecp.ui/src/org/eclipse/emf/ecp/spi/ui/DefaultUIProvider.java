@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.ui.util.ActionHelper;
-import org.eclipse.emf.ecp.ui.widgets.PropertiesComposite;
+import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -239,7 +239,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 						AddCommand.create(domain, object, ((CommandParameter) descriptor).getEStructuralFeature(),
 							new Object[] { cp.getEValue() }));
 					// object.eResource().save(null);
-					ActionHelper.openModelElement(cp.getEValue(), this.getClass().getName(), project);
+					HandlerHelper.openModelElement(cp.getEValue(), this.getClass().getName(), project);
 					// } catch (IOException ex) {
 					// Activator.log(ex);
 					// }

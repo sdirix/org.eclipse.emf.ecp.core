@@ -29,28 +29,35 @@ import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.dialogs.DeleteDialog;
+import org.eclipse.emf.ecp.internal.wizards.AddRepositoryWizard;
+import org.eclipse.emf.ecp.internal.wizards.CheckoutProjectWizard;
+import org.eclipse.emf.ecp.internal.wizards.CreateProjectWizard;
+import org.eclipse.emf.ecp.internal.wizards.FilterModelElementWizard;
+import org.eclipse.emf.ecp.internal.wizards.NewModelElementWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
-import org.eclipse.emf.ecp.ui.composites.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.composites.CheckedSelectModelClassComposite;
-import org.eclipse.emf.ecp.ui.composites.CheckoutProjectComposite;
-import org.eclipse.emf.ecp.ui.composites.CreateProjectComposite;
-import org.eclipse.emf.ecp.ui.composites.SelectModelClassComposite;
-import org.eclipse.emf.ecp.ui.composites.SelectModelElementComposite;
-import org.eclipse.emf.ecp.ui.dialogs.DeleteDialog;
-import org.eclipse.emf.ecp.wizards.AddRepositoryWizard;
-import org.eclipse.emf.ecp.wizards.CheckoutProjectWizard;
-import org.eclipse.emf.ecp.wizards.CreateProjectWizard;
-import org.eclipse.emf.ecp.wizards.FilterModelElementWizard;
-import org.eclipse.emf.ecp.wizards.NewModelElementWizard;
+import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
+import org.eclipse.emf.ecp.ui.common.CheckedModelClassComposite;
+import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
+import org.eclipse.emf.ecp.ui.common.CompositeFactory;
+import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
@@ -80,7 +87,7 @@ public final class HandlerHelper {
 	 */
 	public static void checkout(final List<ECPCheckoutSource> checkoutObjects, final Shell shell) {
 		for (ECPCheckoutSource checkoutSource : checkoutObjects) {
-			CheckoutProjectComposite checkoutCompposite = new CheckoutProjectComposite(checkoutSource);
+			CheckoutProjectComposite checkoutCompposite = CompositeFactory.getCheckoutProjectComposite(checkoutSource);
 			CheckoutProjectWizard wizard = new CheckoutProjectWizard();
 			wizard.setCompositeProvider(checkoutCompposite);
 
@@ -127,10 +134,11 @@ public final class HandlerHelper {
 			}
 		}
 		if (providers.size() == 0) {
+			// TODO language
 			showError(shell, "No Provider", "Please check if a suitable provider is installed.");
 			return null;
 		}
-		CreateProjectComposite createProjectComposite = new CreateProjectComposite(providers);
+		CreateProjectComposite createProjectComposite = CompositeFactory.getCreateProjectComposite(providers);
 		CreateProjectWizard wizard = new CreateProjectWizard();
 		wizard.setCompositeProvider(createProjectComposite);
 
@@ -169,7 +177,7 @@ public final class HandlerHelper {
 	private static void createNewReferenceElement(final EditingDomain editingDomain, final EObject eObject,
 		final EReference eReference, final Object input, final Shell shell) {
 
-		SelectModelElementComposite composite = new SelectModelElementComposite(input);
+		SelectionComposite<TableViewer> composite = CompositeFactory.getTableSelectionComposite(input);
 		NewModelElementWizard wizard = new NewModelElementWizard("");
 		wizard.setCompositeProvider(composite);
 		WizardDialog wd = new WizardDialog(shell, wizard);
@@ -203,7 +211,7 @@ public final class HandlerHelper {
 	 * @param open whether to open the corresponding editor or not
 	 */
 	public static void addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
-		SelectModelClassComposite helper = new SelectModelClassComposite(ecpProject);
+		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ecpProject);
 		NewModelElementWizard wizard = new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title);
 		wizard.setCompositeProvider(helper);
 		WizardDialog wd = new WizardDialog(shell, wizard);
@@ -230,7 +238,7 @@ public final class HandlerHelper {
 				});
 				if (open) {
 					// 3.open the newly created ME
-					ActionHelper.openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);
+					openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);
 				}
 			}
 		}
@@ -245,8 +253,7 @@ public final class HandlerHelper {
 	public static void filterProjectPackages(final ECPProject ecpProject, final Shell shell) {
 		Set<EPackage> ePackages = ECPUtil.getAllRegisteredEPackages();
 
-		CheckedSelectModelClassComposite checkedModelComposite = new CheckedSelectModelClassComposite(ePackages,
-			new HashSet<EPackage>(), ePackages, new HashSet<EClass>());
+		CheckedModelClassComposite checkedModelComposite = CompositeFactory.getCheckedModelClassComposite(ePackages);
 		Set<Object> initialSelectionSet = new HashSet<Object>();
 		initialSelectionSet.addAll(ecpProject.getVisiblePackages());
 		initialSelectionSet.addAll(ecpProject.getVisibleEClasses());
@@ -283,7 +290,7 @@ public final class HandlerHelper {
 	 * @return the created {@link ECPRepository}
 	 */
 	public static ECPRepository createRepository(final Shell shell) {
-		AddRepositoryComposite addRepositoryComposite = new AddRepositoryComposite();
+		AddRepositoryComposite addRepositoryComposite = CompositeFactory.getAddRepositoryComposite();
 		AddRepositoryWizard wizard = new AddRepositoryWizard();
 		wizard.setCompositeProvider(addRepositoryComposite);
 		WizardDialog wd = new WizardDialog(shell, wizard);
@@ -341,5 +348,50 @@ public final class HandlerHelper {
 	 */
 	public static void saveProject(ECPProject project) {
 		project.saveModel();
+	}
+
+	/**
+	 * This opens the model element.
+	 * 
+	 * @param me
+	 *            ModelElement to open
+	 * @param sourceView
+	 *            the view that requested the open model element
+	 * @param ecpProject the {@link ECPProject} of the model element
+	 */
+	public static void openModelElement(final EObject me, final String sourceView, ECPProject ecpProject) {
+		if (me == null) {
+			MessageDialog.openError(Display.getCurrent().getActiveShell(),
+				Messages.ActionHelper_ErrorTitle_ElementDeleted, Messages.ActionHelper_ErrorMessage_ElementDeleted);
+			return;
+		}
+		IConfigurationElement[] modelelementopener = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.emf.ecp.ui.modelelementopener"); //$NON-NLS-1$
+		ModelElementOpener bestCandidate = null;
+		int bestValue = -1;
+		for (IConfigurationElement element : modelelementopener) {
+			modelelementopener = null;
+			try {
+				ModelElementOpener modelelementOpener = (ModelElementOpener) element.createExecutableExtension("class"); //$NON-NLS-1$
+				int value = modelelementOpener.canOpen(me);
+				if (value > bestValue) {
+					bestCandidate = modelelementOpener;
+					bestValue = value;
+				}
+			} catch (CoreException e) {
+
+				Activator.log(e);
+			}
+		}
+		// TODO: find solution
+		// ECPWorkspaceManager.getObserverBus().notify(ModelElementOpenObserver.class).onOpen(me, sourceView, name);
+		// BEGIN SUPRESS CATCH EXCEPTION
+		try {
+			bestCandidate.openModelElement(me, ecpProject);
+		} catch (RuntimeException e) {
+			Activator.log(e);
+		}
+		// END SUPRESS CATCH EXCEPTION
+
 	}
 }
