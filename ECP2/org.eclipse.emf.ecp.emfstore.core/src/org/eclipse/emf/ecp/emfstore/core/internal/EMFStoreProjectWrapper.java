@@ -19,8 +19,8 @@ import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.client.ILocalProject;
-import org.eclipse.emf.emfstore.client.IRemoteProject;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.ESRemoteProject;
 
 /**
  * This is the EMFStore implementation of a {@link ECPCheckoutSource}.
@@ -32,7 +32,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
 	private final InternalRepository repository;
 
-	private final IRemoteProject remoteProject;
+	private final ESRemoteProject remoteProject;
 
 	/**
 	 * The Constructor fro creating an {@link EMFStoreProjectWrapper}.
@@ -40,7 +40,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	 * @param repository the repository for this CheckoutSource
 	 * @param checkoutData the container holding relevant information
 	 */
-	public EMFStoreProjectWrapper(InternalRepository repository, IRemoteProject remoteProject) {
+	public EMFStoreProjectWrapper(InternalRepository repository, ESRemoteProject remoteProject) {
 		this.repository = repository;
 		this.remoteProject = remoteProject;
 	}
@@ -63,8 +63,8 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	/** {@inheritDoc} **/
 	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
 
-		ILocalProject projectSpace = EMFStoreProvider.INSTANCE.getUIProvider().getAdapter(remoteProject,
-			ILocalProject.class);
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getUIProvider().getAdapter(remoteProject,
+			ESLocalProject.class);
 		if (projectSpace != null) {
 			projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getLocalProjectId()
 				.getId());
@@ -77,7 +77,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	 * 
 	 * @return the {@link EMFStoreCheckoutData} used
 	 */
-	public IRemoteProject getCheckoutData() {
+	public ESRemoteProject getCheckoutData() {
 		return remoteProject;
 	}
 

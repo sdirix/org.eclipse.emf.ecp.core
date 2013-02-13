@@ -17,10 +17,10 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-import org.eclipse.emf.emfstore.client.ILocalProject;
-import org.eclipse.emf.emfstore.client.IRemoteProject;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.ESRemoteProject;
+import org.eclipse.emf.emfstore.client.exceptions.CertificateStoreException;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
-import org.eclipse.emf.emfstore.internal.client.model.exceptions.CertificateStoreException;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
 import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
 
@@ -61,8 +61,8 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
-		if (IRemoteProject.class.isInstance(adaptable) && adapterType.equals(ILocalProject.class)) {
-			IRemoteProject checkoutData = (IRemoteProject) adaptable;
+		if (ESRemoteProject.class.isInstance(adaptable) && adapterType.equals(ESLocalProject.class)) {
+			ESRemoteProject checkoutData = (ESRemoteProject) adaptable;
 			try {
 				return (T) checkoutData.checkout(new NullProgressMonitor());
 			} catch (EMFStoreException e) {

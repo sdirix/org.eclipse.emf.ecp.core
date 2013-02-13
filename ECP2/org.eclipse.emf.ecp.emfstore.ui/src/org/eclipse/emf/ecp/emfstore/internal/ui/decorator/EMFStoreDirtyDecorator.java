@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.core.util.observer.IECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.client.ILocalProject;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.model.observer.ESCommitObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.server.model.IChangePackage;
@@ -37,7 +37,8 @@ import java.util.Map;
 /**
  * @author Eugen Neufeld
  */
-public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCommitObserver, IECPProjectPreDeleteObserver {
+public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCommitObserver,
+	IECPProjectPreDeleteObserver {
 
 	private String dirtyPath = "icons/dirty.png";
 	private Map<ECPProject, EMFStoreDirtyObserver> observers = new HashMap<ECPProject, EMFStoreDirtyObserver>();
@@ -106,12 +107,12 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
-	public boolean inspectChanges(ILocalProject project, IChangePackage changePackage, IProgressMonitor monitor) {
+	public boolean inspectChanges(ESLocalProject localProject, IChangePackage changePackage, IProgressMonitor monitor) {
 		return true;
 	}
 
 	/** {@inheritDoc} */
-	public void commitCompleted(ILocalProject localProject, IPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
+	public void commitCompleted(ESLocalProject localProject, IPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
 		// TODO: cast
 		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();

@@ -31,8 +31,8 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.emfstore.client.ILocalProject;
-import org.eclipse.emf.emfstore.client.IRemoteProject;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
@@ -130,8 +130,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 			ServerInfo serverInfo = getServerInfo((InternalRepository) parent);
 			if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn()) {
 				try {
-					List<IRemoteProject> projectInfos = serverInfo.getRemoteProjects(serverInfo.getLastUsersession());
-					for (IRemoteProject projectInfo : projectInfos) {
+					List<ESRemoteProject> projectInfos = serverInfo.getRemoteProjects(serverInfo.getLastUsersession());
+					for (ESRemoteProject projectInfo : projectInfos) {
 						childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent, projectInfo));
 					}
 				} catch (EMFStoreException e) {
@@ -429,8 +429,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (projectSpace == null) {
 			boolean found = false;
-			List<ILocalProject> localProjects = WorkspaceProvider.getInstance().getWorkspace().getLocalProjects();
-			for (ILocalProject localProject : localProjects) {
+			List<ESLocalProject> localProjects = WorkspaceProvider.getInstance().getWorkspace().getLocalProjects();
+			for (ESLocalProject localProject : localProjects) {
 				String projectSpaceID = internalProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
 				if (((ProjectSpace) localProject).getIdentifier().equals(projectSpaceID)) {
 					found = true;
