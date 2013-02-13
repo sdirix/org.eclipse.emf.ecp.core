@@ -17,8 +17,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
-import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;

@@ -83,6 +83,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 		doChangeElements(remove, add);
 	}
 
+	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	public final void disposed(ECPDisposable disposable) {
 		if (isRemoveDisposedElements()) {
@@ -188,6 +189,6 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 
 	protected static boolean isDisposingElement() {
 		Boolean disposingElement = DISPOSING_ELEMENT.get();
-		return disposingElement != null && disposingElement == true;
+		return disposingElement != null && disposingElement;
 	}
 }

@@ -9,9 +9,6 @@
  */
 package org.eclipse.emf.ecp.spi.ui;
 
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
-
-import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Eike Stepper
@@ -22,15 +19,35 @@ public interface UIProviderRegistry {
 	 */
 	UIProviderRegistry INSTANCE = org.eclipse.emf.ecp.internal.ui.UIProviderRegistryImpl.INSTANCE;
 
-	public UIProvider getUIProvider(Object adaptable);
+	/**
+	 * It the adaptable is ECPProviderAware then the {@link UIProvider} that corresponds to the
+	 * {@link org.eclipse.emf.ecp.core.ECPProvider} is
+	 * returned. Otherwise the AdapterUtil tries to resolve this.
+	 * 
+	 * @param adaptable the Object to adapt
+	 * @return the {@link UIProvider} or null if none was found
+	 */
+	UIProvider getUIProvider(Object adaptable);
 
-	public UIProvider getUIProvider(String name);
+	/**
+	 * Returns the {@link UIProvider} by its name.
+	 * 
+	 * @param name the name of the ui provider
+	 * @return the {@link UIProvider} or null if none was found
+	 */
+	UIProvider getUIProvider(String name);
 
-	public UIProvider[] getUIProviders();
+	/**
+	 * Returns all known {@link UIProvider}.
+	 * 
+	 * @return the array containing all known {@link UIProvider}
+	 */
+	UIProvider[] getUIProviders();
 
-	public boolean hasUIProviders();
-
-	public String getText(ECPModelContext context, Object adaptable);
-
-	public Image getImage(ECPModelContext context, Object adaptable);
+	/**
+	 * Whether any {@link UIProvider} are registered.
+	 * 
+	 * @return true if at least one {@link UIProvider} is registered, false otherwise
+	 */
+	boolean hasUIProviders();
 }

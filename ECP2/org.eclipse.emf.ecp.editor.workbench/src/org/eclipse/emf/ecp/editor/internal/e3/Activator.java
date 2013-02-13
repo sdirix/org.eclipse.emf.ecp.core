@@ -34,26 +34,17 @@ public class Activator extends AbstractUIPlugin {
 	public Activator() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 * @generated
-	 */
+	// BEGIN SUPRESS CATCH EXCEPTION
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 * @generated
-	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
-
+	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
 	 *
@@ -73,7 +64,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 	
 	/**
-	 * Returns an image descriptor for the image file at the given. plug-in relative path
+	 * Returns an image descriptor for the image file at the given. plug-in relative path.
 	 * 
 	 * @param path the path
 	 * @return the image descriptor

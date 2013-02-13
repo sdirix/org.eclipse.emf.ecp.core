@@ -33,6 +33,16 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	private static Map<ECPProject, EMFStoreDirtyDecoratorCachedTree> cashedTrees = new HashMap<ECPProject, EMFStoreDirtyDecoratorCachedTree>();
 
 	/**
+	 * Removes an ECPProject from the Cache.
+	 * 
+	 * @param project
+	 */
+
+	public static void removeProject(ECPProject project) {
+		cashedTrees.remove(project);
+	}
+
+	/**
 	 * Static {@link EMFStoreDirtyDecoratorCachedTree} singleton.
 	 * 
 	 * @param project the {@link ECPProject} to initialize this CashedTree on

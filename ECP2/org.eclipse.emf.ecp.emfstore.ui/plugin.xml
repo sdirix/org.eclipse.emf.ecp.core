@@ -48,6 +48,26 @@
             id="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer"
             name="Delete on Server">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.branchCreate"
+            name="create branch">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.branchMerge"
+            name="merge branch">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"
+            name="update to version">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.branchCheckout"
+            name="checkout branch">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups"
+            name="manage user/groups">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -101,7 +121,7 @@
          </command>
          <command
                commandId="org.eclipse.emf.ecp.emfstore.ui.update"
-               icon="icons/update.gif"
+               icon="icons/arrow_up.png"
                label="Update"
                style="push">
             <visibleWhen
@@ -209,6 +229,75 @@
                </and>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.branchCreate"
+               icon="icons/arrow_branch.png"
+               label="Create Branch"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.branchMerge"
+               icon="icons/arrow_merge.png"
+               label="Merge with Branch"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"
+               icon="icons/arrow_up.png"
+               label="Update to version..."
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.core.ECPProject">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.ecp.core.project.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                  </iterate>
+               </and>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelRepositoriesView?after=additions">
@@ -276,6 +365,56 @@
                   <instanceof
                         value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
                   </instanceof>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.branchCheckout"
+               label="Checkout Branch..."
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                  </instanceof>
+                  <count
+                        value="1">
+                  </count>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups"
+               icon="icons/user_edit.png"
+               label="Manage Users/Groups..."
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <count
+                        value="1">
+                  </count>
+                  <and>
+                     <test
+                           property="org.eclipse.emf.ecp.core.repository.providerName"
+                           value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="true">
+                     </test>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                           value="true">
+                     </test>
+                  </and>
                </iterate>
             </visibleWhen>
          </command>
@@ -408,6 +547,65 @@
       <handler
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.DeleteOnServerHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.CreateBranchHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.branchCreate">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.MergeBranchHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.branchMerge">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.UpdateProjectToVersionHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.updateToVersion">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isShared"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.CheckoutBranchHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.branchCheckout">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ManagerUserGroupHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups">
       </handler>
    </extension>
    <extension

@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -434,86 +433,104 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			this.name = name;
 		}
 
+		/** {@inheritDoc} */
 		public String getType() {
 			return TYPE;
 		}
 
+		/** {@inheritDoc} */
 		public String getName() {
 			return name;
 		}
 
+		/** {@inheritDoc} */
 		public boolean isDisposed() {
 			return true;
 		}
 
+		/** {@inheritDoc} */
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
 			return null;
 		}
 
+		/** {@inheritDoc} */
 		public String getLabel() {
 			return null;
 		}
 
+		/** {@inheritDoc} */
 		public String getDescription() {
 			return null;
 		}
 
-		public ECPProject[] getOpenProjects() {
-			return null;
-		}
-
+		/** {@inheritDoc} */
 		public int compareTo(ECPElement o) {
 			return 0;
 		}
 
+		/** {@inheritDoc} */
 		public ECPModelContext getContext() {
 			return null;
 		}
 
+		/** {@inheritDoc} */
 		public ECPProperties getProperties() {
 			return null;
 		}
 
+		/** {@inheritDoc} */
 		public boolean canDelete() {
 			return false;
 		}
 
+		/** {@inheritDoc} */
 		public void delete() {
 		}
 
+		/** {@inheritDoc} */
 		public boolean isStorable() {
 			return false;
 		}
 
+		/** {@inheritDoc} */
 		public void write(ObjectOutput out) throws IOException {
 		}
 
+		/** {@inheritDoc} */
 		public void setLabel(String label) {
 		}
 
+		/** {@inheritDoc} */
 		public void setDescription(String description) {
 		}
 
+		/** {@inheritDoc} */
 		public void dispose() {
 		}
 
+		/** {@inheritDoc} */
 		public void addDisposeListener(DisposeListener listener) {
 		}
 
+		/** {@inheritDoc} */
 		public void removeDisposeListener(DisposeListener listener) {
 		}
 
+		/** {@inheritDoc} */
 		public InternalProvider getProvider() {
 			return null;
 		}
 
+		/** {@inheritDoc} */
 		public Object getProviderSpecificData() {
 			return null;
 		}
 
+		/** {@inheritDoc} */
 		public void setProviderSpecificData(Object data) {
 		}
 
+		/** {@inheritDoc} */
 		public void notifyObjectsChanged(Object[] objects) {
 		}
 	}

@@ -46,6 +46,7 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 		}
 	}
 
+	/** {@inheritDoc} */
 	public ECPModelContext getModelContext(Object element) {
 		while (element != null) {
 			if (element instanceof ECPModelContext) {
@@ -58,6 +59,7 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 		return (ECPModelContext) element;
 	}
 
+	/** {@inheritDoc} */
 	public void notifyChanged(Notification notification) {
 		TreeViewer viewer = getViewer();
 		if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed()) {

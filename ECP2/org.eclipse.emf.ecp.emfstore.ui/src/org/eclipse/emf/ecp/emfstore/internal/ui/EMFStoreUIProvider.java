@@ -18,16 +18,11 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreCheckoutData;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-import org.eclipse.emf.emfstore.client.IWorkspace;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.internal.client.model.WorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.internal.client.model.exceptions.CertificateStoreException;
 import org.eclipse.emf.emfstore.internal.client.model.impl.RemoteProject;
-import org.eclipse.emf.emfstore.internal.client.model.impl.WorkspaceBase;
-import org.eclipse.emf.emfstore.internal.client.model.observers.CheckoutObserver;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
-import org.eclipse.emf.emfstore.internal.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -70,13 +65,10 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		if (EMFStoreCheckoutData.class.isInstance(adaptable) && adapterType.equals(ProjectSpace.class)) {
 			EMFStoreCheckoutData checkoutData = (EMFStoreCheckoutData) adaptable;
 			try {
-				IWorkspace workspace = WorkspaceProvider.getInstance().getWorkspace();
-				// TODO
 				RemoteProject remoteProject = new RemoteProject(checkoutData.getServerInfo(),
-					ModelUtil.clone(checkoutData.getProjectInfo()));
+					checkoutData.getProjectInfo());
+				// TODO: monitor
 				ProjectSpace projectSpace = remoteProject.checkout(new NullProgressMonitor());
-				((WorkspaceBase) workspace).save();
-				WorkspaceProvider.getObserverBus().notify(CheckoutObserver.class).checkoutDone(projectSpace);
 				return (T) projectSpace;
 			} catch (EMFStoreException e) {
 				Activator.log(e);

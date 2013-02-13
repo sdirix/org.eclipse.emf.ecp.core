@@ -49,32 +49,39 @@ public class Properties extends Registry<Map.Entry<String, String>, IECPProperti
 		}
 	}
 
+	/** {@inheritDoc} */
 	public final void addProperty(String key, String value) {
 		Map.Entry<String, String> property = new Property(key, value);
 		doChangeElements(null, Collections.singleton(property));
 	}
 
+	/** {@inheritDoc} */
 	public final void removeProperty(String key) {
 		doChangeElements(Collections.singleton(key), null);
 	}
 
+	/** {@inheritDoc} */
 	public String getValue(String name) {
 		Entry<String, String> element = getElement(name);
 		return element == null ? null : element.getValue();
 	}
 
+	/** {@inheritDoc} */
 	public String[] getKeys() {
 		return getElementNames();
 	}
 
+	/** {@inheritDoc} */
 	public Map.Entry<String, String>[] getProperties() {
 		return getElements();
 	}
 
+	/** {@inheritDoc} */
 	public boolean hasProperties() {
 		return hasElements();
 	}
 
+	/** {@inheritDoc} */
 	public ECPProperties copy() {
 		ECPProperties copy = ECPUtil.createProperties();
 		for (Entry<String, String> property : getElements()) {
@@ -120,14 +127,17 @@ public class Properties extends Registry<Map.Entry<String, String>, IECPProperti
 			this.value = value;
 		}
 
+		/** {@inheritDoc} */
 		public String getKey() {
 			return key;
 		}
 
+		/** {@inheritDoc} */
 		public String getValue() {
 			return value;
 		}
 
+		/** {@inheritDoc} */
 		public String setValue(String value) {
 			throw new UnsupportedOperationException();
 		}

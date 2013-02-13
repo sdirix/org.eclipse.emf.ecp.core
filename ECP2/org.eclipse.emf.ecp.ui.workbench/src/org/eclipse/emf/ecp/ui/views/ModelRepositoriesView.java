@@ -40,12 +40,12 @@ public class ModelRepositoriesView extends TreeView implements IECPProvidersChan
     ECPProviderRegistry.INSTANCE.removeObserver(this);
     super.dispose();
   }
-
+  /**{@inheritDoc} */
   public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception
   {
     setEnablements();
   }
-
+  
   protected void setEnablements()
   {
     addRepositoryAction.setEnabled(canAddRepositories());

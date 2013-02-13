@@ -61,17 +61,17 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   {
     this.id = id;
   }
-
+ 
   public final String getID()
   {
     return id;
   }
-
+  
   public final TreeViewer getViewer()
   {
     return viewer;
   }
-
+  
   public final Action getRefreshAction()
   {
     return refreshAction;
@@ -122,7 +122,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       viewer.getControl().setFocus();
     }
   }
-
+  /**{@inheritDoc} */
   public IStructuredSelection getSelection()
   {
     if (viewer != null)
@@ -132,7 +132,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
     return StructuredSelection.EMPTY;
   }
-
+  /**{@inheritDoc} */
   public void setSelection(ISelection selection)
   {
     if (viewer != null)
@@ -140,7 +140,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       viewer.setSelection(selection);
     }
   }
-
+  /**{@inheritDoc} */
   public void addSelectionChangedListener(ISelectionChangedListener listener)
   {
     if (viewer != null)
@@ -148,7 +148,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       viewer.addSelectionChangedListener(listener);
     }
   }
-
+  /**{@inheritDoc} */
   public void removeSelectionChangedListener(ISelectionChangedListener listener)
   {
     if (viewer != null)
@@ -156,7 +156,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       viewer.removeSelectionChangedListener(listener);
     }
   }
-
+  /**{@inheritDoc} */
   public void selectReveal(ISelection selection)
   {
     if (viewer != null)
@@ -164,17 +164,17 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       viewer.setSelection(selection, true);
     }
   }
-
+  
   protected void showMessage(String message)
   {
     MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
   }
-
+ 
   protected ILabelDecorator createLabelDecorator()
   {
     return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
   }
-
+  
   protected abstract TreeViewer createViewer(Composite parent);
 
   // protected TreeViewer createViewer(Composite parent)
@@ -196,13 +196,13 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   // }
 
   // protected abstract void configureViewer(TreeViewer viewer);
-
+  /**{@inheritDoc} */
   protected void fillLocalPullDown(IMenuManager manager)
   {
     manager.add(new Separator());
     manager.add(refreshAction);
   }
-
+  
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(refreshAction);
@@ -210,14 +210,14 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
     // manager.add(new Separator());
     // drillDownAdapter.addNavigationActions(manager);
   }
-
+  
   protected void fillContextMenu(IMenuManager manager)
   {
     manager.add(new Separator(GLOBAL_ADDITIONS));
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(new Separator());
   }
-
+  
   protected void doubleClicked(DoubleClickEvent event)
   {
   }

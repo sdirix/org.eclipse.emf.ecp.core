@@ -12,39 +12,64 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.edit;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 /**
  * Activator class.
  * @author Eugen Neufeld
  *
  */
-public class Activator implements BundleActivator {
-
-	private static BundleContext context;
+public class Activator extends Plugin {
 
 	/**
-	 * Convenient method to return the {@link BundleContext}.
-	 * @return the current {@link BundleContext}
+	 * The plug-in ID.
 	 */
-	static BundleContext getContext() {
-		return context;
-	}
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.edit"; //$NON-NLS-1$
 
 	/**
-	 * @see BundleActivator#start(org.osgi.framework.BundleContext)
-	 * @generated
+	 * The shared instance.
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		Activator.context = bundleContext;
-	}
+	private static Activator plugin;
 
 	/**
-	 * @see BundleActivator#stop(org.osgi.framework.BundleContext)
-	 * @generated
+	 * The constructor.
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+	public Activator() {
 	}
 
+	// BEGIN SUPRESS CATCH EXCEPTION
+	@Override
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		plugin = this;
+	}
+
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		plugin = null;
+		super.stop(context);
+	}
+	// END SUPRESS CATCH EXCEPTION
+
+	/**
+	 * Returns the shared instance.
+	 * 
+	 * @return the shared instance
+	 */
+	public static Activator getDefault() {
+		return plugin;
+	}
+	/**
+	 * Logs exception.
+	 * 
+	 * @param e the {@link Exception} to log
+	 */
+	public static void logException(Exception e) {
+		getDefault().getLog().log(
+			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+	}
+	
+	
 }

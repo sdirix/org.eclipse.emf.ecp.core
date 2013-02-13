@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.internal.core.properties;
 
@@ -20,48 +19,36 @@ import org.eclipse.emf.ecp.core.util.ECPCloseable;
 /**
  * @author Eike Stepper
  */
-public class ECPCloseableProperties extends Properties<ECPCloseable>
-{
-  public static final IProperties<ECPCloseable> INSTANCE = new ECPCloseableProperties();
+public final class ECPCloseableProperties extends Properties<ECPCloseable> {
+	private static final IProperties<ECPCloseable> INSTANCE = new ECPCloseableProperties();
 
-  public ECPCloseableProperties()
-  {
-    super(ECPCloseable.class);
+	private ECPCloseableProperties() {
+		super(ECPCloseable.class);
 
-    add(new Property<ECPCloseable>("open")
-    {
-      @Override
-      protected Object eval(ECPCloseable closeable)
-      {
-        return closeable.isOpen();
-      }
-    });
+		add(new Property<ECPCloseable>("open") {
+			@Override
+			protected Object eval(ECPCloseable closeable) {
+				return closeable.isOpen();
+			}
+		});
 
-    add(new Property<ECPCloseable>("closed")
-    {
-      @Override
-      protected Object eval(ECPCloseable closeable)
-      {
-        return !closeable.isOpen();
-      }
-    });
-  }
+		add(new Property<ECPCloseable>("closed") {
+			@Override
+			protected Object eval(ECPCloseable closeable) {
+				return !closeable.isOpen();
+			}
+		});
+	}
 
-  public static void main(String[] args)
-  {
-    new Tester().dumpContributionMarkup();
-  }
+	/**
+	 * @author Eike Stepper
+	 */
+	public static final class Tester extends DefaultPropertyTester<ECPCloseable> {
+		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.closeable";
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Tester extends DefaultPropertyTester<ECPCloseable>
-  {
-    public static final String NAMESPACE = "org.eclipse.emf.ecp.core.closeable";
-
-    public Tester()
-    {
-      super(NAMESPACE, INSTANCE);
-    }
-  }
+		/** The tester constructor. */
+		public Tester() {
+			super(NAMESPACE, INSTANCE);
+		}
+	}
 }

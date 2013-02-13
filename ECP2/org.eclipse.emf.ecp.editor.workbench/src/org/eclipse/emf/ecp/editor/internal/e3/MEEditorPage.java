@@ -14,10 +14,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.editor.FormEditorComposite;
+import org.eclipse.emf.ecp.edit.internal.swt.provider.ShortLabelProvider;
+import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
-import org.eclipse.emf.ecp.editor.commands.ECPCommand;
-import org.eclipse.emf.ecp.internal.editor.labelprovider.ShortLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
@@ -39,7 +38,6 @@ import org.eclipse.ui.menus.IMenuService;
  * @author naughton
  */
 public class MEEditorPage extends FormPage {
-	private static String activeModelelement = "activeModelelement";
 
 	//
 	private ScrolledForm form;
@@ -111,7 +109,7 @@ public class MEEditorPage extends FormPage {
 		toolkit.decorateFormHeading(form.getForm());
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		editorPageContent = new FormEditorComposite(modelElementContext, form.getShell(),toolkit);
+		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext, toolkit);
 		editorPageContent.createUI(body);
 		
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));

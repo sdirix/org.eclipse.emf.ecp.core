@@ -30,27 +30,27 @@ public abstract class AbstractAction implements IObjectActionDelegate
   public AbstractAction()
   {
   }
-
+  /**{@inheritDoc} */
   public final IWorkbenchPart getTargetPart()
   {
     return targetPart;
   }
-
+  /**{@inheritDoc} */
   public final Shell getShell()
   {
     return targetPart.getSite().getShell();
   }
-
+  /**{@inheritDoc} */
   public final IStructuredSelection getSelection()
   {
     return selection;
   }
-
+  /**{@inheritDoc} */
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
     this.targetPart = targetPart;
   }
-
+  /**{@inheritDoc} */
   public void selectionChanged(IAction action, ISelection selection)
   {
     action.setEnabled(true);
@@ -63,7 +63,7 @@ public abstract class AbstractAction implements IObjectActionDelegate
       this.selection = null;
     }
   }
-
+  /**{@inheritDoc} */
   public final void run(IAction action)
   {
     if (selection != null)
@@ -84,6 +84,6 @@ public abstract class AbstractAction implements IObjectActionDelegate
       }
     }
   }
-
+  /**{@inheritDoc} */
   protected abstract void run(IAction action, IStructuredSelection selection);
 }

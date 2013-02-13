@@ -12,8 +12,6 @@ package org.eclipse.emf.ecp.ui.actions;
 
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
-import org.eclipse.emf.ecp.wizards.AddRepositoryWizard;
-import org.eclipse.emf.ecp.wizards.WizardUICallback;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Shell;
 

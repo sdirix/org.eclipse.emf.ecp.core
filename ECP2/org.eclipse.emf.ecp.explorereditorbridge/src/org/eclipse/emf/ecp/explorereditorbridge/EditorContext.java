@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH.
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * An EditorContext depending on an {@link ECPProject}.
  * 
  * @author Eugen Neufeld
  * 
@@ -63,7 +64,7 @@ public class EditorContext implements EditModelElementContext {
 		this.ecpProject = ecpProject;
 
 		projectObserver = new IECPProjectsChangedUIObserver() {
-
+			/** {@inheritDoc} */
 			public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 				// TODO Auto-generated method stub
 				if (!ECPUtil.containsElement(newProjects, EditorContext.this.ecpProject)) {
@@ -74,6 +75,7 @@ public class EditorContext implements EditModelElementContext {
 				}
 			}
 
+			/** {@inheritDoc} */
 			public void projectChanged(ECPProject project, boolean opened) throws Exception {
 				if (!opened) {
 					for (EditModelElementContextListener contextListener : contextListeners) {
@@ -83,6 +85,7 @@ public class EditorContext implements EditModelElementContext {
 				}
 			}
 
+			/** {@inheritDoc} */
 			public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 				// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 				// and our model element is no longer contained
@@ -100,19 +103,23 @@ public class EditorContext implements EditModelElementContext {
 		ECPProjectManager.INSTANCE.addObserver(projectObserver);
 	}
 
+	/** {@inheritDoc} */
 	public void addModelElementContextListener(EditModelElementContextListener modelElementContextListener) {
 		contextListeners.add(modelElementContextListener);
 	}
 
+	/** {@inheritDoc} */
 	public void removeModelElementContextListener(EditModelElementContextListener modelElementContextListener) {
 		contextListeners.remove(modelElementContextListener);
 	}
 
+	/** {@inheritDoc} */
 	public Collection<EObject> getAllModelElementsbyClass(EClass clazz, boolean association) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/** {@inheritDoc} */
 	public EditingDomain getEditingDomain() {
 		if (ecpProject != null) {
 			return ecpProject.getEditingDomain();
@@ -121,6 +128,7 @@ public class EditorContext implements EditModelElementContext {
 
 	}
 
+	/** {@inheritDoc} */
 	public boolean contains(EObject eObject) {
 		return ecpProject.contains(eObject);
 	}
@@ -132,71 +140,46 @@ public class EditorContext implements EditModelElementContext {
 		ECPProjectManager.INSTANCE.removeObserver(projectObserver);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getLinkElements(org.eclipse.emf.ecore.EReference)
-	 */
+	/** {@inheritDoc} */
 	public Iterator<EObject> getLinkElements(EReference eReference) {
 		return ecpProject.getReferenceCandidates(modelElement, eReference);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#openEditor(org.eclipse.emf.ecore.EObject)
-	 */
+	/** {@inheritDoc} */
 	public void openEditor(EObject o, String source) {
 		// TODO only elements of the same project?
 		ActionHelper.openModelElement(o, source, ecpProject);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#addModelElement(org.eclipse.emf.ecore.EObject)
-	 */
+	/** {@inheritDoc} */
 	public void addModelElement(EObject newMEInstance) {
 		ecpProject.getElements().add(newMEInstance);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#isDirty()
-	 */
+	/** {@inheritDoc} */
 	public boolean isDirty() {
 		// auto save
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#save()
-	 */
+	/** {@inheritDoc} */
 	public void save() {
 		// do nothing
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getModelElement()
-	 */
+	/** {@inheritDoc} */
 	public EObject getModelElement() {
 		return modelElement;
 	}
 
 	private EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.editor.internal.e3.EditorModelelementContext#getDataBindingContext()
-	 */
+	/** {@inheritDoc} */
 	public DataBindingContext getDataBindingContext() {
 		return dataBindingContext;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.EditModelElementContext#getNewModelElement(org.eclipse.emf.ecore.EObject,
-	 * org.eclipse.emf.ecore.EReference)
-	 */
+	/** {@inheritDoc} */
 	public void createAndReferenceNewModelElement(EReference eReference) {
 		Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
 		List<EPackage> ePackages = new ArrayList<EPackage>();

@@ -81,11 +81,6 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	}
 
 	/** {@inheritDoc} **/
-	public boolean hasProviders() {
-		return hasElements();
-	}
-
-	/** {@inheritDoc} **/
 	public void addProvider(ECPProvider provider) {
 		changeElements(null, Collections.singleton((InternalProvider) provider));
 	}
@@ -153,14 +148,17 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 			super(ECPProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 
+		/** {@inheritDoc} */
 		public ECPProvider getProvider() {
 			return this;
 		}
 
+		/** {@inheritDoc} */
 		public AdapterProvider getUIProvider() {
 			return uiProvider;
 		}
 
+		/** {@inheritDoc} */
 		public void setUIProvider(AdapterProvider uiProvider) {
 			this.uiProvider = uiProvider;
 			if (isResolved()) {
@@ -168,46 +166,57 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 			}
 		}
 
+		/** {@inheritDoc} */
 		public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 			return getResolvedElement().getAdapter(adaptable, adapterType);
 		}
 
+		/** {@inheritDoc} */
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 			return getResolvedElement().getAdapter(adapterType);
 		}
 
+		/** {@inheritDoc} */
 		public ECPRepository[] getRepositories() {
 			return getResolvedElement().getRepositories();
 		}
 
+		/** {@inheritDoc} */
 		public ECPProject[] getOpenProjects() {
 			return getResolvedElement().getOpenProjects();
 		}
 
+		/** {@inheritDoc} */
 		public EditingDomain createEditingDomain(InternalProject project) {
 			return getResolvedElement().createEditingDomain(project);
 		}
 
+		/** {@inheritDoc} */
 		public boolean canAddRepositories() {
 			return getResolvedElement().canAddRepositories();
 		}
 
+		/** {@inheritDoc} */
 		public boolean isSlow(Object parent) {
 			return getResolvedElement().isSlow(parent);
 		}
 
+		/** {@inheritDoc} */
 		public ECPModelContext getModelContext(Object element) {
 			return getResolvedElement().getModelContext(element);
 		}
 
+		/** {@inheritDoc} */
 		public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList) {
 			getResolvedElement().fillChildren(context, parent, childrenList);
 		}
 
+		/** {@inheritDoc} */
 		public void handleLifecycle(ECPModelContext context, LifecycleEvent event) {
 			getResolvedElement().handleLifecycle(context, event);
 		}
 
+		/** {@inheritDoc} */
 		@Override
 		protected void resolvedElement(InternalProvider provider) {
 			super.resolvedElement(provider);
@@ -216,101 +225,65 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 			provider.setUIProvider(uiProvider);
 		}
 
+		/** {@inheritDoc} */
 		@Override
 		protected void doDispose() {
 			uiProvider = null;
 			super.doDispose();
 		}
 
+		/** {@inheritDoc} */
 		public boolean hasUnsharedProjectSupport() {
 			return getResolvedElement().hasUnsharedProjectSupport();
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see
-		 * org.eclipse.emf.ecp.spi.core.InternalProvider#getElements(org.eclipse.emf.ecp.internal.core.ECPProjectImpl)
-		 */
+		/** {@inheritDoc} */
 		public EList<? extends Object> getElements(InternalProject project) {
 			return getResolvedElement().getElements(project);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getLinkElements(org.eclipse.emf.ecp.core.ECPProject,
-		 * org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
-		 */
+		/** {@inheritDoc} */
 		public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 			return getResolvedElement().getLinkElements(project, modelElement, eReference);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getUnsupportedEPackages(java.util.Collection,
-		 * org.eclipse.emf.ecp.spi.core.InternalRepository)
-		 */
+		/** {@inheritDoc} */
 		public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages,
 			InternalRepository repository) {
 			return getResolvedElement().getUnsupportedEPackages(ePackages, repository);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#doSave(org.eclipse.emf.ecp.spi.core.InternalProject)
-		 */
+		/** {@inheritDoc} */
 		public void doSave(InternalProject project) {
 			getResolvedElement().doSave(project);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isDirty(org.eclipse.emf.ecp.spi.core.InternalProject)
-		 */
+		/** {@inheritDoc} */
 		public boolean isDirty(InternalProject project) {
 			return getResolvedElement().isDirty(project);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#delete(org.eclipse.emf.ecp.spi.core.InternalProject,
-		 * java.util.Collection)
-		 */
+		/** {@inheritDoc} */
 		public void delete(InternalProject project, Collection<EObject> eObjects) {
 			getResolvedElement().delete(project, eObjects);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see
-		 * org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.internal.core.ECPProjectImpl,
-		 * org.eclipse.emf.ecp.spi.core.InternalProject)
-		 */
+		/** {@inheritDoc} */
 		public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
 			getResolvedElement().cloneProject(projectToClone, targetProject);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see
-		 * org.eclipse.emf.ecp.spi.core.InternalProvider#projectExists(org.eclipse.emf.ecp.spi.core.InternalProject)
-		 */
+		/** {@inheritDoc} */
 		public boolean modelExists(InternalProject project) {
 			return getResolvedElement().modelExists(project);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
-		 */
+		/** {@inheritDoc} */
 		public Notifier getRoot(InternalProject project) {
 			return getResolvedElement().getRoot(project);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
-		 * java.lang.Object)
-		 */
+		/** {@inheritDoc} */
 		public boolean contains(InternalProject project, Object object) {
 			return getResolvedElement().contains(project, object);
 		}

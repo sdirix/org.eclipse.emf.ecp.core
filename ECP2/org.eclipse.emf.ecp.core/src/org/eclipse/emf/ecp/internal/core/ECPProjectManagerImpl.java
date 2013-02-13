@@ -58,9 +58,9 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 */
 	public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
 	/**
-	 * This variable defines whether the projects where already initialized.
+	 * This variable defines whether the projects where already initialized. Default value is false.
 	 */
-	private boolean initializedProjects = false;
+	private boolean initializedProjects;
 
 	private ECPProjectManagerImpl() {
 	}

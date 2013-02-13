@@ -135,6 +135,7 @@ public class CDOProvider extends DefaultProvider {
 		}
 	}
 
+	/** {@inheritDoc} */
 	public EList<Object> getElements(InternalProject project) {
 		// TODO: implement CDOProvider.addRootElement(project, rootElement)
 		throw new UnsupportedOperationException();
@@ -275,11 +276,7 @@ public class CDOProvider extends DefaultProvider {
 		return new File(Activator.getInstance().getStateLocation().toFile(), workspaceID);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#delete(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * java.util.Collection)
-	 */
+	/** {@inheritDoc} */
 	public void delete(InternalProject project, Collection<EObject> eObjects) {
 		// CDOResource cdoResource = getProjectData(project).getRootResource();
 
@@ -287,28 +284,12 @@ public class CDOProvider extends DefaultProvider {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecore.EObject)
-	 */
-	public boolean contains(InternalProject project, EObject eObject) {
-		throw new UnsupportedOperationException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	public Notifier getRoot(InternalProject project) {
 		throw new UnsupportedOperationException();
 	}

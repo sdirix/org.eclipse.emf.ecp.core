@@ -29,10 +29,12 @@ public class CDOBranchWrapper implements ECPCheckoutSource {
 		this.branchPath = branchPath;
 	}
 
+	/** {@inheritDoc} */
 	public ECPProvider getProvider() {
 		return repository.getProvider();
 	}
 
+	/** {@inheritDoc} */
 	public final InternalRepository getRepository() {
 		return repository;
 	}
@@ -50,10 +52,12 @@ public class CDOBranchWrapper implements ECPCheckoutSource {
 		return branchPath.substring(pos + 1);
 	}
 
+	/** {@inheritDoc} */
 	public String getDefaultCheckoutName() {
 		return repository.getName() + "." + getName();
 	}
 
+	/** {@inheritDoc} */
 	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
 		projectProperties.addProperty("branchPath", branchPath);
 		ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);

@@ -52,7 +52,10 @@ import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 /**
  * @author Eugen Neufeld
  */
-public class TreeViewerFactory {
+public final class TreeViewerFactory {
+	private TreeViewerFactory() {
+	}
+
 	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD, ILabelDecorator labelDecorator) {
 		final ModelContentProvider contentProvider = new ModelContentProvider();
 		final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
