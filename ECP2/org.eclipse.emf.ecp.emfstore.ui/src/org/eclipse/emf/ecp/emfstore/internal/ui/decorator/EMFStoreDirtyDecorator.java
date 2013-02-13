@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ILocalProject;
+import org.eclipse.emf.emfstore.client.model.observer.ESCommitObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.internal.client.model.observers.CommitObserver;
 import org.eclipse.emf.emfstore.server.model.IChangePackage;
 import org.eclipse.emf.emfstore.server.model.versionspec.IPrimaryVersionSpec;
 
@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * @author Eugen Neufeld
  */
-public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, CommitObserver, IECPProjectPreDeleteObserver {
+public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCommitObserver, IECPProjectPreDeleteObserver {
 
 	private String dirtyPath = "icons/dirty.png";
 	private Map<ECPProject, EMFStoreDirtyObserver> observers = new HashMap<ECPProject, EMFStoreDirtyObserver>();

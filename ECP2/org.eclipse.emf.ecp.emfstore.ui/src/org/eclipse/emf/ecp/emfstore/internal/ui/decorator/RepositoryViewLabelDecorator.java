@@ -19,9 +19,9 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.IUsersession;
+import org.eclipse.emf.emfstore.client.model.observer.ESLoginObserver;
+import org.eclipse.emf.emfstore.client.model.observer.ESLogoutObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.internal.client.model.observers.LoginObserver;
-import org.eclipse.emf.emfstore.internal.client.model.observers.LogoutObserver;
 
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -36,8 +36,8 @@ import org.eclipse.swt.widgets.Display;
  * @author Eugen Neufeld
  * @see ILightweightLabelDecorator
  */
-public class RepositoryViewLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, LoginObserver,
-	LogoutObserver {
+public class RepositoryViewLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, ESLoginObserver,
+	ESLogoutObserver {
 
 	/**
 	 * {@inheritDoc}
@@ -98,7 +98,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.emfstore.client.model.observers.LoginObserver#loginCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
+	 * @see org.eclipse.emf.emfstore.client.model.observer.ESLoginObserver#loginCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
 	 */
 	public void loginCompleted(IUsersession session) {
 		update(session);
@@ -107,7 +107,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.emfstore.client.model.observers.LogoutObserver#logoutCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
+	 * @see org.eclipse.emf.emfstore.client.model.observer.ESLogoutObserver#logoutCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
 	 */
 	public void logoutCompleted(IUsersession session) {
 		update(session);
