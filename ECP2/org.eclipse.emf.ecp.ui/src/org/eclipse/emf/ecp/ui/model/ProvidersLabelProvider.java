@@ -4,9 +4,8 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.ecp.ui.model;
 
@@ -29,80 +28,69 @@ import org.eclipse.swt.widgets.Display;
  * @author Eike Stepper
  */
 public class ProvidersLabelProvider extends ECPLabelProvider implements IColorProvider,
-    ResolveListener<InternalProvider>
-{
-  private static final Image PROVIDER = Activator.getImage("icons/provider.gif"); //$NON-NLS-1$
+	ResolveListener<InternalProvider> {
+	private static final Image PROVIDER = Activator.getImage("icons/provider.gif"); //$NON-NLS-1$
 
-  private static final Image PROVIDER_DISABLED = Activator.getImage("icons/provider_disabled.gif"); //$NON-NLS-1$
+	private static final Image PROVIDER_DISABLED = Activator.getImage("icons/provider_disabled.gif"); //$NON-NLS-1$
 
-  private static final Color GRAY = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
+	private static final Color GRAY = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 
-  public ProvidersLabelProvider()
-  {
-    super(null);
-    ECPProviderRegistryImpl.INSTANCE.addResolveListener(this);
-  }
+	public ProvidersLabelProvider() {
+		super(null);
+		ECPProviderRegistryImpl.INSTANCE.addResolveListener(this);
+	}
 
-  @Override
-  public void dispose()
-  {
-    ECPProviderRegistryImpl.INSTANCE.removeResolveListener(this);
-    super.dispose();
-  }
+	@Override
+	public void dispose() {
+		ECPProviderRegistryImpl.INSTANCE.removeResolveListener(this);
+		super.dispose();
+	}
 
-  public void descriptorChanged(InternalDescriptor<InternalProvider> descriptor, boolean resolved) throws Exception
-  {
-    fireEvent(new LabelProviderChangedEvent(this, descriptor));
-  }
+	/** {@inheritDoc} */
+	public void descriptorChanged(InternalDescriptor<InternalProvider> descriptor, boolean resolved) throws Exception {
+		fireEvent(new LabelProviderChangedEvent(this, descriptor));
+	}
 
-  @Override
-  public String getText(Object element)
-  {
-    if (element instanceof ECPProvider)
-    {
-      ECPProvider provider = (ECPProvider)element;
-      return provider.getLabel();
-    }
+	@Override
+	public String getText(Object element) {
+		if (element instanceof ECPProvider) {
+			ECPProvider provider = (ECPProvider) element;
+			return provider.getLabel();
+		}
 
-    return super.getText(element);
-  }
+		return super.getText(element);
+	}
 
-  @Override
-  public Image getImage(Object element)
-  {
-    if (element instanceof ECPProvider)
-    {
-      if (element instanceof ElementDescriptor)
-      {
-        ElementDescriptor<?> descriptor = (ElementDescriptor<?>)element;
-        if (!descriptor.isResolved())
-        {
-          return PROVIDER_DISABLED;
-        }
-      }
+	@Override
+	public Image getImage(Object element) {
+		if (element instanceof ECPProvider) {
+			if (element instanceof ElementDescriptor) {
+				ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
+				if (!descriptor.isResolved()) {
+					return PROVIDER_DISABLED;
+				}
+			}
 
-      return PROVIDER;
-    }
+			return PROVIDER;
+		}
 
-    return super.getImage(element);
-  }
+		return super.getImage(element);
+	}
 
-  public Color getForeground(Object element)
-  {
-    if (element instanceof ElementDescriptor)
-    {
-      ElementDescriptor<?> descriptor = (ElementDescriptor<?>)element;
-      if (!descriptor.isResolved())
-      {
-        return GRAY;
-      }
-    }
+	/** {@inheritDoc} */
+	public Color getForeground(Object element) {
+		if (element instanceof ElementDescriptor) {
+			ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
+			if (!descriptor.isResolved()) {
+				return GRAY;
+			}
+		}
 
-    return null;
-  }
+		return null;
+	}
 
-  public Color getBackground(Object element)
-  {
-    return null;
-  }
+	/** {@inheritDoc} */
+	public Color getBackground(Object element) {
+		return null;
+	}
 }

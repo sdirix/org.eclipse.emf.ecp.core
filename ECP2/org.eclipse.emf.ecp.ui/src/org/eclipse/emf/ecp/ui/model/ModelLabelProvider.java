@@ -41,14 +41,17 @@ public class ModelLabelProvider extends ECPLabelProvider implements IECPProjects
 		return super.getText(element);
 	}
 
+	/** {@inheritDoc} */
 	public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 		// Do nothing
 	}
 
+	/** {@inheritDoc} */
 	public void projectChanged(final ECPProject project, boolean opened) throws Exception {
 		fireEvent(new LabelProviderChangedEvent(this, project));
 	}
 
+	/** {@inheritDoc} */
 	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 		// Do nothing
 	}

@@ -37,10 +37,7 @@ public class AddRepositoryPage extends WizardPage {
 
 	private AddRepositoryComposite addRepositoryComposite;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
+	/** {@inheritDoc} */
 	public void createControl(Composite parent) {
 		setPageComplete(false);
 		setTitle(Messages.AddRepositoryPage_PageTitle_AddRepository);

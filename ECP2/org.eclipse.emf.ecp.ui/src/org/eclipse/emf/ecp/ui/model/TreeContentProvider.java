@@ -43,10 +43,12 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		return (TreeViewer) super.getViewer();
 	}
 
+	/** {@inheritDoc} */
 	public final Object[] getElements(Object parent) {
 		return getChildren(parent);
 	}
 
+	/** {@inheritDoc} */
 	public final boolean hasChildren(Object parent) {
 		if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent)) {
 			return false;
@@ -62,6 +64,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		}
 	}
 
+	/** {@inheritDoc} */
 	public final Object[] getChildren(Object parent) {
 		if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent)) {
 			return NO_CHILDREN;
@@ -91,6 +94,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		return result;
 	}
 
+	/** {@inheritDoc} */
 	public final Object getParent(Object child) {
 		if (child instanceof SyntheticElement) {
 			return ((SyntheticElement) child).getParent();

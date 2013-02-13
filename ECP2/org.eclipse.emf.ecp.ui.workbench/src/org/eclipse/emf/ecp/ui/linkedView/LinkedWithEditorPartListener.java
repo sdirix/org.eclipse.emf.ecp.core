@@ -23,7 +23,7 @@ public class LinkedWithEditorPartListener implements IPartListener2 {
 	public LinkedWithEditorPartListener(ILinkedWithEditorView view) {
 		this.view = view;
 	}
-
+	/**{@inheritDoc} */
 	public void partActivated(IWorkbenchPartReference ref) {
 		if (ref.getPart(true) instanceof IEditorPart) {
 			IEditorPart editor = view.getViewSite().getPage().getActiveEditor();
@@ -32,7 +32,7 @@ public class LinkedWithEditorPartListener implements IPartListener2 {
 			}
 		}
 	}
-
+	/**{@inheritDoc} */
 	public void partBroughtToTop(IWorkbenchPartReference ref) {
 		if (ref.getPart(true) == view) {
 			IEditorPart editor = view.getViewSite().getPage().getActiveEditor();
@@ -41,7 +41,7 @@ public class LinkedWithEditorPartListener implements IPartListener2 {
 			}
 		}
 	}
-
+	/**{@inheritDoc} */
 	public void partOpened(IWorkbenchPartReference ref) {
 		if (ref.getPart(true) == view) {
 			IEditorPart editor = view.getViewSite().getPage().getActiveEditor();
@@ -50,7 +50,7 @@ public class LinkedWithEditorPartListener implements IPartListener2 {
 			}
 		}
 	}
-
+	/**{@inheritDoc} */
 	public void partVisible(IWorkbenchPartReference ref) {
 		if (ref.getPart(true) == view) {
 			IEditorPart editor = view.getViewSite().getPage().getActiveEditor();
@@ -60,16 +60,16 @@ public class LinkedWithEditorPartListener implements IPartListener2 {
 
 		}
 	}
-
+	/**{@inheritDoc} */
 	public void partClosed(IWorkbenchPartReference ref) {
 	}
-
+	/**{@inheritDoc} */
 	public void partDeactivated(IWorkbenchPartReference ref) {
 	}
-
+	/**{@inheritDoc} */
 	public void partHidden(IWorkbenchPartReference ref) {
 	}
-
+	/**{@inheritDoc} */
 	public void partInputChanged(IWorkbenchPartReference ref) {
 	}
 

@@ -25,11 +25,7 @@ import org.eclipse.core.expressions.PropertyTester;
  */
 public class EMFStoreProjectCanUndoTester extends PropertyTester {
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object, java.lang.String, java.lang.Object[],
-	 * java.lang.Object)
-	 */
+	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		ProjectSpace ps = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) receiver);
 		Boolean result = Boolean.valueOf(ps.hasUncommitedChanges());

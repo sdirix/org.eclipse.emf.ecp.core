@@ -19,18 +19,22 @@ import java.util.Arrays;
 /**
  * @author Eike Stepper
  */
-public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements IECPProjectsChangedUIObserver {
+public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements
+	IECPProjectsChangedUIObserver {
 	public ModelContentProvider() {
 	}
 
+	/** {@inheritDoc} */
 	public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 		refreshViewer();
 	}
 
+	/** {@inheritDoc} */
 	public void projectChanged(ECPProject project, boolean opened) throws Exception {
 		refreshViewer(true, project);
 	}
 
+	/** {@inheritDoc} */
 	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
 		refreshViewer(structural, objects);
 		if (!Arrays.asList(objects).contains(project)) {

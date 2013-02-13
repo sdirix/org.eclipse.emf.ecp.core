@@ -120,6 +120,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		}
 	}
 
+	/** {@inheritDoc} */
 	public EList<? extends Object> getElements(InternalProject project) {
 		// ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
 		// return resourceSet.getResources().get(0).getContents();
@@ -127,6 +128,7 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		throw new UnsupportedOperationException();
 	}
 
+	/** {@inheritDoc} */
 	public void resourceChanged(IResourceChangeEvent event) {
 
 		// IResourceDelta delta = event.getDelta();
@@ -251,40 +253,20 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		return rootURI == null ? null : URI.createURI(rootURI);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#delete(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * java.util.Collection)
-	 */
+	/** {@inheritDoc} */
 	public void delete(InternalProject project, Collection<EObject> eObjects) {
 		for (EObject eObject : eObjects) {
 			EcoreUtil.delete(eObject, true);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#cloneProject(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#contains(org.eclipse.emf.ecp.spi.core.InternalProject,
-	 * org.eclipse.emf.ecore.EObject)
-	 */
-	public boolean contains(InternalProject project, EObject eObject) {
-		throw new UnsupportedOperationException();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#getRoot(org.eclipse.emf.ecp.spi.core.InternalProject)
-	 */
+	/** {@inheritDoc} */
 	// FIXME
 	public Notifier getRoot(InternalProject project) {
 		return null;

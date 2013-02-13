@@ -29,6 +29,8 @@ import org.osgi.framework.BundleContext;
 import java.net.URL;
 
 /**
+ * The activator class controls the plug-in life cycle.
+ * 
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
