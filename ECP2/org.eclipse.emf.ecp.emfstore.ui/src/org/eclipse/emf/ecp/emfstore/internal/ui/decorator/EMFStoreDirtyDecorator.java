@@ -23,8 +23,8 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ILocalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.observers.CommitObserver;
-import org.eclipse.emf.emfstore.server.model.api.IChangePackage;
-import org.eclipse.emf.emfstore.server.model.api.versionspec.IPrimaryVersionSpec;
+import org.eclipse.emf.emfstore.server.model.IChangePackage;
+import org.eclipse.emf.emfstore.server.model.versionspec.IPrimaryVersionSpec;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.IDecoration;
