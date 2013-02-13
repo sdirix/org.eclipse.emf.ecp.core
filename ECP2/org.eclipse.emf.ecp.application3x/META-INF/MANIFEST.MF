@@ -7,7 +7,7 @@ Bundle-Activator: org.eclipse.emf.ecp.application3x.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.ui.workbench;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.jface.action,
  org.eclipse.jface.resource,
  org.eclipse.swt.graphics,
