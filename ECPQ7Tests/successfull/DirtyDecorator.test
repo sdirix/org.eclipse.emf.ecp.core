@@ -48,7 +48,6 @@ with [get-view "Model Explorer" | get-tree] {
     get-item TestProject | get-property "getImage().getImageData().transparentPixel" | equals 53 | verify-true
 }
 get-view "Model Explorer" | get-tree | select "TestProject/League Europe1" | get-menu Player | click
-get-editor Player | get-editbox -after [get-label EMail] | set-focus
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
 get-window Commit | get-button OK | click
 get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup/Game" | double-click

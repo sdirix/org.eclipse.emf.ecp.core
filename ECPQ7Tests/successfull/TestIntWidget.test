@@ -18,10 +18,6 @@ get-view "Model Explorer" | get-tree | select "TestProject/League America/Player
 with [get-editor "Player Jonas"] {
     get-editbox -after [get-label Name] | set-focus
     get-editbox -after [get-label Height] | set-text 1
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
     close
 }
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click

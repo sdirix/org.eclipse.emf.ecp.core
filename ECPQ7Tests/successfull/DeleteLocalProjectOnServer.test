@@ -21,10 +21,6 @@ get-window -from "Window.createShell()" | get-button OK | click
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
     get-editbox -after [get-label Name] | set-text Jonasiuiugiug
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
 }
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
 get-window "Commit failed" | get-button OK | click

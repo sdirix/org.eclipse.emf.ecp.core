@@ -29,7 +29,6 @@ with [get-window "Add new model element"] {
 }
 with [get-editor Player] {
     get-editbox -after [get-label Name] | set-text Jonas
-    get-editbox -after [get-label EMail] | click-text
 }
 get-editor "Player Jonas" | close
 get-view "Model Explorer" | get-tree |get-item "Test/Player Jonas" | get-object | invoke getData | invoke eAdapters | invoke size | eq 4 | assert-true "Adapter count is not 4"

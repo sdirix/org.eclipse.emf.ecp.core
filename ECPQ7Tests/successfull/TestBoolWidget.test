@@ -16,12 +16,10 @@ Entry-Name: .content
 
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
-    get-editbox -after [get-label EMail] | set-focus
     get-button -after [get-label "Is Professional"]| click
     close
 }
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
-get-editor "Player Jonas" | get-editbox -after [get-label EMail] | set-focus
 get-editor "Player Jonas" | get-button -after [get-label "Is Professional"]| get-property selected | equals true | verify-true
 
 //Not necessary

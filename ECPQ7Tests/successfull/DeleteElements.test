@@ -21,7 +21,6 @@ with [get-editor "League Europe"] {
 }
 get-view "Model Explorer" | get-tree | get-item TestProject | get-property childCount | equals 2 | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
-get-editor "Player Jonas" | get-editbox -after [get-label EMail] | set-focus
 with [get-view "Model Explorer" | get-tree] {
     select "TestProject/League America/Player Jonas" | get-menu "Delete Model Element" | click
     select "TestProject/Tournament Pro/Matchup/Game" | double-click
@@ -33,7 +32,6 @@ get-tab-folder -index 1 | get-property tabCount | equals 0 | verify-true
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Delete | click
 get-window Delete | get-button Cancel | click
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
-get-editor "Player Maximilian" | get-editbox -after [get-label EMail] | set-focus
 get-view "Model Explorer" | get-tree | select "TestProject/League America" | double-click
 get-editor "League America" | get-editbox -after [get-label Name] | set-focus
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Delete | click
