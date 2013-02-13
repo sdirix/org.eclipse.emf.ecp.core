@@ -37,6 +37,7 @@ import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.Workspace;
 import org.eclipse.emf.emfstore.internal.client.model.WorkspaceProvider;
+import org.eclipse.emf.emfstore.internal.client.model.impl.WorkspaceBase;
 import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
@@ -49,7 +50,6 @@ import org.eclipse.emf.emfstore.internal.server.model.ProjectInfo;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
@@ -184,7 +184,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			InternalProject project = (InternalProject) context;
 			ProjectSpace ps = (ProjectSpace) project.getProviderSpecificData();
 			try {
-				ps.delete(new NullProgressMonitor());
+				((WorkspaceBase) WorkspaceProvider.getInstance().getWorkspace()).deleteProjectSpace(ps);
 			} catch (EMFStoreException ex) {
 				Activator.log(ex);
 			} catch (IOException ex) {
@@ -421,7 +421,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	private ProjectSpace getProjectSpace(InternalProject internalProject, boolean createNewIfNeeded) {
+
 		ProjectSpace projectSpace = (ProjectSpace) internalProject.getProviderSpecificData();
+
 		if (projectSpace == null) {
 			boolean found = false;
 			List<ILocalProject> localProjects = WorkspaceProvider.getInstance().getWorkspace().getLocalProjects();
@@ -433,9 +435,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 					break;
 				}
 			}
+
 			if (!found && createNewIfNeeded) {
-				projectSpace = (ProjectSpace) WorkspaceProvider.getInstance().getWorkspace()
-					.createLocalProject(internalProject.getName(), "");
+				projectSpace = (ProjectSpace) WorkspaceProvider.INSTANCE.getWorkspace().createLocalProject(
+					internalProject.getName(), "");
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
 					projectSpace.getIdentifier());
 
@@ -456,10 +459,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	public ServerInfo getServerInfo(InternalRepository internalRepository) {
 		ServerInfo serverInfo = (ServerInfo) internalRepository.getProviderSpecificData();
-		if (serverInfo == null) {
-			Workspace workspace = (Workspace) WorkspaceProvider.getInstance().getWorkspace();
 
+		if (serverInfo == null) {
+
+			Workspace workspace = (Workspace) WorkspaceProvider.INSTANCE.getWorkspace();
 			boolean foundExisting = false;
+
 			for (ServerInfo info : workspace.getServerInfos()) {
 				if (internalRepository.getProperties().hasProperties()
 					&& isSameServerInfo(info,

@@ -106,13 +106,14 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 	}
 
 	/** {@inheritDoc} */
-	public boolean inspectChanges(ILocalProject projectSpace, IChangePackage changePackage, IProgressMonitor monitor) {
+	public boolean inspectChanges(ILocalProject project, IChangePackage changePackage, IProgressMonitor monitor) {
 		return true;
 	}
 
 	/** {@inheritDoc} */
-	public void commitCompleted(ILocalProject projectSpace, IPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
-		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) projectSpace);
+	public void commitCompleted(ILocalProject localProject, IPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
+		// TODO: cast
+		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
 	}
 

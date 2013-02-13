@@ -25,6 +25,7 @@ import org.eclipse.emf.emfstore.internal.client.model.impl.RemoteProject;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
 import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -66,7 +67,8 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 			try {
 				RemoteProject remoteProject = new RemoteProject(checkoutData.getServerInfo(),
 					checkoutData.getProjectInfo());
-				ProjectSpace projectSpace = remoteProject.checkout(checkoutData.getServerInfo().getLastUsersession());
+				// TODO: monitor
+				ProjectSpace projectSpace = remoteProject.checkout(new NullProgressMonitor());
 				return (T) projectSpace;
 			} catch (EMFStoreException e) {
 				Activator.log(e);
