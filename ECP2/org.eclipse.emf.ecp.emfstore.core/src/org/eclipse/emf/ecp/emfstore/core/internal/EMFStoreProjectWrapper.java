@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 
 /**
  * This is the EMFStore implementation of a {@link ECPCheckoutSource}.

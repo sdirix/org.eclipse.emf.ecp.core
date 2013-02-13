@@ -18,10 +18,10 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.client.model.Usersession;
-import org.eclipse.emf.emfstore.client.model.observers.LoginObserver;
-import org.eclipse.emf.emfstore.client.model.observers.LogoutObserver;
+import org.eclipse.emf.emfstore.client.IUsersession;
+import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.observers.LoginObserver;
+import org.eclipse.emf.emfstore.internal.client.model.observers.LogoutObserver;
 
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -100,7 +100,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	 * 
 	 * @see org.eclipse.emf.emfstore.client.model.observers.LoginObserver#loginCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
 	 */
-	public void loginCompleted(Usersession session) {
+	public void loginCompleted(IUsersession session) {
 		update(session);
 	}
 
@@ -109,16 +109,17 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	 * 
 	 * @see org.eclipse.emf.emfstore.client.model.observers.LogoutObserver#logoutCompleted(org.eclipse.emf.emfstore.client.model.Usersession)
 	 */
-	public void logoutCompleted(Usersession session) {
+	public void logoutCompleted(IUsersession session) {
 		update(session);
 	}
 
-	private void update(final Usersession usersession) {
+	private void update(final IUsersession usersession) {
 
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
+				// TODO cast
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
-					EMFStoreProvider.INSTANCE.getRepository(usersession.getServerInfo())));
+					EMFStoreProvider.INSTANCE.getRepository((ServerInfo) usersession.getServer())));
 			}
 		});
 	}

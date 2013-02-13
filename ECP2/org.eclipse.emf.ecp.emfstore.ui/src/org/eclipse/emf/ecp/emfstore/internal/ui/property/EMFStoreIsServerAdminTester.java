@@ -16,10 +16,10 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.client.model.Usersession;
-import org.eclipse.emf.emfstore.client.model.accesscontrol.AccessControlHelper;
-import org.eclipse.emf.emfstore.server.exceptions.AccessControlException;
+import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.Usersession;
+import org.eclipse.emf.emfstore.internal.client.model.accesscontrol.AccessControlHelper;
+import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlException;
 
 import org.eclipse.core.expressions.PropertyTester;
 

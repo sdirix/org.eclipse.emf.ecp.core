@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.emfstore.localserver;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.emfstore.server.EmfStoreController;
+import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -38,7 +38,7 @@ public class Activator extends Plugin {
 	/**{@inheritDoc} */
 	public void stop(BundleContext bundleContext) throws Exception {
 		plugin = null;
-		EmfStoreController.getInstance().stop();
+		EMFStoreController.getInstance().stop();
 	}
 
 	/**

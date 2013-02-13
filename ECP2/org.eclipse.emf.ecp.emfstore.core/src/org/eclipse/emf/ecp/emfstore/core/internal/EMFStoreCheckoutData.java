@@ -13,8 +13,8 @@
 
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
-import org.eclipse.emf.emfstore.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.server.model.ProjectInfo;
+import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.server.model.ProjectInfo;
 
 /**
  * This class holds a {@link ServerInfo} and a corresponding {@link ProjectInfo} object.

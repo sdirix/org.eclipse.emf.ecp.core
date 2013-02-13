@@ -20,11 +20,13 @@ import org.eclipse.emf.ecp.core.util.observer.IECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.client.model.observers.CommitObserver;
-import org.eclipse.emf.emfstore.server.model.versioning.ChangePackage;
-import org.eclipse.emf.emfstore.server.model.versioning.PrimaryVersionSpec;
+import org.eclipse.emf.emfstore.client.ILocalProject;
+import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.internal.client.model.observers.CommitObserver;
+import org.eclipse.emf.emfstore.server.model.IChangePackage;
+import org.eclipse.emf.emfstore.server.model.versionspec.IPrimaryVersionSpec;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
@@ -104,13 +106,14 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, Commi
 	}
 
 	/** {@inheritDoc} */
-	public boolean inspectChanges(ProjectSpace projectSpace, ChangePackage changePackage) {
+	public boolean inspectChanges(ILocalProject project, IChangePackage changePackage, IProgressMonitor monitor) {
 		return true;
 	}
 
 	/** {@inheritDoc} */
-	public void commitCompleted(ProjectSpace projectSpace, PrimaryVersionSpec newRevision) {
-		ECPProject project = EMFStoreProvider.INSTANCE.getProject(projectSpace);
+	public void commitCompleted(ILocalProject localProject, IPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
+		// TODO: cast
+		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
 	}
 

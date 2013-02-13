@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 
 import org.eclipse.core.expressions.PropertyTester;
 
