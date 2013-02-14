@@ -6,7 +6,7 @@ Element-Name: No Local Store
 Element-Type: context
 Element-Version: 2.0
 Id: _IuFcgFpZEeKcnaHGSt8OwA
-Save-Time: 2/14/13 10:39 AM
+Save-Time: 2/14/13 2:06 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -30,7 +30,7 @@ try {
 			    } 
 				get-items | foreach {
 					select-item | get-menu "Delete on server" | click
-					get-window Confirmation | get-button Yes | click
+					get-window Confirmation | get-button OK | click
 				}
 			}
 		}
