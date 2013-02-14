@@ -1,13 +1,13 @@
 --- Q7 testcase ---
 Format-Version: 1.0
 Q7-vendor: www.xored.com/q7
-Contexts: __UtTgD-XEeK-yuKsz0Lang
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
 Element-Name: NumberOfChangesInCommitDialog
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _zP_LUEIyEeKQh80wtWssKQ
-Save-Time: 1/9/13 7:39 PM
+Save-Time: 2/14/13 4:53 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -22,7 +22,6 @@ get-window Commit | get-editbox -after [get-label "Commit your local changes of 
     | get-property text | equals "Number of composite changes: 1, Number of overall changes: 1" | verify-true
 get-window Commit | get-button OK | click
 get-view "Model Explorer" | get-tree | select "TestProject/League America1" | get-menu Player | click
-get-editor Player | get-editbox -after [get-label EMail] | set-focus
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
 get-window Commit | get-editbox -after [get-label "Commit your local changes of project \"TestProject\" to the server"] 
     | get-property text | equals "Number of composite changes: 1, Number of overall changes: 2" | verify-true
