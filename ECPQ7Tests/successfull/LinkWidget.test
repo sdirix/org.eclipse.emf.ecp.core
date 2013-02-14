@@ -32,12 +32,7 @@ with [get-window "New Reference Element"] {
     get-button Finish | click
 }
 with [get-editor Player] {
-    get-editbox -after [get-label EMail] | set-focus
     get-editbox -after [get-label Name] | set-text Eugen
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
 }
 get-editor Game | click
 get-editor Game | get-link "Player Eugen" | get-property caption | equals "Player Eugen" | verify-true
@@ -47,12 +42,7 @@ with [get-view "Model Explorer" | get-tree] {
 }
 get-view "Model Explorer" | get-tree | select "TestProject/Player Eugen" | double-click
 with [get-editor "Player Eugen"] {
-    get-editbox -after [get-label EMail] | set-focus
     get-editbox -after [get-label Name] | set-text Eugen1
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
 }
 get-editor Game | click
 get-editor Game | get-link "Player Eugen1" | get-property caption | equals "Player Eugen1" | verify-true

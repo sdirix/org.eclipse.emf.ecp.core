@@ -43,16 +43,16 @@ public interface CreateProjectComposite extends CompositeProvider {
 	/**
 	 * @return the provider
 	 */
-	public ECPProvider getProvider();
+	ECPProvider getProvider();
 
 	/**
 	 * @return the projectName
 	 */
-	public String getProjectName();
+	String getProjectName();
 
 	/**
 	 * @param listener
 	 *            the listener to set
 	 */
-	public void setListener(CreateProjectChangeListener listener);
+	void setListener(CreateProjectChangeListener listener);
 }

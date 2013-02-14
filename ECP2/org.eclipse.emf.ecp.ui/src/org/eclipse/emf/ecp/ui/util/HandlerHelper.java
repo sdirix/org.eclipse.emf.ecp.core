@@ -373,11 +373,33 @@ public final class HandlerHelper {
 			modelelementopener = null;
 			try {
 				ModelElementOpener modelelementOpener = (ModelElementOpener) element.createExecutableExtension("class"); //$NON-NLS-1$
-				int value = modelelementOpener.canOpen(me);
-				if (value > bestValue) {
-					bestCandidate = modelelementOpener;
-					bestValue = value;
+				for (IConfigurationElement testerElement : element.getChildren()) {
+					if ("staticTester".equals(testerElement.getName())) {//$NON-NLS-1$
+						int priority = Integer.parseInt(testerElement.getAttribute("priority"));//$NON-NLS-1$
+						String type = testerElement.getAttribute("modelElement");
+						try {
+							Class<?> supportedClassType = Class.forName(type);
+							if (supportedClassType.isInstance(me)) {
+								if (priority > bestValue) {
+									bestCandidate = modelelementOpener;
+									bestValue = priority;
+								}
+							}
+
+						} catch (ClassNotFoundException ex) {
+							Activator.log(ex);
+						}
+					} else if ("dynamicTester".equals(testerElement.getName())) {//$NON-NLS-1$
+						ModelElementOpenTester tester = (ModelElementOpenTester) testerElement
+							.createExecutableExtension("tester"); //$NON-NLS-1$
+						int value = tester.isApplicable(me);
+						if (value > bestValue) {
+							bestCandidate = modelelementOpener;
+							bestValue = value;
+						}
+					}
 				}
+
 			} catch (CoreException e) {
 
 				Activator.log(e);

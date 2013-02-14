@@ -19,10 +19,6 @@ get-view "History Browser" | get-tree | select "Local revision"
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
     get-editbox -after [get-label Name] | set-text Jonas1
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
 }
 get-button Refresh | click
 get-view "History Browser" | get-tree | get-item "Local revision" | get-property childCount | equals 1 | verify-true

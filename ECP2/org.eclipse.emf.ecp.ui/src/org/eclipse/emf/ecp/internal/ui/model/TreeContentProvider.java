@@ -219,7 +219,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			this.cause = cause;
 		}
 
-		public final Throwable getCause() {
+		public Throwable getCause() {
 			return cause;
 		}
 

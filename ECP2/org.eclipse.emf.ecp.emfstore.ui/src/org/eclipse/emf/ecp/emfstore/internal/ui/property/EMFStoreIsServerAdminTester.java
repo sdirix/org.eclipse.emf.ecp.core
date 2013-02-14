@@ -27,17 +27,26 @@ import org.eclipse.core.expressions.PropertyTester;
  * This tests whether a user is the serveradmin on a specific repository.
  * 
  * @author Eugen Neufeld
+ * @author Tobias Verhoeven
  */
 public final class EMFStoreIsServerAdminTester extends PropertyTester {
 
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		if (!(receiver instanceof EMFStoreProjectWrapper)) {
+		InternalRepository repository = null;
+
+		if (receiver instanceof EMFStoreProjectWrapper) {
+			EMFStoreProjectWrapper wrapper = (EMFStoreProjectWrapper) receiver;
+			repository = (InternalRepository) wrapper.getRepository();
+
+		} else if (receiver instanceof InternalRepository) {
+			repository = (InternalRepository) receiver;
+		}
+		if (repository == null) {
 			return false;
 		}
-		EMFStoreProjectWrapper wrapper = (EMFStoreProjectWrapper) receiver;
-		ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) wrapper.getRepository());
 
+		ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repository);
 		Usersession usersession = serverInfo.getLastUsersession();
 		boolean isAdmin = false;
 		if (usersession != null && usersession.getACUser() != null) {
@@ -49,8 +58,7 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 				Activator.log(e);
 			}
 		}
-
-		return new Boolean(isAdmin).equals(expectedValue);
+		return Boolean.valueOf(isAdmin).equals(expectedValue);
 	}
 
 }

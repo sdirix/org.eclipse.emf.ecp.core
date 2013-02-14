@@ -39,38 +39,38 @@ public final class CompositeFactory {
 	private CompositeFactory() {
 	}
 
-	public final static AddRepositoryComposite getAddRepositoryComposite() {
+	public static AddRepositoryComposite getAddRepositoryComposite() {
 		return new AddRepositoryCompositeImpl(null);
 	}
 
-	public final static AddRepositoryComposite getAddRepositoryComposite(ECPProvider provider) {
+	public static AddRepositoryComposite getAddRepositoryComposite(ECPProvider provider) {
 		return new AddRepositoryCompositeImpl(provider);
 	}
 
-	public final static CheckoutProjectComposite getCheckoutProjectComposite(ECPCheckoutSource checkoutSource) {
+	public static CheckoutProjectComposite getCheckoutProjectComposite(ECPCheckoutSource checkoutSource) {
 		return new CheckoutProjectCompositeImpl(checkoutSource);
 	}
 
-	public final static CreateProjectComposite getCreateProjectComposite(List<ECPProvider> providers) {
+	public static CreateProjectComposite getCreateProjectComposite(List<ECPProvider> providers) {
 		return new CreateProjectCompositeImpl(providers);
 	}
 
-	public final static CheckedModelClassComposite getCheckedModelClassComposite(Collection<EPackage> ePackages) {
+	public static CheckedModelClassComposite getCheckedModelClassComposite(Collection<EPackage> ePackages) {
 		return new CheckedSelectModelClassCompositeImpl(ePackages, new HashSet<EPackage>(), ePackages,
 			new HashSet<EClass>());
 	}
 
-	public final static SelectionComposite<TreeViewer> getSelectModelClassComposite(Collection<EPackage> ePackages,
+	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(Collection<EPackage> ePackages,
 		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
 		Collection<EClass> filteredEClasses) {
 		return new SelectModelClassCompositeImpl(ePackages, unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
-	public final static SelectionComposite<TreeViewer> getSelectModelClassComposite(ECPProject project) {
+	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(ECPProject project) {
 		return new SelectModelClassCompositeImpl(project);
 	}
 
-	public final static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject) {
+	public static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject) {
 		return new SelectModelElementCompositeImpl(rootObject);
 	}
 

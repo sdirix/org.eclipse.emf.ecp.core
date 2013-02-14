@@ -1,0 +1,66 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _f3qEUVpSEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
+Element-Name: String
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _QSZfMHHWEeKndsdNMEr_UQ
+Save-Time: 2/13/13 11:51 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-view "Model Explorer" | get-tree | get-item "TestProject/League America/Player Jonas" | get-property caption 
+    | equals "Player Jonas" | verify-true
+get-editor "Player Jonas" | get-editbox -after [get-label Name] | get-property text | equals Jonas | verify-true
+with [get-editor "Player Jonas" | get-editbox -after [get-label Name]] {
+    set-text "Null?$%...----^#!\"§§$%%&//(()))==`*\'_:;MNBVCX>>ADSFGHJKLÖQWERTZUIOPÜ*REDZTDUDT"
+    key-type Enter
+}
+get-view "Model Explorer" | get-tree 
+    | get-item "TestProject/League America/Player Null?$%...----^#!\"§§$%%&\\/\\/\\(\\(\\)\\)\\)==`\\*\'_:;MNBVCX>>ADSFGHJKLÖQWERTZUIOPÜ\\*REDZTDUDT" 
+    | get-property caption 
+    | equals "Player Null?$%...----^#!\"§§$%%&//(()))==`*\'_:;MNBVCX>>ADSFGHJKLÖQWERTZUIOPÜ*REDZTDUDT" | verify-true
+get-editor "Player Null?$%...----^#!\"§§$%%[...]" | get-editbox -after [get-label Name] | get-property text 
+    | equals "Null?$%...----^#!\"§§$%%&//(()))==`*\'_:;MNBVCX>>ADSFGHJKLÖQWERTZUIOPÜ*REDZTDUDT" | verify-true
+with [get-editor "Player Null?$%...----^#!\"§§$%%[...]" | get-editbox -after [get-label Name]] {
+    click-text 68
+    key-type Right -times 15
+    set-text ""
+    key-type Enter
+}
+get-view "Model Explorer" | get-tree | get-item "TestProject/League America/Player" | get-property caption 
+    | equals Player | verify-true
+get-editor Player | get-editbox -after [get-label Name] | get-property text | equals "" | verify-true
+with [get-editor Player | get-editbox -after [get-label Name]] {
+    set-text "                                                         üä.*"
+    key-type Left -times 2
+    set-text "                                                         üä .*"
+}
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian"
+get-view "Model Explorer" | get-tree 
+    | get-item "TestProject/League America/Player                                                          üä .\\*" 
+    | get-property caption | equals "Player                                                          üä .*" 
+    | verify-true
+get-editor "Player                        [...]" | get-editbox -after [get-label Name] | get-property text 
+    | equals "üä .*" | verify-true
+get-editor "Player                        [...]" | get-editbox -after [get-label Name] | click-text 1 63
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
+get-editor "Player Maximilian" | get-editbox -after [get-label Name] | click-text 1 11
+get-view "Model Explorer" | get-tree 
+    | select "TestProject/League America/Player                                                          üä .\\*" 
+    | double-click
+with [get-editor "Player                        [...]" | get-editbox -after [get-label Name]] {
+    set-text Maximilian
+    set-text Maximilian
+}
+get-editor "Player Maximilian" | get-editbox -after [get-label Name] | get-property text | equals Maximilian 
+    | verify-true
+get-view "Model Explorer" | get-tree | get-item "TestProject/League America/Player Maximilian" | get-property caption 
+    | equals "Player Maximilian" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

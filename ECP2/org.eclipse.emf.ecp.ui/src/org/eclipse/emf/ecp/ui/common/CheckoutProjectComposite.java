@@ -36,26 +36,26 @@ public interface CheckoutProjectComposite extends CompositeProvider {
 	/**
 	 * @return the project name
 	 */
-	public String getProjectName();
+	String getProjectName();
 
 	/**
 	 * @return the project properties
 	 */
-	public ECPProperties getProjectProperties();
+	ECPProperties getProjectProperties();
 
 	/**
 	 * @return the checkoutSource
 	 */
-	public ECPCheckoutSource getCheckoutSource();
+	ECPCheckoutSource getCheckoutSource();
 
 	/**
 	 * @return the uiProvider
 	 */
-	public UIProvider getUiProvider();
+	UIProvider getUiProvider();
 
 	/**
 	 * @param listener
 	 *            the listener to set
 	 */
-	public void setListener(CheckoutProjectChangeListener listener);
+	void setListener(CheckoutProjectChangeListener listener);
 }

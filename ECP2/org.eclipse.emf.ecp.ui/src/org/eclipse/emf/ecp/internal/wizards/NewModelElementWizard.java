@@ -22,7 +22,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Composite;
  * 
  * @author Eugen Neufeld
  */
-public class NewModelElementWizard extends ECPWizard<SelectionComposite<TableViewer>> {
+public class NewModelElementWizard extends ECPWizard<SelectionComposite<TreeViewer>> {
 
 	public NewModelElementWizard(String title) {
 		setWindowTitle(title);

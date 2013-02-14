@@ -17,10 +17,6 @@ Entry-Name: .content
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
     get-editbox -after [get-label Name] | set-text ForDeletion
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
 }
 get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Delete | click
 get-window Delete | get-button OK | click

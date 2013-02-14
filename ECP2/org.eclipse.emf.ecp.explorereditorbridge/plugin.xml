@@ -6,6 +6,10 @@
       <ModelElementOpener
             class="org.eclipse.emf.ecp.explorereditorbridge.EditorModelElementOpener"
             name="org.eclipse.emf.ecp.explorereditorbridge.ModelElementOpener">
+         <staticTester
+               modelElement="org.eclipse.emf.ecore.EObject"
+               priority="1">
+         </staticTester>
       </ModelElementOpener>
    </extension>
 

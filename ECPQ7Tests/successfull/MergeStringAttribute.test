@@ -16,12 +16,10 @@ Entry-Name: .content
 
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
-    get-editbox -after [get-label EMail] | set-focus
     get-editbox -after [get-label Name] | set-text Jonas1
 }
 get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
 with [get-editor "Player Jonas"] {
-    get-editbox -after [get-label EMail] | set-focus
     get-editbox -after [get-label Name] | set-text Jonas2
 }
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click

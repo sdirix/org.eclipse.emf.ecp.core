@@ -20,10 +20,6 @@ with [get-view "Model Explorer" | get-tree] {
 }
 with [get-editor "Player Maximilian"] {
     get-editbox -after [get-label Name] | set-text Maximiliansasasa
-    with [get-editbox -after [get-label EMail]] {
-        click-text
-        set-focus
-    }
 }
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "Revert All Operations" | click
 get-window Confirmation | get-button Yes | click
