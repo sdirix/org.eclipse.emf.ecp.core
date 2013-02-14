@@ -22,6 +22,10 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<testSuite>org.eclipse.emf.ecp.core.test</testSuite>
+		          	<testClass>org.eclipse.emf.ecp.core.test.AllTests</testClass>
+		          	<useUIHarness>false</useUIHarness>
+		          	<useUIThread>false</useUIThread>
 					<dependencies>
 						<dependency>
 							<type>eclipse-feature</type>
