@@ -6,7 +6,7 @@ Element-Name: No Local Store
 Element-Type: context
 Element-Version: 2.0
 Id: _IuFcgFpZEeKcnaHGSt8OwA
-Save-Time: 2/14/13 2:06 PM
+Save-Time: 2/14/13 2:51 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -14,7 +14,12 @@ Entry-Name: .ecl.context
 
 try {
 	get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
-	get-window "Progress Information" | get-window "Authentication required" | get-button OK | click
+} -catch {}
+try {
+	get-window "Progress Information" 
+} -catch {}
+try { 
+	get-window "Authentication required" | get-button OK | click
 } -catch {}
 try {
 	with [get-view "Model Repositories"] {
@@ -30,7 +35,7 @@ try {
 			    } 
 				get-items | foreach {
 					select-item | get-menu "Delete on server" | click
-					get-window Confirmation | get-button OK | click
+					get-window Confirmation | get-button Yes | click
 				}
 			}
 		}
