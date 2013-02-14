@@ -324,7 +324,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		// return;
 		// }
 		// }
-		leftColumnComposite.setFocus();
+		// leftColumnComposite.setFocus();
 	}
 
 }
