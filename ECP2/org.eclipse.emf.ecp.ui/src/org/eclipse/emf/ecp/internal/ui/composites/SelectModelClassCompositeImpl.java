@@ -33,14 +33,13 @@ public class SelectModelClassCompositeImpl extends AbstractEClassTreeSelectionCo
 	/**
 	 * Constructor for providing the filter data manually.
 	 * 
-	 * @param ePackages all {@link EPackage}s that can be used
 	 * @param unsupportedEPackages {@link EPackage}s that are not available for selection
 	 * @param filteredEPackages {@link EPackage}s which are selectable
 	 * @param filteredEClasses {@link EClass}es which are selectable
 	 */
-	public SelectModelClassCompositeImpl(Collection<EPackage> ePackages, Collection<EPackage> unsupportedEPackages,
+	public SelectModelClassCompositeImpl(Collection<EPackage> unsupportedEPackages,
 		Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses) {
-		super(ePackages, unsupportedEPackages, filteredEPackages, filteredEClasses);
+		super(unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
 	/**

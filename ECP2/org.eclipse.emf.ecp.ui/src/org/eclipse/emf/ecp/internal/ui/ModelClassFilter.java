@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.internal.ui;
 // TODO: Revise
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.internal.ui.model.ModelTreeContentProvider;
 
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
@@ -42,7 +42,7 @@ public class ModelClassFilter extends ECPViewerFilter {
 				&& ((EPackage) parentElement).getName().toLowerCase().contains(getSearchTerm().toLowerCase());
 		} else if (element instanceof EPackage) {
 			EPackage ePackage = (EPackage) element;
-			Object[] children = ((ModelTreeContentProvider) ((TreeViewer) viewer).getContentProvider())
+			Object[] children = ((ITreeContentProvider) ((TreeViewer) viewer).getContentProvider())
 				.getChildren(element);
 			boolean show = ePackage.getName().toLowerCase().contains(getSearchTerm().toLowerCase());
 			for (Object child : children) {

@@ -50,15 +50,13 @@ public class CheckedSelectModelClassCompositeImpl extends AbstractEClassTreeSele
 	/**
 	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
 	 * 
-	 * @param ePackages the available {@link EPackage EPackages}
 	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
 	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
 	 * @param filteredEClasses {@link EClass EClasses} selected by the user
 	 */
-	public CheckedSelectModelClassCompositeImpl(Collection<EPackage> ePackages,
-		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
-		Collection<EClass> filteredEClasses) {
-		super(ePackages, unsupportedEPackages, filteredEPackages, filteredEClasses);
+	public CheckedSelectModelClassCompositeImpl(Collection<EPackage> unsupportedEPackages,
+		Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses) {
+		super(unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
 	@Override

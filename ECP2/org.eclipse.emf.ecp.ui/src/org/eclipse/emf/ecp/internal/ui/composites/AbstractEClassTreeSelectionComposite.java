@@ -14,11 +14,10 @@ package org.eclipse.emf.ecp.internal.ui.composites;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.ECPViewerFilter;
 import org.eclipse.emf.ecp.internal.ui.ModelClassFilter;
+import org.eclipse.emf.ecp.internal.ui.model.FilteredEClassContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.MEClassLabelProvider;
-import org.eclipse.emf.ecp.internal.ui.model.ModelTreeContentProvider;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
@@ -40,24 +39,24 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	private final ModelClassFilter filter = new ModelClassFilter();
 	private ComposedAdapterFactory composedAdapterFactory;
 	private MEClassLabelProvider meClassLabelProvider;
-	private ModelTreeContentProvider modelTreeContentProvider;
+	private ITreeContentProvider modelTreeContentProvider;
 
 	/**
 	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
 	 * 
-	 * @param ePackages the available {@link EPackage EPackages}
 	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
 	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
 	 * @param filteredEClasses {@link EClass EClasses} selected by the user
 	 */
-	public AbstractEClassTreeSelectionComposite(Collection<EPackage> ePackages,
-		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
-		Collection<EClass> filteredEClasses) {
+	public AbstractEClassTreeSelectionComposite(Collection<EPackage> unsupportedEPackages,
+		Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses) {
 		super();
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		meClassLabelProvider = new MEClassLabelProvider(composedAdapterFactory);
-		modelTreeContentProvider = new ModelTreeContentProvider(composedAdapterFactory, ePackages,
-			unsupportedEPackages, filteredEPackages, filteredEClasses);
+		// modelTreeContentProvider = new ModelTreeContentProvider(composedAdapterFactory, ePackages,
+		// unsupportedEPackages, filteredEPackages, filteredEClasses);
+		modelTreeContentProvider = new FilteredEClassContentProvider(unsupportedEPackages, filteredEPackages,
+			filteredEClasses);
 	}
 
 	/**
@@ -68,8 +67,7 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	 * @param project the {@link ECPProject} to read the data from
 	 */
 	public AbstractEClassTreeSelectionComposite(ECPProject project) {
-		this(ECPUtil.getAllRegisteredEPackages(), project.getUnsupportedEPackages(), project.getVisiblePackages(),
-			project.getVisibleEClasses());
+		this(project.getUnsupportedEPackages(), project.getVisiblePackages(), project.getVisibleEClasses());
 	}
 
 	private ILabelProvider getLabelProvider() {

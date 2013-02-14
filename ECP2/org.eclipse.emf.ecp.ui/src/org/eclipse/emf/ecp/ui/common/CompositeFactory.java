@@ -56,14 +56,13 @@ public final class CompositeFactory {
 	}
 
 	public static CheckedModelClassComposite getCheckedModelClassComposite(Collection<EPackage> ePackages) {
-		return new CheckedSelectModelClassCompositeImpl(ePackages, new HashSet<EPackage>(), ePackages,
-			new HashSet<EClass>());
+		return new CheckedSelectModelClassCompositeImpl(new HashSet<EPackage>(), ePackages, new HashSet<EClass>());
 	}
 
-	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(Collection<EPackage> ePackages,
+	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(
 		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
 		Collection<EClass> filteredEClasses) {
-		return new SelectModelClassCompositeImpl(ePackages, unsupportedEPackages, filteredEPackages, filteredEClasses);
+		return new SelectModelClassCompositeImpl(unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
 	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(ECPProject project) {

@@ -184,34 +184,18 @@ public class EditorContext implements EditModelElementContext {
 	/** {@inheritDoc} */
 	public void createAndReferenceNewModelElement(EReference eReference) {
 		Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
-		List<EPackage> ePackages = new ArrayList<EPackage>();
-		ePackages.add(modelElement.eClass().getEPackage());
-		ePackages.addAll(modelElement.eClass().getEPackage().getESubpackages());
 
 		NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
-		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ePackages,
-			new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
+		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
+			new HashSet<EPackage>(), classes);
 		wizard.setCompositeProvider(helper);
-		// wizard.init(ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(), classes);
 
-		// ModelElementSelectionTreeDialog dialog = new ModelElementSelectionTreeDialog(PlatformUI.getWorkbench()
-		// .getActiveWorkbenchWindow().getShell(), ePackages, new HashSet<EPackage>(), new HashSet<EPackage>(),
-		// classes);
-		//
-		// dialog.setAllowMultiple(false);
-		// int result = dialog.open();
 		WizardDialog wd = new WizardDialog(shell, wizard);
 		// wizard.setWindowTitle("New Reference Element");
 		EObject newMEInstance = null;
 		int result = wd.open();
 
 		if (result == WizardDialog.OK) {
-			// Object[] dialogSelection = dialog.getResult();
-			// for (Object object : dialogSelection)
-			// {
-			// if (object instanceof EClass)
-			// {
-			// EClass eClasse = (EClass)object;
 			Object[] selection = helper.getSelection();
 			if (selection == null || selection.length == 0) {
 				return;
@@ -220,9 +204,6 @@ public class EditorContext implements EditModelElementContext {
 			// 1.create ME
 			EPackage ePackage = eClasse.getEPackage();
 			newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
-
-			// }
-			// }
 		}
 		if (newMEInstance == null) {
 			return;
