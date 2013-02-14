@@ -41,7 +41,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	IECPProjectPreDeleteObserver {
 
 	private String dirtyPath = "icons/dirty.png";
-	private Map<ECPProject, EMFStoreDirtyObserver> observers = new HashMap<ECPProject, EMFStoreDirtyObserver>();
+	private static Map<ECPProject, EMFStoreDirtyObserver> observers = new HashMap<ECPProject, EMFStoreDirtyObserver>();
 
 	/**
 	 * Instantiates a new EMFStoreDirtyDecorator.
@@ -65,8 +65,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 				projectSpace.getOperationManager().addOperationListener(emfStoreDirtyObserver);
 				observers.put((ECPProject) element, emfStoreDirtyObserver);
 			}
-			if (project.isOpen() && EMFStoreProvider.INSTANCE.getProjectSpace(project).isShared()
-				&& EMFStoreDirtyDecoratorCachedTree.getInstance(project).getRootValue() > 0) {
+			if (project.isOpen() && projectSpace.isShared() && projectSpace.hasUncommitedChanges()) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 		}
@@ -113,15 +112,15 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 
 	/** {@inheritDoc} */
 	public void commitCompleted(ESLocalProject localProject, ESPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
-		// TODO: cast
+		// TODO: cast, move to EMFStoreDirtyObserver?
 		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
+		observers.get(project).clearDeletedElementsCache();
 	}
 
 	/** {@inheritDoc} */
 	public void projectDelete(ECPProject project) {
 		EMFStoreDirtyDecoratorCachedTree.removeProject(project);
-
 		observers.remove(project);
 	}
 

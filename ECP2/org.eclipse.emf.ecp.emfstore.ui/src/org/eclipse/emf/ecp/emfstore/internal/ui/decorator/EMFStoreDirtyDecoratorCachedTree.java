@@ -35,9 +35,8 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	/**
 	 * Removes an ECPProject from the Cache.
 	 * 
-	 * @param project
+	 * @param project the project
 	 */
-
 	public static void removeProject(ECPProject project) {
 		cashedTrees.remove(project);
 	}
@@ -150,6 +149,33 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 		if (node != null) {
 			value = node.getOwnValue();
 		}
+
 		return update(eObject, Math.max(0, --value));
+	}
+
+	/**
+	 * Sets the operation count for the given object.
+	 * 
+	 * @param eObject the eobject
+	 * @param count the new count
+	 * @return the set of affected elements
+	 */
+	public Set<EObject> setOperationCount(EObject eObject, int count) {
+		return update(eObject, count);
+	}
+
+	/**
+	 * Gets the own cached value of the given object.
+	 * 
+	 * @param eObject the e object
+	 * @return the own cached value
+	 */
+	public int getOwnValue(EObject eObject) {
+		int value = 0;
+		CachedTreeNode<Integer> node = nodes.get(eObject);
+		if (node != null) {
+			value = node.getOwnValue();
+		}
+		return value;
 	}
 }
