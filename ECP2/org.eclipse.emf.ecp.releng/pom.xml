@@ -28,6 +28,8 @@
 		
 		
 		<module>../org.eclipse.emf.ecp.core</module>
+		<module>../org.eclipse.emf.ecp.core.test</module>
+		
 		<module>../org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../org.eclipse.emf.ecp.example-feature</module>
 		 
