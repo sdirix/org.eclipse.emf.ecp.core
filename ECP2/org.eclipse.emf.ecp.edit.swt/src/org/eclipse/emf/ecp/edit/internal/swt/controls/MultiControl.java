@@ -19,8 +19,6 @@ import java.util.List;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
-import org.eclipse.core.databinding.observable.list.ListDiff;
-import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
@@ -173,31 +171,17 @@ public abstract class MultiControl extends SWTControl {
 		changeListener = new IListChangeListener() {
 
 			public void handleListChange(ListChangeEvent event) {
-				ListDiff diff = event.diff;
-				for (final ListDiffEntry entry : diff.getDifferences()) {
-					if (entry.isAddition() && entry.getPosition() >= sectionComposite.getChildren().length) {
-						addControl(entry.getPosition());
-						sectionComposite.layout(true);
-
-						refreshSection();
-					}
-				}
+				rebuildControls();
 			}
 		};
 		model.addListChangeListener(changeListener);
-		for (int i = 0; i < model.size(); i++) {
-			addControl(i);
-		}
-		refreshSection();
+		rebuildControls();
 		scrolledComposite.setContent(sectionComposite);
 		scrolledComposite.setExpandHorizontal(true);
 
 		return superComposite;
 	}
 
-	/**
-	 * 
-	 */
 	private void isFull() {
 		int upperBound = getStructuralFeature().getUpperBound();
 		boolean full = model.size() >= upperBound && upperBound != -1;
@@ -206,13 +190,25 @@ public abstract class MultiControl extends SWTControl {
 		}
 	}
 
+	private void rebuildControls(){
+		for(WidgetWrapper ww:widgetWrappers){
+			ww.composite.dispose();
+			ww.dispose();
+		}
+		widgetWrappers.clear();
+		for (int i = 0; i < model.size(); i++) {
+			addControl(i);
+		}
+		refreshSection();
+	}
+	
 	private void addControl(int position) {
 		
 		ECPObservableValue modelValue = new ECPObservableValue(model, position, supportedClassType);
 		WidgetWrapper h = new WidgetWrapper(modelValue);
 
 		h.createControl(sectionComposite, SWT.NONE);
-		widgetWrappers.add(h);
+		widgetWrappers.add(position,h);
 
 	}
 	/**
@@ -327,13 +323,9 @@ public abstract class MultiControl extends SWTControl {
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					widgetWrappers.remove(getThis());
 					getModelElementContext().getEditingDomain().getCommandStack().execute(
 					RemoveCommand.create(getModelElementContext().getEditingDomain(),
 						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue()));
-					getThis().composite.dispose();
-					refreshSection();
-					updateIndicesAfterRemove(modelValue.getIndex());
 				}
 
 			});
@@ -359,16 +351,10 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					widgetWrappers.get(currentIndex).composite.moveAbove(widgetWrappers.get(currentIndex - 1).composite);
-					widgetWrappers.remove(currentIndex);
 					getModelElementContext().getEditingDomain().getCommandStack().execute(
 					MoveCommand.create(getModelElementContext().getEditingDomain(),
 						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue(),
 						currentIndex - 1));
-					widgetWrappers.add(--currentIndex, getThis());
-					getThis().getModelValue().setIndex(currentIndex);
-					shiftIndecesToRight(currentIndex);
-					refreshSection();
 				}
 			});
 			Button downB = new Button(composite, SWT.PUSH);
@@ -384,16 +370,10 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					widgetWrappers.get(currentIndex).composite.moveBelow(widgetWrappers.get(currentIndex + 1).composite);
-					widgetWrappers.remove(currentIndex);
 					getModelElementContext().getEditingDomain().getCommandStack().execute(
 					MoveCommand.create(getModelElementContext().getEditingDomain(),
 						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue(),
 						currentIndex + 1));
-					widgetWrappers.add(++currentIndex, getThis());
-					getThis().getModelValue().setIndex(currentIndex);
-					shiftIndecesToLeft(currentIndex);
-					refreshSection();
 				}
 			});
 		}
@@ -409,30 +389,6 @@ public abstract class MultiControl extends SWTControl {
 			composite.dispose();
 			modelValue.dispose();
 		}
-	}
-
-	private void updateIndicesAfterRemove(int indexRemoved) {
-		int i = 0;
-		for (WidgetWrapper h : widgetWrappers) {
-			if (i < indexRemoved) {
-				i++;
-				continue;
-			}
-			ECPObservableValue modelValue = h.getModelValue();
-			modelValue.setIndex(modelValue.getIndex() - 1);
-		}
-	}
-
-	private void shiftIndecesToRight(int index) {
-		ECPObservableValue modelValue = widgetWrappers.get(index + 1).getModelValue();
-		modelValue.setIndex(modelValue.getIndex() + 1);
-
-	}
-
-	private void shiftIndecesToLeft(int index) {
-		ECPObservableValue modelValue = widgetWrappers.get(index - 1).getModelValue();
-		modelValue.setIndex(modelValue.getIndex() - 1);
-
 	}
 
 	/**
