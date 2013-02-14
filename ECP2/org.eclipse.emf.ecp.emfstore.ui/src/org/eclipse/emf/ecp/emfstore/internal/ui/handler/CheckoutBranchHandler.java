@@ -13,12 +13,7 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
-import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.internal.client.model.impl.RemoteProject;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICheckoutController;
-import org.eclipse.emf.emfstore.internal.server.model.ProjectInfo;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -42,11 +37,9 @@ public class CheckoutBranchHandler extends AbstractHandler {
 			Object selection = ssel.getFirstElement();
 			if (selection instanceof EMFStoreProjectWrapper) {
 				EMFStoreProjectWrapper projectWrapper = (EMFStoreProjectWrapper) selection;
-				InternalRepository repo = (InternalRepository) projectWrapper.getRepository();
-				ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repo);
 
-				new UICheckoutController(HandlerUtil.getActiveShell(event), new RemoteProject(serverInfo,
-					(ProjectInfo) projectWrapper.getCheckoutData()), true).execute();
+				new UICheckoutController(HandlerUtil.getActiveShell(event), projectWrapper.getCheckoutData(), true)
+					.execute();
 			}
 		}
 
