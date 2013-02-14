@@ -227,8 +227,8 @@
                            value="true">
                      </test>
                      <test
-                           property="org.eclipse.emf.ecp.core.project.providerName"
-                           value="org.eclipse.emf.ecp.emfstore.provider">
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.hasHistory"
+                           value="true">
                      </test>
                   </iterate>
                </and>
