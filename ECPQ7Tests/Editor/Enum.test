@@ -1,13 +1,13 @@
 --- Q7 testcase ---
 Format-Version: 1.0
 Q7-vendor: www.xored.com/q7
-Contexts: _f3qEUVpSEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
 Element-Name: Enum
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _MhtJ4HHYEeKndsdNMEr_UQ
-Save-Time: 2/13/13 11:51 AM
+Save-Time: 2/14/13 11:18 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -25,4 +25,18 @@ get-view "Model Explorer" | get-tree | get-item "TestProject/Tournament Pro" | g
 get-editor "Tournament Pro" | get-combo -after [get-label Type] | select Amateur
 get-view "Model Explorer" | get-tree | get-item "TestProject/Tournament Amateur" | get-property caption 
     | equals "Tournament Amateur" | verify-true
+
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "Revert All Operations" | click
+get-window Confirmation | get-button Yes | click
+get-window Revert | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/Tournament Pro" | double-click
+get-editor "Tournament Pro" | get-combo -after [get-label Type] | select Amateur
+get-editor "Tournament Amateur" | close
+get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Commit | click
+get-window Commit | get-button OK | click
+get-editor "Tournament Pro" | get-combo -after [get-label Type] | get-property selection | equals Pro | verify-true
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Update | click
+get-window Update | get-button OK | click
+get-editor "Tournament Amateur" | get-combo -after [get-label Type] | get-property selection | equals Amateur 
+    | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
