@@ -226,12 +226,9 @@
                            property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
                            value="true">
                      </test>
-                     <instanceof
-                           value="org.eclipse.emf.ecp.core.ECPProject">
-                     </instanceof>
                      <test
-                           property="org.eclipse.emf.ecp.core.project.providerName"
-                           value="org.eclipse.emf.ecp.emfstore.provider">
+                           property="org.eclipse.emf.ecp.emfstore.ui.testers.hasHistory"
+                           value="true">
                      </test>
                   </iterate>
                </and>
