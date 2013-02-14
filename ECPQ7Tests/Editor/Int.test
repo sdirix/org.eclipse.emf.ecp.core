@@ -1,0 +1,45 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _f3qEUVpSEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
+Element-Name: Int
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _1mLz4HHYEeKndsdNMEr_UQ
+Save-Time: 2/13/13 11:51 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | click-text 1 2
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 0 
+    | verify-true
+with [get-editor "Player Jonas"] {
+    get-editbox -after [get-label "Number Of Victories"] | set-text 9987
+    close
+}
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 9987 
+    | verify-true
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] 
+    | set-text 9987999999999999999999999999999999999999
+with [get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"]] {
+    get-property "decorators.visible" -index 0 | equals true | verify-true
+    get-property "decorators.description" -index 0 | equals "Invalid input" | verify-true
+}
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
+get-editor "Player Jonas" | click
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text 
+    | equals 9987999999999999999999999999999999999999 | verify-true
+get-editor "Player Jonas" | close
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/League America" | double-click
+    select "TestProject/League America/Player Jonas" | double-click
+}
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 9987 
+    | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
