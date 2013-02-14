@@ -3,7 +3,7 @@
 <schema targetNamespace="org.eclipse.emf.ecp.edit" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.emf.ecp.edit" id="org.eclipse.emf.ecp.edit.controls" name="ECP Controls"/>
+         <meta.schema plugin="org.eclipse.emf.ecp.edit" id="controls" name="ECP Controls"/>
       </appinfo>
       <documentation>
          This extension point allows to register controls. 
