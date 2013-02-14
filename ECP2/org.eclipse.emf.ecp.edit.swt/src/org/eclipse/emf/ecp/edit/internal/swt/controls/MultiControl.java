@@ -304,7 +304,9 @@ public abstract class MultiControl extends SWTControl {
 			widget.createControl(composite);
 			
 			createDeleteButton(composite);
-			createUpDownButtons(composite);
+			if(getStructuralFeature().isOrdered()){
+				createUpDownButtons(composite);
+			}
 			
 			
 		}
