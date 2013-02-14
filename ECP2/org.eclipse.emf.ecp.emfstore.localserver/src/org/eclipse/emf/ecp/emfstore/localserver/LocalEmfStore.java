@@ -12,18 +12,22 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.localserver;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
-import org.eclipse.emf.emfstore.internal.server.exceptions.FatalEmfStoreException;
 
 /**
  * The LocalEmfStore contains static methods to manually start the EmfStrore.
  * 
  * @author Tobias Verhoeven
  */
+@SuppressWarnings("restriction")
 public final class LocalEmfStore {
 
 	/**
@@ -35,11 +39,35 @@ public final class LocalEmfStore {
 	 * Starts a EMFStore instance.
 	 */
 	public static void start() {
+		
+		writePasswordFile();
+		
 		try {
 			EMFStoreController.runAsNewThread();
-		} catch (FatalEmfStoreException e) {
+		} catch (org.eclipse.emf.emfstore.internal.server.exceptions.FatalEmfStoreException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		} 
+	}
+	
+	// creates a  user.properties file in the conf folder if none does exist.
+	private static void writePasswordFile() {
+		PrintWriter printWriter=null;
+		File file = new File(org.eclipse.emf.emfstore.internal.server.ServerConfiguration.getServerHome() + "/conf/user.properties");
+		
+		if (!file.exists()) {
+			try {
+				printWriter = new PrintWriter(file);
+		        printWriter.println("testUserA=password"); 
+		        printWriter.println("testUserB=password"); 
+		        printWriter.flush(); 
+			} catch (IOException e) {
+				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			} finally {
+				if (printWriter != null) {
+					printWriter.close();
+				}
+			}
+		}
 	}
 
 	/**
