@@ -48,6 +48,10 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 		InternalProject project = (InternalProject) element;
 		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 
+		if (projectSpace == null) {
+			return;
+		}
+
 		if (project.isOpen() && projectSpace.isShared() && projectSpace.hasUncommitedChanges()) {
 			decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 		}
