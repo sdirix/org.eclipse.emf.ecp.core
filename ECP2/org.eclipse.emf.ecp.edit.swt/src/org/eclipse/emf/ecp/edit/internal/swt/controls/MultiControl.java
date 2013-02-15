@@ -19,6 +19,9 @@ import java.util.List;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
+import org.eclipse.core.databinding.observable.list.ListDiff;
+import org.eclipse.core.databinding.observable.list.ListDiffEntry;
+import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
@@ -67,7 +70,7 @@ public abstract class MultiControl extends SWTControl {
 	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private static final String ICONS_ARROW_DOWN_PNG = "icons/arrow_down.png";//$NON-NLS-1$
 	private static final String ICONS_ARROW_UP_PNG = "icons/arrow_up.png";//$NON-NLS-1$
-	
+
 	private IObservableList model;
 	private IListChangeListener changeListener;
 	// list of controls
@@ -90,43 +93,46 @@ public abstract class MultiControl extends SWTControl {
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public MultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		EditModelElementContext modelElementContext,boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,embedded);
-		findControlDescription(itemPropertyDescriptor,modelElementContext.getModelElement());
+		EditModelElementContext modelElementContext, boolean embedded) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+		findControlDescription(itemPropertyDescriptor, modelElementContext.getModelElement());
 		actions = instantiateActions();
 	}
+
 	/**
 	 * This returns the array of actions to display in the multi control.
+	 * 
 	 * @return the array of action to add
 	 */
 	protected abstract ECPSWTAction[] instantiateActions();
 
 	private void findControlDescription(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		int bestPriority=-1;
-		for(ControlDescription description:ControlFactory.INSTANCE.getControlDescriptors()){
-			if(StaticApplicableTester.class.isInstance(description.getTester())){
-				StaticApplicableTester tester=(StaticApplicableTester) description.getTester();
-				int priority=getTesterPriority(tester,itemPropertyDescriptor,eObject);
-				if(bestPriority<priority){
-					bestPriority=priority;
-					controlDescription=description;
-					supportedClassType=tester.getSupportedClassType();
+		int bestPriority = -1;
+		for (ControlDescription description : ControlFactory.INSTANCE.getControlDescriptors()) {
+			if (StaticApplicableTester.class.isInstance(description.getTester())) {
+				StaticApplicableTester tester = (StaticApplicableTester) description.getTester();
+				int priority = getTesterPriority(tester, itemPropertyDescriptor, eObject);
+				if (bestPriority < priority) {
+					bestPriority = priority;
+					controlDescription = description;
+					supportedClassType = tester.getSupportedClassType();
 				}
-			}
-			else{
+			} else {
 				continue;
 			}
 		}
 	}
+
 	/**
 	 * Checks the priority of a tester.
+	 * 
 	 * @param tester the {@link StaticApplicableTester} to test
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param eObject the {@link EObject} to use
 	 * @return the priority
 	 */
-	protected abstract int getTesterPriority(StaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
-		EObject eObject);
+	protected abstract int getTesterPriority(StaticApplicableTester tester,
+		IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
 
 	/*
 	 * (non-Javadoc)
@@ -145,11 +151,6 @@ public abstract class MultiControl extends SWTControl {
 		mainComposite = new Composite(superComposite, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(mainComposite);
-
-		// TITLE
-//		Label title = new Label(mainComposite, SWT.NONE);
-//		title.setText(getItemPropertyDescriptor().getDisplayName(getModelElementContext().getModelElement()));
-//		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(title);
 
 		// TOOLBAR
 		createSectionToolbar();
@@ -171,11 +172,42 @@ public abstract class MultiControl extends SWTControl {
 		changeListener = new IListChangeListener() {
 
 			public void handleListChange(ListChangeEvent event) {
-				rebuildControls();
+				ListDiff diff = event.diff;
+				diff.accept(new ListDiffVisitor() {
+					
+					@Override
+					public void handleRemove(int index, Object element) {
+						updateIndicesAfterRemove(index);
+					}
+					
+					@Override
+					public void handleAdd(int index, Object element) {
+						addControl(index);
+					}
+
+					@Override
+					public void handleMove(int oldIndex, int newIndex, Object element) {
+						if(oldIndex>newIndex){
+							shiftIndecesToLeft(newIndex);
+						}
+						else{
+							shiftIndecesToRight(newIndex);
+						}
+					}
+
+					@Override
+					public void handleReplace(int index, Object oldElement, Object newElement) {
+						//do nothing
+					}
+				});
+				refreshSection();
 			}
 		};
 		model.addListChangeListener(changeListener);
-		rebuildControls();
+		for (int i = 0; i < model.size(); i++) {
+			addControl(i);
+		}
+		refreshSection();
 		scrolledComposite.setContent(sectionComposite);
 		scrolledComposite.setExpandHorizontal(true);
 
@@ -190,27 +222,29 @@ public abstract class MultiControl extends SWTControl {
 		}
 	}
 
-	private void rebuildControls(){
-		for(WidgetWrapper ww:widgetWrappers){
-			ww.composite.dispose();
-			ww.dispose();
-		}
-		widgetWrappers.clear();
-		for (int i = 0; i < model.size(); i++) {
-			addControl(i);
-		}
-		refreshSection();
-	}
-	
 	private void addControl(int position) {
-		
+
 		ECPObservableValue modelValue = new ECPObservableValue(model, position, supportedClassType);
 		WidgetWrapper h = new WidgetWrapper(modelValue);
 
 		h.createControl(sectionComposite, SWT.NONE);
-		widgetWrappers.add(position,h);
-
+		widgetWrappers.add(position, h);
+		
+		Composite lastComposite=h.composite;
+		int i = 0;
+		for (WidgetWrapper wrapper : widgetWrappers) {
+			if (i <= position) {
+				i++;
+				continue;
+			}
+			wrapper.composite.moveBelow(lastComposite);
+			lastComposite=wrapper.composite;
+			ECPObservableValue wrapperModelValue = wrapper.getModelValue();
+			wrapperModelValue.setIndex(modelValue.getIndex() + 1);
+		}
+		
 	}
+
 	/**
 	 * Returns the {@link SWTControl}.
 	 * 
@@ -219,9 +253,11 @@ public abstract class MultiControl extends SWTControl {
 	@SuppressWarnings({ "unchecked" })
 	private SWTControl getSingleInstance() {
 		try {
-			Constructor<? extends AbstractControl<Composite>> widgetConstructor = (Constructor<? extends AbstractControl<Composite>>) controlDescription.getControlClass().getConstructor(boolean.class,
-				IItemPropertyDescriptor.class, EStructuralFeature.class, EditModelElementContext.class,boolean.class);
-			return (SWTControl) widgetConstructor.newInstance(false,getItemPropertyDescriptor()	, getStructuralFeature(), getModelElementContext(),true);
+			Constructor<? extends AbstractControl<Composite>> widgetConstructor = (Constructor<? extends AbstractControl<Composite>>) controlDescription
+				.getControlClass().getConstructor(boolean.class, IItemPropertyDescriptor.class,
+					EStructuralFeature.class, EditModelElementContext.class, boolean.class);
+			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
+				getStructuralFeature(), getModelElementContext(), true);
 		} catch (IllegalArgumentException ex) {
 			Activator.logException(ex);
 		} catch (InstantiationException ex) {
@@ -264,9 +300,9 @@ public abstract class MultiControl extends SWTControl {
 			}
 		});
 		for (ECPSWTAction action : actions) {
-				action.setEnabled(isEditable());
-				toolBarActions.add(action);
-				toolBarManager.add(action);
+			action.setEnabled(isEditable());
+			toolBarActions.add(action);
+			toolBarManager.add(action);
 
 		}
 		toolBarManager.update(true);
@@ -279,7 +315,6 @@ public abstract class MultiControl extends SWTControl {
 	 * 
 	 */
 	private final class WidgetWrapper {
-		
 
 		private final ECPObservableValue modelValue;
 
@@ -302,13 +337,12 @@ public abstract class MultiControl extends SWTControl {
 			SWTControl widget = getSingleInstance();
 			widget.setObservableValue(modelValue);
 			widget.createControl(composite);
-			
+
 			createDeleteButton(composite);
-			if(getStructuralFeature().isOrdered()){
+			if (getStructuralFeature().isOrdered()) {
 				createUpDownButtons(composite);
 			}
-			
-			
+
 		}
 
 		/**
@@ -325,9 +359,13 @@ public abstract class MultiControl extends SWTControl {
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					getModelElementContext().getEditingDomain().getCommandStack().execute(
-					RemoveCommand.create(getModelElementContext().getEditingDomain(),
-						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue()));
+					
+					getModelElementContext()
+						.getEditingDomain()
+						.getCommandStack()
+						.execute(
+							RemoveCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), modelValue.getValue()));
 				}
 
 			});
@@ -353,10 +391,13 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					getModelElementContext().getEditingDomain().getCommandStack().execute(
-					MoveCommand.create(getModelElementContext().getEditingDomain(),
-						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue(),
-						currentIndex - 1));
+					
+					getModelElementContext()
+						.getEditingDomain()
+						.getCommandStack()
+						.execute(
+							MoveCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), modelValue.getValue(), currentIndex - 1));
 				}
 			});
 			Button downB = new Button(composite, SWT.PUSH);
@@ -372,10 +413,13 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					getModelElementContext().getEditingDomain().getCommandStack().execute(
-					MoveCommand.create(getModelElementContext().getEditingDomain(),
-						getModelElementContext().getModelElement(), getStructuralFeature(), modelValue.getValue(),
-						currentIndex + 1));
+					
+					getModelElementContext()
+						.getEditingDomain()
+						.getCommandStack()
+						.execute(
+							MoveCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), modelValue.getValue(), currentIndex + 1));
 				}
 			});
 		}
@@ -391,6 +435,44 @@ public abstract class MultiControl extends SWTControl {
 			composite.dispose();
 			modelValue.dispose();
 		}
+	}
+
+	private void updateIndicesAfterRemove(int indexRemoved) {
+		WidgetWrapper wrapper= widgetWrappers.remove(indexRemoved);
+		wrapper.composite.dispose();
+		
+		int i = 0;
+		for (WidgetWrapper h : widgetWrappers) {
+			if (i < indexRemoved) {
+				i++;
+				continue;
+			}
+			ECPObservableValue modelValue = h.getModelValue();
+			modelValue.setIndex(modelValue.getIndex() - 1);
+		}
+	}
+
+	private void shiftIndecesToRight(int index) {
+		widgetWrappers.get(index-1).composite.moveBelow(widgetWrappers.get(index).composite);
+		WidgetWrapper wrapper= widgetWrappers.remove(index-1);
+		widgetWrappers.add(index, wrapper);
+		wrapper.getModelValue().setIndex(index);
+		
+		ECPObservableValue modelValue = widgetWrappers.get(index-1).getModelValue();
+		modelValue.setIndex(modelValue.getIndex() - 1);
+
+	}
+
+	private void shiftIndecesToLeft(int index) {
+		
+		widgetWrappers.get(index+1).composite.moveAbove(widgetWrappers.get(index).composite);
+		WidgetWrapper wrapper= widgetWrappers.remove(index+1);
+		widgetWrappers.add(index, wrapper);
+		wrapper.getModelValue().setIndex(index);
+		
+		ECPObservableValue modelValue = widgetWrappers.get(index+1).getModelValue();
+		modelValue.setIndex(modelValue.getIndex() + 1);
+
 	}
 
 	/**
@@ -428,7 +510,7 @@ public abstract class MultiControl extends SWTControl {
 
 	@Override
 	public void bindValue() {
-		//bind is widget specific
+		// bind is widget specific
 	}
 
 	@Override

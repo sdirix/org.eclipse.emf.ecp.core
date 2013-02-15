@@ -20,14 +20,15 @@ import org.eclipse.ui.ISharedImages;
 
 /**
  * The action to allow adding of attribute values to multi attribute controls.
+ * 
  * @author Eugen Neufeld
  * 
  */
 public class AddAttributeAction extends ECPSWTAction {
 
-	
 	/**
 	 * The constructor for the add attribute action.
+	 * 
 	 * @param modelElementContext the {@link EditModelElementContext} to use
 	 * @param feature the {@link EStructuralFeature} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
@@ -44,8 +45,12 @@ public class AddAttributeAction extends ECPSWTAction {
 	@Override
 	public void run() {
 		super.run();
-		AddCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext().getModelElement(),
-			getFeature(), getFeature().getEType().getDefaultValue()).execute();
+		getModelElementContext()
+			.getEditingDomain()
+			.getCommandStack()
+			.execute(
+				AddCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
+					.getModelElement(), getFeature(), getFeature().getEType().getDefaultValue()));
 
 	}
 }
