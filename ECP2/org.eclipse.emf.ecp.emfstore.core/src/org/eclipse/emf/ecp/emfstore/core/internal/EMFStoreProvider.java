@@ -46,8 +46,8 @@ import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlException;
-import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
+import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -134,7 +134,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 					for (ESRemoteProject projectInfo : projectInfos) {
 						childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent, projectInfo));
 					}
-				} catch (EMFStoreException e) {
+				} catch (ESException e) {
 					Activator.log(e);
 				}
 
@@ -188,7 +188,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			ProjectSpace ps = (ProjectSpace) project.getProviderSpecificData();
 			try {
 				((WorkspaceBase) WorkspaceProvider.getInstance().getWorkspace()).deleteProjectSpace(ps);
-			} catch (EMFStoreException ex) {
+			} catch (ESException ex) {
 				Activator.log(ex);
 			} catch (IOException ex) {
 				Activator.log(ex);
@@ -209,7 +209,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 					serverInfo.getLastUsersession().logIn();
 				} catch (AccessControlException ex) {
 					Activator.log(ex);
-				} catch (EMFStoreException ex) {
+				} catch (ESException ex) {
 					Activator.log(ex);
 				}
 			}

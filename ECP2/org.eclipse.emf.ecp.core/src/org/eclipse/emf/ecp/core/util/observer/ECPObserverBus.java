@@ -43,7 +43,7 @@ import java.util.Set;
  * Example code:
  * 
  * <pre>
- * // A is IObserver
+ * // A is ESObserver
  * A a = new A() {
  * 
  * 	public void foo() {

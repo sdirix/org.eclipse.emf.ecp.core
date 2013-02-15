@@ -22,7 +22,7 @@ import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.client.exceptions.ESCertificateStoreException;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
-import org.eclipse.emf.emfstore.internal.server.exceptions.EMFStoreException;
+import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -65,7 +65,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 			ESRemoteProject checkoutData = (ESRemoteProject) adaptable;
 			try {
 				return (T) checkoutData.checkout(new NullProgressMonitor());
-			} catch (EMFStoreException e) {
+			} catch (ESException e) {
 				Activator.log(e);
 				// BEGIN SUPRESS CATCH EXCEPTION
 			} catch (RuntimeException e) {
