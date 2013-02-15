@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
@@ -45,12 +47,31 @@ public class AddAttributeAction extends ECPSWTAction {
 	@Override
 	public void run() {
 		super.run();
+		//TODO show message if something goes wrong
+		Object defaultValue=getFeature().getEType().getDefaultValue();
+		if(defaultValue==null){
+			try {
+				defaultValue=getFeature().getEType().getInstanceClass().getConstructor().newInstance();
+			} catch (InstantiationException e) {
+				Activator.logException(e);
+			} catch (IllegalAccessException e) {
+				Activator.logException(e);
+			} catch (IllegalArgumentException e) {
+				Activator.logException(e);
+			} catch (InvocationTargetException e) {
+				Activator.logException(e);
+			} catch (NoSuchMethodException e) {
+				Activator.logException(e);
+			} catch (SecurityException e) {
+				Activator.logException(e);
+			}
+		}
 		getModelElementContext()
 			.getEditingDomain()
 			.getCommandStack()
 			.execute(
 				AddCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
-					.getModelElement(), getFeature(), getFeature().getEType().getDefaultValue()));
+					.getModelElement(), getFeature(),defaultValue ));
 
 	}
 }
