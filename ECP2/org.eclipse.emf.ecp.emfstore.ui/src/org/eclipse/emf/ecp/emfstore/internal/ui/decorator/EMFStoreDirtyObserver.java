@@ -146,6 +146,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).remove(
 					projectSpace.getProject().get(cdo.getModelElementId()));
+				// TODO: consider containments
 			}
 		}
 	}
@@ -163,6 +164,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 					modelElementIdToOperationCount.get(cdo.getModelElementId())));
 
 				modelElementIdToOperationCount.remove(projectSpace.getProject().get(cdo.getModelElementId()));
+				// TODO: consider containments
 			}
 		}
 	}
