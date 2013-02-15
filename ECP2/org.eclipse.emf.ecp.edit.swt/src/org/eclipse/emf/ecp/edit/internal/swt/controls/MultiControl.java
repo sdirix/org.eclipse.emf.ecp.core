@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -178,26 +179,30 @@ public abstract class MultiControl extends SWTControl {
 					@Override
 					public void handleRemove(int index, Object element) {
 						updateIndicesAfterRemove(index);
+						getDataBindingContext().updateTargets();
 					}
 					
 					@Override
 					public void handleAdd(int index, Object element) {
 						addControl(index);
+						getDataBindingContext().updateTargets();
 					}
 
 					@Override
 					public void handleMove(int oldIndex, int newIndex, Object element) {
-						if(oldIndex>newIndex){
-							shiftIndecesToLeft(newIndex);
-						}
-						else{
-							shiftIndecesToRight(newIndex);
-						}
+//						if(oldIndex>newIndex){
+//							shiftIndecesToLeft(newIndex);
+//						}
+//						else{
+//							shiftIndecesToRight(newIndex);
+//						}
+						getDataBindingContext().updateTargets();
 					}
 
 					@Override
 					public void handleReplace(int index, Object oldElement, Object newElement) {
 						//do nothing
+						System.out.println();
 					}
 				});
 				refreshSection();
@@ -396,8 +401,8 @@ public abstract class MultiControl extends SWTControl {
 						.getEditingDomain()
 						.getCommandStack()
 						.execute(
-							MoveCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), modelValue.getValue(), currentIndex - 1));
+							new MoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), currentIndex, currentIndex - 1));
 				}
 			});
 			Button downB = new Button(composite, SWT.PUSH);
@@ -418,8 +423,8 @@ public abstract class MultiControl extends SWTControl {
 						.getEditingDomain()
 						.getCommandStack()
 						.execute(
-							MoveCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), modelValue.getValue(), currentIndex + 1));
+							new MoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), currentIndex, currentIndex + 1));
 				}
 			});
 		}
@@ -438,24 +443,25 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void updateIndicesAfterRemove(int indexRemoved) {
-		WidgetWrapper wrapper= widgetWrappers.remove(indexRemoved);
+		WidgetWrapper wrapper= widgetWrappers.remove(widgetWrappers.size()-1);
 		wrapper.composite.dispose();
 		
-		int i = 0;
-		for (WidgetWrapper h : widgetWrappers) {
-			if (i < indexRemoved) {
-				i++;
-				continue;
-			}
-			ECPObservableValue modelValue = h.getModelValue();
-			modelValue.setIndex(modelValue.getIndex() - 1);
-		}
+//		int i = 0;
+//		for (WidgetWrapper h : widgetWrappers) {
+//			if (i < indexRemoved) {
+//				i++;
+//				continue;
+//			}
+//			ECPObservableValue modelValue = h.getModelValue();
+//			modelValue.setIndex(modelValue.getIndex() - 1);
+//		}
 	}
 
 	private void shiftIndecesToRight(int index) {
-		widgetWrappers.get(index-1).composite.moveBelow(widgetWrappers.get(index).composite);
+		
 		WidgetWrapper wrapper= widgetWrappers.remove(index-1);
 		widgetWrappers.add(index, wrapper);
+		widgetWrappers.get(index).composite.moveBelow(widgetWrappers.get(index-1).composite);
 		wrapper.getModelValue().setIndex(index);
 		
 		ECPObservableValue modelValue = widgetWrappers.get(index-1).getModelValue();
@@ -464,10 +470,12 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void shiftIndecesToLeft(int index) {
+		widgetWrappers.get(index).composite.moveAbove(widgetWrappers.get(index+1).composite);
 		
-		widgetWrappers.get(index+1).composite.moveAbove(widgetWrappers.get(index).composite);
 		WidgetWrapper wrapper= widgetWrappers.remove(index+1);
 		widgetWrappers.add(index, wrapper);
+		
+		
 		wrapper.getModelValue().setIndex(index);
 		
 		ECPObservableValue modelValue = widgetWrappers.get(index+1).getModelValue();

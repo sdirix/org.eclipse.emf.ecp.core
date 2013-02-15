@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -25,6 +27,7 @@ import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -149,8 +152,9 @@ public class LinkControl extends SingleControl {
 						}
 						if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
 							stackLayout.topControl = linkComposite;
-							setLinkModelElement();
+							getDataBindingContext().updateTargets();
 							setLinkChangeListener();
+
 						} else {
 							stackLayout.topControl = unsetLabel;
 							linkModelElement = null;
@@ -165,8 +169,6 @@ public class LinkControl extends SingleControl {
 
 		imageHyperlink = new Label(linkComposite, SWT.NONE);
 
-		// TODO: Reactivate
-		// ModelElementClassTooltip.enableFor(imageHyperlink);
 		hyperlink = new Link(linkComposite, SWT.NONE);
 		String text = shortLabelProvider.getText(linkModelElement);
 		hyperlink.setText("<a>" + text + "</a>");//$NON-NLS-1$ //$NON-NLS-2$
@@ -190,30 +192,6 @@ public class LinkControl extends SingleControl {
 
 	}
 
-	private void updateValues() {
-		if (linkModelElement != null) {
-			Image image = shortLabelProvider.getImage(linkModelElement);
-			imageHyperlink.setImage(image);
-			imageHyperlink.setData(linkModelElement.eClass());
-			String text = shortLabelProvider.getText(linkModelElement);
-			hyperlink.setText("<a>" + text + "</a>");//$NON-NLS-1$ //$NON-NLS-2$
-			hyperlink.setToolTipText(text);
-			hyperlink.update();
-			// imageHyperlink.layout(true);
-
-			// if (listener != null) {
-			// hyperlink.removeHyperlinkListener(listener);
-			// imageHyperlink.removeHyperlinkListener(listener);
-			// listener = null;
-			// }
-			// if (listener == null) {
-			// listener = new MEHyperLinkAdapter(linkModelElement, getModelElementContext());
-			// hyperlink.addHyperlinkListener(listener);
-			// imageHyperlink.addHyperlinkListener(listener);
-			// }
-		}
-	}
-
 	private void setLinkChangeListener() {
 
 		if (linkedModelElementChangeListener != null) {
@@ -227,7 +205,7 @@ public class LinkControl extends SingleControl {
 					Display.getDefault().syncExec(new Runnable() {
 
 						public void run() {
-							updateValues();
+							getDataBindingContext().updateTargets();
 
 						}
 
@@ -236,13 +214,6 @@ public class LinkControl extends SingleControl {
 				}
 			};
 		}
-	}
-
-	private void setLinkModelElement() {
-		if (!getStructuralFeature().isMany()) {
-			linkModelElement = (EObject) getModelElementContext().getModelElement().eGet(getStructuralFeature());
-		}
-		updateValues();
 	}
 
 	@Override
@@ -257,11 +228,40 @@ public class LinkControl extends SingleControl {
 
 	@Override
 	public void bindValue() {
+		
 		if (ECPObservableValue.class.isInstance(getModelValue())) {
 			linkModelElement = (EObject) ((ECPObservableValue) getModelValue()).getValue();
+			setLinkChangeListener();
 		}
-		setLinkModelElement();
-		setLinkChangeListener();
+		
+		
+		IObservableValue value = SWTObservables.observeText(hyperlink);
+		getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
+
+			@Override
+			public Object convert(Object value) {
+				return linkModelElement;
+			}
+		}, new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				linkModelElement = (EObject) value;
+				return "<a>" + shortLabelProvider.getText(value) + "</a>";
+			}
+		});
+		IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
+		getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
+
+			@Override
+			public Object convert(Object value) {
+				return linkModelElement;
+			}
+		}, new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				return shortLabelProvider.getImage(value);
+			}
+		});
 	}
 
 	@Override

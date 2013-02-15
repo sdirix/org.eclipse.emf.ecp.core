@@ -80,7 +80,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	 * @param composite the composite to create the button onto
 	 * @return the created button
 	 */
-	protected Button createButtonForAction(final Action action, Composite composite) {
+	protected Button createButtonForAction(final Action action, final Composite composite) {
 		Button selectButton = new Button(composite, SWT.PUSH);
 		selectButton.setImage(action.getImageDescriptor().createImage());
 		selectButton.setToolTipText(action.getToolTipText());
@@ -88,6 +88,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				action.run();
+				composite.layout();
 			}
 
 		});
