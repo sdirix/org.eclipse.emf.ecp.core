@@ -65,7 +65,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 				projectSpace.getOperationManager().addOperationListener(emfStoreDirtyObserver);
 				observers.put((ECPProject) element, emfStoreDirtyObserver);
 			}
-			if (project.isOpen() && projectSpace.isShared() && projectSpace.hasUncommitedChanges()) {
+			if (project.isOpen() && projectSpace.isShared() && observers.get(element).isDirty()) {
 				decoration.addOverlay(Activator.getImageDescriptor(dirtyPath), IDecoration.BOTTOM_LEFT);
 			}
 		}
@@ -115,7 +115,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 		// TODO: cast, move to EMFStoreDirtyObserver?
 		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
-		observers.get(project).clearDeletedElementsCache();
+		observers.get(project).clearObserverCache();
 	}
 
 	/** {@inheritDoc} */

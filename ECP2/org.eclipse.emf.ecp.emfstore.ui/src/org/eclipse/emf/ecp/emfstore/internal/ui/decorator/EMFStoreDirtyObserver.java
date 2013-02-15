@@ -13,21 +13,14 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.client.ESLocalProject;
-import org.eclipse.emf.emfstore.client.model.observer.ESCommitObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.CreateDeleteOperation;
-import org.eclipse.emf.emfstore.server.model.ESChangePackage;
-import org.eclipse.emf.emfstore.server.model.versionspec.ESPrimaryVersionSpec;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
@@ -48,6 +41,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	private InternalProject internalProject;
 	private Map<ModelElementId, Integer> modelElementIdToOperationCount = new HashMap<ModelElementId, Integer>();
 	private Set<EObject> lastAffected;
+	private int operations = 0;
 
 	/**
 	 * Default constructor.
@@ -67,6 +61,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	private void initCachedTree(ProjectSpace ps) {
 		for (AbstractOperation operation : ps.getOperations()) {
+			operations++;
 			for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 				EObject element = ps.getProject().getModelElement(modelElementId);
 				if (element != null) {
@@ -79,7 +74,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	/** {@inheritDoc} */
 	public void operationExecuted(AbstractOperation operation) {
-
+		operations++;
 		if (!projectSpace.isShared()) {
 			return;
 		}
@@ -102,6 +97,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	/** {@inheritDoc} */
 	public void operationUnDone(AbstractOperation operation) {
+		operations--;
 		if (!projectSpace.isShared()) {
 			return;
 		}
@@ -180,7 +176,20 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		return lastAffected;
 	}
 
-	public void clearDeletedElementsCache() {
+	/**
+	 * Clears the cache of deleted elements and resets the operation count to 0.
+	 */
+	public void clearObserverCache() {
 		modelElementIdToOperationCount.clear();
+		operations = 0;
+	}
+
+	/**
+	 * Returns weather the observed projectSpac is dirty.
+	 * 
+	 * @return true, if is dirty.
+	 */
+	public boolean isDirty() {
+		return operations > 0;
 	}
 }
