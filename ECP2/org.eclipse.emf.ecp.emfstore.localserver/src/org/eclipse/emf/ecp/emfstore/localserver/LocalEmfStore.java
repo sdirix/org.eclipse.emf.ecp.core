@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
+import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
 
 /**
  * The LocalEmfStore contains static methods to manually start the EmfStrore.
@@ -44,7 +45,7 @@ public final class LocalEmfStore {
 		
 		try {
 			EMFStoreController.runAsNewThread();
-		} catch (org.eclipse.emf.emfstore.internal.server.exceptions.FatalEmfStoreException e) {
+		} catch (FatalESException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		} 
 	}
