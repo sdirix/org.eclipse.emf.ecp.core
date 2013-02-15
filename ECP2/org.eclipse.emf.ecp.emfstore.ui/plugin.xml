@@ -735,11 +735,9 @@
             lightweight="true"
             state="true">
          <enablement>
-            <or>
                <objectClass
                      name="org.eclipse.emf.ecp.core.ECPProject">
                </objectClass>
-            </or>
          </enablement>
          <description>
             If the porject has local changes.
