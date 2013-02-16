@@ -31,57 +31,10 @@
       </view>
    </extension>
    <extension
-         point="org.eclipse.ui.popupMenus">
-      <!--
-      
-      
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.ecp.ui.contribution.checkoutSources"
-            objectClass="org.eclipse.emf.ecp.core.util.ECPCheckoutSource">
-         <action
-               class="org.eclipse.emf.ecp.ui.actions.CheckoutAction"
-               enablesFor="multiple"
-               icon="icons/checkout_project.gif"
-               id="org.eclipse.emf.ecp.ui.checkoutAction"
-               label="Checkout..."
-               state="true"
-               style="push">
-         </action>
-      </objectContribution>
-      -->
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.ecp.ui.contribution.repositories"
-            objectClass="org.eclipse.emf.ecp.core.ECPRepository">
-         <action
-               class="org.eclipse.emf.ecp.ui.actions.RepositoryPropertiesAction"
-               enablesFor="1"
-               id="org.eclipse.emf.ecp.ui.repositoryPropertiesAction"
-               label="%RepositoryProperties"
-               state="true"
-               style="push">
-         </action>
-      </objectContribution>
-      <objectContribution
-            adaptable="true"
-            id="org.eclipse.emf.ecp.ui.contribution.projects"
-            objectClass="org.eclipse.emf.ecp.core.ECPProject">
-         <action
-               class="org.eclipse.emf.ecp.ui.actions.ProjectPropertiesAction"
-               enablesFor="1"
-               id="org.eclipse.emf.ecp.ui.projectPropertiesAction"
-               label="%ProjectProperties"
-               state="true"
-               style="push">
-         </action>
-      </objectContribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
-            locationURI="popup:org.eclipse.ui.popup.any?after=global_additions">
+            locationURI="popup:org.eclipse.ui.popup.any?after=common">
          <command
                commandId="org.eclipse.emf.ecp.ui.closable"
                label="%OpenClosable"
@@ -182,12 +135,44 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
          <command
                commandId="org.eclipse.emf.ecp.ui.project.createProject"
                icon="icons/checkout_project_old.gif"
                label="%CreateNewProject"
                style="push">
+         </command>
+         <separator
+               name="common"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.properties.project"
+               label="%ProjectProperties"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.properties.project"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
          </command>
          <command
                commandId="org.eclipse.emf.ecp.ui.project.filterModelElements"
@@ -317,6 +302,10 @@
                   </and>
             </visibleWhen>
          </command>
+         <separator
+               name="org.eclipse.emf.ecp.ui.separatorProvider"
+               visible="true">
+         </separator>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -325,6 +314,52 @@
                commandId="org.eclipse.emf.ecp.ui.workbench.saveProject"
                icon="icons/database_save.png"
                label="%SaveProject"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelRepositoriesView?after=additions">
+         <separator
+               name="common"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.properties.repository"
+               label="%RepositoryProperties"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPRepository">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.properties.repository"
+                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.emf.ecp.ui.ModelRepositoriesView?after=additions">
+         <command
+               commandId="org.eclipse.emf.ecp.ui.addrepository"
+               icon="icons/add.gif"
+               label="Add Repository"
                style="push">
          </command>
       </menuContribution>
@@ -401,6 +436,14 @@
       <command
             id="org.eclipse.emf.ecp.ui.workbench.export"
             name="Export model">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.properties.project"
+            name="Project Properties">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.properties.repository"
+            name="Repository Properties">
       </command>
    </extension>
    <extension
@@ -511,6 +554,24 @@
             </with>
          </enabledWhen>
       </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ProjectPropertiesHandler"
+            commandId="org.eclipse.emf.ecp.ui.properties.project">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.RepositoryPropertiesHandler"
+            commandId="org.eclipse.emf.ecp.ui.properties.repository">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.AddRepositoryHandler"
+            commandId="org.eclipse.emf.ecp.ui.addrepository">
+         <enabledWhen>
+            <test
+                  property="org.eclipse.emf.ecp.ui.repository.canAddRepositories"
+                  value="true">
+            </test>
+         </enabledWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -528,6 +589,13 @@
             id="org.eclipse.emf.ecp.ui.workbench.menu.properties"
             namespace="org.eclipse.emf.ecp.ui.workbench.menu"
             properties="enablement"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.ui.tester.CanAddRepositoriesTester"
+            id="org.eclipse.emf.ecp.ui.repository.tester"
+            namespace="org.eclipse.emf.ecp.ui.repository"
+            properties="canAddRepositories"
             type="java.lang.Object">
       </propertyTester>
    </extension>

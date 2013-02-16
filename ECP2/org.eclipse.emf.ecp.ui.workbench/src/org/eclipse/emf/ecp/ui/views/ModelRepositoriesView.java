@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.ui.views;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
-import org.eclipse.emf.ecp.ui.actions.AddRepositoryAction;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -43,34 +42,13 @@ public class ModelRepositoriesView extends TreeView implements IECPProvidersChan
   /**{@inheritDoc} */
   public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception
   {
-    setEnablements();
   }
   
-  protected void setEnablements()
-  {
-    addRepositoryAction.setEnabled(canAddRepositories());
-  }
-
-  protected boolean canAddRepositories()
-  {
-    for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders())
-    {
-      if (provider.canAddRepositories())
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
 
   @Override
   protected TreeViewer createViewer(Composite parent)
   {
 	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
-
-    addRepositoryAction = new AddRepositoryAction(getSite().getShell());
-    setEnablements();
     ECPProviderRegistry.INSTANCE.addObserver(this);
     return viewer;
   }
@@ -78,7 +56,6 @@ public class ModelRepositoriesView extends TreeView implements IECPProvidersChan
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(addRepositoryAction);
     super.fillLocalToolBar(manager);
   }
 }

@@ -32,6 +32,8 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.dialogs.DeleteDialog;
+import org.eclipse.emf.ecp.internal.ui.dialogs.ProjectPropertiesDialog;
+import org.eclipse.emf.ecp.internal.ui.dialogs.RepositoryPropertiesDialog;
 import org.eclipse.emf.ecp.internal.wizards.AddRepositoryWizard;
 import org.eclipse.emf.ecp.internal.wizards.CheckoutProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.CreateProjectWizard;
@@ -415,5 +417,23 @@ public final class HandlerHelper {
 		}
 		// END SUPRESS CATCH EXCEPTION
 
+	}
+
+	/**
+	 * @param project
+	 * @param editable
+	 * @param shell
+	 */
+	public static void openProjectProperties(ECPProject project, boolean editable, Shell shell) {
+		new ProjectPropertiesDialog(shell, editable, project).open();
+	}
+
+	/**
+	 * @param firstElement
+	 * @param b
+	 * @param activeShell
+	 */
+	public static void openRepositoryProperties(ECPRepository repository, boolean editable, Shell shell) {
+		new RepositoryPropertiesDialog(shell, editable, repository).open();
 	}
 }
