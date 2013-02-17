@@ -16,6 +16,8 @@ import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -24,10 +26,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.ISharedImages;
 /**
  * This class defines a DateTimeControl which is used for displaying {@link EStructuralFeature}s which have a date
  * value.
@@ -106,33 +112,37 @@ public class DateTimeControl extends SingleControl {
 	 * @param composite the parent {@link Composite}
 	 */
 	private void createDateAndTimeWidget(Composite composite) {
-
+		int numColumns = 3;
+		if (isEmbedded()) {
+			numColumns = 2;
+		}
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
+		
 		dateWidget = new DateTime(composite, SWT.DATE);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		//FIXME add button
-//		dateDeleteButton = new ImageHyperlink(composite, SWT.TOP);
-//		dateDeleteButton.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
-//
-//		dateDeleteButton.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseUp(MouseEvent e) {
-//				new ECPCommand(getModelElementContext().getModelElement(), getEditingDomain()) {
-//
-//					@Override
-//					protected void doRun() {
-//						getEditingDomain().getCommandStack().execute(
-//							new RemoveCommand(getEditingDomain(), getModelElementContext().getModelElement(),
-//								getFeature(), getModelElementContext().getModelElement().eGet(getFeature())));
-//
-//						sl.topControl = unsetLabel;
-//						parentComposite.layout();
-//					}
-//				}.run(true);
-//			}
-//		});
+		
+		if(!isEmbedded()){
+			Button unsetdate=new Button(composite, SWT.PUSH);
+			unsetdate.setToolTipText("UnsetDate");
+			unsetdate.setImage(Activator.getDefault().getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
+			unsetdate.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					
+					getModelElementContext().getEditingDomain().getCommandStack().execute(
+						new RemoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext().getModelElement(),
+							getStructuralFeature(), getModelElementContext().getModelElement().eGet(getStructuralFeature())));
+
+					sl.topControl = unsetLabel;
+					parentComposite.layout();
+				}
+				
+			});
+		}
 	}
 	
 	@Override

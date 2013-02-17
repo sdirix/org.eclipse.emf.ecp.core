@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.provider.ShortLabelProvider;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -34,7 +33,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -71,8 +69,6 @@ public class LinkControl extends SingleControl {
 
 	private Label imageHyperlink;
 
-	private EObject linkModelElement;
-
 	private ComposedAdapterFactory composedAdapterFactory;
 
 	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
@@ -86,8 +82,6 @@ public class LinkControl extends SingleControl {
 	private StackLayout stackLayout;
 
 	private Composite mainComposite;
-
-	private ModelElementChangeListener linkedModelElementChangeListener;
 
 	private Button setNullButton;
 
@@ -140,39 +134,11 @@ public class LinkControl extends SingleControl {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-		modelElementChangeListener = new ModelElementChangeListener(getModelElementContext().getModelElement()) {
-
-			@Override
-			public void onChange(Notification notification) {
-				Display.getDefault().syncExec(new Runnable() {
-
-					public void run() {
-						if (mainComposite.isDisposed()) {
-							return;
-						}
-						if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
-							stackLayout.topControl = linkComposite;
-							getDataBindingContext().updateTargets();
-							setLinkChangeListener();
-
-						} else {
-							stackLayout.topControl = unsetLabel;
-							linkModelElement = null;
-						}
-						mainComposite.layout();
-					}
-
-				});
-
-			}
-		};
 
 		imageHyperlink = new Label(linkComposite, SWT.NONE);
 
 		hyperlink = new Link(linkComposite, SWT.NONE);
-		String text = shortLabelProvider.getText(linkModelElement);
-		hyperlink.setText("<a>" + text + "</a>");//$NON-NLS-1$ //$NON-NLS-2$
-		hyperlink.setToolTipText(text);
+
 		hyperlink.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -184,36 +150,12 @@ public class LinkControl extends SingleControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				getModelElementContext().openEditor(linkModelElement, EDITOR_ID);
+				getModelElementContext().openEditor((EObject) getModelValue().getValue(), EDITOR_ID);
 			}
 
 		});
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(hyperlink);
 
-	}
-
-	private void setLinkChangeListener() {
-
-		if (linkedModelElementChangeListener != null) {
-			linkedModelElementChangeListener.remove();
-		}
-		if (linkModelElement != null) {
-			linkedModelElementChangeListener = new ModelElementChangeListener(linkModelElement) {
-
-				@Override
-				public void onChange(Notification notification) {
-					Display.getDefault().syncExec(new Runnable() {
-
-						public void run() {
-							getDataBindingContext().updateTargets();
-
-						}
-
-					});
-
-				}
-			};
-		}
 	}
 
 	@Override
@@ -228,33 +170,42 @@ public class LinkControl extends SingleControl {
 
 	@Override
 	public void bindValue() {
-		
-		if (ECPObservableValue.class.isInstance(getModelValue())) {
-			linkModelElement = (EObject) ((ECPObservableValue) getModelValue()).getValue();
-			setLinkChangeListener();
-		}
-		
-		
+
 		IObservableValue value = SWTObservables.observeText(hyperlink);
+
 		getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return linkModelElement;
+				return getModelValue().getValue();
 			}
 		}, new UpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {
-				linkModelElement = (EObject) value;
-				return "<a>" + shortLabelProvider.getText(value) + "</a>";
+				updateChangeListener((EObject) value);
+				return  "<a>" +  getLinkText(value)+ "</a>";
 			}
 		});
+		IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
+		getDataBindingContext().bindValue(tooltipValue, getModelValue(), new UpdateValueStrategy() {
+
+			@Override
+			public Object convert(Object value) {
+				return getModelValue().getValue();
+			}
+		}, new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				return getLinkText(value);
+			}
+		});
+
 		IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
 		getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return linkModelElement;
+				return getModelValue().getValue();
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -264,16 +215,58 @@ public class LinkControl extends SingleControl {
 		});
 	}
 
+	private Object getLinkText(Object value) {
+		String linkName=shortLabelProvider.getText(value);
+		return linkName==null?"":linkName;
+	}
+
+	private void updateChangeListener(final EObject value) {
+		if (modelElementChangeListener != null) {
+			if (modelElementChangeListener.getTarget().equals(value)) {
+				return;
+			}
+			modelElementChangeListener.remove();
+			modelElementChangeListener = null;
+		}
+		if (value == null) {
+			if (stackLayout.topControl != unsetLabel) {
+				stackLayout.topControl = unsetLabel;
+				mainComposite.layout();
+			}
+
+		} else {
+			if (stackLayout.topControl != linkComposite) {
+				stackLayout.topControl = linkComposite;
+				mainComposite.layout();
+			}
+
+			modelElementChangeListener = new ModelElementChangeListener(value) {
+
+				@Override
+				public void onChange(Notification notification) {
+					Display.getDefault().syncExec(new Runnable() {
+
+						public void run() {
+							getDataBindingContext().updateTargets();
+							linkComposite.layout();
+
+						}
+
+					});
+
+				}
+			};
+
+		}
+
+	}
+
 	@Override
 	public void dispose() {
 		adapterFactoryLabelProvider.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		modelElementChangeListener.remove();
-		if (linkedModelElementChangeListener != null) {
-			linkedModelElementChangeListener.remove();
-		}
-		linkModelElement = null;
 		hyperlink.dispose();
 		super.dispose();
 	}

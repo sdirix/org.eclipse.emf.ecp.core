@@ -184,33 +184,26 @@ public abstract class MultiControl extends SWTControl {
 					
 					@Override
 					public void handleAdd(int index, Object element) {
-						addControl(index);
+						addControl();
+						sectionComposite.layout();
 						getDataBindingContext().updateTargets();
 					}
 
 					@Override
 					public void handleMove(int oldIndex, int newIndex, Object element) {
-//						if(oldIndex>newIndex){
-//							shiftIndecesToLeft(newIndex);
-//						}
-//						else{
-//							shiftIndecesToRight(newIndex);
-//						}
 						getDataBindingContext().updateTargets();
 					}
 
 					@Override
 					public void handleReplace(int index, Object oldElement, Object newElement) {
 						//do nothing
-						System.out.println();
 					}
 				});
-				refreshSection();
 			}
 		};
 		model.addListChangeListener(changeListener);
 		for (int i = 0; i < model.size(); i++) {
-			addControl(i);
+			addControl();
 		}
 		refreshSection();
 		scrolledComposite.setContent(sectionComposite);
@@ -227,27 +220,13 @@ public abstract class MultiControl extends SWTControl {
 		}
 	}
 
-	private void addControl(int position) {
+	private void addControl() {
 
-		ECPObservableValue modelValue = new ECPObservableValue(model, position, supportedClassType);
+		ECPObservableValue modelValue = new ECPObservableValue(model, widgetWrappers.size(), supportedClassType);
 		WidgetWrapper h = new WidgetWrapper(modelValue);
 
 		h.createControl(sectionComposite, SWT.NONE);
-		widgetWrappers.add(position, h);
-		
-		Composite lastComposite=h.composite;
-		int i = 0;
-		for (WidgetWrapper wrapper : widgetWrappers) {
-			if (i <= position) {
-				i++;
-				continue;
-			}
-			wrapper.composite.moveBelow(lastComposite);
-			lastComposite=wrapper.composite;
-			ECPObservableValue wrapperModelValue = wrapper.getModelValue();
-			wrapperModelValue.setIndex(modelValue.getIndex() + 1);
-		}
-		
+		widgetWrappers.add(h);
 	}
 
 	/**
@@ -445,42 +424,6 @@ public abstract class MultiControl extends SWTControl {
 	private void updateIndicesAfterRemove(int indexRemoved) {
 		WidgetWrapper wrapper= widgetWrappers.remove(widgetWrappers.size()-1);
 		wrapper.composite.dispose();
-		
-//		int i = 0;
-//		for (WidgetWrapper h : widgetWrappers) {
-//			if (i < indexRemoved) {
-//				i++;
-//				continue;
-//			}
-//			ECPObservableValue modelValue = h.getModelValue();
-//			modelValue.setIndex(modelValue.getIndex() - 1);
-//		}
-	}
-
-	private void shiftIndecesToRight(int index) {
-		
-		WidgetWrapper wrapper= widgetWrappers.remove(index-1);
-		widgetWrappers.add(index, wrapper);
-		widgetWrappers.get(index).composite.moveBelow(widgetWrappers.get(index-1).composite);
-		wrapper.getModelValue().setIndex(index);
-		
-		ECPObservableValue modelValue = widgetWrappers.get(index-1).getModelValue();
-		modelValue.setIndex(modelValue.getIndex() - 1);
-
-	}
-
-	private void shiftIndecesToLeft(int index) {
-		widgetWrappers.get(index).composite.moveAbove(widgetWrappers.get(index+1).composite);
-		
-		WidgetWrapper wrapper= widgetWrappers.remove(index+1);
-		widgetWrappers.add(index, wrapper);
-		
-		
-		wrapper.getModelValue().setIndex(index);
-		
-		ECPObservableValue modelValue = widgetWrappers.get(index+1).getModelValue();
-		modelValue.setIndex(modelValue.getIndex() + 1);
-
 	}
 
 	/**
