@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _L6tvoG-ZEeKndsdNMEr_UQ
-Save-Time: 2/14/13 2:36 PM
+Save-Time: 2/17/13 3:38 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -61,7 +61,7 @@ get-window "Progress Information" | get-window -from "Window.createShell()" | ge
     | get-button OK | click
     with [get-group Participants | get-table] {
         select [get-item "" -index 1] | activate-cell-edit -column 3
-        select [get-item "" -index 1] | get-combo | select Writer
+        select [get-item "" -index 1] | get-combo | set-text Writer
         apply-cell-edit
     }
     get-table | select "B \\[0\\]" | double-click
@@ -72,7 +72,7 @@ get-window "Progress Information" | get-window -from "Window.createShell()" | ge
     with [get-group Participants] {
         with [get-table] {
             select [get-item "" -index 1] | activate-cell-edit -column 3
-            select [get-item "" -index 1] | get-combo | select Writer
+            select [get-item "" -index 1] | get-combo | set-text Writer
         }
         get-button "Add..." | click
     }
@@ -152,8 +152,7 @@ get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Lo
 get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
 with [get-window "Progress Information" | get-window "Authentication required"] {
     with [get-combo -after [get-label Username]] {
-        set-text testUser
-        select testUserA
+        set-text testUserA
         key-type "TRAVERSE_TAB_NEXT"
     }
     get-editbox -after [get-label Password] | set-text password
@@ -173,8 +172,7 @@ with [get-view "Model Repositories" | get-tree] {
 }
 with [get-window "Progress Information" | get-window "Authentication required"] {
     with [get-combo -after [get-label Username]] {
-        set-text supe
-        select super
+        set-text super
         key-type "TRAVERSE_TAB_NEXT"
     }
     get-editbox -after [get-label Password] | set-text super
