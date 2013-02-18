@@ -54,8 +54,14 @@ public class MEClassLabelProvider extends AdapterFactoryLabelProvider {
 			EClass eClass = (EClass) object;
 			EPackage ePackage = eClass.getEPackage();
 			if (!eClass.isAbstract() && !eClass.isInterface()) {
+				// TODO: find a better way to retrieve images without instanciate classes
 				EObject newMEInstance = ePackage.getEFactoryInstance().create(eClass);
-				return super.getImage(newMEInstance);
+				try {
+					return super.getImage(newMEInstance);
+				} catch (NullPointerException e) {
+					return super.getImage(object);
+				}
+
 			}
 			return super.getImage(object);
 
