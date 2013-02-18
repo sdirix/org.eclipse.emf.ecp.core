@@ -19,7 +19,7 @@
       <category name="org.eclipse.emf.ecp.provider.category"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
-   <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (optional)"/>
+   <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (at least one is required)"/>
    <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>
    <category-def name="org.eclipse.emf.ecp.extra.category" label="ECP Extra Feature"/>
 </site>
