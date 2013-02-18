@@ -139,7 +139,6 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	@Override
 	protected void fillLocalToolBar(IToolBarManager manager) {
-		super.fillLocalToolBar(manager);
 		if(getDialogSettings().getBoolean("LinkWithEditorSet")){
 			linkingActive = getDialogSettings().getBoolean("LinkWithEditor");
 		}

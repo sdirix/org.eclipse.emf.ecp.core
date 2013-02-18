@@ -37,7 +37,6 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 
@@ -53,7 +52,6 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
   private TreeViewer viewer;
 
-  private DrillDownAdapter drillDownAdapter;
 
   private Action refreshAction;
 
@@ -96,7 +94,6 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
       }
 
       refreshAction = new RefreshViewerAction(viewer);
-      drillDownAdapter = new DrillDownAdapter(viewer);
 
       hookContextMenu();
       hookDoubleClickAction();
@@ -177,25 +174,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   
   protected abstract TreeViewer createViewer(Composite parent);
 
-  // protected TreeViewer createViewer(Composite parent)
-  // {
-  // TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-  // configureViewer(viewer);
-  //
-  // ILabelDecorator labelDecorator = createLabelDecorator();
-  // if (labelDecorator != null)
-  // {
-  // IBaseLabelProvider labelProvider = viewer.getLabelProvider();
-  // if (labelProvider instanceof ILabelProvider && !(labelProvider instanceof DecoratingLabelProvider))
-  // {
-  // viewer.setLabelProvider(new DecoratingLabelProvider((ILabelProvider)labelProvider, labelDecorator));
-  // }
-  // }
-  //
-  // return viewer;
-  // }
-
-  // protected abstract void configureViewer(TreeViewer viewer);
+ 
   /**{@inheritDoc} */
   protected void fillLocalPullDown(IMenuManager manager)
   {
@@ -207,8 +186,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
   {
     manager.add(refreshAction);
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-    // manager.add(new Separator());
-    // drillDownAdapter.addNavigationActions(manager);
+   
   }
   
   protected void fillContextMenu(IMenuManager manager)
