@@ -348,7 +348,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		// -> specify the condition that violates the invariant
 		// -> verify the details of the diagnostic, including severity and message
 		// Ensure that you remove @generated or mark it @generated NOT
-		if (this.getFirstName()==null||this.getFirstName().isEmpty()) {
+		if (this.getFirstName()==null||this.getFirstName().length()==0) {
 			if (diagnostic != null) {
 				diagnostic.add
 					(new BasicDiagnostic
