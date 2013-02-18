@@ -28,7 +28,7 @@ public class Perspective implements IPerspectiveFactory {
 	  public void createInitialLayout(IPageLayout layout)
 	  {
 	    String editorArea = layout.getEditorArea();
-	    layout.addView(ModelExplorerView.ID, IPageLayout.LEFT, 0.25f, editorArea);
+	    layout.addView(ModelExplorerView.ID, IPageLayout.LEFT, 0.3f, editorArea);
 	    layout.addView(ModelRepositoriesView.ID, IPageLayout.BOTTOM, 0.75f, editorArea);
 	  }
 }
