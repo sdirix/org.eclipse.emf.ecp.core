@@ -16,7 +16,6 @@ package org.eclipse.emf.ecp.ui.util;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -47,16 +46,12 @@ import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.ChangeCommand;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
@@ -173,36 +168,6 @@ public final class HandlerHelper {
 			return project;
 		}
 		return null;
-	}
-
-	// TODO never used
-	private static void createNewReferenceElement(final EditingDomain editingDomain, final EObject eObject,
-		final EReference eReference, final Object input, final Shell shell) {
-
-		SelectionComposite<TableViewer> composite = CompositeFactory.getTableSelectionComposite(input);
-		NewModelElementWizard wizard = new NewModelElementWizard("");
-		wizard.setCompositeProvider(composite);
-		WizardDialog wd = new WizardDialog(shell, wizard);
-
-		int wizardResult = wd.open();
-		if (wizardResult == WizardDialog.OK) {
-			Object[] results = composite.getSelection();
-			if (eReference.isMany()) {
-				List<EObject> list = new ArrayList<EObject>();
-				for (Object result : results) {
-					if (result instanceof EObject) {
-						list.add((EObject) result);
-					}
-				}
-				editingDomain.getCommandStack().execute(new AddCommand(editingDomain, eObject, eReference, list));
-			} else {
-				if (results.length > 0 && results[0] instanceof EObject) {
-					editingDomain.getCommandStack().execute(
-						new SetCommand(editingDomain, eObject, eReference, results[0]));
-				}
-			}
-		}
-		composite.dispose();
 	}
 
 	/**

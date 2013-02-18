@@ -61,7 +61,7 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 
 	/**
 	 * Constructor that delegates to the
-	 * {@link AbstractEClassTreeSelectionComposite#AbstractEClassTreeSelectionComposite(Collection, Collection, Collection, Collection)}
+	 * {@link AbstractEClassTreeSelectionComposite#AbstractEClassTreeSelectionComposite(Collection, Collection, Collection)}
 	 * by reading the data from the project.
 	 * 
 	 * @param project the {@link ECPProject} to read the data from
