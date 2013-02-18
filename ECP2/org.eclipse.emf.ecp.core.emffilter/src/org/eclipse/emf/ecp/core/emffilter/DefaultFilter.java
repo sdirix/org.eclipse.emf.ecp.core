@@ -48,6 +48,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		addUMLModels(packages);
 		addEMFCompareModels(packages);
 		addGMFModels(packages);
+		addGraphitiModels(packages);
 		
 		// xml
 		packages.add("http://www.eclipse.org/xsd/2002/XSD"); //$NON-NLS-1$
@@ -60,6 +61,13 @@ public class DefaultFilter implements ECPFilterProvider {
 		//TODO add Graphiti
 		
 		return packages;
+	}
+
+	private void addGraphitiModels(Set<String> packages) {
+		packages.add("http://eclipse.org/graphiti/examples/chess");
+		packages.add("http://eclipse.org/graphiti/mm/algorithms/styles");
+		
+		
 	}
 
 	/**
