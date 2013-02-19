@@ -17,6 +17,9 @@ import org.eclipse.core.runtime.IAdaptable;
 
 /**
  * @author Eike Stepper
+ * @author Jonas
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPProvider extends ECPElement, IAdaptable {
 	/**

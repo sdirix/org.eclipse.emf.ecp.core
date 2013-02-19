@@ -20,6 +20,8 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
  * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
  * 
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPRepositoryManager {
 

@@ -24,6 +24,8 @@ import org.eclipse.core.runtime.IAdaptable;
  * This class describes a repository.
  * 
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPRepository extends ECPElement, ECPModelContext, ECPPropertiesAware, ECPDeletable, IAdaptable {
 	/**

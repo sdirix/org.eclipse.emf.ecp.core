@@ -15,7 +15,8 @@ package org.eclipse.emf.ecp.core.exception;
  * This exception is thrown when we try to add a project with a name that already exists.
  * 
  * @author Eugen Neufeld
- * 
+ * @noextend This class is not intended to be subclassed by clients.
+ * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class ProjectWithNameExistsException extends Exception {
 

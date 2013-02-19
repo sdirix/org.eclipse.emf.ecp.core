@@ -21,6 +21,9 @@ import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
  * Registry class to manage the registered providers.
  * 
  * @author Eike Stepper
+ * @author Jonas
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPProviderRegistry {
 	/**
