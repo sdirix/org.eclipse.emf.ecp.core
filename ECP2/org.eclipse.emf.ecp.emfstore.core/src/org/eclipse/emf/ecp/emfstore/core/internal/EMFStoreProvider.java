@@ -108,7 +108,7 @@ public final class EMFStoreProvider extends DefaultProvider {
    * 
    */
 	private void configureEMFStore() {
-		Configuration.setAutoSave(false);
+		Configuration.ClIENT_BEHAVIOR.setAutoSave(false);
 	}
 
 	/** {@inheritDoc} */
@@ -441,7 +441,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			if (!found && createNewIfNeeded) {
 				projectSpace = (ProjectSpace) WorkspaceProvider.INSTANCE.getWorkspace().createLocalProject(
-					internalProject.getName(), "");
+					internalProject.getName());
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
 					projectSpace.getIdentifier());
 
