@@ -317,14 +317,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	/** {@inheritDoc} */
 	public void focus() {
-		// set keyboard focus on the first Text control
-		// for (AbstractControl meControl : meControls.values()) {
-		// if (meControl instanceof METextControl) {
-		// ((METextControl) meControl).setFocus();
-		// return;
-		// }
-		// }
-		// leftColumnComposite.setFocus();
+		leftColumnComposite.setFocus();
 	}
 
 }
