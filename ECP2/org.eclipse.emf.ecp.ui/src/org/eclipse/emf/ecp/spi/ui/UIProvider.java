@@ -95,4 +95,13 @@ public interface UIProvider extends InternalRegistryElement, IAdaptable, Adapter
 	 * @return the created control
 	 */
 	Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties);
+
+	/**
+	 * The UIProvider can return a provider specific UI to allow the user to fill in provider specific data for the
+	 * creation of a new project.
+	 * 
+	 * @param parent the {@link Composite} to fill
+	 * @return the created control
+	 */
+	Control createNewProjectUI(Composite parent);
 }

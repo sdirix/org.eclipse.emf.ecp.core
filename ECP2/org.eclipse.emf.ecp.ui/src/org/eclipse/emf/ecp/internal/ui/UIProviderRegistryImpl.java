@@ -179,5 +179,10 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 			ECPProperties projectProperties) {
 			return getResolvedElement().createCheckoutUI(parent, checkoutSource, projectProperties);
 		}
+
+		public Control createNewProjectUI(Composite parent) {
+			// TODO Auto-generated method stub
+			return getResolvedElement().createNewProjectUI(parent);
+		}
 	}
 }

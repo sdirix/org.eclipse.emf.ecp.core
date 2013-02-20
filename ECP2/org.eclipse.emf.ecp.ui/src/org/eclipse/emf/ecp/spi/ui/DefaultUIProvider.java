@@ -259,6 +259,11 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		return new PropertiesComposite(parent, true, projectProperties);
 	}
 
+	/** {@inheritDoc} **/
+	public Control createNewProjectUI(Composite parent) {
+		return null;
+	}
+
 	protected boolean populateNewRoot(Resource resource, IMenuManager manager) {
 		boolean populated = false;
 		EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
