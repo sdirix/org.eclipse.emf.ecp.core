@@ -27,7 +27,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">

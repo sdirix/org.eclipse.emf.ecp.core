@@ -46,7 +46,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <iterate
                         ifEmpty="false"
                         operator="or">
@@ -74,7 +74,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <iterate
                         ifEmpty="false"
                         operator="or">
@@ -99,7 +99,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <iterate
                         ifEmpty="false"
                         operator="or">
@@ -120,7 +120,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <iterate
                         ifEmpty="false"
                         operator="or">
@@ -153,7 +153,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -182,7 +182,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -211,7 +211,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                     variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -240,7 +240,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                     variable="activeMenuSelection">
                   <iterate
                         ifEmpty="false"
                         operator="and">
@@ -331,7 +331,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="selection">
+                  variable="activeMenuSelection">
                   <and>
                      <count
                            value="1">
@@ -453,7 +453,7 @@
             commandId="org.eclipse.emf.ecp.ui.delete">
          <enabledWhen>
             <with
-                  variable="selection">
+                  variable="activeMenuSelection">
                <iterate
                      ifEmpty="false"
                      operator="or">
@@ -482,7 +482,7 @@
             commandId="org.eclipse.emf.ecp.ui.workbench.saveProject">
          <enabledWhen>
             <with
-                  variable="selection">
+                  variable="activeMenuSelection">
                <iterate
                      ifEmpty="false"
                      operator="and">
@@ -503,7 +503,7 @@
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
          <enabledWhen>
             <with
-                  variable="selection">
+                  variable="activeMenuSelection">
                <and>
                   <count
                         value="1">
@@ -537,7 +537,7 @@
             commandId="org.eclipse.emf.ecp.ui.project.filterModelElements">
          <enabledWhen>
             <with
-                  variable="selection">
+                  variable="activeMenuSelection">
                <and>
                   <count
                         value="1">
