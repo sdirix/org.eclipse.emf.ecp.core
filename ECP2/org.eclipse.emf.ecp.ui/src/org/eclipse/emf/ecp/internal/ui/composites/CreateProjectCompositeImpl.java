@@ -113,9 +113,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 					if (newProjectUI != null) {
 						providerStackLayout.topControl = newProjectUI;
 					} else {
-						if (providerStackLayout.topControl != null) {
-							providerStackLayout.topControl = null;
-						}
+						providerStackLayout.topControl = null;
 					}
 					providerStack.layout();
 				}
@@ -144,6 +142,10 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 				}
 			}
 		});
+
+		Label seperator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		seperator.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 2, 2));
+
 		providerStackLayout = new StackLayout();
 		providerStack = new Composite(composite, SWT.NONE);
 		providerStack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
