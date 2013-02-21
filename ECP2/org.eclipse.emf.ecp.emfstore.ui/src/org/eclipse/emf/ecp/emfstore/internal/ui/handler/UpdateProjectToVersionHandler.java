@@ -23,6 +23,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+
 /**
  * This is the EMFStore UpdateProjectToVersion Handler delegating to the EMFStore
  * {@link UIUpdateProjectToVersionController}.
@@ -33,7 +34,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class UpdateProjectToVersionHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
 		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO Ugly

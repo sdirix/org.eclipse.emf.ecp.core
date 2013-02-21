@@ -32,7 +32,7 @@ public class CloseableHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection ssel = (IStructuredSelection) selection;
 		String currentType = event.getParameter("org.eclipse.emf.ecp.ecpclosable.type");
 		Object[] selectionArray =  ssel.toArray();

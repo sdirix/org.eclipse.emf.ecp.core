@@ -36,7 +36,7 @@ public class ManagerUserGroupHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
-			.getCurrentSelection(event)).getFirstElement();
+			.getActiveMenuSelection(event)).getFirstElement();
 		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 
 		new UIManageOrgUnitsController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession()).execute();

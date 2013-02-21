@@ -35,7 +35,7 @@ public class EmfstoreLogOutHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
-			.getCurrentSelection(event)).getFirstElement();
+			.getActiveMenuSelection(event)).getFirstElement();
 		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 
 		new UILogoutSessionController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession()).execute();

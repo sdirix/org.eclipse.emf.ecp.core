@@ -30,7 +30,7 @@ public class RepositoryPropertiesHandler extends AbstractHandler {
 
 	/**{@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection=HandlerUtil.getCurrentSelection(event);
+	    ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		if(IStructuredSelection.class.isInstance(selection)){
 			IStructuredSelection ssel=(IStructuredSelection)selection;
 			if(ECPRepository.class.isInstance(ssel.getFirstElement())){

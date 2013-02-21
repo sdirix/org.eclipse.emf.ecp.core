@@ -33,7 +33,7 @@ public class SaveProjectHandler extends AbstractHandler {
 	 * {@inheritDoc}
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(event);
 		ECPProject project = ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 		HandlerHelper.saveProject(project);
 		return null;

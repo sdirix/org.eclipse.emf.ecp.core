@@ -33,7 +33,7 @@ public class ShowHistoryHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Object object = ((IStructuredSelection) HandlerUtil.getCurrentSelection(event)).getFirstElement();
+		Object object = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
 		EObject result = null;
 
 		if (object instanceof EObject) {

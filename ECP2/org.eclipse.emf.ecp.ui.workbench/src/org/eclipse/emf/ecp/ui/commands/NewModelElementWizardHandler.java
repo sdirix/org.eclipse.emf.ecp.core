@@ -35,7 +35,7 @@ public class NewModelElementWizardHandler extends AbstractHandler
    */
   public Object execute(final ExecutionEvent event) throws ExecutionException
   {
-    ISelection selection = HandlerUtil.getCurrentSelection(event);
+    ISelection selection = HandlerUtil.getActiveMenuSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
     HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), HandlerUtil.getActiveShell(event),true);
     

@@ -154,7 +154,7 @@ public class ExportHandler extends AbstractHandler {
 	private List<EObject> getSelfContainedModelElementTree(ExecutionEvent event) {
 		List<EObject> result = new ArrayList<EObject>();
 
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection strucSel = null;
 		EObject copyModelElement = null;
 

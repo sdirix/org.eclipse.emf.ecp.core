@@ -36,7 +36,7 @@ public class CreateRemoteProjectHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalRepository ecpRepository = (InternalRepository) ((IStructuredSelection) HandlerUtil
-			.getCurrentSelection(event)).getFirstElement();
+			.getActiveMenuSelection(event)).getFirstElement();
 		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository);
 		// FIXME:
 		InputDialog dialog = new InputDialog(HandlerUtil.getActiveShell(event), "Remote Project Name",

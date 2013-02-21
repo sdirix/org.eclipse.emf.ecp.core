@@ -35,7 +35,7 @@ public class DeleteOnServerHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
 		if (sel instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) sel;
 			Object selection = ssel.getFirstElement();

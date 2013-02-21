@@ -32,7 +32,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class MergeBranchHandler extends AbstractHandler {
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
 		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		new UIMergeController(HandlerUtil.getActiveShell(event), projectSpace).execute();

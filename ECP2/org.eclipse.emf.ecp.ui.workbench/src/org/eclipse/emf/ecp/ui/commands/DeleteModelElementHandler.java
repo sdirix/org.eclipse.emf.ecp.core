@@ -34,7 +34,7 @@ public class DeleteModelElementHandler extends AbstractHandler {
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(event);
 
 		InternalProject project=(InternalProject)ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 			
