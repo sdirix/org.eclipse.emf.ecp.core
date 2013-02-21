@@ -89,4 +89,9 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 		// Suppress default properties composite
 		return null;
 	}
+
+	@Override
+	public Control createNewProjectUI(Composite parent) {
+		return new NewWorkspaceProjectComposite(parent);
+	}
 }

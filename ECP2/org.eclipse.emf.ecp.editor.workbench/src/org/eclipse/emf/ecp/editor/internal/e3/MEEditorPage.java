@@ -192,14 +192,4 @@ public class MEEditorPage extends FormPage {
 		form.dispose();
 		super.dispose();
 	}
-
-	/**
-	 * {@inheritDoc} This method is added to solve the focus bug of navigator. Every time that a ME is opened in editor,
-	 * navigator has to lose focus so that its action contributions are set correctly for next time.
-	 */
-	@Override
-	public void setFocus() {
-		editorPageContent.focus();
-	}
-
 }

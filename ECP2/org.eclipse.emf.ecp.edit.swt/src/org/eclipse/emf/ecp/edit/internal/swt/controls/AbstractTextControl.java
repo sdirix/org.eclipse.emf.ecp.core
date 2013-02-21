@@ -81,18 +81,19 @@ public abstract class AbstractTextControl<T> extends SingleControl {
 		doVerify = false;
 		createTextWidget(composite);
 		addControlDecoration();
-		// addFocusListener();
+		//addFocusListener();
 		addVerifyListener();
 	}
+
 	private void addControlDecoration() {
 		controlDecoration = new ControlDecoration(text, SWT.RIGHT | SWT.TOP);
+		controlDecoration.hide();
 		//TODO language
 		controlDecoration.setDescriptionText("Invalid input");//$NON-NLS-1$
 		controlDecoration.setShowHover(true);
 		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
 			FieldDecorationRegistry.DEC_ERROR);
 		controlDecoration.setImage(fieldDecoration.getImage());
-		controlDecoration.hide();
 	}
 
 	private void addVerifyListener() {
@@ -188,7 +189,8 @@ public abstract class AbstractTextControl<T> extends SingleControl {
 		// Define a validator to check that only numbers are entered
 		IValidator validator = new IValidator() {
 			public IStatus validate(Object value) {
-				boolean valid = validateString(text.getText());
+   			boolean valid = validateString(text.getText());
+				
 
 				if (valid) {
 					controlDecoration.hide();
