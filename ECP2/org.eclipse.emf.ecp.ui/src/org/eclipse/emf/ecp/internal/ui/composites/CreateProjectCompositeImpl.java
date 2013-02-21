@@ -104,6 +104,8 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 			providersViewer.setSorter(new ViewerSorter());
 			providersViewer.setInput(providers);
 
+			providersViewer.setSelection(new StructuredSelection(providers.get(0)));
+
 			providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 				public void selectionChanged(SelectionChangedEvent event) {
 					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
@@ -113,36 +115,11 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 						listener.providerChanged(provider);
 					}
 				}
-
-				private void updateUI() {
-					UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(provider);
-					Control newProjectUI = uiProvider.createNewProjectUI(providerStack, new CompositeStateObserver() {
-
-						public void compositeChangedState(Composite caller, boolean complete,
-							ECPProperties projectProperties) {
-							compositeStatus = complete;
-							properties = projectProperties;
-							checkComplete();
-
-						}
-					}, ECPUtil.createProperties());
-
-					if (newProjectUI != null) {
-						providerStackLayout.topControl = newProjectUI;
-					} else {
-						providerStackLayout.topControl = null;
-						compositeStatus = true;
-						properties = null;
-						checkComplete();
-					}
-					providerStack.layout();
-				}
 			});
 
-		} else if (providers.size() == 1) {
-			provider = providers.get(0);
 		}
 
+		provider = providers.get(0);
 		Label labelName = new Label(composite, SWT.NONE);
 		labelName.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		labelName.setText(Messages.UICreateProject_ProjectName + ":"); //$//$NON-NLS-1$
@@ -181,9 +158,31 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 		providerStack = new Composite(composite, SWT.NONE);
 		providerStack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		providerStack.setLayout(providerStackLayout);
-		providersViewer.setSelection(new StructuredSelection(providers.get(0)));
-
+		updateUI();
 		return composite;
+	}
+
+	private void updateUI() {
+		UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(provider);
+		Control newProjectUI = uiProvider.createNewProjectUI(providerStack, new CompositeStateObserver() {
+
+			public void compositeChangedState(Composite caller, boolean complete, ECPProperties projectProperties) {
+				compositeStatus = complete;
+				properties = projectProperties;
+				checkComplete();
+
+			}
+		}, ECPUtil.createProperties());
+
+		if (newProjectUI != null) {
+			providerStackLayout.topControl = newProjectUI;
+		} else {
+			providerStackLayout.topControl = null;
+			compositeStatus = true;
+			properties = null;
+			checkComplete();
+		}
+		providerStack.layout();
 	}
 
 	private void checkComplete() {
