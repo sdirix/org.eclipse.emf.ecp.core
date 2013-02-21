@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
  */
 public class ControlDescription {
 
+	private final String id;
 	private final Class<? extends AbstractControl<?>> controlClass;
 	private final Class<?> supportedCompositeClass;
 	private final boolean showLabel;
@@ -32,12 +33,16 @@ public class ControlDescription {
 	 * @param showLabel whether to show a label for this control or not
 	 * @param tester the class testing whether the control is applicable for the current feature of the current eobject
 	 */
-	public ControlDescription(Class<? extends AbstractControl<?>> controlClass, Class<?> supportedCompositeClass, boolean showLabel, ECPApplicableTester tester) {
+	public ControlDescription(String id,Class<? extends AbstractControl<?>> controlClass, Class<?> supportedCompositeClass, boolean showLabel, ECPApplicableTester tester) {
 		super();
+		this.id=id;
 		this.controlClass = controlClass;
 		this.supportedCompositeClass=supportedCompositeClass;
 		this.showLabel=showLabel;
 		this.tester=tester;
+	}
+	public String getId() {
+		return id;
 	}
 	/**
 	 * The class implementing the Control. It extends the {@link AbstractControl}.

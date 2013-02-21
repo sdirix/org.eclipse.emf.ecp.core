@@ -42,6 +42,18 @@ public interface ControlFactory {
 	<T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
 		EditModelElementContext context);
 	/**
+	 * Creates an {@link AbstractControl} based on a provided id.
+	 * 
+	 * @param <T> the Type of the composite where we want to add the control onto
+	 * @param parent the Composite the control will be added to
+	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
+	 * @param context the {@link EditModelElementContext}
+	 * @param controlId the id of the control to create
+	 * @return the created {@link AbstractControl} or null if id is unknown
+	 */
+	<T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
+		EditModelElementContext context,String controlId);
+	/**
 	 * A copy of all known {@link ControlDescription}.
 	 * @return a copy of the set of all known controlDescriptions
 	 */

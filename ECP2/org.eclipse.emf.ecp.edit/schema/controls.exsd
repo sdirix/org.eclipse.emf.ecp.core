@@ -59,6 +59,13 @@ Controls are used to render features of an EObejct in the editor or some other v
             <element ref="dynamicTest"/>
             <element ref="staticTest"/>
          </choice>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>

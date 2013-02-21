@@ -5,6 +5,7 @@
          point="org.eclipse.emf.ecp.edit.controls">
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.StringControl"
+            id="org.eclipse.emf.ecp.control.swt.string"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -15,6 +16,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.DoubleControl"
+            id="org.eclipse.emf.ecp.control.swt.double"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -25,6 +27,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.IntegerControl"
+            id="org.eclipse.emf.ecp.control.swt.string"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -35,6 +38,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.BooleanControl"
+            id="org.eclipse.emf.ecp.control.swt.boolean"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -45,6 +49,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.DateTimeControl"
+            id="org.eclipse.emf.ecp.control.swt.dateTime"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -55,6 +60,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.EEnumControl"
+            id="org.eclipse.emf.ecp.control.swt.enum"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -65,6 +71,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl"
+            id="org.eclipse.emf.ecp.control.swt.reference"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
@@ -75,6 +82,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl"
+            id="org.eclipse.emf.ecp.control.swt.multiReference"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <dynamicTest
@@ -83,6 +91,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.AttributeMultiControl"
+            id="org.eclipse.emf.ecp.control.swt.multiAttribute"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <dynamicTest
