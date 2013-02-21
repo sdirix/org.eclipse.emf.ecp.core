@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
+import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -101,7 +102,9 @@ public interface UIProvider extends InternalRegistryElement, IAdaptable, Adapter
 	 * creation of a new project.
 	 * 
 	 * @param parent the {@link Composite} to fill
+	 * @param observer the observer
+	 * @param projectProperties the {@link ECPProperties} of the project to create
 	 * @return the created control
 	 */
-	Control createNewProjectUI(Composite parent);
+	Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties);
 }

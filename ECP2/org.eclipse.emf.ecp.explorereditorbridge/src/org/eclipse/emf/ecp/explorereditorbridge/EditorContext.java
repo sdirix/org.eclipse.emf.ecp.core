@@ -24,7 +24,8 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
-import org.eclipse.emf.ecp.internal.wizards.NewModelElementWizard;
+import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
@@ -185,7 +186,11 @@ public class EditorContext implements EditModelElementContext {
 	public void createAndReferenceNewModelElement(EReference eReference) {
 		Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
 
-		NewModelElementWizard wizard = new NewModelElementWizard("New Reference Element");
+		SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element",
+			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
+			Messages.NewModelElementWizard_PageTitle_AddModelElement,
+			Messages.NewModelElementWizard_PageDescription_AddModelElement);
+
 		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
 			new HashSet<EPackage>(), classes);
 		wizard.setCompositeProvider(helper);

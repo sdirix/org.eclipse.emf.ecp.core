@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 
 /**
  * @author Eugen Neufeld
@@ -38,6 +39,14 @@ public interface CreateProjectComposite extends CompositeProvider {
 		 * @param provider the new selected provider.
 		 */
 		void providerChanged(ECPProvider provider);
+
+		/**
+		 * Callback method providing the new provide.
+		 * 
+		 * @param status the new status.
+		 */
+		void completeStatusChanged(boolean status);
+
 	}
 
 	/**
@@ -49,6 +58,11 @@ public interface CreateProjectComposite extends CompositeProvider {
 	 * @return the projectName
 	 */
 	String getProjectName();
+
+	/**
+	 * @return the project properties
+	 */
+	ECPProperties getProperties();
 
 	/**
 	 * @param listener

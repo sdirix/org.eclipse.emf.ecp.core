@@ -37,7 +37,7 @@ import org.eclipse.emf.ecp.internal.wizards.AddRepositoryWizard;
 import org.eclipse.emf.ecp.internal.wizards.CheckoutProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.CreateProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.FilterModelElementWizard;
-import org.eclipse.emf.ecp.internal.wizards.NewModelElementWizard;
+import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
@@ -148,9 +148,10 @@ public final class HandlerHelper {
 				showError(shell, "No project created", "Please check if a suitable provider is installed.");
 				return null;
 			}
-			ECPProperties projectProperties = ECPUtil.createProperties();
 
+			ECPProperties projectProperties = createProjectComposite.getProperties();
 			String projectName = createProjectComposite.getProjectName();
+
 			ECPProject project = null;
 			try {
 				project = ECPProjectManager.INSTANCE.createProject(selectedProvider, projectName, projectProperties);
@@ -179,7 +180,10 @@ public final class HandlerHelper {
 	 */
 	public static void addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
 		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ecpProject);
-		NewModelElementWizard wizard = new NewModelElementWizard(Messages.NewModelElementWizardHandler_Title);
+		SelectModelElementWizard wizard = new SelectModelElementWizard(Messages.NewModelElementWizardHandler_Title,
+			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
+			Messages.NewModelElementWizard_PageTitle_AddModelElement,
+			Messages.NewModelElementWizard_PageDescription_AddModelElement);
 		wizard.setCompositeProvider(helper);
 		WizardDialog wd = new WizardDialog(shell, wizard);
 

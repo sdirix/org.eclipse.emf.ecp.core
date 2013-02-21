@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
@@ -260,7 +261,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
-	public Control createNewProjectUI(Composite parent) {
+	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties) {
 		return null;
 	}
 
