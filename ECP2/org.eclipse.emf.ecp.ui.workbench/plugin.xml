@@ -482,7 +482,7 @@
             commandId="org.eclipse.emf.ecp.ui.workbench.saveProject">
          <enabledWhen>
             <with
-                  variable="activeMenuSelection">
+                  variable="selection">
                <iterate
                      ifEmpty="false"
                      operator="and">

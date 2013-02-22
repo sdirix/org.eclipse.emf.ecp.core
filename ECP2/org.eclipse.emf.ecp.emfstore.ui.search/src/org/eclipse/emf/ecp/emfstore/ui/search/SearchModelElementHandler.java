@@ -47,6 +47,10 @@ public class SearchModelElementHandler extends AbstractHandler {
 		InternalProject project = (InternalProject)ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 
 		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		
+		if (projectSpace == null) {
+			return null;
+		}
 
 		Set<EObject> eObjects = projectSpace.getProject().getAllModelElements();
 
