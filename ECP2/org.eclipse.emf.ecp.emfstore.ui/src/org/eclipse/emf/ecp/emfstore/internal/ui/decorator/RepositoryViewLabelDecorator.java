@@ -20,8 +20,8 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
-import org.eclipse.emf.emfstore.client.model.observer.ESLoginObserver;
-import org.eclipse.emf.emfstore.client.model.observer.ESLogoutObserver;
+import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
+import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 
 import org.eclipse.jface.viewers.IDecoration;
