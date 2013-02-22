@@ -83,35 +83,6 @@ public abstract class SingleControl extends SWTControl {
 	 */
 	protected abstract void fillInnerComposite(Composite composite);
 
-	// /**
-	// * @param actions
-	// * @param composite
-	// */
-	// private void createControlActions(Composite composite) {
-	// for (Class<? extends ECPAction> actionClass : getWidgetDescription().getSingleActions()) {
-	// try {
-	// Constructor<?> actionConstructor = actionClass.getConstructor(EditModelElementContext.class,
-	// IItemPropertyDescriptor.class, EStructuralFeature.class);
-	// ECPSWTAction action = (ECPSWTAction) actionConstructor.newInstance(getModelElementContext(),
-	// getItemPropertyDescriptor(), getStructuralFeature());
-	// action.setEnabled(isEditable());
-	// createButtonForAction(action, composite);
-	// } catch (InstantiationException ex) {
-	// Activator.logException(ex);
-	// } catch (IllegalAccessException ex) {
-	// Activator.logException(ex);
-	// } catch (SecurityException ex) {
-	// Activator.logException(ex);
-	// } catch (NoSuchMethodException ex) {
-	// Activator.logException(ex);
-	// } catch (IllegalArgumentException ex) {
-	// Activator.logException(ex);
-	// } catch (InvocationTargetException ex) {
-	// Activator.logException(ex);
-	// }
-	//
-	// }
-	// }
 
 	/**
 	 * {@inheritDoc}

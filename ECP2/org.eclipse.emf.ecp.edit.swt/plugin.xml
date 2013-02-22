@@ -98,6 +98,17 @@
                testClass="org.eclipse.emf.ecp.edit.internal.swt.controls.AttributeMultiControlTester">
          </dynamicTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl"
+            id="org.eclipse.emf.ecp.control.swt.table"
+            showLabel="false"
+            supportedCompositeClass="org.eclipse.swt.widgets.Composite">
+         <staticTest
+               priority="1"
+               singleValue="true"
+               supportedClassType="java.util.List">
+         </staticTest>
+      </control>
    </extension>
 
 </plugin>
