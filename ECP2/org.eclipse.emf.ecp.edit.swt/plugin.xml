@@ -27,7 +27,7 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.IntegerControl"
-            id="org.eclipse.emf.ecp.control.swt.string"
+            id="org.eclipse.emf.ecp.control.swt.integer"
             showLabel="true"
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
