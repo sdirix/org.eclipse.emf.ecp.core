@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.Binding;
@@ -40,12 +52,27 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
 
+/**
+ * The class describing a table control.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class TableControl extends SWTControl {
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
+	/**
+	 * Constructor for a String control.
+	 * 
+	 * @param showLabel whether to show a label
+	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
+	 * @param feature the {@link EStructuralFeature} to use
+	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param embedded whether this control is embedded in another control
+	 */
 	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
 		EditModelElementContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
@@ -91,9 +118,9 @@ public class TableControl extends SWTControl {
 			column.getColumn().setResizable(false);
 			column.getColumn().setMoveable(false);
 			column.setLabelProvider(new ObservableMapCellLabelProvider(property.observeDetail(set)));
-			column.setEditingSupport(createEditingSupport(tableViewer, getDataBindingContext(),
-				new TextCellEditor(tableViewer.getTable()),
-				CellEditorProperties.control().value(WidgetProperties.text(SWT.Modify)), property));
+			column.setEditingSupport(createEditingSupport(tableViewer, getDataBindingContext(), new TextCellEditor(
+				tableViewer.getTable()), CellEditorProperties.control().value(WidgetProperties.text(SWT.Modify)),
+				property));
 
 		}
 		tableViewer.setInput(list);
@@ -130,9 +157,9 @@ public class TableControl extends SWTControl {
 
 	@Override
 	public void setEditable(boolean isEditable) {
-		// TODO Auto-generated method stub
-
+		tableViewer.getTable().setEnabled(false);
 	}
+
 	private EditingSupport createEditingSupport(ColumnViewer viewer, DataBindingContext dbc,
 		final CellEditor cellEditor, final IValueProperty cellEditorProperty, final IValueProperty elementProperty) {
 		return new ObservableValueEditingSupport(viewer, dbc) {
@@ -147,8 +174,10 @@ public class TableControl extends SWTControl {
 			protected CellEditor getCellEditor(Object element) {
 				return cellEditor;
 			}
+
 			protected Binding createBinding(IObservableValue target, IObservableValue model) {
-				return getDataBindingContext().bindValue(target, model, new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_CONVERT), null);
+				return getDataBindingContext().bindValue(target, model,
+					new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_CONVERT), null);
 			}
 		};
 	}

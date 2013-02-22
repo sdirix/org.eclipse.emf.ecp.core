@@ -105,8 +105,8 @@
             supportedCompositeClass="org.eclipse.swt.widgets.Composite">
          <staticTest
                priority="1"
-               singleValue="true"
-               supportedClassType="java.util.List">
+               singleValue="false"
+               supportedClassType="org.eclipse.emf.ecore.EObject">
          </staticTest>
       </control>
    </extension>
