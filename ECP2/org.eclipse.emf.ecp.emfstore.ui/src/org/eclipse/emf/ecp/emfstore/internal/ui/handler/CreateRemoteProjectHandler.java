@@ -37,7 +37,7 @@ public class CreateRemoteProjectHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalRepository ecpRepository = (InternalRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository);
+		final ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository);
 		// FIXME:
 		InputDialog dialog = new InputDialog(HandlerUtil.getActiveShell(event), "Remote Project Name",
 			"Please enter a name", "", null);
@@ -50,7 +50,7 @@ public class CreateRemoteProjectHandler extends AbstractHandler {
 		if (projectName == null) {
 			return null;
 		}
-
+		// TODO EMFStore Contructor is missing
 		new UICreateRemoteProjectController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession(),
 			projectName, "").execute();
 		ecpRepository.notifyObjectsChanged(new Object[] { ecpRepository });

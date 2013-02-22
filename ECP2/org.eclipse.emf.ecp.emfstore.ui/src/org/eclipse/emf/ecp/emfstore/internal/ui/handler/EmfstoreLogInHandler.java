@@ -32,8 +32,9 @@ public class EmfstoreLogInHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
-
+		final ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE
+			.getServerInfo((InternalRepository) ecpRepository);
+		// TODO EMFStore Constructor is missing
 		new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
 
 		// ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();

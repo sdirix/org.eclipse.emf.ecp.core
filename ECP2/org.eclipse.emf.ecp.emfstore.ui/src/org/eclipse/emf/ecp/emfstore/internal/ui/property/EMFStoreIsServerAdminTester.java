@@ -46,10 +46,11 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 			return false;
 		}
 
-		ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repository);
+		ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(repository);
 		Usersession usersession = serverInfo.getLastUsersession();
 		boolean isAdmin = false;
 		if (usersession != null && usersession.getACUser() != null) {
+			// TODO EMFStore Constructor is missing
 			AccessControlHelper accessControlHelper = new AccessControlHelper(usersession);
 			try {
 				accessControlHelper.checkServerAdminAccess();

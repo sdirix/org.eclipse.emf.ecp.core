@@ -36,12 +36,13 @@ public class CommitProjectHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-		// TODO Ugly
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore how to set usersession?
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
+		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);
 		new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		// is structural because of possible merge
 		project.notifyObjectsChanged(new Object[] { project }, true);

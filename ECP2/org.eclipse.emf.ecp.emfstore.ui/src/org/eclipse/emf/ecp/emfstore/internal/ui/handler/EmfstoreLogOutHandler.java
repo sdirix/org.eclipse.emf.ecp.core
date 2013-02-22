@@ -36,8 +36,9 @@ public class EmfstoreLogOutHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
-
+		final ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE
+			.getServerInfo((InternalRepository) ecpRepository);
+		// TODO EMFStore Constructor is missing
 		new UILogoutSessionController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession()).execute();
 
 		((InternalRepository) ecpRepository).notifyObjectsChanged(new Object[] { ecpRepository });

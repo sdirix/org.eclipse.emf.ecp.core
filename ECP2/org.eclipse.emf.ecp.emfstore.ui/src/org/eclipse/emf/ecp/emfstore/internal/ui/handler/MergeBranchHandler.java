@@ -34,7 +34,8 @@ public class MergeBranchHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore Constructor is missing
 		new UIMergeController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		return null;
 	}

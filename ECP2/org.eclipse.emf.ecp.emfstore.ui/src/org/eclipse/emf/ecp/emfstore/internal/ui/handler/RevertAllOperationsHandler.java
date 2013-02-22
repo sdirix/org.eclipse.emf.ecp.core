@@ -37,8 +37,8 @@ public class RevertAllOperationsHandler extends AbstractHandler {
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore Constructor is missing
 		if (projectSpace != null) {
 			new UIRevertOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		}

@@ -38,8 +38,9 @@ public class UndoLastOperationHandler extends AbstractHandler {
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		if (projectSpace != null) {
+			// TODO EMFStore Constructor is missing
 			new UIUndoLastOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		}
 		return null;

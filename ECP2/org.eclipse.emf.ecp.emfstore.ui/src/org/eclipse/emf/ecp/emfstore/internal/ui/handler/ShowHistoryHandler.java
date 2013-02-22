@@ -39,7 +39,7 @@ public class ShowHistoryHandler extends AbstractHandler {
 		if (object instanceof EObject) {
 			result = (EObject) object;
 		} else if (object instanceof InternalProject) {
-			result = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) object);
+			result = (EObject) EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) object);
 		}
 
 		if (result != null) {

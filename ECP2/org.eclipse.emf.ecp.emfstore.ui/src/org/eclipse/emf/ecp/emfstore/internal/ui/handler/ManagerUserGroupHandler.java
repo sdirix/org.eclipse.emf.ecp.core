@@ -37,8 +37,9 @@ public class ManagerUserGroupHandler extends AbstractHandler {
 
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
-
+		final ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE
+			.getServerInfo((InternalRepository) ecpRepository);
+		// TODO EMFStore Constructor is missing
 		new UIManageOrgUnitsController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession()).execute();
 		return null;
 	}

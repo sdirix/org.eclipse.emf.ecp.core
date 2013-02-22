@@ -36,12 +36,13 @@ public class UpdateProjectHandler extends AbstractHandler {
 
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-		// TODO Ugly
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore how to set user session?
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
+		// TODO EMFStore Constructor is missing
 		new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		project.notifyObjectsChanged(new Object[] { project }, true);
 

@@ -58,7 +58,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 			if (ECPProjectManager.INSTANCE.getProject(project.getName()) == null) {
 				return;
 			}
-			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
 
 			if (!observers.containsKey(element)) {
 				EMFStoreDirtyObserver emfStoreDirtyObserver = new EMFStoreDirtyObserver(projectSpace, project);

@@ -48,12 +48,13 @@ public class ShareProjectHandler extends AbstractHandler {
 			// TODO internal cast again
 			InternalRepository repository = (InternalRepository) rw.getSelectedRepository();
 			project.undispose(repository);
-			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
 			// TODO Ugly
 			if (projectSpace.getUsersession() == null) {
-				ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+				ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
 				projectSpace.setUsersession(serverInfo.getLastUsersession());
 			}
+			// TODO EMFStore Constructor is missing
 			new UIShareProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 
 			project.notifyObjectsChanged(new Object[] { project }, false);

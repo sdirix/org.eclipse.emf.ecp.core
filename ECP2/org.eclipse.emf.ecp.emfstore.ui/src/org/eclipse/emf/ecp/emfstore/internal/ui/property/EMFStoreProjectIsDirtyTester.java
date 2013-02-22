@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 
 import org.eclipse.core.expressions.PropertyTester;
 
@@ -32,7 +32,7 @@ public class EMFStoreProjectIsDirtyTester extends PropertyTester {
 	 *      java.lang.Object)
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		ProjectSpace ps = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) receiver);
+		ESLocalProject ps = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) receiver);
 		if (ps != null) {
 			return Boolean.valueOf(ps.hasUncommitedChanges()).equals(expectedValue);
 		}

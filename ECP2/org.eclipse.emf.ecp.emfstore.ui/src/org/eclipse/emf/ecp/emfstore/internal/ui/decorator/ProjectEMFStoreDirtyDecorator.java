@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -50,7 +50,7 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 		ECPProvider ecpProvider = ECPProviderRegistry.INSTANCE.getProvider(EMFStoreProvider.NAME);
 		EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
 		InternalProject project = (InternalProject) element;
-		ProjectSpace projectSpace = provider.getProjectSpace(project);
+		ESLocalProject projectSpace = provider.getProjectSpace(project);
 
 		if (projectSpace == null) {
 			return;

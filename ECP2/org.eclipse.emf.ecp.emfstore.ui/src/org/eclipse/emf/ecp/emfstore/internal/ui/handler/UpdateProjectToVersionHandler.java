@@ -36,12 +36,13 @@ public class UpdateProjectToVersionHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO Ugly
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
+		// TODO EMFStore Constructor is missing
 		new UIUpdateProjectToVersionController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		project.notifyObjectsChanged(new Object[] { project }, true);
 
