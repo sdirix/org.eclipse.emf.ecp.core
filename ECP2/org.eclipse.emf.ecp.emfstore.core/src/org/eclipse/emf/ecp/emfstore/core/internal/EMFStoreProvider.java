@@ -441,7 +441,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			List<ESLocalProject> localProjects = WorkspaceProvider.getInstance().getWorkspace().getLocalProjects();
 			for (ESLocalProject localProject : localProjects) {
 				String projectSpaceID = internalProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
-				if (localProject.getGlobalProjectId().getId().equals(projectSpaceID)) {
+				if (localProject.getLocalProjectId().getId().equals(projectSpaceID)) {
 					found = true;
 					projectSpace = localProject;
 					break;
@@ -451,7 +451,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			if (!found && createNewIfNeeded) {
 				projectSpace = WorkspaceProvider.INSTANCE.getWorkspace().createLocalProject(internalProject.getName());
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
-					projectSpace.getGlobalProjectId().getId());
+					projectSpace.getLocalProjectId().getId());
 
 			}
 			internalProject.setProviderSpecificData(projectSpace);
