@@ -298,7 +298,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		Collection<EObject> result = new HashSet<EObject>();
-		// TODO EMFStore geht das auch mit ESLocalProject?
+		// TODO EMFStore does it work with ESLocalProject?
 		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result,
 			((ProjectSpace) getProjectSpace(project)).getProject(), eReference.getEType());
 		return result.iterator();
