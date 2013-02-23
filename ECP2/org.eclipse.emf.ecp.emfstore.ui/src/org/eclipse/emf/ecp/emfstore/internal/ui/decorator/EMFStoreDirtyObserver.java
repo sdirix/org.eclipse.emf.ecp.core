@@ -41,7 +41,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	private InternalProject internalProject;
 	private Map<ModelElementId, Integer> modelElementIdToOperationCount = new HashMap<ModelElementId, Integer>();
 	private Set<EObject> lastAffected;
-	private int operations = 0;
+	private int operations;
 
 	/**
 	 * Default constructor.

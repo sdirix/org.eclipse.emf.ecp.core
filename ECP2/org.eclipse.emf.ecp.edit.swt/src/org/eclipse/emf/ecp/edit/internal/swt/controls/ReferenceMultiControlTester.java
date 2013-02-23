@@ -62,6 +62,9 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 				return NOT_APPLICABLE;
 		}
 		else if(EReference.class.isInstance(feature)){
+			if(((EReference)feature).isContainment()){
+				return NOT_APPLICABLE;
+			}
 			Class<?> instanceClass = feature.getEType().getInstanceClass();
 			if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
@@ -70,7 +73,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 		if (tester.getSupportedEObject().isInstance(eObject)
 			&& (tester.getSupportedFeature() == null || eObject.eClass()
 				.getEStructuralFeature(tester.getSupportedFeature()).equals(feature))) {
-			return tester.getPriority();
+			return tester.getPriority()+1;
 		}
 		return NOT_APPLICABLE;
 	}
