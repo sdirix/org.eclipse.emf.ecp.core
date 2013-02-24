@@ -70,6 +70,9 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 				return NOT_APPLICABLE;
 			}
 		}
+		if(!tester.isSingleValue()){
+			return NOT_APPLICABLE;
+		}
 		if (tester.getSupportedEObject().isInstance(eObject)
 			&& (tester.getSupportedFeature() == null || eObject.eClass()
 				.getEStructuralFeature(tester.getSupportedFeature()).equals(feature))) {
