@@ -40,7 +40,6 @@ import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.Workspace;
 import org.eclipse.emf.emfstore.internal.client.model.WorkspaceProvider;
-import org.eclipse.emf.emfstore.internal.client.model.impl.WorkspaceBase;
 import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
@@ -52,6 +51,7 @@ import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.Abst
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
@@ -187,9 +187,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	private void handleRemove(ECPModelContext context) {
 		if (context instanceof InternalProject) {
 			InternalProject project = (InternalProject) context;
-			ProjectSpace ps = (ProjectSpace) project.getProviderSpecificData();
+			ESLocalProject ps = (ESLocalProject) project.getProviderSpecificData();
 			try {
-				((WorkspaceBase) WorkspaceProvider.getInstance().getWorkspace()).deleteProjectSpace(ps);
+				ps.delete(new NullProgressMonitor());
 			} catch (ESException ex) {
 				Activator.log(ex);
 			} catch (IOException ex) {
@@ -310,7 +310,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * @return
 	 */
 	private boolean isSameServerInfo(ESServer info, String url, int port, String certificate) {
-		return info.getUrl().equalsIgnoreCase(url) && info.getPort() == port
+		return info.getURL().equalsIgnoreCase(url) && info.getPort() == port
 			&& info.getCertificateAlias().equalsIgnoreCase(certificate);
 	}
 
@@ -491,10 +491,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 				serverInfo = EMFStoreClientUtil.createServerInfo(
 					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
 					Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
-					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE));
+					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE)).getAPIImpl();
 				workspace.addServer(serverInfo);
 			} else if (!foundExisting && !internalRepository.getProperties().hasProperties()) {
-				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080);
+				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080).getAPIImpl();
 			}
 			internalRepository.setProviderSpecificData(serverInfo);
 		}

@@ -14,8 +14,10 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.ESServer;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESUsersessionImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIUpdateProjectToVersionController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -36,13 +38,13 @@ public class UpdateProjectToVersionHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO Ugly
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-			projectSpace.setUsersession(serverInfo.getLastUsersession());
+			ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			((ESLocalProjectImpl) projectSpace).getInternalAPIImpl().setUsersession(
+				((ESUsersessionImpl) serverInfo.getLastUsersession()).getInternalAPIImpl());
 		}
-		// TODO EMFStore Constructor is missing
 		new UIUpdateProjectToVersionController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		project.notifyObjectsChanged(new Object[] { project }, true);
 
