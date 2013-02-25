@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICommitProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -39,7 +40,8 @@ public class CommitProjectHandler extends AbstractHandler {
 		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore how to set usersession?
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository()))
+				.getInternalAPIImpl();
 			projectSpace.setUsersession(serverInfo.getLastUsersession());
 		}
 		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);

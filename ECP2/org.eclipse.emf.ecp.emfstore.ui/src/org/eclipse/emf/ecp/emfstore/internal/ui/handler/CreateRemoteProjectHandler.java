@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICreateRemoteProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -37,7 +38,8 @@ public class CreateRemoteProjectHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalRepository ecpRepository = (InternalRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository);
+		final ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository))
+			.getInternalAPIImpl();
 		// FIXME:
 		InputDialog dialog = new InputDialog(HandlerUtil.getActiveShell(event), "Remote Project Name",
 			"Please enter a name", "", null);
