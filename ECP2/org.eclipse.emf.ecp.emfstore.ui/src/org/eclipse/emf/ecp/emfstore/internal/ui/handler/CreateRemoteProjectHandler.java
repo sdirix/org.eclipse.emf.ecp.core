@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESServer;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESUsersessionImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICreateRemoteProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -51,8 +52,8 @@ public class CreateRemoteProjectHandler extends AbstractHandler {
 			return null;
 		}
 		// TODO EMFStore Contructor is missing
-		new UICreateRemoteProjectController(HandlerUtil.getActiveShell(event), server.getLastUsersession(), projectName)
-			.execute();
+		new UICreateRemoteProjectController(HandlerUtil.getActiveShell(event),
+			((ESUsersessionImpl) server.getLastUsersession()).getInternalAPIImpl(), projectName, "").execute();
 		ecpRepository.notifyObjectsChanged(new Object[] { ecpRepository });
 		return null;
 	}

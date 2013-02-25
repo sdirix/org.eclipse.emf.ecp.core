@@ -46,7 +46,7 @@ public class CommitProjectHandler extends AbstractHandler {
 			localProject.getInternalAPIImpl().setUsersession(serverInfo.getLastUsersession());
 		}
 		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);
-		new UICommitProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
+		new UICommitProjectController(HandlerUtil.getActiveShell(event), localProject.getInternalAPIImpl()).execute();
 		// is structural because of possible merge
 		project.notifyObjectsChanged(new Object[] { project }, true);
 		project.getRepository().notifyObjectsChanged(new Object[] { project.getRepository() });
