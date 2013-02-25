@@ -15,8 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
+import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UILogoutSessionController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -37,10 +36,9 @@ public class EmfstoreLogOutHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE
-			.getServerInfo((InternalRepository) ecpRepository)).getInternalAPIImpl();
+		ESServer server = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 		// TODO EMFStore Constructor is missing
-		new UILogoutSessionController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession()).execute();
+		new UILogoutSessionController(HandlerUtil.getActiveShell(event), server.getLastUsersession()).execute();
 
 		((InternalRepository) ecpRepository).notifyObjectsChanged(new Object[] { ecpRepository });
 		return null;

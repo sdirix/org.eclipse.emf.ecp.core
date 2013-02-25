@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIMergeController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -34,9 +34,9 @@ public class MergeBranchHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject localProject = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore Constructor is missing
-		new UIMergeController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		new UIMergeController(HandlerUtil.getActiveShell(event), localProject).execute();
 		return null;
 	}
 
