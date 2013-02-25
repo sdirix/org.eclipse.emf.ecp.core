@@ -40,6 +40,7 @@ import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.Workspace;
 import org.eclipse.emf.emfstore.internal.client.model.WorkspaceProvider;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
@@ -226,9 +227,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handelDispose(ECPModelContext context) {
 		if (context instanceof InternalProject) {
-			ProjectSpace projectSpace = (ProjectSpace) getProjectSpace((InternalProject) context);
+			ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
 
-			projectSpace.getProject().eAdapters().remove(adapter);
+			((ESLocalProjectImpl) projectSpace).getInternalAPIImpl().getProject().eAdapters().remove(adapter);
 
 		}
 
@@ -245,10 +246,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handleInit(final ECPModelContext context) {
 		if (context instanceof InternalProject) {
-			ProjectSpace projectSpace = (ProjectSpace) getProjectSpace((InternalProject) context, true);
-			if (projectSpace == null) {
+			ESLocalProject localProject = getProjectSpace((InternalProject) context, true);
+			if (localProject == null) {
 				return;
 			}
+			ProjectSpace projectSpace = ((ESLocalProjectImpl) localProject).getInternalAPIImpl();
+
 			if (isAutosave()) {
 				// TODO EMFStore how to listen to operations?
 				projectSpace.getOperationManager().addOperationListener(new OperationObserver() {
@@ -299,8 +302,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		Collection<EObject> result = new HashSet<EObject>();
 		// TODO EMFStore does it work with ESLocalProject?
-		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result,
-			((ProjectSpace) getProjectSpace(project)).getProject(), eReference.getEType());
+		ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).getInternalAPIImpl();
+		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result, projectSpace.getProject(),
+			eReference.getEType());
 		return result.iterator();
 	}
 
@@ -328,7 +332,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	public void delete(InternalProject project, final Collection<EObject> eObjects) {
-		final ProjectSpace projectSpace = (ProjectSpace) getProjectSpace(project);
+		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).getInternalAPIImpl();
 		// TODO EMFStore how to delete eObject?
 		new EMFStoreCommand() {
 
@@ -345,8 +349,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		// TODO EMFStore how to clone local project?
-		ProjectSpace toClone = (ProjectSpace) getProjectSpace(projectToClone);
-		ProjectSpace target = (ProjectSpace) getProjectSpace(targetProject);
+		ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).getInternalAPIImpl();
+		ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).getInternalAPIImpl();
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
@@ -359,7 +363,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public Notifier getRoot(InternalProject project) {
 		// TODO EMFStore other way to get root of localproject?
-		return ((ProjectSpace) getProjectSpace(project)).getProject();
+		return ((ESLocalProjectImpl) getProjectSpace(project)).getInternalAPIImpl().getProject();
 	}
 
 	@Override
@@ -507,9 +511,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * @param projectSpace the {@link ProjectSpace} to get the {@link ECPProject} for
 	 * @return the {@link ECPProject} corresponding to this ProjectSpace or null if none found
 	 */
-	public ECPProject getProject(ProjectSpace projectSpace) {
+	public ECPProject getProject(ESLocalProject projectSpace) {
 		for (InternalProject project : getOpenProjects()) {
-			ProjectSpace localProjectSpace = (ProjectSpace) project.getProviderSpecificData();
+			ESLocalProject localProjectSpace = (ESLocalProject) project.getProviderSpecificData();
 			if (localProjectSpace.equals(projectSpace)) {
 				return project;
 			}

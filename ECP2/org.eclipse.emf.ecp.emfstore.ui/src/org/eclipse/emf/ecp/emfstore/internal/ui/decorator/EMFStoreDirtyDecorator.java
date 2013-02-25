@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.observer.ESCommitObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.server.model.ESChangePackage;
 import org.eclipse.emf.emfstore.server.model.versionspec.ESPrimaryVersionSpec;
 
@@ -58,7 +59,8 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 			if (ECPProjectManager.INSTANCE.getProject(project.getName()) == null) {
 				return;
 			}
-			ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			ProjectSpace projectSpace = ((ESLocalProjectImpl) EMFStoreProvider.INSTANCE.getProjectSpace(project))
+				.getInternalAPIImpl();
 
 			if (!observers.containsKey(element)) {
 				EMFStoreDirtyObserver emfStoreDirtyObserver = new EMFStoreDirtyObserver(projectSpace, project);
@@ -113,7 +115,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	/** {@inheritDoc} */
 	public void commitCompleted(ESLocalProject localProject, ESPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
 		// TODO: cast, move to EMFStoreDirtyObserver?
-		ECPProject project = EMFStoreProvider.INSTANCE.getProject((ProjectSpace) localProject);
+		ECPProject project = EMFStoreProvider.INSTANCE.getProject(localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();
 		observers.get(project).clearObserverCache();
 	}
