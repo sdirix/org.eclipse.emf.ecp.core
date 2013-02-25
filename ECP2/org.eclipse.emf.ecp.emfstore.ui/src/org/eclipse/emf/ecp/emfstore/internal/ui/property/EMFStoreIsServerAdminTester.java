@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.Usersession;
 import org.eclipse.emf.emfstore.internal.client.model.accesscontrol.AccessControlHelper;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlException;
 
 import org.eclipse.core.expressions.PropertyTester;
@@ -46,7 +47,8 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 			return false;
 		}
 
-		ServerInfo serverInfo = (ServerInfo) EMFStoreProvider.INSTANCE.getServerInfo(repository);
+		ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(repository))
+			.getInternalAPIImpl();
 		Usersession usersession = serverInfo.getLastUsersession();
 		boolean isAdmin = false;
 		if (usersession != null && usersession.getACUser() != null) {
