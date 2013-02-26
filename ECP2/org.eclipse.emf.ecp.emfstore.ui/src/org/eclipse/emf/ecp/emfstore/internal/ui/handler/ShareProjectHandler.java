@@ -58,8 +58,7 @@ public class ShareProjectHandler extends AbstractHandler {
 				localProject.getInternalAPIImpl().setUsersession(serverInfo.getLastUsersession());
 			}
 			// TODO EMFStore Constructor is missing
-			new UIShareProjectController(HandlerUtil.getActiveShell(event), localProject.getInternalAPIImpl())
-				.execute();
+			new UIShareProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
 
 			project.notifyObjectsChanged(new Object[] { project }, false);
 			repository.notifyObjectsChanged(new Object[] { repository });

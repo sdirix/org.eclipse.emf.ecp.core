@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
@@ -37,16 +38,16 @@ public class CommitProjectHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ESLocalProjectImpl localProject = (ESLocalProjectImpl) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject localProject = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore how to set usersession?
 		// -> why is this necessary? The project is already checked out
 		if (localProject.getUsersession() == null) {
 			ESServerImpl server = (ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
 			ServerInfo serverInfo = server.getInternalAPIImpl();
-			localProject.getInternalAPIImpl().setUsersession(serverInfo.getLastUsersession());
+			((ESLocalProjectImpl) localProject).getInternalAPIImpl().setUsersession(serverInfo.getLastUsersession());
 		}
 		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);
-		new UICommitProjectController(HandlerUtil.getActiveShell(event), localProject.getInternalAPIImpl()).execute();
+		new UICommitProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
 		// is structural because of possible merge
 		project.notifyObjectsChanged(new Object[] { project }, true);
 		project.getRepository().notifyObjectsChanged(new Object[] { project.getRepository() });
