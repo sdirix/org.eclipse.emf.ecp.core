@@ -139,7 +139,7 @@ public class Activator extends AbstractUIPlugin {
 				if (object instanceof EObject) {
 					EObject eObject = (EObject) object;
 					
-					if (eObject.eContainer() == null) {
+					if (eObject.eContainer() == null && eObject.eResource() == null) {
 						// if an object was deleted it must be removed from the cachedTree.
 						for (EObject childObject : eObject.eContents()) {
 							getValidationService(project).remove(childObject);

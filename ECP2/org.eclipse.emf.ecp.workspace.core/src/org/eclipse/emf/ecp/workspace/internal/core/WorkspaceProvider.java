@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
+
 /*
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
@@ -11,12 +23,16 @@ package org.eclipse.emf.ecp.workspace.internal.core;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -25,53 +41,91 @@ import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @author Tobias Verhoeven
  */
-public class WorkspaceProvider extends DefaultProvider implements IResourceChangeListener {
+public class WorkspaceProvider extends DefaultProvider {
+
+	/** The Provider Name. */
 	public static final String NAME = "org.eclipse.emf.ecp.workspace.provider";
 
+	/** Root URI Property Name. */
 	public static final String PROP_ROOT_URI = "rootURI";
 
-	private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
-
-	private static final IWorkspaceRoot WORKSPACE_ROOT = WORKSPACE.getRoot();
-
+	/** The Workspace Provider Instance. */
 	static WorkspaceProvider INSTANCE;
 
+	/**
+	 * Instantiates a new workspace provider.
+	 */
 	public WorkspaceProvider() {
 		super(NAME);
 		INSTANCE = this;
-		WORKSPACE.addResourceChangeListener(this);
+		// WORKSPACE.addResourceChangeListener(this);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void handleLifecycle(ECPModelContext context, LifecycleEvent event) {
+		switch (event) {
+		case INIT:
+			handleInit(context);
+			break;
+		case DISPOSE:
+			handelDispose(context);
+			break;
+		case CREATE:
+			handleCreate(context);
+			break;
+		case REMOVE:
+			handleRemove(context);
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void handleInit(ECPModelContext context) {
+		if (context instanceof InternalProject) {
+			final InternalProject project = (InternalProject) context;
+			EditingDomain editingDomain = project.getEditingDomain();
+			editingDomain.getResourceSet().eAdapters().add(new WorkspaceProjectObserver(project));
+		}
+
+	}
+
+	private void handleRemove(ECPModelContext context) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void handleCreate(ECPModelContext context) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void handelDispose(ECPModelContext context) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	protected void doDispose() {
 		try {
-			WORKSPACE.removeResourceChangeListener(this);
+			// WORKSPACE.removeResourceChangeListener(this);
 			super.doDispose();
 		} finally {
 			INSTANCE = null;
@@ -86,32 +140,21 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 	@Override
 	public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof ECPRepository) {
-			ECPRepository repository = (ECPRepository) parent;
-			RepositoryResourceWrapper wrapper = new RepositoryResourceWrapper(repository, WORKSPACE_ROOT);
-			wrapper.fillChildren(childrenList);
 		} else if (parent instanceof ECPProject) {
 			ECPProject project = (ECPProject) parent;
 			String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
-			if (rootURI == null) {
-				ProjectResourceWrapper wrapper = new ProjectResourceWrapper(project, WORKSPACE_ROOT);
-				wrapper.fillChildren(childrenList);
+
+			ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+
+			URI uri = URI.createURI(rootURI);
+			if (uri.hasFragment()) {
+				EObject eObject = resourceSet.getEObject(uri, true);
+				super.fillChildren(context, eObject, childrenList);
 			} else {
-				ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-
-				URI uri = URI.createURI(rootURI);
-				if (uri.hasFragment()) {
-					EObject eObject = resourceSet.getEObject(uri, true);
-					super.fillChildren(context, eObject, childrenList);
-				} else {
-					Resource resource = resourceSet.getResource(uri, true);
-					childrenList.addChildren(resource.getContents());
-
-					// String path = uri.toPlatformString(true);
-					// IResource member = WORKSPACE_ROOT.findMember(path);
-					// ProjectResourceWrapper wrapper = new ProjectResourceWrapper(project, member);
-					// wrapper.fillChildren(childrenList);
-				}
+				Resource resource = resourceSet.getResource(uri, true);
+				childrenList.addChildren(resource.getContents());
 			}
+
 		} else if (parent instanceof ResourceWrapper) {
 			ResourceWrapper<?> wrapper = (ResourceWrapper<?>) parent;
 			wrapper.fillChildren(childrenList);
@@ -122,32 +165,32 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 
 	/** {@inheritDoc} */
 	public EList<? extends Object> getElements(InternalProject project) {
-		// ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-		// return resourceSet.getResources().get(0).getContents();
+		ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+		return resourceSet.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true)
+			.getContents();
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
-		throw new UnsupportedOperationException();
 	}
 
-	/** {@inheritDoc} */
-	public void resourceChanged(IResourceChangeEvent event) {
+	@Override
+	public boolean contains(InternalProject project, Object object) {
+		// TODO: optimize
+		if (object instanceof EObject) {
+			EObject eObject = (EObject) object;
 
-		// IResourceDelta delta = event.getDelta();
-		// if (delta != null) {
-		// InternalRepository repository = getRepositories()[0];
-		// Object[] objects = getChangedObjects(delta, repository);
-		// repository.notifyObjectsChanged(objects);
-		//
-		// for (InternalProject project : getOpenProjects()) {
-		// objects = getChangedObjects(delta, project);
-		// project.notifyObjectsChanged(objects, true);
-		// }
-		// }
+			return EcoreUtil.getRootContainer(eObject).eResource().equals(getRoot(project));
+		}
+		return false;
 	}
 
-	private void reload(InternalProject project) {
+	/**
+	 * Reloads the project.
+	 * 
+	 * @param project the project to be reloaded.
+	 */
+	public void reload(InternalProject project) {
 		List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
 		for (Resource resource : resources) {
-			if (resource.getURI().equals(getRootURI(project)) && resource.isLoaded()) {
+			if (resource.equals(getRoot(project)) && resource.isLoaded()) {
 				resource.unload();
 
 				try {
@@ -160,117 +203,22 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		}
 	}
 
-	private Object[] getChangedObjects(IResourceDelta delta, InternalRepository repository) {
-		Set<Object> objects = new HashSet<Object>();
-		collectChangedObjects(delta, repository, objects);
-		return objects.toArray(new Object[objects.size()]);
-	}
-
-	private void collectChangedObjects(IResourceDelta delta, InternalRepository repository, Set<Object> objects) {
-		switch (delta.getKind()) {
-		case IResourceDelta.ADDED:
-		case IResourceDelta.REMOVED:
-			IResource resource = delta.getResource();
-			if (resource.getType() == IResource.PROJECT) {
-				objects.add(repository);
-			} else {
-				objects.add(new RepositoryResourceWrapper(repository, resource.getParent()));
-			}
-
-			return;
-		}
-
-		for (IResourceDelta child : delta.getAffectedChildren()) {
-			collectChangedObjects(child, repository, objects);
-		}
-	}
-
-	private Object[] getChangedObjects(IResourceDelta delta, InternalProject project) {
-
-		IPath rootPath = getRootResource(project).getFullPath();
-		IPath deltaPath = delta.getResource().getFullPath();
-		if (rootPath.equals(deltaPath)) {
-			return new Object[] { project };
-		}
-
-		if (rootPath.isPrefixOf(deltaPath)) {
-			Set<Object> objects = new HashSet<Object>();
-			collectChangedObjects(delta, project, objects);
-			return objects.toArray(new Object[objects.size()]);
-		}
-
-		return null;
-	}
-
-	private void collectChangedObjects(IResourceDelta delta, InternalProject project, Set<Object> objects) {
-		switch (delta.getKind()) {
-		case IResourceDelta.ADDED:
-		case IResourceDelta.REMOVED:
-			IResource resource = delta.getResource();
-			objects.add(new ProjectResourceWrapper(project, resource.getParent()));
-			return;
-		}
-
-		for (IResourceDelta child : delta.getAffectedChildren()) {
-			collectChangedObjects(child, project, objects);
-		}
-	}
-
-	public static Object getElement(ECPProject project, URI uri) {
-		if (uri == null) {
-			return WORKSPACE_ROOT;
-		}
-
-		if (uri.hasFragment()) {
-			ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-			return resourceSet.getEObject(uri, true);
-		}
-
-		String path = uri.toPlatformString(true);
-		return WORKSPACE_ROOT.findMember(path);
-	}
-
-	public static IResource getResource(ECPProject project, URI uri) {
-		if (uri != null) {
-			uri = uri.trimFragment();
-		}
-
-		return (IResource) getElement(project, uri);
-	}
-
-	public static Object getRootElement(ECPProject project) {
-		URI uri = getRootURI(project);
-		return getElement(project, uri);
-	}
-
-	public static IResource getRootResource(ECPProject project) {
-		URI uri = getRootURI(project);
-		return getResource(project, uri);
-	}
-
-	public static URI getRootURI(ECPProject project) {
-		String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
-		return rootURI == null ? null : URI.createURI(rootURI);
-	}
-
 	/** {@inheritDoc} */
 	public void delete(InternalProject project, Collection<EObject> eObjects) {
-		for (EObject eObject : eObjects) {
-			EcoreUtil.delete(eObject, true);
-		}
+		project.getEditingDomain().getCommandStack()
+			.execute(DeleteCommand.create(project.getEditingDomain(), eObjects));
 	}
 
 	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
 	// FIXME
 	public Notifier getRoot(InternalProject project) {
-		return null;
-		// return project.getEditingDomain().getResourceSet().getResources().get(0).getContents().get(0);
+		return project.getEditingDomain().getResourceSet()
+			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true);
 	}
 
 	@Override
@@ -280,12 +228,9 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 			saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 			List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
 			for (Resource resource : resources) {
-				if (resource.getURI().equals(getRootURI(project))) {
-					resource.save(saveOptions);
-
-				}
+				resource.save(saveOptions);
 			}
-			((BasicCommandStack) editingDomain.getCommandStack()).saveIsDone();
+			((BasicCommandStack) project.getEditingDomain().getCommandStack()).saveIsDone();
 		} catch (IOException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
@@ -298,16 +243,21 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		return ((BasicCommandStack) project.getEditingDomain().getCommandStack()).isSaveNeeded();
 	}
 
-	private EditingDomain editingDomain;
-
 	@Override
-	public EditingDomain createEditingDomain(InternalProject project) {
-		if (editingDomain == null) {
-			CommandStack commandStack = new BasicCommandStack();
-			editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY, commandStack);
+	public EditingDomain createEditingDomain(final InternalProject project) {
 
-		}
+		CommandStack commandStack = new BasicCommandStack();
+		EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
+			commandStack);
+
 		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
+		URI uri = URI.createURI(project.getProperties().getValue(PROP_ROOT_URI));
+		try {
+			editingDomain.getResourceSet().getResource(uri, true);
+		} catch (WrappedException we) {
+			project.close();
+		}
+
 		return editingDomain;
 	}
 
@@ -318,6 +268,152 @@ public class WorkspaceProvider extends DefaultProvider implements IResourceChang
 		}
 		return super.getModelContext(element);
 	}
+
+	@Override
+	public boolean hasUnsharedProjectSupport() {
+		return true;
+	}
+
+	/**
+	 * Observes changes in a projects resource and notifies the project.
+	 */
+	private static class WorkspaceProjectObserver extends EContentAdapter {
+
+		private InternalProject project;
+
+		public WorkspaceProjectObserver(InternalProject project) {
+			this.project = project;
+		}
+
+		@Override
+		public void notifyChanged(Notification notification) {
+			super.notifyChanged(notification);
+
+			if (notification.getNotifier() instanceof EObject) {
+				EObject eObject = (EObject) notification.getNotifier();
+				project.notifyObjectsChanged(new Object[] { eObject }, false);
+
+				Object feature = notification.getFeature();
+				if (feature instanceof EReference) {
+					EReference eReference = (EReference) feature;
+
+					if (eReference.isContainment() && notification.getNewValue() instanceof EObject) {
+						project.notifyObjectsChanged(new Object[] { notification.getNewValue() }, true);
+					}
+
+				}
+
+			}
+		}
+	}
+
+	// private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
+
+	// private static final IWorkspaceRoot WORKSPACE_ROOT = WORKSPACE.getRoot();
+
+	/*
+	 * public void resourceChanged(IResourceChangeEvent event) {
+	 * // IResourceDelta delta = event.getDelta();
+	 * // if (delta != null) {
+	 * // InternalRepository repository = getRepositories()[0];
+	 * // Object[] objects = getChangedObjects(delta, repository);
+	 * // repository.notifyObjectsChanged(objects);
+	 * //
+	 * // for (InternalProject project : getOpenProjects()) {
+	 * // objects = getChangedObjects(delta, project);
+	 * // project.notifyObjectsChanged(objects, true);
+	 * // }
+	 * // }
+	 * }
+	 */
+
+	/*
+	 * private Object[] getChangedObjects(IResourceDelta delta, InternalRepository repository) {
+	 * Set<Object> objects = new HashSet<Object>();
+	 * collectChangedObjects(delta, repository, objects);
+	 * return objects.toArray(new Object[objects.size()]);
+	 * }
+	 */
+
+	/*
+	 * private void collectChangedObjects(IResourceDelta delta, InternalRepository repository, Set<Object> objects) {
+	 * switch (delta.getKind()) {
+	 * case IResourceDelta.ADDED:
+	 * case IResourceDelta.REMOVED:
+	 * IResource resource = delta.getResource();
+	 * if (resource.getType() == IResource.PROJECT) {
+	 * objects.add(repository);
+	 * } else {
+	 * objects.add(new RepositoryResourceWrapper(repository, resource.getParent()));
+	 * }
+	 * return;
+	 * }
+	 * for (IResourceDelta child : delta.getAffectedChildren()) {
+	 * collectChangedObjects(child, repository, objects);
+	 * }
+	 * }
+	 */
+
+	/*
+	 * private Object[] getChangedObjects(IResourceDelta delta, InternalProject project) {
+	 * IPath rootPath = getRootResource(project).getFullPath();
+	 * IPath deltaPath = delta.getResource().getFullPath();
+	 * if (rootPath.equals(deltaPath)) {
+	 * return new Object[] { project };
+	 * }
+	 * if (rootPath.isPrefixOf(deltaPath)) {
+	 * Set<Object> objects = new HashSet<Object>();
+	 * collectChangedObjects(delta, project, objects);
+	 * return objects.toArray(new Object[objects.size()]);
+	 * }
+	 * return null;
+	 * }
+	 */
+	/*
+	 * private void collectChangedObjects(IResourceDelta delta, InternalProject project, Set<Object> objects) {
+	 * switch (delta.getKind()) {
+	 * case IResourceDelta.ADDED:
+	 * case IResourceDelta.REMOVED:
+	 * IResource resource = delta.getResource();
+	 * objects.add(new ProjectResourceWrapper(project, resource.getParent()));
+	 * return;
+	 * }
+	 * for (IResourceDelta child : delta.getAffectedChildren()) {
+	 * collectChangedObjects(child, project, objects);
+	 * }
+	 * }
+	 */
+	/*
+	 * public static Object getElement(ECPProject project, URI uri) {
+	 * if (uri == null) {
+	 * return WORKSPACE_ROOT;
+	 * }
+	 * if (uri.hasFragment()) {
+	 * ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+	 * return resourceSet.getEObject(uri, true);
+	 * }
+	 * String path = uri.toPlatformString(true);
+	 * return WORKSPACE_ROOT.findMember(path);
+	 * }
+	 * public static IResource getResource(ECPProject project, URI uri) {
+	 * if (uri != null) {
+	 * uri = uri.trimFragment();
+	 * }
+	 * return (IResource) getElement(project, uri);
+	 * }
+	 * public static Object getRootElement(ECPProject project) {
+	 * URI uri = getRootURI(project);
+	 * return getElement(project, uri);
+	 * }
+	 * public static IResource getRootResource(ECPProject project) {
+	 * URI uri = getRootURI(project);
+	 * return getResource(project, uri);
+	 * }
+	 * public static URI getRootURI(ECPProject project) {
+	 * String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
+	 * return rootURI == null ? null : URI.createURI(rootURI);
+	 * }
+	 */
 
 	// public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 	//
