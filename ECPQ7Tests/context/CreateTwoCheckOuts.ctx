@@ -6,14 +6,15 @@ Element-Name: CreateTwoCheckOuts
 Element-Type: context
 Element-Version: 2.0
 Id: __UtTgD-XEeK-yuKsz0Lang
-Save-Time: 1/24/13 12:19 PM
+Save-Time: 2/27/13 11:24 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
 Entry-Name: .ecl.context
 
 get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
-with [get-window "Create EMFStore Project"] {
+with [get-window "Create Project"] {
+    get-combo -after [get-label "Provider:"] | set-text EMFStore
     get-editbox -after [get-label "Project Name:"] | set-text TestProject
     get-button Finish | click
 }
