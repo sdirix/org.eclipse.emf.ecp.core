@@ -14,7 +14,6 @@
 package org.eclipse.emf.ecp.internal.wizards;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -35,10 +34,17 @@ import org.eclipse.swt.widgets.Composite;
  * 
  * @author Eugen Neufeld
  */
-public class NewModelElementWizard extends ECPWizard<SelectionComposite<TreeViewer>> {
+public class SelectModelElementWizard extends ECPWizard<SelectionComposite<TreeViewer>> {
 
-	public NewModelElementWizard(String title) {
-		setWindowTitle(title);
+	private String pageName;
+	private String description;
+	private String pageTitle;
+
+	public SelectModelElementWizard(String windowTitle, String pageName, String pageTitle, String description) {
+		setWindowTitle(windowTitle);
+		this.pageName = pageName;
+		this.description = description;
+		this.pageTitle = pageTitle;
 	}
 
 	/**
@@ -47,7 +53,7 @@ public class NewModelElementWizard extends ECPWizard<SelectionComposite<TreeView
 	@Override
 	public void addPages() {
 		super.addPages();
-		WizardPage wp = new WizardPage(Messages.NewModelElementWizard_WizardTitle_AddModelElement) {
+		WizardPage wp = new WizardPage(pageName) {
 
 			public void createControl(Composite parent) {
 				Composite composite = getCompositeProvider().createUI(parent);
@@ -78,8 +84,8 @@ public class NewModelElementWizard extends ECPWizard<SelectionComposite<TreeView
 			}
 		};
 		addPage(wp);
-		wp.setTitle(Messages.NewModelElementWizard_PageTitle_AddModelElement);
-		wp.setDescription(Messages.NewModelElementWizard_PageDescription_AddModelElement);
+		wp.setTitle(pageTitle);
+		wp.setDescription(description);
 
 	}
 

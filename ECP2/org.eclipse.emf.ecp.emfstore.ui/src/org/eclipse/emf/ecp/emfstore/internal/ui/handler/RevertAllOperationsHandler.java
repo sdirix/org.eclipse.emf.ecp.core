@@ -32,13 +32,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class RevertAllOperationsHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore Constructor is missing
 		if (projectSpace != null) {
 			new UIRevertOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		}

@@ -18,10 +18,12 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
+import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
-import org.eclipse.emf.emfstore.client.model.observer.ESLoginObserver;
-import org.eclipse.emf.emfstore.client.model.observer.ESLogoutObserver;
+import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
+import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -48,7 +50,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 			ECPProvider provider = repository.getProvider();
 
 			if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName())) {
-				ServerInfo server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
+				ESServer server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
 				if (server.getLastUsersession() != null && server.getLastUsersession().isLoggedIn()) {
 					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"),
 						IDecoration.BOTTOM_RIGHT);
@@ -95,10 +97,16 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	public void removeListener(ILabelProviderListener listener) {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void loginCompleted(ESUsersession session) {
 		update(session);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void logoutCompleted(ESUsersession session) {
 		update(session);
 	}
@@ -109,7 +117,8 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 			public void run() {
 				// TODO cast
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
-					EMFStoreProvider.INSTANCE.getRepository((ServerInfo) usersession.getServer())));
+					EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
+						.getInternalAPIImpl())));
 			}
 		});
 	}

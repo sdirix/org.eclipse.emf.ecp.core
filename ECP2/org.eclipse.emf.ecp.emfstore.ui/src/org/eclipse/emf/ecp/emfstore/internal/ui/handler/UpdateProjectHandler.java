@@ -14,8 +14,10 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.ESServer;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESUsersessionImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIUpdateProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -34,13 +36,14 @@ public class UpdateProjectHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-		// TODO Ugly
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore how to set user session?
 		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-			projectSpace.setUsersession(serverInfo.getLastUsersession());
+			ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			((ESLocalProjectImpl) projectSpace).getInternalAPIImpl().setUsersession(
+				((ESUsersessionImpl) serverInfo.getLastUsersession()).getInternalAPIImpl());
 		}
 		new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		project.notifyObjectsChanged(new Object[] { project }, true);

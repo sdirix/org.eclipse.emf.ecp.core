@@ -43,6 +43,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
 	
 	private static final String CLASS_ATTRIBUTE = "class";//$NON-NLS-1$
+	private static final String CONTROL_ID = "id";//$NON-NLS-1$
 	private static final String COMPOSITE_CLASS_ATTRIBUTE = "supportedCompositeClass";//$NON-NLS-1$
 	private static final String LABEL_ATTRIBUTE = "showLabel";//$NON-NLS-1$
 	
@@ -72,6 +73,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 			CONTROL_EXTENSION);
 		for (IConfigurationElement e : controls) {
 			try {
+				String id=e.getAttribute(CONTROL_ID);
 				String clazz = e.getAttribute(CLASS_ATTRIBUTE);
 				Class<? extends AbstractControl<?>> resolvedClass = loadClass(e.getContributor().getName(), clazz);
 				String compositeClazz = e.getAttribute(COMPOSITE_CLASS_ATTRIBUTE);
@@ -101,7 +103,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 						tester=new StaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature);
 					}
 				}
-				ControlDescription controlDescription = new ControlDescription(resolvedClass,resolvedCompositeClass,showLabel,tester);
+				ControlDescription controlDescription = new ControlDescription(id,resolvedClass,resolvedCompositeClass,showLabel,tester);
 				controlDescriptors.add(controlDescription);
 			} catch (ClassNotFoundException e1) {
 				Activator.logException(e1);
@@ -138,6 +140,28 @@ public final class ControlFactoryImpl implements ControlFactory{
 		
 		return control;
 	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public <T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
+		EditModelElementContext context, String controlId) {
+		
+		ControlDescription controlDescription = null;
+		for(ControlDescription desc:controlDescriptors){
+			if(desc.getId().equals(controlId)){
+				controlDescription=desc;
+				break;
+			}
+		}
+		if(controlDescription==null){
+			return null;
+		}
+		AbstractControl<T> control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
+
+		
+		return control;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -188,5 +212,8 @@ public final class ControlFactoryImpl implements ControlFactory{
 		}
 		return bestCandidate;
 	}
+
+	
+	
 
 }

@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UILoginSessionController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -31,9 +31,8 @@ public class EmfstoreLogInHandler extends AbstractHandler {
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
-			.getCurrentSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
-
+			.getActiveMenuSelection(event)).getFirstElement();
+		final ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 		new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
 
 		// ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();

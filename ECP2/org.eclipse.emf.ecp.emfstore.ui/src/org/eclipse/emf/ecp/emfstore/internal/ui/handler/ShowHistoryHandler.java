@@ -33,13 +33,13 @@ public class ShowHistoryHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Object object = ((IStructuredSelection) HandlerUtil.getCurrentSelection(event)).getFirstElement();
+		Object object = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
 		EObject result = null;
 
 		if (object instanceof EObject) {
 			result = (EObject) object;
 		} else if (object instanceof InternalProject) {
-			result = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) object);
+			result = (EObject) EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) object);
 		}
 
 		if (result != null) {

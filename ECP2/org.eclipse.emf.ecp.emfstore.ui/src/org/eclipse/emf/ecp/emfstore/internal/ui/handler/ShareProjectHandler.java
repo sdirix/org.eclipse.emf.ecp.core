@@ -16,8 +16,9 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.internal.wizards.ShareWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIShareProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -36,7 +37,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class ShareProjectHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
 
 		ShareWizard rw = new ShareWizard();
@@ -48,13 +49,16 @@ public class ShareProjectHandler extends AbstractHandler {
 			// TODO internal cast again
 			InternalRepository repository = (InternalRepository) rw.getSelectedRepository();
 			project.undispose(repository);
-			ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			ESLocalProjectImpl localProject = (ESLocalProjectImpl) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+
 			// TODO Ugly
-			if (projectSpace.getUsersession() == null) {
-				ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-				projectSpace.setUsersession(serverInfo.getLastUsersession());
+			if (localProject.getUsersession() == null) {
+				ESServerImpl server = (ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+				ServerInfo serverInfo = server.getInternalAPIImpl();
+				localProject.getInternalAPIImpl().setUsersession(serverInfo.getLastUsersession());
 			}
-			new UIShareProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+			// TODO EMFStore Constructor is missing
+			new UIShareProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
 
 			project.notifyObjectsChanged(new Object[] { project }, false);
 			repository.notifyObjectsChanged(new Object[] { repository });

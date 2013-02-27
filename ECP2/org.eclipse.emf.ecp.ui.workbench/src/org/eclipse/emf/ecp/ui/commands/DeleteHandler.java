@@ -34,7 +34,7 @@ public class DeleteHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection ssel = (IStructuredSelection) selection;
 		
 		List<ECPDeletable> deletables = new ArrayList<ECPDeletable>();

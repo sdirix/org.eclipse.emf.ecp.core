@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
+import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.IMenuManager;
@@ -180,9 +181,9 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 			return getResolvedElement().createCheckoutUI(parent, checkoutSource, projectProperties);
 		}
 
-		public Control createNewProjectUI(Composite parent) {
-			// TODO Auto-generated method stub
-			return getResolvedElement().createNewProjectUI(parent);
+		public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
+			ECPProperties projectProperties) {
+			return getResolvedElement().createNewProjectUI(parent, observer, projectProperties);
 		}
 	}
 }

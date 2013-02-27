@@ -58,7 +58,7 @@ public class ImportHandler extends AbstractHandler {
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final EObject selectedModelElement = (EObject) ((IStructuredSelection)HandlerUtil.getCurrentSelection(event)).getFirstElement();
+		final EObject selectedModelElement = (EObject) ((IStructuredSelection)HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
 		
 //		ECPModelContextProvider contextProvider = (ECPModelContextProvider)((TreeView)HandlerUtil.getActivePart(event))
 //	        .getViewer().getContentProvider();

@@ -35,7 +35,7 @@ public class ProjectFilterdPackagesHandler extends AbstractHandler
 	 */
   public Object execute(ExecutionEvent event) throws ExecutionException
   {
-    ISelection selection = HandlerUtil.getCurrentSelection(event);
+	ISelection selection = HandlerUtil.getActiveMenuSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
     
     HandlerHelper.filterProjectPackages((ECPProject)ssel.getFirstElement(),HandlerUtil.getActiveShell(event));

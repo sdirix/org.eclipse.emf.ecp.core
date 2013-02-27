@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIRegisterEPackageController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -35,8 +36,10 @@ public class RegisterEPackageHandler extends AbstractHandler {
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
-			.getCurrentSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
+			.getActiveMenuSelection(event)).getFirstElement();
+		final ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE
+			.getServerInfo((InternalRepository) ecpRepository)).getInternalAPIImpl();
+		// TODO EMFStore Constructor is missing
 		new UIRegisterEPackageController(HandlerUtil.getActiveShell(event), serverInfo).execute();
 		System.out.println("Register EPackage");
 		return null;

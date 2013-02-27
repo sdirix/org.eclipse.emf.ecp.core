@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIDeleteRemoteProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -35,7 +35,7 @@ public class DeleteOnServerHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
 		if (sel instanceof IStructuredSelection) {
 			IStructuredSelection ssel = (IStructuredSelection) sel;
 			Object selection = ssel.getFirstElement();
@@ -43,7 +43,7 @@ public class DeleteOnServerHandler extends AbstractHandler {
 				EMFStoreProjectWrapper projectWrapper = (EMFStoreProjectWrapper) selection;
 
 				InternalRepository repo = (InternalRepository) projectWrapper.getRepository();
-				ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repo);
+				ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repo);
 				new UIDeleteRemoteProjectController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession(),
 					projectWrapper.getCheckoutData()).execute();
 				repo.notifyObjectsChanged(new Object[] { repo });

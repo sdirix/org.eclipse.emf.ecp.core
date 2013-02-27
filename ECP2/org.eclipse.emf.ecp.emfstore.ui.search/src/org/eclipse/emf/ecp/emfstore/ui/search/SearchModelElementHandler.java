@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.util.HandlerHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -46,9 +46,13 @@ public class SearchModelElementHandler extends AbstractHandler {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		InternalProject project = (InternalProject)ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		
+		if (projectSpace == null) {
+			return null;
+		}
 
-		Set<EObject> eObjects = projectSpace.getProject().getAllModelElements();
+		Set<EObject> eObjects = projectSpace.getAllModelElements();
 
 		if (project == null) {
 			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "Information",

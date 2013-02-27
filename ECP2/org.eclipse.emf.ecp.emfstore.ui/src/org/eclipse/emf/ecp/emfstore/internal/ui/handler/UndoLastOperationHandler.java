@@ -33,13 +33,14 @@ public class UndoLastOperationHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		if (projectSpace != null) {
+			// TODO EMFStore Constructor is missing
 			new UIUndoLastOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		}
 		return null;

@@ -35,7 +35,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class CheckoutHandler extends AbstractHandler {
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelection(event);
+		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection ssel = (IStructuredSelection) selection;
 
 		List<ECPCheckoutSource> checkouts = new ArrayList<ECPCheckoutSource>();

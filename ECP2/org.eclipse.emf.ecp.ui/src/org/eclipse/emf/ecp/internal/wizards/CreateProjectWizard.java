@@ -65,15 +65,16 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 					}
 
 					public void projectNameChanged(String projectName) {
-						if (projectName == null) {
-							setPageComplete(false);
-						} else if (ECPProjectManager.INSTANCE.getProject(projectName) != null) {
-							setPageComplete(false);
+						if (projectName != null && ECPProjectManager.INSTANCE.getProject(projectName) != null) {
 							setErrorMessage("A project with name " + projectName + " already exists in the workspace.");
 						} else {
 							setErrorMessage(null);
-							setPageComplete(true);
 						}
+					}
+
+					public void completeStatusChanged(boolean status) {
+						setPageComplete(status);
+
 					}
 				});
 				setPageComplete(false);
@@ -93,5 +94,4 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 		wp.setMessage(message);
 		setWindowTitle(title);
 	}
-
 }

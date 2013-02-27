@@ -14,8 +14,10 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICommitProjectController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -34,15 +36,18 @@ public class CommitProjectHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-		// TODO Ugly
-		if (projectSpace.getUsersession() == null) {
-			ServerInfo serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-			projectSpace.setUsersession(serverInfo.getLastUsersession());
+		ESLocalProject localProject = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		// TODO EMFStore how to set usersession?
+		// -> why is this necessary? The project is already checked out
+		if (localProject.getUsersession() == null) {
+			ESServerImpl server = (ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
+			ServerInfo serverInfo = server.getInternalAPIImpl();
+			((ESLocalProjectImpl) localProject).getInternalAPIImpl().setUsersession(serverInfo.getLastUsersession());
 		}
-		new UICommitProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);
+		new UICommitProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
 		// is structural because of possible merge
 		project.notifyObjectsChanged(new Object[] { project }, true);
 		project.getRepository().notifyObjectsChanged(new Object[] { project.getRepository() });
