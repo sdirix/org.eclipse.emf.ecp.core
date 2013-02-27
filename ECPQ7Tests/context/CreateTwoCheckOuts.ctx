@@ -6,7 +6,7 @@ Element-Name: CreateTwoCheckOuts
 Element-Type: context
 Element-Version: 2.0
 Id: __UtTgD-XEeK-yuKsz0Lang
-Save-Time: 2/27/13 11:24 PM
+Save-Time: 2/28/13 12:52 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -58,10 +58,7 @@ get-editor Matchup | close
 get-editor Game | close
 get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
 with [get-window "Progress Information" | get-window "Authentication required"] {
-    with [get-combo -after [get-label Username]] {
-        set-text super
-        key-type "TRAVERSE_TAB_NEXT"
-    }
+    get-combo -after [get-label Username] | set-text super
     get-editbox -after [get-label Password] | set-text super
     get-button OK | click
 }
