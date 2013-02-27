@@ -36,5 +36,13 @@
          </property>
       </product>
    </extension>
+   <extension
+         point="org.eclipse.ui.elementFactories">
+      <factory
+            class="org.eclipse.emf.ecp.application3x.NavigatorRoot"
+            id="org.eclipse.emf.ecp.NavigatorRoot">
+      </factory>
+   </extension>
+
 
 </plugin>
