@@ -83,15 +83,11 @@ public class LinkControl extends SingleControl {
 
 	private Composite mainComposite;
 
-	private Button setNullButton;
-
-	private Button addButton;
-
-	private Button newButton;
+	private Button[] buttons;
 
 	@Override
 	protected void fillInnerComposite(Composite composite) {
-		int numColumns = 4;
+		int numColumns = 1+getNumButtons();
 		if (isEmbedded()) {
 			numColumns = 1;
 		}
@@ -121,13 +117,23 @@ public class LinkControl extends SingleControl {
 			stackLayout.topControl = unsetLabel;
 		}
 		if (!isEmbedded()) {
-			setNullButton = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
-				getItemPropertyDescriptor(), getStructuralFeature()), composite);
-			addButton = createButtonForAction(new AddReferenceAction(getModelElementContext(),
-				getItemPropertyDescriptor(), getStructuralFeature()), composite);
-			newButton = createButtonForAction(new NewReferenceAction(getModelElementContext(),
-				getItemPropertyDescriptor(), getStructuralFeature()), composite);
+			buttons=createButtons(composite);
 		}
+	}
+
+	protected int getNumButtons() {
+		return 3;
+	}
+
+	protected Button[] createButtons(Composite composite) {
+		Button[] buttons=new Button[3];
+		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
+			getItemPropertyDescriptor(), getStructuralFeature()), composite);
+		buttons[1] = createButtonForAction(new AddReferenceAction(getModelElementContext(),
+			getItemPropertyDescriptor(), getStructuralFeature()), composite);
+		buttons[2] = createButtonForAction(new NewReferenceAction(getModelElementContext(),
+			getItemPropertyDescriptor(), getStructuralFeature()), composite);
+		return buttons;
 	}
 
 	private void createHyperlink() {
@@ -161,9 +167,9 @@ public class LinkControl extends SingleControl {
 	@Override
 	public void setEditable(boolean isEditable) {
 		if (!isEmbedded()) {
-			setNullButton.setVisible(isEditable);
-			addButton.setVisible(isEditable);
-			newButton.setVisible(isEditable);
+			for(Button button:buttons){
+				button.setVisible(isEditable);
+			}
 		}
 		mainComposite.getParent().layout();
 	}

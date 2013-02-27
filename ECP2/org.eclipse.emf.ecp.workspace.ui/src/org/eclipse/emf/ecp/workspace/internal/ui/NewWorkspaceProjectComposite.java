@@ -385,7 +385,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 	}
 
 	private boolean nonEmptyString(String string) {
-		return string != null && !string.isEmpty() && string.trim().length() == string.length();
+		return string != null && string.length() > 0 && string.trim().length() == string.length();
 	}
 
 	private void fillResource() {

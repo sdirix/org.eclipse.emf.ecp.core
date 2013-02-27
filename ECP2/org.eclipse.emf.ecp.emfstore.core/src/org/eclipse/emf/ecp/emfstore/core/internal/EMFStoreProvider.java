@@ -112,7 +112,7 @@ public final class EMFStoreProvider extends DefaultProvider {
    * 
    */
 	private void configureEMFStore() {
-		Configuration.ClIENT_BEHAVIOR.setAutoSave(false);
+		Configuration.getClientBehavior().setAutoSave(false);
 	}
 
 	/** {@inheritDoc} */
