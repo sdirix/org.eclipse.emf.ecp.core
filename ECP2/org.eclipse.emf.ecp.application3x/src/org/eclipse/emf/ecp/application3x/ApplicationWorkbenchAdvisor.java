@@ -33,6 +33,7 @@ import org.eclipse.ui.internal.ide.model.WorkbenchAdapterBuilder;
  * @author Eugen Neufeld
  *
  */
+@SuppressWarnings({ "deprecation", "restriction" })
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	private static final String PERSPECTIVE_ID = "org.eclipse.emf.ecp.application3x.perspective"; //$NON-NLS-1$
@@ -47,7 +48,9 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	
 	
 	//////////////////////////////// make workspace working - copied from IDEWorkbenchAdvisor /////////////////////////////////////
+	// BEGIN COMPLEX CODE 
 
+	
 	/**{@inheritDoc} */
 	public void initialize(IWorkbenchConfigurer configurer) {
 		configurer.setSaveAndRestore(true);
@@ -58,8 +61,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	public IAdaptable getDefaultPageInput() {
 		return new NavigatorRoot();
 	}
-	
-	/**{@inheritDoc} */
 	public void preStartup() {
 		WorkbenchAdapterBuilder.registerAdapters();
 	}
