@@ -25,6 +25,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -166,8 +167,8 @@ public class WorkspaceProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public EList<? extends Object> getElements(InternalProject project) {
 		ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-		return resourceSet.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true)
-			.getContents();
+		return ECollections.unmodifiableEList(resourceSet.getResource(
+			URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true).getContents());
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
 	}
 

@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.ui;
 
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -28,6 +29,9 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  * @author Eike Stepper
  */
 public class WorkspaceUIProvider extends DefaultUIProvider {
+
+	private static final Image PROJECT_OPEN = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+		"icons/page_code.gif").createImage(); //$NON-NLS-1$
 	private static final ILabelProvider WORKBENCH_LABEL_PROVIDER = new WorkbenchLabelProvider();
 
 	/**
@@ -52,6 +56,11 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 		if (element instanceof ResourceWrapper) {
 			ResourceWrapper<?> wrapper = (ResourceWrapper<?>) element;
 			return WORKBENCH_LABEL_PROVIDER.getImage(wrapper.getDelegate());
+		} else if (element instanceof ECPProject) {
+			ECPProject project = (ECPProject) element;
+			if (project.isOpen()) {
+				return PROJECT_OPEN;
+			}
 		}
 
 		return super.getImage(element);
