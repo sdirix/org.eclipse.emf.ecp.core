@@ -177,8 +177,12 @@ public class WorkspaceProvider extends DefaultProvider {
 		// TODO: optimize
 		if (object instanceof EObject) {
 			EObject eObject = (EObject) object;
+			EObject root = EcoreUtil.getRootContainer(eObject);
+			if (root == null || root.eResource() == null) {
+				return false;
+			}
 
-			return EcoreUtil.getRootContainer(eObject).eResource().equals(getRoot(project));
+			return root.eResource().equals(getRoot(project));
 		}
 		return false;
 	}
