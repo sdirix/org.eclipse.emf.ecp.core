@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIRevertOperationController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -37,7 +37,7 @@ public class RevertAllOperationsHandler extends AbstractHandler {
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore Constructor is missing
 		if (projectSpace != null) {
 			new UIRevertOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();

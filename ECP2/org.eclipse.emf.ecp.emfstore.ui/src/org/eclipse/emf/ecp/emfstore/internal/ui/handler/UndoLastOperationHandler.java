@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIUndoLastOperationController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -38,7 +38,7 @@ public class UndoLastOperationHandler extends AbstractHandler {
 		if (project == null) {
 			return null;
 		}
-		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		if (projectSpace != null) {
 			// TODO EMFStore Constructor is missing
 			new UIUndoLastOperationController(HandlerUtil.getActiveShell(event), projectSpace).execute();
