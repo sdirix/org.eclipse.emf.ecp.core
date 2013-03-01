@@ -19,6 +19,8 @@ package org.eclipse.emf.ecp.core.util;
  * {@link org.eclipse.emf.ecp.core.ECPProject ECPProject} or {@link org.eclipse.emf.ecp.core.ECPRepository
  * ECPRepository}.
  * 
+ * 
+ * 
  * @author Eike Stepper
  */
 public interface ECPModelContext extends ECPModelContextAware {

@@ -18,10 +18,12 @@ package org.eclipse.emf.ecp.core.util;
  * 
  * @author Eike Stepper
  * @author Eugen Neufeld
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ECPElement extends Comparable<ECPElement> {
 	/**
-	 * This returns the name of the object.
+	 * This returns the unique name of the object.
 	 * 
 	 * @return the name
 	 */

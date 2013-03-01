@@ -17,7 +17,9 @@ package org.eclipse.emf.ecp.core.exception;
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
+ * 
  */
+// TODO:Move into project Manager
 public class ProjectWithNameExistsException extends Exception {
 
 	private static final long serialVersionUID = 2896166396540238251L;

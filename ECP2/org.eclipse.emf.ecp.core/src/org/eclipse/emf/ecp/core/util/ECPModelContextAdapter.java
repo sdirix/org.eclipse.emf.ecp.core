@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * 
  * @author Eike Stepper
  * @author Eugen Neufeld
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class ECPModelContextAdapter extends AdapterImpl {
 	private final ECPModelContext context;
