@@ -20,8 +20,10 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -35,7 +37,8 @@ public abstract class SingleControl extends SWTControl {
 
 	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private Label validationLabel;
-
+//	private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);
+	
 	/**
 	 * Constructor for a single control.
 	 * @param showLabel whether to show a label 
@@ -64,7 +67,6 @@ public abstract class SingleControl extends SWTControl {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 		if (!isEmbedded()) {
 			validationLabel = new Label(composite, SWT.NONE);
-			validationLabel.setBackground(parent.getBackground());
 			// set the size of the label to the size of the image
 			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 		}
@@ -92,7 +94,18 @@ public abstract class SingleControl extends SWTControl {
 			Image image = Activator.getImageDescriptor(SingleControl.VALIDATION_ERROR_ICON).createImage(); 
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
+			updateValidationColor(validationLabel.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 		}
+		else{
+			resetValidation();
+		}
+	}
+	/**
+	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the parameter.
+	 * @param color the color to set, null if the default background color should be set
+	 */
+	protected void updateValidationColor(Color color){
+		
 	}
 
 	/**
@@ -103,6 +116,8 @@ public abstract class SingleControl extends SWTControl {
 			return;
 		}
 		validationLabel.setImage(null);
+		validationLabel.setToolTipText("");
+		updateValidationColor(null);
 	}
 
 	@Override

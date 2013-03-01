@@ -32,15 +32,17 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority=NOT_APPLICABLE;
 		for(ControlDescription description:ControlFactory.INSTANCE.getControlDescriptors()){
-			if(StaticApplicableTester.class.isInstance(description.getTester())){
-				StaticApplicableTester tester=(StaticApplicableTester) description.getTester();
-				int priority=getTesterPriority(tester,itemPropertyDescriptor,eObject);
-				if(bestPriority<priority){
-					bestPriority=priority;
+			for(ECPApplicableTester tester:description.getTester()){
+				if(StaticApplicableTester.class.isInstance(tester)){
+					StaticApplicableTester test=(StaticApplicableTester) tester;
+					int priority=getTesterPriority(test,itemPropertyDescriptor,eObject);
+					if(bestPriority<priority){
+						bestPriority=priority;
+					}
 				}
-			}
-			else{
-				continue;
+				else{
+					continue;
+				}
 			}
 		}
 		return bestPriority;

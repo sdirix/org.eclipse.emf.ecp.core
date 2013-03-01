@@ -57,7 +57,7 @@ Controls are used to render features of an EObejct in the editor or some other v
       <complexType>
          <choice>
             <element ref="dynamicTest"/>
-            <element ref="staticTest"/>
+            <element ref="staticTest" minOccurs="1" maxOccurs="unbounded"/>
          </choice>
          <attribute name="id" type="string" use="required">
             <annotation>

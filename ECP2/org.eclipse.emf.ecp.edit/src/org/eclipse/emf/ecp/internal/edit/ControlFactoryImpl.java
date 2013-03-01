@@ -80,10 +80,11 @@ public final class ControlFactoryImpl implements ControlFactory{
 				Class<?> resolvedCompositeClass = loadClass(e.getContributor().getName(), compositeClazz);
 				boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
 				
-				ECPApplicableTester tester=null;
+//				ECPApplicableTester tester=null;
+				Set<ECPApplicableTester> tester=new HashSet<ECPApplicableTester>();
 				for(IConfigurationElement testerExtension: e.getChildren()){
 					if(TEST_DYNAMIC.equals(testerExtension.getName())){
-						tester=(ECPApplicableTester) testerExtension.createExecutableExtension(CONTROL_TESTER);
+						tester.add((ECPApplicableTester) testerExtension.createExecutableExtension(CONTROL_TESTER));
 					}
 					else if(TEST_STATIC.equals(testerExtension.getName())){
 						boolean singleValue = Boolean.parseBoolean(testerExtension.getAttribute(TESTER_SINGLEVALUE));
@@ -100,7 +101,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 						
 						String supportedFeature = testerExtension.getAttribute(TESTER_FEATURE);
 						
-						tester=new StaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature);
+						tester.add(new StaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature));
 					}
 				}
 				ControlDescription controlDescription = new ControlDescription(id,resolvedClass,resolvedCompositeClass,showLabel,tester);
@@ -203,7 +204,14 @@ public final class ControlFactoryImpl implements ControlFactory{
 				continue;
 			}
 			int currentPriority=-1;
-			currentPriority=description.getTester().isApplicable(itemPropertyDescriptor, modelElement);
+			
+			for(ECPApplicableTester tester:description.getTester()){
+				int testerPriority=tester.isApplicable(itemPropertyDescriptor, modelElement);
+				if(testerPriority>currentPriority){
+					currentPriority=testerPriority;
+				}
+				
+			}
 			
 			if(currentPriority>highestPriority){
 				highestPriority=currentPriority;

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
 
 /**
@@ -24,7 +26,7 @@ public class ControlDescription {
 	private final Class<? extends AbstractControl<?>> controlClass;
 	private final Class<?> supportedCompositeClass;
 	private final boolean showLabel;
-	private final ECPApplicableTester tester;
+	private final Set<ECPApplicableTester> tester;
 	
 	/**
 	 * The constructor of the ControlDescription.
@@ -33,7 +35,7 @@ public class ControlDescription {
 	 * @param showLabel whether to show a label for this control or not
 	 * @param tester the class testing whether the control is applicable for the current feature of the current eobject
 	 */
-	public ControlDescription(String id,Class<? extends AbstractControl<?>> controlClass, Class<?> supportedCompositeClass, boolean showLabel, ECPApplicableTester tester) {
+	public ControlDescription(String id,Class<? extends AbstractControl<?>> controlClass, Class<?> supportedCompositeClass, boolean showLabel, Set<ECPApplicableTester> tester) {
 		super();
 		this.id=id;
 		this.controlClass = controlClass;
@@ -69,7 +71,7 @@ public class ControlDescription {
 	 * The tester for this control. The tester is used to check whether this control is usable on a specific feature of a specific eobject.
 	 * @return the {@link ECPApplicableTester} implementation
 	 */
-	public ECPApplicableTester getTester() {
+	public Set<ECPApplicableTester> getTester() {
 		return tester;
 	}
 }

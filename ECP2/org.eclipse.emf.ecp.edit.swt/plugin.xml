@@ -15,28 +15,6 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.DoubleControl"
-            id="org.eclipse.emf.ecp.control.swt.double"
-            showLabel="true"
-            supportedCompositeClass="org.eclipse.swt.widgets.Composite">
-         <staticTest
-               priority="1"
-               singleValue="true"
-               supportedClassType="java.lang.Double">
-         </staticTest>
-      </control>
-      <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.IntegerControl"
-            id="org.eclipse.emf.ecp.control.swt.integer"
-            showLabel="true"
-            supportedCompositeClass="org.eclipse.swt.widgets.Composite">
-         <staticTest
-               priority="1"
-               singleValue="true"
-               supportedClassType="java.lang.Integer">
-         </staticTest>
-      </control>
-      <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.BooleanControl"
             id="org.eclipse.emf.ecp.control.swt.boolean"
             showLabel="true"
@@ -107,6 +85,43 @@
                priority="1"
                singleValue="false"
                supportedClassType="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.XmlDateControl"
+            id="org.eclipse.emf.ecp.control.swt.xml.date"
+            showLabel="true"
+            supportedCompositeClass="org.eclipse.swt.widgets.Composite">
+         <staticTest
+               priority="1"
+               singleValue="true"
+               supportedClassType="javax.xml.datatype.XMLGregorianCalendar">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalControl"
+            id="org.eclipse.emf.ecp.control.swt.number"
+            showLabel="true"
+            supportedCompositeClass="org.eclipse.swt.widgets.Composite">
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Double">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Integer">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.math.BigInteger">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.math.BigDecimal">
          </staticTest>
       </control>
    </extension>

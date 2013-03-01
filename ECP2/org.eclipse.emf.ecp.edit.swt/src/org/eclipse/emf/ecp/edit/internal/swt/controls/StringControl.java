@@ -23,7 +23,7 @@ import org.eclipse.swt.layout.GridData;
  * @author Eugen Neufeld
  *
  */
-public class StringControl extends AbstractTextControl<String> {
+public class StringControl extends AbstractTextControl {
 
 	/**
 	 * Constructor for a String control.
@@ -58,36 +58,5 @@ public class StringControl extends AbstractTextControl<String> {
 			textStyle = textStyle | SWT.SINGLE;
 		}
 		return textStyle;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected String convertStringToModel(String s) {
-		return s;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected boolean validateString(String s) {
-		return true;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected String convertModelToString(String t) {
-		return t;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected String getDefaultValue() {
-		return ""; //$NON-NLS-1$
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected void postValidate(String text) {
-		// do nothing
-
 	}
 }
