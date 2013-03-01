@@ -147,11 +147,12 @@ public abstract class AbstractTextControl extends SingleControl {
 		public Object convert(Object value) {
 			try {
 				controlDecoration.hide();
-				text.setBackground(null);
+				updateValidationColor(null);
 				return super.convert(value);
 			} catch (NumberFormatException e) {
 				controlDecoration.show();
-				text.setBackground(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
 				throw e;
 			}
 		}

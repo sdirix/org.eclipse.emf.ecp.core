@@ -63,7 +63,7 @@ public abstract class SingleControl extends SWTControl {
 		if (isEmbedded()) {
 			numColumns--;
 		}
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(2, 0).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 		if (!isEmbedded()) {
 			validationLabel = new Label(composite, SWT.NONE);

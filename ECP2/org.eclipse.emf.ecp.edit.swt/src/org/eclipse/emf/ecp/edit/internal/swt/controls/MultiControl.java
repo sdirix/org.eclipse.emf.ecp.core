@@ -140,7 +140,7 @@ public abstract class MultiControl extends SWTControl {
 	@Override
 	public Composite createControl(Composite parent) {
 		Composite superComposite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).equalWidth(false).applyTo(superComposite);
+		GridLayoutFactory.fillDefaults().numColumns(2).spacing(10, 0).equalWidth(false).applyTo(superComposite);
 
 		// VALIDATION
 		validationLabel = new Label(superComposite, SWT.NONE);
