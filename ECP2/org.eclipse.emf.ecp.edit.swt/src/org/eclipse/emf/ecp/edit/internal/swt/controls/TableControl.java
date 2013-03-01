@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import org.eclipse.core.commands.IParameterValues;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -28,6 +29,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -118,8 +121,12 @@ public class TableControl extends SWTControl {
 			column.getColumn().setResizable(false);
 			column.getColumn().setMoveable(false);
 			column.setLabelProvider(new ObservableMapCellLabelProvider(property.observeDetail(set)));
-			column.setEditingSupport(createEditingSupport(tableViewer, getDataBindingContext(), new TextCellEditor(
-				tableViewer.getTable()), CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut)),
+			CellEditor cellEditor=CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor, tempInstance, tableViewer.getTable());
+			IValueProperty editorProperty=CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
+			if(ECPCellEditor.class.isInstance(cellEditor)){
+				editorProperty=((ECPCellEditor)cellEditor).getValueProperty();
+			}
+			column.setEditingSupport(createEditingSupport(tableViewer, getDataBindingContext(), cellEditor, editorProperty,
 				property));
 
 		}
