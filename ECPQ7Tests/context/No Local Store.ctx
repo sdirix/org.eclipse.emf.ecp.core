@@ -6,7 +6,7 @@ Element-Name: No Local Store
 Element-Type: context
 Element-Version: 2.0
 Id: _IuFcgFpZEeKcnaHGSt8OwA
-Save-Time: 2/14/13 5:14 PM
+Save-Time: 3/1/13 12:49 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -19,7 +19,10 @@ try {
 	get-window "Progress Information" 
 } -catch {}
 try { 
-	get-window "Authentication required" | get-button OK | click
+	with [get-window "Progress Information" | get-window "Authentication required"] {
+	    get-editbox -after [get-label Password] | set-text super
+	    get-button OK | click
+	}
 } -catch {}
 try {
 	with [get-view "Model Repositories"] {

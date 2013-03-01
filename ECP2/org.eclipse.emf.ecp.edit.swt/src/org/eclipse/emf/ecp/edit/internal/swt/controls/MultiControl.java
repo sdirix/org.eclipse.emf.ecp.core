@@ -268,7 +268,7 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void createSectionToolbar() {
-		ToolBarManager toolBarManager = new ToolBarManager(SWT.RIGHT_TO_LEFT);
+		ToolBarManager toolBarManager = new ToolBarManager(SWT.RIGHT);
 		ToolBar toolbar = toolBarManager.createControl(mainComposite);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.END, SWT.BEGINNING).applyTo(toolbar);
 		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);

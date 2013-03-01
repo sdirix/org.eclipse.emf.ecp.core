@@ -119,7 +119,7 @@ public class TableControl extends SWTControl {
 			column.getColumn().setMoveable(false);
 			column.setLabelProvider(new ObservableMapCellLabelProvider(property.observeDetail(set)));
 			column.setEditingSupport(createEditingSupport(tableViewer, getDataBindingContext(), new TextCellEditor(
-				tableViewer.getTable()), CellEditorProperties.control().value(WidgetProperties.text(SWT.Modify)),
+				tableViewer.getTable()), CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut)),
 				property));
 
 		}
@@ -177,7 +177,7 @@ public class TableControl extends SWTControl {
 
 			protected Binding createBinding(IObservableValue target, IObservableValue model) {
 				return getDataBindingContext().bindValue(target, model,
-					new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_CONVERT), null);
+					new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), null);
 			}
 		};
 	}
