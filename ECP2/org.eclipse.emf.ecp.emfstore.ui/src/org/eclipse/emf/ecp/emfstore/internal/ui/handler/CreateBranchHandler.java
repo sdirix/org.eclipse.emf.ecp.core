@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICreateBranchController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -35,7 +35,7 @@ public class CreateBranchHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();
-		ProjectSpace projectSpace = (ProjectSpace) EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore constructor missing
 		new UICreateBranchController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		return null;

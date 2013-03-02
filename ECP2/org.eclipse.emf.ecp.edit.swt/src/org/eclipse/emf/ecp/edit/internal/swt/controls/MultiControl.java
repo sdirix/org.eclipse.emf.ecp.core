@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -108,16 +109,18 @@ public abstract class MultiControl extends SWTControl {
 	private void findControlDescription(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority = -1;
 		for (ControlDescription description : ControlFactory.INSTANCE.getControlDescriptors()) {
-			if (StaticApplicableTester.class.isInstance(description.getTester())) {
-				StaticApplicableTester tester = (StaticApplicableTester) description.getTester();
-				int priority = getTesterPriority(tester, itemPropertyDescriptor, eObject);
-				if (bestPriority < priority) {
-					bestPriority = priority;
-					controlDescription = description;
-					supportedClassType = tester.getSupportedClassType();
+			for(ECPApplicableTester tester:description.getTester()){
+				if (StaticApplicableTester.class.isInstance(tester)) {
+					StaticApplicableTester test = (StaticApplicableTester) tester;
+					int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
+					if (bestPriority < priority) {
+						bestPriority = priority;
+						controlDescription = description;
+						supportedClassType = test.getSupportedClassType();
+					}
+				} else {
+					continue;
 				}
-			} else {
-				continue;
 			}
 		}
 	}

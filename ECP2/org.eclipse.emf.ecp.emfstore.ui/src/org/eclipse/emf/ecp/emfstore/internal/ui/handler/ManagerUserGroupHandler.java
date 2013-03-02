@@ -15,8 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
+import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIManageOrgUnitsController;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -38,8 +37,7 @@ public class ManagerUserGroupHandler extends AbstractHandler {
 
 		final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();
-		final ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE
-			.getServerInfo((InternalRepository) ecpRepository)).getInternalAPIImpl();
+		final ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo((InternalRepository) ecpRepository);
 		// TODO EMFStore Constructor is missing
 		new UIManageOrgUnitsController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession()).execute();
 		return null;

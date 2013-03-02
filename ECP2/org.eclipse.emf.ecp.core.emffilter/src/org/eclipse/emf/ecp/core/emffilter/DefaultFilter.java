@@ -49,7 +49,8 @@ public class DefaultFilter implements ECPFilterProvider {
 		addEMFCompareModels(packages);
 		addGMFModels(packages);
 		addGraphitiModels(packages);
-		
+		addQ7Models(packages);
+
 		// xml
 		packages.add("http://www.eclipse.org/xsd/2002/XSD"); //$NON-NLS-1$
 		packages.add("http://www.w3.org/XML/1998/namespace"); //$NON-NLS-1$
@@ -58,16 +59,53 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/acceleo/profiler/3.0"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/acceleo/mtl/3.0"); //$NON-NLS-1$
 
-		//TODO add Graphiti
-		
+		// TODO add Graphiti
+
 		return packages;
+	}
+
+	private void addQ7Models(Set<String> packages) {
+		packages.add("http://www.eclipse.org/ecl/ast.ecore");
+		packages.add("http://www.eclipse.org/ecl/invoke/commands.ecore");
+		packages.add("http://www.eclipse.org/debug/runtime/commands.ecore");
+		packages.add("http://www.eclipse.org/ecl/data/commands.ecore");
+		packages.add("http://www.eclipse.org/ecl/platform.ui/commands.ecore");
+		packages.add("http:///com/xored/q7/ecl/context.ecore");
+		packages.add("http://xored.com/x5/core.ecore");
+		packages.add("http://www.eclipse.org/ecl/core.ecore");
+		packages.add("http://xored.com/q7/debug");
+		packages.add("http:///com/xored/tesla/core/diagram.ecore");
+		packages.add("http://www.eclipse.org/ecl/tesla/diagram.ecore");
+		packages.add("http:///com/xored/tesla/core/info.ecore");
+		packages.add("http://xored.com/sherlock/jobs/1.0");
+		packages.add("http://xored.com/q7/sherlock/model.ecore");
+		packages.add("http://www.eclipse.org/ecl/tesla.ecore");
+		packages.add("http://xored.com/q7/core/model.ecore");
+		packages.add("http://www.eclipse.org/ecl/data/objects.ecore");
+		packages.add("http://www.eclipse.org/ecl/platform.ui/objects.ecore");
+		packages.add("http://www.eclipse.org/ecl/operations.ecore");
+		packages.add("http://com/xored/q7/parameters.ecore");
+		packages.add("http://www.eclipse.org/ecl/perf.ecore");
+		packages.add("http://xored.com/x5/data/eclipse/platform.ecore");
+		packages.add("com.xored.q7.preferences");
+		packages.add("http:///com/xored/tesla/core/protocol.ecore");
+		packages.add("http:///com/xored/tesla/core/protocol/raw.ecore");
+		packages.add("http://xored.com/sherlock/report/1.0");
+		packages.add("http://xored.com/sherlock/report/1.0");
+		packages.add("http://com/xored/q7/reporting.ecore");
+		packages.add("http://com/xored/q7/scenario.ecore");
+		packages.add("http://xored.com/sherlock/1.0");
+		packages.add("http://xored.com/x5/dynamic/com.xored.q7.x5.startup");
+		packages.add("http://xored.com/x5/data/system.ecore");
+		packages.add("http:///com/xored/tesla/core/ui.ecore");
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
+		packages.add("http:///com/xored/q7/workspace.ecore");
 	}
 
 	private void addGraphitiModels(Set<String> packages) {
 		packages.add("http://eclipse.org/graphiti/examples/chess");
 		packages.add("http://eclipse.org/graphiti/mm/algorithms/styles");
-		
-		
+
 	}
 
 	/**
