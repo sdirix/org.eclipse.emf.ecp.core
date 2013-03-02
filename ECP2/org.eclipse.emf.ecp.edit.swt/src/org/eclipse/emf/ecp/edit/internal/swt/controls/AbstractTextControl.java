@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
@@ -141,6 +142,32 @@ public abstract class AbstractTextControl extends SingleControl {
 
 		HighlightUpdateValueStrategy(int updatePolicy) {
 			super(updatePolicy);
+		}
+
+		@Override
+		public IStatus validateAfterConvert(Object value) {
+			// TODO Auto-generated method stub
+			return super.validateAfterConvert(value);
+		}
+
+		@Override
+		public IStatus validateAfterGet(Object value) {
+			IStatus status=super.validateAfterGet(value);
+			if(status.getSeverity()==IStatus.ERROR){
+				controlDecoration.show();
+				controlDecoration.setDescriptionText(status.getMessage());
+			}
+			else{
+				controlDecoration.hide();
+				controlDecoration.setDescriptionText(null);
+			}
+			return status;
+		}
+
+		@Override
+		public IStatus validateBeforeSet(Object value) {
+			// TODO Auto-generated method stub
+			return super.validateBeforeSet(value);
 		}
 
 		@Override
