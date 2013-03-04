@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.application3x;
 
-import java.net.URL;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
@@ -23,35 +21,44 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ide.IDEInternalWorkbenchImages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.osgi.framework.Bundle;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ide.model.WorkbenchAdapterBuilder;
+
+import org.osgi.framework.Bundle;
+
+import java.net.URL;
+
 /**
  * The {@link ApplicationWorkbenchAdvisor} class.
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 @SuppressWarnings({ "deprecation", "restriction" })
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	private static final String PERSPECTIVE_ID = "org.eclipse.emf.ecp.application3x.perspective"; //$NON-NLS-1$
-	/**{@inheritDoc} */
-    public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
-        return new ApplicationWorkbenchWindowAdvisor(configurer);
-    }
-    /**{@inheritDoc} */
+
+	/** {@inheritDoc} */
+	@Override
+	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
+		return new ApplicationWorkbenchWindowAdvisor(configurer);
+	}
+
+	/** {@inheritDoc} */
+	@Override
 	public String getInitialWindowPerspectiveId() {
 		return PERSPECTIVE_ID;
 	}
-	
-	
-	//////////////////////////////// make workspace working - copied from IDEWorkbenchAdvisor /////////////////////////////////////
-	// BEGIN COMPLEX CODE 
 
-	
-	/**{@inheritDoc} */
+	// ////////////////////////////// make workspace working - copied from IDEWorkbenchAdvisor
+	// /////////////////////////////////////
+	// BEGIN COMPLEX CODE
+
+	/** {@inheritDoc} */
+	@Override
 	public void initialize(IWorkbenchConfigurer configurer) {
 		configurer.setSaveAndRestore(true);
 		declareWorkbenchImages();
@@ -61,10 +68,12 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	public IAdaptable getDefaultPageInput() {
 		return new NavigatorRoot();
 	}
+
+	@Override
 	public void preStartup() {
 		WorkbenchAdapterBuilder.registerAdapters();
 	}
-	
+
 	private void declareWorkbenchImages() {
 
 		final String ICONS_PATH = "$nl$/icons/full/";//$NON-NLS-1$

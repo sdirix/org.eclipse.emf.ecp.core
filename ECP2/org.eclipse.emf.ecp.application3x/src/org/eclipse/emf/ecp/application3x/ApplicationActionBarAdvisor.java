@@ -34,13 +34,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected void makeActions(IWorkbenchWindow window) {
-		//nothing todo
+		// nothing todo
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected void fillMenuBar(IMenuManager menuBar) {
-		//nothing todo
+		// nothing todo
 	}
 
 }

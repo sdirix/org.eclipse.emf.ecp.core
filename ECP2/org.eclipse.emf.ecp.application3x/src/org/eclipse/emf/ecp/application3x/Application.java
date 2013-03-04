@@ -30,14 +30,14 @@ public class Application implements IApplication {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
 			if (returnCode == PlatformUI.RETURN_RESTART) {
 				return IApplication.EXIT_RESTART;
-			} else {
-				return IApplication.EXIT_OK;
 			}
+			return IApplication.EXIT_OK;
 		} finally {
 			display.dispose();
 		}
 
 	}
+
 	// END SUPRESS CATCH EXCEPTION
 	/** {@inheritDoc} */
 	public void stop() {
