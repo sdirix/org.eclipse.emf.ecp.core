@@ -53,13 +53,13 @@ public class EditorContext implements EditModelElementContext {
 
 	/**
 	 * @author Jonas
-	 *
+	 * 
 	 */
 	private final class IECPProjectsChangedUIObserverImplementation implements IECPProjectsChangedUIObserver {
 		/** {@inheritDoc} */
 		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
 			// TODO Auto-generated method stub
-			if (!ECPUtil.containsElement(newProjects, EditorContext.this.ecpProject)) {
+			if (!ECPUtil.containsElement(newProjects, ecpProject)) {
 				for (EditModelElementContextListener contextListener : contextListeners) {
 					contextListener.onContextDeleted();
 				}
@@ -82,10 +82,9 @@ public class EditorContext implements EditModelElementContext {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself
-			if (structural && EditorContext.this.ecpProject.equals(project)
-				&& !project.contains(EditorContext.this.modelElement)) {
+			if (structural && ecpProject.equals(project) && !project.contains(modelElement)) {
 				for (EditModelElementContextListener contextListener : contextListeners) {
-					contextListener.onModelElementDeleted(EditorContext.this.modelElement);
+					contextListener.onModelElementDeleted(modelElement);
 				}
 				dispose();
 			}
@@ -122,23 +121,12 @@ public class EditorContext implements EditModelElementContext {
 	}
 
 	/** {@inheritDoc} */
-	public Collection<EObject> getAllModelElementsbyClass(EClass clazz, boolean association) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/** {@inheritDoc} */
 	public EditingDomain getEditingDomain() {
 		if (ecpProject != null) {
 			return ecpProject.getEditingDomain();
 		}
 		return AdapterFactoryEditingDomain.getEditingDomainFor(modelElement);
 
-	}
-
-	/** {@inheritDoc} */
-	public boolean contains(EObject eObject) {
-		return ecpProject.contains(eObject);
 	}
 
 	/**

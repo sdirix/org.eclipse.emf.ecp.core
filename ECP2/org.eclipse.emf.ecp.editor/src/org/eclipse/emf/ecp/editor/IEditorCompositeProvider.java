@@ -16,7 +16,10 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eugen Neufeld
  * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
+// FIXME: remove the "I"
 public interface IEditorCompositeProvider {
 
 	/**
@@ -25,6 +28,8 @@ public interface IEditorCompositeProvider {
 	 * @param parent the parent {@link Composite}
 	 * @return the created {@link Composite}
 	 */
+	// FIXME: do we want to offer this method or move the parent composite to the Factory. What happens if you call this
+	// method twice?
 	Composite createUI(Composite parent);
 
 	/**

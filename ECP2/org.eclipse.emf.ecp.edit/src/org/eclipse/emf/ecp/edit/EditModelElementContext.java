@@ -45,15 +45,7 @@ public interface EditModelElementContext {
 	 */
 	void removeModelElementContextListener(EditModelElementContextListener modelElementContextListener);
 
-	/**
-	 * Returns all {@link EObject} in the context, which are of a certain type.
-	 * 
-	 * @param clazz
-	 *            the type
-	 * @param association whether to search for associations
-	 * @return a {@link Collection} of {@link EObject} Iterator
-	 */
-	Collection<EObject> getAllModelElementsbyClass(EClass clazz, boolean association);
+	
 
 	/**
 	 * Return the {@link DataBindingContext} to use in the editor.
@@ -74,13 +66,7 @@ public interface EditModelElementContext {
 	 */
 	void dispose();
 
-	/**
-	 * Checks whether this {@link EObject} is reachable from this {@link EditModelElementContext}.
-	 * 
-	 * @param modelElement the {@link EObject} for which to check the reachability
-	 * @return true if the object is reachable, else otherwise
-	 */
-	boolean contains(EObject modelElement);
+	
 
 	/**
 	 * @param eReference
