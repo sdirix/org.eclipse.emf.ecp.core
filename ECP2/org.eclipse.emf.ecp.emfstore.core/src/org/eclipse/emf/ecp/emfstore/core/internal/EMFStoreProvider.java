@@ -37,9 +37,9 @@ import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
+import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.internal.client.model.WorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
@@ -48,7 +48,6 @@ import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
-import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlException;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
@@ -58,6 +57,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import java.io.IOException;
+import java.security.AccessControlException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -392,7 +392,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			EObject eObject = (EObject) element;
 			ProjectSpace ps = null;
 			try {
-				ps = WorkspaceProvider.getProjectSpace(eObject);
+				ps = ESWorkspaceProviderImpl.getProjectSpace(eObject);
 			} catch (IllegalArgumentException iae) {
 				return null;
 			}
@@ -445,7 +445,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (projectSpace == null) {
 			boolean found = false;
-			List<ESLocalProject> localProjects = WorkspaceProvider.getInstance().getWorkspace().getLocalProjects();
+			List<ESLocalProject> localProjects = ESWorkspaceProvider.INSTANCE.getWorkspace().getLocalProjects();
 			for (ESLocalProject localProject : localProjects) {
 				String projectSpaceID = internalProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
 				if (localProject.getLocalProjectId().getId().equals(projectSpaceID)) {
@@ -456,7 +456,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 			}
 
 			if (!found && createNewIfNeeded) {
-				projectSpace = WorkspaceProvider.INSTANCE.getWorkspace().createLocalProject(internalProject.getName());
+				projectSpace = ESWorkspaceProvider.INSTANCE.getWorkspace()
+					.createLocalProject(internalProject.getName());
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
 					projectSpace.getLocalProjectId().getId());
 
@@ -480,7 +481,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (serverInfo == null) {
 
-			ESWorkspace workspace = WorkspaceProvider.INSTANCE.getWorkspace();
+			ESWorkspace workspace = ESWorkspaceProvider.INSTANCE.getWorkspace();
 			boolean foundExisting = false;
 
 			for (ESServer info : workspace.getServers()) {

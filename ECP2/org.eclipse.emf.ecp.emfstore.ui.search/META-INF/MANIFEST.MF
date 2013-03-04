@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.core;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.ecp.ui.workbench;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.emfstore.client;bundle-version="[0.9.0,1.0.0)",
+ org.eclipse.emf.emfstore.client;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.ecp.ui;bundle-version="[1.0.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
