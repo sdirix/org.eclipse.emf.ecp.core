@@ -85,10 +85,10 @@ public final class LocalEmfStore {
 	 * Should start.
 	 *
 	 * @return  returns weather a call to startIfNeeded will start the EmfStore by reading
-	 * the preference com.integrationcentral.emfstorelocal/STARTUP
+	 * the preference org.eclipse.emf.ecp.emfstore.localserver/STARTUP
 	 */
 	public static boolean shouldStart() {
 		IPreferencesService service = Platform.getPreferencesService();	
-		return service.getBoolean("com.integrationcentral.emfstorelocal", "STARTUP",true,null);
+		return service.getBoolean("org.eclipse.emf.ecp.emfstore.localserver", "STARTUP",true,null);
 	}
 }
