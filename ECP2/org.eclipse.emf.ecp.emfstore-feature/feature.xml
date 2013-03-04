@@ -4,10 +4,6 @@
       label="EMF Client Platform (EMFStore Support)"
       version="1.0.0.qualifier"
       provider-name="%providerName">
-      
-   <url>
-      <discovery label="EMFStore Update Site (Milestone Releases)" url="http://download.eclipse.org/emf-store/milestones/latest"/>
-   </url>
 
    <description>
       This Feature allows the use of the EMFStore for the EMF Client Platform.
@@ -20,6 +16,10 @@
    <license url="http://www.example.com/license">
       [Enter License Description here.]
    </license>
+
+   <url>
+      <discovery label="EMFStore Update Site 1.0.0" url="http://download.eclipse.org/emf-store/releases/1.0.0"/>
+   </url>
 
    <plugin
          id="org.eclipse.emf.ecp.emfstore.core"
