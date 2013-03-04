@@ -117,21 +117,21 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			// toolkit.adapt(topSash, true, true);
 			topSash.setSashWidth(4);
 			leftColumnComposite = new Composite(topSash, SWT.NONE);
-			rightColumnComposite = new Composite(topSash, SWT.TRANSPARENT);
+			rightColumnComposite = new Composite(topSash, SWT.NONE);
 			GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(5, 2, 5, 5)
 				.applyTo(rightColumnComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(rightColumnComposite);
 			int[] topWeights = { 50, 50 };
 			topSash.setWeights(topWeights);
 		} else {
-			leftColumnComposite = new Composite(topComposite, SWT.TRANSPARENT);
+			leftColumnComposite = new Composite(topComposite, SWT.NONE);
 		}
 
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(2, 5, 5, 5)
 			.applyTo(leftColumnComposite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(leftColumnComposite);
 
-		bottomComposite = new Composite(topComposite, SWT.TRANSPARENT);
+		bottomComposite = new Composite(topComposite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(0, 0, 0, 0)
 			.applyTo(bottomComposite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(bottomComposite);
