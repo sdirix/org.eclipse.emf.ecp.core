@@ -59,7 +59,6 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/acceleo/profiler/3.0"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/acceleo/mtl/3.0"); //$NON-NLS-1$
 
-		// TODO add Graphiti
 
 		return packages;
 	}
