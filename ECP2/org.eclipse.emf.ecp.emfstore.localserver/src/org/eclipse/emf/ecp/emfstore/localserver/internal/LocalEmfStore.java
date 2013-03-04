@@ -10,7 +10,7 @@
  * Tobias Verhoeven - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.emfstore.localserver;
+package org.eclipse.emf.ecp.emfstore.localserver.internal;
 
 import java.io.File;
 import java.io.IOException;
