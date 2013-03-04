@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.provider.ShortLabelProvider;
 import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.swt.SWTException;
@@ -42,7 +43,7 @@ public class MEEditorPage extends FormPage {
 	//
 	private ScrolledForm form;
 	//
-	 private final EditModelElementContext modelElementContext;
+	private final EditModelElementContext modelElementContext;
 
 	private IEditorCompositeProvider editorPageContent;
 
@@ -50,9 +51,9 @@ public class MEEditorPage extends FormPage {
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
-//	private ISourceProvider sourceProvider;
+	// private ISourceProvider sourceProvider;
 
-//	private IEvaluationService service;
+	// private IEvaluationService service;
 
 	/**
 	 * Default constructor.
@@ -71,7 +72,7 @@ public class MEEditorPage extends FormPage {
 	public MEEditorPage(MEEditor editor, String id, String title, EditModelElementContext modelElementContext,
 		EObject modelElement) {
 		super(editor, id, title);
-		this.modelElementContext=modelElementContext;
+		this.modelElementContext = modelElementContext;
 
 	}
 
@@ -109,9 +110,9 @@ public class MEEditorPage extends FormPage {
 		toolkit.decorateFormHeading(form.getForm());
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext, toolkit);
+		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
 		editorPageContent.createUI(body);
-		
+
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		createToolbar();
 		form.pack();
@@ -123,8 +124,7 @@ public class MEEditorPage extends FormPage {
 	 */
 	public void updateSectionTitle() {
 		// Layout form
-		
-		
+
 		String name = shortLabelProvider.getText(modelElementContext.getModelElement());
 
 		name += " [" + modelElementContext.getModelElement().eClass().getName() + "]";
@@ -137,34 +137,34 @@ public class MEEditorPage extends FormPage {
 
 	private void createToolbar() {
 		IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
-//		sourceProvider = new AbstractSourceProvider() {
-//			public void dispose() {
-//			}
-//
-//			@SuppressWarnings("rawtypes")
-//			public Map getCurrentState() {
-//				HashMap<Object, Object> map = new HashMap<Object, Object>();
-//				map.put(activeModelelement, modelElementContext.getModelElement());
-//				return map;
-//			}
-//
-//			public String[] getProvidedSourceNames() {
-//				String[] namens = new String[1];
-//				namens[0] = activeModelelement;
-//				return namens;
-//			}
-//
-//		};
-//
-//		service = (IEvaluationService) PlatformUI.getWorkbench()
-//			.getService(IEvaluationService.class);
-//		service.addSourceProvider(sourceProvider);
-		
+		// sourceProvider = new AbstractSourceProvider() {
+		// public void dispose() {
+		// }
+		//
+		// @SuppressWarnings("rawtypes")
+		// public Map getCurrentState() {
+		// HashMap<Object, Object> map = new HashMap<Object, Object>();
+		// map.put(activeModelelement, modelElementContext.getModelElement());
+		// return map;
+		// }
+		//
+		// public String[] getProvidedSourceNames() {
+		// String[] namens = new String[1];
+		// namens[0] = activeModelelement;
+		// return namens;
+		// }
+		//
+		// };
+		//
+		// service = (IEvaluationService) PlatformUI.getWorkbench()
+		// .getService(IEvaluationService.class);
+		// service.addSourceProvider(sourceProvider);
+
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor("icons/delete.gif")) {
 
 			@Override
 			public void run() {
-				new ECPCommand(modelElementContext.getModelElement(),modelElementContext.getEditingDomain()) {
+				new ECPCommand(modelElementContext.getModelElement(), modelElementContext.getEditingDomain()) {
 
 					@Override
 					protected void doRun() {
@@ -172,7 +172,7 @@ public class MEEditorPage extends FormPage {
 					}
 
 				}.run(true);
-				
+
 				MEEditorPage.this.getEditor().close(true);
 			}
 		});
@@ -180,7 +180,7 @@ public class MEEditorPage extends FormPage {
 			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage");
 		form.getToolBarManager().update(true);
 	}
-	
+
 	/**
 	 * {@inheritDoc} This method is added to solve the focus bug of navigator. Every time that a ME is opened in editor,
 	 * navigator has to lose focus so that its action contributions are set correctly for next time.

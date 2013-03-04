@@ -38,8 +38,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,24 +57,12 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	private ModelElementChangeListener modelElementChangeListener;
 
 	/**
-	 * Constructor to initialize the {@link FormToolkit} on its own.
+	 * Default Constructor.
 	 * 
 	 * @param modelElementContext the {@link EditModelElementContext}
-	 * @param shell the shell used for callbacks
 	 */
-	public FormEditorComposite(EditModelElementContext modelElementContext, Shell shell) {
-		this(modelElementContext, new FormToolkit(shell.getDisplay()));
-	}
-
-	/**
-	 * Constructor where the {@link FormToolkit} is provided.
-	 * 
-	 * @param modelElementContext the {@link EditModelElementContext}
-	 * @param toolkit the {@link FormToolkit}
-	 */
-	public FormEditorComposite(EditModelElementContext modelElementContext, FormToolkit toolkit) {
+	public FormEditorComposite(EditModelElementContext modelElementContext) {
 		this.modelElementContext = modelElementContext;
-		this.toolkit = toolkit;
 		addModelElementListener();
 	}
 
@@ -96,8 +82,6 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			}
 		};
 	}
-
-	private final FormToolkit toolkit;
 
 	private final EditModelElementContext modelElementContext;
 
@@ -120,7 +104,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	/** {@inheritDoc} */
 	public Composite createUI(Composite parent) {
-		Composite topComposite = toolkit.createComposite(parent);
+		Composite topComposite = new Composite(parent, SWT.NONE);
+		topComposite.setBackground(parent.getBackground());
+		topComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		topComposite.setLayout(new GridLayout());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topComposite);
 
@@ -128,35 +114,35 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		if (!rightColumnAttributes.isEmpty()) {
 			SashForm topSash = new SashForm(topComposite, SWT.HORIZONTAL);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(topSash);
-			toolkit.adapt(topSash, true, true);
+			// toolkit.adapt(topSash, true, true);
 			topSash.setSashWidth(4);
-			leftColumnComposite = toolkit.createComposite(topSash, SWT.NONE);
-			rightColumnComposite = toolkit.createComposite(topSash, SWT.NONE);
+			leftColumnComposite = new Composite(topSash, SWT.NONE);
+			rightColumnComposite = new Composite(topSash, SWT.TRANSPARENT);
 			GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(5, 2, 5, 5)
 				.applyTo(rightColumnComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(rightColumnComposite);
 			int[] topWeights = { 50, 50 };
 			topSash.setWeights(topWeights);
 		} else {
-			leftColumnComposite = toolkit.createComposite(topComposite, SWT.NONE);
+			leftColumnComposite = new Composite(topComposite, SWT.TRANSPARENT);
 		}
 
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(2, 5, 5, 5)
 			.applyTo(leftColumnComposite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).applyTo(leftColumnComposite);
 
-		bottomComposite = toolkit.createComposite(topComposite);
+		bottomComposite = new Composite(topComposite, SWT.TRANSPARENT);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(0, 0, 0, 0)
 			.applyTo(bottomComposite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(bottomComposite);
 
 		// Sort and order attributes
 		// Create attributes
-		createAttributes(toolkit, leftColumnComposite, leftColumnAttributes);
+		createAttributes(leftColumnComposite, leftColumnAttributes);
 		if (!rightColumnAttributes.isEmpty()) {
-			createAttributes(toolkit, rightColumnComposite, rightColumnAttributes);
+			createAttributes(rightColumnComposite, rightColumnAttributes);
 		}
-		createAttributes(toolkit, bottomComposite, bottomAttributes);
+		createAttributes(bottomComposite, bottomAttributes);
 
 		updateLiveValidation();
 		return topComposite;
@@ -226,9 +212,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	}
 
-	private void createAttributes(FormToolkit toolkit, Composite column, List<IItemPropertyDescriptor> attributes) {
-		Composite attributeComposite = toolkit.createComposite(column);
-		attributeComposite.setBackgroundMode(SWT.INHERIT_FORCE);
+	private void createAttributes(Composite column, List<IItemPropertyDescriptor> attributes) {
+		Composite attributeComposite = new Composite(column, SWT.TRANSPARENT);
+		attributeComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(attributeComposite);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 			.applyTo(attributeComposite);
@@ -244,7 +230,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			int numColumnSpan = 2;
 			if (control.showLabel()) {
 				Label label = new Label(attributeComposite, SWT.NONE);
-				label.setBackground(attributeComposite.getBackground());
+				// label.setBackground(attributeComposite.getBackground());
 				label.setText(itemPropertyDescriptor.getDisplayName(modelElementContext.getModelElement()));
 				label.setToolTipText(itemPropertyDescriptor.getDescription(modelElementContext.getModelElement()));
 				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);

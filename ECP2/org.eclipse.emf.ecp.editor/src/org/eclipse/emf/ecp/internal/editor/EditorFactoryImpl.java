@@ -16,8 +16,6 @@ import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 
-import org.eclipse.ui.forms.widgets.FormToolkit;
-
 /**
  * The Implementation of the {@link EditorFactory}.
  * 
@@ -37,8 +35,8 @@ public final class EditorFactoryImpl implements EditorFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public IEditorCompositeProvider getEditorComposite(EditModelElementContext modelElementContext, FormToolkit toolkit) {
-		return new FormEditorComposite(modelElementContext, toolkit);
+	public IEditorCompositeProvider getEditorComposite(EditModelElementContext modelElementContext) {
+		return new FormEditorComposite(modelElementContext);
 	}
 
 }

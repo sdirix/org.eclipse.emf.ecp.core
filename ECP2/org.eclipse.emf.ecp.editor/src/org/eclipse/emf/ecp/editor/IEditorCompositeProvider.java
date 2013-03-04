@@ -35,6 +35,7 @@ public interface IEditorCompositeProvider {
 	/**
 	 * Triggers live validation of the model attributes.
 	 **/
+	// FIXME: Do we need to expose this?
 	void updateLiveValidation();
 
 	/**

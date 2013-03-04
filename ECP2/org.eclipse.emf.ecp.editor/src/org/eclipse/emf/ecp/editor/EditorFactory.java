@@ -14,8 +14,6 @@ package org.eclipse.emf.ecp.editor;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.internal.editor.EditorFactoryImpl;
 
-import org.eclipse.ui.forms.widgets.FormToolkit;
-
 /**
  * Factory class to create the FormEditorComposite.
  * 
@@ -32,8 +30,7 @@ public interface EditorFactory {
 	 * Instantiate the editorComposite.
 	 * 
 	 * @param modelElementContext the {@link EditModelElementContext} to use
-	 * @param toolkit the {@link FormToolkit} to use
 	 * @return the {@link IEditorCompositeProvider}
 	 */
-	IEditorCompositeProvider getEditorComposite(EditModelElementContext modelElementContext, FormToolkit toolkit);
+	IEditorCompositeProvider getEditorComposite(EditModelElementContext modelElementContext);
 }
