@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Ui
+Bundle-Name: EMFStore UI Provider
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.Activator
@@ -17,19 +17,19 @@ Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui;version="1.0.0.qualifie
  org.eclipse.emf.ecp.emfstore.internal.ui.decorator;version="1.0.0.qualifier";x-internal:=true,
  org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.0.0.qualifier";x-internal:=true;uses:="org.eclipse.core.commands",
  org.eclipse.emf.ecp.emfstore.internal.ui.property;version="1.0.0.qualifier";x-internal:=true
-Import-Package: org.eclipse.core.commands,
- org.eclipse.jface.action,
- org.eclipse.jface.dialogs,
- org.eclipse.jface.resource,
- org.eclipse.jface.viewers,
- org.eclipse.jface.window,
- org.eclipse.jface.wizard,
- org.eclipse.swt,
- org.eclipse.swt.events,
- org.eclipse.swt.graphics,
- org.eclipse.swt.layout,
- org.eclipse.swt.widgets,
- org.eclipse.ui;ui.workbench=split,
- org.eclipse.ui.dialogs;ui.workbench=split,
- org.eclipse.ui.handlers,
- org.eclipse.ui.plugin
+Import-Package: org.eclipse.core.commands;version="0.0.0",
+ org.eclipse.jface.action;version="0.0.0",
+ org.eclipse.jface.dialogs;version="0.0.0",
+ org.eclipse.jface.resource;version="0.0.0",
+ org.eclipse.jface.viewers;version="0.0.0",
+ org.eclipse.jface.window;version="0.0.0",
+ org.eclipse.jface.wizard;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.events;version="0.0.0",
+ org.eclipse.swt.graphics;version="0.0.0",
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.eclipse.ui;ui.workbench=split;version="0.0.0",
+ org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0",
+ org.eclipse.ui.handlers;version="0.0.0",
+ org.eclipse.ui.plugin;version="0.0.0"
