@@ -12,15 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-
-
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
@@ -85,10 +84,10 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
-		if(getStructuralFeature().isUnsettable()){
+		if (getStructuralFeature().isUnsettable()) {
 			text.setMessage("<unset>");
 		}
-		
+
 	}
 
 	/**
@@ -134,6 +133,7 @@ public abstract class AbstractTextControl extends SingleControl {
 		text.setText(string);
 		doVerify = oldDoVerify;
 	}
+
 	@Override
 	public void dispose() {
 		controlDecoration.dispose();
@@ -149,12 +149,11 @@ public abstract class AbstractTextControl extends SingleControl {
 
 		@Override
 		public IStatus validateAfterGet(Object value) {
-			IStatus status=super.validateAfterGet(value);
-			if(status.getSeverity()==IStatus.ERROR){
+			IStatus status = super.validateAfterGet(value);
+			if (status.getSeverity() == IStatus.ERROR) {
 				controlDecoration.show();
 				controlDecoration.setDescriptionText(status.getMessage());
-			}
-			else{
+			} else {
 				controlDecoration.hide();
 				controlDecoration.setDescriptionText(null);
 			}
@@ -166,7 +165,8 @@ public abstract class AbstractTextControl extends SingleControl {
 			try {
 				controlDecoration.hide();
 				updateValidationColor(null);
-				if(getStructuralFeature().isUnsettable()&&value!=null&&String.class.isInstance(value)&&((String)value).isEmpty()){
+				if (getStructuralFeature().isUnsettable() && value != null && String.class.isInstance(value)
+					&& ((String) value).equals("")) {
 					return null;
 				}
 				return super.convert(value);
@@ -175,7 +175,7 @@ public abstract class AbstractTextControl extends SingleControl {
 				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
 				throw e;
-			}catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				controlDecoration.show();
 				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
