@@ -37,9 +37,9 @@ import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
+import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
-import org.eclipse.emf.emfstore.internal.client.model.WorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
@@ -392,7 +392,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			EObject eObject = (EObject) element;
 			ProjectSpace ps = null;
 			try {
-				ps = WorkspaceProvider.getProjectSpace(eObject);
+				ps = ESWorkspaceProviderImpl.getProjectSpace(eObject);
 			} catch (IllegalArgumentException iae) {
 				return null;
 			}
