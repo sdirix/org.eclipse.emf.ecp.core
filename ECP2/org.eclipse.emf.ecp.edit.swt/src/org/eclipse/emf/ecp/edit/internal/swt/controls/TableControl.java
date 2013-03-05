@@ -14,9 +14,8 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -31,32 +30,24 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.set.IObservableSet;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.CellEditorProperties;
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
-import org.eclipse.jface.databinding.viewers.ObservableValueEditingSupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationListener;
+import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -67,7 +58,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 
 import java.util.Iterator;
@@ -121,69 +111,203 @@ public class TableControl extends SWTControl {
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
-
-		ObservableListContentProvider contentProvider = new ObservableListContentProvider();
-		tableViewer.setContentProvider(contentProvider);
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
-		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
-			@Override
-			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
-					|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
-			}
-		};
+		// ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
+		// @Override
+		// protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+		// return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+		// || event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+		// || event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
+		// || event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+		// }
+		// };
+		//
+		// TableViewerEditor.create(tableViewer, actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
+		// | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR | ColumnViewerEditor.TABBING_VERTICAL
+		// | ColumnViewerEditor.KEEP_EDITOR_ON_DOUBLE_CLICK | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 
-		TableViewerEditor.create(tableViewer, actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
-			| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR | ColumnViewerEditor.TABBING_VERTICAL
-			| ColumnViewerEditor.KEEP_EDITOR_ON_DOUBLE_CLICK | ColumnViewerEditor.KEYBOARD_ACTIVATION);
-
-		list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(), getModelElementContext()
-			.getModelElement(), getStructuralFeature());
-		IObservableSet set = contentProvider.getKnownElements();
+		// create a content provider
+		ObservableListContentProvider cp = new ObservableListContentProvider();
 
 		EObject tempInstance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
-		for (EStructuralFeature feature : clazz.getEAllStructuralFeatures()) {
+		for (final EStructuralFeature feature : clazz.getEAllStructuralFeatures()) {
 			IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 				tempInstance, feature);
-			IValueProperty property = EMFEditProperties.value(getModelElementContext().getEditingDomain(), feature);
-
 			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
 				tempInstance, tableViewer.getTable());
-			IValueProperty editorProperty = CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
-			int style = SWT.LEAD;
-			if (ECPCellEditor.class.isInstance(cellEditor)) {
-				editorProperty = ((ECPCellEditor) cellEditor).getValueProperty();
-				style = ((ECPCellEditor) cellEditor).getStyle();
-			}
+			// create a new column
+			TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
+			// determine the attribute that should be observed
+			IObservableMap map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
+			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
+				@Override
+				public void update(ViewerCell cell) {
+					Object element = cell.getElement();
+					Object value = attributeMaps[0].get(element);
 
-			TableViewerColumn column = new TableViewerColumn(tableViewer, style);
+					if (ECPCellEditor.class.isInstance(cellEditor)) {
+						ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+						String text = ecpCellEditor.getFormatedString(value);
+						cell.setText(text == null ? "" : text);
+					} else {
+						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
+					}
+				}
+			});
+
+			// set the column title & set the size
 			column.getColumn().setText(itemPropertyDescriptor.getDisplayName(null));
 			column.getColumn().setToolTipText(itemPropertyDescriptor.getDescription(null));
 			column.getColumn().setResizable(false);
 			column.getColumn().setMoveable(false);
-			EditingSupport editingSupport = createEditingSupport(tableViewer, getDataBindingContext(), cellEditor,
-				editorProperty, property);
-			column.setEditingSupport(editingSupport);
-			column.setLabelProvider(new ObservableMapCellLabelProvider(property.observeDetail(set)) {
+
+			EditingSupport observableSupport = new EditingSupport(tableViewer) {
+				private EditingState editingState;
+
+				private final ColumnViewerEditorActivationListenerHelper activationListener = new ColumnViewerEditorActivationListenerHelper();
+
+				/**
+				 * 
+				 * Default implementation always returns <code>true</code>.
+				 * 
+				 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
+				 */
 				@Override
-				public void update(ViewerCell cell) {
-					// if(cellEditor..){
-					// cell.setBackground(cell.getControl().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
-					// }
-					// else{
-					// cell.setBackground(null);
-					// }
-					super.update(cell);
+				protected boolean canEdit(Object element) {
+					return true;
 				}
 
-			});
+				/**
+				 * Default implementation always returns <code>null</code> as this will be
+				 * handled by the Binding.
+				 * 
+				 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
+				 */
+				@Override
+				protected Object getValue(Object element) {
+					// no op
+					return null;
+				}
+
+				/**
+				 * Default implementation does nothing as this will be handled by the
+				 * Binding.
+				 * 
+				 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
+				 */
+				@Override
+				protected void setValue(Object element, Object value) {
+					// no op
+				}
+
+				/**
+				 * Creates a {@link Binding} between the editor and the element to be
+				 * edited. Invokes {@link #doCreateCellEditorObservable(CellEditor)},
+				 * {@link #doCreateElementObservable(Object, ViewerCell)}, and then
+				 * {@link #createBinding(IObservableValue, IObservableValue)}.
+				 */
+				@Override
+				protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
+					IObservableValue target = doCreateCellEditorObservable(cellEditor);
+					Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
+
+					IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
+					Assert.isNotNull(model, "doCreateElementObservable(...) did not return an observable"); //$NON-NLS-1$
+
+					Binding binding = createBinding(target, model);
+
+					Assert.isNotNull(binding, "createBinding(...) did not return a binding"); //$NON-NLS-1$
+
+					editingState = new EditingState(binding, target, model);
+
+					getViewer().getColumnViewerEditor().addEditorActivationListener(activationListener);
+				}
+
+				@Override
+				protected CellEditor getCellEditor(Object element) {
+					return cellEditor;
+				}
+
+				protected Binding createBinding(IObservableValue target, IObservableValue model) {
+					return getDataBindingContext().bindValue(target, model);
+				}
+
+				protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
+					return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
+						(EObject) element, feature);
+				}
+
+				protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
+					if (ECPCellEditor.class.isInstance(cellEditor)) {
+						return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
+					}
+					return SWTObservables.observeText(cellEditor.getControl(), SWT.FocusOut);
+				}
+
+				@Override
+				final protected void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
+					editingState.binding.updateTargetToModel();
+				}
+
+				class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
+
+					@Override
+					public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
+						// do nothing
+					}
+
+					@Override
+					public void afterEditorDeactivated(ColumnViewerEditorDeactivationEvent event) {
+						editingState.dispose();
+						editingState = null;
+
+						getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
+					}
+
+					@Override
+					public void beforeEditorActivated(ColumnViewerEditorActivationEvent event) {
+						// do nothing
+					}
+
+					@Override
+					public void beforeEditorDeactivated(ColumnViewerEditorDeactivationEvent event) {
+						// do nothing
+					}
+				}
+
+				/**
+				 * Maintains references to objects that only live for the length of the edit
+				 * cycle.
+				 */
+				class EditingState {
+					IObservableValue target;
+
+					IObservableValue model;
+
+					Binding binding;
+
+					EditingState(Binding binding, IObservableValue target, IObservableValue model) {
+						this.binding = binding;
+						this.target = target;
+						this.model = model;
+					}
+
+					void dispose() {
+						binding.dispose();
+						target.dispose();
+						model.dispose();
+					}
+				}
+			};
+			column.setEditingSupport(observableSupport);
 
 		}
+		tableViewer.setContentProvider(cp);
+		list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(), getModelElementContext()
+			.getModelElement(), getStructuralFeature());
 		tableViewer.setInput(list);
 		TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
@@ -273,48 +397,6 @@ public class TableControl extends SWTControl {
 		tableViewer.getTable().setEnabled(false);
 	}
 
-	private EditingSupport createEditingSupport(ColumnViewer viewer, DataBindingContext dbc,
-		final CellEditor cellEditor, final IValueProperty cellEditorProperty, final IValueProperty elementProperty) {
-		return new ObservableValueEditingSupport(viewer, dbc) {
-			@Override
-			protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
-				return cellEditorProperty.observe(cellEditor);
-			}
-
-			@Override
-			protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-				return elementProperty.observe(element);
-			}
-
-			@Override
-			protected CellEditor getCellEditor(Object element) {
-				return cellEditor;
-			}
-
-			@Override
-			protected Binding createBinding(IObservableValue target, IObservableValue model) {
-
-				Binding binding = getDataBindingContext().bindValue(target, model,
-					new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE) {
-						@Override
-						public IStatus validateAfterGet(Object value) {
-							IStatus status = super.validateAfterGet(value);
-							Control control = cellEditor.getControl();
-							if (status.getSeverity() == IStatus.ERROR) {
-								control.setBackground(control.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
-							} else {
-								control.setBackground(null);
-							}
-							System.out.println("validateAfterGet " + status);
-							return status;
-						}
-					}, null);
-				ControlDecorationSupport.create(binding, SWT.TOP | SWT.LEFT);
-				return binding;
-			}
-		};
-	}
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addRow(EClass clazz) {
 		EObject modelElement = getModelElementContext().getModelElement();
@@ -324,4 +406,5 @@ public class TableControl extends SWTControl {
 		EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 		list.add(instance);
 	}
+
 }

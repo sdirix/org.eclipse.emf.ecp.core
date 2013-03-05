@@ -1,11 +1,14 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -22,12 +25,17 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.ISharedImages;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import java.util.Date;
+
 public class XmlDateControl extends SingleControl {
 
 	public XmlDateControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature, EditModelElementContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
+
 	private DateTime dateWidget;
 
 	private Composite parentComposite;
@@ -35,7 +43,7 @@ public class XmlDateControl extends SingleControl {
 	private StackLayout sl;
 
 	private Label unsetLabel;
-	
+
 	@Override
 	protected void fillInnerComposite(Composite composite) {
 		parentComposite = new Composite(composite, SWT.NONE);
@@ -48,7 +56,7 @@ public class XmlDateControl extends SingleControl {
 		createDateAndTimeWidget(dateTimeComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
-		//TODO language
+		// TODO language
 		unsetLabel.setText("No date set! Click to set date.");//$NON-NLS-1$
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -60,11 +68,11 @@ public class XmlDateControl extends SingleControl {
 			}
 
 			public void mouseDown(MouseEvent e) {
-				//nothing to do
+				// nothing to do
 			}
 
 			public void mouseDoubleClick(MouseEvent e) {
-				//nothing to do
+				// nothing to do
 			}
 		});
 		if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
@@ -81,30 +89,34 @@ public class XmlDateControl extends SingleControl {
 			numColumns = 2;
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
-		
-		dateWidget = new DateTime(composite, SWT.DATE|SWT.DROP_DOWN);
+
+		dateWidget = new DateTime(composite, SWT.DATE | SWT.DROP_DOWN);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		if(!isEmbedded()&&getStructuralFeature().isUnsettable()){
-			Button unsetdate=new Button(composite, SWT.PUSH);
+
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			Button unsetdate = new Button(composite, SWT.PUSH);
 			unsetdate.setToolTipText("UnsetDate");
-			unsetdate.setImage(Activator.getDefault().getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
+			unsetdate.setImage(Activator.getDefault().getWorkbench().getSharedImages()
+				.getImage(ISharedImages.IMG_TOOL_DELETE));
 			unsetdate.addSelectionListener(new SelectionAdapter() {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					getModelElementContext().getEditingDomain().getCommandStack().execute(
-						new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext().getModelElement(),
-							getStructuralFeature(), SetCommand.UNSET_VALUE));
+					getModelElementContext()
+						.getEditingDomain()
+						.getCommandStack()
+						.execute(
+							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
 
 					sl.topControl = unsetLabel;
 					parentComposite.layout();
 				}
-				
+
 			});
 		}
 	}
-	
+
 	@Override
 	public void setEditable(boolean isEditable) {
 		dateWidget.setEnabled(isEditable);
@@ -113,8 +125,21 @@ public class XmlDateControl extends SingleControl {
 	@Override
 	protected void bindValue() {
 		IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
-		getDataBindingContext().bindValue(dateObserver, getModelValue());
-	}
+		getDataBindingContext().bindValue(dateObserver, getModelValue(), new UpdateValueStrategy() {
 
+			@Override
+			public Object convert(Object value) {
+				Date date = (Date) value;
+				return new XMLCalendar(date, XMLCalendar.DATE);
+			}
+
+		}, new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) value;
+				return gregorianCalendar.toGregorianCalendar().getTime();
+			}
+		});
+	}
 
 }
