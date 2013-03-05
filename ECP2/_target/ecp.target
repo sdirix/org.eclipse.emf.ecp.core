@@ -30,7 +30,7 @@
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.0.v20130305-0505"/>
 <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.0.v20130305-0505"/>
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130305-0505"/>
-<repository location="https://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/lastSuccessfulBuild/artifact/git/org.eclipse.emf.emfstore.releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
+<repository location="https://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/673/artifact/git/org.eclipse.emf.emfstore.releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
 </location>
 </locations>
 </target>
