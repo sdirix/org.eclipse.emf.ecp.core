@@ -105,7 +105,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 			Project project = projectSpace.getProject();
-			EObject element = project.get(modelElementId.getAPIImpl());
+			EObject element = project.get(modelElementId);
 
 			if (element != null) {
 				lastAffected.add(element);
@@ -141,13 +141,11 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 			if (cdo.isDelete()) {
 
-				modelElementIdToOperationCount.put(
-					cdo.getModelElementId(),
-					EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).getOwnValue(
-						projectSpace.getProject().get(cdo.getModelElementId().getAPIImpl())));
+				modelElementIdToOperationCount.put(cdo.getModelElementId(), EMFStoreDirtyDecoratorCachedTree
+					.getInstance(internalProject).getOwnValue(projectSpace.getProject().get(cdo.getModelElementId())));
 
 				EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).remove(
-					projectSpace.getProject().get(cdo.getModelElementId().getAPIImpl()));
+					projectSpace.getProject().get(cdo.getModelElementId()));
 				// TODO: consider containments
 			}
 		}
@@ -162,11 +160,10 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 			if (cdo.isDelete()) {
 				lastAffected.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).setOperationCount(
-					projectSpace.getProject().get(cdo.getModelElementId().getAPIImpl()),
+					projectSpace.getProject().get(cdo.getModelElementId()),
 					modelElementIdToOperationCount.get(cdo.getModelElementId().getAPIImpl())));
 
-				modelElementIdToOperationCount.remove(projectSpace.getProject().get(
-					cdo.getModelElementId().getAPIImpl()));
+				modelElementIdToOperationCount.remove(projectSpace.getProject().get(cdo.getModelElementId()));
 				// TODO: consider containments
 			}
 		}
