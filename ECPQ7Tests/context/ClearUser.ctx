@@ -1,0 +1,31 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Context-Type: com.xored.q7.ecl.context
+Element-Name: ClearUser
+Element-Type: context
+Element-Version: 2.0
+Id: _KY8s8YQIEeKCBM8mH5lmmw
+Save-Time: 3/3/13 3:04 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
+get-window "Progress Information" | get-window "Authentication required" | get-button OK | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Manage Users\\/Groups..." | click
+with [get-window "Progress Information" | get-window -from "Window.createShell()"] {
+    get-tab-folder | get-tab-item Users | click
+    try{
+    get-table | select testUserA
+    get-button "Delete user" | click
+    }-catch {}
+    try{
+    get-table | select testUserB
+    get-button "Delete user" | click
+    }-catch {}
+    get-button Close | click
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Logout | click
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

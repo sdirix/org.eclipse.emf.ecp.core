@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+
+
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
@@ -83,6 +85,10 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
+		if(getStructuralFeature().isUnsettable()){
+			text.setMessage("<unset>");
+		}
+		
 	}
 
 	/**
@@ -136,18 +142,9 @@ public abstract class AbstractTextControl extends SingleControl {
 	}
 
 	private class HighlightUpdateValueStrategy extends EMFUpdateValueStrategy {
-		HighlightUpdateValueStrategy() {
-			super();
-		}
 
 		HighlightUpdateValueStrategy(int updatePolicy) {
 			super(updatePolicy);
-		}
-
-		@Override
-		public IStatus validateAfterConvert(Object value) {
-			// TODO Auto-generated method stub
-			return super.validateAfterConvert(value);
 		}
 
 		@Override
@@ -165,18 +162,20 @@ public abstract class AbstractTextControl extends SingleControl {
 		}
 
 		@Override
-		public IStatus validateBeforeSet(Object value) {
-			// TODO Auto-generated method stub
-			return super.validateBeforeSet(value);
-		}
-
-		@Override
 		public Object convert(Object value) {
 			try {
 				controlDecoration.hide();
 				updateValidationColor(null);
+				if(getStructuralFeature().isUnsettable()&&value!=null&&String.class.isInstance(value)&&((String)value).isEmpty()){
+					return null;
+				}
 				return super.convert(value);
 			} catch (NumberFormatException e) {
+				controlDecoration.show();
+				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
+				throw e;
+			}catch (IllegalArgumentException e) {
 				controlDecoration.show();
 				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());

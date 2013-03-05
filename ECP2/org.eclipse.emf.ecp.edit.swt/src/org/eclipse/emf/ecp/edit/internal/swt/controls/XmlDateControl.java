@@ -4,7 +4,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.EditModelElementContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -82,10 +82,10 @@ public class XmlDateControl extends SingleControl {
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
 		
-		dateWidget = new DateTime(composite, SWT.DATE);
+		dateWidget = new DateTime(composite, SWT.DATE|SWT.DROP_DOWN);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		if(!isEmbedded()){
+		if(!isEmbedded()&&getStructuralFeature().isUnsettable()){
 			Button unsetdate=new Button(composite, SWT.PUSH);
 			unsetdate.setToolTipText("UnsetDate");
 			unsetdate.setImage(Activator.getDefault().getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
@@ -93,10 +93,9 @@ public class XmlDateControl extends SingleControl {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					
 					getModelElementContext().getEditingDomain().getCommandStack().execute(
-						new RemoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext().getModelElement(),
-							getStructuralFeature(), getModelElementContext().getModelElement().eGet(getStructuralFeature())));
+						new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext().getModelElement(),
+							getStructuralFeature(), SetCommand.UNSET_VALUE));
 
 					sl.topControl = unsetLabel;
 					parentComposite.layout();

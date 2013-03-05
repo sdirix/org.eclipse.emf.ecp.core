@@ -6,4 +6,5 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 public interface ECPCellEditor {
 	IValueProperty getValueProperty();
 	void instantiate(IItemPropertyDescriptor descriptor);
+	int getStyle();
 }

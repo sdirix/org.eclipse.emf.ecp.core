@@ -126,5 +126,18 @@
          </staticTest>
       </control>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecp.edit.swt.celleditor">
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.NumberCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.number"
+            tester="org.eclipse.emf.ecp.edit.internal.swt.table.NumberCellEditorTester">
+      </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.XmlDateCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.date"
+            tester="org.eclipse.emf.ecp.edit.internal.swt.table.XmlDateCellEditorTester">
+      </cellEditor>
+   </extension>
 
 </plugin>
