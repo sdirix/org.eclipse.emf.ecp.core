@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecp.core.filters">
       <FilterProvider
-            class="org.eclipse.emf.ecp.core.emffilter.DefaultFilter">
+            class="org.eclipse.emf.ecp.core.emffilter.internal.DefaultFilter">
       </FilterProvider>
    </extension>
 
