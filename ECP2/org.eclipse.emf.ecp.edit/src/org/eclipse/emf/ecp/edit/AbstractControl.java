@@ -27,7 +27,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  */
 public abstract class AbstractControl<COMPOSITE> {
 
-	private final EditModelElementContext modelElementContext;
+	private final ECPControlContext modelElementContext;
 	private final IItemPropertyDescriptor itemPropertyDescriptor;
 	private final EStructuralFeature feature;
 	private final boolean showLabel;
@@ -39,11 +39,11 @@ public abstract class AbstractControl<COMPOSITE> {
 	 * @param showLabel whether a label should be created for this control
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param feature the {@link EStructuralFeature}
-	 * @param modelElementContext the {@link EditModelElementContext}
+	 * @param modelElementContext the {@link ECPControlContext}
 	 * @param embedded whether this control will be embedded in another control e.g. multicontrol
 	 */
 	public AbstractControl(boolean showLabel,IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		EditModelElementContext modelElementContext,boolean embedded) {
+		ECPControlContext modelElementContext,boolean embedded) {
 		this.feature = feature;
 		this.modelElementContext = modelElementContext;
 		this.itemPropertyDescriptor = itemPropertyDescriptor;
@@ -52,11 +52,11 @@ public abstract class AbstractControl<COMPOSITE> {
 	}
 
 	/**
-	 * Returns the {@link EditModelElementContext} to use.
+	 * Returns the {@link ECPControlContext} to use.
 	 * 
-	 * @return the {@link EditModelElementContext}
+	 * @return the {@link ECPControlContext}
 	 */
-	protected EditModelElementContext getModelElementContext() {
+	protected ECPControlContext getModelElementContext() {
 		return modelElementContext;
 	}
 

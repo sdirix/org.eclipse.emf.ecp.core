@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -50,11 +50,11 @@ public abstract class AbstractTextControl extends SingleControl {
 	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public AbstractTextControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, EditModelElementContext modelElementContext, boolean embedded) {
+		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.edit.AbstractControl;
 import org.eclipse.emf.ecp.edit.ControlFactory;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationHiddenDescriptor;
@@ -59,9 +59,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/**
 	 * Default Constructor.
 	 * 
-	 * @param modelElementContext the {@link EditModelElementContext}
+	 * @param modelElementContext the {@link ECPControlContext}
 	 */
-	public FormEditorComposite(EditModelElementContext modelElementContext) {
+	public FormEditorComposite(ECPControlContext modelElementContext) {
 		this.modelElementContext = modelElementContext;
 		addModelElementListener();
 	}
@@ -83,7 +83,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		};
 	}
 
-	private final EditModelElementContext modelElementContext;
+	private final ECPControlContext modelElementContext;
 
 	private Map<EStructuralFeature, AbstractControl<?>> meControls = new LinkedHashMap<EStructuralFeature, AbstractControl<?>>();
 

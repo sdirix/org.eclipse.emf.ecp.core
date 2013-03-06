@@ -15,7 +15,9 @@ package org.eclipse.emf.ecp.editor.e3;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.ECPEditorContext;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
@@ -30,7 +32,7 @@ import org.eclipse.ui.IPersistableElement;
 public class MEEditorInput implements IEditorInput {
 
 	private EStructuralFeature problemFeature;
-	private EditModelElementContext modelElementContext;
+	private ECPEditorContext modelElementContext;
 
 	/**
 	 * Constructor to add a probleFeature.
@@ -38,7 +40,7 @@ public class MEEditorInput implements IEditorInput {
 	 * @param context context of the model element
 	 * @param problemFeature the problem feature
 	 */
-	public MEEditorInput(EditModelElementContext context, EStructuralFeature problemFeature) {
+	public MEEditorInput(ECPEditorContext context, EStructuralFeature problemFeature) {
 		this(context);
 		this.problemFeature = problemFeature;
 	}
@@ -48,9 +50,9 @@ public class MEEditorInput implements IEditorInput {
 	 * 
 	 * @param context context of the modelelement
 	 */
-	public MEEditorInput(EditModelElementContext context) {
+	public MEEditorInput(ECPEditorContext context) {
 		super();
-		this.modelElementContext = context;
+		modelElementContext = context;
 	}
 
 	/**
@@ -121,19 +123,20 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * Returns the {@link ECPModelelemenContext}.
 	 * 
-	 * @return {@link EditModelElementContext}
+	 * @return {@link ECPControlContext}
 	 */
-	public EditModelElementContext getModelElementContext() {
+	public ECPEditorContext getModelElementContext() {
 		return modelElementContext;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void dispose(){
+	public void dispose() {
 		modelElementContext.dispose();
-		modelElementContext=null;
+		modelElementContext = null;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -141,12 +144,14 @@ public class MEEditorInput implements IEditorInput {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public String getName() {
 		return modelElementContext.getModelElement().eClass().getName();
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */

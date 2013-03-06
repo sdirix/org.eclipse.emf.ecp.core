@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.AbstractControl;
 import org.eclipse.emf.ecp.edit.ControlDescription;
 import org.eclipse.emf.ecp.edit.ControlFactory;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -32,7 +32,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * The ControlFactoryImpl is a Singelton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides a
- * method ({@link #createControl(T, IItemPropertyDescriptor, EditModelElementContext)}) for creating a suitable
+ * method ({@link #createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
  * control for with the known widgets.
  * 
  * @author Eugen Neufeld
@@ -130,7 +130,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	 * {@inheritDoc}
 	 */
 	public <T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
-		EditModelElementContext context) {
+		ECPControlContext context) {
 
 		ControlDescription controlDescription = getControlCandidate(parent.getClass(),itemPropertyDescriptor, context.getModelElement());
 		if(controlDescription==null){
@@ -145,7 +145,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	 * {@inheritDoc}
 	 */
 	public <T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
-		EditModelElementContext context, String controlId) {
+		ECPControlContext context, String controlId) {
 		
 		ControlDescription controlDescription = null;
 		for(ControlDescription desc:controlDescriptors){
@@ -172,11 +172,11 @@ public final class ControlFactoryImpl implements ControlFactory{
 
 	@SuppressWarnings("unchecked")
 	private static <T> AbstractControl<T> getControlInstance(ControlDescription controlDescription,
-		IItemPropertyDescriptor itemPropertyDescriptor,  EditModelElementContext modelElementContext) {
+		IItemPropertyDescriptor itemPropertyDescriptor,  ECPControlContext modelElementContext) {
 		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement());
 		try {
 			Constructor<? extends AbstractControl<?>> controlConstructor = controlDescription.getControlClass().getConstructor(boolean.class,
-				IItemPropertyDescriptor.class, EStructuralFeature.class, EditModelElementContext.class,boolean.class);
+				IItemPropertyDescriptor.class, EStructuralFeature.class, ECPControlContext.class,boolean.class);
 			return (AbstractControl<T>) controlConstructor.newInstance(controlDescription.isShowLabel(),itemPropertyDescriptor, feature, modelElementContext,false);
 		} catch (IllegalArgumentException ex) {
 			Activator.logException(ex);

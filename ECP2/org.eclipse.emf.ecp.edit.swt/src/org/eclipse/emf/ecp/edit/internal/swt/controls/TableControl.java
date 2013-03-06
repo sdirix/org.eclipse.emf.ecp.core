@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
@@ -81,11 +81,11 @@ public class TableControl extends SWTControl {
 	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		EditModelElementContext modelElementContext, boolean embedded) {
+		ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
@@ -333,7 +333,7 @@ public class TableControl extends SWTControl {
 
 	private void createRemoveRowButton(EClass clazz, final Composite buttonComposite) {
 		Button removeButton = new Button(buttonComposite, SWT.None);
-		Image image = Activator.getImageDescriptor("icons/delete.png").createImage(); //$NON-NLS-1$
+		Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
 		removeButton.setImage(image);
 		removeButton.setToolTipText("Remove the selected " + clazz.getInstanceClass().getSimpleName());
 		removeButton.addSelectionListener(new SelectionAdapter() {
@@ -360,7 +360,7 @@ public class TableControl extends SWTControl {
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		Button addButton = new Button(buttonComposite, SWT.None);
-		Image image = Activator.getImageDescriptor("icons/add.png").createImage(); //$NON-NLS-1$
+		Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		addButton.setImage(image);
 		addButton.setToolTipText("Add an instance of " + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {

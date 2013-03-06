@@ -12,21 +12,19 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
-import java.net.URL;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
-import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.dialogs.MessageDialog;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.PlatformUI;
+
+import java.net.URL;
 
 /**
  * An Action for adding reference links to a model element. It is mainly used in the {@link MEMultiLinkControl}
@@ -38,12 +36,13 @@ public class NewReferenceAction extends ECPSWTAction {
 
 	/**
 	 * The constructor for a new reference action.
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * 
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
 	 */
-	public NewReferenceAction(EditModelElementContext modelElementContext,
-		IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature) {
+	public NewReferenceAction(ECPControlContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
+		EStructuralFeature feature) {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		Object obj = null;
 		EReference eReference = (EReference) getFeature();
@@ -55,7 +54,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		}
 		IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			modelElementContext.getModelElement());
-		Image image = Activator.getImageDescriptor(((URL) labelProvider.getImage(obj)).toExternalForm()).createImage();
+		Image image = Activator.getImage((URL) labelProvider.getImage(obj));
 
 		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
 		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
@@ -63,7 +62,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		setImageDescriptor(imageDescriptor);
 
 		String attribute = getItemPropertyDescriptor().getDisplayName(eReference);
-		//TODO language, same text as in addreference
+		// TODO language, same text as in addreference
 		// make singular attribute labels
 		if (attribute.endsWith("ies")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 3) + "y";//$NON-NLS-1$
@@ -71,24 +70,6 @@ public class NewReferenceAction extends ECPSWTAction {
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
 		setToolTipText("Create and link new " + attribute);//$NON-NLS-1$
-	}
-
-	/**
-	 * Command to create a new reference.
-	 * 
-	 * @author helming
-	 */
-	private final class NewReferenceCommand extends ChangeCommand {
-
-		public NewReferenceCommand(EObject eObject) {
-			super(eObject);
-		}
-
-		@Override
-		protected void doExecute() {
-			getModelElementContext().createAndReferenceNewModelElement((EReference) getFeature());
-
-		}
 	}
 
 	/**
@@ -142,14 +123,12 @@ public class NewReferenceAction extends ECPSWTAction {
 	@Override
 	public void run() {
 		// checks if we try to create a container for ourself, this is not allowed
-		if (((EReference) getFeature()).isContainer()) {
-			//TODO PlatformUI dependency, language
-			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",//$NON-NLS-1$
-				"Operation not permitted for container references!");//$NON-NLS-1$
-			return;
-		}
-		getModelElementContext().getEditingDomain().getCommandStack()
-			.execute(new NewReferenceCommand(getModelElementContext().getModelElement()));
+
+		// getModelElementContext().getEditingDomain().getCommandStack()
+		// .execute(new NewReferenceCommand(getModelElementContext().getModelElement()));
+		EObject eObject = getModelElementContext().getNewElementFor((EReference) getFeature());
+		getModelElementContext().addModelElement(eObject, (EReference) getFeature());
+		getModelElementContext().openEditor(eObject);
 	}
 
 }

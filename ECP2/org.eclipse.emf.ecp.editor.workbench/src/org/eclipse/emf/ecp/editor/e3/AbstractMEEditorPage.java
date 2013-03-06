@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.editor.e3;
 
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -31,6 +31,6 @@ public abstract class AbstractMEEditorPage {
 	 * @param modelElementContext the {@link EditorModelelementContext}
 	 * @return the {@link FormPage}
 	 */
-	public abstract FormPage createPage(FormEditor editor, EditModelElementContext modelElementContext);
+	public abstract FormPage createPage(FormEditor editor, ECPControlContext modelElementContext);
 
 }

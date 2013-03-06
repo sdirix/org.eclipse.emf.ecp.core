@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.edit.ControlFactoryImpl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * The ControlFactory provides a
- * method ({@link ControlFactory#createControl(T, IItemPropertyDescriptor, EditModelElementContext)}) for creating a suitable
+ * method ({@link ControlFactory#createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
  * control with the known widgets.
  * 
  * @author Eugen Neufeld
@@ -31,28 +31,28 @@ public interface ControlFactory {
 	ControlFactory INSTANCE = ControlFactoryImpl.INSTANCE;
 	/**
 	 * Creates an {@link AbstractControl} from the provided {@link IItemPropertyDescriptor} and the
-	 * {@link EditModelElementContext}.
+	 * {@link ECPControlContext}.
 	 * 
 	 * @param <T> the Type of the composite where we want to add the control onto
 	 * @param parent the Composite the control will be added to
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param context the {@link EditModelElementContext}
+	 * @param context the {@link ECPControlContext}
 	 * @return the created {@link AbstractControl} or null if nothing fitting could be created
 	 */
 	<T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
-		EditModelElementContext context);
+		ECPControlContext context);
 	/**
 	 * Creates an {@link AbstractControl} based on a provided id.
 	 * 
 	 * @param <T> the Type of the composite where we want to add the control onto
 	 * @param parent the Composite the control will be added to
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param context the {@link EditModelElementContext}
+	 * @param context the {@link ECPControlContext}
 	 * @param controlId the id of the control to create
 	 * @return the created {@link AbstractControl} or null if id is unknown
 	 */
 	<T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
-		EditModelElementContext context,String controlId);
+		ECPControlContext context,String controlId);
 	/**
 	 * A copy of all known {@link ControlDescription}.
 	 * @return a copy of the set of all known controlDescriptions

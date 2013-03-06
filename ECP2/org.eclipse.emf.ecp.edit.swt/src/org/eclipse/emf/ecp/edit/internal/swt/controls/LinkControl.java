@@ -12,20 +12,21 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
-import org.eclipse.emf.ecp.edit.internal.swt.provider.ShortLabelProvider;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -40,6 +41,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 
+import java.net.URL;
+
 /**
  * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a reference.
  * 
@@ -47,7 +50,6 @@ import org.eclipse.swt.widgets.Link;
  * 
  */
 public class LinkControl extends SingleControl {
-	private static final String EDITOR_ID = "org.eclipse.emf.ecp.editor"; //$NON-NLS-1$
 
 	/**
 	 * Constructor for a eenum control.
@@ -55,11 +57,11 @@ public class LinkControl extends SingleControl {
 	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public LinkControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		EditModelElementContext modelElementContext, boolean embedded) {
+		ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
@@ -71,9 +73,9 @@ public class LinkControl extends SingleControl {
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
-	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+	// private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
-	private ShortLabelProvider shortLabelProvider;
+	// private ShortLabelProvider shortLabelProvider;
 
 	private ModelElementChangeListener modelElementChangeListener;
 
@@ -85,9 +87,11 @@ public class LinkControl extends SingleControl {
 
 	private Button[] buttons;
 
+	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+
 	@Override
 	protected void fillInnerComposite(Composite composite) {
-		int numColumns = 1+getNumButtons();
+		int numColumns = 1 + getNumButtons();
 		if (isEmbedded()) {
 			numColumns = 1;
 		}
@@ -117,7 +121,7 @@ public class LinkControl extends SingleControl {
 			stackLayout.topControl = unsetLabel;
 		}
 		if (!isEmbedded()) {
-			buttons=createButtons(composite);
+			buttons = createButtons(composite);
 		}
 	}
 
@@ -126,7 +130,7 @@ public class LinkControl extends SingleControl {
 	}
 
 	protected Button[] createButtons(Composite composite) {
-		Button[] buttons=new Button[3];
+		Button[] buttons = new Button[3];
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
 			getItemPropertyDescriptor(), getStructuralFeature()), composite);
 		buttons[1] = createButtonForAction(new AddReferenceAction(getModelElementContext(),
@@ -138,8 +142,9 @@ public class LinkControl extends SingleControl {
 
 	private void createHyperlink() {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
-		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
+		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+		// adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+		// shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 
 		imageHyperlink = new Label(linkComposite, SWT.NONE);
 
@@ -156,7 +161,7 @@ public class LinkControl extends SingleControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				getModelElementContext().openEditor((EObject) getModelValue().getValue(), EDITOR_ID);
+				getModelElementContext().openEditor((EObject) getModelValue().getValue());
 			}
 
 		});
@@ -167,7 +172,7 @@ public class LinkControl extends SingleControl {
 	@Override
 	public void setEditable(boolean isEditable) {
 		if (!isEmbedded()) {
-			for(Button button:buttons){
+			for (Button button : buttons) {
 				button.setVisible(isEditable);
 			}
 		}
@@ -189,7 +194,7 @@ public class LinkControl extends SingleControl {
 			@Override
 			public Object convert(Object value) {
 				updateChangeListener((EObject) value);
-				return  "<a>" +  getLinkText(value)+ "</a>";
+				return "<a>" + getLinkText(value) + "</a>";
 			}
 		});
 		IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
@@ -216,14 +221,14 @@ public class LinkControl extends SingleControl {
 		}, new UpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {
-				return shortLabelProvider.getImage(value);
+				return Activator.getImage((URL) adapterFactoryItemDelegator.getImage(value));
 			}
 		});
 	}
 
 	private Object getLinkText(Object value) {
-		String linkName=shortLabelProvider.getText(value);
-		return linkName==null?"":linkName;
+		String linkName = adapterFactoryItemDelegator.getText(value);
+		return linkName == null ? "" : linkName;
 	}
 
 	private void updateChangeListener(final EObject value) {
@@ -269,9 +274,9 @@ public class LinkControl extends SingleControl {
 
 	@Override
 	public void dispose() {
-		adapterFactoryLabelProvider.dispose();
+		// adapterFactoryItemDelegator.dispose();
 		composedAdapterFactory.dispose();
-		shortLabelProvider.dispose();
+		// shortLabelProvider.dispose();
 		modelElementChangeListener.remove();
 		hyperlink.dispose();
 		super.dispose();

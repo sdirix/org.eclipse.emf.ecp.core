@@ -10,24 +10,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPEditorContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
-import org.eclipse.emf.ecp.edit.internal.swt.provider.ShortLabelProvider;
 import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
 import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -36,6 +32,10 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * GUI view for editing MEs.
@@ -56,14 +56,13 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private ModelElementChangeListener modelElementChangeListener;
 
-	private EditModelElementContext modelElementContext;
+	private ECPEditorContext modelElementContext;
 
 	private EditModelElementContextListener modelElementContextListener;
 
 	private MEEditorInput meInput;
 
 	private ShortLabelProvider shortLabelProvider;
-
 
 	private ComposedAdapterFactory composedAdapterFactory;
 
@@ -98,7 +97,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 				try {
 					newPage = (AbstractMEEditorPage) configTemp[i].createExecutableExtension("class");
-					FormPage createPage = newPage.createPage(this, modelElementContext);
+					FormPage createPage = newPage.createPage(this, modelElementContext.getECPControlContext());
 					if (createPage != null) {
 						addPage(createPage);
 					}
@@ -126,10 +125,10 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (!replaceMEEditor) {
 			try {
 				if (editorInput.getProblemFeature() != null) {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext.getECPControlContext(),
 						modelElementContext.getModelElement(), editorInput.getProblemFeature());
 				} else {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext.getECPControlContext(),
 						modelElementContext.getModelElement());
 				}
 
@@ -146,7 +145,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 		for (IConfigurationElement e : config) {
 			try {
 				AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class");
-				FormPage createPage = newPage.createPage(this, modelElementContext);
+				FormPage createPage = newPage.createPage(this, modelElementContext.getECPControlContext());
 				if (createPage != null) {
 					addPage(createPage);
 				}
@@ -196,18 +195,17 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (input instanceof MEEditorInput) {
 			setInput(input);
 			meInput = (MEEditorInput) input;
-			
-			this.modelElementContext = meInput.getModelElementContext();
+
+			modelElementContext = meInput.getModelElementContext();
 			composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-			shortLabelProvider=new ShortLabelProvider(composedAdapterFactory);
+			shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 			setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
-				setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
-			
+			setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 
 			modelElementContextListener = new EditModelElementContextListener() {
 
 				public void onModelElementDeleted(EObject deleted) {
-					if(modelElementContext.getModelElement().equals(deleted)){
+					if (modelElementContext.getModelElement().equals(deleted)) {
 						close(false);
 					}
 				}
@@ -240,15 +238,15 @@ public class MEEditor extends SharedHeaderFormEditor {
 			initStatusProvider();
 			updateStatusMessage();
 
-//			labelProviderListener = new ILabelProviderListener() {
-//				public void labelProviderChanged(LabelProviderChangedEvent event) {
-//					if(!titleImage.isDisposed())
-//						titleImage.dispose();
-//					titleImage=meInput.getImageDescriptor().createImage();
-//					updateIcon();
-//				}
-//			};
-//			meInput.getLabelProvider().addListener(labelProviderListener);
+			// labelProviderListener = new ILabelProviderListener() {
+			// public void labelProviderChanged(LabelProviderChangedEvent event) {
+			// if(!titleImage.isDisposed())
+			// titleImage.dispose();
+			// titleImage=meInput.getImageDescriptor().createImage();
+			// updateIcon();
+			// }
+			// };
+			// meInput.getLabelProvider().addListener(labelProviderListener);
 
 		} else {
 			throw new PartInitException("MEEditor is only appliable for MEEditorInputs");
@@ -314,22 +312,23 @@ public class MEEditor extends SharedHeaderFormEditor {
 		modelElementContext.removeModelElementContextListener(modelElementContextListener);
 		modelElementContext.dispose();
 		meInput.dispose();
-//		((MEEditorInput) getEditorInput()).getLabelProvider().removeListener(labelProviderListener);
+		// ((MEEditorInput) getEditorInput()).getLabelProvider().removeListener(labelProviderListener);
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
-//		meInput.dispose();
+		// meInput.dispose();
 		getSite().setSelectionProvider(null);
 		super.dispose();
-		
+
 	}
 
 	private void updateIcon() {
-		
+
 		setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		// TODO AS: Debug why sometimes the page is null - not disposed Adapter?
 		if (mePage != null) {
 			try {
-				mePage.getManagedForm().getForm().setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+				mePage.getManagedForm().getForm()
+					.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 			} catch (SWTException e) {
 				// Catch in case Editor is directly closed after change.
 			}

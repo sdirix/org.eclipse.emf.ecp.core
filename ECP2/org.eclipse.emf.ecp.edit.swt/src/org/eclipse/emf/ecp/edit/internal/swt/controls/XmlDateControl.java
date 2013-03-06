@@ -2,7 +2,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.ISharedImages;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -32,7 +31,7 @@ import java.util.Date;
 public class XmlDateControl extends SingleControl {
 
 	public XmlDateControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, EditModelElementContext modelElementContext, boolean embedded) {
+		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
@@ -96,8 +95,7 @@ public class XmlDateControl extends SingleControl {
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			Button unsetdate = new Button(composite, SWT.PUSH);
 			unsetdate.setToolTipText("UnsetDate");
-			unsetdate.setImage(Activator.getDefault().getWorkbench().getSharedImages()
-				.getImage(ISharedImages.IMG_TOOL_DELETE));
+			unsetdate.setImage(Activator.getImage("icons/delete.png"));//$NON-NLS-1$
 			unsetdate.addSelectionListener(new SelectionAdapter() {
 
 				@Override

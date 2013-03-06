@@ -13,8 +13,7 @@ package org.eclipse.emf.ecp.editor.internal.e3;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
-import org.eclipse.emf.ecp.edit.internal.swt.provider.ShortLabelProvider;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -43,7 +42,7 @@ public class MEEditorPage extends FormPage {
 	//
 	private ScrolledForm form;
 	//
-	private final EditModelElementContext modelElementContext;
+	private final ECPControlContext modelElementContext;
 
 	private IEditorCompositeProvider editorPageContent;
 
@@ -69,7 +68,7 @@ public class MEEditorPage extends FormPage {
 	 * @param modelElementContext
 	 *            the {@link ModelElementContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, EditModelElementContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPControlContext modelElementContext,
 		EObject modelElement) {
 		super(editor, id, title);
 		this.modelElementContext = modelElementContext;
@@ -92,7 +91,7 @@ public class MEEditorPage extends FormPage {
 	 * @param modelElementContext
 	 *            the {@link ModelElementContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, EditModelElementContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPControlContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
 		this(editor, id, title, modelElementContext, modelElement);
 	}

@@ -11,14 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.ui.ISharedImages;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * The action to allow adding of attribute values to multi attribute controls.
@@ -31,27 +30,26 @@ public class AddAttributeAction extends ECPSWTAction {
 	/**
 	 * The constructor for the add attribute action.
 	 * 
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param feature the {@link EStructuralFeature} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 */
-	public AddAttributeAction(EditModelElementContext modelElementContext,
-		IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature) {
+	public AddAttributeAction(ECPControlContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
+		EStructuralFeature feature) {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		// TODO remove PlatformUI
-		setImageDescriptor(Activator.getDefault().getWorkbench().getSharedImages()
-			.getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
+		setImageDescriptor(Activator.getImageDescriptor("icons/add.png"));
 		setToolTipText("Add Entry"); //$NON-NLS-1$
 	}
 
 	@Override
 	public void run() {
 		super.run();
-		//TODO show message if something goes wrong
-		Object defaultValue=getFeature().getEType().getDefaultValue();
-		if(defaultValue==null){
+		// TODO show message if something goes wrong
+		Object defaultValue = getFeature().getEType().getDefaultValue();
+		if (defaultValue == null) {
 			try {
-				defaultValue=getFeature().getEType().getInstanceClass().getConstructor().newInstance();
+				defaultValue = getFeature().getEType().getInstanceClass().getConstructor().newInstance();
 			} catch (InstantiationException e) {
 				Activator.logException(e);
 			} catch (IllegalAccessException e) {
@@ -71,7 +69,7 @@ public class AddAttributeAction extends ECPSWTAction {
 			.getCommandStack()
 			.execute(
 				AddCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
-					.getModelElement(), getFeature(),defaultValue ));
+					.getModelElement(), getFeature(), defaultValue));
 
 	}
 }

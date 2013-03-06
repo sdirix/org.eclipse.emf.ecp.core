@@ -72,7 +72,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 
 				if (selections != null && selections.length == 1 && selections[0] instanceof EObject) {
 					HandlerHelper.openModelElement((EObject) selections[0],
-						"org.eclipse.emf.ecp.ui.commands.SearchModelElementHandler", project);
+						 project);
 				}
 			}
 			adapterFactoryLabelProvider.dispose();

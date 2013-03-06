@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
 
@@ -22,27 +22,27 @@ import org.eclipse.jface.action.Action;
  * 
  */
 public abstract class ECPSWTAction extends Action{
-	private EditModelElementContext modelElementContext;
+	private ECPControlContext modelElementContext;
 	private EStructuralFeature feature;
 	private IItemPropertyDescriptor itemPropertyDescriptor;
 
 	/**
 	 * The constructor of all ecp actions.
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
 	 */
-	public ECPSWTAction(EditModelElementContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
+	public ECPSWTAction(ECPControlContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature) {
 		this.modelElementContext = modelElementContext;
 		this.feature = feature;
 		this.itemPropertyDescriptor = itemPropertyDescriptor;
 	}
 	/**
-	 * The set {@link EditModelElementContext}.
-	 * @return the {@link EditModelElementContext}
+	 * The set {@link ECPControlContext}.
+	 * @return the {@link ECPControlContext}
 	 */
-	protected EditModelElementContext getModelElementContext() {
+	protected ECPControlContext getModelElementContext() {
 		return modelElementContext;
 	}
 	/**

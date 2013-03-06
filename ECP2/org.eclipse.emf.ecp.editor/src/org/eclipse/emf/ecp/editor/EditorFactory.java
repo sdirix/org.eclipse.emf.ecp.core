@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.editor.EditorFactoryImpl;
 
 /**
@@ -30,8 +30,8 @@ public interface EditorFactory {
 	/**
 	 * Instantiate the editorComposite.
 	 * 
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @return the {@link IEditorCompositeProvider}
 	 */
-	IEditorCompositeProvider getEditorComposite(EditModelElementContext modelElementContext);
+	IEditorCompositeProvider getEditorComposite(ECPControlContext modelElementContext);
 }

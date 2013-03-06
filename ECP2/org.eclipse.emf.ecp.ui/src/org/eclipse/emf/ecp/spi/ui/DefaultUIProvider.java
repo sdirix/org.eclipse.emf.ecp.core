@@ -240,7 +240,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 						AddCommand.create(domain, object, ((CommandParameter) descriptor).getEStructuralFeature(),
 							new Object[] { cp.getEValue() }));
 					// object.eResource().save(null);
-					HandlerHelper.openModelElement(cp.getEValue(), this.getClass().getName(), project);
+					HandlerHelper.openModelElement(cp.getEValue(), project);
 					// } catch (IOException ex) {
 					// Activator.log(ex);
 					// }

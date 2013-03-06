@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
  * @author Eugen Neufeld
  *
  */
-public class Activator extends Plugin {
+public class Activator extends Plugin{
 
 	/**
 	 * The plug-in ID.
@@ -45,11 +45,10 @@ public class Activator extends Plugin {
 		super.start(context);
 		plugin = this;
 	}
-
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		plugin = null;
 		super.stop(context);
+		plugin = null;
 	}
 	// END SUPRESS CATCH EXCEPTION
 

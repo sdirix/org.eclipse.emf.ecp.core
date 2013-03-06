@@ -209,7 +209,7 @@ public final class HandlerHelper {
 				});
 				if (open) {
 					// 3.open the newly created ME
-					openModelElement(newMEInstance, HandlerHelper.class.getName(), ecpProject);
+					openModelElement(newMEInstance, ecpProject);
 				}
 			}
 		}
@@ -330,7 +330,7 @@ public final class HandlerHelper {
 	 *            the view that requested the open model element
 	 * @param ecpProject the {@link ECPProject} of the model element
 	 */
-	public static void openModelElement(final EObject me, final String sourceView, ECPProject ecpProject) {
+	public static void openModelElement(final EObject me, ECPProject ecpProject) {
 		if (me == null) {
 			MessageDialog.openError(Display.getCurrent().getActiveShell(),
 				Messages.ActionHelper_ErrorTitle_ElementDeleted, Messages.ActionHelper_ErrorMessage_ElementDeleted);

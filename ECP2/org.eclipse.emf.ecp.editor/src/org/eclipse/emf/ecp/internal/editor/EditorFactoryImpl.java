@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.editor;
 
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 
@@ -35,7 +35,7 @@ public final class EditorFactoryImpl implements EditorFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public IEditorCompositeProvider getEditorComposite(EditModelElementContext modelElementContext) {
+	public IEditorCompositeProvider getEditorComposite(ECPControlContext modelElementContext) {
 		return new FormEditorComposite(modelElementContext);
 	}
 

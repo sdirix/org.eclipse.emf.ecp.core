@@ -11,16 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.core.databinding.observable.list.IListChangeListener;
-import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.list.ListChangeEvent;
-import org.eclipse.core.databinding.observable.list.ListDiff;
-import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
@@ -28,7 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.AbstractControl;
 import org.eclipse.emf.ecp.edit.ControlDescription;
 import org.eclipse.emf.ecp.edit.ControlFactory;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
@@ -38,6 +28,12 @@ import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.databinding.observable.list.IListChangeListener;
+import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.list.ListChangeEvent;
+import org.eclipse.core.databinding.observable.list.ListDiff;
+import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -55,8 +51,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This control provides the necessary common functionality to create a multicontrol that are needed for
@@ -89,11 +88,11 @@ public abstract class MultiControl extends SWTControl {
 	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public MultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		EditModelElementContext modelElementContext, boolean embedded) {
+		ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 		findControlDescription(itemPropertyDescriptor, modelElementContext.getModelElement());
 		actions = instantiateActions();
@@ -109,7 +108,7 @@ public abstract class MultiControl extends SWTControl {
 	private void findControlDescription(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority = -1;
 		for (ControlDescription description : ControlFactory.INSTANCE.getControlDescriptors()) {
-			for(ECPApplicableTester tester:description.getTester()){
+			for (ECPApplicableTester tester : description.getTester()) {
 				if (StaticApplicableTester.class.isInstance(tester)) {
 					StaticApplicableTester test = (StaticApplicableTester) tester;
 					int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
@@ -176,13 +175,13 @@ public abstract class MultiControl extends SWTControl {
 			public void handleListChange(ListChangeEvent event) {
 				ListDiff diff = event.diff;
 				diff.accept(new ListDiffVisitor() {
-					
+
 					@Override
 					public void handleRemove(int index, Object element) {
 						updateIndicesAfterRemove(index);
 						getDataBindingContext().updateTargets();
 					}
-					
+
 					@Override
 					public void handleAdd(int index, Object element) {
 						addControl();
@@ -197,7 +196,7 @@ public abstract class MultiControl extends SWTControl {
 
 					@Override
 					public void handleReplace(int index, Object oldElement, Object newElement) {
-						//do nothing
+						// do nothing
 					}
 				});
 			}
@@ -240,7 +239,7 @@ public abstract class MultiControl extends SWTControl {
 		try {
 			Constructor<? extends AbstractControl<Composite>> widgetConstructor = (Constructor<? extends AbstractControl<Composite>>) controlDescription
 				.getControlClass().getConstructor(boolean.class, IItemPropertyDescriptor.class,
-					EStructuralFeature.class, EditModelElementContext.class, boolean.class);
+					EStructuralFeature.class, ECPControlContext.class, boolean.class);
 			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
 				getStructuralFeature(), getModelElementContext(), true);
 		} catch (IllegalArgumentException ex) {
@@ -335,7 +334,7 @@ public abstract class MultiControl extends SWTControl {
 		 */
 		private void createDeleteButton(Composite composite) {
 			Button delB = new Button(composite, SWT.PUSH);
-			delB.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
+			delB.setImage(Activator.getImage("icons/delete.png"));
 			delB.addSelectionListener(new SelectionAdapter() {
 
 				/*
@@ -344,7 +343,7 @@ public abstract class MultiControl extends SWTControl {
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					
+
 					getModelElementContext()
 						.getEditingDomain()
 						.getCommandStack()
@@ -360,8 +359,8 @@ public abstract class MultiControl extends SWTControl {
 		 * Initializes the up/down buttons.
 		 */
 		private void createUpDownButtons(Composite composite) {
-			Image up = Activator.getImageDescriptor(ICONS_ARROW_UP_PNG).createImage();
-			Image down = Activator.getImageDescriptor(ICONS_ARROW_DOWN_PNG).createImage();
+			Image up = Activator.getImage(ICONS_ARROW_UP_PNG);
+			Image down = Activator.getImage(ICONS_ARROW_DOWN_PNG);
 
 			Button upB = new Button(composite, SWT.PUSH);
 			upB.setImage(up);
@@ -376,7 +375,7 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					
+
 					getModelElementContext()
 						.getEditingDomain()
 						.getCommandStack()
@@ -398,7 +397,7 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					int currentIndex = getThis().getModelValue().getIndex();
-					
+
 					getModelElementContext()
 						.getEditingDomain()
 						.getCommandStack()
@@ -423,16 +422,17 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void updateIndicesAfterRemove(int indexRemoved) {
-		WidgetWrapper wrapper= widgetWrappers.remove(widgetWrappers.size()-1);
+		WidgetWrapper wrapper = widgetWrappers.remove(widgetWrappers.size() - 1);
 		wrapper.composite.dispose();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImageDescriptor(MultiControl.VALIDATION_ERROR_ICON).createImage();
+			Image image = Activator.getImage(MultiControl.VALIDATION_ERROR_ICON);
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
 		}
@@ -441,6 +441,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;

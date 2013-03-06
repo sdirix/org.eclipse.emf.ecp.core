@@ -12,7 +12,6 @@ package org.eclipse.emf.ecp.edit.internal.swt.dialogs;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.edit.internal.swt.provider.RelevanceWrappedLabelProvider;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;

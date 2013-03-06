@@ -12,13 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.EditModelElementContext;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -33,7 +34,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.ISharedImages;
+
 /**
  * This class defines a DateTimeControl which is used for displaying {@link EStructuralFeature}s which have a date
  * value.
@@ -52,18 +53,19 @@ public class DateTimeControl extends SingleControl {
 	private StackLayout sl;
 
 	private Label unsetLabel;
+
 	/**
 	 * Constructor for a dateTime control.
 	 * 
 	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link EditModelElementContext} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public DateTimeControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, EditModelElementContext modelElementContext,boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,embedded);
+		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class DateTimeControl extends SingleControl {
 		createDateAndTimeWidget(dateTimeComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
-		//TODO language
+		// TODO language
 		unsetLabel.setText("No date set! Click to set date.");//$NON-NLS-1$
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
@@ -91,11 +93,11 @@ public class DateTimeControl extends SingleControl {
 			}
 
 			public void mouseDown(MouseEvent e) {
-				//nothing to do
+				// nothing to do
 			}
 
 			public void mouseDoubleClick(MouseEvent e) {
-				//nothing to do
+				// nothing to do
 			}
 		});
 		if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
@@ -117,34 +119,37 @@ public class DateTimeControl extends SingleControl {
 			numColumns = 2;
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
-		
+
 		dateWidget = new DateTime(composite, SWT.DATE);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		if(!isEmbedded()&&getStructuralFeature().isUnsettable()){
-			Button unsetdate=new Button(composite, SWT.PUSH);
+
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			Button unsetdate = new Button(composite, SWT.PUSH);
 			unsetdate.setToolTipText("UnsetDate");
-			unsetdate.setImage(Activator.getDefault().getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE));
+			unsetdate.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 			unsetdate.addSelectionListener(new SelectionAdapter() {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					
-					getModelElementContext().getEditingDomain().getCommandStack().execute(
-						new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext().getModelElement(),
-							getStructuralFeature(), SetCommand.UNSET_VALUE));
+
+					getModelElementContext()
+						.getEditingDomain()
+						.getCommandStack()
+						.execute(
+							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
 
 					sl.topControl = unsetLabel;
 					parentComposite.layout();
 				}
-				
+
 			});
 		}
 	}
-	
+
 	@Override
 	public void setEditable(boolean isEditable) {
 		dateWidget.setEnabled(isEditable);
