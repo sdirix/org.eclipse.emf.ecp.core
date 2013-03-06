@@ -88,6 +88,15 @@ public abstract class AbstractTextControl extends SingleControl {
 			text.setMessage("<unset>");
 		}
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
+		customizeText(text);
+	}
+
+	/**
+	 * This method allows to set custom values to the text field, e.g. a tooltip or a validation.
+	 * 
+	 * @param text the text widget to customize
+	 */
+	protected void customizeText(Text text) {
 
 	}
 

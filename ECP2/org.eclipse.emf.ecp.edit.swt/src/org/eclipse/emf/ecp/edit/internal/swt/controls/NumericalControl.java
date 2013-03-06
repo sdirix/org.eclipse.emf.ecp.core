@@ -14,9 +14,14 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Text;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * This class is used as a common class for all number controls.
@@ -50,5 +55,36 @@ public class NumericalControl extends AbstractTextControl {
 	@Override
 	protected String getTextVariantID() {
 		return "org_eclipse_emf_ecp_control_swt_number";
+	}
+
+	@Override
+	protected void customizeText(Text text) {
+		Class<?> instanceClass = getStructuralFeature().getEType().getInstanceClass();
+		if (instanceClass.isPrimitive()) {
+			try {
+				if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+					text.setToolTipText("This is an Integer Field. The format is '#'.");
+				} else if (Double.class.getField("TYPE").get(null).equals(instanceClass)) {
+					text.setToolTipText("This is an Float Field. The format is '#.#'.");
+				}
+			} catch (NoSuchFieldException e) {
+				Activator.logException(e);
+			} catch (IllegalArgumentException e) {
+				Activator.logException(e);
+			} catch (IllegalAccessException e) {
+				Activator.logException(e);
+			} catch (SecurityException e) {
+				Activator.logException(e);
+			}
+
+		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
+			text.setToolTipText("This is an Integer Field. The format is '#'.");
+		} else if (Integer.class.isAssignableFrom(instanceClass)) {
+			text.setToolTipText("This is an Integer Field. The format is '#'.");
+		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
+			text.setToolTipText("This is an Float Field. The format is '#.#'.");
+		} else if (Double.class.isAssignableFrom(instanceClass)) {
+			text.setToolTipText("This is an Float Field. The format is '#.#'.");
+		}
 	}
 }
