@@ -15,28 +15,32 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 
 /**
  * The class describing a String control.
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public class StringControl extends AbstractTextControl {
 
 	/**
 	 * Constructor for a String control.
-	 * @param showLabel whether to show a label 
+	 * 
+	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
 	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public StringControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext,boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,embedded);
+		ECPControlContext modelElementContext, boolean embedded) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
+
 	/** {@inheritDoc} */
 	@Override
 	protected GridData getTextWidgetLayoutData() {
@@ -46,6 +50,7 @@ public class StringControl extends AbstractTextControl {
 		}
 		return gridData;
 	}
+
 	/** {@inheritDoc} */
 	@Override
 	protected int getTextWidgetStyle() {
@@ -58,5 +63,14 @@ public class StringControl extends AbstractTextControl {
 			textStyle = textStyle | SWT.SINGLE;
 		}
 		return textStyle;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl#getTextVariantID()
+	 */
+	@Override
+	protected String getTextVariantID() {
+		return "org_eclipse_emf_ecp_control_swt_string";
 	}
 }

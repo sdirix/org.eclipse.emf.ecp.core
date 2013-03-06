@@ -80,6 +80,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	@Override
 	protected Control createControl(Composite parent) {
 		dateWidget = new DateTime(parent, SWT.DATE | SWT.DROP_DOWN);
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_swt_cellEditor_date");
 		dateWidget.addKeyListener(new KeyAdapter() {
 			// hook key pressed - see PR 14201
 			@Override

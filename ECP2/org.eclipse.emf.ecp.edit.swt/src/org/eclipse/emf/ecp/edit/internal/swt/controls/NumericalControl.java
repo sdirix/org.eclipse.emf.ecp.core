@@ -15,7 +15,9 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 import org.eclipse.swt.SWT;
+
 /**
  * This class is used as a common class for all number controls.
  * 
@@ -24,7 +26,8 @@ import org.eclipse.swt.SWT;
 public class NumericalControl extends AbstractTextControl {
 	/**
 	 * Constructor for a String control.
-	 * @param showLabel whether to show a label 
+	 * 
+	 * @param showLabel whether to show a label
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param feature the {@link EStructuralFeature} to use
 	 * @param modelElementContext the {@link ECPControlContext} to use
@@ -37,6 +40,15 @@ public class NumericalControl extends AbstractTextControl {
 
 	@Override
 	protected int getTextWidgetStyle() {
-		return super.getTextWidgetStyle()|SWT.RIGHT;
+		return super.getTextWidgetStyle() | SWT.RIGHT;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl#getTextVariantID()
+	 */
+	@Override
+	protected String getTextVariantID() {
+		return "org_eclipse_emf_ecp_control_swt_number";
 	}
 }

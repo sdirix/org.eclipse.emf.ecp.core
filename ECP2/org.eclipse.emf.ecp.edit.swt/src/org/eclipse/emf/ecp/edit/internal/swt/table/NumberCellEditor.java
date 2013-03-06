@@ -27,6 +27,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	public void instantiate(IItemPropertyDescriptor descriptor) {
+		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_swt_cellEditor_number");
 		// do nothing
 	}
 

@@ -12,10 +12,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -49,7 +50,7 @@ public class BooleanControl extends SingleControl {
 	@Override
 	protected void fillInnerComposite(Composite composite) {
 		check = new Button(composite, SWT.CHECK);
-
+		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_boolean");
 	}
 
 	@Override

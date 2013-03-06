@@ -122,9 +122,11 @@ public class DateTimeControl extends SingleControl {
 
 		dateWidget = new DateTime(composite, SWT.DATE);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_date");
 
 		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_time");
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			Button unsetdate = new Button(composite, SWT.PUSH);

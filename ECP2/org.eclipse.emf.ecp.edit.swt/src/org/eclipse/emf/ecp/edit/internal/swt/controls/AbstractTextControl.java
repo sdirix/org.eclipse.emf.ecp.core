@@ -87,8 +87,16 @@ public abstract class AbstractTextControl extends SingleControl {
 		if (getStructuralFeature().isUnsettable()) {
 			text.setMessage("<unset>");
 		}
+		text.setData(CUSTOM_VARIANT, getTextVariantID());
 
 	}
+
+	/**
+	 * The VariantId to use e.g. for RAP
+	 * 
+	 * @return the String identifying this control
+	 */
+	protected abstract String getTextVariantID();
 
 	/**
 	 * The LayoutData for the created {@link Text} widget. Can be changed by the concrete classes.

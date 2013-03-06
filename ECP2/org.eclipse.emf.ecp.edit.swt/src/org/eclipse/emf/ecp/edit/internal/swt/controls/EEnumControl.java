@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Composite;
+
 /**
  * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a enum
  * value.
@@ -32,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 public class EEnumControl extends SingleControl {
 
 	private ComboViewer combo;
+
 	/**
 	 * Constructor for a eenum control.
 	 * 
@@ -42,8 +45,8 @@ public class EEnumControl extends SingleControl {
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public EEnumControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext,boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,embedded);
+		ECPControlContext modelElementContext, boolean embedded) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
 	@Override
@@ -62,6 +65,7 @@ public class EEnumControl extends SingleControl {
 
 		});
 		combo.setInput(getStructuralFeature().getEType().getInstanceClass().getEnumConstants());
+		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_enum");
 	}
 
 	@Override

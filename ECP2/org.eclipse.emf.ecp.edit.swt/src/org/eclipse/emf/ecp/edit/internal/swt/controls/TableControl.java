@@ -111,6 +111,7 @@ public class TableControl extends SWTControl {
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
+		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 

@@ -149,7 +149,7 @@ public class LinkControl extends SingleControl {
 		imageHyperlink = new Label(linkComposite, SWT.NONE);
 
 		hyperlink = new Link(linkComposite, SWT.NONE);
-
+		hyperlink.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_reference");
 		hyperlink.addSelectionListener(new SelectionAdapter() {
 
 			@Override

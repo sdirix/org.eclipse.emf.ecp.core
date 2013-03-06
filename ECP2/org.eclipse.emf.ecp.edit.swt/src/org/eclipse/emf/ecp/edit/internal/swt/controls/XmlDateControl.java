@@ -91,6 +91,7 @@ public class XmlDateControl extends SingleControl {
 
 		dateWidget = new DateTime(composite, SWT.DATE | SWT.DROP_DOWN);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_xml_date");
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			Button unsetdate = new Button(composite, SWT.PUSH);
