@@ -156,9 +156,6 @@ public class WorkspaceProvider extends DefaultProvider {
 				childrenList.addChildren(resource.getContents());
 			}
 
-		} else if (parent instanceof ResourceWrapper) {
-			ResourceWrapper<?> wrapper = (ResourceWrapper<?>) parent;
-			wrapper.fillChildren(childrenList);
 		} else {
 			super.fillChildren(context, parent, childrenList);
 		}
@@ -268,9 +265,6 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	@Override
 	public ECPModelContext getModelContext(Object element) {
-		if (element instanceof ModelWrapper) {
-			return ((ModelWrapper<?, ?>) element).getContext();
-		}
 		return super.getModelContext(element);
 	}
 
@@ -311,134 +305,4 @@ public class WorkspaceProvider extends DefaultProvider {
 			}
 		}
 	}
-
-	// private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
-
-	// private static final IWorkspaceRoot WORKSPACE_ROOT = WORKSPACE.getRoot();
-
-	/*
-	 * public void resourceChanged(IResourceChangeEvent event) {
-	 * // IResourceDelta delta = event.getDelta();
-	 * // if (delta != null) {
-	 * // InternalRepository repository = getRepositories()[0];
-	 * // Object[] objects = getChangedObjects(delta, repository);
-	 * // repository.notifyObjectsChanged(objects);
-	 * //
-	 * // for (InternalProject project : getOpenProjects()) {
-	 * // objects = getChangedObjects(delta, project);
-	 * // project.notifyObjectsChanged(objects, true);
-	 * // }
-	 * // }
-	 * }
-	 */
-
-	/*
-	 * private Object[] getChangedObjects(IResourceDelta delta, InternalRepository repository) {
-	 * Set<Object> objects = new HashSet<Object>();
-	 * collectChangedObjects(delta, repository, objects);
-	 * return objects.toArray(new Object[objects.size()]);
-	 * }
-	 */
-
-	/*
-	 * private void collectChangedObjects(IResourceDelta delta, InternalRepository repository, Set<Object> objects) {
-	 * switch (delta.getKind()) {
-	 * case IResourceDelta.ADDED:
-	 * case IResourceDelta.REMOVED:
-	 * IResource resource = delta.getResource();
-	 * if (resource.getType() == IResource.PROJECT) {
-	 * objects.add(repository);
-	 * } else {
-	 * objects.add(new RepositoryResourceWrapper(repository, resource.getParent()));
-	 * }
-	 * return;
-	 * }
-	 * for (IResourceDelta child : delta.getAffectedChildren()) {
-	 * collectChangedObjects(child, repository, objects);
-	 * }
-	 * }
-	 */
-
-	/*
-	 * private Object[] getChangedObjects(IResourceDelta delta, InternalProject project) {
-	 * IPath rootPath = getRootResource(project).getFullPath();
-	 * IPath deltaPath = delta.getResource().getFullPath();
-	 * if (rootPath.equals(deltaPath)) {
-	 * return new Object[] { project };
-	 * }
-	 * if (rootPath.isPrefixOf(deltaPath)) {
-	 * Set<Object> objects = new HashSet<Object>();
-	 * collectChangedObjects(delta, project, objects);
-	 * return objects.toArray(new Object[objects.size()]);
-	 * }
-	 * return null;
-	 * }
-	 */
-	/*
-	 * private void collectChangedObjects(IResourceDelta delta, InternalProject project, Set<Object> objects) {
-	 * switch (delta.getKind()) {
-	 * case IResourceDelta.ADDED:
-	 * case IResourceDelta.REMOVED:
-	 * IResource resource = delta.getResource();
-	 * objects.add(new ProjectResourceWrapper(project, resource.getParent()));
-	 * return;
-	 * }
-	 * for (IResourceDelta child : delta.getAffectedChildren()) {
-	 * collectChangedObjects(child, project, objects);
-	 * }
-	 * }
-	 */
-	/*
-	 * public static Object getElement(ECPProject project, URI uri) {
-	 * if (uri == null) {
-	 * return WORKSPACE_ROOT;
-	 * }
-	 * if (uri.hasFragment()) {
-	 * ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-	 * return resourceSet.getEObject(uri, true);
-	 * }
-	 * String path = uri.toPlatformString(true);
-	 * return WORKSPACE_ROOT.findMember(path);
-	 * }
-	 * public static IResource getResource(ECPProject project, URI uri) {
-	 * if (uri != null) {
-	 * uri = uri.trimFragment();
-	 * }
-	 * return (IResource) getElement(project, uri);
-	 * }
-	 * public static Object getRootElement(ECPProject project) {
-	 * URI uri = getRootURI(project);
-	 * return getElement(project, uri);
-	 * }
-	 * public static IResource getRootResource(ECPProject project) {
-	 * URI uri = getRootURI(project);
-	 * return getResource(project, uri);
-	 * }
-	 * public static URI getRootURI(ECPProject project) {
-	 * String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
-	 * return rootURI == null ? null : URI.createURI(rootURI);
-	 * }
-	 */
-
-	// public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
-	//
-	//
-	// Collection<EObject> visited = new HashSet<EObject>();
-	// Collection<EObject> result = new ArrayList<EObject>();
-	// for(InternalProject internalProject: getOpenProjects()){
-	// for (TreeIterator<?> i = resourceSet.getAllContents(); i.hasNext(); )
-	// {
-	// Object child = i.next();
-	// if (child instanceof EObject)
-	// {
-	// ItemPropertyDescriptor.collectReachableObjectsOfType(visited, result, (EObject)child, eReference.getEType());
-	// // ItemPropertyDescriptor.collectReachableObjectsOfType(visited, itemQueue, result, (EObject)child,
-	// eReference.getEType());
-	// i.prune();
-	// }
-	// }
-	// }
-	// return result.iterator();
-	// }
-
 }

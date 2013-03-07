@@ -14,20 +14,12 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.eclipse.emf.ecp.workspace.ui.emptyResource"
-            name="Create Empty Resource">
-      </command>
-      <command
             id="org.eclipse.emf.ecp.workspace.internal.ui.undoLastCommand"
             name="Undo Last Command">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
-      <handler
-            class="org.eclipse.emf.ecp.workspace.internal.ui.CreateEmptyResourceHandler"
-            commandId="org.eclipse.emf.ecp.workspace.ui.emptyResource">
-      </handler>
       <handler
             class="org.eclipse.emf.ecp.workspace.internal.ui.UndoLastCommandHandler"
             commandId="org.eclipse.emf.ecp.workspace.internal.ui.undoLastCommand">

@@ -15,7 +15,6 @@ import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
-import org.eclipse.emf.ecp.workspace.internal.core.ResourceWrapper;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -43,20 +42,12 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 
 	@Override
 	public String getText(Object element) {
-		if (element instanceof ResourceWrapper) {
-			ResourceWrapper<?> wrapper = (ResourceWrapper<?>) element;
-			return WORKBENCH_LABEL_PROVIDER.getText(wrapper.getDelegate());
-		}
-
 		return super.getText(element);
 	}
 
 	@Override
 	public Image getImage(Object element) {
-		if (element instanceof ResourceWrapper) {
-			ResourceWrapper<?> wrapper = (ResourceWrapper<?>) element;
-			return WORKBENCH_LABEL_PROVIDER.getImage(wrapper.getDelegate());
-		} else if (element instanceof ECPProject) {
+		if (element instanceof ECPProject) {
 			ECPProject project = (ECPProject) element;
 			if (project.isOpen()) {
 				return PROJECT_OPEN;
