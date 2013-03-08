@@ -71,7 +71,13 @@
 		<module>../org.eclipse.emf.ecp.workspace.ui</module>
 		<module>../../ECPQ7Tests</module>
 	</modules>
-
+	<repositories>
+	<repository>
+      <id>emfstore-repository</id>
+      <layout>p2</layout>
+      <url>https://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/lastSuccessfulBuild/artifact/git/org.eclipse.emf.emfstore.releng/org.eclipse.emf.emfstore.p2repository/target/repository/</url>
+    </repository>
+	</repositories>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<outputDirectory>bin</outputDirectory>
