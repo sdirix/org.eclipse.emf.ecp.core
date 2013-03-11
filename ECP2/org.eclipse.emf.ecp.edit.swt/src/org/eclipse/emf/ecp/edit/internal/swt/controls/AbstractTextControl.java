@@ -134,7 +134,16 @@ public abstract class AbstractTextControl extends SingleControl {
 	public void bindValue() {
 		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
 		getDataBindingContext().bindValue(value, getModelValue(),
-			new HighlightUpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), null);
+			new HighlightUpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new EMFUpdateValueStrategy() {
+
+				@Override
+				public Object convert(Object value) {
+					controlDecoration.hide();
+					updateValidationColor(null);
+					return super.convert(value);
+				}
+
+			});
 
 	}
 
