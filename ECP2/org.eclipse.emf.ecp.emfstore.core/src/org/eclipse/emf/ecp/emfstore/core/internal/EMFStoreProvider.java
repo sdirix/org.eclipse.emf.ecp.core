@@ -42,9 +42,9 @@ import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
-import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
+import org.eclipse.emf.emfstore.internal.client.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
@@ -257,9 +257,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			if (isAutosave()) {
 				// TODO EMFStore how to listen to operations?
-				projectSpace.getOperationManager().addOperationListener(new OperationObserver() {
+				projectSpace.getOperationManager().addOperationObserver(new OperationObserver() {
 
-					public void operationUnDone(AbstractOperation operation) {
+					public void operationUndone(AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
 

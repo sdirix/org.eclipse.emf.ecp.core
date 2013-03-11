@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.internal.client.model.observers.OperationObserver;
+import org.eclipse.emf.emfstore.internal.client.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
@@ -96,7 +96,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	/** {@inheritDoc} */
-	public void operationUnDone(AbstractOperation operation) {
+	public void operationUndone(AbstractOperation operation) {
 		operations--;
 		if (!projectSpace.isShared()) {
 			return;
