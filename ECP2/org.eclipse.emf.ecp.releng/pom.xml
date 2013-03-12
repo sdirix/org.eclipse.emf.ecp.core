@@ -34,6 +34,7 @@
 		<module>../org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../org.eclipse.emf.ecp.example-feature</module>
 		 
+		<module>../org.eclipse.emf.ecp.common</module>
 		<!-- 
 		<module>../org.eclipse.emf.ecp.example.bowlingmodel</module>
 		<module>../org.eclipse.emf.ecp.example.bowlingmodel.edit</module>
