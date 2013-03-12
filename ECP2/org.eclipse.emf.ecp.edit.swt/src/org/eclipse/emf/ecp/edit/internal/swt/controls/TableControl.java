@@ -13,7 +13,6 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EClass;
@@ -25,6 +24,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -60,7 +62,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * The class describing a table control.
@@ -350,11 +355,18 @@ public class TableControl extends SWTControl {
 					return;
 				}
 
+				List<EObject> deletionList = new ArrayList<EObject>();
 				Iterator<?> iterator = selection.iterator();
 
 				while (iterator.hasNext()) {
-					list.remove(iterator.next());
+					deletionList.add((EObject) iterator.next());
 				}
+
+				EObject modelElement = getModelElementContext().getModelElement();
+				EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+				editingDomain.getCommandStack().execute(
+					RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
+
 			}
 		});
 	}
@@ -398,14 +410,13 @@ public class TableControl extends SWTControl {
 		tableViewer.getTable().setEnabled(false);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void addRow(EClass clazz) {
 		EObject modelElement = getModelElementContext().getModelElement();
-		EStructuralFeature structuralFeature = getStructuralFeature();
-		EList list = (EList) modelElement.eGet(structuralFeature);
-
 		EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
-		list.add(instance);
+
+		EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		editingDomain.getCommandStack().execute(
+			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), Collections.singleton(instance)));
 	}
 
 }
