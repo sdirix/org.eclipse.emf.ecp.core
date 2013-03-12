@@ -277,7 +277,9 @@ public class LinkControl extends SingleControl {
 		// adapterFactoryItemDelegator.dispose();
 		composedAdapterFactory.dispose();
 		// shortLabelProvider.dispose();
-		modelElementChangeListener.remove();
+		if (modelElementChangeListener != null) {
+			modelElementChangeListener.remove();
+		}
 		hyperlink.dispose();
 		super.dispose();
 	}
