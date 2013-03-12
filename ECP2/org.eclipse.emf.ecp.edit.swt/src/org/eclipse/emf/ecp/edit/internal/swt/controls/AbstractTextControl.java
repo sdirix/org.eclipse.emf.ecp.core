@@ -67,11 +67,11 @@ public abstract class AbstractTextControl extends SingleControl {
 	protected void fillInnerComposite(Composite composite) {
 		doVerify = false;
 		createTextWidget(composite);
-		addControlDecoration();
+		addControlDecoration(composite.getParent());
 	}
 
-	private void addControlDecoration() {
-		controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
+	private void addControlDecoration(Composite composite) {
+		controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP, composite);
 		controlDecoration.hide();
 		// TODO language
 		controlDecoration.setDescriptionText("Invalid input");//$NON-NLS-1$
