@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.validation.connector;
+package org.eclipse.emf.ecp.internal.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;
