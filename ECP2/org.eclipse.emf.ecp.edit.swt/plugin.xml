@@ -138,6 +138,11 @@
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.date"
             tester="org.eclipse.emf.ecp.edit.internal.swt.table.XmlDateCellEditorTester">
       </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.dateTime"
+            tester="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditorTester">
+      </cellEditor>
    </extension>
 
 </plugin>

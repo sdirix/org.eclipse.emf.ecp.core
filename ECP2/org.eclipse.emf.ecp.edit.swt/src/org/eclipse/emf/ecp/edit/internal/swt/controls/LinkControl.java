@@ -87,7 +87,7 @@ public class LinkControl extends SingleControl {
 
 	private Button[] buttons;
 
-	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+	protected AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	@Override
 	protected void fillInnerComposite(Composite composite) {
@@ -161,12 +161,19 @@ public class LinkControl extends SingleControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				getModelElementContext().openEditor((EObject) getModelValue().getValue());
+				linkClicked((EObject) getModelValue().getValue());
 			}
 
 		});
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(hyperlink);
 
+	}
+
+	/**
+	 * @param value
+	 */
+	protected void linkClicked(EObject value) {
+		getModelElementContext().openEditor(value);
 	}
 
 	@Override
@@ -221,12 +228,16 @@ public class LinkControl extends SingleControl {
 		}, new UpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {
-				return Activator.getImage((URL) adapterFactoryItemDelegator.getImage(value));
+				return getImage(value);
 			}
 		});
 	}
 
-	private Object getLinkText(Object value) {
+	protected Object getImage(Object value) {
+		return Activator.getImage((URL) adapterFactoryItemDelegator.getImage(value));
+	}
+
+	protected Object getLinkText(Object value) {
 		String linkName = adapterFactoryItemDelegator.getText(value);
 		return linkName == null ? "" : linkName;
 	}

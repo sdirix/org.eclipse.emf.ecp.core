@@ -119,21 +119,6 @@ public class TableControl extends SWTControl {
 		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
-
-		// ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
-		// @Override
-		// protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-		// return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-		// || event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-		// || event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
-		// || event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
-		// }
-		// };
-		//
-		// TableViewerEditor.create(tableViewer, actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
-		// | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR | ColumnViewerEditor.TABBING_VERTICAL
-		// | ColumnViewerEditor.KEEP_EDITOR_ON_DOUBLE_CLICK | ColumnViewerEditor.KEYBOARD_ACTIVATION);
-
 		// create a content provider
 		ObservableListContentProvider cp = new ObservableListContentProvider();
 
@@ -142,6 +127,10 @@ public class TableControl extends SWTControl {
 		for (final EStructuralFeature feature : clazz.getEAllStructuralFeatures()) {
 			IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 				tempInstance, feature);
+			if (itemPropertyDescriptor == null) {
+				// if we can't render because no edit information is available, do nothing
+				continue;
+			}
 			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
 				tempInstance, tableViewer.getTable());
 			// create a new column

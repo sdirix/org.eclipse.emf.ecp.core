@@ -37,6 +37,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	public String getFormatedString(Object value) {
 		if (value == null) {
+			setErrorMessage("Value is null");
 			return "";
 		}
 
