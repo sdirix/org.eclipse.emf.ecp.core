@@ -196,4 +196,12 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		}
 		return dateFormat.format(cal);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	 */
+	public int getColumnWidthWeight() {
+		return 75;
+	}
 }

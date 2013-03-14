@@ -169,4 +169,12 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	public String getFormatedString(Object value) {
 		return adapterFactoryItemDelegator.getText(value);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	 */
+	public int getColumnWidthWeight() {
+		return 100;
+	}
 }

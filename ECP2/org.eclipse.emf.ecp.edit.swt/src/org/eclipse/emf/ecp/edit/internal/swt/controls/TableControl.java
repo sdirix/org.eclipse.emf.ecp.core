@@ -40,6 +40,7 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -56,10 +57,9 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
 import java.util.ArrayList;
@@ -108,12 +108,22 @@ public class TableControl extends SWTControl {
 		EClass clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
 		final Composite parentComposite = new Composite(parent, SWT.NONE);
-		parentComposite.setLayout(new GridLayout(2, false));
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(parentComposite);
+
+		Label label = new Label(parentComposite, SWT.NONE);
+		label.setText(getItemPropertyDescriptor().getDisplayName(null));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BOTTOM).grab(true, false).applyTo(label);
+
+		final Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BOTTOM).grab(false, false).applyTo(buttonComposite);
+		buttonComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		createAddRowButton(clazz, buttonComposite);
+		createRemoveRowButton(clazz, buttonComposite);
 
 		final Composite composite = new Composite(parentComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).hint(SWT.DEFAULT, 200)
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, 200).span(2, 1)
 			.applyTo(composite);
-		composite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
 		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
@@ -134,7 +144,8 @@ public class TableControl extends SWTControl {
 			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
 				tempInstance, tableViewer.getTable());
 			// create a new column
-			TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
+			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
+
 			// determine the attribute that should be observed
 			IObservableMap map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
@@ -147,8 +158,10 @@ public class TableControl extends SWTControl {
 						ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
 						String text = ecpCellEditor.getFormatedString(value);
 						cell.setText(text == null ? "" : text);
+						column.getColumn().setData("width", ecpCellEditor.getColumnWidthWeight());
 					} else {
 						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
+						column.getColumn().setData("width", 100);
 					}
 				}
 			});
@@ -156,9 +169,8 @@ public class TableControl extends SWTControl {
 			// set the column title & set the size
 			column.getColumn().setText(itemPropertyDescriptor.getDisplayName(null));
 			column.getColumn().setToolTipText(itemPropertyDescriptor.getDescription(null));
-			column.getColumn().setResizable(false);
+			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(false);
-
 			EditingSupport observableSupport = new EditingSupport(tableViewer) {
 				private EditingState editingState;
 
@@ -311,17 +323,9 @@ public class TableControl extends SWTControl {
 		// - the layout stops resizing columns that have been resized manually by the user (this could be considered a
 		// feature though)
 		for (TableColumn col : tableViewer.getTable().getColumns()) {
-			layout.setColumnData(col, new ColumnWeightData(100));
+
+			layout.setColumnData(col, new ColumnWeightData((Integer) col.getData("width")));
 		}
-
-		final Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
-		buttonComposite.setLayout(new FillLayout(SWT.VERTICAL));
-
-		createAddRowButton(clazz, buttonComposite);
-		createRemoveRowButton(clazz, buttonComposite);
-
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		buttonComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1));
 
 		return parentComposite;
 	}
