@@ -115,13 +115,12 @@ public class ECPControlContextImpl implements ECPControlContext {
 		}
 		// add the new object to the reference
 		// Object object = modelElement.eGet(eReference);
-		if (eReference.getUpperBound() > 1) {
-			getEditingDomain().getCommandStack().execute(
-				AddCommand.create(getEditingDomain(), modelElement, eReference, newMEInstance));
-
-		} else {
+		if (eReference.getUpperBound() == 1) {
 			getEditingDomain().getCommandStack().execute(
 				SetCommand.create(getEditingDomain(), modelElement, eReference, newMEInstance));
+		} else {
+			getEditingDomain().getCommandStack().execute(
+				AddCommand.create(getEditingDomain(), modelElement, eReference, newMEInstance));
 		}
 
 	}
