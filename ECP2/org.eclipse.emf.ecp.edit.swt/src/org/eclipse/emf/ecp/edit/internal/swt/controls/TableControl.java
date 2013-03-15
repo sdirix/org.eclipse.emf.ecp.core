@@ -43,14 +43,19 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationListener;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -129,6 +134,23 @@ public class TableControl extends SWTControl {
 		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
+
+		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
+			new FocusCellOwnerDrawHighlighter(tableViewer));
+		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
+			@Override
+			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
+					|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+			}
+		};
+
+		TableViewerEditor.create(tableViewer, focusCellManager, actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
+			| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR | ColumnViewerEditor.TABBING_VERTICAL
+			| ColumnViewerEditor.KEYBOARD_ACTIVATION);
+
 		// create a content provider
 		ObservableListContentProvider cp = new ObservableListContentProvider();
 
@@ -145,7 +167,6 @@ public class TableControl extends SWTControl {
 				tempInstance, tableViewer.getTable());
 			// create a new column
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
-
 			// determine the attribute that should be observed
 			IObservableMap map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
@@ -171,19 +192,20 @@ public class TableControl extends SWTControl {
 			column.getColumn().setToolTipText(itemPropertyDescriptor.getDescription(null));
 			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(false);
+			// remove if no editing needed
 			EditingSupport observableSupport = new EditingSupport(tableViewer) {
 				private EditingState editingState;
 
 				private final ColumnViewerEditorActivationListenerHelper activationListener = new ColumnViewerEditorActivationListenerHelper();
 
 				/**
-				 * 
 				 * Default implementation always returns <code>true</code>.
 				 * 
 				 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
 				 */
 				@Override
 				protected boolean canEdit(Object element) {
+					// return false here otherwise
 					return true;
 				}
 
