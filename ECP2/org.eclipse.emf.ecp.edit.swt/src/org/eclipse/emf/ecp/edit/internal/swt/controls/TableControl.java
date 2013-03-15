@@ -56,7 +56,9 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.TableViewerFocusCellManager;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -68,7 +70,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -155,7 +156,9 @@ public class TableControl extends SWTControl {
 		ObservableListContentProvider cp = new ObservableListContentProvider();
 
 		EObject tempInstance = clazz.getEPackage().getEFactoryInstance().create(clazz);
-
+		ECPTableViewerComparator comparator = new ECPTableViewerComparator();
+		tableViewer.setComparator(comparator);
+		int columnNumber = 0;
 		for (final EStructuralFeature feature : clazz.getEAllStructuralFeatures()) {
 			IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 				tempInstance, feature);
@@ -163,10 +166,12 @@ public class TableControl extends SWTControl {
 				// if we can't render because no edit information is available, do nothing
 				continue;
 			}
+
 			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
 				tempInstance, tableViewer.getTable());
 			// create a new column
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
+
 			// determine the attribute that should be observed
 			IObservableMap map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
@@ -187,6 +192,7 @@ public class TableControl extends SWTControl {
 				}
 			});
 
+			column.getColumn().addSelectionListener(getSelectionAdapter(comparator, column.getColumn(), columnNumber));
 			// set the column title & set the size
 			column.getColumn().setText(itemPropertyDescriptor.getDisplayName(null));
 			column.getColumn().setToolTipText(itemPropertyDescriptor.getDescription(null));
@@ -333,6 +339,7 @@ public class TableControl extends SWTControl {
 			};
 			column.setEditingSupport(observableSupport);
 
+			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
 		list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(), getModelElementContext()
@@ -350,6 +357,21 @@ public class TableControl extends SWTControl {
 		}
 
 		return parentComposite;
+	}
+
+	private SelectionAdapter getSelectionAdapter(final ECPTableViewerComparator comparator, final TableColumn column,
+		final int index) {
+		SelectionAdapter selectionAdapter = new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				comparator.setColumn(index);
+				int dir = comparator.getDirection();
+				tableViewer.getTable().setSortDirection(dir);
+				tableViewer.getTable().setSortColumn(column);
+				tableViewer.refresh();
+			}
+		};
+		return selectionAdapter;
 	}
 
 	private void createRemoveRowButton(EClass clazz, final Composite buttonComposite) {
@@ -430,8 +452,65 @@ public class TableControl extends SWTControl {
 		EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
 		EditingDomain editingDomain = getModelElementContext().getEditingDomain();
-		editingDomain.getCommandStack().execute(
-			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), Collections.singleton(instance)));
+		if (tableViewer.getSelection() == null) {
+			editingDomain.getCommandStack().execute(
+				AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
+		} else {
+			editingDomain.getCommandStack().execute(
+				AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance, tableViewer.getTable()
+					.getSelectionIndex()));
+		}
+
 	}
 
+	private class ECPTableViewerComparator extends ViewerComparator {
+		private int propertyIndex;
+		private static final int DESCENDING = 1;
+		private int direction = DESCENDING;
+
+		public ECPTableViewerComparator() {
+			propertyIndex = 0;
+			direction = DESCENDING;
+		}
+
+		public int getDirection() {
+			return direction == 1 ? SWT.DOWN : SWT.UP;
+		}
+
+		public void setColumn(int column) {
+			if (column == propertyIndex) {
+				// Same column as last sort; toggle the direction
+				direction = 1 - direction;
+			} else {
+				// New column; do an ascending sort
+				propertyIndex = column;
+				direction = DESCENDING;
+			}
+		}
+
+		@Override
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			int rc = 0;
+			EObject object1 = (EObject) e1;
+			EObject object2 = (EObject) e2;
+			EStructuralFeature feat1 = object1.eClass().getEAllStructuralFeatures().get(propertyIndex);
+			EStructuralFeature feat2 = object2.eClass().getEAllStructuralFeatures().get(propertyIndex);
+
+			Object value1 = object1.eGet(feat1);
+			Object value2 = object2.eGet(feat2);
+
+			if (value1 == null) {
+				rc = 1;
+			} else if (value2 == null) {
+				rc = -1;
+			} else {
+				rc = value1.toString().compareTo(value2.toString());
+			}
+			// If descending order, flip the direction
+			if (direction == DESCENDING) {
+				rc = -rc;
+			}
+			return rc;
+		}
+	}
 }
