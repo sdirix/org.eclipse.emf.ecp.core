@@ -10,7 +10,7 @@
  * Edgar Mueller - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.cachetree;
+package org.eclipse.emf.ecp.common.cachetree;
 
 import org.eclipse.emf.ecore.EObject;
 
