@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -39,9 +40,13 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -172,6 +177,12 @@ public class TableControl extends SWTControl {
 			// create a new column
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
 
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				column.getColumn().setData("width", ((ECPCellEditor) cellEditor).getColumnWidthWeight());
+			} else {
+				column.getColumn().setData("width", 100);
+			}
+
 			// determine the attribute that should be observed
 			IObservableMap map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
@@ -184,10 +195,10 @@ public class TableControl extends SWTControl {
 						ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
 						String text = ecpCellEditor.getFormatedString(value);
 						cell.setText(text == null ? "" : text);
-						column.getColumn().setData("width", ecpCellEditor.getColumnWidthWeight());
+
 					} else {
 						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
-						column.getColumn().setData("width", 100);
+
 					}
 				}
 			});
@@ -392,18 +403,32 @@ public class TableControl extends SWTControl {
 					return;
 				}
 
-				List<EObject> deletionList = new ArrayList<EObject>();
+				final List<EObject> deletionList = new ArrayList<EObject>();
 				Iterator<?> iterator = selection.iterator();
 
 				while (iterator.hasNext()) {
 					deletionList.add((EObject) iterator.next());
 				}
 
-				EObject modelElement = getModelElementContext().getModelElement();
-				EditingDomain editingDomain = getModelElementContext().getEditingDomain();
-				editingDomain.getCommandStack().execute(
-					RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
+				MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(), "Delete?", null,
+					"Are you sure you want to delete the selected Elements?", MessageDialog.CONFIRM, new String[] {
+						JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
+						JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
+				new ECPDialogExecutor(dialog) {
+
+					@Override
+					public void handleResult(int codeResult) {
+						if (codeResult == IDialogConstants.CANCEL_ID) {
+							return;
+						}
+
+						EObject modelElement = getModelElementContext().getModelElement();
+						EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+						editingDomain.getCommandStack().execute(
+							RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
+					}
+				}.execute();
 			}
 		});
 	}

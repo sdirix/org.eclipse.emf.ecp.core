@@ -79,4 +79,13 @@ public class EEnumControl extends SingleControl {
 		getDataBindingContext().bindValue(target, getModelValue());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "This is an enum field. You can select a value here.";
+	}
+
 }

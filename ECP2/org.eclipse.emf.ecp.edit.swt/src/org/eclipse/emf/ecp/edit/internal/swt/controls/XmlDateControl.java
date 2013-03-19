@@ -141,4 +141,13 @@ public class XmlDateControl extends SingleControl {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "A XMLGregorianDate control showing a date. The format is DD.MM.YYYY";
+	}
+
 }

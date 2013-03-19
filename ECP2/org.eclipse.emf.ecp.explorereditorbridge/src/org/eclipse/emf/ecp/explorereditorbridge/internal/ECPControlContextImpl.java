@@ -285,4 +285,13 @@ public class ECPControlContextImpl implements ECPControlContext {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#isRunningAsWebApplication()
+	 */
+	public boolean isRunningAsWebApplication() {
+		// TODO IMPLEMENT to be generic
+		return false;
+	}
+
 }

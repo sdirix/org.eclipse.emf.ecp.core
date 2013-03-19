@@ -29,6 +29,8 @@ import java.math.BigInteger;
  * @author Eugen Neufeld
  */
 public class NumericalControl extends AbstractTextControl {
+	private String helpText;
+
 	/**
 	 * Constructor for a String control.
 	 * 
@@ -41,6 +43,41 @@ public class NumericalControl extends AbstractTextControl {
 	public NumericalControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+
+		prepareHelpText();
+	}
+
+	/**
+	 * 
+	 */
+	private void prepareHelpText() {
+		Class<?> instanceClass = getStructuralFeature().getEType().getInstanceClass();
+		if (instanceClass.isPrimitive()) {
+			try {
+				if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+					helpText = "This is an Integer Field. The format is '#'.";
+				} else if (Double.class.getField("TYPE").get(null).equals(instanceClass)) {
+					helpText = "This is an Float Field. The format is '#.#'.";
+				}
+			} catch (NoSuchFieldException e) {
+				Activator.logException(e);
+			} catch (IllegalArgumentException e) {
+				Activator.logException(e);
+			} catch (IllegalAccessException e) {
+				Activator.logException(e);
+			} catch (SecurityException e) {
+				Activator.logException(e);
+			}
+
+		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
+			helpText = "This is an Integer Field. The format is '#'.";
+		} else if (Integer.class.isAssignableFrom(instanceClass)) {
+			helpText = "This is an Integer Field. The format is '#'.";
+		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
+			helpText = "This is an Float Field. The format is '#.#'.";
+		} else if (Double.class.isAssignableFrom(instanceClass)) {
+			helpText = "This is an Float Field. The format is '#.#'.";
+		}
 	}
 
 	@Override
@@ -59,32 +96,13 @@ public class NumericalControl extends AbstractTextControl {
 
 	@Override
 	protected void customizeText(Text text) {
-		Class<?> instanceClass = getStructuralFeature().getEType().getInstanceClass();
-		if (instanceClass.isPrimitive()) {
-			try {
-				if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
-					text.setToolTipText("This is an Integer Field. The format is '#'.");
-				} else if (Double.class.getField("TYPE").get(null).equals(instanceClass)) {
-					text.setToolTipText("This is an Float Field. The format is '#.#'.");
-				}
-			} catch (NoSuchFieldException e) {
-				Activator.logException(e);
-			} catch (IllegalArgumentException e) {
-				Activator.logException(e);
-			} catch (IllegalAccessException e) {
-				Activator.logException(e);
-			} catch (SecurityException e) {
-				Activator.logException(e);
-			}
-
-		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
-			text.setToolTipText("This is an Integer Field. The format is '#'.");
-		} else if (Integer.class.isAssignableFrom(instanceClass)) {
-			text.setToolTipText("This is an Integer Field. The format is '#'.");
-		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
-			text.setToolTipText("This is an Float Field. The format is '#.#'.");
-		} else if (Double.class.isAssignableFrom(instanceClass)) {
-			text.setToolTipText("This is an Float Field. The format is '#.#'.");
+		if (!getModelElementContext().isRunningAsWebApplication()) {
+			text.setToolTipText(helpText);
 		}
+	}
+
+	@Override
+	protected String getHelpText() {
+		return helpText;
 	}
 }

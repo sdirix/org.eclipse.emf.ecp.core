@@ -15,14 +15,21 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
@@ -59,11 +66,14 @@ public abstract class SingleControl extends SWTControl {
 	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	public Composite createControl(Composite parent) {
+	public Composite createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		int numColumns = 2;
 		if (isEmbedded()) {
 			numColumns--;
+		}
+		if (getModelElementContext().isRunningAsWebApplication()) {
+			numColumns++;
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
@@ -79,8 +89,37 @@ public abstract class SingleControl extends SWTControl {
 		fillInnerComposite(innerComposite);
 		setEditable(isEditable());
 		bindValue();
+
+		if (getModelElementContext().isRunningAsWebApplication()) {
+			Button b = new Button(composite, SWT.PUSH);
+			b.setImage(Activator.getImage("icons/help.png"));
+			b.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					super.widgetSelected(e);
+					MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
+						MessageDialog.INFORMATION, new String[] { JFaceResources
+							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+					new ECPDialogExecutor(dialog) {
+
+						@Override
+						public void handleResult(int codeResult) {
+
+						}
+					}.execute();
+				}
+
+			});
+		}
+
 		return composite;
 	}
+
+	/**
+	 * @return
+	 */
+	protected abstract String getHelpText();
 
 	/**
 	 * This method must be overridden by concrete classes. Here the widget displaying the data is added to the

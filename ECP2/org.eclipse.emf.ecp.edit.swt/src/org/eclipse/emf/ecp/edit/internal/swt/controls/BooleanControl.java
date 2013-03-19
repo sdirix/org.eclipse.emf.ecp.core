@@ -69,4 +69,13 @@ public class BooleanControl extends SingleControl {
 		IObservableValue targetValue = SWTObservables.observeSelection(check);
 		getDataBindingContext().bindValue(targetValue, getModelValue());
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "This is a boolean field";
+	}
 }
