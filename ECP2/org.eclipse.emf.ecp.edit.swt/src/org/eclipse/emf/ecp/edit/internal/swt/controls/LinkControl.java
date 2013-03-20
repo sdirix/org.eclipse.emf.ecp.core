@@ -71,7 +71,7 @@ public class LinkControl extends SingleControl {
 
 	private Label imageHyperlink;
 
-	private ComposedAdapterFactory composedAdapterFactory;
+	protected ComposedAdapterFactory composedAdapterFactory;
 
 	// private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
