@@ -13,10 +13,10 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
+import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
+import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.cachetree.AbstractCachedTree;
-import org.eclipse.emf.ecp.ui.cachetree.CachedTreeNode;
-import org.eclipse.emf.ecp.ui.cachetree.IExcludedObjectsCallback;
 
 import java.util.HashMap;
 import java.util.Map;

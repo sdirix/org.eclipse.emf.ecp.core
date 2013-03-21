@@ -9,7 +9,7 @@
  * Contributors:
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.cachetree;
+package org.eclipse.emf.ecp.common.cachetree;
 
 import java.util.Collection;
 import java.util.HashMap;

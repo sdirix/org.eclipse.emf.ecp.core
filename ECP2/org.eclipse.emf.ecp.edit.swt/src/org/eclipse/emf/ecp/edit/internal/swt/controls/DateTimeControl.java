@@ -166,4 +166,13 @@ public class DateTimeControl extends SingleControl {
 		getDataBindingContext().bindValue(target, getModelValue());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "This is a date-time control. The date field is DD.MM.YYYY and the time field is mm:hh";
+	}
+
 }

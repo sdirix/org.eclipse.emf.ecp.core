@@ -68,4 +68,6 @@ public interface ECPControlContext {
 	EObject getNewElementFor(EReference eReference);
 
 	EObject getExistingElementFor(EReference eReference);
+	
+	boolean isRunningAsWebApplication();
 }

@@ -189,4 +189,12 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		}
 		return dateFormat.format(cal.toGregorianCalendar().getTime());
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	 */
+	public int getColumnWidthWeight() {
+		return 75;
+	}
 }

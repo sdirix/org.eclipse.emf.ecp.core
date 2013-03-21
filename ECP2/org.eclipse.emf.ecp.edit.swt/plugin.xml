@@ -2,6 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="celleditor" name="ECP SWT Table CellEditor" schema="schema/celleditor.exsd"/>
+   <extension-point id="dialogWrapper" name="Dialog Wrapper" schema="schema/dialogWrapper.exsd"/>
    <extension
          point="org.eclipse.emf.ecp.edit.controls">
       <control

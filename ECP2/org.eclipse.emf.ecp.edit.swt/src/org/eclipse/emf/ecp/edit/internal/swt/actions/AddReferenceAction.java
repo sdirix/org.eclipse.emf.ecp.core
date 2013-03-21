@@ -54,7 +54,7 @@ public class AddReferenceAction extends ECPSWTAction {
 		IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			modelElementContext.getModelElement());
 
-		Image image = Activator.getImage((URL) labelProvider.getImage(obj));
+		Image image = Activator.getImage(obj == null ? null : (URL) labelProvider.getImage(obj));
 
 		String overlayString = "icons/link_overlay.png";//$NON-NLS-1$
 		if (eReference.isContainment()) {
@@ -83,6 +83,9 @@ public class AddReferenceAction extends ECPSWTAction {
 	@Override
 	public void run() {
 		EObject selectedEObject = getModelElementContext().getExistingElementFor((EReference) getFeature());
+		if (selectedEObject == null) {
+			return;
+		}
 		getModelElementContext().addModelElement(selectedEObject, (EReference) getFeature());
 		getModelElementContext().openEditor(selectedEObject);
 

@@ -73,4 +73,13 @@ public class StringControl extends AbstractTextControl {
 	protected String getTextVariantID() {
 		return "org_eclipse_emf_ecp_control_swt_string";
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "This is a free text control.";
+	}
 }

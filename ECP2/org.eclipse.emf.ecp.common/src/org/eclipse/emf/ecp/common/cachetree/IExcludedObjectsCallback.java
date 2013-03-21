@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.cachetree;
+package org.eclipse.emf.ecp.common.cachetree;
 
 /**
  * @author Eugen Neufeld

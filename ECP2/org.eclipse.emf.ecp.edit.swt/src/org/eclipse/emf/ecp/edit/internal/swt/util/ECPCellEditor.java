@@ -21,4 +21,13 @@ public interface ECPCellEditor {
 	 * @return
 	 */
 	String getFormatedString(Object value);
+
+	/**
+	 * The returned value is used for layouting the table columns. The value is a relative column weight. A column
+	 * containing text has a weight of 100. Please consider this when defining you weight. E.g if you return 200 your
+	 * column will be twice the width of a text column.
+	 * 
+	 * @return the relative column width
+	 */
+	int getColumnWidthWeight();
 }

@@ -48,4 +48,12 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		return ((Number) value).toString();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	 */
+	public int getColumnWidthWeight() {
+		return 50;
+	}
+
 }

@@ -127,6 +127,9 @@ public class NewReferenceAction extends ECPSWTAction {
 		// getModelElementContext().getEditingDomain().getCommandStack()
 		// .execute(new NewReferenceCommand(getModelElementContext().getModelElement()));
 		EObject eObject = getModelElementContext().getNewElementFor((EReference) getFeature());
+		if (eObject == null) {
+			return;
+		}
 		getModelElementContext().addModelElement(eObject, (EReference) getFeature());
 		getModelElementContext().openEditor(eObject);
 	}

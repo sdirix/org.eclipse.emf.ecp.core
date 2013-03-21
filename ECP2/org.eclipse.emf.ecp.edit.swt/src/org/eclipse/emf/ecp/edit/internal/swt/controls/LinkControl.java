@@ -71,7 +71,7 @@ public class LinkControl extends SingleControl {
 
 	private Label imageHyperlink;
 
-	private ComposedAdapterFactory composedAdapterFactory;
+	protected ComposedAdapterFactory composedAdapterFactory;
 
 	// private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
@@ -293,5 +293,14 @@ public class LinkControl extends SingleControl {
 		}
 		hyperlink.dispose();
 		super.dispose();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "A link control pointing to a referenced element.";
 	}
 }
