@@ -118,7 +118,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 				// TODO cast
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
 					EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
-						.getInternalAPIImpl())));
+						.toInternalAPI())));
 			}
 		});
 	}

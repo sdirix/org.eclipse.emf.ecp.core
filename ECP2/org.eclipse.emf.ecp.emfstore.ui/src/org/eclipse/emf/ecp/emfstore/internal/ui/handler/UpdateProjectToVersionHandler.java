@@ -42,8 +42,8 @@ public class UpdateProjectToVersionHandler extends AbstractHandler {
 		// TODO Ugly
 		if (projectSpace.getUsersession() == null) {
 			ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-			((ESLocalProjectImpl) projectSpace).getInternalAPIImpl().setUsersession(
-				((ESUsersessionImpl) serverInfo.getLastUsersession()).getInternalAPIImpl());
+			((ESLocalProjectImpl) projectSpace).toInternalAPI().setUsersession(
+				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectToVersionController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		project.notifyObjectsChanged(new Object[] { project }, true);

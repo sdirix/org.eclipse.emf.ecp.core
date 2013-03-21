@@ -119,7 +119,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public EditingDomain createEditingDomain(final InternalProject project) {
 
-		EditingDomain domain = ((ESWorkspaceImpl) ESWorkspaceProvider.INSTANCE.getWorkspace()).getInternalAPIImpl()
+		EditingDomain domain = ((ESWorkspaceImpl) ESWorkspaceProvider.INSTANCE.getWorkspace()).toInternalAPI()
 			.getEditingDomain();
 		return domain;
 	}
@@ -232,7 +232,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 		if (context instanceof InternalProject) {
 			ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
 
-			((ESLocalProjectImpl) projectSpace).getInternalAPIImpl().getProject().eAdapters().remove(adapter);
+			((ESLocalProjectImpl) projectSpace).toInternalAPI().getProject().eAdapters().remove(adapter);
 
 		}
 
@@ -253,7 +253,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			if (localProject == null) {
 				return;
 			}
-			ProjectSpace projectSpace = ((ESLocalProjectImpl) localProject).getInternalAPIImpl();
+			ProjectSpace projectSpace = ((ESLocalProjectImpl) localProject).toInternalAPI();
 
 			if (isAutosave()) {
 				// TODO EMFStore how to listen to operations?
@@ -305,7 +305,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		Collection<EObject> result = new HashSet<EObject>();
 		// TODO EMFStore does it work with ESLocalProject?
-		ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).getInternalAPIImpl();
+		ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
 		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result, projectSpace.getProject(),
 			eReference.getEType());
 		return result.iterator();
@@ -335,7 +335,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	public void delete(InternalProject project, final Collection<EObject> eObjects) {
-		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).getInternalAPIImpl();
+		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
 		// TODO EMFStore how to delete eObject?
 		new EMFStoreCommand() {
 
@@ -352,8 +352,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		// TODO EMFStore how to clone local project?
-		ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).getInternalAPIImpl();
-		ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).getInternalAPIImpl();
+		ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).toInternalAPI();
+		ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).toInternalAPI();
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
@@ -366,7 +366,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public Notifier getRoot(InternalProject project) {
 		// TODO EMFStore other way to get root of localproject?
-		return ((ESLocalProjectImpl) getProjectSpace(project)).getInternalAPIImpl().getProject();
+		return ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI().getProject();
 	}
 
 	@Override
@@ -499,10 +499,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 				serverInfo = EMFStoreClientUtil.createServerInfo(
 					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
 					Integer.parseInt(internalRepository.getProperties().getValue(EMFStoreProvider.PROP_PORT)),
-					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE)).getAPIImpl();
+					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE)).toAPI();
 				workspace.addServer(serverInfo);
 			} else if (!foundExisting && !internalRepository.getProperties().hasProperties()) {
-				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080).getAPIImpl();
+				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080).toAPI();
 			}
 			internalRepository.setProviderSpecificData(serverInfo);
 		}

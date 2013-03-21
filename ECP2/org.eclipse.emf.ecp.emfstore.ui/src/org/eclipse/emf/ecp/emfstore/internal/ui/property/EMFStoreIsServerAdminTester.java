@@ -48,7 +48,7 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 		}
 
 		ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(repository))
-			.getInternalAPIImpl();
+			.toInternalAPI();
 		Usersession usersession = serverInfo.getLastUsersession();
 		boolean isAdmin = false;
 		if (usersession != null && usersession.getACUser() != null) {

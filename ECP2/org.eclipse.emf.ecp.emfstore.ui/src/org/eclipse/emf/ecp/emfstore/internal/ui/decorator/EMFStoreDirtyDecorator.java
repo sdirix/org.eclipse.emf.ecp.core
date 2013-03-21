@@ -60,7 +60,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 				return;
 			}
 			ProjectSpace projectSpace = ((ESLocalProjectImpl) EMFStoreProvider.INSTANCE.getProjectSpace(project))
-				.getInternalAPIImpl();
+				.toInternalAPI();
 
 			if (!observers.containsKey(element)) {
 				EMFStoreDirtyObserver emfStoreDirtyObserver = new EMFStoreDirtyObserver(projectSpace, project);

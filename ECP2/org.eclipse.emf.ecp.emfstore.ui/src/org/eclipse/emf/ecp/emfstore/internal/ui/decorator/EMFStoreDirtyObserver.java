@@ -161,7 +161,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 			if (cdo.isDelete()) {
 				lastAffected.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).setOperationCount(
 					projectSpace.getProject().get(cdo.getModelElementId()),
-					modelElementIdToOperationCount.get(cdo.getModelElementId().getAPIImpl())));
+					modelElementIdToOperationCount.get(cdo.getModelElementId().toAPI())));
 
 				modelElementIdToOperationCount.remove(projectSpace.getProject().get(cdo.getModelElementId()));
 				// TODO: consider containments

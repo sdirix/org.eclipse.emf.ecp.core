@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.internal.wizards.ShareWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.util.RunESCommand;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
@@ -28,6 +29,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.util.concurrent.Callable;
 
 /**
  * This is the EMFStore ShareProject Handler delegating to the EMFStore {@link UIShareProjectController}.
@@ -50,14 +53,19 @@ public class ShareProjectHandler extends AbstractHandler {
 			// TODO internal cast again
 			InternalRepository repository = (InternalRepository) rw.getSelectedRepository();
 			project.undispose(repository);
-			ESLocalProject localProject = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+			final ESLocalProject localProject = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 
 			// TODO Ugly
 			if (localProject.getUsersession() == null) {
 				ESServerImpl server = (ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-				ServerInfo serverInfo = server.getInternalAPIImpl();
-				((ESLocalProjectImpl) localProject).getInternalAPIImpl()
-					.setUsersession(serverInfo.getLastUsersession());
+				final ServerInfo serverInfo = server.toInternalAPI();
+				RunESCommand.run(new Callable<Void>() {
+					public Void call() throws Exception {
+						((ESLocalProjectImpl) localProject).toInternalAPI().setUsersession(
+							serverInfo.getLastUsersession());
+						return null;
+					}
+				});
 			}
 			// TODO EMFStore Constructor is missing
 			new UIShareProjectController(HandlerUtil.getActiveShell(event), localProject).execute();

@@ -42,8 +42,8 @@ public class UpdateProjectHandler extends AbstractHandler {
 		// TODO EMFStore how to set user session?
 		if (projectSpace.getUsersession() == null) {
 			ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(project.getRepository());
-			((ESLocalProjectImpl) projectSpace).getInternalAPIImpl().setUsersession(
-				((ESUsersessionImpl) serverInfo.getLastUsersession()).getInternalAPIImpl());
+			((ESLocalProjectImpl) projectSpace).toInternalAPI().setUsersession(
+				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
 		project.notifyObjectsChanged(new Object[] { project }, true);
