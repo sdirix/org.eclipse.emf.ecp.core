@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.emfstore"
+      label="EMF Client Platform (EMFStore Support)"
+      version="1.0.0.qualifier"
+      provider-name="%providerName">
+
+   <description>
+      This Feature allows the use of the EMFStore for the EMF Client Platform.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <url>
+      <discovery label="EMFStore Update Site 1.0.0" url="http://download.eclipse.org/emf-store/releases/1.0.0"/>
+   </url>
+
+   <plugin
+         id="org.eclipse.emf.ecp.emfstore.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.emfstore.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.emfstore.ui.search"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

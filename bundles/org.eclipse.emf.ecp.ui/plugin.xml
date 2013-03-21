@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension-point id="uiProviders" name="ECP UI Providers" schema="schema/uiProviders.exsd"/>
+   <extension-point id="modelelementopener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
+   <extension-point id="dropadapter" name="ECP UI DropAdapaters" schema="schema/dropadapter.exsd"/>
+   <extension-point id="modelExplorerSettings" name="ECP Model Explorer Settings" schema="schema/modelExplorerSettings.exsd"/>
+	
+</plugin>

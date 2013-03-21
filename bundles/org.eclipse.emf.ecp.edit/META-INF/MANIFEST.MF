@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ECP Edit
+Bundle-SymbolicName: org.eclipse.emf.ecp.edit;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.emf.ecp.internal.edit.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;bundle-version="2.6.0",
+ org.eclipse.emf.edit;bundle-version="2.6.0",
+ org.eclipse.core.databinding;bundle-version="1.2.0";visibility:=reexport,
+ org.eclipse.emf.databinding.edit;bundle-version="1.2.0";visibility:=reexport
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.emf.ecp.edit;version="0.0.0",
+ org.eclipse.emf.ecp.editor.util,
+ org.eclipse.emf.ecp.internal.edit;version="0.0.0";x-internal:=true

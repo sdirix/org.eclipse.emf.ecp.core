@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.eclipse.emf.ecp.emfstore.provider"
+         name="EMFStore"
+         point="org.eclipse.emf.ecp.core.providers">
+      <provider
+            class="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider"
+            description="Integrates ECP with the EMFStore workspace.">
+      </provider>
+   </extension>
+
+</plugin>

@@ -1,0 +1,50 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: Boolean
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _aw0FMHHeEeKndsdNMEr_UQ
+Save-Time: 2/14/13 10:58 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-button -after [get-label "Is Professional"] | click
+get-editor "Player Jonas" | get-button -after [get-label "Is Professional"] | get-property "getSelection()" 
+    | equals true | verify-true
+get-editor "Player Jonas" | close
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-button -after [get-label "Is Professional"] | get-property "getSelection()" 
+    | equals true | verify-true
+get-editor "Player Jonas" | get-button -after [get-label "Is Professional"] | click
+get-editor "Player Jonas" | get-button -after [get-label "Is Professional"] | get-property "getSelection()" 
+    | equals false | verify-true
+get-editor "Player Jonas" | close
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-button -after [get-label "Is Professional"] | get-property "getSelection()" 
+    | equals false | verify-true
+
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/League America/Player Maximilian" 
+    | double-click
+get-editor "Player Maximilian" | get-button -after [get-label "Is Professional"] | click
+get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Commit | click
+with [get-window Commit] {
+    get-editbox -after [get-label "Log message:"] | set-text Bool
+    get-button OK | click
+}
+get-editor "Player Maximilian" | close
+get-editor "Player Jonas" | click
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/League America/Player Maximilian" | double-click
+    select TestProject | get-menu Update | click
+}
+get-window Update | get-button OK | click
+get-editor "Player Maximilian" | get-button -after [get-label "Is Professional"] | get-property "getSelection()" 
+    | equals true | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

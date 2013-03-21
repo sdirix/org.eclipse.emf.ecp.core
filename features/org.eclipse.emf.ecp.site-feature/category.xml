@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.emf.ecp.emfstore_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.emfstore" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.provider.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.workspace_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.workspace" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.provider.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.ui3x_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.ui3x" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.3x.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.validation.feature_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.validation.feature" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.extra.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.cdo_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.cdo" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.provider.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.example_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.example" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.extra.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.target_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.target" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.extra.category"/>
+   </feature>
+   <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
+   <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (at least one is required)"/>
+   <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>
+   <category-def name="org.eclipse.emf.ecp.extra.category" label="ECP Extra Feature"/>
+</site>

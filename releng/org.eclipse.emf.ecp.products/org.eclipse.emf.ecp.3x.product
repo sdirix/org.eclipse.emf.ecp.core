@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="ECP 3.x" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application3x.product" application="org.eclipse.emf.ecp.application3x.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="/org.eclipse.emf.ecp.ui.workbench/icons/bricks.png"/>
+
+   <launcher name="ecp">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.emf.ecp.ui3x"/>
+      <feature id="org.eclipse.emf.ecp"/>
+      <feature id="org.eclipse.emf.ecp.emfstore"/>
+      <feature id="org.eclipse.emf.ecp.workspace"/>
+      <feature id="org.eclipse.emf.ecp.cdo"/>
+      <feature id="org.eclipse.emf.ecp.license"/>
+      <feature id="org.eclipse.emf.ecp.target"/>
+      <feature id="org.eclipse.emf.ecp.example"/>
+      <feature id="org.eclipse.emf.ecp.validation.feature"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.emf.ecp.emfstore.localserver" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="1" />
+   </configurations>
+
+</product>

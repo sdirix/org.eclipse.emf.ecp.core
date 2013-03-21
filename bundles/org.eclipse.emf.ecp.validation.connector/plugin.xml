@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="org.eclipse.emf.ecp.validation.connector.ValidationFailedDecorator"
+            id="org.eclipse.emf.ecp.validation.InvalidDecorator"
+            label="Validation Failed Decorator"
+            lightweight="true"
+            state="true">
+         <enablement>
+            <or>
+               <objectClass
+                     name="org.eclipse.emf.ecore.EObject">
+               </objectClass>
+               <objectClass
+                     name="org.eclipse.emf.ecp.core.ECPProject">
+               </objectClass>
+            </or>
+         </enablement>
+      </decorator>
+   </extension>
+
+</plugin>

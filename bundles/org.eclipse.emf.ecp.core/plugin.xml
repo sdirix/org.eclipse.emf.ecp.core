@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension-point id="providers" name="ECP Providers" schema="schema/providers.exsd"/>
+   <extension-point id="repositories" name="ECP Repositories" schema="schema/repositories.exsd"/>
+   <extension-point id="filters" name="EMF Package Filter" schema="schema/filters.exsd"/>
+
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+         id="org.eclipse.emf.ecp.core.closeable.properties"
+         type="org.eclipse.emf.ecp.core.util.ECPCloseable"
+         namespace="org.eclipse.emf.ecp.core.closeable"
+         properties="open,closed"
+         class="org.eclipse.emf.ecp.internal.core.properties.ECPCloseableProperties$Tester"/>
+      <propertyTester
+         id="org.eclipse.emf.ecp.core.project.properties"
+         type="org.eclipse.emf.ecp.core.ECPProject"
+         namespace="org.eclipse.emf.ecp.core.project"
+         properties="name,repositoryName,repositoryLabel,providerName,providerLabel,hasAutosave,isDirty"
+         class="org.eclipse.emf.ecp.internal.core.properties.ECPProjectProperties$Tester"/>
+      <propertyTester
+            class="org.eclipse.emf.ecp.internal.core.properties.ECPDeletableProperties$Tester"
+            id="org.eclipse.emf.ecp.core.deletable.properties"
+            namespace="org.eclipse.emf.ecp.core.deletable"
+            properties="canDelete"
+            type="org.eclipse.emf.ecp.core.util.ECPDeletable">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.internal.core.properties.ECPRepositoryProperties$Tester"
+            id="org.eclipse.emf.ecp.core.repository.properties"
+            namespace="org.eclipse.emf.ecp.core.repository"
+            properties="name,repositoryLabel,providerName"
+            type="org.eclipse.emf.ecp.core.ECPRepository">
+      </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.eclipse.emf.ecp.core.isProjectSingle">
+         <with
+               variable="selection">
+            <and>
+               <count
+                     value="1">
+               </count>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.emf.ecp.core.ECPProject">
+                  </instanceof>
+               </iterate>
+            </and>
+         </with>
+      </definition>
+   </extension>
+</plugin>

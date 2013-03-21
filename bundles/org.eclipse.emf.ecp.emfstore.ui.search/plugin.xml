@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.search.modelelement"
+            name="Search Model Element">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.ui.search.SearchModelElementHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.search.modelelement">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.emf.ecp.ui.ModelExplorerView?after=additions">
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.search.modelelement"
+               icon="icons/magnifier.png"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                  variable="selection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <or>
+                           <and>
+                              <instanceof
+                                    value="org.eclipse.emf.ecp.core.ECPProject">
+                              </instanceof>
+                              <test
+                                    property="org.eclipse.emf.ecp.core.project.providerName"
+                                    value="org.eclipse.emf.ecp.emfstore.provider">
+                              </test>
+                           </and>
+                           <instanceof
+                                 value="org.eclipse.emf.ecore.EObject">
+                           </instanceof>
+                        </or>
+					  </iterate>
+					</and>
+				</with>
+			</visibleWhen>
+		 </command>
+	  </menuContribution>
+                        
+	</extension>
+
+</plugin>

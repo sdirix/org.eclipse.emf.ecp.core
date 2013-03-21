@@ -1,0 +1,41 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: SetString
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _Mr1VQYpNEeK80-dAVHg-DA
+Save-Time: 3/11/13 2:50 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | double-click
+with [get-editor "League America" | get-table] {
+    select Jonas | activate-cell-edit
+    with [get-editbox] {
+        set-text Eugen
+        key-type Enter
+    }
+    apply-cell-edit
+}
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Eugen" | double-click
+get-editor "Player Eugen" | get-editbox -after [get-label Name] | get-property text | equals Eugen | verify-true
+with [get-editor "Player Eugen" | get-editbox -after [get-label Name]] {
+    set-text "Jonas H"
+    key-type Enter
+}
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | double-click
+get-editor "League America" | get-table | get-item "Jonas H" | get-property columns -index 0 | equals "Jonas H" 
+    | verify-true
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Update | click
+get-window Update | get-button OK | click
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckOut/League America/Player Jonas H" 
+    | get-property caption | equals "Player Jonas H" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Application3x
+Bundle-SymbolicName: org.eclipse.emf.ecp.application3x; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.emf.ecp.application3x.Activator
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.emf.ecp.ui.workbench;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.ui;bundle-version="[3.1.0,4.0.0)"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.eclipse.core.resources,
+ org.eclipse.jface.action,
+ org.eclipse.jface.resource,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.widgets,
+ org.eclipse.ui;ui.workbench=split,
+ org.eclipse.ui.application,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.internal.application,
+ org.eclipse.ui.internal.ide,
+ org.eclipse.ui.internal.ide.model,
+ org.eclipse.ui.model,
+ org.eclipse.ui.plugin
+Export-Package: org.eclipse.emf.ecp.application3x;version="1.0.0";x-internal:=true
