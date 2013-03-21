@@ -89,6 +89,7 @@ public class Activator extends Plugin {
 			serverBrowser.setPort(7778);
 			serverBrowser.activate();
 		} catch (Exception e) {
+			log(e.getMessage());
 			// TODO: Please check this. Added. because EMFCP fails on start up if this port is in use
 		}
 	}
