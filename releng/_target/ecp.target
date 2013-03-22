@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="191">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="192">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.ide" version="4.2.1.M20120914-1800"/>
@@ -22,6 +22,16 @@
 <unit id="org.h2" version="1.1.117.v201105142352"/>
 <unit id="org.h2.source" version="1.1.117.v201105142352"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130321-1606"/>
+<repository location="http://download.eclipse.org/emf-store/milestones/latest"/>
 </location>
 </locations>
 </target>
