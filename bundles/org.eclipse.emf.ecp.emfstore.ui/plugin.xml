@@ -76,6 +76,10 @@
             id="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject"
             name="Create Remote Project">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.startLocalServer"
+            name="Start local server">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -552,6 +556,31 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.startLocalServer"
+               icon="icons/server_go.png"
+               label="Start Local server"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <test
+                              property="org.eclipse.emf.ecp.core.repository.providerName"
+                              value="org.eclipse.emf.ecp.emfstore.provider">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -757,6 +786,23 @@
             class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.CreateRemoteProjectHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject">
       </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.StartLocalServerHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.startLocalServer">
+         <enabledWhen>
+            <with
+                  variable="activeMenuSelection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isLocalAndNotRunning"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.decorators">
@@ -842,6 +888,13 @@
             namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
             properties="hasHistory"
             type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.property.EmfStoreLocalServerAndNotRunningTester"
+            id="org.eclipse.emf.ecp.emfstore.ui.testers.isLocalAndNotRunning"
+            namespace="org.eclipse.emf.ecp.emfstore.ui.testers"
+            properties="isLocalAndNotRunning"
+            type="org.eclipse.emf.ecp.core.ECPRepository">
       </propertyTester>
    </extension>
 	<extension

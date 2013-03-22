@@ -57,7 +57,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import java.io.IOException;
-import java.security.AccessControlException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -210,16 +209,17 @@ public final class EMFStoreProvider extends DefaultProvider {
 	private void handleCreate(final ECPModelContext context) {
 		if (context instanceof InternalRepository) {
 			ESServer serverInfo = getServerInfo((InternalRepository) context);
-			if (serverInfo.getLastUsersession() != null && !serverInfo.getLastUsersession().isLoggedIn()) {
-				try {
-					serverInfo.login(serverInfo.getLastUsersession().getUsername(), serverInfo.getLastUsersession()
-						.getPassword());
-				} catch (AccessControlException ex) {
-					Activator.log(ex);
-				} catch (ESException ex) {
-					Activator.log(ex);
-				}
-			}
+			// TODO autologin?
+			// if (serverInfo.getLastUsersession() != null && !serverInfo.getLastUsersession().isLoggedIn()) {
+			// try {
+			// serverInfo.login(serverInfo.getLastUsersession().getUsername(), serverInfo.getLastUsersession()
+			// .getPassword());
+			// } catch (AccessControlException ex) {
+			// Activator.log(ex);
+			// } catch (ESException ex) {
+			// Activator.log(ex);
+			// }
+			// }
 		} else if (context instanceof InternalProject) {
 			getProjectSpace((InternalProject) context);
 		}
