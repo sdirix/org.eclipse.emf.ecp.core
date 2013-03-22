@@ -17,60 +17,60 @@
 	</properties>
 
 	<modules>
-		<module>../_target</module>
-		<module>../org.eclipse.emf.ecp-feature</module>
-		<module>../org.eclipse.emf.ecp.application3x</module>
+		<module>../../releng/_target</module>
+		<module>../../features/org.eclipse.emf.ecp-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.application3x</module>
 		
 		
-		<module>../org.eclipse.emf.ecp.cdo-feature</module>
-		<module>../org.eclipse.emf.ecp.cdo.core</module>
-		<module>../org.eclipse.emf.ecp.cdo.ui</module>
+		<module>../../features/org.eclipse.emf.ecp.cdo-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
 		
 		
-		<module>../org.eclipse.emf.ecp.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.core</module>
 		<!--
-		<module>../org.eclipse.emf.ecp.core.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
 		 -->
-		<module>../org.eclipse.emf.ecp.core.emffilter</module>
-		<module>../org.eclipse.emf.ecp.example-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
+		<module>../../features/org.eclipse.emf.ecp.example-feature</module>
 		 
-		<module>../org.eclipse.emf.ecp.common</module>
+		<module>../../bundles/org.eclipse.emf.ecp.common</module>
 		<!-- 
 		<module>../org.eclipse.emf.ecp.example.bowlingmodel</module>
 		<module>../org.eclipse.emf.ecp.example.bowlingmodel.edit</module>
 		-->
 		
-		<module>../org.eclipse.emf.ecp.doc</module>
-		<module>../org.eclipse.emf.ecp.edit</module>
-		<module>../org.eclipse.emf.ecp.edit.swt</module>
-		<module>../org.eclipse.emf.ecp.editor</module>
-		<module>../org.eclipse.emf.ecp.editor.workbench</module>
+		<module>../../bundles/org.eclipse.emf.ecp.doc</module>
+		<module>../../bundles/org.eclipse.emf.ecp.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.editor</module>
+		<module>../../bundles/org.eclipse.emf.ecp.editor.workbench</module>
 		<!--
 		<module>../org.eclipse.emf.ecp.example.leagueView</module> 
 		<module>../org.eclipse.emf.ecp.editor.controls-feature</module>
 		<module>../org.eclipse.emf.ecp.editor.controls.multireferenceviewer</module>
 		-->
-		<module>../org.eclipse.emf.ecp.emfstore-feature</module>
-		<module>../org.eclipse.emf.ecp.emfstore.core</module>
-		<module>../org.eclipse.emf.ecp.emfstore.localserver</module>
-		<module>../org.eclipse.emf.ecp.emfstore.ui</module>
-		<module>../org.eclipse.emf.ecp.emfstore.ui.search</module>
-		<module>../org.eclipse.emf.ecp.explorereditorbridge</module>
-		<module>../org.eclipse.emf.ecp.license-feature</module>
-		<module>../org.eclipse.emf.ecp.products</module>
-		<module>../org.eclipse.emf.ecp.site-feature</module>
-		<module>../org.eclipse.emf.ecp.target-feature</module>
-		<module>../org.eclipse.emf.ecp.ui</module>
-		<module>../org.eclipse.emf.ecp.ui.workbench</module>
-		<module>../org.eclipse.emf.ecp.ui3x-feature</module>
-		<module>../org.eclipse.emf.ecp.validation</module>
-		<module>../org.eclipse.emf.ecp.validation-feature</module>
-		<module>../org.eclipse.emf.ecp.validation.connector</module>
-		<module>../org.eclipse.emf.ecp.validation.test</module>
-		<module>../org.eclipse.emf.ecp.workspace-feature</module>
-		<module>../org.eclipse.emf.ecp.workspace.core</module>
-		<module>../org.eclipse.emf.ecp.workspace.ui</module>
-		<module>../../ECPQ7Tests</module>
+		<module>../../features/org.eclipse.emf.ecp.emfstore-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.search</module>
+		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
+		<module>../../features/org.eclipse.emf.ecp.license-feature</module>
+		<module>../../releng/org.eclipse.emf.ecp.products</module>
+		<module>../../features/org.eclipse.emf.ecp.site-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.target-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.workbench</module>
+		<module>../../features/org.eclipse.emf.ecp.ui3x-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.validation</module>
+		<module>../../features/org.eclipse.emf.ecp.validation-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.validation.connector</module>
+		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+		<module>../../features/org.eclipse.emf.ecp.workspace-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
+		<module>../../tests/ECPQ7Tests</module>
 	</modules>
 	<repositories>
 	<repository>
@@ -152,7 +152,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${javadoc-version}</version>
 				<configuration>
-					<reportOutputDirectory>../org.eclipse.emf.ecp.doc/</reportOutputDirectory>
+					<reportOutputDirectory>../../bundles/org.eclipse.emf.ecp.doc/</reportOutputDirectory>
 					<destDir>target/ecp-doc</destDir>
 				</configuration>
 			</plugin>
