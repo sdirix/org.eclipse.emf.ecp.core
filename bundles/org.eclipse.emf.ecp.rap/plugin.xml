@@ -2,18 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
 
-   <extension
-         id="viewapp"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            thread="main"
-            cardinality="singleton-global"
-            visible="true">
-         <run
-               class="org.eclipse.emf.ecp.rap.Application">
-         </run>
-      </application>
-   </extension>
    
    <extension
          point="org.eclipse.ui.perspectives">
@@ -26,11 +14,18 @@
    <extension
          point="org.eclipse.rap.ui.branding">
       <branding
-            defaultEntrypointId="viewapp"
-            id="org.eclipse.emf.ecp.rap.branding1"
-            servletName="view"
+            id="org.eclipse.emf.ecp.rap.branding"
             title="RAP ECP">
       </branding>
+   </extension>
+   <extension
+         point="org.eclipse.rap.ui.entrypoint">
+      <entrypoint
+            brandingId="org.eclipse.emf.ecp.rap.branding"
+            class="org.eclipse.emf.ecp.rap.Application"
+            id="org.eclipse.emf.ecp.rap.entrypoint"
+            path="/ecpWeb">
+      </entrypoint>
    </extension>
    <!--
    <extension

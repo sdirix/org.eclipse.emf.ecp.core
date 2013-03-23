@@ -13,16 +13,16 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.edit.internal.swt.dialogs;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.explorereditorbridge.internal;version="1.0.0";x-friends:="org.eclipse.emf.ecp.rap.mobile"
-Import-Package: org.eclipse.core.commands,
+Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.emf.ecp.edit.internal.swt;version="1.0.0",
- org.eclipse.emf.edit.ui.provider,
- org.eclipse.jface.dialogs,
+ org.eclipse.emf.edit.ui.provider;version="0.0.0",
+ org.eclipse.jface.dialogs;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",
  org.eclipse.jface.window;version="0.0.0",
  org.eclipse.jface.wizard;version="0.0.0",
- org.eclipse.swt,
- org.eclipse.swt.layout,
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0",
  org.eclipse.ui;ui.workbench=split;version="0.0.0",
- org.eclipse.ui.dialogs,
+ org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0"
