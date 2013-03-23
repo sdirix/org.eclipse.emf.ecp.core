@@ -38,6 +38,7 @@ public class CreateBranchHandler extends AbstractHandler {
 		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore constructor missing
 		new UICreateBranchController(HandlerUtil.getActiveShell(event), projectSpace).execute();
+		project.notifyObjectsChanged(new Object[] { project }, false);
 		return null;
 	}
 

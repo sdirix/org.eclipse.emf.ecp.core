@@ -851,6 +851,22 @@
            </objectClass>
         </enablement>
      </decorator>
+      <decorator
+            adaptable="true"
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ProjectEMFStoreBranchDecorator"
+            id="org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreBranchDecorator"
+            label="EMFStoreBranch Decorator"
+            lightweight="false"
+            state="true">
+         <enablement>
+            <objectClass
+                  name="org.eclipse.emf.ecp.core.ECPProject">
+            </objectClass>
+         </enablement>
+         <description>
+            Show branch and version if shared
+         </description>
+      </decorator>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
@@ -914,4 +930,10 @@
             commitObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyDecorator">
       </observer>
    </extension>
+                <extension
+                      point="org.eclipse.emf.emfstore.client.shareObserver">
+                   <observer
+                         shareObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ProjectEMFStoreBranchDecorator">
+                   </observer>
+                </extension>
 </plugin>
