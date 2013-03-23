@@ -40,6 +40,7 @@ import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
+import org.eclipse.emf.emfstore.internal.client.model.impl.ProjectSpaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
@@ -47,6 +48,7 @@ import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.internal.client.observers.OperationObserver;
 import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
+import org.eclipse.emf.emfstore.internal.common.model.impl.ProjectImpl;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
@@ -272,8 +274,15 @@ public final class EMFStoreProvider extends DefaultProvider {
 			projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
 				// 2
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
+					if (modelElement instanceof ProjectImpl) {
+						ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
+						ECPProject ecpProject = getProject(projectSpace.toAPI());
 
-					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, false);
+						((InternalProject) context).notifyObjectsChanged(new Object[] { ecpProject }, true);
+
+					} else {
+						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, true);
+					}
 				}
 
 				// 3

@@ -150,12 +150,10 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		List<InternalProject> result = new ArrayList<InternalProject>();
 		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
 			if (project.isOpen()) {
-				ECPRepository repository = project.getRepository();
-				if (!ECPUtil.isDisposed(repository)) {
-					if (repository.getProvider().equals(this)) {
-						result.add((InternalProject) project);
-					}
+				if (project.getProvider().equals(this)) {
+					result.add((InternalProject) project);
 				}
+
 			}
 		}
 
