@@ -6,14 +6,22 @@ Element-Name: ClearUser
 Element-Type: context
 Element-Version: 2.0
 Id: _KY8s8YQIEeKCBM8mH5lmmw
-Save-Time: 3/3/13 3:04 PM
+Save-Time: 3/24/13 10:19 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
 Entry-Name: .ecl.context
 
 get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
-get-window "Progress Information" | get-window "Authentication required" | get-button OK | click
+with [get-window "Progress Information" | get-window "Authentication required"] {
+    with [get-combo -after [get-label Username]] {
+        set-text super
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    get-editbox -after [get-label Password] | set-text super
+    get-button | click
+    get-button OK | click
+}
 get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Manage Users\\/Groups..." | click
 with [get-window "Progress Information" | get-window -from "Window.createShell()"] {
     get-tab-folder | get-tab-item Users | click
