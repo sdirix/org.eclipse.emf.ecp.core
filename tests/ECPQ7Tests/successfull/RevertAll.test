@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _OPeisEJWEeKQh80wtWssKQ
-Save-Time: 2/14/13 5:14 PM
+Save-Time: 3/24/13 3:39 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -15,26 +15,17 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Model Explorer" | get-tree] {
-    select "TestProject/League America/Player Jonas" | get-menu "Delete Model Element" | click
-    select "TestProject/League America/Player Maximilian" | double-click
+    select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | get-menu "Delete Model Element" | click
+    select "TestProject \\[trunk, Version 0\\]/League America/Player Maximilian" | double-click
 }
 with [get-editor "Player Maximilian"] {
     get-editbox -after [get-label Name] | set-text Maximiliansasasa
 }
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Revert All Operations" | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "Revert All Operations" | click
 get-window Confirmation | get-button Yes | click
 get-window Revert | get-button OK | click
 with [get-view "Model Explorer" | get-tree] {
-    get-item "TestProject/League America" | get-property childCount | equals 2 | verify-true
-    get-item "TestProject/League America/Player Jonas" | get-property caption | equals "Player Jonas" | verify-true
+    get-item "TestProject \\[trunk, Version 0\\]/League America" | get-property childCount | equals 2 | verify-true
+    get-item "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | get-property caption | equals "Player Jonas" | verify-true
 }
-
-//Not necessary
-get-view "Model Explorer" | get-tree | select TestProject | get-menu Delete | click
-get-window Delete | get-button OK | click
-get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Delete | click
-get-window Delete | get-button OK | click
-get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Delete on server" | click
-get-window Confirmation | get-button Yes | click
-get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Logout | click
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -7,14 +7,14 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _oyrywG-UEeKndsdNMEr_UQ
-Save-Time: 3/2/13 2:31 PM
+Save-Time: 3/24/13 8:11 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Create Branch" | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "Create Branch" | click
 with [get-window "Create Branch"] {
     get-label "Create Branch" | get-property caption | equals "Create Branch" | verify-true
     get-table | get-item "Branch:  trunk  \\[Version: 0\\]" | get-property caption 
@@ -32,7 +32,7 @@ with [get-window Commit | get-tree] {
     get-property itemCount | equals 1 | verify-true
 }
 get-window Commit | get-button OK | click
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Create Branch" | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[TestBranchA, Version 1\\]" | get-menu "Create Branch" | click
 with [get-window "Create Branch"] {
     get-label "Create Branch" | get-property caption | equals "Create Branch" | verify-true
     with [get-table] {
@@ -49,8 +49,7 @@ with [get-window "Create Branch"] {
     get-button OK | click
 }
 get-window Commit | get-button OK | click
-get-view "Model Explorer" | get-tree | select TestProject
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Create Branch" | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[TestBranchB, Version 2\\]" | get-menu "Create Branch" | click
 with [get-window "Create Branch" | get-table] {
     get-property itemCount | equals 3 | verify-true
     get-item "Branch:  trunk  \\[Version: 0\\]" | get-property caption | equals "Branch:  trunk  [Version: 0]" 

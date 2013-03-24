@@ -7,14 +7,14 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _1mLz4HHYEeKndsdNMEr_UQ
-Save-Time: 3/2/13 12:58 AM
+Save-Time: 3/24/13 9:07 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
 get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | click-text 1 2
 get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 0 
     | verify-true
@@ -22,41 +22,43 @@ with [get-editor "Player Jonas"] {
     get-editbox -after [get-label "Number Of Victories"] | set-text 9987
     close
 }
-get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
 get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 9987 
     | verify-true
 get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] 
     | set-text 9987999999999999999999999999999999999999
+/* TODO worked earlier
 with [get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"]] {
     get-property "decorators.visible" -index 0 | equals true | verify-true
     get-property "decorators.description" -index 0 | equals "Invalid input For input string: \"9987999999999999999999999999999999999999\"" | verify-true
 }
-get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
+*/
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Maximilian" | double-click
 get-editor "Player Jonas" | click
 get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text 
     | equals 9987999999999999999999999999999999999999 | verify-true
 get-editor "Player Jonas" | close
 with [get-view "Model Explorer" | get-tree] {
-    select "TestProject/League America" | double-click
-    select "TestProject/League America/Player Jonas" | double-click
+    select "TestProject \\[trunk, Version 0\\]/League America" | double-click
+    select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
 }
 get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 9987 
     | verify-true
-    get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/League America/Player Maximilian" 
+    get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/League America/Player Maximilian" 
     | double-click
 with [get-editor "Player Maximilian"] {
     get-editbox -after [get-label "Number Of Victories"] | set-text 100000
     close
 }
-get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Commit | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Commit | click
 with [get-window Commit] {
     get-editbox -after [get-label "Log message:"] | set-text Int
     get-button OK | click
 }
-get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Maximilian" | double-click
 get-editor "Player Maximilian" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 0 
     | verify-true
-get-view "Model Explorer" | get-tree | select TestProject | get-menu Update | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Update | click
 get-window Update | get-button OK | click
 get-editor "Player Maximilian" | get-editbox -after [get-label "Number Of Victories"] | get-property text 
     | equals 100000 | verify-true

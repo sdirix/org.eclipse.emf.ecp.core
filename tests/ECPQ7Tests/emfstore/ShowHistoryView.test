@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _fqvcEG6-EeKbTKOCBYPcow
-Save-Time: 2/14/13 2:37 PM
+Save-Time: 3/24/13 8:51 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -25,9 +25,9 @@ with [get-window "ECPRepository Wizard"] {
     get-button Finish | click
 }
 get-window "Share succeeded" | get-button OK | click
-get-view "Model Explorer" | get-tree | select TestProject
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]"
 get-view "Model Explorer" | get-tree | get-menu "Show Historyview" | get-property enablement | equals true | verify-true
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Show Historyview" | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "Show Historyview" | click
 get-view "History Browser" | get-label "History for TestProject [trunk]" | get-property caption 
     | equals "History for TestProject [trunk]" | verify-true
 with [get-tab-folder -index 2] {
@@ -37,14 +37,14 @@ with [get-tab-folder -index 2] {
 get-view "History Browser" | get-tree | get-item "Local revision" | get-property childCount | equals 0 | verify-true
 get-view "History Browser" | get-tree | get-item "\\[HEAD,HEAD: trunk,BASE\\] \\*Version 0" | get-property caption 
     | equals "[HEAD,HEAD: trunk,BASE] *Version 0" | verify-true
-get-view "Model Explorer" | get-tree | select "TestProject/League Europe" | double-click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League Europe" | double-click
 get-editor "League Europe" | get-editbox -after [get-label Name] | set-text Europez
 get-view "History Browser" | get-tree | select "Local revision"
 get-button Refresh | click
 get-view "History Browser" | get-tree | get-item "Local revision" | get-property childCount | equals 1 | verify-true
-get-view "Model Explorer" | get-tree | select TestProject
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]"
 
-get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
 with [get-window Commit] {
     get-editbox -after [get-label "Log message:"] | set-text HistoryCommit
     get-button OK | click

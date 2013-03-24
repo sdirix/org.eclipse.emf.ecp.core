@@ -7,22 +7,22 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _7fNEUHXLEeK2tZkPdpUavQ
-Save-Time: 2/15/13 1:49 PM
+Save-Time: 3/24/13 9:47 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 34 | get-property "getChildren().length" | equals 0 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
+get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 0 | verify-true
 get-editor "Tournament Pro" | get-button "Link Player" | click
 with [get-window "Select Elements"] {
     get-table | select "Player Jonas"
     get-button OK | click
 }
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 34 | get-property "getChildren().length" | equals 1 | verify-true
+    get-control Any -index 44 | get-property "getChildren().length" | equals 1 | verify-true
     get-link "<a>Player Jonas</a>" | get-property caption | equals "<a>Player Jonas</a>" | verify-true
 }
 get-editor "Tournament Pro" | get-button "Link Player" | click
@@ -31,7 +31,7 @@ with [get-window "Select Elements"] {
     get-button OK | click
 }
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 34 | get-property "getChildren().length" | equals 2 | verify-true
+    get-control Any -index 44 | get-property "getChildren().length" | equals 2 | verify-true
     get-link "<a>Player Maximilian</a>" | get-property caption | equals "<a>Player Maximilian</a>" | verify-true
 }
 get-editor "Tournament Pro" | get-button "Create and link new Player" | click
@@ -43,7 +43,7 @@ get-editor Player | get-label "Player [Player]" | get-property caption | equals 
 get-editor Player | get-editbox -after [get-label Name] | set-text Hans
 get-editor "Tournament Pro" | click
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 34 | get-property "getChildren().length" | equals 3 | verify-true
+    get-control Any -index 44 | get-property "getChildren().length" | equals 3 | verify-true
     get-link "<a>Player Hans</a>" | get-property caption | equals "<a>Player Hans</a>" | verify-true
 }
 with [get-editor "Player Hans"] {
@@ -54,8 +54,8 @@ get-editor "Tournament Pro" | click
 get-editor "Tournament Pro" | get-link "<a>Player Hansilein</a>" | get-property caption 
     | equals "<a>Player Hansilein</a>" | verify-true
 get-editor "Tournament Pro" | get-button -after [get-link "<a>Player Hansilein</a>"] | click
-get-editor "Tournament Pro" | get-control Any -index 34 | get-property "getChildren().length" | equals 2 | verify-true
-get-view "Model Explorer" | get-tree | get-item "TestProject/Player Hansilein" | get-property caption 
+get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 2 | verify-true
+get-view "Model Explorer" | get-tree | get-item "TestProject \\[trunk, Version 0\\]/Player Hansilein" | get-property caption 
     | equals "Player Hansilein" | verify-true
 get-editor "Tournament Pro" | get-button "Create and link new Player" | click
 with [get-window "New Reference Element"] {
@@ -87,21 +87,21 @@ with [get-window "New Reference Element"] {
     get-button Finish | click
 }
 get-editor "Tournament Pro" | click
-get-editor "Tournament Pro" | get-control Any -index 34 | get-property "getChildren().length" | equals 6 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 6 | verify-true
 get-editor "Tournament Pro" | get-link "<a>Player</a>" -after [get-link "<a>Player</a>" 
     -after [get-link "<a>Player</a>"]] | click-link
 get-editor Player | get-editbox -after [get-label Name] | set-text Hravlad
 get-editor "Tournament Pro" | click
 get-editor "Tournament Pro" | get-link "<a>Player Hravlad</a>" | get-property caption | equals "<a>Player Hravlad</a>" 
     | verify-true
-get-view "Model Explorer" | get-tree | get-item "TestProject/Player Hravlad" | get-property caption 
+get-view "Model Explorer" | get-tree | get-item "TestProject \\[trunk, Version 0\\]/Player Hravlad" | get-property caption 
     | equals "Player Hravlad" | verify-true
 with [get-editor "Tournament Pro"] {
     get-button -after [get-link "<a>Player</a>" -after [get-link "<a>Player Hravlad</a>"]] | click
     get-button -after [get-link "<a>Player</a>" -after [get-link "<a>Player</a>"]] | click
     get-button -after [get-link "<a>Player</a>"] | click
 }
-get-editor "Tournament Pro" | get-control Any -index 34 | get-property "getChildren().length" | equals 3 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 3 | verify-true
 with [get-editor "Tournament Pro"] {
     get-button -after [get-link "<a>Player Maximilian</a>"] -index 1 | click
     get-button -after [get-link "<a>Player Hravlad</a>"] -index 1 | click
@@ -112,13 +112,13 @@ with [get-editor "Tournament Pro"] {
     get-link "<a>Player Jonas</a>" | get-property caption | equals "<a>Player Jonas</a>" | verify-true
     get-link "<a>Player Hravlad</a>" | get-property caption | equals "<a>Player Hravlad</a>" | verify-true
 }
-get-view "Model Explorer" | get-tree | select "TestProject/Player Hravlad" | get-menu "Delete Model Element" | click
-get-editor "Tournament Pro" | get-control Any -index 34 | get-property "getChildren().length" | equals 2 | verify-true
-get-view "Model Explorer" | get-tree | select TestProject | get-menu "Revert All Operations" | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Player Hravlad" | get-menu "Delete Model Element" | click
+get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 2 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "Revert All Operations" | click
 get-window Confirmation | get-button Yes | click
 get-window Revert | get-button OK | click
 get-editor "Tournament Pro" | close
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/Tournament Pro" | double-click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro" | double-click
 get-editor "Tournament Pro" | get-button "Link Player" | click
 get-window "Select Elements" | get-table | select "Player Jonas" | double-click
 get-editor "Tournament Pro" | get-button "Link Player" | click
@@ -132,15 +132,15 @@ with [get-editor Player] {
     get-editbox -after [get-label Name] | set-text Eugen
     close
 }
-get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Commit | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Commit | click
 get-window Commit | get-button OK | click
 get-editor "Tournament Pro" | close
-get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 34 | get-property "getChildren().length" | equals 0 | verify-true
-get-view "Model Explorer" | get-tree | select TestProject | get-menu Update | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
+get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 0 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Update | click
 get-window Update | get-button OK | click
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 34 | get-property "getChildren().length" | equals 3 | verify-true
+    get-control Any -index 44 | get-property "getChildren().length" | equals 3 | verify-true
     get-link "<a>Player Jonas</a>" | get-property caption | equals "<a>Player Jonas</a>" | verify-true
     get-link "<a>Player Maximilian</a>" | get-property caption | equals "<a>Player Maximilian</a>" | verify-true
     get-link "<a>Player Eugen</a>" | get-property caption | equals "<a>Player Eugen</a>" | verify-true
@@ -167,17 +167,17 @@ with [get-editor "Tournament Pro"] {
     get-button -after [get-link "<a>Player Jonas</a>"] -index 2 | click
     get-button -after [get-link "<a>Player Harald</a>"] -index 1 | click
 }
-get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 1\]" | get-menu Commit | click
 get-window Commit | get-button OK | click
 get-editor "Tournament Pro" | close
 with [get-view "Model Explorer" | get-tree] {
-    select "TestProjectSecondCheckOut/Tournament Pro" | double-click
-    select TestProjectSecondCheckOut | get-menu Update | click
+    select "TestProjectSecondCheckOut \\[trunk, Version 1\\]/Tournament Pro" | double-click
+    select "TestProjectSecondCheckOut \\[trunk, Version 1\\]" | get-menu Update | click
 }
 
 get-window Update | get-button OK | click
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 34 | get-property "getChildren().length" | equals 4 | verify-true
+    get-control Any -index 44 | get-property "getChildren().length" | equals 4 | verify-true
     get-link "<a>Player Maximilian</a>" | get-property caption | equals "<a>Player Maximilian</a>" | verify-true
     get-link "<a>Player Jonas</a>" | get-property caption | equals "<a>Player Jonas</a>" | verify-true
     get-link "<a>Player Harald</a>" | get-property caption | equals "<a>Player Harald</a>" | verify-true
@@ -199,15 +199,15 @@ with [get-editor "Tournament Pro"] {
     }
     close
 }
-get-view "Model Explorer" | get-tree | select TestProjectSecondCheckOut | get-menu Commit | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 2\\]" | get-menu Commit | click
 get-window Commit | get-button OK | click
 with [get-view "Model Explorer" | get-tree] {
-    select "TestProject/Tournament Pro" | double-click
-    select TestProject | get-menu Update | click
+    select "TestProject \\[trunk, Version 2\\]/Tournament Pro" | double-click
+    select "TestProject \\[trunk, Version 2\\]" | get-menu Update | click
 }
 get-window Update | get-button OK | click
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 34 | get-property "getChildren().length" | equals 3 | verify-true
+    get-control Any -index 44 | get-property "getChildren().length" | equals 3 | verify-true
     get-link "<a>Player Jonas</a>" | get-property caption | equals "<a>Player Jonas</a>" | verify-true
     get-link "<a>Player Maximilian</a>" | get-property caption | equals "<a>Player Maximilian</a>" | verify-true
     get-link "<a>Player Eugen</a>" | get-property caption | equals "<a>Player Eugen</a>" | verify-true
