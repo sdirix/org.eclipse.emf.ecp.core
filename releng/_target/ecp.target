@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="194">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="195">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.8.1.v20120917-0436"/>
@@ -24,14 +24,14 @@
 <repository location="http://download.eclipse.org/eclipse/updates/4.2"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130324-2201"/>
-<repository location="https://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/749/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.0.v20130324-2320"/>
+<repository location="http://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/750/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
 </location>
 </locations>
 </target>
