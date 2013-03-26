@@ -22,14 +22,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<compress>true</compress>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-        		<artifactId>tycho-packaging-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<archiveSite>true</archiveSite>
+					<finalName>repository</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
