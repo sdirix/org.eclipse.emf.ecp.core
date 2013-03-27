@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _MdOp4W60EeKbTKOCBYPcow
-Save-Time: 3/24/13 5:01 PM
+Save-Time: 3/27/13 3:40 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -22,7 +22,7 @@ get-window Commit | get-editbox -after [get-label "Log message:"] | set-text Tes
 with [get-window Commit] {
     get-label "Commit your local changes of project \"TestProject\" to the server" | get-property caption 
         | equals "Commit your local changes of project \"TestProject\" to the server" | verify-true
-    get-tree | get-item "Change Package" | get-property "getItemCount()" | equals 2 // This should actually be one ? 
+    get-tree | get-item "Change Package" | get-property "getItemCount()" | equals 3 //TODO This should actually be one ? 
         | verify-true
 }
 get-window Commit | get-button OK | click

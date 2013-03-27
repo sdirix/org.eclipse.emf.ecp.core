@@ -90,6 +90,7 @@ public class DateTimeControl extends SingleControl {
 			public void mouseUp(MouseEvent e) {
 				sl.topControl = dateTimeComposite;
 				parentComposite.layout(true);
+				getDataBindingContext().updateModels();
 			}
 
 			public void mouseDown(MouseEvent e) {

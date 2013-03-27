@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _GLHKgIpeEeK80-dAVHg-DA
-Save-Time: 3/24/13 10:07 PM
+Save-Time: 3/27/13 3:37 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -23,7 +23,7 @@ with [get-editor Matchup | get-editbox -after [get-label "Nr Spectators"]] {
     key-type "NUMPAD_ENTER" "\\u000D"
 }
 get-editor "Tournament Pro" | click
-get-editor "Tournament Pro" | get-table | get-item "\\[\\]" | get-property columns -index 1 | equals 45000 | verify-true
+get-editor "Tournament Pro" | get-table | get-item "" | get-property columns -index 1 | equals 45000 | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
 get-window Commit | get-button OK | click
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update | click

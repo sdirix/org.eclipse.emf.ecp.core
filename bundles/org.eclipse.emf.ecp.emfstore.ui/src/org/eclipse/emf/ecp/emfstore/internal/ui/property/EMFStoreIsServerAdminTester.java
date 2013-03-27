@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
-import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.internal.client.accesscontrol.AccessControlHelper;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
@@ -47,8 +46,7 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 			return false;
 		}
 
-		ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(repository))
-			.toInternalAPI();
+		ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(repository)).toInternalAPI();
 		Usersession usersession = serverInfo.getLastUsersession();
 		boolean isAdmin = false;
 		if (usersession != null && usersession.getACUser() != null) {
@@ -58,7 +56,7 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 				accessControlHelper.checkServerAdminAccess();
 				isAdmin = true;
 			} catch (AccessControlException e) {
-				Activator.log(e);
+				// not an admin -> ignore
 			}
 		}
 		return Boolean.valueOf(isAdmin).equals(expectedValue);

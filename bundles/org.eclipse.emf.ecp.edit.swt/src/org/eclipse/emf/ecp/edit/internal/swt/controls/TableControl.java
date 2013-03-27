@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFProperties;
+import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -68,7 +69,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -89,7 +89,6 @@ public class TableControl extends SWTControl {
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
-	private IObservableList list;
 
 	/**
 	 * Constructor for a String control.
@@ -123,11 +122,11 @@ public class TableControl extends SWTControl {
 
 		Label label = new Label(parentComposite, SWT.NONE);
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BOTTOM).grab(true, false).applyTo(label);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		final Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BOTTOM).grab(false, false).applyTo(buttonComposite);
-		buttonComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true).applyTo(buttonComposite);
 
 		createAddRowButton(clazz, buttonComposite);
 		createRemoveRowButton(clazz, buttonComposite);
@@ -135,8 +134,10 @@ public class TableControl extends SWTControl {
 		final Composite composite = new Composite(parentComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, 200).span(2, 1)
 			.applyTo(composite);
+
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(tableViewer.getTable());
 		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
@@ -184,7 +185,12 @@ public class TableControl extends SWTControl {
 			}
 
 			// determine the attribute that should be observed
-			IObservableMap map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
+			IObservableMap map = null;
+			if (feature.isMany()) {
+				map = new EObjectObservableMap(cp.getKnownElements(), feature);
+			} else {
+				map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
+			}
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
 				@Override
 				public void update(ViewerCell cell) {
@@ -353,8 +359,8 @@ public class TableControl extends SWTControl {
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-		list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(), getModelElementContext()
-			.getModelElement(), getStructuralFeature());
+		IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
+			getModelElementContext().getModelElement(), getStructuralFeature());
 		tableViewer.setInput(list);
 		TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
@@ -363,8 +369,8 @@ public class TableControl extends SWTControl {
 		// - the layout stops resizing columns that have been resized manually by the user (this could be considered a
 		// feature though)
 		for (TableColumn col : tableViewer.getTable().getColumns()) {
-
-			layout.setColumnData(col, new ColumnWeightData((Integer) col.getData("width")));
+			layout.setColumnData(col, new ColumnWeightData((Integer) col.getData("width"), 50));
+			// layout.setColumnData(col, new ColumnPixelData((Integer) col.getData("width")));
 		}
 
 		return parentComposite;
