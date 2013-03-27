@@ -44,6 +44,10 @@
             <configuration>
               <aut>
                 <explicit>${aut-base-path}/org.eclipse.emf.ecp.3x-[classifier].zip</explicit>
+                <args>
+                	<arg>-nl</arg>
+                	<arg>de</arg>
+                </args>
               </aut>
 
               <q7>
