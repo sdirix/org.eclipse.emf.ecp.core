@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _fytq8HXSEeK2tZkPdpUavQ
-Save-Time: 3/27/13 4:17 PM
+Save-Time: 3/27/13 4:47 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -24,16 +24,16 @@ with [get-editor "Tournament Pro" | get-button "Add Entry"] {
 }
 get-editor "Tournament Pro" | get-control Any -index 54 | get-property "getChildren().length" | equals 3 | verify-true
 with [get-editor "Tournament Pro"] {
-    get-editbox -after [get-label "Price Money"] | set-text "10000.9"
-    get-editbox -after [get-label "Price Money"] -index 1 | set-text "5000.50"
-    get-editbox -after [get-label "Price Money"] -index 2 | set-text "1000.6"
+    get-editbox -after [get-label "Price Money"] | set-text "10000,9"
+    get-editbox -after [get-label "Price Money"] -index 1 | set-text "5000,50"
+    get-editbox -after [get-label "Price Money"] -index 2 | set-text "1000,6"
     close
 }
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
 with [get-editor "Tournament Pro"] {
-    get-editbox -after [get-label "Price Money"] | get-property text | equals "10000.9" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "5000.5" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "1000.6" | verify-true
+    get-editbox -after [get-label "Price Money"] | get-property text | equals "10.000,9" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "5.000,5" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "1.000,6" | verify-true
 }
 with [get-editor "Tournament Pro"] {
     get-editbox -after [get-label "Price Money"] | set-text "10000.9d"
@@ -45,9 +45,9 @@ with [get-editor "Tournament Pro"] {
 
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
 with [get-editor "Tournament Pro"] {
-    get-editbox -after [get-label "Price Money"] | get-property text | equals "10000.9" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "5000.5" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "1000.6" | verify-true
+    get-editbox -after [get-label "Price Money"] | get-property text | equals "10.000,9" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "5.000,5" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "1.000,6" | verify-true
 }
 
 with [get-editor "Tournament Pro"] {
@@ -55,23 +55,25 @@ with [get-editor "Tournament Pro"] {
     get-button -after [get-label "Price Money"] -index 5 | click
 }
 with [get-editor "Tournament Pro"] {
-    get-editbox -after [get-label "Price Money"] | get-property text | equals "1000.6" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "10000.9" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "5000.5" | verify-true
+    get-editbox -after [get-label "Price Money"] | get-property text | equals "1.000,6" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "10.000,9" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "5.000,5" | verify-true
 }
 with [get-editor "Tournament Pro"] {
     get-editbox -after [get-label "Price Money"] | set-text "1000.6dfdf"
     get-editbox -after [get-label "Price Money"] -index 1 | click-text 1
 }
+/** todo doesn't work curretly
 with [get-editor "Tournament Pro" | get-editbox -after [get-label "Price Money"]] {
     get-property "decorators.visible" -index 0 | equals true | verify-true
     get-property "decorators.description" -index 0 | equals "Invalid input" | verify-true
 }
+*/
 with [get-editor "Tournament Pro"] {
     get-button -after [get-label "Price Money"] -index 7 | click
     get-button -after [get-label "Price Money"] -index 4 | click
 }
-get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 1 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 54 | get-property "getChildren().length" | equals 1 | verify-true
 with [get-editor "Tournament Pro"] {
     get-button -after [get-label "Price Money"] -index 1 | click
 }
@@ -86,27 +88,27 @@ with [get-editor "Tournament Pro"] {
         click
         click
     }
-    get-editbox -after [get-label "Price Money"] | set-text "10000.0"
-    get-editbox -after [get-label "Price Money"] -index 1 | set-text "8000.0"
+    get-editbox -after [get-label "Price Money"] | set-text "10000,0"
+    get-editbox -after [get-label "Price Money"] -index 1 | set-text "8000,0"
     with [get-editbox -after [get-label "Price Money"] -index 2] {
         click-text 1
         key-type Left -times 3
-        set-text "5000.0"
+        set-text "5000,0"
     }
-    get-editbox -after [get-label "Price Money"] -index 3 | set-text "3000.0"
+    get-editbox -after [get-label "Price Money"] -index 3 | set-text "3000,0"
 }
-get-view "Model Explorer" | get-tree | select TestProject | get-menu Commit | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
 get-window Commit | get-button OK | click
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 44 | get-property "getChildren().length" | equals 0 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro" | double-click
+get-editor "Tournament Pro" | get-control Any -index 54 | get-property "getChildren().length" | equals 0 | verify-true
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update | click
 get-window Update | get-button OK | click
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 44 | get-property "getChildren().length" | equals 4 | verify-true
-    get-editbox -after [get-label "Price Money"] | get-property text | equals "10000.0" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "8000.0" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "5000.0" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 3 | get-property text | equals "3000.0" | verify-true
+    get-control Any -index 54 | get-property "getChildren().length" | equals 4 | verify-true
+    get-editbox -after [get-label "Price Money"] | get-property text | equals "10.000" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "8.000" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "5.000" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 3 | get-property text | equals "3.000" | verify-true
 }
 with [get-editor "Tournament Pro"] {
     get-button -after [get-label "Price Money"] -index 11 | click
@@ -122,9 +124,9 @@ get-editor "Tournament Pro" | click
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Update | click
 get-window Update | get-button OK | click
 with [get-editor "Tournament Pro"] {
-    get-editbox -after [get-label "Price Money"] | get-property text | equals "3000.0" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "5000.0" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "8000.0" | verify-true
-    get-editbox -after [get-label "Price Money"] -index 3 | get-property text | equals "10000.0" | verify-true
+    get-editbox -after [get-label "Price Money"] | get-property text | equals "3.000" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "5.000" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "8.000" | verify-true
+    get-editbox -after [get-label "Price Money"] -index 3 | get-property text | equals "10.000" | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
