@@ -26,6 +26,7 @@
 		          	<testClass>org.eclipse.emf.ecp.core.test.AllTests</testClass>
 		          	<useUIHarness>false</useUIHarness>
 		          	<useUIThread>false</useUIThread>
+		          	<testFailureIgnore>true</testFailureIgnore>
 					<dependencies>
 						<dependency>
 							<type>eclipse-feature</type>
