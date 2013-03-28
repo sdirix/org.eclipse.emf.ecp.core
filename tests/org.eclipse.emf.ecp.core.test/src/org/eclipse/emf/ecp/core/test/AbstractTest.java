@@ -24,12 +24,15 @@ public abstract class AbstractTest {
 		repository = ECPRepositoryManager.INSTANCE.addRepository(provider, "repositoryName", "repositoryLabel",
 			"description", getNewProperties());
 		projectManager = ECPProjectManager.INSTANCE;
-		project = getProjectManager().createProject(getProvider(), "projectName");
+		
 	}
 
 	@Before
-	public void cleanup() {
-
+	public void cleanup() throws ProjectWithNameExistsException {
+		for(ECPProject existingProject:projectManager.getProjects()){
+			existingProject.delete();
+		}
+		project = getProjectManager().createProject(getProvider(), "projectName");
 	}
 
 	public ECPProject getProject() {

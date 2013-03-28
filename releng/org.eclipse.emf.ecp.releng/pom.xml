@@ -28,9 +28,9 @@
 		
 		
 		<module>../../bundles/org.eclipse.emf.ecp.core</module>
-		<!--
-		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
-		 -->
+		
+		
+		
 		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../../features/org.eclipse.emf.ecp.example-feature</module>
 		 
@@ -66,10 +66,14 @@
 		<module>../../bundles/org.eclipse.emf.ecp.validation</module>
 		<module>../../features/org.eclipse.emf.ecp.validation-feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.validation.connector</module>
-		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+		
 		<module>../../features/org.eclipse.emf.ecp.workspace-feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
+		
+		<!-- Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
 		<module>../../tests/ECPQ7Tests</module>
 	</modules>
 	<!-- 
