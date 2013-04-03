@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ControlDescription;
 import org.eclipse.emf.ecp.edit.ControlFactory;
-import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * This is a dynamic tester for an attribute multi control. It tests whether there is a control with a static tester which would fit. 

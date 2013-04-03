@@ -1,7 +1,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;

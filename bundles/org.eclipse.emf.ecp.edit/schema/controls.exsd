@@ -100,17 +100,17 @@ For SWT this is org.eclipse.swt.Composite.
    <element name="dynamicTest">
       <annotation>
          <documentation>
-            A dynamic test simply provides an implementation of the org.eclipse.emf.ecp.editor.util.ECPApplicableTester interface.
+            A dynamic test simply provides an implementation of the org.eclipse.emf.ecp.edit.util.ECPApplicableTester interface.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="testClass" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementation of the tester. The Class must extend the org.eclipse.emf.ecp.editor.util.ECPApplicableTester.
+                  The implementation of the tester. The Class must extend the org.eclipse.emf.ecp.edit.util.ECPApplicableTester.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.editor.util.ECPApplicableTester"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.util.ECPApplicableTester"/>
                </appinfo>
             </annotation>
          </attribute>

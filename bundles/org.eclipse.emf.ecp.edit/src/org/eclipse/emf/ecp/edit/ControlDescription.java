@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.edit;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 
 /**
  * This class describes the control extensionpoint. It is used to provide the possibility to access all known controls without reading the extension point.

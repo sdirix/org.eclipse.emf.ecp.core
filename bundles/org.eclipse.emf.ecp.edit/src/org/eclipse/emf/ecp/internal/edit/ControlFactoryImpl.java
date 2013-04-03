@@ -25,8 +25,8 @@ import org.eclipse.emf.ecp.edit.AbstractControl;
 import org.eclipse.emf.ecp.edit.ControlDescription;
 import org.eclipse.emf.ecp.edit.ControlFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.osgi.framework.Bundle;
 

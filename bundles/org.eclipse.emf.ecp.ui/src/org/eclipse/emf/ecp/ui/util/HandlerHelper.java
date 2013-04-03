@@ -57,6 +57,8 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import org.osgi.framework.Bundle;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -349,7 +351,7 @@ public final class HandlerHelper {
 						int priority = Integer.parseInt(testerElement.getAttribute("priority"));//$NON-NLS-1$
 						String type = testerElement.getAttribute("modelElement");
 						try {
-							Class<?> supportedClassType = Class.forName(type);
+							Class<?> supportedClassType = loadClass(testerElement.getContributor().getName(), type);
 							if (supportedClassType.isInstance(me)) {
 								if (priority > bestValue) {
 									bestCandidate = modelelementOpener;
@@ -385,6 +387,18 @@ public final class HandlerHelper {
 			Activator.log(e);
 		}
 		// END SUPRESS CATCH EXCEPTION
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
+		Bundle bundle = Platform.getBundle(bundleName);
+		if (bundle == null) {
+			// TODO externalize strings
+			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
+				+ " cannot be resolved"); //$NON-NLS-1$
+		}
+		return (Class<T>) bundle.loadClass(clazz);
 
 	}
 

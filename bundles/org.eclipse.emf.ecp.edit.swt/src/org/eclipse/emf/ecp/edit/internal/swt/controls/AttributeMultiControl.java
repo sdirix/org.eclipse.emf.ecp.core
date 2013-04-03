@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.editor.util.StaticApplicableTester;
+import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a multi attribute.

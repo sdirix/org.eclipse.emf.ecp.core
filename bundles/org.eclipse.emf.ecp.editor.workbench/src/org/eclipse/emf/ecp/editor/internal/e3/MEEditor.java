@@ -14,10 +14,10 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
+import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
-import org.eclipse.emf.ecp.editor.util.ModelElementChangeListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.core.runtime.CoreException;

@@ -3,7 +3,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.table;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.editor.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 public class LinkCellEditorTester implements ECPApplicableTester {
