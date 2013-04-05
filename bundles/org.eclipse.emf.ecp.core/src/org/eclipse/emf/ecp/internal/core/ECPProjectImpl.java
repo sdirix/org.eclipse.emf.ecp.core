@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectPreDeleteObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -281,8 +281,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public void notifyObjectsChanged(Object[] objects, boolean structural) {
-		if (objects != null && objects.length != 0) {
+	public void notifyObjectsChanged(Collection<Object> objects, boolean structural) {
+		if (objects != null && objects.size() != 0) {
 			// if (getProvider().isDirty(this)) {
 			// getProvider().doSave(this);
 			// }
@@ -340,7 +340,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/** {@inheritDoc} */
 	public void delete() {
-		ECPObserverBus.getInstance().notify(IECPProjectPreDeleteObserver.class).projectDelete(this);
+		ECPObserverBus.getInstance().notify(ECPProjectPreDeleteObserver.class).projectDelete(this);
 		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
 		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
 	}
@@ -531,7 +531,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		/** {@inheritDoc} */
-		public void notifyObjectsChanged(Object[] objects) {
+		public void notifyObjectsChanged(Collection<Object> objects) {
 		}
 	}
 
@@ -586,7 +586,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void deleteElements(Collection<EObject> eObjects) {
 		getProvider().delete(this, eObjects);
-		notifyObjectsChanged(new Object[] { this }, true);
+		notifyObjectsChanged((Collection) Collections.singleton(this), true);
 	}
 
 	/** {@inheritDoc} */

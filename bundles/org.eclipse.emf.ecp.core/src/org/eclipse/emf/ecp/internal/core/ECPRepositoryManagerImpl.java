@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
@@ -49,9 +49,8 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPRepositoryManagerImpl extends
-	PropertiesStore<InternalRepository, IECPRepositoriesChangedObserver> implements ECPRepositoryManager,
-	IECPProvidersChangedObserver {
+public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPRepositoriesChangedObserver>
+	implements ECPRepositoryManager, ECPProvidersChangedObserver {
 	/**
 	 * This Singleton is used by the {@link ECPRepositoryManager#INSTANCE}.
 	 */
@@ -109,10 +108,10 @@ public final class ECPRepositoryManagerImpl extends
 	 * @param repository the repository where the changes occured
 	 * @param objects the changed objects
 	 */
-	public void notifyObjectsChanged(ECPRepository repository, Object[] objects) {
+	public void notifyObjectsChanged(ECPRepository repository, Collection<Object> objects) {
 
 		try {
-			ECPObserverBus.getInstance().notify(IECPRepositoriesChangedObserver.class)
+			ECPObserverBus.getInstance().notify(ECPRepositoriesChangedObserver.class)
 				.objectsChanged(repository, objects);
 		} catch (Exception ex) {
 			Activator.log(ex);
@@ -120,7 +119,8 @@ public final class ECPRepositoryManagerImpl extends
 	}
 
 	/** {@inheritDoc} **/
-	public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception {
+	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
+		throws Exception {
 		Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {
 			load();
@@ -132,15 +132,16 @@ public final class ECPRepositoryManagerImpl extends
 		return new ECPRepositoryImpl(in);
 	}
 
-	@Override
-	protected InternalRepository[] createElementArray(int size) {
-		return new InternalRepository[size];
-	}
+	// @Override
+	// protected InternalRepository[] createElementArray(int size) {
+	// return new InternalRepository[size];
+	// }
 
 	@Override
-	protected void notifyObservers(IECPRepositoriesChangedObserver observer, InternalRepository[] oldRepositories,
-		InternalRepository[] newRepositories) throws Exception {
-		observer.repositoriesChanged(oldRepositories, newRepositories);
+	protected void notifyObservers(ECPRepositoriesChangedObserver observer,
+		Collection<InternalRepository> oldRepositories, Collection<InternalRepository> newRepositories)
+		throws Exception {
+		observer.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
 	}
 
 	@Override
@@ -244,7 +245,7 @@ public final class ECPRepositoryManagerImpl extends
 		}
 
 		/** {@inheritDoc} */
-		public void notifyObjectsChanged(Object[] objects) {
+		public void notifyObjectsChanged(Collection<Object> objects) {
 			getResolvedElement().notifyObjectsChanged(objects);
 		}
 

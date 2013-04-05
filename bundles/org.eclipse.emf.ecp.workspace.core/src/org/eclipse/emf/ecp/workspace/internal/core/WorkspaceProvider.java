@@ -290,14 +290,14 @@ public class WorkspaceProvider extends DefaultProvider {
 
 			if (notification.getNotifier() instanceof EObject) {
 				EObject eObject = (EObject) notification.getNotifier();
-				project.notifyObjectsChanged(new Object[] { eObject }, false);
+				project.notifyObjectsChanged((Collection) Collections.singleton(eObject), false);
 
 				Object feature = notification.getFeature();
 				if (feature instanceof EReference) {
 					EReference eReference = (EReference) feature;
 
 					if (eReference.isContainment() && notification.getNewValue() instanceof EObject) {
-						project.notifyObjectsChanged(new Object[] { notification.getNewValue() }, true);
+						project.notifyObjectsChanged(Collections.singleton(notification.getNewValue()), true);
 					}
 
 				}

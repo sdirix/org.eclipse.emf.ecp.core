@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecp.validation.connector;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +19,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectObjectsChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -114,13 +115,13 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Project change observer that validates changed objects.
 	 */
-	private class ValidationObserver implements IECPProjectsChangedUIObserver, IECPProjectObjectsChangedObserver {
+	private class ValidationObserver implements ECPProjectsChangedUIObserver, ECPProjectObjectsChangedObserver {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
-		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
-			List<ECPProject> newProjectList = Arrays.asList(newProjects);
+		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception {
+//			List<ECPProject> newProjectList = Arrays.asList(newProjects);
 			for (ECPProject project : oldProjects) {
-				if (!newProjectList.contains(project)) {
+				if (!newProjects.contains(project)) {
 					getValidationServiceProvider().deleteValidationService(project);
 				}
 			}
@@ -129,11 +130,11 @@ public class Activator extends AbstractUIPlugin {
 		public void projectChanged(ECPProject project, boolean opened) throws Exception {
 		}
 
-		public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
+		public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
 		}
 
-		public Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception {
-			Set<EObject> allAffectedElements = new HashSet<EObject>();
+		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) throws Exception {
+			Set<Object> allAffectedElements = new HashSet<Object>();
 			
 			for (Object object : objects) {
 				if (object instanceof EObject) {
@@ -151,7 +152,7 @@ public class Activator extends AbstractUIPlugin {
 					}
 				}
 			}
-			return allAffectedElements.toArray();
+			return allAffectedElements;
 		}		
 	}
 

@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ import java.util.Set;
  * This is a universal observer bus. This class follows the publish/subscribe pattern, it is a central dispatcher for
  * observers and makes use of generics in order to allow type safety. It can be used as singleton or be injected through
  * DI.
- * Observers have to implement the {@link IECPObserver} interface, which is only used as a marker. Future use of
+ * Observers have to implement the {@link ECPObserver} interface, which is only used as a marker. Future use of
  * Annotations is possible.
  * by using {@link #notify(Class)} (e.g. <code>bus.notify(MyObserver.class).myObserverMethod()</code>) all registered
  * Observers are notified.
@@ -100,13 +101,13 @@ public class ECPObserverBus {
 		return SingletonHolder.INSTANCE;
 	}
 
-	private HashMap<Class<? extends IECPObserver>, List<IECPObserver>> observerMap;
+	private HashMap<Class<? extends ECPObserver>, List<ECPObserver>> observerMap;
 
 	/**
 	 * Default constructor.
 	 */
 	public ECPObserverBus() {
-		observerMap = new HashMap<Class<? extends IECPObserver>, List<IECPObserver>>();
+		observerMap = new HashMap<Class<? extends ECPObserver>, List<ECPObserver>>();
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class ECPObserverBus {
 	 * @param clazz class of observer
 	 * @return call object
 	 */
-	public <T extends IECPObserver> T notify(Class<T> clazz) {
+	public <T extends ECPObserver> T notify(Class<T> clazz) {
 		return notify(clazz, false);
 	}
 
@@ -129,7 +130,7 @@ public class ECPObserverBus {
 	 * 
 	 * @return call object
 	 */
-	public <T extends IECPObserver> T notify(Class<T> clazz, boolean prioritized) {
+	public <T extends ECPObserver> T notify(Class<T> clazz, boolean prioritized) {
 		if (clazz == null) {
 			return null;
 		}
@@ -141,7 +142,7 @@ public class ECPObserverBus {
 	 * 
 	 * @param observer observer object
 	 */
-	public void register(IECPObserver observer) {
+	public void register(ECPObserver observer) {
 		register(observer, getObserverInterfaces(observer));
 	}
 
@@ -151,8 +152,8 @@ public class ECPObserverBus {
 	 * @param observer observer object
 	 * @param classes set of classes
 	 */
-	public void register(IECPObserver observer, Class<? extends IECPObserver>... classes) {
-		for (Class<? extends IECPObserver> iface : classes) {
+	public void register(ECPObserver observer, Class<? extends ECPObserver>... classes) {
+		for (Class<? extends ECPObserver> iface : classes) {
 			if (iface.isInstance(observer)) {
 				addObserver(observer, iface);
 			}
@@ -164,7 +165,7 @@ public class ECPObserverBus {
 	 * 
 	 * @param observer observer object
 	 */
-	public void unregister(IECPObserver observer) {
+	public void unregister(ECPObserver observer) {
 		unregister(observer, getObserverInterfaces(observer));
 	}
 
@@ -174,39 +175,39 @@ public class ECPObserverBus {
 	 * @param observer observer object
 	 * @param classes set of classes
 	 */
-	public void unregister(IECPObserver observer, Class<? extends IECPObserver>... classes) {
-		for (Class<? extends IECPObserver> iface : classes) {
+	public void unregister(ECPObserver observer, Class<? extends ECPObserver>... classes) {
+		for (Class<? extends ECPObserver> iface : classes) {
 			if (iface.isInstance(observer)) {
 				removeObserver(observer, iface);
 			}
 		}
 	}
 
-	private void addObserver(IECPObserver observer, Class<? extends IECPObserver> iface) {
-		List<IECPObserver> observers = initObserverList(iface);
+	private void addObserver(ECPObserver observer, Class<? extends ECPObserver> iface) {
+		List<ECPObserver> observers = initObserverList(iface);
 		observers.add(observer);
 	}
 
-	private void removeObserver(IECPObserver observer, Class<? extends IECPObserver> iface) {
-		List<IECPObserver> observers = initObserverList(iface);
+	private void removeObserver(ECPObserver observer, Class<? extends ECPObserver> iface) {
+		List<ECPObserver> observers = initObserverList(iface);
 		observers.remove(observer);
 	}
 
-	private List<IECPObserver> initObserverList(Class<? extends IECPObserver> iface) {
-		List<IECPObserver> list = observerMap.get(iface);
+	private List<ECPObserver> initObserverList(Class<? extends ECPObserver> iface) {
+		List<ECPObserver> list = observerMap.get(iface);
 		if (list == null) {
-			list = new ArrayList<IECPObserver>();
+			list = new ArrayList<ECPObserver>();
 			observerMap.put(iface, list);
 		}
 		return list;
 	}
 
-	private List<IECPObserver> getObserverByClass(Class<? extends IECPObserver> clazz) {
-		List<IECPObserver> list = observerMap.get(clazz);
+	private List<ECPObserver> getObserverByClass(Class<? extends ECPObserver> clazz) {
+		List<ECPObserver> list = observerMap.get(clazz);
 		if (list == null) {
 			list = Collections.emptyList();
 		}
-		return new ArrayList<IECPObserver>(list);
+		return new ArrayList<ECPObserver>(list);
 	}
 
 	private boolean isPrioritizedObserver(Class<?> clazz, Method method) {
@@ -224,8 +225,8 @@ public class ECPObserverBus {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends IECPObserver> T createProxy(Class<T> clazz, boolean prioritized) {
-		ProxyHandler handler = new ProxyHandler((Class<IECPObserver>) clazz, prioritized);
+	private <T extends ECPObserver> T createProxy(Class<T> clazz, boolean prioritized) {
+		ProxyHandler handler = new ProxyHandler((Class<ECPObserver>) clazz, prioritized);
 		return (T) Proxy
 			.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz, ECPObserverCall.class }, handler);
 
@@ -238,11 +239,11 @@ public class ECPObserverBus {
 	 */
 	private final class ProxyHandler implements InvocationHandler, ECPObserverCall {
 
-		private Class<IECPObserver> clazz;
+		private Class<ECPObserver> clazz;
 		private List<ECPObserverCall.Result> lastResults;
 		private boolean prioritized;
 
-		public ProxyHandler(Class<IECPObserver> clazz, boolean prioritized) {
+		public ProxyHandler(Class<ECPObserver> clazz, boolean prioritized) {
 			this.clazz = clazz;
 			this.prioritized = prioritized;
 			lastResults = new ArrayList<ECPObserverCall.Result>();
@@ -256,7 +257,7 @@ public class ECPObserverBus {
 				return accessObserverCall(method, args);
 			}
 
-			List<IECPObserver> observers = getObserverByClass(clazz);
+			List<ECPObserver> observers = getObserverByClass(clazz);
 
 			if (prioritized && isPrioritizedObserver(clazz, method)) {
 				sortObservers(observers);
@@ -275,12 +276,14 @@ public class ECPObserverBus {
 				if (res instanceof Object[]) {
 					Object[] arrayRes = (Object[]) res;
 					result.addAll(Arrays.asList(arrayRes));
+				} else if (res instanceof Collection) {
+					result.addAll((Collection) res);
 				} else {
 					result.add(res);
 				}
 
 			}
-			return result.toArray();
+			return result;
 		}
 
 		private Object accessObserverCall(Method method, Object[] args) throws IllegalArgumentException,
@@ -289,9 +292,9 @@ public class ECPObserverBus {
 
 		}
 
-		private List<ECPObserverCall.Result> notifiyObservers(List<IECPObserver> observers, Method method, Object[] args) {
+		private List<ECPObserverCall.Result> notifiyObservers(List<ECPObserver> observers, Method method, Object[] args) {
 			List<ECPObserverCall.Result> results = new ArrayList<ECPObserverCall.Result>(observers.size());
-			for (IECPObserver observer : observers) {
+			for (ECPObserver observer : observers) {
 				try {
 					results.add(new Result(observer, method, method.invoke(observer, args)));
 					// BEGIN SUPRESS CATCH EXCEPTION
@@ -315,9 +318,9 @@ public class ECPObserverBus {
 	 * 
 	 * @param observers list of observers
 	 */
-	private void sortObservers(List<IECPObserver> observers) {
-		Collections.sort(observers, new Comparator<IECPObserver>() {
-			public int compare(IECPObserver o1, IECPObserver o2) {
+	private void sortObservers(List<ECPObserver> observers) {
+		Collections.sort(observers, new Comparator<ECPObserver>() {
+			public int compare(ECPObserver o1, ECPObserver o2) {
 				int prio1 = ((ECPPrioritizedIObserver) o1).getPriority();
 				int prio2 = ((ECPPrioritizedIObserver) o2).getPriority();
 				if (prio1 == prio2) {
@@ -329,21 +332,21 @@ public class ECPObserverBus {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Class<? extends IECPObserver>[] getObserverInterfaces(IECPObserver observer) {
-		HashSet<Class<? extends IECPObserver>> observerInterfacsFound = new HashSet<Class<? extends IECPObserver>>();
+	private Class<? extends ECPObserver>[] getObserverInterfaces(ECPObserver observer) {
+		HashSet<Class<? extends ECPObserver>> observerInterfacsFound = new HashSet<Class<? extends ECPObserver>>();
 		getClasses(observer.getClass(), observerInterfacsFound);
 		return observerInterfacsFound.toArray(new Class[observerInterfacsFound.size()]);
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean getClasses(Class<?> clazz, HashSet<Class<? extends IECPObserver>> result) {
+	private boolean getClasses(Class<?> clazz, HashSet<Class<? extends ECPObserver>> result) {
 		for (Class<?> iface : getAllInterfaces(clazz, new HashSet<Class<?>>())) {
-			if (iface.equals(IECPObserver.class) && clazz.isInterface()) {
-				result.add((Class<? extends IECPObserver>) clazz);
+			if (iface.equals(ECPObserver.class) && clazz.isInterface()) {
+				result.add((Class<? extends ECPObserver>) clazz);
 				return true;
 			}
 			if (getClasses(iface, result) && clazz.isInterface()) {
-				result.add((Class<? extends IECPObserver>) clazz);
+				result.add((Class<? extends ECPObserver>) clazz);
 			}
 
 		}

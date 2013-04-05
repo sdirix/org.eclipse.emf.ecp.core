@@ -10,9 +10,11 @@
  */
 package org.eclipse.emf.ecp.ui.views;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
-import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -22,7 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eike Stepper
  */
-public class ModelRepositoriesView extends TreeView implements IECPProvidersChangedObserver //ECPProviderRegistry.Listener
+public class ModelRepositoriesView extends TreeView implements ECPProvidersChangedObserver //ECPProviderRegistry.Listener
 {
   public static final String ID = "org.eclipse.emf.ecp.ui.ModelRepositoriesView";
 
@@ -40,7 +42,7 @@ public class ModelRepositoriesView extends TreeView implements IECPProvidersChan
     super.dispose();
   }
   /**{@inheritDoc} */
-  public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception
+  public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) throws Exception
   {
   }
   

@@ -48,7 +48,7 @@ public interface ECPObserverCall {
 	 */
 	public class Result {
 
-		private final IECPObserver observer;
+		private final ECPObserver observer;
 		private final Method method;
 		private final Object result;
 		private final Throwable exception;
@@ -60,7 +60,7 @@ public interface ECPObserverCall {
 		 * @param method method
 		 * @param result result
 		 */
-		public Result(IECPObserver observer, Method method, Object result) {
+		public Result(ECPObserver observer, Method method, Object result) {
 			this.observer = observer;
 			this.method = method;
 			this.result = result;
@@ -74,7 +74,7 @@ public interface ECPObserverCall {
 		 * @param e exception
 		 * @param method method
 		 */
-		public Result(IECPObserver observer, Throwable e, Method method) {
+		public Result(ECPObserver observer, Throwable e, Method method) {
 			this.observer = observer;
 			exception = e;
 			this.method = method;
@@ -104,7 +104,7 @@ public interface ECPObserverCall {
 		 * 
 		 * @return this can't be null
 		 */
-		public IECPObserver getObserver() {
+		public ECPObserver getObserver() {
 			return observer;
 		}
 

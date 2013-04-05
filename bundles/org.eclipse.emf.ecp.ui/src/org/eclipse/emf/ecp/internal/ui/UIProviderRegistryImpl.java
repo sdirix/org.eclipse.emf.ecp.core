@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
-import org.eclipse.emf.ecp.core.util.observer.IECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
@@ -39,7 +39,7 @@ import java.util.Collection;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IECPObserver> implements
+public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver> implements
 	UIProviderRegistry {
 	/**
 	 * This is the Instance used by the {@link UIProviderRegistry} for providing its instance.
@@ -99,14 +99,14 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, IE
 		return hasElements();
 	}
 
-	@Override
-	protected UIProvider[] createElementArray(int size) {
-		return new UIProvider[size];
-	}
+	// @Override
+	// protected UIProvider[] createElementArray(int size) {
+	// return new UIProvider[size];
+	// }
 
 	@Override
-	protected void notifyObservers(IECPObserver listener, UIProvider[] oldElements, UIProvider[] newElements)
-		throws Exception {
+	protected void notifyObservers(ECPObserver listener, Collection<UIProvider> oldElements,
+		Collection<UIProvider> newElements) throws Exception {
 	}
 
 	@Override

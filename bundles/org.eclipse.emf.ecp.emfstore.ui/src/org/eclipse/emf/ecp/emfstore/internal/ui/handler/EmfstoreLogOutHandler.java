@@ -24,6 +24,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * This is the EMFStore LogOut Handler delegating to the EMFStore {@link UILogoutSessionController}.
  * 
@@ -40,7 +43,7 @@ public class EmfstoreLogOutHandler extends AbstractHandler {
 		// TODO EMFStore Constructor is missing
 		new UILogoutSessionController(HandlerUtil.getActiveShell(event), server.getLastUsersession()).execute();
 
-		((InternalRepository) ecpRepository).notifyObjectsChanged(new Object[] { ecpRepository });
+		((InternalRepository) ecpRepository).notifyObjectsChanged((Collection) Collections.singleton(ecpRepository));
 		return null;
 	}
 

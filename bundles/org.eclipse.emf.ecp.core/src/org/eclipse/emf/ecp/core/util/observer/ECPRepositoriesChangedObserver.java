@@ -8,13 +8,15 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- * Edgar Mueller - change to IECPObserver
+ * Edgar Mueller - change to ECPObserver
  * Eugen Neufeld - JavaDoc
  * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
+
+import java.util.Collection;
 
 /**
  * This Observer is called to notify listeners about changes of repositories.
@@ -25,7 +27,7 @@ import org.eclipse.emf.ecp.core.ECPRepository;
  * 
  */
 // TODO dicuss whether to split it up
-public interface IECPRepositoriesChangedObserver extends IECPObserver {
+public interface ECPRepositoriesChangedObserver extends ECPObserver {
 
 	/**
 	 * This is called to indicate, that repositories changed.
@@ -34,7 +36,7 @@ public interface IECPRepositoriesChangedObserver extends IECPObserver {
 	 * @param newRepositories repository list after change
 	 * @throws Exception thrown when something unexpected happens
 	 */
-	void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception;
+	void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) throws Exception;
 
 	/**
 	 * This is called to indicate, that objects inside the repository changed.
@@ -43,5 +45,5 @@ public interface IECPRepositoriesChangedObserver extends IECPObserver {
 	 * @param objects the objects that changed
 	 * @throws Exception thrown when something unexpected happens
 	 */
-	void objectsChanged(ECPRepository repository, Object[] objects) throws Exception;
+	void objectsChanged(ECPRepository repository, Collection<Object> objects) throws Exception;
 }

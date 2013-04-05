@@ -41,11 +41,11 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
 import org.eclipse.core.runtime.Platform;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -130,8 +130,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
-	public final InternalRepository[] getRepositories() {
-		List<InternalRepository> result = new ArrayList<InternalRepository>();
+	public final Set<ECPRepository> getRepositories() {
+		Set<InternalRepository> result = new LinkedHashSet<InternalRepository>();
 		for (ECPRepository repository : ECPRepositoryManager.INSTANCE.getRepositories()) {
 			if (!ECPUtil.isDisposed(repository)) {
 				ECPProvider provider = repository.getProvider();
@@ -142,12 +142,12 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 
 		// TODO Consider to cache the result
-		return result.toArray(new InternalRepository[result.size()]);
+		return (Set) result;
 	}
 
 	/** {@inheritDoc} */
-	public final InternalProject[] getOpenProjects() {
-		List<InternalProject> result = new ArrayList<InternalProject>();
+	public final Set<InternalProject> getOpenProjects() {
+		Set<InternalProject> result = new LinkedHashSet<InternalProject>();
 		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
 			if (project.isOpen()) {
 				if (project.getProvider().equals(this)) {
@@ -158,7 +158,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 
 		// TODO Consider to cache the result
-		return result.toArray(new InternalProject[result.size()]);
+		return result;
 	}
 
 	/** {@inheritDoc} */

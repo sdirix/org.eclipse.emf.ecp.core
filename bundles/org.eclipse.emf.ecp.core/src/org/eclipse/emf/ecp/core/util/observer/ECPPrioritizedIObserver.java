@@ -18,7 +18,7 @@ package org.eclipse.emf.ecp.core.util.observer;
  * 
  * @author wesendon
  */
-public interface ECPPrioritizedIObserver extends IECPObserver {
+public interface ECPPrioritizedIObserver extends ECPObserver {
 
 	/**
 	 * Returns the priority of this observer. The higher the number returned

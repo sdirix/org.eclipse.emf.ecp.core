@@ -10,7 +10,7 @@
 package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.observer.IECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.spi.core.util.InternalElementRegistry.ResolveListener;
 
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class ElementRegistry<ELEMENT extends ECPElement, OBSERVER extends IECPObserver> extends
+public abstract class ElementRegistry<ELEMENT extends ECPElement, OBSERVER extends ECPObserver> extends
 	Registry<ELEMENT, OBSERVER> {
 	private final List<ResolveListener<ELEMENT>> resolveListeners = new ArrayList<ResolveListener<ELEMENT>>();
 

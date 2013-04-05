@@ -26,6 +26,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * This is the EMFStore UpdateProject Handler delegating to the EMFStore {@link UIUpdateProjectController}.
  * 
@@ -46,7 +49,7 @@ public class UpdateProjectHandler extends AbstractHandler {
 				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-		project.notifyObjectsChanged(new Object[] { project }, true);
+		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
 
 		return null;
 	}

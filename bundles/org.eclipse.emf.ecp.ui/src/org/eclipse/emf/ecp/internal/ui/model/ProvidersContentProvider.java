@@ -11,7 +11,7 @@ package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
-import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
 import java.util.Collection;
@@ -21,7 +21,7 @@ import java.util.Collection;
  */
 public class ProvidersContentProvider extends TreeContentProvider<ECPProviderRegistry> implements
 // ECPProviderRegistry.Listener
-	IECPProvidersChangedObserver {
+	ECPProvidersChangedObserver {
 	private final boolean excludesProvidersThatCannotAddRepositories;
 
 	public ProvidersContentProvider() {
@@ -52,7 +52,7 @@ public class ProvidersContentProvider extends TreeContentProvider<ECPProviderReg
 		}
 	}
 
-	public void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception {
+	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) throws Exception {
 		refreshViewer();
 	}
 

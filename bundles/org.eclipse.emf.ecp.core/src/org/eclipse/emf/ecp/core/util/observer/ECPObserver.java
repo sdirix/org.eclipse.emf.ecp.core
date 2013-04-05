@@ -18,5 +18,5 @@ package org.eclipse.emf.ecp.core.util.observer;
  * 
  * @author wesendon
  */
-public interface IECPObserver {
+public interface ECPObserver {
 }

@@ -20,13 +20,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
-import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
@@ -42,6 +41,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * This class manages {@link ECPProvider}.
@@ -49,7 +49,7 @@ import java.util.Iterator;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, IECPProvidersChangedObserver>
+public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPProvidersChangedObserver>
 	implements ECPProviderRegistry {
 	/**
 	 * The Singleton used in {@link ECPProviderRegistry#INSTANCE}.
@@ -90,20 +90,20 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		changeElements(Collections.singleton(name), null);
 	}
 
-	@Override
-	protected InternalProvider[] createElementArray(int size) {
-		return new InternalProvider[size];
-	}
+	// @Override
+	// protected InternalProvider[] createElementArray(int size) {
+	// return new InternalProvider[size];
+	// }
 
 	/** {@inheritDoc} **/
 	@Override
-	protected void notifyObservers(IECPProvidersChangedObserver observer, InternalProvider[] oldProviders,
-		InternalProvider[] newProviders) throws Exception {
-		observer.providersChanged(oldProviders, newProviders);
+	protected void notifyObservers(ECPProvidersChangedObserver observer, Collection<InternalProvider> oldProviders,
+		Collection<InternalProvider> newProviders) throws Exception {
+		observer.providersChanged((Collection) oldProviders, (Collection) newProviders);
 	}
 
 	@Override
-	protected void elementsChanged(InternalProvider[] oldElements, InternalProvider[] newElements) {
+	protected void elementsChanged(Collection<InternalProvider> oldElements, Collection<InternalProvider> newElements) {
 		super.elementsChanged(oldElements, newElements);
 	}
 
@@ -177,12 +177,12 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public ECPRepository[] getRepositories() {
+		public Set<ECPRepository> getRepositories() {
 			return getResolvedElement().getRepositories();
 		}
 
 		/** {@inheritDoc} */
-		public ECPProject[] getOpenProjects() {
+		public Set<InternalProject> getOpenProjects() {
 			return getResolvedElement().getOpenProjects();
 		}
 

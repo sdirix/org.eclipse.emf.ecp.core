@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
 
 import java.util.Collection;
 
@@ -103,16 +103,16 @@ public interface ECPProjectManager {
 	/**
 	 * This method adds a observer to the observer of the ECPProjectManager.
 	 * 
-	 * @param observer the {@link IECPProjectsChangedUIObserver} to add
+	 * @param observer the {@link ECPProjectsChangedUIObserver} to add
 	 */
-	void addObserver(IECPProjectsChangedUIObserver observer);
+	void addObserver(ECPProjectsChangedUIObserver observer);
 
 	/**
 	 * This method removes a observer from the observer of the ECPProjectManager.
 	 * 
-	 * @param observer the {@link IECPProjectsChangedUIObserver} to remove
+	 * @param observer the {@link ECPProjectsChangedUIObserver} to remove
 	 */
-	void removeObserver(IECPProjectsChangedUIObserver observer);
+	void removeObserver(ECPProjectsChangedUIObserver observer);
 
 	/**
 	 * This exception is thrown when we try to add a project with a name that already exists.

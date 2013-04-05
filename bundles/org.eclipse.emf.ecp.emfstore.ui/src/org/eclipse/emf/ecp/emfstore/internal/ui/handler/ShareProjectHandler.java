@@ -30,6 +30,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
 /**
@@ -70,8 +72,8 @@ public class ShareProjectHandler extends AbstractHandler {
 			// TODO EMFStore Constructor is missing
 			new UIShareProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
 
-			project.notifyObjectsChanged(new Object[] { project }, false);
-			repository.notifyObjectsChanged(new Object[] { repository });
+			project.notifyObjectsChanged((Collection) Collections.singleton(project), false);
+			repository.notifyObjectsChanged((Collection) Collections.singleton(repository));
 		}
 		return null;
 	}

@@ -23,6 +23,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * A CreateBranch Handler. This allows to create a new branch.
  * 
@@ -38,7 +41,7 @@ public class CreateBranchHandler extends AbstractHandler {
 		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore constructor missing
 		new UICreateBranchController(HandlerUtil.getActiveShell(event), projectSpace).execute();
-		project.notifyObjectsChanged(new Object[] { project }, false);
+		project.notifyObjectsChanged((Collection) Collections.singleton(project), false);
 		return null;
 	}
 

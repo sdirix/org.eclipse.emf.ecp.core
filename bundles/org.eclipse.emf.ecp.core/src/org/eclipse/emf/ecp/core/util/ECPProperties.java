@@ -13,10 +13,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.util.observer.IECPPropertiesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesChangedObserver;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * {@link ECPProperties} are used to store key - value - pairs.
@@ -55,7 +56,7 @@ public interface ECPProperties {
 	 * 
 	 * @return an array of all keys
 	 */
-	String[] getKeys();
+	Set<String> getKeys();
 
 	/**
 	 * All Properties.
@@ -80,18 +81,18 @@ public interface ECPProperties {
 	ECPProperties copy();
 
 	/**
-	 * Adds an {@link IECPPropertiesChangedObserver} which will be notified if a property changes.
+	 * Adds an {@link ECPPropertiesChangedObserver} which will be notified if a property changes.
 	 * 
 	 * @param changeObserver the observer to add
 	 */
-	void addObserver(IECPPropertiesChangedObserver changeObserver);
+	void addObserver(ECPPropertiesChangedObserver changeObserver);
 
 	/**
-	 * Removes an {@link IECPPropertiesChangedObserver} from the collection of observer which will be notified if a
+	 * Removes an {@link ECPPropertiesChangedObserver} from the collection of observer which will be notified if a
 	 * property changes.
 	 * 
 	 * @param changeObserver the observer to remove
 	 */
-	void removeObserver(IECPPropertiesChangedObserver changeObserver);
+	void removeObserver(ECPPropertiesChangedObserver changeObserver);
 
 }

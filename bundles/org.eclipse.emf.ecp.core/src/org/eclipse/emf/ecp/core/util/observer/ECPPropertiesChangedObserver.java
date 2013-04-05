@@ -8,31 +8,30 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- * Edgar Mueller - change to IECPObserver
+ * Edgar Mueller - change to ECPObserver
  * Eugen Neufeld - JavaDoc
  * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
-import org.eclipse.emf.ecp.core.ECPProvider;
+import java.util.Collection;
+import java.util.Map.Entry;
 
 /**
- * This Observer is called to notify listeners about changes of providers.
+ * This Observer is called to notify listeners about changes of properties.
  * 
  * @author Eike Stepper
  * @author Edgar Mueller
  * @author Eugen Neufeld
  * 
  */
-public interface IECPProvidersChangedObserver extends IECPObserver {
+public interface ECPPropertiesChangedObserver extends ECPObserver {
 
 	/**
-	 * This is called to indicate, that providers changed. Either a provider was added or removed.
+	 * This is called to indicate, that properties changed.
 	 * 
-	 * @param oldProviders provider before change
-	 * @param newProviders providers after change
-	 * @throws Exception thrown when something unexpected happens
+	 * @param oldProperties the properties before changing
+	 * @param newProperties the properties after changing
 	 */
-	void providersChanged(ECPProvider[] oldProviders, ECPProvider[] newProviders) throws Exception;
-
+	void propertiesChanged(Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties);
 }

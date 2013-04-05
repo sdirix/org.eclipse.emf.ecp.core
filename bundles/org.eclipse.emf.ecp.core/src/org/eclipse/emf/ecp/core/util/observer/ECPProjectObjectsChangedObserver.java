@@ -13,12 +13,14 @@ package org.eclipse.emf.ecp.core.util.observer;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 
+import java.util.Collection;
+
 /**
  * @author Eugen Neufeld
  * 
  */
 // TODO rename to something more understandable
-public interface IECPProjectObjectsChangedObserver extends IECPObserver {
+public interface ECPProjectObjectsChangedObserver extends ECPObserver {
 
 	/**
 	 * Return array of affected Objects.
@@ -28,5 +30,5 @@ public interface IECPProjectObjectsChangedObserver extends IECPObserver {
 	 * @return array of affected objects.
 	 * @throws Exception
 	 */
-	Object[] objectsChanged(ECPProject project, Object[] objects) throws Exception;
+	Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) throws Exception;
 }

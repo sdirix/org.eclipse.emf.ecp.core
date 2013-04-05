@@ -59,7 +59,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -278,31 +280,34 @@ public final class EMFStoreProvider extends DefaultProvider {
 						ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
 						ECPProject ecpProject = getProject(projectSpace.toAPI());
 
-						((InternalProject) context).notifyObjectsChanged(new Object[] { ecpProject }, true);
+						((InternalProject) context).notifyObjectsChanged(
+							(Collection) Collections.singleton(ecpProject), true);
 
 					} else {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, true);
+						((InternalProject) context).notifyObjectsChanged(
+							(Collection) Collections.singleton(modelElement), true);
 					}
 				}
 
 				// 3
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement.eContainer() == null) {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement, context }, true);
+						((InternalProject) context).notifyObjectsChanged(Arrays.asList(modelElement, context), true);
 					}
 				}
 
 				// 1
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
 					if (Project.class.isInstance(modelElement.eContainer())) {
-						((InternalProject) context).notifyObjectsChanged(new Object[] { context, modelElement }, true);
+						((InternalProject) context).notifyObjectsChanged(Arrays.asList(modelElement, context), true);
 					}
-					((InternalProject) context).notifyObjectsChanged(new Object[] { modelElement }, true);
+					((InternalProject) context).notifyObjectsChanged((Collection) Collections.singleton(modelElement),
+						true);
 				}
 
 				public void collectionDeleted(IdEObjectCollection collection) {
 					// project delete
-					((InternalProject) context).notifyObjectsChanged(new Object[] { context }, true);
+					((InternalProject) context).notifyObjectsChanged((Collection) Collections.singleton(context), true);
 				}
 			});
 		}
@@ -542,9 +547,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	public ECPRepository getRepository(ServerInfo serverInfo) {
 		if (serverInfo != null) {
-			for (InternalRepository internalRepository : getRepositories()) {
+			for (ECPRepository internalRepository : getRepositories()) {
 				if (internalRepository.getProvider().equals(this)) {
-					if (serverInfo.equals(internalRepository.getProviderSpecificData())) {
+					if (serverInfo.equals(((InternalRepository) internalRepository).getProviderSpecificData())) {
 						return internalRepository;
 					}
 				}

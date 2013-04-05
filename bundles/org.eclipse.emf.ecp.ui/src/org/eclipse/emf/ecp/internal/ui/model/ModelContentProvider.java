@@ -11,21 +11,21 @@ package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
-import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
  */
-public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements
-	IECPProjectsChangedUIObserver {
+public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements ECPProjectsChangedUIObserver {
 	public ModelContentProvider() {
 	}
 
 	/** {@inheritDoc} */
-	public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
+	public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)
+		throws Exception {
 		refreshViewer();
 	}
 
@@ -35,10 +35,10 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 	}
 
 	/** {@inheritDoc} */
-	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
+	public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
 		refreshViewer(structural, objects);
-		if (!Arrays.asList(objects).contains(project)) {
-			refreshViewer(false, project);
+		if (!objects.contains(project)) {
+			refreshViewer(structural, project);
 		}
 	}
 

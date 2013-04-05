@@ -12,14 +12,16 @@ package org.eclipse.emf.ecp.internal.ui.model;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
 
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
  */
-public class ModelLabelProvider extends ECPLabelProvider implements IECPProjectsChangedUIObserver {
+public class ModelLabelProvider extends ECPLabelProvider implements ECPProjectsChangedUIObserver {
 
 	public ModelLabelProvider(ECPModelContextProvider modelContextProvider) {
 		super(modelContextProvider);
@@ -42,7 +44,7 @@ public class ModelLabelProvider extends ECPLabelProvider implements IECPProjects
 	}
 
 	/** {@inheritDoc} */
-	public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
+	public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception {
 		// Do nothing
 	}
 
@@ -52,7 +54,7 @@ public class ModelLabelProvider extends ECPLabelProvider implements IECPProjects
 	}
 
 	/** {@inheritDoc} */
-	public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
+	public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
 		// Do nothing
 	}
 }

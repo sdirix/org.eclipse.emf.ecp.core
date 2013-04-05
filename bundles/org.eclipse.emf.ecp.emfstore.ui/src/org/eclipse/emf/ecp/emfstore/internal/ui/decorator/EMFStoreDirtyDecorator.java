@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectPreDeleteObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -39,7 +39,7 @@ import java.util.Map;
  * @author Eugen Neufeld
  */
 public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCommitObserver,
-	IECPProjectPreDeleteObserver {
+	ECPProjectPreDeleteObserver {
 
 	private String dirtyPath = "icons/dirty.png";
 	private static Map<ECPProject, EMFStoreDirtyObserver> observers = new HashMap<ECPProject, EMFStoreDirtyObserver>();

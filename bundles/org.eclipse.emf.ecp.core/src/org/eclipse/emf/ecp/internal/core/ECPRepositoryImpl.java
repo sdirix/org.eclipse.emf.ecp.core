@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -238,8 +239,8 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
-	public void notifyObjectsChanged(Object[] objects) {
-		if (objects != null && objects.length != 0) {
+	public void notifyObjectsChanged(Collection<Object> objects) {
+		if (objects != null && objects.size() != 0) {
 			ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
 		}
 	}

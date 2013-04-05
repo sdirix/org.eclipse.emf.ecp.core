@@ -15,6 +15,8 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 
 import org.eclipse.core.runtime.IAdaptable;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  * @author Jonas
@@ -39,7 +41,7 @@ public interface ECPProvider extends ECPElement, IAdaptable {
 	 * 
 	 * @return repositories using this ECPProvider
 	 */
-	ECPRepository[] getRepositories();
+	Set<ECPRepository> getRepositories();
 
 	/**
 	 * Check whether a new repository can be added to this ECPProvider.

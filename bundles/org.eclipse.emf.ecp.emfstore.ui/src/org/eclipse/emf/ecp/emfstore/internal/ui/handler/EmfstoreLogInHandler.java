@@ -23,6 +23,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * @author Eugen Neufeld
  */
@@ -36,7 +39,7 @@ public class EmfstoreLogInHandler extends AbstractHandler {
 		new UILoginSessionController(HandlerUtil.getActiveShell(event), serverInfo).execute();
 
 		// ((TreeView)HandlerUtil.getActivePart(event)).getRefreshAction().run();
-		((InternalRepository) ecpRepository).notifyObjectsChanged(new Object[] { ecpRepository });
+		((InternalRepository) ecpRepository).notifyObjectsChanged((Collection) Collections.singleton(ecpRepository));
 		return null;
 	}
 

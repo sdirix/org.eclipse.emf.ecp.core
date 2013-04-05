@@ -12,7 +12,7 @@ package org.eclipse.emf.ecp.internal.core.util;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.observer.IECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 
@@ -26,13 +26,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER extends IECPObserver> extends
+public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER extends ECPObserver> extends
 	ElementRegistry<ELEMENT, OBSERVER> {
 	private File folder;
 
@@ -110,7 +111,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	protected abstract ELEMENT loadElement(ObjectInput in) throws IOException;
 
 	@Override
-	protected void elementsChanged(ELEMENT[] oldElements, ELEMENT[] newElements) {
+	protected void elementsChanged(Collection<ELEMENT> oldElements, Collection<ELEMENT> newElements) {
 		if (isDisposingElement()) {
 			return;
 		}

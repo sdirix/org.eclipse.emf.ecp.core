@@ -14,9 +14,11 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPRepositoriesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -24,7 +26,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
  */
 public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositoryManager> implements
 // ECPRepositoryManager.Listener
-	IECPRepositoriesChangedObserver {
+	ECPRepositoriesChangedObserver {
 	private final ECPProvider allowedProvider;
 
 	public RepositoriesContentProvider() {
@@ -36,12 +38,12 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	}
 
 	/** {@inheritDoc} */
-	public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception {
+	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) throws Exception {
 		refreshViewer();
 	}
 
 	/** {@inheritDoc} */
-	public void objectsChanged(ECPRepository repository, Object[] objects) throws Exception {
+	public void objectsChanged(ECPRepository repository, Collection<Object> objects) throws Exception {
 		// do always a full refresh
 		refreshViewer(true, objects);
 	}

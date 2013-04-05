@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
@@ -45,7 +46,7 @@ public class ECPProviderTests extends AbstractTest {
 
 	@Test
 	public void getRepositoriesTest() {
-		List<ECPRepository> repositories = Arrays.asList(getProvider().getRepositories());
+		Set<ECPRepository> repositories = getProvider().getRepositories();
 		assertTrue(repositories.contains(getRepository()));
 	}
 
@@ -53,10 +54,10 @@ public class ECPProviderTests extends AbstractTest {
 	public void canAddRepositoriesTest() {
 		boolean canAddRepositories = getProvider().canAddRepositories();
 
-		int countReposBefore = getProvider().getRepositories().length;
+		int countReposBefore = getProvider().getRepositories().size();
 		repository = ECPRepositoryManager.INSTANCE.addRepository(getProvider(), "repository4Name", "repository4Label",
 			"description", getNewProperties());
-		int countReposAfterAdd = getProvider().getRepositories().length;
+		int countReposAfterAdd = getProvider().getRepositories().size();
 
 		if (countReposAfterAdd - countReposBefore == 1) {
 			assertTrue(canAddRepositories);
@@ -122,7 +123,7 @@ public class ECPProviderTests extends AbstractTest {
 	@Test
 	public void getOpenProjectsTest(){
 		InternalProvider provider=(InternalProvider) getProvider();
-		assertEquals(0,provider.getOpenProjects().length);
+		assertEquals(0,provider.getOpenProjects().size());
 		InternalProject project=null;
 		try {
 			project = (InternalProject)getProjectManager().createProject(
@@ -130,10 +131,10 @@ public class ECPProviderTests extends AbstractTest {
 		} catch (ProjectWithNameExistsException e) {
 			fail(e.getMessage());
 		}
-		assertEquals(1,provider.getOpenProjects().length);
+		assertEquals(1,provider.getOpenProjects().size());
 		project.close();
-		assertEquals(0,provider.getOpenProjects().length);
+		assertEquals(0,provider.getOpenProjects().size());
 		project.open();
-		assertEquals(1,provider.getOpenProjects().length);
+		assertEquals(1,provider.getOpenProjects().size());
 	}
 }

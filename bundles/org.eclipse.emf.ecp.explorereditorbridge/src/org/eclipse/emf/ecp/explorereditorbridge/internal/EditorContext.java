@@ -15,8 +15,7 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
@@ -24,6 +23,7 @@ import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -38,11 +38,12 @@ public class EditorContext implements ECPEditorContext {
 	 * @author Jonas
 	 * 
 	 */
-	private final class IECPProjectsChangedUIObserverImplementation implements IECPProjectsChangedUIObserver {
+	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedUIObserver {
 		/** {@inheritDoc} */
-		public void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception {
+		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)
+			throws Exception {
 			// TODO Auto-generated method stub
-			if (!ECPUtil.containsElement(newProjects, ecpProject)) {
+			if (!newProjects.contains(ecpProject)) {
 				for (EditModelElementContextListener contextListener : contextListeners) {
 					contextListener.onContextDeleted();
 				}
@@ -61,7 +62,7 @@ public class EditorContext implements ECPEditorContext {
 		}
 
 		/** {@inheritDoc} */
-		public void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception {
+		public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself
@@ -76,7 +77,7 @@ public class EditorContext implements ECPEditorContext {
 
 	private List<EditModelElementContextListener> contextListeners = new ArrayList<EditModelElementContextListener>();
 
-	private IECPProjectsChangedUIObserver projectObserver;
+	private ECPProjectsChangedUIObserver projectObserver;
 
 	private ECPControlContextImpl ecpControlContextImpl;
 

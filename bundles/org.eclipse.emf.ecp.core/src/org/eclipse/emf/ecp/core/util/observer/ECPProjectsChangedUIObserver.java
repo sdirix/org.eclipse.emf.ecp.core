@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- * Edgar Mueller - change to IECPObserver
+ * Edgar Mueller - change to ECPObserver
  * Eugen Neufeld - JavaDoc
  * 
  *******************************************************************************/
@@ -16,6 +16,8 @@
 package org.eclipse.emf.ecp.core.util.observer;
 
 import org.eclipse.emf.ecp.core.ECPProject;
+
+import java.util.Collection;
 
 /**
  * This Observer is called to notify listeners about changes of a project.
@@ -26,7 +28,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
  * 
  */
 // TODO dicuss whether to split it up
-public interface IECPProjectsChangedUIObserver extends IECPObserver {
+public interface ECPProjectsChangedUIObserver extends ECPObserver {
 
 	/**
 	 * This is called when a project changes, so if it is either added or removed.
@@ -35,7 +37,7 @@ public interface IECPProjectsChangedUIObserver extends IECPObserver {
 	 * @param newProjects the collection of projects after the change
 	 * @throws Exception thrown when something unexpected happens
 	 */
-	void projectsChanged(ECPProject[] oldProjects, ECPProject[] newProjects) throws Exception;
+	void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception;
 
 	/**
 	 * This is called when a project is opened or closed.
@@ -54,5 +56,5 @@ public interface IECPProjectsChangedUIObserver extends IECPObserver {
 	 * @param structural whether the change was structural
 	 * @throws Exception thrown when something unexpected happens
 	 */
-	void objectsChanged(ECPProject project, Object[] objects, boolean structural) throws Exception;
+	void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception;
 }

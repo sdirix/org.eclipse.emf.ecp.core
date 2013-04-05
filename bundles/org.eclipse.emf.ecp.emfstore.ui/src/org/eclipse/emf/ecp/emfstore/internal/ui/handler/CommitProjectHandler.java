@@ -23,6 +23,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * This is the EMFStore Commit Handler delegating to the EMFStore {@link UICommitProjectController}.
  * 
@@ -47,8 +50,8 @@ public class CommitProjectHandler extends AbstractHandler {
 		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);
 		new UICommitProjectController(HandlerUtil.getActiveShell(event), localProject).execute();
 		// is structural because of possible merge
-		project.notifyObjectsChanged(new Object[] { project }, true);
-		project.getRepository().notifyObjectsChanged(new Object[] { project.getRepository() });
+		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
+		project.getRepository().notifyObjectsChanged((Collection) Collections.singleton(project.getRepository()));
 		return null;
 	}
 }

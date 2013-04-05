@@ -25,6 +25,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * This is the EMFStore DeleteOnServer Handler delegating to the EMFStore {@link UIDeleteRemoteProjectController}.
  * 
@@ -46,7 +49,7 @@ public class DeleteOnServerHandler extends AbstractHandler {
 				ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repo);
 				new UIDeleteRemoteProjectController(HandlerUtil.getActiveShell(event), serverInfo.getLastUsersession(),
 					projectWrapper.getCheckoutData()).execute();
-				repo.notifyObjectsChanged(new Object[] { repo });
+				repo.notifyObjectsChanged((Collection) Collections.singleton(repo));
 			}
 		}
 		return null;

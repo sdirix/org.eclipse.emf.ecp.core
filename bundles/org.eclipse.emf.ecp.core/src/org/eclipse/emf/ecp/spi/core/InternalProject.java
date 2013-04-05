@@ -16,6 +16,8 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 
+import java.util.Collection;
+
 /**
  * @author Eike Stepper
  * @author Eugen Neufeld
@@ -58,7 +60,7 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	 * @param objects the objects that have changed
 	 * @param structural if the changes where structural (e.g. delete)
 	 */
-	void notifyObjectsChanged(Object[] objects, boolean structural);
+	void notifyObjectsChanged(Collection<Object> objects, boolean structural);
 
 	/**
 	 * This method undisposes the project based on a repository.

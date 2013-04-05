@@ -25,6 +25,9 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * This is the EMFStore Register EPackage Handler delegating to the EMFStore {@link RegisterEPackageHandler}.
  * 
@@ -53,7 +56,7 @@ public class CreateRemoteProjectHandler extends AbstractHandler {
 		// TODO EMFStore Contructor is missing
 		new UICreateRemoteProjectController(HandlerUtil.getActiveShell(event), server.getLastUsersession(), projectName)
 			.execute();
-		ecpRepository.notifyObjectsChanged(new Object[] { ecpRepository });
+		ecpRepository.notifyObjectsChanged((Collection) Collections.singleton(ecpRepository));
 		return null;
 	}
 }

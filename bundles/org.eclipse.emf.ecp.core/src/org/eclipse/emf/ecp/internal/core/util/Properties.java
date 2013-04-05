@@ -11,7 +11,7 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.IECPPropertiesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesChangedObserver;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -20,11 +20,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class Properties extends Registry<Map.Entry<String, String>, IECPPropertiesChangedObserver> implements
+public class Properties extends Registry<Map.Entry<String, String>, ECPPropertiesChangedObserver> implements
 	ECPProperties {
 	public Properties() {
 		activate();
@@ -68,7 +69,7 @@ public class Properties extends Registry<Map.Entry<String, String>, IECPProperti
 	}
 
 	/** {@inheritDoc} */
-	public String[] getKeys() {
+	public Set<String> getKeys() {
 		return getElementNames();
 	}
 
@@ -100,20 +101,21 @@ public class Properties extends Registry<Map.Entry<String, String>, IECPProperti
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * org.eclipse.emf.ecp.internal.core.util.Registry#notifyObservers(org.eclipse.emf.ecp.core.util.observer.IECPObserver
+	 * org.eclipse.emf.ecp.internal.core.util.Registry#notifyObservers(org.eclipse.emf.ecp.core.util.observer.ECPObserver
 	 * , ELEMENT[], ELEMENT[])
 	 */
 	@Override
-	protected void notifyObservers(IECPPropertiesChangedObserver observer, Entry<String, String>[] oldProperties,
-		Entry<String, String>[] newProperties) throws Exception {
+	protected void notifyObservers(ECPPropertiesChangedObserver observer,
+		Collection<Map.Entry<String, String>> oldProperties, Collection<Map.Entry<String, String>> newProperties)
+		throws Exception {
 		observer.propertiesChanged(oldProperties, newProperties);
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	protected Map.Entry<String, String>[] createElementArray(int size) {
-		return new Map.Entry[size];
-	}
+	// @Override
+	// @SuppressWarnings("unchecked")
+	// protected Map.Entry<String, String>[] createElementArray(int size) {
+	// return new Map.Entry[size];
+	// }
 
 	/**
 	 * @author Eike Stepper

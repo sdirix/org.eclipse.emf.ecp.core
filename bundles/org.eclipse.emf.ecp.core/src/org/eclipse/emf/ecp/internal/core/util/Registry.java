@@ -13,11 +13,12 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.IECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends Lifecycle implements DisposeListener {
+public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Lifecycle implements DisposeListener {
 	private static final ThreadLocal<Boolean> DISPOSING_ELEMENT = new InheritableThreadLocal<Boolean>();
 
 	private Map<String, ELEMENT> elements = new HashMap<String, ELEMENT>();
@@ -43,10 +44,11 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 		}
 	}
 
-	public final String[] getElementNames() {
+	public final Set<String> getElementNames() {
 		checkActive();
 		synchronized (this) {
-			return elements.keySet().toArray(new String[elements.size()]);
+			// return elements.keySet().toArray(new String[elements.size()]);
+			return Collections.unmodifiableSet(new HashSet<String>(elements.keySet()));
 		}
 	}
 
@@ -60,7 +62,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 	public final Collection<ELEMENT> getElements() {
 		checkActive();
 		synchronized (this) {
-			return Collections.unmodifiableCollection(elements.values());
+			return Collections.unmodifiableCollection(new ArrayList<ELEMENT>(elements.values()));
 			// ELEMENT[] result = createElementArray(elements.size());
 			// return elements.values().toArray(result);
 		}
@@ -149,12 +151,14 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 		}
 
 		if (newElements != null) {
-			ELEMENT[] oldArray = oldElements.toArray(createElementArray(oldElements.size()));
-			ELEMENT[] newArray = newElements.toArray(createElementArray(newElements.size()));
-			elementsChanged(oldArray, newArray);
+			// ELEMENT[] oldArray = oldElements.toArray(createElementArray(oldElements.size()));
+			// ELEMENT[] newArray = newElements.toArray(createElementArray(newElements.size()));
+			Collection<ELEMENT> unmodifiableOld = Collections.unmodifiableCollection(oldElements);
+			Collection<ELEMENT> unmodifiableNew = Collections.unmodifiableCollection(newElements);
+			elementsChanged(unmodifiableOld, unmodifiableNew);
 
 			try {
-				notifyObservers(oldArray, newArray);
+				notifyObservers(unmodifiableOld, unmodifiableNew);
 			} catch (Exception ex) {
 				Activator.log(ex);
 			}
@@ -171,7 +175,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 		ECPObserverBus.getInstance().unregister(observer);
 	}
 
-	private void notifyObservers(ELEMENT[] oldArray, ELEMENT[] newArray) throws Exception {
+	private void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray) throws Exception {
 		// TODO: remove warning
 		Class<OBSERVER> observerType = (Class<OBSERVER>) ((ParameterizedType) getClass().getGenericSuperclass())
 			.getActualTypeArguments()[1];
@@ -179,13 +183,14 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 		notifyObservers(notify, oldArray, newArray);
 	}
 
-	protected abstract void notifyObservers(OBSERVER observer, ELEMENT[] oldArray, ELEMENT[] newArray) throws Exception;
+	protected abstract void notifyObservers(OBSERVER observer, Collection<ELEMENT> oldArray,
+		Collection<ELEMENT> newArray) throws Exception;
 
-	protected void elementsChanged(ELEMENT[] oldElements, ELEMENT[] newElements) {
+	protected void elementsChanged(Collection<ELEMENT> oldElements, Collection<ELEMENT> newElements) {
 		// Can be overridden in subclasses
 	}
 
-	protected abstract ELEMENT[] createElementArray(int size);
+	// protected abstract ELEMENT[] createElementArray(int size);
 
 	protected abstract String getElementName(ELEMENT element);
 

@@ -16,7 +16,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
@@ -29,6 +28,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -200,7 +200,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * 
 	 * @return open projects using this ECPProvider
 	 */
-	ECPProject[] getOpenProjects();
+	Set<InternalProject> getOpenProjects();
 
 	/**
 	 * Checks whether a specific project contains a specific object.
