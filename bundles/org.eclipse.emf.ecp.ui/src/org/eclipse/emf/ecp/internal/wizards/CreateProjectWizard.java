@@ -82,12 +82,10 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 			}
 		};
 		addPage(wp);
-		String title = Messages.CreateProjectWizard_PageTitle_CreateProjectDefault;
-		String message = Messages.CreateProjectWizard_PageMessage_CreateProjectDefault;
+		String title = Messages.CreateProjectWizard_PageTitle_CreateProject;
+		String message = Messages.CreateProjectWizard_PageMessage_SelectProviderAndSetName;
 		if (providers.size() == 1) {
-			title = Messages.CreateProjectWizard_PageTitle_Create + providers.get(0).getLabel()
-				+ Messages.CreateProjectWizard_PageTitle_Project;
-			message = Messages.CreateProjectWizard_PageMessage_CreateProject;
+			message = Messages.CreateProjectWizard_PageMessage_SetProjectName;
 		}
 		wp.setTitle(title);
 		wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$

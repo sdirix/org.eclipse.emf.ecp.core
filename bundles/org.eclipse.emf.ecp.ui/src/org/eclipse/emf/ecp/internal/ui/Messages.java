@@ -20,7 +20,7 @@ import org.eclipse.osgi.util.NLS;
  * @generated
  */
 public final class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.internal.ui.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.messages"; //$NON-NLS-1$
 	public static String AbstractModelElementHelper_FilterLabel;
 	public static String AbstractModelElementHelper_FilterText;
 	public static String ActionHelper_ErrorMessage_ElementDeleted;
@@ -41,11 +41,9 @@ public final class Messages extends NLS {
 	public static String CheckoutProjectWizard_PageMessage_CheckoutRepositrory;
 	public static String CheckoutProjectWizard_PageTitle_CheckoutProject;
 	public static String CheckoutProjectWizard_Title_Checkout;
-	public static String CreateProjectWizard_PageMessage_CreateProject;
-	public static String CreateProjectWizard_PageMessage_CreateProjectDefault;
-	public static String CreateProjectWizard_PageTitle_Create;
-	public static String CreateProjectWizard_PageTitle_CreateProjectDefault;
-	public static String CreateProjectWizard_PageTitle_Project;
+	public static String CreateProjectWizard_PageMessage_SetProjectName;
+	public static String CreateProjectWizard_PageMessage_SelectProviderAndSetName;
+	public static String CreateProjectWizard_PageTitle_CreateProject;
 	public static String DeleteDialog_DialogTitle;
 	public static String DeleteDialog_Message_AreYouSure;
 	public static String DeleteDialog_Message_element;
