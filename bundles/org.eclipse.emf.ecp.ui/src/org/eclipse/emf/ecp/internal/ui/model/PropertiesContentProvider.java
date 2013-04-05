@@ -23,7 +23,7 @@ public class PropertiesContentProvider extends StructuredContentProvider<Propert
 	}
 
 	public Object[] getElements(Object inputElement) {
-		return getInput().getElements();
+		return getInput().getElements().toArray();
 	}
 
 	public void propertiesChanged(Entry<String, String>[] oldProperties, Entry<String, String>[] newProperties) {

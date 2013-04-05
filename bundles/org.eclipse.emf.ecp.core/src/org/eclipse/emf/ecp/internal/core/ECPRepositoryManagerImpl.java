@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -77,8 +78,8 @@ public final class ECPRepositoryManagerImpl extends
 	}
 
 	/** {@inheritDoc} **/
-	public InternalRepository[] getRepositories() {
-		return getElements();
+	public Collection<ECPRepository> getRepositories() {
+		return (Collection) getElements();
 	}
 
 	/**

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.util.observer.IECPPropertiesChangedObserver;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,8 +42,8 @@ public class Properties extends Registry<Map.Entry<String, String>, IECPProperti
 	}
 
 	public void write(ObjectOutput out) throws IOException {
-		Entry<String, String>[] entries = getElements();
-		out.writeInt(entries.length);
+		Collection<Entry<String, String>> entries = getElements();
+		out.writeInt(entries.size());
 		for (Entry<String, String> entry : entries) {
 			out.writeUTF(entry.getKey());
 			out.writeUTF(entry.getValue());
@@ -72,7 +73,7 @@ public class Properties extends Registry<Map.Entry<String, String>, IECPProperti
 	}
 
 	/** {@inheritDoc} */
-	public Map.Entry<String, String>[] getProperties() {
+	public Collection<Map.Entry<String, String>> getProperties() {
 		return getElements();
 	}
 

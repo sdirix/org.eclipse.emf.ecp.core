@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.ecp.spi.ui;
 
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -42,7 +43,7 @@ public interface UIProviderRegistry {
 	 * 
 	 * @return the array containing all known {@link UIProvider}
 	 */
-	UIProvider[] getUIProviders();
+	Collection<UIProvider> getUIProviders();
 
 	/**
 	 * Whether any {@link UIProvider} are registered.

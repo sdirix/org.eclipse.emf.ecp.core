@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.core.util;
 
 import org.eclipse.emf.ecp.core.util.observer.IECPPropertiesChangedObserver;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -61,7 +62,7 @@ public interface ECPProperties {
 	 * 
 	 * @return an array of Key-Value-Pairs
 	 */
-	Map.Entry<String, String>[] getProperties();
+	Collection<Map.Entry<String, String>> getProperties();
 
 	/**
 	 * Whether any properties are stored.

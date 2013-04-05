@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.IStatus;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -139,8 +140,8 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
-	public InternalProject[] getProjects() {
-		InternalProject[] projects = getElements();
+	public Collection<ECPProject> getProjects() {
+		Collection<InternalProject> projects = getElements();
 		if (!initializedProjects) {
 
 			for (InternalProject project : projects) {
@@ -156,7 +157,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 			initializedProjects = true;
 		}
 
-		return projects;
+		return (Collection) projects;
 	}
 
 	@Override
@@ -215,7 +216,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	/** {@inheritDoc} */
 	public void repositoriesChanged(ECPRepository[] oldRepositories, ECPRepository[] newRepositories) throws Exception {
 		Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
-		InternalProject[] projects = getProjects();
+		Collection<InternalProject> projects = getElements();
 
 		for (ECPRepository repository : addedRepositories) {
 			for (InternalProject project : projects) {

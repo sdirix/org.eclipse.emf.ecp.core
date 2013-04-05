@@ -14,6 +14,8 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
+import java.util.Collection;
+
 /**
  * @author Eike Stepper
  */
@@ -37,7 +39,7 @@ public class ProvidersContentProvider extends TreeContentProvider<ECPProviderReg
 	@Override
 	protected void fillChildren(Object parent, InternalChildrenList childrenList) {
 		if (parent == ECPProviderRegistry.INSTANCE) {
-			ECPProvider[] providers = ECPProviderRegistry.INSTANCE.getProviders();
+			Collection<ECPProvider> providers = ECPProviderRegistry.INSTANCE.getProviders();
 			if (!excludesProvidersThatCannotAddRepositories) {
 				childrenList.addChildren(providers);
 			} else {

@@ -175,13 +175,13 @@ public class ECPProjectManagerTests extends AbstractTest {
 	@Test
 	public void getProjectsTest() {
 		try {
-			assertEquals(0, getProjectManager().getProjects().length);
+			assertEquals(0, getProjectManager().getProjects().size());
 			ECPProject project = getProjectManager().createProject(
 					getProvider(), projectName);
-			assertEquals(1, getProjectManager().getProjects().length);
+			assertEquals(1, getProjectManager().getProjects().size());
 			ECPProject project2 = getProjectManager().createProject(
 					getProvider(), projectName+"2");
-			assertEquals(2, getProjectManager().getProjects().length);
+			assertEquals(2, getProjectManager().getProjects().size());
 		} catch (ProjectWithNameExistsException e) {
 			fail();
 		}

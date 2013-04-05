@@ -17,6 +17,8 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.observer.IECPProvidersChangedObserver;
 
+import java.util.Collection;
+
 /**
  * Registry class to manage the registered providers.
  * 
@@ -54,7 +56,7 @@ public interface ECPProviderRegistry {
 	 * 
 	 * @return array of {@link ECPProvider ECPProviders}
 	 */
-	ECPProvider[] getProviders();
+	Collection<ECPProvider> getProviders();
 
 	/**
 	 * Method to programmatically add an {@link ECPProvider} to list of available provider.

@@ -17,8 +17,8 @@ public class ECPProviderRegistryTest extends AbstractTest {
 	@Test
 	public void removeAddProviderTest(){
 		ECPProviderRegistry.INSTANCE.removeProvider(EMFStoreProvider.NAME);
-		assertEquals(0,ECPProviderRegistry.INSTANCE.getProviders().length);
+		assertEquals(0,ECPProviderRegistry.INSTANCE.getProviders().size());
 		ECPProviderRegistry.INSTANCE.addProvider(new EMFStoreProvider());
-		assertEquals(1,ECPProviderRegistry.INSTANCE.getProviders().length);
+		assertEquals(1,ECPProviderRegistry.INSTANCE.getProviders().size());
 	}
 }

@@ -76,8 +76,8 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	}
 
 	/** {@inheritDoc} **/
-	public InternalProvider[] getProviders() {
-		return getElements();
+	public Collection<ECPProvider> getProviders() {
+		return (Collection) getElements();
 	}
 
 	/** {@inheritDoc} **/

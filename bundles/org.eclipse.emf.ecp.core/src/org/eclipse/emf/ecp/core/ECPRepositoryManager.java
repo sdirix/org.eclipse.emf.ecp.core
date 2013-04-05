@@ -16,6 +16,8 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 
+import java.util.Collection;
+
 /**
  * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
  * 
@@ -56,7 +58,7 @@ public interface ECPRepositoryManager {
 	 * @return an array of all known {@link ECPRepository ECPRepositories}
 	 */
 
-	ECPRepository[] getRepositories();
+	Collection<ECPRepository> getRepositories();
 
 	/**
 	 * This method allows the user to create a repository.

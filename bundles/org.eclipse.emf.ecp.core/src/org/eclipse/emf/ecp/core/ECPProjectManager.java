@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.core;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 
+import java.util.Collection;
+
 /**
  * @author Eike Stepper
  * @author Jonas
@@ -96,7 +98,7 @@ public interface ECPProjectManager {
 	 * 
 	 * @return an array of all known projects
 	 */
-	ECPProject[] getProjects();
+	Collection<ECPProject> getProjects();
 
 	/**
 	 * This method adds a observer to the observer of the ECPProjectManager.

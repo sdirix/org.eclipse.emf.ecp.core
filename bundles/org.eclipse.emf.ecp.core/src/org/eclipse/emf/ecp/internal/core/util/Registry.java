@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.core.util.observer.IECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,11 +57,12 @@ public abstract class Registry<ELEMENT, OBSERVER extends IECPObserver> extends L
 		}
 	}
 
-	public final ELEMENT[] getElements() {
+	public final Collection<ELEMENT> getElements() {
 		checkActive();
 		synchronized (this) {
-			ELEMENT[] result = createElementArray(elements.size());
-			return elements.values().toArray(result);
+			return Collections.unmodifiableCollection(elements.values());
+			// ELEMENT[] result = createElementArray(elements.size());
+			// return elements.values().toArray(result);
 		}
 	}
 
