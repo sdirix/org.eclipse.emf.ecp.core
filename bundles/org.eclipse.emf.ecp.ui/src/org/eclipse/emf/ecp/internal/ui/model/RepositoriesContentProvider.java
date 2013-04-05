@@ -38,14 +38,15 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	}
 
 	/** {@inheritDoc} */
-	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) throws Exception {
+	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories)
+		throws Exception {
 		refreshViewer();
 	}
 
 	/** {@inheritDoc} */
 	public void objectsChanged(ECPRepository repository, Collection<Object> objects) throws Exception {
 		// do always a full refresh
-		refreshViewer(true, objects);
+		refreshViewer(true, objects.toArray());
 	}
 
 	@Override

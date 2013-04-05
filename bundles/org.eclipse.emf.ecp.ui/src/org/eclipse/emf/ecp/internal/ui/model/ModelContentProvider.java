@@ -36,9 +36,9 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 
 	/** {@inheritDoc} */
 	public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
-		refreshViewer(structural, objects);
+		refreshViewer(structural, objects.toArray());
 		if (!objects.contains(project)) {
-			refreshViewer(structural, project);
+			refreshViewer(false, project);
 		}
 	}
 

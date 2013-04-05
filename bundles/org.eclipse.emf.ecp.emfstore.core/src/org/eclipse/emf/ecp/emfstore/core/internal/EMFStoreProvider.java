@@ -292,7 +292,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 				// 3
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement.eContainer() == null) {
-						((InternalProject) context).notifyObjectsChanged(Arrays.asList(modelElement, context), true);
+						((InternalProject) context).notifyObjectsChanged(Arrays.asList(context, modelElement), true);
 					}
 				}
 
