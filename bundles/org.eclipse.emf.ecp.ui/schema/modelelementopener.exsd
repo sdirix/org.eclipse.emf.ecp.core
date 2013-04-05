@@ -66,7 +66,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ModelElementOpener"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ECPModelElementOpener"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -137,7 +137,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ModelElementOpenTester"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ECPModelElementOpenTester"/>
                </appinfo>
             </annotation>
          </attribute>

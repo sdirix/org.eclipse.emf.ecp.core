@@ -20,12 +20,12 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.util.ECPDeletable;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 /**
- * This Handler uses the {@link HandlerHelper#deleteHandlerHelper(IStructuredSelection, org.eclipse.swt.widgets.Shell)} method
+ * This Handler uses the {@link ECPHandlerHelper#deleteHandlerHelper(IStructuredSelection, org.eclipse.swt.widgets.Shell)} method
  * to delete.
  * 
  * @author Eugen Neufeld
@@ -44,7 +44,7 @@ public class DeleteHandler extends AbstractHandler {
 				deletables.add((ECPDeletable) element);
 			}
 		}
-		HandlerHelper.deleteHandlerHelper(deletables, HandlerUtil.getActiveShell(event));
+		ECPHandlerHelper.deleteHandlerHelper(deletables, HandlerUtil.getActiveShell(event));
 		return null;
 	}
 }

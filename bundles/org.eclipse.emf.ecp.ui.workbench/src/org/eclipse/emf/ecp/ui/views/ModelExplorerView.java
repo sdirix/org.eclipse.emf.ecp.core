@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
 import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.platform.Activator;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -71,7 +71,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 				}
 				else if (firstElement instanceof EObject) {
 					ECPModelContext context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
-					HandlerHelper.openModelElement((EObject) firstElement, (ECPProject) context);
+					ECPHandlerHelper.openModelElement((EObject) firstElement, (ECPProject) context);
 				} 
 			}
 		}

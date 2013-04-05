@@ -17,13 +17,13 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- *  This Handler uses the {@link HandlerHelper#filterProjectPackages(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback)} method
+ *  This Handler uses the {@link ECPHandlerHelper#filterProjectPackages(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback)} method
  * to filter a project.
  * @author Eugen Neufeld
  */
@@ -38,7 +38,7 @@ public class ProjectFilterdPackagesHandler extends AbstractHandler
 	ISelection selection = HandlerUtil.getActiveMenuSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
     
-    HandlerHelper.filterProjectPackages((ECPProject)ssel.getFirstElement(),HandlerUtil.getActiveShell(event));
+    ECPHandlerHelper.filterProjectPackages((ECPProject)ssel.getFirstElement(),HandlerUtil.getActiveShell(event));
     
     
     return null;

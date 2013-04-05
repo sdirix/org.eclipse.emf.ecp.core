@@ -17,7 +17,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -34,7 +34,7 @@ public class RepositoryPropertiesHandler extends AbstractHandler {
 		if(IStructuredSelection.class.isInstance(selection)){
 			IStructuredSelection ssel=(IStructuredSelection)selection;
 			if(ECPRepository.class.isInstance(ssel.getFirstElement())){
-				HandlerHelper.openRepositoryProperties((ECPRepository)ssel.getFirstElement(),false,HandlerUtil.getActiveShell(event));
+				ECPHandlerHelper.openRepositoryProperties((ECPRepository)ssel.getFirstElement(),false,HandlerUtil.getActiveShell(event));
 			}
 		}
 		return null;

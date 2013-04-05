@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -77,7 +77,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	/** {@inheritDoc} */
 	public void openEditor(EObject o) {
 		// TODO only elements of the same project?
-		HandlerHelper.openModelElement(o, ecpProject);
+		ECPHandlerHelper.openModelElement(o, ecpProject);
 	}
 
 	/** {@inheritDoc} */
@@ -243,7 +243,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 			elements.add(allElements.next());
 		}
 
-		// HandlerHelper.createNewReferenceElement(modelElement, eReference,
+		// ECPHandlerHelper.createNewReferenceElement(modelElement, eReference,
 		// new WizardUICallback<SelectModelElementComposite>(shell, null));
 		// TODO remove PlatformUI
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();

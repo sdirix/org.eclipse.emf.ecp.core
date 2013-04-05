@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
@@ -71,7 +71,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 				Object[] selections = dialog.getResult();
 
 				if (selections != null && selections.length == 1 && selections[0] instanceof EObject) {
-					HandlerHelper.openModelElement((EObject) selections[0],
+					ECPHandlerHelper.openModelElement((EObject) selections[0],
 						 project);
 				}
 			}

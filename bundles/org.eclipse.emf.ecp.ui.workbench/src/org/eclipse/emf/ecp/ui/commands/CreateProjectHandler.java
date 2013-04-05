@@ -16,11 +16,11 @@ package org.eclipse.emf.ecp.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the {@link HandlerHelper#createProject(org.eclipse.emf.ecp.ui.common.AbstractUICallback)} method
+ * This Handler uses the {@link ECPHandlerHelper#createProject(org.eclipse.emf.ecp.ui.common.AbstractUICallback)} method
  * to create a new project.
  * 
  * @author Eugen Neufeld
@@ -29,7 +29,7 @@ public class CreateProjectHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		HandlerHelper.createProject(HandlerUtil.getActiveShell(event));
+		ECPHandlerHelper.createProject(HandlerUtil.getActiveShell(event));
 		return null;
 	}
 }

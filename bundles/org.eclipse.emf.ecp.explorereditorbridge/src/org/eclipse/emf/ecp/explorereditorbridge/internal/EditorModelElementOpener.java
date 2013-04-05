@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
-import org.eclipse.emf.ecp.ui.util.ModelElementOpener;
+import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
 
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -26,7 +26,7 @@ import org.eclipse.ui.PlatformUI;
  * @author Eugen Neufeld
  * 
  */
-public class EditorModelElementOpener implements ModelElementOpener {
+public class EditorModelElementOpener implements ECPModelElementOpener {
 
 	/**
 	 * Convenient constructor.

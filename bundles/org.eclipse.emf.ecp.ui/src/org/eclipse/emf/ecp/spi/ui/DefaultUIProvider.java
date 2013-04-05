@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -240,7 +240,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 						AddCommand.create(domain, object, ((CommandParameter) descriptor).getEStructuralFeature(),
 							new Object[] { cp.getEValue() }));
 					// object.eResource().save(null);
-					HandlerHelper.openModelElement(cp.getEValue(), project);
+					ECPHandlerHelper.openModelElement(cp.getEValue(), project);
 					// } catch (IOException ex) {
 					// Activator.log(ex);
 					// }

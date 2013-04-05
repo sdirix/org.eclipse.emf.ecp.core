@@ -20,11 +20,11 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 /**
- * This Handler uses the {@link HandlerHelper#deleteModelElement(org.eclipse.emf.ecp.core.ECPProject, java.util.Collection)} method
+ * This Handler uses the {@link ECPHandlerHelper#deleteModelElement(org.eclipse.emf.ecp.core.ECPProject, java.util.Collection)} method
  * to delete the selected {@link EObject EObjects}.
  * 
  * @author Eugen Neufeld
@@ -38,7 +38,7 @@ public class DeleteModelElementHandler extends AbstractHandler {
 
 		InternalProject project=(InternalProject)ECPProjectManager.INSTANCE.getProject(selection.getFirstElement());
 			
-		HandlerHelper.deleteModelElement(project, (List<EObject>)selection.toList());
+		ECPHandlerHelper.deleteModelElement(project, (List<EObject>)selection.toList());
 		return null;
 	}
 

@@ -70,8 +70,8 @@ import java.util.Set;
  * 
  * @author Eugen Neufeld
  */
-public final class HandlerHelper {
-	private HandlerHelper() {
+public final class ECPHandlerHelper {
+	private ECPHandlerHelper() {
 	}
 
 	private static void showError(Shell shell, String title, String message) {
@@ -340,12 +340,12 @@ public final class HandlerHelper {
 		}
 		IConfigurationElement[] modelelementopener = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.ui.modelelementopener"); //$NON-NLS-1$
-		ModelElementOpener bestCandidate = null;
+		ECPModelElementOpener bestCandidate = null;
 		int bestValue = -1;
 		for (IConfigurationElement element : modelelementopener) {
 			modelelementopener = null;
 			try {
-				ModelElementOpener modelelementOpener = (ModelElementOpener) element.createExecutableExtension("class"); //$NON-NLS-1$
+				ECPModelElementOpener modelelementOpener = (ECPModelElementOpener) element.createExecutableExtension("class"); //$NON-NLS-1$
 				for (IConfigurationElement testerElement : element.getChildren()) {
 					if ("staticTester".equals(testerElement.getName())) {//$NON-NLS-1$
 						int priority = Integer.parseInt(testerElement.getAttribute("priority"));//$NON-NLS-1$
@@ -363,7 +363,7 @@ public final class HandlerHelper {
 							Activator.log(ex);
 						}
 					} else if ("dynamicTester".equals(testerElement.getName())) {//$NON-NLS-1$
-						ModelElementOpenTester tester = (ModelElementOpenTester) testerElement
+						ECPModelElementOpenTester tester = (ECPModelElementOpenTester) testerElement
 							.createExecutableExtension("tester"); //$NON-NLS-1$
 						int value = tester.isApplicable(me);
 						if (value > bestValue) {

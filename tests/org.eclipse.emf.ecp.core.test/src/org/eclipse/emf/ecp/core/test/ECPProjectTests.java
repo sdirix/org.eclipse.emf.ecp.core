@@ -311,8 +311,6 @@ public class ECPProjectTests extends AbstractTest {
 			thrown = true;
 		}
 		assertTrue(thrown);
-		
-		fail("Delete should be called deleteElements - consistent naming");
 	}
 	
 	/**

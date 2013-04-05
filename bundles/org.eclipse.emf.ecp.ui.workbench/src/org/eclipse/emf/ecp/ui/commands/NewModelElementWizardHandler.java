@@ -17,13 +17,13 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.ui.util.HandlerHelper;
+import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the {@link HandlerHelper#addModelElement(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback, boolean)} method
+ * This Handler uses the {@link ECPHandlerHelper#addModelElement(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback, boolean)} method
  * to add a model element to a project.
  * 
  * @author Eugen Neufeld
@@ -37,7 +37,7 @@ public class NewModelElementWizardHandler extends AbstractHandler
   {
     ISelection selection = HandlerUtil.getActiveMenuSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;
-    HandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), HandlerUtil.getActiveShell(event),true);
+    ECPHandlerHelper.addModelElement((ECPProject)ssel.getFirstElement(), HandlerUtil.getActiveShell(event),true);
     
     return null;
   }
