@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.junit.Test;
 
@@ -83,6 +86,18 @@ public class ECPProjectManagerTests extends AbstractTest {
 		}
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void createSharedProjectWithoutRepository() {
+		ECPProperties properties = getNewProperties();
+		try {
+			ECPProject project = getProjectManager().createProject(
+					(ECPRepository) null, projectName, properties);
+			fail("Null Repository not allowed.");
+		} catch (ProjectWithNameExistsException e) {
+			fail();
+		}
+	}
+
 	@Test(expected = ProjectWithNameExistsException.class)
 	public void createSharedWithExistingNameProject()
 			throws ProjectWithNameExistsException {
@@ -100,7 +115,13 @@ public class ECPProjectManagerTests extends AbstractTest {
 
 	@Test
 	public void cloneProjectTest() {
-		ECPProject project = getProject();
+		ECPProject project=null;
+		try {
+			project = getProjectManager().createProject(
+					getProvider(), projectName);
+		} catch (ProjectWithNameExistsException e) {
+			fail(e.getMessage());
+		}
 		ECPProject clonedProject = getProjectManager().cloneProject(project);
 		assertTrue(project.equals(clonedProject));
 	}
@@ -116,7 +137,7 @@ public class ECPProjectManagerTests extends AbstractTest {
 	}
 
 	@Test
-	public void getProjectWithNameTest() {
+	public void getProjectByNameTest() {
 		try {
 			ECPProject project = getProjectManager().createProject(
 					getProvider(), projectName);
@@ -126,16 +147,49 @@ public class ECPProjectManagerTests extends AbstractTest {
 			fail();
 		}
 	}
-
 	@Test
-	public void getProjectWithNameNonExistingTest() {
+	public void getProjectByItselfTest() {
 		try {
 			ECPProject project = getProjectManager().createProject(
 					getProvider(), projectName);
-			ECPProject project2 = getProjectManager().getProject(projectName);
+			ECPProject project2 = getProjectManager().getProject(project);
 			assertTrue(project == project2);
 		} catch (ProjectWithNameExistsException e) {
 			fail();
 		}
+	}
+	@Test
+	public void getProjectByModelElementTest() {
+		try {
+			ECPProject project = getProjectManager().createProject(
+					getProvider(), projectName);
+			EObject object=EcoreFactory.eINSTANCE.createEObject();
+			project.getElements().add(object);
+			
+			ECPProject project2 = getProjectManager().getProject(object);
+			assertTrue(project == project2);
+		} catch (ProjectWithNameExistsException e) {
+			fail();
+		}
+	}
+	@Test
+	public void getProjectsTest() {
+		try {
+			assertEquals(0, getProjectManager().getProjects().length);
+			ECPProject project = getProjectManager().createProject(
+					getProvider(), projectName);
+			assertEquals(1, getProjectManager().getProjects().length);
+			ECPProject project2 = getProjectManager().createProject(
+					getProvider(), projectName+"2");
+			assertEquals(2, getProjectManager().getProjects().length);
+		} catch (ProjectWithNameExistsException e) {
+			fail();
+		}
+	}
+
+	@Test
+	public void getProjectByNameNonExistingTest() {
+		ECPProject project = getProjectManager().getProject(projectName);
+		assertTrue(null == project);
 	}
 }

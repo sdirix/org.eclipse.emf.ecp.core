@@ -584,7 +584,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public void delete(Collection<EObject> eObjects) {
+	public void deleteElements(Collection<EObject> eObjects) {
 		getProvider().delete(this, eObjects);
 		notifyObjectsChanged(new Object[] { this }, true);
 	}

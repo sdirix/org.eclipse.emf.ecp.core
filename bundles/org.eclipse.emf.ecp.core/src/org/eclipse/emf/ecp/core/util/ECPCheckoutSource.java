@@ -14,7 +14,7 @@
 
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 
 /**
  * This class describes an object that can be checkedout.

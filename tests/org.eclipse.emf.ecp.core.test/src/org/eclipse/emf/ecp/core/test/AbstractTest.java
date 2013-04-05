@@ -2,11 +2,11 @@ package org.eclipse.emf.ecp.core.test;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 public abstract class AbstractTest {
-	private static ECPProject project;
 	private static ECPProjectManager projectManager;
 	private static ECPProvider provider;
 	private static ECPRepository repository;
@@ -32,11 +31,6 @@ public abstract class AbstractTest {
 		for(ECPProject existingProject:projectManager.getProjects()){
 			existingProject.delete();
 		}
-		project = getProjectManager().createProject(getProvider(), "projectName");
-	}
-
-	public ECPProject getProject() {
-		return project;
 	}
 
 	public static ECPProjectManager getProjectManager() {

@@ -130,7 +130,7 @@ public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAw
 	 * 
 	 * @param eObjects the collection of {@link EObject}s to delete
 	 */
-	void delete(Collection<EObject> eObjects);
+	void deleteElements(Collection<EObject> eObjects);
 
 	/**
 	 * This method checks whether the provided object is the model root of the project.

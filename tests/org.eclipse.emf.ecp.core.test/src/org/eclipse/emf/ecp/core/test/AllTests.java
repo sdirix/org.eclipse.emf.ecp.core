@@ -25,7 +25,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({ 
 	ECPProjectManagerTests.class,
 	ECPProjectTests.class, 
-	ECPProviderTests.class})
+	ECPProviderTests.class,
+	ECPProviderRegistryTest.class})
 public class AllTests {
 
 }

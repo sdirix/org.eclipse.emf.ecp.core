@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.IECPProjectsChangedUIObserver;
 
@@ -112,4 +111,27 @@ public interface ECPProjectManager {
 	 * @param observer the {@link IECPProjectsChangedUIObserver} to remove
 	 */
 	void removeObserver(IECPProjectsChangedUIObserver observer);
+
+	/**
+	 * This exception is thrown when we try to add a project with a name that already exists.
+	 * 
+	 * @author Eugen Neufeld
+	 * @noextend This class is not intended to be subclassed by clients.
+	 * @noinstantiate This class is not intended to be instantiated by clients.
+	 * 
+	 */
+	public class ProjectWithNameExistsException extends Exception {
+
+		private static final long serialVersionUID = 2896166396540238251L;
+
+		/**
+		 * Convenient Constructor for this Exception.
+		 * 
+		 * @param message the message of this exception
+		 */
+
+		public ProjectWithNameExistsException(String message) {
+			super(message);
+		}
+	}
 }

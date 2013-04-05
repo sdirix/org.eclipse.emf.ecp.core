@@ -19,6 +19,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -100,9 +101,7 @@ public class ECPProjectTests extends AbstractTest {
 		
 		project.getElements().remove(reference);
 		assertFalse(project.contains(clazz));
-		assertFalse(project.contains(reference));	
-		
-		fail("contains should be called containsElement. - consistent naming");
+		assertFalse(project.contains(reference));
 	}
 	
 	/**
@@ -148,7 +147,7 @@ public class ECPProjectTests extends AbstractTest {
 	 */
 	@Test
 	public void testGetUnsupportedEPackages() {
-		//Collection<EPackage> unsupportedPackages = project.getUnsupportedEPackages();
+		Collection<EPackage> unsupportedPackages = project.getUnsupportedEPackages();
 		fail("This method always returns an empty list");
 	}
 	
@@ -159,16 +158,15 @@ public class ECPProjectTests extends AbstractTest {
 	@Test
 	public void testVisiblePackages() {
 		Set<EPackage> packages = project.getVisiblePackages();
-		assertTrue(packages.contains(EcorePackage.eINSTANCE));
-		
+		assertFalse( packages.contains(EcorePackage.eINSTANCE));
 		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
 		EObject reference = EcoreFactory.eINSTANCE.createEReference();
 		
 		project.getElements().add(clazz);
 		assertTrue(project.contains(clazz));
 		
-		packages.remove(EcorePackage.eINSTANCE);
-		assertFalse( project.getVisiblePackages().contains(EcorePackage.eINSTANCE));
+		packages.add(EcorePackage.eINSTANCE);
+		assertTrue(packages.contains(EcorePackage.eINSTANCE));
 				
 		project.getElements().add(reference);
 		assertTrue(project.contains(reference));	
@@ -290,12 +288,12 @@ public class ECPProjectTests extends AbstractTest {
 		project.getElements().add(reference);
 		assertEquals(2,project.getElements().size());
 		
-		project.delete(Collections.singleton(clazz));
+		project.deleteElements(Collections.singleton(clazz));
 		assertEquals(1,project.getElements().size());
 		assertTrue(project.contains(reference));
 		assertFalse(project.contains(clazz));
 		
-		project.delete(Collections.singleton(reference));
+		project.deleteElements(Collections.singleton(reference));
 		assertEquals(0,project.getElements().size());
 		
 		project.getElements().add(clazz);
@@ -303,12 +301,12 @@ public class ECPProjectTests extends AbstractTest {
 		project.getElements().add(attribute);
 		
 		assertEquals(3,project.getElements().size());
-		project.delete(Arrays.asList(clazz,reference,attribute));
+		project.deleteElements(Arrays.asList(clazz,reference,attribute));
 		assertEquals(0,project.getElements().size());
 		
 		boolean thrown=false;
 		try {
-			project.delete(Collections.singleton(clazz));
+			project.deleteElements(Collections.singleton(clazz));
 		} catch (IllegalArgumentException iae) {
 			thrown = true;
 		}

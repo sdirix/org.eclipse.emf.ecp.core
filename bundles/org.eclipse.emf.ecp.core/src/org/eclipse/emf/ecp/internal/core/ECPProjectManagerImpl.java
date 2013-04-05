@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -123,10 +122,6 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	// TODO integrate in getProject
 	private InternalProject getInternalProject(Object object) {
-		if (InternalProject.class.isInstance(object)) {
-			return (InternalProject) object;
-		}
-
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
 			InternalProvider internalProvider = (InternalProvider) ECPUtil.getResolvedElement(provider);
 			ECPModelContext modelContext = internalProvider.getModelContext(object);

@@ -2,6 +2,7 @@ package org.eclipse.emf.ecp.core.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -9,9 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.exception.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.junit.After;
 import org.junit.Test;
 
@@ -83,5 +88,52 @@ public class ECPProviderTests extends AbstractTest {
 		}
 
 		assertEquals(hasUnsharedProjectSupport, isActuallyPossible);
+	}
+	
+	@Test
+	public void getUIProviderTest(){
+		InternalProvider provider=(InternalProvider) getProvider();
+		AdapterProvider uiProvider=provider.getUIProvider();
+		assertNotNull(uiProvider);
+	}
+	@Test
+	public void setUIProviderTest(){
+		fail("Not yet implemented");
+	}
+	@Test
+	public void isSlowTest(){
+		InternalProvider provider=(InternalProvider) getProvider();
+		boolean isSlow=provider.isSlow(null);
+		fail("what should be passed?");
+	}
+	@Test
+	public void createEditingDomainTest(){
+		InternalProvider provider=(InternalProvider) getProvider();
+		InternalProject project=null;
+		try {
+			project = (InternalProject) getProjectManager().createProject(
+					getProvider(), "test");
+		} catch (ProjectWithNameExistsException e) {
+			fail(e.getMessage());
+		}
+		EditingDomain editingDomain=provider.createEditingDomain(project);
+		assertNotNull(editingDomain);
+	}
+	@Test
+	public void getOpenProjectsTest(){
+		InternalProvider provider=(InternalProvider) getProvider();
+		assertEquals(0,provider.getOpenProjects().length);
+		InternalProject project=null;
+		try {
+			project = (InternalProject)getProjectManager().createProject(
+					getProvider(), "test");
+		} catch (ProjectWithNameExistsException e) {
+			fail(e.getMessage());
+		}
+		assertEquals(1,provider.getOpenProjects().length);
+		project.close();
+		assertEquals(0,provider.getOpenProjects().length);
+		project.open();
+		assertEquals(1,provider.getOpenProjects().length);
 	}
 }
