@@ -47,10 +47,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.ui3x"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.validation.feature"
          version="0.0.0"
          name="org.eclipse.emf.ecp.validation"/>
@@ -61,6 +57,10 @@
 
    <includes
          id="org.eclipse.emf.ecp.target"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.e3"
          version="0.0.0"/>
 
 </feature>
