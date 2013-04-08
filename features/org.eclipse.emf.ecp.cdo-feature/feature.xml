@@ -16,7 +16,7 @@
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
-      license-feature-version="2.0.0">
+      license-feature-version="1.0.0">
 
    <description>
       %description

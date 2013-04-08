@@ -3,14 +3,16 @@
       id="org.eclipse.emf.ecp.emfstore"
       label="EMF Client Platform (EMFStore Support)"
       version="1.0.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      license-feature="org.eclipse.emf.ecp.license"
+      license-feature-version="1.0.0">
 
    <description>
       This Feature allows the use of the EMFStore for the EMF Client Platform.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="%copyrightURL">
+      %copyright
    </copyright>
 
    <license url="http://www.example.com/license">
