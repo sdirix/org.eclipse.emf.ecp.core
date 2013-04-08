@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -54,11 +55,18 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	/**
 	 * This Singleton is used by the {@link ECPRepositoryManager#INSTANCE}.
 	 */
-	public static final ECPRepositoryManagerImpl INSTANCE = new ECPRepositoryManagerImpl();
+	// public static final ECPRepositoryManagerImpl INSTANCE = new ECPRepositoryManagerImpl();
+	public static ECPRepositoryManagerImpl INSTANCE;
 
 	private final RepositoryParser extensionParser = new RepositoryParser();
 
-	private ECPRepositoryManagerImpl() {
+	public ECPRepositoryManagerImpl() {
+		INSTANCE = this;
+	}
+
+	protected void startup() {
+		setFolder(new File(Activator.getInstance().getStateLocation().toFile(), "repositories"));
+		activate();
 	}
 
 	/** {@inheritDoc} **/

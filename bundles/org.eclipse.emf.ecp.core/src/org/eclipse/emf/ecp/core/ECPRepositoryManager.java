@@ -15,6 +15,7 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
@@ -30,7 +31,8 @@ public interface ECPRepositoryManager {
 	/**
 	 * The {@link ECPRepositoryManager} instance.
 	 */
-	ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
+	// ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
+	ECPRepositoryManager INSTANCE = Activator.getECPRepositoryManager();
 
 	/**
 	 * This method returns a {@link ECPRepository} from an adaptable. The adaptable must be of type:

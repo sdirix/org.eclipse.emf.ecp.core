@@ -13,14 +13,17 @@
 
 package org.eclipse.emf.ecp.internal.core;
 
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 
 import org.osgi.framework.BundleContext;
-
-import java.io.File;
+import org.osgi.framework.ServiceReference;
 
 /**
  * This is the Activator for the ECP Core plugin.
@@ -48,13 +51,13 @@ public final class Activator extends Plugin {
 		super.start(bundleContext);
 		instance = this;
 
-		File stateLocation = getStateLocation().toFile();
-		ECPRepositoryManagerImpl.INSTANCE.setFolder(new File(stateLocation, "repositories"));
-		ECPProjectManagerImpl.INSTANCE.setFolder(new File(stateLocation, "projects"));
+		// File stateLocation = getStateLocation().toFile();
+		// ECPRepositoryManagerImpl.INSTANCE.setFolder(new File(stateLocation, "repositories"));
+		// ECPProjectManagerImpl.INSTANCE.setFolder(new File(stateLocation, "projects"));
 
-		ECPProviderRegistryImpl.INSTANCE.activate();
-		ECPRepositoryManagerImpl.INSTANCE.activate();
-		ECPProjectManagerImpl.INSTANCE.activate();
+		// ECPProviderRegistryImpl.INSTANCE.activate();
+		// ECPRepositoryManagerImpl.INSTANCE.activate();
+		// ECPProjectManagerImpl.INSTANCE.activate();
 	}
 
 	@Override
@@ -68,6 +71,11 @@ public final class Activator extends Plugin {
 	}
 
 	// END SUPRESS CATCH EXCEPTION
+
+	public static Activator getInstance() {
+		return instance;
+	}
+
 	/**
 	 * Logs and Info message.
 	 * 
@@ -115,5 +123,23 @@ public final class Activator extends Plugin {
 		}
 
 		return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
+	}
+
+	public static ECPProjectManager getECPProjectManager() {
+		ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPProjectManager.class);
+		return instance.getBundle().getBundleContext().getService(serviceRef);
+	}
+
+	public static ECPRepositoryManager getECPRepositoryManager() {
+		ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPRepositoryManager.class);
+		return instance.getBundle().getBundleContext().getService(serviceRef);
+	}
+
+	public static ECPProviderRegistry getECPProviderRegistry() {
+		ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPProviderRegistry.class);
+		return instance.getBundle().getBundleContext().getService(serviceRef);
 	}
 }

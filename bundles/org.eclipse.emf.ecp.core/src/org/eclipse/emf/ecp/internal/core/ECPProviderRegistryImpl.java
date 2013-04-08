@@ -54,11 +54,17 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	/**
 	 * The Singleton used in {@link ECPProviderRegistry#INSTANCE}.
 	 */
-	public static final ECPProviderRegistryImpl INSTANCE = new ECPProviderRegistryImpl();
+	// public static final ECPProviderRegistryImpl INSTANCE = new ECPProviderRegistryImpl();
+	public static ECPProviderRegistryImpl INSTANCE;
 
 	private final ProviderParser extensionParser = new ProviderParser();
 
-	private ECPProviderRegistryImpl() {
+	public ECPProviderRegistryImpl() {
+		INSTANCE = this;
+	}
+
+	protected void startup() {
+		activate();
 	}
 
 	/** {@inheritDoc} **/

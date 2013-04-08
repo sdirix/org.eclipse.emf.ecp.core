@@ -16,6 +16,7 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
+import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
@@ -31,7 +32,8 @@ public interface ECPProviderRegistry {
 	/**
 	 * Instance of the ECPProviderRegistry.
 	 */
-	ECPProviderRegistry INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProviderRegistryImpl.INSTANCE;
+	// ECPProviderRegistry INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProviderRegistryImpl.INSTANCE;
+	ECPProviderRegistry INSTANCE = Activator.getECPProviderRegistry();
 
 	/**
 	 * This method returns the {@link ECPProvider} based on the adaptable. The adaptable must be of type

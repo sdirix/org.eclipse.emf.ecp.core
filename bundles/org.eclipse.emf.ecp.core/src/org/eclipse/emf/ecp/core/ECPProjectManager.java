@@ -13,12 +13,14 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
 /**
  * @author Eike Stepper
  * @author Jonas
+ * @author Eugen Neufeld
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
@@ -27,7 +29,8 @@ public interface ECPProjectManager {
 	/**
 	 * Instance of the ECPProjectManager.
 	 */
-	ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
+	// ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
+	ECPProjectManager INSTANCE = Activator.getECPProjectManager();
 
 	/**
 	 * Method to construct an offline Project, this method calls

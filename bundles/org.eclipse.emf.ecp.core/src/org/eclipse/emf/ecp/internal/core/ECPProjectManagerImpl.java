@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import org.eclipse.core.runtime.IStatus;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.util.Collection;
@@ -55,13 +56,20 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	/**
 	 * The singleton that is returned by the {@link ECPProjectManager#INSTANCE}.
 	 */
-	public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
+	// public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
+	public static ECPProjectManagerImpl INSTANCE;
 	/**
 	 * This variable defines whether the projects where already initialized. Default value is false.
 	 */
 	private boolean initializedProjects;
 
-	private ECPProjectManagerImpl() {
+	public ECPProjectManagerImpl() {
+		INSTANCE = this;
+	}
+
+	protected void startup() {
+		setFolder(new File(Activator.getInstance().getStateLocation().toFile(), "projects"));
+		activate();
 	}
 
 	/** {@inheritDoc} */
