@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ECP 3.x" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application3x.product" application="org.eclipse.emf.ecp.application3x.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="ECP 3.x" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
 
    <configIni use="default">
    </configIni>
@@ -10,7 +11,7 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.eclipse.emf.ecp.ui.workbench/icons/bricks.png"/>
+   <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
 
    <launcher name="ecp">
       <solaris/>
@@ -19,6 +20,7 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
 
@@ -26,7 +28,7 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.ecp.ui3x"/>
+      <feature id="org.eclipse.emf.ecp.e3"/>
       <feature id="org.eclipse.emf.ecp"/>
       <feature id="org.eclipse.emf.ecp.emfstore"/>
       <feature id="org.eclipse.emf.ecp.workspace"/>
