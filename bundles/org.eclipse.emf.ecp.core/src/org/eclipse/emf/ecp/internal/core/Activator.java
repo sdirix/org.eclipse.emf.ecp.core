@@ -50,14 +50,6 @@ public final class Activator extends Plugin {
 	public void start(BundleContext bundleContext) throws Exception {
 		super.start(bundleContext);
 		instance = this;
-
-		// File stateLocation = getStateLocation().toFile();
-		// ECPRepositoryManagerImpl.INSTANCE.setFolder(new File(stateLocation, "repositories"));
-		// ECPProjectManagerImpl.INSTANCE.setFolder(new File(stateLocation, "projects"));
-
-		// ECPProviderRegistryImpl.INSTANCE.activate();
-		// ECPRepositoryManagerImpl.INSTANCE.activate();
-		// ECPProjectManagerImpl.INSTANCE.activate();
 	}
 
 	@Override

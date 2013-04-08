@@ -54,9 +54,8 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	implements ECPProjectManager, ECPRepositoriesChangedObserver {
 
 	/**
-	 * The singleton that is returned by the {@link ECPProjectManager#INSTANCE}.
+	 * The Singleton to access the implementation of the Default ECPProjectManager.
 	 */
-	// public static final ECPProjectManagerImpl INSTANCE = new ECPProjectManagerImpl();
 	public static ECPProjectManagerImpl INSTANCE;
 	/**
 	 * This variable defines whether the projects where already initialized. Default value is false.

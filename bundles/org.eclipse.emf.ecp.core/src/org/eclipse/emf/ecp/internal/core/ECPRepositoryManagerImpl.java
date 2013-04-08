@@ -53,9 +53,8 @@ import java.util.Set;
 public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPRepositoriesChangedObserver>
 	implements ECPRepositoryManager, ECPProvidersChangedObserver {
 	/**
-	 * This Singleton is used by the {@link ECPRepositoryManager#INSTANCE}.
+	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
 	 */
-	// public static final ECPRepositoryManagerImpl INSTANCE = new ECPRepositoryManagerImpl();
 	public static ECPRepositoryManagerImpl INSTANCE;
 
 	private final RepositoryParser extensionParser = new RepositoryParser();

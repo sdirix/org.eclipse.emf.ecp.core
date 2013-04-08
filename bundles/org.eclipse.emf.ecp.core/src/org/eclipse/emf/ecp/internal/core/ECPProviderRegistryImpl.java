@@ -52,9 +52,8 @@ import java.util.Set;
 public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPProvidersChangedObserver>
 	implements ECPProviderRegistry {
 	/**
-	 * The Singleton used in {@link ECPProviderRegistry#INSTANCE}.
+	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
 	 */
-	// public static final ECPProviderRegistryImpl INSTANCE = new ECPProviderRegistryImpl();
 	public static ECPProviderRegistryImpl INSTANCE;
 
 	private final ProviderParser extensionParser = new ProviderParser();
