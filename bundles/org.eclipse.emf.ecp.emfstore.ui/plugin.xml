@@ -435,18 +435,14 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
-                     <test
-                           property="org.eclipse.emf.ecp.core.repository.providerName"
-                           value="org.eclipse.emf.ecp.emfstore.provider">
-                     </test>
+                     <instanceof
+                           value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                     </instanceof>
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
                            value="true">
                      </test>
-                     <instanceof
-                           value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
-                     </instanceof>
                   </iterate>
                </and>
                </with>
@@ -467,10 +463,6 @@
                   <iterate
                         ifEmpty="false"
                         operator="and">
-                     <test
-                           property="org.eclipse.emf.ecp.core.repository.providerName"
-                           value="org.eclipse.emf.ecp.emfstore.provider">
-                     </test>
                      <instanceof
                            value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
                      </instanceof>
