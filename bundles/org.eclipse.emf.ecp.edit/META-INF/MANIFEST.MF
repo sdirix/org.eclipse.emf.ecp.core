@@ -11,6 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.databinding.edit;bundle-version="1.2.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.edit;version="0.0.0",
- org.eclipse.emf.ecp.edit.util,
- org.eclipse.emf.ecp.internal.edit;version="0.0.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.edit;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.util;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.internal.edit;version="1.0.0";x-internal:=true

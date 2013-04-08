@@ -22,4 +22,4 @@ Import-Package: org.eclipse.core.commands,
  org.eclipse.ui.dialogs;ui.workbench=split,
  org.eclipse.ui.handlers,
  org.eclipse.ui.plugin
-Export-Package: org.eclipse.emf.ecp.emfstore.ui.search;x-internal:=true
+Export-Package: org.eclipse.emf.ecp.emfstore.ui.search;version="1.0.0";x-internal:=true

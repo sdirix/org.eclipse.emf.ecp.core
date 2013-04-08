@@ -31,5 +31,5 @@ Import-Package: org.eclipse.core.commands,
  org.eclipse.ui.plugin,
  org.eclipse.ui.services
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.editor.e3,
- org.eclipse.emf.ecp.editor.internal.e3;x-internal:=true
+Export-Package: org.eclipse.emf.ecp.editor.e3;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.editor.internal.e3;version="1.0.0";x-internal:=true
