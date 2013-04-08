@@ -11,7 +11,8 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -25,8 +26,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class Properties extends Registry<Map.Entry<String, String>, ECPPropertiesChangedObserver> implements
-	ECPProperties {
+public class Properties extends Registry<Map.Entry<String, String>, ECPPropertiesObserver> implements ECPProperties {
 	public Properties() {
 		activate();
 	}
@@ -105,10 +105,10 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	 * , ELEMENT[], ELEMENT[])
 	 */
 	@Override
-	protected void notifyObservers(ECPPropertiesChangedObserver observer,
-		Collection<Map.Entry<String, String>> oldProperties, Collection<Map.Entry<String, String>> newProperties)
-		throws Exception {
-		observer.propertiesChanged(oldProperties, newProperties);
+	protected void notifyObservers(Collection<Map.Entry<String, String>> oldProperties,
+		Collection<Map.Entry<String, String>> newProperties) throws Exception {
+		ECPObserverBus.getInstance().notify(ECPPropertiesObserver.class)
+			.propertiesChanged(oldProperties, newProperties);
 	}
 
 	// @Override

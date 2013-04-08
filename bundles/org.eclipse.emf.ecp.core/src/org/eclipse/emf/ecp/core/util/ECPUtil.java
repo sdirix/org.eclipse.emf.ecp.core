@@ -33,8 +33,6 @@ import java.util.Set;
  */
 public final class ECPUtil {
 
-	private static final int NOT_FOUND = -1;
-
 	private ECPUtil() {
 	}
 
@@ -68,7 +66,7 @@ public final class ECPUtil {
 	/**
 	 * This creates an empty {@link ECPProperties}.
 	 * 
-	 * @return an empry {@link ECPProperties}
+	 * @return an empty {@link ECPProperties}
 	 */
 	public static ECPProperties createProperties() {
 		return new Properties();
@@ -118,36 +116,6 @@ public final class ECPUtil {
 		}
 
 		return elementOrDescriptor;
-	}
-
-	/**
-	 * Checks whether an array contains an element.
-	 * 
-	 * @param elements the array to check
-	 * @param element the element to find
-	 * @param <E> the type of the elements
-	 * @return true if the element is in the array, false otherwise
-	 */
-	public static <E> boolean containsElement(E[] elements, E element) {
-		return getElementIndex(elements, element) != NOT_FOUND;
-	}
-
-	/**
-	 * Returns the index of an Element inside the array.
-	 * 
-	 * @param elements the array to search
-	 * @param element the element to search
-	 * @param <E> the generic type of the element and the array
-	 * @return the index of the element in the array or {@link #NOT_FOUND} if the element is not in the array
-	 */
-	public static <E> int getElementIndex(E[] elements, E element) {
-		for (int i = 0; i < elements.length; i++) {
-			if (elements[i] == element) {
-				return i;
-			}
-		}
-
-		return NOT_FOUND;
 	}
 
 	/**

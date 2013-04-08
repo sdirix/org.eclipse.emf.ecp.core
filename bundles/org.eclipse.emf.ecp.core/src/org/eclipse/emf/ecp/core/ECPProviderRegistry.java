@@ -15,7 +15,7 @@
 
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
@@ -32,12 +32,10 @@ public interface ECPProviderRegistry {
 	/**
 	 * Instance of the ECPProviderRegistry.
 	 */
-	// ECPProviderRegistry INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProviderRegistryImpl.INSTANCE;
 	ECPProviderRegistry INSTANCE = Activator.getECPProviderRegistry();
 
 	/**
-	 * This method returns the {@link ECPProvider} based on the adaptable. The adaptable must be of type
-	 * {@link org.eclipse.emf.ecp.core.util.ECPProviderAware ECPProviderAware}.
+	 * This method returns the {@link ECPProvider} based on the adaptable.
 	 * 
 	 * @param adaptable the adaptable to adapt
 	 * @return the adapted {@link ECPProvider} or null
@@ -50,7 +48,6 @@ public interface ECPProviderRegistry {
 	 * @param name the name of the {@link ECPProvider} to search for
 	 * @return the {@link ECPProvider}
 	 */
-	// FIXME is needed?
 	ECPProvider getProvider(String name);
 
 	/**
@@ -65,7 +62,6 @@ public interface ECPProviderRegistry {
 	 * 
 	 * @param provider the {@link ECPProvider} to add
 	 */
-	// TODO is needed?
 	void addProvider(ECPProvider provider);
 
 	/**
@@ -73,22 +69,19 @@ public interface ECPProviderRegistry {
 	 * 
 	 * @param name the name of the provider to delete
 	 */
-	// TODO is needed?
 	void removeProvider(String name);
 
 	/**
-	 * Add an {@link ECPProvidersChangedObserver} to be notified.
+	 * Add an {@link ECPProviderRegistryObserver} to be notified.
 	 * 
 	 * @param changeObserver the observer to add
 	 */
-	// TODO is needed?
-	void addObserver(ECPProvidersChangedObserver changeObserver);
+	void addObserver(ECPProviderRegistryObserver changeObserver);
 
 	/**
-	 * Remove an {@link ECPProvidersChangedObserver} from the list of the providers to be notified.
+	 * Remove an {@link ECPProviderRegistryObserver} from the list of the providers to be notified.
 	 * 
 	 * @param changeObserver the observer to remove
 	 */
-	// TODO is needed?
-	void removeObserver(ECPProvidersChangedObserver changeObserver);
+	void removeObserver(ECPProviderRegistryObserver changeObserver);
 }

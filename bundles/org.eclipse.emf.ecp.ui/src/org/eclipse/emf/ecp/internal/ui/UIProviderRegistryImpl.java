@@ -105,8 +105,8 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	// }
 
 	@Override
-	protected void notifyObservers(ECPObserver listener, Collection<UIProvider> oldElements,
-		Collection<UIProvider> newElements) throws Exception {
+	protected void notifyObservers(Collection<UIProvider> oldElements, Collection<UIProvider> newElements)
+		throws Exception {
 	}
 
 	@Override

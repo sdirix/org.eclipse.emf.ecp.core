@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class ECPProjectTests extends AbstractTest {
 
 	
 	/** The project. */
-	private ECPProject project;
+	private InternalProject project;
 	
 	/**
 	 * Setup.
@@ -60,7 +61,7 @@ public class ECPProjectTests extends AbstractTest {
 		
 		while(!done)
 			try {
-				this.project = getProjectManager().createProject(getProvider(), "Projekt " + UUID.randomUUID());
+				this.project = (InternalProject)getProjectManager().createProject(getProvider(), "Projekt " + UUID.randomUUID());
 				done = true;
 			} catch (ProjectWithNameExistsException e) {}
 	}
@@ -73,36 +74,6 @@ public class ECPProjectTests extends AbstractTest {
 		project.delete();
 	}
 	
-	/**
-	 * Test contains.
-	 */
-	@Test
-	public void testContains() {
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		EObject reference = EcoreFactory.eINSTANCE.createEReference();
-		
-		assertFalse(project.contains(clazz));
-		assertFalse(project.contains(reference));
-		
-		project.getElements().add(clazz);
-		
-		assertTrue(project.contains(clazz));
-		assertFalse(project.contains(reference));
-		
-		project.getElements().add(reference);
-		
-		assertTrue(project.contains(clazz));
-		assertTrue(project.contains(reference));
-		
-		project.getElements().remove(clazz);
-		
-		assertFalse(project.contains(clazz));
-		assertTrue(project.contains(reference));
-		
-		project.getElements().remove(reference);
-		assertFalse(project.contains(clazz));
-		assertFalse(project.contains(reference));
-	}
 	
 	/**
 	 * Test get elements.
@@ -288,12 +259,12 @@ public class ECPProjectTests extends AbstractTest {
 		project.getElements().add(reference);
 		assertEquals(2,project.getElements().size());
 		
-		project.deleteElements(Collections.singleton(clazz));
+		project.deleteElements((Collection)Collections.singleton(clazz));
 		assertEquals(1,project.getElements().size());
 		assertTrue(project.contains(reference));
 		assertFalse(project.contains(clazz));
 		
-		project.deleteElements(Collections.singleton(reference));
+		project.deleteElements((Collection)Collections.singleton(reference));
 		assertEquals(0,project.getElements().size());
 		
 		project.getElements().add(clazz);
@@ -301,12 +272,12 @@ public class ECPProjectTests extends AbstractTest {
 		project.getElements().add(attribute);
 		
 		assertEquals(3,project.getElements().size());
-		project.deleteElements(Arrays.asList(clazz,reference,attribute));
+		project.deleteElements((Collection)Arrays.asList(clazz,reference,attribute));
 		assertEquals(0,project.getElements().size());
 		
 		boolean thrown=false;
 		try {
-			project.deleteElements(Collections.singleton(clazz));
+			project.deleteElements((Collection)Collections.singleton(clazz));
 		} catch (IllegalArgumentException iae) {
 			thrown = true;
 		}

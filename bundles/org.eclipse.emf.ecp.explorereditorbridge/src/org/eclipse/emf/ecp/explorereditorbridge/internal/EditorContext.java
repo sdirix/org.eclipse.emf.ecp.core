@@ -15,10 +15,13 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
 import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -38,7 +41,8 @@ public class EditorContext implements ECPEditorContext {
 	 * @author Jonas
 	 * 
 	 */
-	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedUIObserver {
+	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedObserver,
+		ECPProjectOpenClosedObserver, ECPProjectObjectsChangedUIObserver {
 		/** {@inheritDoc} */
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)
 			throws Exception {
@@ -66,7 +70,7 @@ public class EditorContext implements ECPEditorContext {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself
-			if (structural && ecpProject.equals(project) && !project.contains(modelElement)) {
+			if (structural && ecpProject.equals(project) && !((InternalProject) project).contains(modelElement)) {
 				for (EditModelElementContextListener contextListener : contextListeners) {
 					contextListener.onModelElementDeleted(modelElement);
 				}
@@ -77,7 +81,7 @@ public class EditorContext implements ECPEditorContext {
 
 	private List<EditModelElementContextListener> contextListeners = new ArrayList<EditModelElementContextListener>();
 
-	private ECPProjectsChangedUIObserver projectObserver;
+	private ECPProjectsChangedObserver projectObserver;
 
 	private ECPControlContextImpl ecpControlContextImpl;
 

@@ -277,7 +277,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
-	public void delete(InternalProject project, Collection<EObject> eObjects) {
+	public void delete(InternalProject project, Collection<Object> objects) {
 		// CDOResource cdoResource = getProjectData(project).getRootResource();
 
 		// cdoResource.eContents().removeAll(eObjects);

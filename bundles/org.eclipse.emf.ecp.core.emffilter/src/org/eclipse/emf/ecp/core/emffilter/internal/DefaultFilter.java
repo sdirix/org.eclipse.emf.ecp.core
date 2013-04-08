@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.emffilter.internal;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,9 +35,9 @@ public class DefaultFilter implements ECPFilterProvider {
 	/**
 	 * This returns all package uris known in an default modeling edition including emfstore.
 	 * 
-	 * @return a {@link Collection} of {@link String}s of the default packages in the modeling edition of eclipse
+	 * @return a {@link Set} of {@link String Strings} of the default packages in the modeling edition of eclipse
 	 */
-	public Collection<String> getFilteredPackages() {
+	public Set<String> getHiddenPackages() {
 		Set<String> packages = new HashSet<String>();
 		addE4Models(packages);
 		addEMFStoreModels(packages);

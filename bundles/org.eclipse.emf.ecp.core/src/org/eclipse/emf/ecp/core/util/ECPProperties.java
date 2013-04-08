@@ -13,7 +13,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 
 import java.util.Collection;
 import java.util.Map;
@@ -81,18 +81,18 @@ public interface ECPProperties {
 	ECPProperties copy();
 
 	/**
-	 * Adds an {@link ECPPropertiesChangedObserver} which will be notified if a property changes.
+	 * Adds an {@link ECPPropertiesObserver} which will be notified if a property changes.
 	 * 
 	 * @param changeObserver the observer to add
 	 */
-	void addObserver(ECPPropertiesChangedObserver changeObserver);
+	void addObserver(ECPPropertiesObserver changeObserver);
 
 	/**
-	 * Removes an {@link ECPPropertiesChangedObserver} from the collection of observer which will be notified if a
+	 * Removes an {@link ECPPropertiesObserver} from the collection of observer which will be notified if a
 	 * property changes.
 	 * 
 	 * @param changeObserver the observer to remove
 	 */
-	void removeObserver(ECPPropertiesChangedObserver changeObserver);
+	void removeObserver(ECPPropertiesObserver changeObserver);
 
 }

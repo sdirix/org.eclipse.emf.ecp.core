@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,7 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryManagerObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
@@ -31,13 +32,10 @@ public interface ECPRepositoryManager {
 	/**
 	 * The {@link ECPRepositoryManager} instance.
 	 */
-	// ECPRepositoryManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl.INSTANCE;
 	ECPRepositoryManager INSTANCE = Activator.getECPRepositoryManager();
 
 	/**
-	 * This method returns a {@link ECPRepository} from an adaptable. The adaptable must be of type:
-	 * {@link org.eclipse.emf.ecp.core.util.ECPRepositoryAware ECPRepositoryAware}. Otherwise the
-	 * {@link org.eclipse.net4j.util.AdapterUtil AdapterUtil} will be used.
+	 * This method returns a {@link ECPRepository} from an adaptable.
 	 * 
 	 * @param adaptable the adaptable to adapt
 	 * @return {@link ECPRepository} or null if the adaptable could not be adapted
@@ -75,4 +73,17 @@ public interface ECPRepositoryManager {
 	ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties);
 
+	/**
+	 * Add an {@link ECPRepositoryManagerObserver} to be notified.
+	 * 
+	 * @param changeObserver the observer to add
+	 */
+	void addObserver(ECPRepositoryManagerObserver changeObserver);
+
+	/**
+	 * Remove an {@link ECPRepositoryManagerObserver} from the list of the providers to be notified.
+	 * 
+	 * @param changeObserver the observer to remove
+	 */
+	void removeObserver(ECPRepositoryManagerObserver changeObserver);
 }

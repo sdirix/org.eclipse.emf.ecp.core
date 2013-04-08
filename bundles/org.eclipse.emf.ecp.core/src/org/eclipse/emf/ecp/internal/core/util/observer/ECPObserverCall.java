@@ -11,7 +11,9 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.core.util.observer;
+package org.eclipse.emf.ecp.internal.core.util.observer;
+
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

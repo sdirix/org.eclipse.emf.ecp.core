@@ -14,7 +14,6 @@
 
 package org.eclipse.emf.ecp.core.util;
 
-// TODO remove?
 /**
  * Common super interface for provider and repositories.
  * 

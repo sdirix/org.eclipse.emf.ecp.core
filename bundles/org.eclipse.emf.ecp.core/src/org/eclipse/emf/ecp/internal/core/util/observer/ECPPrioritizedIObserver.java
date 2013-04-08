@@ -11,7 +11,9 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.core.util.observer;
+package org.eclipse.emf.ecp.internal.core.util.observer;
+
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 
 /**
  * An observer with a priority. The higher the number the more important is the observer.

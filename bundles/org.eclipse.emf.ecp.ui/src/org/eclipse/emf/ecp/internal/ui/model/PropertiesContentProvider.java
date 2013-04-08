@@ -9,7 +9,7 @@
  */
 package org.eclipse.emf.ecp.internal.ui.model;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
 
 import java.util.Collection;
@@ -19,7 +19,7 @@ import java.util.Map.Entry;
  * @author Eike Stepper
  */
 public class PropertiesContentProvider extends StructuredContentProvider<Properties> implements
-	ECPPropertiesChangedObserver {
+	ECPPropertiesObserver {
 	public PropertiesContentProvider() {
 	}
 

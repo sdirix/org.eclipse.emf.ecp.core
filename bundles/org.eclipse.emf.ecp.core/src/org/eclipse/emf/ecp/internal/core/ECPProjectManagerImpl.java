@@ -23,12 +23,15 @@ import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
@@ -50,8 +53,8 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPProjectsChangedUIObserver>
-	implements ECPProjectManager, ECPRepositoriesChangedObserver {
+public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPProjectManagerObserver> implements
+	ECPProjectManager, ECPRepositoriesChangedObserver {
 
 	/**
 	 * The Singleton to access the implementation of the Default ECPProjectManager.
@@ -184,7 +187,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		}
 
 		try {
-			ECPObserverBus.getInstance().notify(ECPProjectsChangedUIObserver.class).projectChanged(project, opened);
+			ECPObserverBus.getInstance().notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
 		} catch (Exception ex) {
 			Activator.log(ex);
 		}
@@ -193,7 +196,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	/**
 	 * This is called by projects to notify observers about object changes.
 	 * First the {@link ECPProjectObjectsChangedObserver IECPProjectObjectsChangedObservers} are notified then the
-	 * {@link ECPProjectsChangedUIObserver IECPProjectsChangedUIObservers}.
+	 * {@link ECPProjectsChangedObserver IECPProjectsChangedUIObservers}.
 	 * 
 	 * @param project the project that called this method
 	 * @param objects the objects that changed
@@ -208,7 +211,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 			if (affected != null) {
 				toUpdate.addAll(affected);
 			}
-			ECPObserverBus.getInstance().notify(ECPProjectsChangedUIObserver.class)
+			ECPObserverBus.getInstance().notify(ECPProjectObjectsChangedUIObserver.class)
 				.objectsChanged(project, toUpdate, structural);
 		} catch (Exception ex) {
 			Activator.log(ex);
@@ -228,11 +231,6 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 				}
 			}
 		}
-	}
-
-	/** {@inheritDoc} */
-	public void objectsChanged(ECPRepository repository, Collection<Object> objects) throws Exception {
-		// Do nothing
 	}
 
 	@Override
@@ -263,9 +261,10 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	// }
 
 	@Override
-	protected void notifyObservers(ECPProjectsChangedUIObserver observer, Collection<InternalProject> oldElements,
-		Collection<InternalProject> newElements) throws Exception {
-		observer.projectsChanged((Collection) oldElements, (Collection) newElements);
+	protected void notifyObservers(Collection<InternalProject> oldElements, Collection<InternalProject> newElements)
+		throws Exception {
+		ECPObserverBus.getInstance().notify(ECPProjectsChangedObserver.class)
+			.projectsChanged((Collection) oldElements, (Collection) newElements);
 	}
 
 	@Override

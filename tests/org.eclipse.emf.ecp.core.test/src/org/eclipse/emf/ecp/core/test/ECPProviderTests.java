@@ -71,7 +71,7 @@ public class ECPProviderTests extends AbstractTest {
 
 	@Test
 	public void hasUnsharedProjectSupportTest() {
-		boolean hasUnsharedProjectSupport = getProvider().hasUnsharedProjectSupport();
+		boolean hasUnsharedProjectSupport = getProvider().canAddOfflineProjects();
 		boolean isActuallyPossible = false;
 
 		try {

@@ -13,6 +13,8 @@
 
 package org.eclipse.emf.ecp.core.util.observer;
 
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
+
 /**
  * Universal observer super interface. To be used with {@link ECPObserverBus}.
  * 

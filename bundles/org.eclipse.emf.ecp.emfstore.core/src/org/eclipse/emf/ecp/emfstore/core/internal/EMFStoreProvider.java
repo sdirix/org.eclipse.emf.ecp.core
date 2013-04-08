@@ -153,7 +153,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	@Override
-	public boolean hasUnsharedProjectSupport() {
+	public boolean canAddOfflineProjects() {
 		return true;
 	}
 
@@ -348,15 +348,17 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
-	public void delete(InternalProject project, final Collection<EObject> eObjects) {
+	public void delete(InternalProject project, final Collection<Object> objects) {
 		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
 		// TODO EMFStore how to delete eObject?
 		new EMFStoreCommand() {
 
 			@Override
 			protected void doRun() {
-				for (EObject eObject : eObjects) {
-					projectSpace.getProject().deleteModelElement(eObject);
+				for (Object object : objects) {
+					if (EObject.class.isInstance(object)) {
+						projectSpace.getProject().deleteModelElement((EObject) object);
+					}
 				}
 			}
 		}.run(false);

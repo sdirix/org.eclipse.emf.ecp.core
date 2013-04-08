@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.ECPViewerFilter;
 import org.eclipse.emf.ecp.internal.ui.ModelClassFilter;
 import org.eclipse.emf.ecp.internal.ui.model.FilteredEClassContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.MEClassLabelProvider;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
@@ -67,7 +68,8 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	 * @param project the {@link ECPProject} to read the data from
 	 */
 	public AbstractEClassTreeSelectionComposite(ECPProject project) {
-		this(project.getUnsupportedEPackages(), project.getVisiblePackages(), project.getVisibleEClasses());
+		this(((InternalProject) project).getUnsupportedEPackages(), ((InternalProject) project).getVisiblePackages(),
+			((InternalProject) project).getVisibleEClasses());
 	}
 
 	private ILabelProvider getLabelProvider() {

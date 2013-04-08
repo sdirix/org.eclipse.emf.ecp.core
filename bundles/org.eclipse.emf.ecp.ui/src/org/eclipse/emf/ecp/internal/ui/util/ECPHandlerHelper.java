@@ -11,7 +11,7 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.ui.util;
+package org.eclipse.emf.ecp.internal.ui.util;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.internal.wizards.CheckoutProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.CreateProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.FilterModelElementWizard;
 import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
@@ -46,6 +47,8 @@ import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
+import org.eclipse.emf.ecp.ui.util.ECPModelElementOpenTester;
+import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
 import org.eclipse.emf.edit.command.ChangeCommand;
 
 import org.eclipse.core.runtime.CoreException;
@@ -113,9 +116,9 @@ public final class ECPHandlerHelper {
 	 * @param project the project to delete from
 	 * @param eObjects the model elements to delete
 	 */
-	public static void deleteModelElement(final ECPProject project, final Collection<EObject> eObjects) {
+	public static void deleteModelElement(final ECPProject project, final Collection<Object> objects) {
 		if (project != null) {
-			project.deleteElements(eObjects);
+			project.deleteElements(objects);
 		}
 	}
 
@@ -128,7 +131,7 @@ public final class ECPHandlerHelper {
 	public static ECPProject createProject(final Shell shell) {
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-			if (provider.hasUnsharedProjectSupport()) {
+			if (provider.canAddOfflineProjects()) {
 				providers.add(provider);
 			}
 		}
@@ -228,8 +231,8 @@ public final class ECPHandlerHelper {
 
 		CheckedModelClassComposite checkedModelComposite = CompositeFactory.getCheckedModelClassComposite(ePackages);
 		Set<Object> initialSelectionSet = new HashSet<Object>();
-		initialSelectionSet.addAll(ecpProject.getVisiblePackages());
-		initialSelectionSet.addAll(ecpProject.getVisibleEClasses());
+		initialSelectionSet.addAll(((InternalProject) ecpProject).getVisiblePackages());
+		initialSelectionSet.addAll(((InternalProject) ecpProject).getVisibleEClasses());
 		checkedModelComposite.setInitialSelection(initialSelectionSet.toArray());
 
 		FilterModelElementWizard wizard = new FilterModelElementWizard();
@@ -251,8 +254,8 @@ public final class ECPHandlerHelper {
 					}
 				}
 			}
-			ecpProject.setVisiblePackages(filtererdPackages);
-			ecpProject.setVisibleEClasses(filtererdEClasses);
+			((InternalProject) ecpProject).setVisiblePackages(filtererdPackages);
+			((InternalProject) ecpProject).setVisibleEClasses(filtererdEClasses);
 		}
 	}
 
@@ -345,7 +348,8 @@ public final class ECPHandlerHelper {
 		for (IConfigurationElement element : modelelementopener) {
 			modelelementopener = null;
 			try {
-				ECPModelElementOpener modelelementOpener = (ECPModelElementOpener) element.createExecutableExtension("class"); //$NON-NLS-1$
+				ECPModelElementOpener modelelementOpener = (ECPModelElementOpener) element
+					.createExecutableExtension("class"); //$NON-NLS-1$
 				for (IConfigurationElement testerElement : element.getChildren()) {
 					if ("staticTester".equals(testerElement.getName())) {//$NON-NLS-1$
 						int priority = Integer.parseInt(testerElement.getAttribute("priority"));//$NON-NLS-1$

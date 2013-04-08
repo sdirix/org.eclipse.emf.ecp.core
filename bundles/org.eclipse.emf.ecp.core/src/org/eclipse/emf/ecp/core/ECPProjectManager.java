@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,11 +8,11 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ ******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
@@ -29,7 +29,6 @@ public interface ECPProjectManager {
 	/**
 	 * Instance of the ECPProjectManager.
 	 */
-	// ECPProjectManager INSTANCE = org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl.INSTANCE;
 	ECPProjectManager INSTANCE = Activator.getECPProjectManager();
 
 	/**
@@ -106,16 +105,16 @@ public interface ECPProjectManager {
 	/**
 	 * This method adds a observer to the observer of the ECPProjectManager.
 	 * 
-	 * @param observer the {@link ECPProjectsChangedUIObserver} to add
+	 * @param observer the {@link ECPProjectManagerObserver} to add
 	 */
-	void addObserver(ECPProjectsChangedUIObserver observer);
+	void addObserver(ECPProjectManagerObserver observer);
 
 	/**
 	 * This method removes a observer from the observer of the ECPProjectManager.
 	 * 
-	 * @param observer the {@link ECPProjectsChangedUIObserver} to remove
+	 * @param observer the {@link ECPProjectManagerObserver} to remove
 	 */
-	void removeObserver(ECPProjectsChangedUIObserver observer);
+	void removeObserver(ECPProjectManagerObserver observer);
 
 	/**
 	 * This exception is thrown when we try to add a project with a name that already exists.

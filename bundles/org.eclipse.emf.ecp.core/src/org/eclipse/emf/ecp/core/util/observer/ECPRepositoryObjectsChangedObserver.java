@@ -14,24 +14,26 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
+import org.eclipse.emf.ecp.core.ECPRepository;
+
 import java.util.Collection;
-import java.util.Map.Entry;
 
 /**
- * This Observer is called to notify listeners about changes of properties.
+ * This Observer is called to notify listeners about changes of the objects in a repository.
  * 
  * @author Eike Stepper
  * @author Edgar Mueller
  * @author Eugen Neufeld
  * 
  */
-public interface ECPPropertiesChangedObserver extends ECPObserver {
+public interface ECPRepositoryObjectsChangedObserver extends ECPRepositoryManagerObserver {
 
 	/**
-	 * This is called to indicate, that properties changed.
+	 * This is called to indicate, that objects inside the repository changed.
 	 * 
-	 * @param oldProperties the properties before changing
-	 * @param newProperties the properties after changing
+	 * @param repository the repository the changes occured
+	 * @param objects the objects that changed
+	 * @throws Exception thrown when something unexpected happens
 	 */
-	void propertiesChanged(Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties);
+	void objectsChanged(ECPRepository repository, Collection<Object> objects) throws Exception;
 }

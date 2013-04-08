@@ -8,24 +8,16 @@
  * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
- *******************************************************************************/
-package org.eclipse.emf.ecp.core.util;
-
-import java.util.Set;
+ ******************************************************************************/
+package org.eclipse.emf.ecp.core.util.observer;
 
 /**
- * Interface to provide a collection of nsUris that should not be available.
+ * Common marker interface for all observers which can be registered on the
+ * {@link org.eclipse.emf.ecp.core.ECPProjectManager ECPProjectManager}.
  * 
  * @author Eugen Neufeld
  * 
  */
-public interface ECPFilterProvider {
+public interface ECPProjectManagerObserver extends ECPObserver {
 
-	/**
-	 * Returns the {@link Set} of nsUris that should be by default not visible in ecp.
-	 * 
-	 * @return the Set of nsUris
-	 */
-	Set<String> getHiddenPackages();
 }

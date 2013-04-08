@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Eike Stepper - initial API and implementation
- */
+ ******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
@@ -55,6 +55,6 @@ public interface ECPProvider extends ECPElement, IAdaptable {
 	 * 
 	 * @return true if offline projects are allowed, false otherwise.
 	 */
-	boolean hasUnsharedProjectSupport();
+	boolean canAddOfflineProjects();
 
 }

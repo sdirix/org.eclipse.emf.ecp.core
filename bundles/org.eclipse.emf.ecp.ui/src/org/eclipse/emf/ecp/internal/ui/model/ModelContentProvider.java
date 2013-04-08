@@ -11,7 +11,9 @@ package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
 import java.util.Collection;
@@ -19,7 +21,8 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements ECPProjectsChangedUIObserver {
+public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements ECPProjectsChangedObserver,
+	ECPProjectOpenClosedObserver, ECPProjectObjectsChangedUIObserver {
 	public ModelContentProvider() {
 	}
 

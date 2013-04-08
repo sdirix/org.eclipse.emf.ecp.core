@@ -28,12 +28,12 @@ import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
+import org.eclipse.emf.ecp.internal.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
@@ -186,7 +186,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		Set<EPackage> ePackages = new HashSet<EPackage>();
 		Set<String> filteredNsUris = new HashSet<String>();
 		for (ECPFilterProvider filterProvider : filterProviders) {
-			filteredNsUris.addAll(filterProvider.getFilteredPackages());
+			filteredNsUris.addAll(filterProvider.getHiddenPackages());
 		}
 
 		Set<String> relevantURIs = new HashSet<String>(Registry.INSTANCE.keySet());
@@ -542,7 +542,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public Collection<EPackage> getUnsupportedEPackages() {
+	public Set<EPackage> getUnsupportedEPackages() {
 		return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages(), getRepository());
 	}
 
@@ -584,8 +584,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public void deleteElements(Collection<EObject> eObjects) {
-		getProvider().delete(this, eObjects);
+	public void deleteElements(Collection<Object> objects) {
+		getProvider().delete(this, objects);
 		notifyObjectsChanged((Collection) Collections.singleton(this), true);
 	}
 

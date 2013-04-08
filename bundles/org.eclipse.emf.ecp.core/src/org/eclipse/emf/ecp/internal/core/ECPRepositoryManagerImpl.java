@@ -23,13 +23,15 @@ import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryManagerObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -50,7 +52,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPRepositoriesChangedObserver>
+public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPRepositoryManagerObserver>
 	implements ECPRepositoryManager, ECPProvidersChangedObserver {
 	/**
 	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
@@ -118,7 +120,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	public void notifyObjectsChanged(ECPRepository repository, Collection<Object> objects) {
 
 		try {
-			ECPObserverBus.getInstance().notify(ECPRepositoriesChangedObserver.class)
+			ECPObserverBus.getInstance().notify(ECPRepositoryObjectsChangedObserver.class)
 				.objectsChanged(repository, objects);
 		} catch (Exception ex) {
 			Activator.log(ex);
@@ -145,10 +147,10 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	// }
 
 	@Override
-	protected void notifyObservers(ECPRepositoriesChangedObserver observer,
-		Collection<InternalRepository> oldRepositories, Collection<InternalRepository> newRepositories)
-		throws Exception {
-		observer.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
+	protected void notifyObservers(Collection<InternalRepository> oldRepositories,
+		Collection<InternalRepository> newRepositories) throws Exception {
+		ECPObserverBus.getInstance().notify(ECPRepositoriesChangedObserver.class)
+			.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
 	}
 
 	@Override

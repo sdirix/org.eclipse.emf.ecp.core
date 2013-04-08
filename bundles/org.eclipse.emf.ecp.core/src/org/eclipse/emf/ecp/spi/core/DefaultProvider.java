@@ -26,11 +26,11 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
+import org.eclipse.emf.ecp.internal.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
@@ -341,8 +341,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @return the {@link Collection} of {@link EPackage EPackages} unsupported by this provider for the specified
 	 *         repository
 	 */
-	public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> packages, InternalRepository repository) {
-		return Collections.emptyList();
+	public Set<EPackage> getUnsupportedEPackages(Collection<EPackage> packages, InternalRepository repository) {
+		return Collections.emptySet();
 	}
 
 	/**
@@ -398,7 +398,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * 
 	 * @return false
 	 */
-	public boolean hasUnsharedProjectSupport() {
+	public boolean canAddOfflineProjects() {
 		return false;
 	}
 

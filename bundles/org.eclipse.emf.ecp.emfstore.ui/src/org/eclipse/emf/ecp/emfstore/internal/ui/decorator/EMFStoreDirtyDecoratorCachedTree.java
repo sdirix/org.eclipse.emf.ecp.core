@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
 import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +53,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 			cashedTrees.put(project, new EMFStoreDirtyDecoratorCachedTree(new IExcludedObjectsCallback() {
 
 				public boolean isExcluded(Object object) {
-					return project.isModelRoot(object);
+					return ((InternalProject) project).isModelRoot(object);
 				}
 			}));
 		}

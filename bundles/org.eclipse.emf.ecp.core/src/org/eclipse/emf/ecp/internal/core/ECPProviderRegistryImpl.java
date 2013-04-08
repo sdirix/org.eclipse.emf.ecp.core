@@ -25,10 +25,12 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
+import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -49,7 +51,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPProvidersChangedObserver>
+public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPProviderRegistryObserver>
 	implements ECPProviderRegistry {
 	/**
 	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
@@ -102,9 +104,10 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 
 	/** {@inheritDoc} **/
 	@Override
-	protected void notifyObservers(ECPProvidersChangedObserver observer, Collection<InternalProvider> oldProviders,
-		Collection<InternalProvider> newProviders) throws Exception {
-		observer.providersChanged((Collection) oldProviders, (Collection) newProviders);
+	protected void notifyObservers(Collection<InternalProvider> oldProviders, Collection<InternalProvider> newProviders)
+		throws Exception {
+		ECPObserverBus.getInstance().notify(ECPProvidersChangedObserver.class)
+			.providersChanged((Collection) oldProviders, (Collection) newProviders);
 	}
 
 	@Override
@@ -238,8 +241,8 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public boolean hasUnsharedProjectSupport() {
-			return getResolvedElement().hasUnsharedProjectSupport();
+		public boolean canAddOfflineProjects() {
+			return getResolvedElement().canAddOfflineProjects();
 		}
 
 		/** {@inheritDoc} */
@@ -253,8 +256,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages,
-			InternalRepository repository) {
+		public Set<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository) {
 			return getResolvedElement().getUnsupportedEPackages(ePackages, repository);
 		}
 
@@ -269,8 +271,8 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public void delete(InternalProject project, Collection<EObject> eObjects) {
-			getResolvedElement().delete(project, eObjects);
+		public void delete(InternalProject project, Collection<Object> objects) {
+			getResolvedElement().delete(project, objects);
 		}
 
 		/** {@inheritDoc} */

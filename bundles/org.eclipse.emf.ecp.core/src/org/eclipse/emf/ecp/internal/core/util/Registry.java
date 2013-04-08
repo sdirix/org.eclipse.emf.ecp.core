@@ -14,10 +14,9 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -175,16 +174,16 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		ECPObserverBus.getInstance().unregister(observer);
 	}
 
-	private void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray) throws Exception {
-		// TODO: remove warning
-		Class<OBSERVER> observerType = (Class<OBSERVER>) ((ParameterizedType) getClass().getGenericSuperclass())
-			.getActualTypeArguments()[1];
-		OBSERVER notify = ECPObserverBus.getInstance().notify(observerType);
-		notifyObservers(notify, oldArray, newArray);
-	}
+	// private void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray) throws Exception {
+	// // TODO: remove warning
+	// Class<OBSERVER> observerType = (Class<OBSERVER>) ((ParameterizedType) getClass().getGenericSuperclass())
+	// .getActualTypeArguments()[1];
+	// OBSERVER notify = ECPObserverBus.getInstance().notify(observerType);
+	// notifyObservers(notify, oldArray, newArray);
+	// }
 
-	protected abstract void notifyObservers(OBSERVER observer, Collection<ELEMENT> oldArray,
-		Collection<ELEMENT> newArray) throws Exception;
+	protected abstract void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray)
+		throws Exception;
 
 	protected void elementsChanged(Collection<ELEMENT> oldElements, Collection<ELEMENT> newElements) {
 		// Can be overridden in subclasses

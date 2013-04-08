@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 
@@ -49,8 +50,8 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 			IValidationService validationService = new ValidationService(new IExcludedObjectsCallback() {
 				
 				public boolean isExcluded(Object object) {
-					if(ECPProject.class.isInstance(validationServiceObject)){
-						return ((ECPProject)validationServiceObject).isModelRoot(object);
+					if(InternalProject.class.isInstance(validationServiceObject)){
+						return ((InternalProject)validationServiceObject).isModelRoot(object);
 					}
 					return false;
 				}

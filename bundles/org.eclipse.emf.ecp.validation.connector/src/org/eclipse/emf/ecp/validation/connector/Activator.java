@@ -10,17 +10,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.validation.connector;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -67,14 +65,14 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 
 		validationObserver = new ValidationObserver();
-		ECPObserverBus.getInstance().register(validationObserver);
+		ECPProjectManager.INSTANCE.addObserver(validationObserver);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext context) throws Exception {
-		ECPObserverBus.getInstance().unregister(validationObserver);
+		ECPProjectManager.INSTANCE.removeObserver(validationObserver);
 		plugin = null;
 		super.stop(context);
 	}
@@ -115,9 +113,10 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Project change observer that validates changed objects.
 	 */
-	private class ValidationObserver implements ECPProjectsChangedUIObserver, ECPProjectObjectsChangedObserver {
+	private class ValidationObserver implements ECPProjectsChangedObserver, ECPProjectObjectsChangedObserver {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
+		/** {@inheritDoc} **/
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception {
 //			List<ECPProject> newProjectList = Arrays.asList(newProjects);
 			for (ECPProject project : oldProjects) {
@@ -126,13 +125,7 @@ public class Activator extends AbstractUIPlugin {
 				}
 			}
 		}
-
-		public void projectChanged(ECPProject project, boolean opened) throws Exception {
-		}
-
-		public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
-		}
-
+		/** {@inheritDoc} **/
 		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) throws Exception {
 			Set<Object> allAffectedElements = new HashSet<Object>();
 			

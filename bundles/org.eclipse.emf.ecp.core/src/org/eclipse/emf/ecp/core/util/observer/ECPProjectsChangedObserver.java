@@ -20,15 +20,14 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import java.util.Collection;
 
 /**
- * This Observer is called to notify listeners about changes of a project.
+ * This Observer is called to notify listeners about changes of projects.
  * 
  * @author Eike Stepper
  * @author Edgar Mueller
  * @author Eugen Neufeld
  * 
  */
-// TODO dicuss whether to split it up
-public interface ECPProjectsChangedUIObserver extends ECPObserver {
+public interface ECPProjectsChangedObserver extends ECPProjectManagerObserver {
 
 	/**
 	 * This is called when a project changes, so if it is either added or removed.
@@ -39,22 +38,4 @@ public interface ECPProjectsChangedUIObserver extends ECPObserver {
 	 */
 	void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception;
 
-	/**
-	 * This is called when a project is opened or closed.
-	 * 
-	 * @param project the {@link ECPProject} that changed
-	 * @param opened whether it was opened or closed
-	 * @throws Exception thrown when something unexpected happens
-	 */
-	void projectChanged(ECPProject project, boolean opened) throws Exception;
-
-	/**
-	 * This is called when objects of a project changed.
-	 * 
-	 * @param project the project where the changed occured.
-	 * @param objects the objects that changed
-	 * @param structural whether the change was structural
-	 * @throws Exception thrown when something unexpected happens
-	 */
-	void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception;
 }

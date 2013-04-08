@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
+import org.eclipse.emf.ecp.internal.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -206,9 +206,8 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
-	public void delete(InternalProject project, Collection<EObject> eObjects) {
-		project.getEditingDomain().getCommandStack()
-			.execute(DeleteCommand.create(project.getEditingDomain(), eObjects));
+	public void delete(InternalProject project, Collection<Object> objects) {
+		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
 	}
 
 	/** {@inheritDoc} */
@@ -269,7 +268,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	@Override
-	public boolean hasUnsharedProjectSupport() {
+	public boolean canAddOfflineProjects() {
 		return true;
 	}
 

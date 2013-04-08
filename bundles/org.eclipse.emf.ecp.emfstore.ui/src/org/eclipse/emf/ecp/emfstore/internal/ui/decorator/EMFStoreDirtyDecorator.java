@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
@@ -49,7 +48,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	 */
 	public EMFStoreDirtyDecorator() {
 		super();
-		ECPObserverBus.getInstance().register(this);
+		ECPProjectManager.INSTANCE.addObserver(this);
 	}
 
 	/** {@inheritDoc} */

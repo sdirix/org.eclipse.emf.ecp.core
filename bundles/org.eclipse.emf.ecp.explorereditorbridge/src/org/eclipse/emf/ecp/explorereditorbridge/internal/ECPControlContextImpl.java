@@ -13,10 +13,11 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.dialogs.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
-import org.eclipse.emf.ecp.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -200,7 +201,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		// Collection<EObject> allElements=new HashSet<EObject>();
 		//
 
-		Iterator<EObject> allElements = ecpProject.getReferenceCandidates(modelElement, eReference);
+		Iterator<EObject> allElements = ((InternalProject) ecpProject).getReferenceCandidates(modelElement, eReference);
 
 		// EClass clazz = eReference.getEReferenceType();
 		// Collection<EObject> allElements = context.getAllModelElementsbyClass(clazz, true);

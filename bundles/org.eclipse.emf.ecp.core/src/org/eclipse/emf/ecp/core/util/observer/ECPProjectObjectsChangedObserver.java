@@ -16,11 +16,12 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import java.util.Collection;
 
 /**
+ * This Observer is called to notify listeners about changes of the objects in a project.
+ * 
  * @author Eugen Neufeld
  * 
  */
-// TODO rename to something more understandable
-public interface ECPProjectObjectsChangedObserver extends ECPObserver {
+public interface ECPProjectObjectsChangedObserver extends ECPProjectManagerObserver {
 
 	/**
 	 * Return array of affected Objects.

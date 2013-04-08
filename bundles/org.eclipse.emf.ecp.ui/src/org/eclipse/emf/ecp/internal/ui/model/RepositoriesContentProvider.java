@@ -13,8 +13,8 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
@@ -26,7 +26,7 @@ import java.util.Collection;
  */
 public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositoryManager> implements
 // ECPRepositoryManager.Listener
-	ECPRepositoriesChangedObserver {
+	ECPRepositoriesChangedObserver, ECPRepositoryObjectsChangedObserver {
 	private final ECPProvider allowedProvider;
 
 	public RepositoriesContentProvider() {
@@ -52,12 +52,12 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	@Override
 	protected void connectInput(ECPRepositoryManager input) {
 		super.connectInput(input);
-		ECPObserverBus.getInstance().register(this);
+		ECPRepositoryManager.INSTANCE.addObserver(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPRepositoryManager input) {
-		ECPObserverBus.getInstance().unregister(this);
+		ECPRepositoryManager.INSTANCE.removeObserver(this);
 		super.disconnectInput(input);
 	}
 

@@ -11,12 +11,18 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.core;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -82,4 +88,77 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	 * @return the cloned project
 	 */
 	InternalProject clone();
+
+	/**
+	 * Saves the properties, such as visible packages or the name of the project into the workspace.
+	 */
+	void saveProperties();
+
+	/**
+	 * Get all possible {@link EObject}s from the provider to which a reference can be added from a certain
+	 * {@link EObject} based
+	 * on the type of the {@link EReference}.
+	 * 
+	 * @param eObject
+	 *            - the {@link EObject} for which the reference should be set.
+	 * @param eReference
+	 *            - the {@link EReference} to be set.
+	 * @return {@link Iterator} over all {@link EObject} that can be added as a reference
+	 */
+	Iterator<EObject> getReferenceCandidates(EObject eObject, EReference eReference);
+
+	/**
+	 * This method checks whether the provided object is the model root of the project.
+	 * 
+	 * @param object the object to check
+	 * @return true if the object is the root of the model of this project, false otherwise
+	 */
+	boolean isModelRoot(Object object);
+
+	/**
+	 * Returns a collection of {@link EPackage}s which are not supported by the provider. EObjects from these packages
+	 * cannot be created within the project.
+	 * 
+	 * @return {@link Collection} of unsupported {@link EPackage}s
+	 */
+	Set<EPackage> getUnsupportedEPackages();
+
+	/**
+	 * Set the visible {@link EPackage}s. New model elements can only be created from {@link EPackage}s contained in
+	 * the visiblePackages and the {@link #setVisibleEClasses(Set)}.
+	 * 
+	 * @param visiblePackages the {@link EPackage}s to be visible
+	 */
+	void setVisiblePackages(Set<EPackage> visiblePackages);
+
+	/**
+	 * Get the currently visible {@link EPackage}s. If no filter is set, then all {@link EPackage}s supported by the
+	 * provider are returned.
+	 * 
+	 * @return {@link Set} of {@link EPackage}s that should be available, or all supported EPackages
+	 */
+	Set<EPackage> getVisiblePackages();
+
+	/**
+	 * Get the currently visible {@link EClass}es. If no visible {@link EClass}es are set, then an empty {@link Set} is
+	 * returned.
+	 * 
+	 * @return {@link Set} of {@link EClass}es that should be available, or empty.
+	 */
+	Set<EClass> getVisibleEClasses();
+
+	/**
+	 * Set the visible {@link EClass}es.
+	 * 
+	 * @param visibleEClasses the classes that should be available
+	 */
+	void setVisibleEClasses(Set<EClass> visibleEClasses);
+
+	/**
+	 * Check whether a project contains an Object.
+	 * 
+	 * @param object the object to check for containment
+	 * @return true if the object is in the project, false otherwise
+	 */
+	boolean contains(Object object);
 }

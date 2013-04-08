@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -43,18 +42,6 @@ public final class InternalUtil {
 	}
 
 	/**
-	 * Finds the set of all Elements that are in the new array but not in the old.
-	 * 
-	 * @param oldElements the array containing the old elements
-	 * @param newElements the array containing the new elements
-	 * @param <E> the type of the elements
-	 * @return the Set<E> of elements which are only in the newElements array
-	 */
-	public static <E> Set<E> getAddedElements(E[] oldElements, E[] newElements) {
-		return getRemovedElements(newElements, oldElements);
-	}
-
-	/**
 	 * Finds the set of all Elements that are in the new collection but not in the old.
 	 * 
 	 * @param oldElements the collection containing the old elements
@@ -66,26 +53,6 @@ public final class InternalUtil {
 		Set<E> result = new HashSet<E>(newElements);
 		result.removeAll(oldElements);
 		return result;
-	}
-
-	/**
-	 * Finds the set of all Elements that are in the old array but not in the new.
-	 * 
-	 * @param oldElements the array containing the old elements
-	 * @param newElements the array containing the new elements
-	 * @param <E> the type of the elements
-	 * @return the Set<E> of elements which are only in the oldElements array
-	 */
-	public static <E> Set<E> getRemovedElements(E[] oldElements, E[] newElements) {
-		Set<E> removed = new HashSet<E>();
-		for (int i = 0; i < oldElements.length; i++) {
-			E element = oldElements[i];
-			if (!ECPUtil.containsElement(newElements, element)) {
-				removed.add(element);
-			}
-		}
-
-		return removed;
 	}
 
 	/**

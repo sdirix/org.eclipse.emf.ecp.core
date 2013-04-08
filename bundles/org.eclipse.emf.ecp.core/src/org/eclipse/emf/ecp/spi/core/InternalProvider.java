@@ -131,7 +131,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param repository the repository to check
 	 * @return a {@link Collection} of {@link EPackage}s that are not supported
 	 */
-	Collection<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
+	Set<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository);
 
 	/**
 	 * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
@@ -166,9 +166,9 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * Deletes a collection of EObjects from the model.
 	 * 
 	 * @param project the project from where to delete
-	 * @param eObjects the {@link Collection} if {@link EObject}s to delete
+	 * @param objects the {@link Collection} if {@link Object Objects} to delete
 	 */
-	void delete(InternalProject project, Collection<EObject> eObjects);
+	void delete(InternalProject project, Collection<Object> objects);
 
 	/**
 	 * This method clones a project.

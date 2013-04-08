@@ -50,7 +50,7 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 		super.addPages();
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
-			if (provider.hasUnsharedProjectSupport()) {
+			if (provider.canAddOfflineProjects()) {
 				providers.add(provider);
 			}
 		}

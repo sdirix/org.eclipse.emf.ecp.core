@@ -10,22 +10,21 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.core.util;
+package org.eclipse.emf.ecp.core.util.observer;
 
-import java.util.Set;
+import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
- * Interface to provide a collection of nsUris that should not be available.
- * 
  * @author Eugen Neufeld
  * 
  */
-public interface ECPFilterProvider {
-
+public interface ECPProjectOpenClosedObserver extends ECPProjectManagerObserver {
 	/**
-	 * Returns the {@link Set} of nsUris that should be by default not visible in ecp.
+	 * This is called when a project is opened or closed.
 	 * 
-	 * @return the Set of nsUris
+	 * @param project the {@link ECPProject} that changed
+	 * @param opened whether it was opened or closed
+	 * @throws Exception thrown when something unexpected happens
 	 */
-	Set<String> getHiddenPackages();
+	void projectChanged(ECPProject project, boolean opened) throws Exception;
 }

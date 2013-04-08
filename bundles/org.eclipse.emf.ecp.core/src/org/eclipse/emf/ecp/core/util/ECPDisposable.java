@@ -34,7 +34,6 @@ public interface ECPDisposable {
 	 */
 	void dispose();
 
-	// TODO use Observerbus?
 	/**
 	 * Adds a {@link DisposeListener} to this instance.
 	 * 

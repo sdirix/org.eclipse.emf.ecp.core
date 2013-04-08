@@ -13,6 +13,7 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.0.0";x-internal:=true
  org.eclipse.emf.ecp.internal.ui.composites;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.internal.ui.dialogs;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.internal.ui.model;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.internal.ui.util;x-internal:=true,
  org.eclipse.emf.ecp.internal.wizards;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.internal.wizards.page;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.spi.ui;version="1.0.0";x-internal:=true,
