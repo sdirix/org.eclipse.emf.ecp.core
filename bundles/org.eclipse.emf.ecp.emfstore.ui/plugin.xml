@@ -636,10 +636,6 @@
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
                         value="true">
                   </test>
-                  <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
                </iterate>
             </with>
          </enabledWhen>
@@ -658,10 +654,6 @@
                         value="true">
                   </test>
                   <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
-                  <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="false">
                   </test>
@@ -678,10 +670,6 @@
                <iterate
                      ifEmpty="false"
                      operator="or">
-                  <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
                   <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
@@ -712,10 +700,6 @@
                         value="true">
                   </test>
                   <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
-                  <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
                         value="true">
                   </test>
@@ -735,10 +719,6 @@
                   <test
                         property="org.eclipse.emf.ecp.core.closeable.open"
                         value="true">
-                  </test>
-                  <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
                   </test>
                   <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.isDirty"
@@ -779,10 +759,6 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
-                  <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
@@ -800,10 +776,6 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
-                  <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
                   </test>
@@ -820,10 +792,6 @@
                <iterate
                      ifEmpty="false"
                      operator="or">
-                  <test
-                        property="org.eclipse.emf.ecp.core.repository.providerName"
-                        value="org.eclipse.emf.ecp.emfstore.provider">
-                  </test>
                   <test
                         property="org.eclipse.emf.ecp.emfstore.ui.testers.elementShared"
                         value="true">
