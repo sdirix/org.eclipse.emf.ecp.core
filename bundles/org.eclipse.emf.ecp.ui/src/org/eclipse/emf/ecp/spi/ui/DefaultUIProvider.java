@@ -231,7 +231,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			final CommandParameter cp = (CommandParameter) descriptor;
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
-			} else if (cp.getEReference().isMany()
+			} else if (cp.getEReference().isMany() && cp.getEReference().getUpperBound() != -1
 				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
