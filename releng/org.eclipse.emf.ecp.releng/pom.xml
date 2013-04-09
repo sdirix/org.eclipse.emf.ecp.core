@@ -14,6 +14,7 @@
 		<javadoc-version>2.9</javadoc-version>
 		<ecp-version-release>1.0.0.M4</ecp-version-release>
 		<ecp-version>1.0.0-SNAPSHOT</ecp-version>
+		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 	</properties>
 
 	<modules>
