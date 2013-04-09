@@ -223,12 +223,22 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	 */
 	private void fillContextMenuWithDescriptors(IMenuManager manager, Collection<?> descriptors,
 		final EditingDomain domain, final Object object, final ECPProject project) {
+		if (!EObject.class.isInstance(object)) {
+			return;
+		}
+		EObject eObject = (EObject) object;
 		for (Object descriptor : descriptors) {
 			final CommandParameter cp = (CommandParameter) descriptor;
-			// TODO check containment?
-			if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
+			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
+				continue;
+			} else if (cp.getEReference().isMany()
+				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
+			// TODO needed?
+			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
+			// continue;
+			// }
 			manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor) {
 				@Override
 				public void run() {
