@@ -49,7 +49,8 @@ public abstract class AbstractTest {
 		ECPProperties properties = ECPUtil.createProperties();
 		properties.addProperty(EMFStoreProvider.PROP_REPOSITORY_URL, "localhost");
 		properties.addProperty(EMFStoreProvider.PROP_PORT, "8080");
-		properties.addProperty(EMFStoreProvider.PROP_CERTIFICATE, "foo");
+		properties.addProperty(EMFStoreProvider.PROP_CERTIFICATE,
+			"emfstore test certificate (do not use in production!)");
 		return properties;
 	}
 }
