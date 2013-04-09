@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsPreChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedUIObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
@@ -130,7 +130,6 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		return AdapterUtil.adapt(adaptable, InternalProject.class);
 	}
 
-	// TODO integrate in getProject
 	private InternalProject getInternalProject(Object object) {
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
 			InternalProvider internalProvider = (InternalProvider) ECPUtil.getResolvedElement(provider);
@@ -195,7 +194,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/**
 	 * This is called by projects to notify observers about object changes.
-	 * First the {@link ECPProjectObjectsChangedObserver IECPProjectObjectsChangedObservers} are notified then the
+	 * First the {@link ECPProjectObjectsPreChangedObserver IECPProjectObjectsChangedObservers} are notified then the
 	 * {@link ECPProjectsChangedObserver IECPProjectsChangedUIObservers}.
 	 * 
 	 * @param project the project that called this method
@@ -205,13 +204,13 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	public void notifyObjectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 
 		try {
-			Collection<Object> affected = ECPObserverBus.getInstance().notify(ECPProjectObjectsChangedObserver.class)
+			Collection<Object> affected = ECPObserverBus.getInstance().notify(ECPProjectObjectsPreChangedObserver.class)
 				.objectsChanged(project, objects);
 			Set<Object> toUpdate = new HashSet<Object>(objects);
 			if (affected != null) {
 				toUpdate.addAll(affected);
 			}
-			ECPObserverBus.getInstance().notify(ECPProjectObjectsChangedUIObserver.class)
+			ECPObserverBus.getInstance().notify(ECPProjectObjectsChangedObserver.class)
 				.objectsChanged(project, toUpdate, structural);
 		} catch (Exception ex) {
 			Activator.log(ex);

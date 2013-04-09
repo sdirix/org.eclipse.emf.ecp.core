@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedUIObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
@@ -42,7 +42,7 @@ public class EditorContext implements ECPEditorContext {
 	 * 
 	 */
 	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedObserver,
-		ECPProjectOpenClosedObserver, ECPProjectObjectsChangedUIObserver {
+		ECPProjectOpenClosedObserver, ECPProjectObjectsChangedObserver {
 		/** {@inheritDoc} */
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)
 			throws Exception {

@@ -17,7 +17,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsPreChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
@@ -113,7 +113,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * Project change observer that validates changed objects.
 	 */
-	private class ValidationObserver implements ECPProjectsChangedObserver, ECPProjectObjectsChangedObserver {
+	private class ValidationObserver implements ECPProjectsChangedObserver, ECPProjectObjectsPreChangedObserver {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		/** {@inheritDoc} **/
