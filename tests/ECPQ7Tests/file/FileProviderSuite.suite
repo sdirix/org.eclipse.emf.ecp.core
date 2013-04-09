@@ -1,0 +1,20 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Element-Name: FileProviderSuite
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _rRvXcaEeEeKX8e34E6tWIg
+Save-Time: 4/9/13 4:45 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_r0W08KEhEeKX8e34E6tWIg	// kind: 'test' name: 'CreateFileProject' path: 'CreateFileProject.test'
+_zKqbgKEeEeKX8e34E6tWIg	// kind: 'test' name: 'CreateWorkspaceProject' path: 'CreateWorkspaceProject.test'
+_HZ-QoKEjEeKX8e34E6tWIg	// kind: 'test' name: 'CheckFileProviderContextMenu' path: 'CheckFileProviderContextMenu.test'
+_5xu5UKEiEeKX8e34E6tWIg	// kind: 'test' name: 'DeleteWorkspaceProject' path: 'DeleteWorkspaceProject.test'
+_WC_IcKEjEeKX8e34E6tWIg	// kind: 'test' name: 'ImportFromExistingWorkspace' path: 'ImportFromExistingWorkspace.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

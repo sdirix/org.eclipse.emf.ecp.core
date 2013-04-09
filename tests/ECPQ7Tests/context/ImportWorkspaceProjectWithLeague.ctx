@@ -1,0 +1,33 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Context-Type: com.xored.q7.ecl.context
+Element-Name: ImportWorkspaceProject
+Element-Type: context
+Element-Version: 2.0
+Id: _7kKq0KEjEeKX8e34E6tWIg
+Save-Time: 4/9/13 5:01 PM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-combo -after [get-label "Provider:"] | select "Eclipse Workspace"
+}
+with [get-window "Create Project"] {
+    get-button "Import existing XMI-File" | click
+}
+with [get-window "Create Project"] {
+    get-button "Browse Workspace ..." | click
+    with [get-window "Select XMI"] {
+        get-tree | select "TestProject/testProject.xmi"
+        get-button OK | click
+    }
+}
+with [get-window "Create Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text TestProject
+    get-button Finish | click
+}
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

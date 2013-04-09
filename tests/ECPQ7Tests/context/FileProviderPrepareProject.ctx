@@ -1,0 +1,42 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Context-Type: com.xored.q7.workspace.context
+Element-Name: FileProviderWorkspaceProjectBase
+Element-Type: context
+Element-Version: 2.0
+Id: _evRYkKEiEeKX8e34E6tWIg
+Save-Time: 4/9/13 5:02 PM
+
+------=_contents/TestProject/.project-620bc043-fb12-3a2a-b8b2-691b5061f918
+Content-Type: q7/binary
+Entry-Name: contents/TestProject/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSzsa/IzVEoSy0qzszPs1Uy1DNQUkjN
+S85PycxLt1UKDXHTtVCyt+Plsikoys9KTS5xSS1OLsosKAGqBopy2uQl5qbahaQWlwRA5G30wSIgqeT8
+3NzUvBI7G30YCyQKNacYzNFH4SWVZuakBBekJkPkULl5iSWlRalQbQgO3AhUhwEAUEsHCNFY9/+CAAAA
+1wAAAFBLAQIUABQACAgIAAAAIQDRWPf/ggAAANcAAAAIAAAAAAAAAAAAAAAAAAAAAAAuY29udGVudFBL
+BQYAAAAAAQABADYAAAC4AAAAAAA=
+------=_contents/TestProject/.project-620bc043-fb12-3a2a-b8b2-691b5061f918--
+------=_contents/TestProject/testProject.xmi-1eea97f9-14bc-3de6-b0e5-d6312b0c0a65
+Content-Type: q7/binary
+Entry-Name: contents/TestProject/testProject.xmi
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnR9zr8KwjAQx/Fd8B1CHuBOHUNjEaeA
+Ti6utR4xkH801eTxTSF2dD0+vy/X9cVZ9qEpmeAl38OOM/JjeBqvJT/dzkrx/rjddGHSQKM1MRFQGVy0
+BI+QbXXiQoN+EyvOiLV0WEq17ZOod8lf8xwFYs4ZgtNQc3i/qh/5U1+ny6QZbAab4Vhf/AJQSwcIvESU
+z4cAAADLAAAAUEsBAhQAFAAICAgAAAAhALxElM+HAAAAywAAAAgAAAAAAAAAAAAAAAAAAAAAAC5jb250
+ZW50UEsFBgAAAAABAAEANgAAAL0AAAAAAA==
+------=_contents/TestProject/testProject.xmi-1eea97f9-14bc-3de6-b0e5-d6312b0c0a65--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAAALmNvbnRlbnSNkE1rwzAMhu+D/Qej+6x9sZaQrLCR
+QSmDMQbtTiM4aua1tlPbS/Lzp7ZJeulhN0nvI72S0llntqIhH7SzGdzIaxBklSu1rTL4jeurKcweLy9S
+5YzsnKdS7iaydX4T6kJRshyiZ2cjdVF0RifjuNv9ODawIeF6Bt8x1gli27bSmUo6X+HqdT4g5y3GLmQd
+DzruJjjqkhTXQNjCMPuit/TmXaNL8uNuXPghFZ+KwJwuM/ii5v1zs8h1TovVlO7u84e4nFfAhwrBp/Ip
+Nh4STutjd+gdPijEfiD0CENr9h0I2XcAntfjaYLkt4xYioPVcQ88LbKP//V/Zv8AUEsHCEzkezP6AAAA
+0wEAAFBLAQIUABQACAgIAAAAIQBM5Hsz+gAAANMBAAAIAAAAAAAAAAAAAAAAAAAAAAAuY29udGVudFBL
+BQYAAAAAAQABADYAAAAwAQAAAAA=
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
