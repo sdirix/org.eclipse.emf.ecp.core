@@ -31,8 +31,8 @@ public interface ECPRepositoriesChangedObserver extends ECPRepositoryManagerObse
 	/**
 	 * This is called to indicate, that repositories changed.
 	 * 
-	 * @param oldRepositories repository list before change
-	 * @param newRepositories repository list after change
+	 * @param oldRepositories repositories before change
+	 * @param newRepositories repositories after change
 	 * @throws Exception thrown when something unexpected happens
 	 */
 	void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories)

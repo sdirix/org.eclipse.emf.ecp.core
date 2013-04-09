@@ -16,7 +16,8 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import java.util.Collection;
 
 /**
- * This Observer is called to notify listeners about changes of the objects in a project.
+ * This Observer is called to notify listeners about changes of objects in a project. The caller can return objects that
+ * are affected by the object change.
  * 
  * @author Eugen Neufeld
  * 
@@ -24,12 +25,12 @@ import java.util.Collection;
 public interface ECPProjectObjectsChangedObserver extends ECPProjectManagerObserver {
 
 	/**
-	 * Return array of affected Objects.
+	 * Return an Collection affected Objects.
 	 * 
-	 * @param project
-	 * @param objects
-	 * @return array of affected objects.
-	 * @throws Exception
+	 * @param project the {@link ECPProject} where the change occured
+	 * @param objects the objects that changed
+	 * @return Collection of affected Objects
+	 * @throws Exception when the call goes wrong
 	 */
 	Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) throws Exception;
 }

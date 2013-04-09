@@ -16,6 +16,9 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import java.util.Collection;
 
 /**
+ * This Observer is called when objects of an project are changed. This Observer is notified after the
+ * {@link ECPProjectObjectsChangedObserver}. It will also get all Elements that where affected by the change.
+ * 
  * @author Eugen Neufeld
  * 
  */
@@ -23,8 +26,8 @@ public interface ECPProjectObjectsChangedUIObserver extends ECPProjectManagerObs
 	/**
 	 * This is called when objects of a project changed.
 	 * 
-	 * @param project the project where the changed occured.
-	 * @param objects the objects that changed
+	 * @param project the project where the changed occurred.
+	 * @param objects the objects that changed and the objects affected by the change
 	 * @param structural whether the change was structural
 	 * @throws Exception thrown when something unexpected happens
 	 */

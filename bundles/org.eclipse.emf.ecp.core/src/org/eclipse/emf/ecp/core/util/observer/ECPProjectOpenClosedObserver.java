@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.core.util.observer;
 import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
+ * This Observer is notified when a project is closed or opened.
+ * 
  * @author Eugen Neufeld
  * 
  */

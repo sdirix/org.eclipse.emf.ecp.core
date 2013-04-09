@@ -31,7 +31,7 @@ public interface ECPRepositoryObjectsChangedObserver extends ECPRepositoryManage
 	/**
 	 * This is called to indicate, that objects inside the repository changed.
 	 * 
-	 * @param repository the repository the changes occured
+	 * @param repository the repository the changes occurred
 	 * @param objects the objects that changed
 	 * @throws Exception thrown when something unexpected happens
 	 */
