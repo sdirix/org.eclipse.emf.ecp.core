@@ -195,14 +195,17 @@ public final class EMFStoreProvider extends DefaultProvider {
 		if (context instanceof InternalProject) {
 			InternalProject project = (InternalProject) context;
 			ESLocalProject ps = (ESLocalProject) project.getProviderSpecificData();
-			try {
-				ps.delete(new NullProgressMonitor());
-			} catch (ESException ex) {
-				Activator.log(ex);
-			} catch (IOException ex) {
-				Activator.log(ex);
+			if (ps != null) {
+				try {
+					ps.delete(new NullProgressMonitor());
+				} catch (ESException ex) {
+					Activator.log(ex);
+				} catch (IOException ex) {
+					Activator.log(ex);
+				}
+				project.setProviderSpecificData(null);
 			}
-			project.setProviderSpecificData(null);
+
 		}
 
 	}
@@ -236,7 +239,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 		if (context instanceof InternalProject) {
 			ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
 
-			((ESLocalProjectImpl) projectSpace).toInternalAPI().getProject().eAdapters().remove(adapter);
+			if (projectSpace != null) {
+				((ESLocalProjectImpl) projectSpace).toInternalAPI().getProject().eAdapters().remove(adapter);
+			}
 
 		}
 
