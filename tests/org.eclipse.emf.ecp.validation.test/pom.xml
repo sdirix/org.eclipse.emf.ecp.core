@@ -22,6 +22,7 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+				<testFailureIgnore>true</testFailureIgnore>
 					<dependencies>
 						<dependency>
 							<type>eclipse-feature</type>
