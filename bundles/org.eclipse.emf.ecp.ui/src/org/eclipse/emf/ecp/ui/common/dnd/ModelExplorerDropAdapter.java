@@ -154,6 +154,9 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 			}
 		} else if (event.detail != DND.DROP_NONE) {
 			super.drop(event);
+			if (event.detail == DND.DROP_LINK) {
+				viewer.refresh();
+			}
 		}
 	}
 
