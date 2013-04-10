@@ -9,6 +9,7 @@
  */
 package org.eclipse.emf.ecp.internal.ui.model;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.ChildrenListImpl;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -100,7 +101,16 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			return ((SyntheticElement) child).getParent();
 		}
 
-		return parentsCache.get(child);
+		Object result = parentsCache.get(child);
+		if (result == null && EObject.class.isInstance(child)) {
+			EObject childEObject = (EObject) child;
+			result = childEObject.eContainer();
+			if (result != null && parentsCache.containsKey(result)) {
+				return result;
+
+			}
+		}
+		return result;
 	}
 
 	public final void refreshViewer(final boolean sturctural, final Object... objects) {
