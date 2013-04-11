@@ -10,6 +10,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.emf.ecp.validation.test.test.Library;
@@ -171,7 +172,7 @@ public class ValidationTest {
 	public void testECPProject() {
 		try {
 			ECPProject project = ECPProjectManager.INSTANCE.createProject(
-				ECPProviderRegistry.INSTANCE.getProvider("org.eclipse.emf.ecp.emfstore.provider"), "Project");
+				ECPProviderRegistry.INSTANCE.getProvider(EMFStoreProvider.NAME), "Project");
 
 			Writer correctWriter = TestFactory.eINSTANCE.createWriter();
 			correctWriter.setFirstName("Hans");
