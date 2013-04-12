@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
@@ -53,9 +54,11 @@ public class AddReferenceAction extends ECPSWTAction {
 		}
 		IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			modelElementContext.getModelElement());
-
-		Image image = Activator.getImage(obj == null ? null : (URL) labelProvider.getImage(obj));
-
+		Object labelProviderImageResult = labelProvider.getImage(obj);
+		if (ComposedImage.class.isInstance(labelProviderImageResult)) {
+			labelProviderImageResult = ((ComposedImage) labelProviderImageResult).getImages().get(0);
+		}
+		Image image = Activator.getImage(obj == null ? null : (URL) labelProviderImageResult);
 		String overlayString = "icons/link_overlay.png";//$NON-NLS-1$
 		if (eReference.isContainment()) {
 			overlayString = "icons/containment_overlay.png";//$NON-NLS-1$

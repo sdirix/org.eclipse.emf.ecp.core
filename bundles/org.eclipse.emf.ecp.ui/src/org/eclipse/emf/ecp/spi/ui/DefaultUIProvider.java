@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -222,11 +223,11 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	 * @param descriptors
 	 */
 	private void fillContextMenuWithDescriptors(IMenuManager manager, Collection<?> descriptors,
-		final EditingDomain domain, final Object object, final ECPProject project) {
+		final EditingDomain domain, Object object, final ECPProject project) {
 		if (!EObject.class.isInstance(object)) {
 			return;
 		}
-		EObject eObject = (EObject) object;
+		final EObject eObject = (EObject) object;
 		for (Object descriptor : descriptors) {
 			final CommandParameter cp = (CommandParameter) descriptor;
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
@@ -239,16 +240,19 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
 			// continue;
 			// }
-			manager.add(new CreateChildAction(domain, new StructuredSelection(object), descriptor) {
+			manager.add(new CreateChildAction(domain, new StructuredSelection(eObject), descriptor) {
 				@Override
 				public void run() {
 					super.run();
 
+					EReference reference = ((CommandParameter) descriptor).getEReference();
+					if (!reference.isContainment()) {
+						domain.getCommandStack().execute(
+							AddCommand.create(domain, eObject.eContainer(), null, cp.getEValue()));
+					}
 					// try {
 					// TODO what is correct
-					domain.getCommandStack().execute(
-						AddCommand.create(domain, object, ((CommandParameter) descriptor).getEStructuralFeature(),
-							new Object[] { cp.getEValue() }));
+					domain.getCommandStack().execute(AddCommand.create(domain, eObject, reference, cp.getEValue()));
 					// object.eResource().save(null);
 					ECPHandlerHelper.openModelElement(cp.getEValue(), project);
 					// } catch (IOException ex) {
