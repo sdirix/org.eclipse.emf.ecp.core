@@ -105,4 +105,23 @@ public class NumericalControl extends AbstractTextControl {
 	protected String getHelpText() {
 		return helpText;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		// TODO language
+		return "No number set! Click to set number."; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset number";
+	}
 }

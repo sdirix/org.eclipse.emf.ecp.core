@@ -77,10 +77,11 @@ public abstract class MultiControl extends SWTControl {
 	private List<ECPSWTAction> toolBarActions = new ArrayList<ECPSWTAction>();
 	private Composite mainComposite;
 	private Composite sectionComposite;
-	private Label validationLabel;
 	private ControlDescription controlDescription;
 	private Class<?> supportedClassType;
 	private ECPSWTAction[] actions;
+
+	private Button unsetButton;
 
 	/**
 	 * Constructor for a multi control.
@@ -135,14 +136,11 @@ public abstract class MultiControl extends SWTControl {
 	protected abstract int getTesterPriority(StaticApplicableTester tester,
 		IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
-	public Composite createControl(Composite parent) {
+	protected void fillControlComposite(Composite parent) {
 		Composite superComposite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(10, 0).equalWidth(false).applyTo(superComposite);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(superComposite);
 
 		// VALIDATION
 		validationLabel = new Label(superComposite, SWT.NONE);
@@ -154,7 +152,7 @@ public abstract class MultiControl extends SWTControl {
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(mainComposite);
 
 		// TOOLBAR
-		createSectionToolbar();
+		createButtonBar();
 		// SEPERATOR
 		Label seperator = new Label(mainComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).span(3, 1).applyTo(seperator);
@@ -162,7 +160,9 @@ public abstract class MultiControl extends SWTControl {
 		model = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(), getModelElementContext()
 			.getModelElement(), getStructuralFeature());
 
-		ScrolledComposite scrolledComposite = new ScrolledComposite(mainComposite, SWT.V_SCROLL);
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(mainComposite, SWT.V_SCROLL);
+		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setExpandHorizontal(true);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, 150)
 			.minSize(SWT.DEFAULT, 150).span(3, 1).applyTo(scrolledComposite);
 
@@ -176,9 +176,12 @@ public abstract class MultiControl extends SWTControl {
 				ListDiff diff = event.diff;
 				diff.accept(new ListDiffVisitor() {
 
+					int widthBeforeChange = -1; // initial negative value
+
 					@Override
 					public void handleRemove(int index, Object element) {
 						updateIndicesAfterRemove(index);
+						triggerScrollbarUpdate();
 						getDataBindingContext().updateTargets();
 					}
 
@@ -186,6 +189,7 @@ public abstract class MultiControl extends SWTControl {
 					public void handleAdd(int index, Object element) {
 						addControl();
 						sectionComposite.layout();
+						triggerScrollbarUpdate();
 						getDataBindingContext().updateTargets();
 					}
 
@@ -198,6 +202,14 @@ public abstract class MultiControl extends SWTControl {
 					public void handleReplace(int index, Object oldElement, Object newElement) {
 						// do nothing
 					}
+
+					private void triggerScrollbarUpdate() {
+						int widthAfterChange = sectionComposite.getSize().x;
+						if (widthBeforeChange != widthAfterChange) {
+							scrolledComposite.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
+							widthBeforeChange = widthAfterChange;
+						}
+					}
 				});
 			}
 		};
@@ -206,10 +218,15 @@ public abstract class MultiControl extends SWTControl {
 			addControl();
 		}
 		refreshSection();
-		scrolledComposite.setContent(sectionComposite);
-		scrolledComposite.setExpandHorizontal(true);
 
-		return superComposite;
+		scrolledComposite.setMinSize(sectionComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setContent(sectionComposite);
+
+	}
+
+	@Override
+	protected Button getUnsetButton() {
+		return unsetButton;
 	}
 
 	private void isFull() {
@@ -269,7 +286,31 @@ public abstract class MultiControl extends SWTControl {
 		isFull();
 	}
 
+	private void createButtonBar() {
+		Composite buttonComposite = new Composite(mainComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+
+		int colNum = actions.length;
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			colNum++;
+		}
+
+		GridLayoutFactory.fillDefaults().numColumns(colNum).equalWidth(true).applyTo(buttonComposite);
+
+		for (ECPSWTAction action : actions) {
+			action.setEnabled(isEditable());
+			Button button = createButtonForAction(action, buttonComposite);
+		}
+
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			unsetButton = new Button(buttonComposite, SWT.PUSH);
+			unsetButton.setToolTipText(getUnsetButtonTooltip());
+			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+		}
+	}
+
 	private void createSectionToolbar() {
+		// TODO remove
 		ToolBarManager toolBarManager = new ToolBarManager(SWT.RIGHT);
 		ToolBar toolbar = toolBarManager.createControl(mainComposite);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.END, SWT.BEGINNING).applyTo(toolbar);
@@ -289,6 +330,14 @@ public abstract class MultiControl extends SWTControl {
 			toolBarManager.add(action);
 
 		}
+
+		Button toolItem1 = new Button(toolbar, SWT.PUSH);
+		toolItem1.setText("Unset");
+		toolItem1.setImage(Activator.getImage("icons/delete.png"));
+		// toolItem1.addSelectionListener(new SelectionAdapter() {
+		//
+		// });
+
 		toolBarManager.update(true);
 	}
 

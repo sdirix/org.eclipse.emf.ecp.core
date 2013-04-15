@@ -89,6 +89,8 @@ public class TableControl extends SWTControl {
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+	private EClass clazz;
+	private Button unsetButton = null;
 
 	/**
 	 * Constructor for a String control.
@@ -111,27 +113,50 @@ public class TableControl extends SWTControl {
 
 	@Override
 	public Composite createControl(Composite parent) {
-
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		EClass clazz = ((EReference) getStructuralFeature()).getEReferenceType();
+		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
-		final Composite parentComposite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(parentComposite);
-
-		Label label = new Label(parentComposite, SWT.NONE);
+		Label label = new Label(parent, SWT.NONE);
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
-		final Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(true).applyTo(buttonComposite);
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
+
+		// delegate to super class
+		createContentControl(composite);
+
+		return parent;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#fillControlComposite(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected void fillControlComposite(Composite parent) {
+		Composite parentComposite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(parentComposite);
+		GridLayoutFactory.fillDefaults().spacing(2, 0).numColumns(2).applyTo(parentComposite);
+
+		Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(true).applyTo(buttonComposite);
 
 		createAddRowButton(clazz, buttonComposite);
 		createRemoveRowButton(clazz, buttonComposite);
 
-		final Composite composite = new Composite(parentComposite, SWT.NONE);
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			unsetButton = new Button(buttonComposite, SWT.PUSH);
+			unsetButton.setToolTipText(getUnsetButtonTooltip());
+			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+		}
+
+		Composite composite = new Composite(parentComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, 200).span(2, 1)
 			.applyTo(composite);
 
@@ -372,8 +397,11 @@ public class TableControl extends SWTControl {
 			layout.setColumnData(col, new ColumnWeightData((Integer) col.getData("width"), 50));
 			// layout.setColumnData(col, new ColumnPixelData((Integer) col.getData("width")));
 		}
+	}
 
-		return parentComposite;
+	@Override
+	protected Button getUnsetButton() {
+		return unsetButton;
 	}
 
 	private SelectionAdapter getSelectionAdapter(final ECPTableViewerComparator comparator, final TableColumn column,
@@ -543,5 +571,32 @@ public class TableControl extends SWTControl {
 			}
 			return rc;
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "This is a table control";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		return "Not set. Click to set!";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset";
 	}
 }

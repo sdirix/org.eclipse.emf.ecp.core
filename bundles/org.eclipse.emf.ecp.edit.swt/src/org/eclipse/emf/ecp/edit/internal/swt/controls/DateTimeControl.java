@@ -14,26 +14,16 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * This class defines a DateTimeControl which is used for displaying {@link EStructuralFeature}s which have a date
@@ -47,12 +37,6 @@ public class DateTimeControl extends SingleControl {
 	private DateTime dateWidget;
 
 	private DateTime timeWidget;
-
-	private Composite parentComposite;
-
-	private StackLayout sl;
-
-	private Label unsetLabel;
 
 	/**
 	 * Constructor for a dateTime control.
@@ -69,44 +53,10 @@ public class DateTimeControl extends SingleControl {
 	}
 
 	@Override
-	protected void fillInnerComposite(Composite composite) {
-		parentComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(parentComposite);
-		sl = new StackLayout();
-		parentComposite.setLayout(sl);
-		final Composite dateTimeComposite = new Composite(parentComposite, SWT.NONE);
+	protected void fillControlComposite(Composite dateTimeComposite) {
 		GridLayoutFactory.fillDefaults().spacing(2, 0).numColumns(4).applyTo(dateTimeComposite);
-
 		createDateAndTimeWidget(dateTimeComposite);
 
-		unsetLabel = new Label(parentComposite, SWT.NONE);
-		// TODO language
-		unsetLabel.setText("No date set! Click to set date.");//$NON-NLS-1$
-		unsetLabel.setBackground(composite.getBackground());
-		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-		unsetLabel.setAlignment(SWT.CENTER);
-		unsetLabel.addMouseListener(new MouseListener() {
-
-			public void mouseUp(MouseEvent e) {
-				sl.topControl = dateTimeComposite;
-				parentComposite.layout(true);
-				getDataBindingContext().updateModels();
-			}
-
-			public void mouseDown(MouseEvent e) {
-				// nothing to do
-			}
-
-			public void mouseDoubleClick(MouseEvent e) {
-				// nothing to do
-			}
-		});
-		if (getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
-			sl.topControl = dateTimeComposite;
-		} else {
-			sl.topControl = unsetLabel;
-		}
-		parentComposite.layout();
 	}
 
 	/**
@@ -119,7 +69,7 @@ public class DateTimeControl extends SingleControl {
 		if (isEmbedded()) {
 			numColumns = 2;
 		}
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(2, 0).equalWidth(false).applyTo(composite);
 
 		dateWidget = new DateTime(composite, SWT.DATE);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -128,29 +78,6 @@ public class DateTimeControl extends SingleControl {
 		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_time");
-
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
-			Button unsetdate = new Button(composite, SWT.PUSH);
-			unsetdate.setToolTipText("UnsetDate");
-			unsetdate.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
-			unsetdate.addSelectionListener(new SelectionAdapter() {
-
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-
-					getModelElementContext()
-						.getEditingDomain()
-						.getCommandStack()
-						.execute(
-							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
-
-					sl.topControl = unsetLabel;
-					parentComposite.layout();
-				}
-
-			});
-		}
 	}
 
 	@Override
@@ -176,4 +103,22 @@ public class DateTimeControl extends SingleControl {
 		return "This is a date-time control. The date field is DD.MM.YYYY and the time field is mm:hh";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		// TODO language
+		return "No date set! Click to set date."; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset Date";
+	}
 }

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 /**
  * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a multi reference.
  * 
@@ -37,20 +38,50 @@ public class ReferenceMultiControl extends MultiControl {
 	 * @param embedded whether this control is embedded in another control
 	 */
 	public ReferenceMultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext,boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,embedded);
+		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
 
 	@Override
 	protected ECPSWTAction[] instantiateActions() {
 		ECPSWTAction[] actions = new ECPSWTAction[2];
-			actions[0]=new AddReferenceAction(getModelElementContext(), getItemPropertyDescriptor(), getStructuralFeature());
-			actions[1]=new NewReferenceAction(getModelElementContext(), getItemPropertyDescriptor(), getStructuralFeature());
-			return actions;
+		actions[0] = new AddReferenceAction(getModelElementContext(), getItemPropertyDescriptor(),
+			getStructuralFeature());
+		actions[1] = new NewReferenceAction(getModelElementContext(), getItemPropertyDescriptor(),
+			getStructuralFeature());
+		return actions;
 	}
+
 	@Override
 	protected int getTesterPriority(StaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject eObject) {
 		return ReferenceMultiControlTester.getTesterPriority(tester, itemPropertyDescriptor, eObject);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getHelpText()
+	 */
+	@Override
+	protected String getHelpText() {
+		return "This is a reference multi control.";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		return "Not set. Click to set!";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset";
 	}
 }

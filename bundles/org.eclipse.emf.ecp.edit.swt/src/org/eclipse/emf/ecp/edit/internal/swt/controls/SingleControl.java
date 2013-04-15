@@ -15,23 +15,12 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
-import org.eclipse.jface.dialogs.IDialogLabelKeys;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * This class defines a SingleControl which is used for displaying {@link EStructuralFeature}s which have maximum 1
@@ -43,7 +32,6 @@ import org.eclipse.swt.widgets.Label;
 public abstract class SingleControl extends SWTControl {
 
 	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
-	private Label validationLabel;
 
 	// private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);
 
@@ -60,74 +48,6 @@ public abstract class SingleControl extends SWTControl {
 		ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	public Composite createControl(final Composite parent) {
-		final Composite composite = new Composite(parent, SWT.NONE);
-		int numColumns = 2;
-		if (isEmbedded()) {
-			numColumns--;
-		}
-		if (getModelElementContext().isRunningAsWebApplication()) {
-			numColumns++;
-		}
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
-		if (!isEmbedded()) {
-			validationLabel = new Label(composite, SWT.NONE);
-			// set the size of the label to the size of the image
-			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
-		}
-
-		Composite innerComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
-		fillInnerComposite(innerComposite);
-		setEditable(isEditable());
-		bindValue();
-
-		if (getModelElementContext().isRunningAsWebApplication()) {
-			Button b = new Button(composite, SWT.PUSH);
-			b.setImage(Activator.getImage("icons/help.png"));
-			b.addSelectionListener(new SelectionAdapter() {
-
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					super.widgetSelected(e);
-					MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
-						MessageDialog.INFORMATION, new String[] { JFaceResources
-							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-					new ECPDialogExecutor(dialog) {
-
-						@Override
-						public void handleResult(int codeResult) {
-
-						}
-					}.execute();
-				}
-
-			});
-		}
-
-		return composite;
-	}
-
-	/**
-	 * @return
-	 */
-	protected abstract String getHelpText();
-
-	/**
-	 * This method must be overridden by concrete classes. Here the widget displaying the data is added to the
-	 * composite.
-	 * 
-	 * @param composite the {@link Composite} to add the widget to
-	 */
-	protected abstract void fillInnerComposite(Composite composite);
 
 	/**
 	 * {@inheritDoc}

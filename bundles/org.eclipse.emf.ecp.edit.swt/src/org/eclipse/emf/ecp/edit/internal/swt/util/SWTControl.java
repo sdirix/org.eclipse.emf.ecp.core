@@ -16,16 +16,27 @@ import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.AbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 /**
  * This class defines a SWTCOntrol which is an abstract class defining an {@link AbstractControl} for SWT.
@@ -36,11 +47,18 @@ import org.eclipse.swt.widgets.Composite;
 public abstract class SWTControl extends AbstractControl<Composite> {
 
 	/**
-	 * RAP theming variable to set
+	 * RAP theming variable to set.
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";
 
+	protected Label validationLabel;
+
 	private IObservableValue modelValue;
+
+	private Composite controlComposite;
+	private Composite parentComposite;
+	private StackLayout sl;
+	private Label unsetLabel;
 
 	/**
 	 * Constructor for a swt control.
@@ -54,6 +72,148 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	public SWTControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
 		ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public Composite createControl(final Composite parent) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		int numColumns = 2;
+		if (isEmbedded()) {
+			numColumns--;
+		}
+		if (getModelElementContext().isRunningAsWebApplication()) {
+			numColumns++;
+		}
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
+		if (!isEmbedded()) {
+			validationLabel = new Label(composite, SWT.NONE);
+			// set the size of the label to the size of the image
+			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
+		}
+
+		Composite innerComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
+		createContentControl(innerComposite);
+		setEditable(isEditable());
+		bindValue();
+
+		if (getModelElementContext().isRunningAsWebApplication()) {
+			Button b = new Button(composite, SWT.PUSH);
+			b.setImage(Activator.getImage("icons/help.png"));
+			b.addSelectionListener(new SelectionAdapter() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					super.widgetSelected(e);
+					MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
+						MessageDialog.INFORMATION, new String[] { JFaceResources
+							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+					new ECPDialogExecutor(dialog) {
+
+						@Override
+						public void handleResult(int codeResult) {
+
+						}
+					}.execute();
+				}
+
+			});
+		}
+
+		return composite;
+	}
+
+	/**
+	 * Helper for creating the unset stacklayout and creating the control's composite.
+	 * 
+	 * @param composite
+	 */
+	protected void createContentControl(Composite composite) {
+		parentComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(parentComposite);
+		sl = new StackLayout();
+		parentComposite.setLayout(sl);
+		controlComposite = new Composite(parentComposite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(controlComposite);
+
+		unsetLabel = new Label(parentComposite, SWT.NONE);
+		unsetLabel.setBackground(composite.getBackground());
+		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+		unsetLabel.setAlignment(SWT.CENTER);
+		unsetLabel.setText(getUnsetLabelText());
+		unsetLabel.addMouseListener(new MouseListener() {
+
+			public void mouseUp(MouseEvent e) {
+				sl.topControl = controlComposite;
+				parentComposite.layout(true);
+				// getDataBindingContext().updateModels();
+			}
+
+			public void mouseDown(MouseEvent e) {
+				// nothing to do
+			}
+
+			public void mouseDoubleClick(MouseEvent e) {
+				// nothing to do
+			}
+		});
+
+		fillControlComposite(controlComposite);
+
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			Button unsetButton = getUnsetButton();
+			if (unsetButton == null) {
+				unsetButton = new Button(controlComposite, SWT.PUSH);
+				unsetButton.setToolTipText(getUnsetButtonTooltip());
+				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			}
+			unsetButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					getModelElementContext()
+						.getEditingDomain()
+						.getCommandStack()
+						.execute(
+							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
+								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
+
+					sl.topControl = unsetLabel;
+					parentComposite.layout();
+				}
+			});
+		}
+
+		if (!getStructuralFeature().isUnsettable()
+			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
+			sl.topControl = controlComposite;
+		} else {
+			sl.topControl = unsetLabel;
+		}
+
+		parentComposite.layout();
+	}
+
+	/**
+	 * This method must be overridden by concrete classes. Here the widget displaying the data is added to the
+	 * composite.
+	 * 
+	 * @param controlComposite the {@link Composite} to add the widget to
+	 */
+	protected abstract void fillControlComposite(Composite controlComposite);
+
+	/**
+	 * Returns the created unset button or null if the default unset button is to be used.
+	 * 
+	 * @return The unset button
+	 */
+	protected Button getUnsetButton() {
+		return null;
 	}
 
 	/**
@@ -114,4 +274,25 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	 * Triggers the control to perform the databinding.
 	 */
 	protected abstract void bindValue();
+
+	/**
+	 * Returns the help information.
+	 * 
+	 * @return The help text
+	 */
+	protected abstract String getHelpText();
+
+	/**
+	 * Returns the string for the unset label.
+	 * 
+	 * @return The unset label text
+	 */
+	protected abstract String getUnsetLabelText();
+
+	/**
+	 * Returns the string for the unset button tooltip.
+	 * 
+	 * @return The unset button tooltip
+	 */
+	protected abstract String getUnsetButtonTooltip();
 }

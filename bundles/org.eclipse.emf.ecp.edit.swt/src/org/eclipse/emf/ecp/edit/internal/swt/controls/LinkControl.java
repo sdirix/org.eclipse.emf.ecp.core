@@ -90,7 +90,7 @@ public class LinkControl extends SingleControl {
 	protected AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	@Override
-	protected void fillInnerComposite(Composite composite) {
+	protected void fillControlComposite(Composite composite) {
 		int numColumns = 1 + getNumButtons();
 		if (isEmbedded()) {
 			numColumns = 1;
@@ -302,5 +302,24 @@ public class LinkControl extends SingleControl {
 	@Override
 	protected String getHelpText() {
 		return "A link control pointing to a referenced element.";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		// TODO language
+		return "No link set! Click to set link."; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset Link";
 	}
 }

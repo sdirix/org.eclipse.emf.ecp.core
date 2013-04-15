@@ -50,7 +50,7 @@ public class EEnumControl extends SingleControl {
 	}
 
 	@Override
-	protected void fillInnerComposite(Composite composite) {
+	protected void fillControlComposite(Composite composite) {
 		final IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			getModelElementContext().getModelElement());
 
@@ -86,6 +86,25 @@ public class EEnumControl extends SingleControl {
 	@Override
 	protected String getHelpText() {
 		return "This is an enum field. You can select a value here.";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		// TODO language
+		return "No value set! Click to set value."; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset value";
 	}
 
 }

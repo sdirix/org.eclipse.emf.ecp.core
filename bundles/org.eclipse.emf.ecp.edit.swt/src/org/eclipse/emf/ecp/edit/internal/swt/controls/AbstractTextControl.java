@@ -64,7 +64,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	}
 
 	@Override
-	protected void fillInnerComposite(Composite composite) {
+	protected void fillControlComposite(Composite composite) {
 		doVerify = false;
 		createTextWidget(composite);
 		addControlDecoration(composite.getParent());

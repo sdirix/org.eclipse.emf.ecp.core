@@ -82,4 +82,23 @@ public class StringControl extends AbstractTextControl {
 	protected String getHelpText() {
 		return "This is a free text control.";
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		// TODO language
+		return "No text set! Click to set text."; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset text";
+	}
 }

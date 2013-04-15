@@ -48,7 +48,7 @@ public class BooleanControl extends SingleControl {
 	}
 
 	@Override
-	protected void fillInnerComposite(Composite composite) {
+	protected void fillControlComposite(Composite composite) {
 		check = new Button(composite, SWT.CHECK);
 		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_boolean");
 	}
@@ -77,5 +77,24 @@ public class BooleanControl extends SingleControl {
 	@Override
 	protected String getHelpText() {
 		return "This is a boolean field";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
+	 */
+	@Override
+	protected String getUnsetLabelText() {
+		// TODO language
+		return "No boolean set! Click to set boolean."; //$NON-NLS-1$
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetButtonTooltip()
+	 */
+	@Override
+	protected String getUnsetButtonTooltip() {
+		return "Unset boolean";
 	}
 }
