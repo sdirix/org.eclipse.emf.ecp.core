@@ -63,4 +63,8 @@
          id="org.eclipse.emf.ecp.e3"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.graphiti"
+         version="0.0.0"/>
+
 </feature>
