@@ -40,6 +40,8 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";
 
+	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+
 	private IObservableValue modelValue;
 
 	/**

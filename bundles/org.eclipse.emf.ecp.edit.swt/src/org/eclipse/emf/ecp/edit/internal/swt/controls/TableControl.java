@@ -89,6 +89,7 @@ public class TableControl extends SWTControl {
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+	private Label validationLabel;
 
 	/**
 	 * Constructor for a String control.
@@ -110,7 +111,7 @@ public class TableControl extends SWTControl {
 	}
 
 	@Override
-	public Composite createControl(Composite parent) {
+	public Composite createControl(final Composite parent) {
 
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
@@ -118,11 +119,16 @@ public class TableControl extends SWTControl {
 		EClass clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
 		final Composite parentComposite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(parentComposite);
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(parentComposite);
 
 		Label label = new Label(parentComposite, SWT.NONE);
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
+
+		// VALIDATION
+		validationLabel = new Label(parentComposite, SWT.NONE);
+		// set the size of the label to the size of the image
+		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 
 		final Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
@@ -132,12 +138,13 @@ public class TableControl extends SWTControl {
 		createRemoveRowButton(clazz, buttonComposite);
 
 		final Composite composite = new Composite(parentComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, 200).span(2, 1)
+		// composite.setLayout(new FillLayout());
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200).span(3, 1)
 			.applyTo(composite);
 
-		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION
-			| SWT.BORDER);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(tableViewer.getTable());
+		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, SWT.DEFAULT)
+		// .applyTo(tableViewer.getTable());
 		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
@@ -362,17 +369,18 @@ public class TableControl extends SWTControl {
 		IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
 			getModelElementContext().getModelElement(), getStructuralFeature());
 		tableViewer.setInput(list);
-		TableColumnLayout layout = new TableColumnLayout();
-		composite.setLayout(layout);
+
 		// IMPORTANT:
 		// - the minimumWidth and (non)resizable settings of the ColumnWeightData are not supported properly
 		// - the layout stops resizing columns that have been resized manually by the user (this could be considered a
 		// feature though)
-		for (TableColumn col : tableViewer.getTable().getColumns()) {
-			layout.setColumnData(col, new ColumnWeightData((Integer) col.getData("width"), 50));
-			// layout.setColumnData(col, new ColumnPixelData((Integer) col.getData("width")));
+		TableColumnLayout layout = new TableColumnLayout();
+		composite.setLayout(layout);
+		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
+			Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width");
+			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
+				: storedValue));
 		}
-
 		return parentComposite;
 	}
 
@@ -461,16 +469,27 @@ public class TableControl extends SWTControl {
 		composedAdapterFactory.dispose();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void handleValidation(Diagnostic diagnostic) {
-		// TODO Auto-generated method stub
-
+		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
+			Image image = Activator.getImage(VALIDATION_ERROR_ICON);
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(diagnostic.getMessage());
+		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void resetValidation() {
-		// TODO Auto-generated method stub
-
+		if (validationLabel == null || validationLabel.isDisposed()) {
+			return;
+		}
+		validationLabel.setImage(null);
 	}
 
 	@Override

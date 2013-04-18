@@ -66,7 +66,6 @@ import java.util.List;
  */
 public abstract class MultiControl extends SWTControl {
 
-	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private static final String ICONS_ARROW_DOWN_PNG = "icons/arrow_down.png";//$NON-NLS-1$
 	private static final String ICONS_ARROW_UP_PNG = "icons/arrow_up.png";//$NON-NLS-1$
 
@@ -432,7 +431,7 @@ public abstract class MultiControl extends SWTControl {
 	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImage(MultiControl.VALIDATION_ERROR_ICON);
+			Image image = Activator.getImage(VALIDATION_ERROR_ICON);
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
 		}
