@@ -5,9 +5,14 @@ import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
 
 public class ECPDiagramTypeProvider extends AbstractDiagramTypeProvider {
 
+
 	public ECPDiagramTypeProvider() {
 		super();
 		setFeatureProvider(new ECPFeatureProvider(this));
 	}
 
+	@Override
+	public boolean isAutoUpdateAtRuntimeWhenEditorIsSaved() {
+		return true;
+	}
 }

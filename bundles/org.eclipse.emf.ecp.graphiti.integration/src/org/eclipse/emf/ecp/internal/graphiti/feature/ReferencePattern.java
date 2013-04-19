@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.internal.graphiti.feature;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
@@ -97,7 +96,6 @@ public class ReferencePattern extends AbstractConnectionPattern {
 
 		AddConnectionContext addContext = new AddConnectionContext(
 				context.getSourceAnchor(), context.getTargetAnchor());
-//		addContext.setNewObject(eReference);
 		Connection newConnection = (Connection) getFeatureProvider()
 				.addIfPossible(addContext);
 
