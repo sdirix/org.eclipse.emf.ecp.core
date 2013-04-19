@@ -29,6 +29,12 @@
                commandId="org.eclipse.emf.ecp.graphiti.open"
                label="Open ECP Graphiti Editor"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
+               </reference>
+            </visibleWhen>
          </command>
       </menuContribution>
    </extension>
