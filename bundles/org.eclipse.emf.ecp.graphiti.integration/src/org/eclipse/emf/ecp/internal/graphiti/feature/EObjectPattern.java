@@ -47,6 +47,7 @@ public class EObjectPattern extends AbstractPattern {
 		super(null);
 	}
 
+
 	@Override
 	public boolean canCreate(ICreateContext context) {
 		return context.getTargetContainer() instanceof Diagram;
@@ -82,6 +83,10 @@ public class EObjectPattern extends AbstractPattern {
 	public String getCreateName() {
 		// TODO Auto-generated method stub
 		return "EObject";
+	}
+	@Override
+	public String getCreateImageId() {
+		return "addEObject";
 	}
 
 	@Override

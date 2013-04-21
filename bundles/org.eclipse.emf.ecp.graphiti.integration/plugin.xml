@@ -18,6 +18,9 @@
          <diagramType
                id="org.eclipse.emf.ecp.graphiti.diagramType">
          </diagramType>
+         <imageProvider
+               id="org.eclipse.emf.ecp.graphiti.integration.imageProvider">
+         </imageProvider>
       </diagramTypeProvider>
    </extension>
    <extension
@@ -60,5 +63,12 @@
             class="org.eclipse.emf.ecp.graphiti.internal.integration.OpenGraphitiEditorHandler"
             commandId="org.eclipse.emf.ecp.graphiti.open">
       </handler>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.imageProviders">
+      <imageProvider
+            class="org.eclipse.emf.ecp.graphiti.internal.integration.ECPImageProvider"
+            id="org.eclipse.emf.ecp.graphiti.integration.imageProvider">
+      </imageProvider>
    </extension>
 </plugin>

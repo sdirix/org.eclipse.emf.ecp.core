@@ -130,7 +130,10 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 		// TODO Auto-generated method stub
 		return "Containment";
 	}
-
+	@Override
+	public String getCreateImageId() {
+		return "containment";
+	}
 	private Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
 		IGaService gaService = Graphiti.getGaService();
 		Polygon polygon = gaService.createPolygon(gaContainer, new int[] { -10,

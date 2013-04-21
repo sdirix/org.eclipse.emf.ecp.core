@@ -106,6 +106,10 @@ public class ReferencePattern extends AbstractConnectionPattern {
 	public String getCreateName() {
 		return "Reference";
 	}
+	@Override
+	public String getCreateImageId() {
+		return "reference";
+	}
 
 	private static final IColorConstant FOREGROUND = new ColorConstant(255, 131,
 			167);
