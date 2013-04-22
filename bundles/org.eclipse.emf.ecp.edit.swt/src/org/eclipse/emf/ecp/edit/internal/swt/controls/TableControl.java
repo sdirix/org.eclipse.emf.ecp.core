@@ -90,6 +90,7 @@ public class TableControl extends SWTControl {
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private Button unsetButton = null;
+	private EClass clazz;
 
 	/**
 	 * Constructor for a String control.
@@ -116,11 +117,16 @@ public class TableControl extends SWTControl {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		EClass clazz = ((EReference) getStructuralFeature()).getEReferenceType();
+		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
+
+		// VALIDATION
+		validationLabel = new Label(parent, SWT.NONE);
+		// set the size of the label to the size of the image
+		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
@@ -154,7 +160,6 @@ public class TableControl extends SWTControl {
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		}
-
 
 		final Composite composite = new Composite(parentComposite, SWT.NONE);
 		// composite.setLayout(new FillLayout());

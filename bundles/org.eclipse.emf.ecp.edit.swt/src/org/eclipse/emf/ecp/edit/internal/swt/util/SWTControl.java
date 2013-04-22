@@ -53,7 +53,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";
 
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
-	
+
 	protected Label validationLabel;
 
 	private IObservableValue modelValue;
@@ -144,6 +144,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 		sl = new StackLayout();
 		parentComposite.setLayout(sl);
 		controlComposite = new Composite(parentComposite, SWT.NONE);
+		// 1 column for control, 1 for default unset button
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(controlComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
@@ -158,8 +159,6 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 				parentComposite.layout(true);
 				if (binding != null) {
 					binding.updateTargetToModel();
-				} else {
-					getModelValue().setValue(null);
 				}
 			}
 
