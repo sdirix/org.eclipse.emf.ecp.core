@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
@@ -225,7 +226,7 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	@Override
-	protected Button getUnsetButton() {
+	protected Button getCustomUnsetButton() {
 		return unsetButton;
 	}
 
@@ -511,8 +512,8 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	@Override
-	public void bindValue() {
-		// bind is widget specific
+	public Binding bindValue() {
+		return null;
 	}
 
 	@Override

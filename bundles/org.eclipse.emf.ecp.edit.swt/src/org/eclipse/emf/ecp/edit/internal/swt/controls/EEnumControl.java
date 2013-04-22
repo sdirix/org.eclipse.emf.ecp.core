@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -74,9 +75,9 @@ public class EEnumControl extends SingleControl {
 	}
 
 	@Override
-	public void bindValue() {
+	public Binding bindValue() {
 		IObservableValue target = ViewersObservables.observeSingleSelection(combo);
-		getDataBindingContext().bindValue(target, getModelValue());
+		return getDataBindingContext().bindValue(target, getModelValue());
 	}
 
 	/*

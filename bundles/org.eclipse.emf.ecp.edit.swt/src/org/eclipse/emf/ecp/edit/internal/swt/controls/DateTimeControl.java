@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -87,11 +88,11 @@ public class DateTimeControl extends SingleControl {
 	}
 
 	@Override
-	public void bindValue() {
+	public Binding bindValue() {
 		IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
 		IObservableValue timeObserver = SWTObservables.observeSelection(timeWidget);
 		IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		getDataBindingContext().bindValue(target, getModelValue());
+		return getDataBindingContext().bindValue(target, getModelValue());
 	}
 
 	/*

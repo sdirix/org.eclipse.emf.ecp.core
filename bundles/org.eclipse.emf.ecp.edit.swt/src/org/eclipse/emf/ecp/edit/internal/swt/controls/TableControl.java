@@ -107,8 +107,8 @@ public class TableControl extends SWTControl {
 	}
 
 	@Override
-	protected void bindValue() {
-		// Not necessary
+	protected Binding bindValue() {
+		return null;
 	}
 
 	@Override
@@ -400,7 +400,7 @@ public class TableControl extends SWTControl {
 	}
 
 	@Override
-	protected Button getUnsetButton() {
+	protected Button getCustomUnsetButton() {
 		return unsetButton;
 	}
 

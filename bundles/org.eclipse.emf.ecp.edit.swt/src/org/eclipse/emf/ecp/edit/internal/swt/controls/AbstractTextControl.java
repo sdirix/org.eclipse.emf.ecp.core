@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
@@ -131,9 +132,9 @@ public abstract class AbstractTextControl extends SingleControl {
 	}
 
 	@Override
-	public void bindValue() {
+	public Binding bindValue() {
 		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
-		getDataBindingContext().bindValue(value, getModelValue(),
+		Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			new HighlightUpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new EMFUpdateValueStrategy() {
 
 				@Override
@@ -144,7 +145,7 @@ public abstract class AbstractTextControl extends SingleControl {
 				}
 
 			});
-
+		return binding;
 	}
 
 	/**

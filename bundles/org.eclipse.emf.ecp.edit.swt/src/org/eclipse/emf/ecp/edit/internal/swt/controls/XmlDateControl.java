@@ -5,6 +5,7 @@ import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -51,9 +52,9 @@ public class XmlDateControl extends SingleControl {
 	}
 
 	@Override
-	protected void bindValue() {
+	protected Binding bindValue() {
 		IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
-		getDataBindingContext().bindValue(dateObserver, getModelValue(), new UpdateValueStrategy() {
+		Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
@@ -68,6 +69,7 @@ public class XmlDateControl extends SingleControl {
 				return gregorianCalendar.toGregorianCalendar().getTime();
 			}
 		});
+		return binding;
 	}
 
 	/*

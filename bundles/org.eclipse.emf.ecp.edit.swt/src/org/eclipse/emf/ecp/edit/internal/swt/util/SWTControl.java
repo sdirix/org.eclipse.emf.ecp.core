@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.action.Action;
@@ -54,6 +55,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	protected Label validationLabel;
 
 	private IObservableValue modelValue;
+	private Binding binding;
 
 	private Composite controlComposite;
 	private Composite parentComposite;
@@ -101,7 +103,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
 		setEditable(isEditable());
-		bindValue();
+		binding = bindValue();
 
 		if (getModelElementContext().isRunningAsWebApplication()) {
 			Button b = new Button(composite, SWT.PUSH);
@@ -152,7 +154,11 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 			public void mouseUp(MouseEvent e) {
 				sl.topControl = controlComposite;
 				parentComposite.layout(true);
-				// getDataBindingContext().updateModels();
+				if (binding != null) {
+					binding.updateTargetToModel();
+				} else {
+					getModelValue().setValue(null);
+				}
 			}
 
 			public void mouseDown(MouseEvent e) {
@@ -167,7 +173,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 		fillControlComposite(controlComposite);
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
-			Button unsetButton = getUnsetButton();
+			Button unsetButton = getCustomUnsetButton();
 			if (unsetButton == null) {
 				unsetButton = new Button(controlComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
@@ -208,11 +214,12 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	protected abstract void fillControlComposite(Composite controlComposite);
 
 	/**
-	 * Returns the created unset button or null if the default unset button is to be used.
+	 * The default unset button will be displayed to the right of the control's composite. Concrete classes may override
+	 * this method to include an own unset button in their composite rather than using the default positioning.
 	 * 
-	 * @return The unset button
+	 * @return The custom unset button of the concrete class
 	 */
-	protected Button getUnsetButton() {
+	protected Button getCustomUnsetButton() {
 		return null;
 	}
 
@@ -272,8 +279,10 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 
 	/**
 	 * Triggers the control to perform the databinding.
+	 * 
+	 * @return The {@link Binding}
 	 */
-	protected abstract void bindValue();
+	protected abstract Binding bindValue();
 
 	/**
 	 * Returns the help information.

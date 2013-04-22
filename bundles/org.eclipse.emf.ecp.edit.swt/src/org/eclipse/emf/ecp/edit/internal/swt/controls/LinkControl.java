@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -187,11 +188,11 @@ public class LinkControl extends SingleControl {
 	}
 
 	@Override
-	public void bindValue() {
+	public Binding bindValue() {
 
 		IObservableValue value = SWTObservables.observeText(hyperlink);
 
-		getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
+		Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
@@ -231,6 +232,7 @@ public class LinkControl extends SingleControl {
 				return getImage(value);
 			}
 		});
+		return binding;
 	}
 
 	protected Object getImage(Object value) {

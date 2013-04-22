@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -65,9 +66,9 @@ public class BooleanControl extends SingleControl {
 	}
 
 	@Override
-	public void bindValue() {
+	public Binding bindValue() {
 		IObservableValue targetValue = SWTObservables.observeSelection(check);
-		getDataBindingContext().bindValue(targetValue, getModelValue());
+		return getDataBindingContext().bindValue(targetValue, getModelValue());
 	}
 
 	/*
