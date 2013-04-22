@@ -96,6 +96,9 @@ public class LinkControl extends SingleControl {
 		if (isEmbedded()) {
 			numColumns = 1;
 		}
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			numColumns++;
+		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
 
 		mainComposite = new Composite(composite, SWT.NONE);
