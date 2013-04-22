@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
@@ -22,7 +23,6 @@ import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -31,7 +31,7 @@ import org.osgi.framework.ServiceReference;
  * 
  * @author emueller
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends Plugin {
 
 	/**
 	 * The plug-in ID.
@@ -158,7 +158,8 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+		return ImageDescriptor.createFromURL(getDefault().getBundle().getResource(path));
+//		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 }

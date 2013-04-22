@@ -41,7 +41,7 @@ public class XmlDateControl extends SingleControl {
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(2, 0).equalWidth(false).applyTo(composite);
 
-		dateWidget = new DateTime(composite, SWT.DATE | SWT.DROP_DOWN);
+		dateWidget = new DateTime(composite, SWT.DATE | SWT.DROP_DOWN | SWT.BORDER);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_xml_date");
 	}

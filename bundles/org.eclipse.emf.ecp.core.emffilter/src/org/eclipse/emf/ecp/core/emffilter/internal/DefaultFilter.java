@@ -103,7 +103,9 @@ public class DefaultFilter implements ECPFilterProvider {
 	private void addGraphitiModels(Set<String> packages) {
 		packages.add("http://eclipse.org/graphiti/examples/chess");
 		packages.add("http://eclipse.org/graphiti/mm/algorithms/styles");
-
+		packages.add("http://eclipse.org/graphiti/mm/pictograms");
+		packages.add("http://eclipse.org/graphiti/mm/algorithms");
+		packages.add("http://eclipse.org/graphiti/mm");
 	}
 
 	/**

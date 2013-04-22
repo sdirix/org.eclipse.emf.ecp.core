@@ -62,6 +62,11 @@
 		
 		<module>../../features/org.eclipse.emf.ecp.example-feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module>
+		
+		<!-- Graphiti -->
+		<module>../../features/org.eclipse.emf.ecp.graphiti-feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.graphiti.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>
 				 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>

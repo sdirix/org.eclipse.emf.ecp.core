@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension
+         point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            id="org.eclipse.emf.ecp.graphiti.diagramType"
+            name="ECP Graphiti Type"
+            type="org.eclipse.emf.ecp.graphiti.diagramType">
+      </diagramType>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            class="org.eclipse.emf.ecp.graphiti.internal.integration.ECPDiagramTypeProvider"
+            id="org.eclipse.emf.ecp.graphiti.diagramTypeProvider"
+            name="org.eclipse.emf.ecp.graphiti.diagramTypeProvider">
+         <diagramType
+               id="org.eclipse.emf.ecp.graphiti.diagramType">
+         </diagramType>
+         <imageProvider
+               id="org.eclipse.emf.ecp.graphiti.integration.imageProvider">
+         </imageProvider>
+      </diagramTypeProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
+         <command
+               commandId="org.eclipse.emf.ecp.graphiti.open"
+               label="Open ECP Graphiti Editor"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="org.eclipse.emf.ecp.core.isProjectSingle">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.emf.ecp.graphiti.internal.integration.GenericECPGraphitiDiagramEditor"
+            default="false"
+            id="org.eclipse.emf.ecp.graphiti.editor"
+            name="ECP Graphiti Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.emf.ecp.graphiti.open"
+            name="Open ECP Graphiti Editor">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.ecp.graphiti.internal.integration.OpenGraphitiEditorHandler"
+            commandId="org.eclipse.emf.ecp.graphiti.open">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.imageProviders">
+      <imageProvider
+            class="org.eclipse.emf.ecp.graphiti.internal.integration.ECPImageProvider"
+            id="org.eclipse.emf.ecp.graphiti.integration.imageProvider">
+      </imageProvider>
+   </extension>
+</plugin>

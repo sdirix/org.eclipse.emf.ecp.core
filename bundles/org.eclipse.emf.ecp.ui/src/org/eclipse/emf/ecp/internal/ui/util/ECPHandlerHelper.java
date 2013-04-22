@@ -183,7 +183,7 @@ public final class ECPHandlerHelper {
 	 * @param shell the {@link Shell} used to display the UI
 	 * @param open whether to open the corresponding editor or not
 	 */
-	public static void addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
+	public static EObject addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
 		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ecpProject);
 		SelectModelElementWizard wizard = new SelectModelElementWizard(Messages.NewModelElementWizardHandler_Title,
 			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
@@ -196,7 +196,7 @@ public final class ECPHandlerHelper {
 		if (wizardResult == WizardDialog.OK) {
 			Object[] selection = helper.getSelection();
 			if (selection == null || selection.length == 0) {
-				return;
+				return null;
 			}
 			EClass newMEType = (EClass) selection[0];
 			// TODO find childdescriptor
@@ -216,8 +216,10 @@ public final class ECPHandlerHelper {
 					// 3.open the newly created ME
 					openModelElement(newMEInstance, ecpProject);
 				}
+				return newMEInstance;
 			}
 		}
+		return null;
 	}
 
 	/**
