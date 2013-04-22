@@ -36,22 +36,16 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ToolBar;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -138,16 +132,7 @@ public abstract class MultiControl extends SWTControl {
 
 	@Override
 	protected void fillControlComposite(Composite parent) {
-		Composite superComposite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(10, 0).equalWidth(false).applyTo(superComposite);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(superComposite);
-
-		// VALIDATION
-		validationLabel = new Label(superComposite, SWT.NONE);
-		// set the size of the label to the size of the image
-		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
-
-		mainComposite = new Composite(superComposite, SWT.BORDER);
+		mainComposite = new Composite(parent, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(mainComposite);
 
@@ -307,38 +292,6 @@ public abstract class MultiControl extends SWTControl {
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		}
-	}
-
-	private void createSectionToolbar() {
-		// TODO remove
-		ToolBarManager toolBarManager = new ToolBarManager(SWT.RIGHT);
-		ToolBar toolbar = toolBarManager.createControl(mainComposite);
-		GridDataFactory.fillDefaults().grab(false, false).align(SWT.END, SWT.BEGINNING).applyTo(toolbar);
-		final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
-		toolbar.setCursor(handCursor);
-		// Cursor needs to be explicitly disposed
-		toolbar.addDisposeListener(new DisposeListener() {
-			public void widgetDisposed(DisposeEvent e) {
-				if (!handCursor.isDisposed()) {
-					handCursor.dispose();
-				}
-			}
-		});
-		for (ECPSWTAction action : actions) {
-			action.setEnabled(isEditable());
-			toolBarActions.add(action);
-			toolBarManager.add(action);
-
-		}
-
-		Button toolItem1 = new Button(toolbar, SWT.PUSH);
-		toolItem1.setText("Unset");
-		toolItem1.setImage(Activator.getImage("icons/delete.png"));
-		// toolItem1.addSelectionListener(new SelectionAdapter() {
-		//
-		// });
-
-		toolBarManager.update(true);
 	}
 
 	/**

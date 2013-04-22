@@ -121,19 +121,23 @@ public class TableControl extends SWTControl {
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(label);
+
+		Composite parentComposite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(parentComposite);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(parentComposite);
 
 		// VALIDATION
-		validationLabel = new Label(parent, SWT.NONE);
+		validationLabel = new Label(parentComposite, SWT.NONE);
 		// set the size of the label to the size of the image
 		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
+		Composite controlComposite = new Composite(parentComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(controlComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 
 		// delegate to super class
-		createContentControl(composite);
+		createContentControl(controlComposite);
 
 		return parent;
 	}
