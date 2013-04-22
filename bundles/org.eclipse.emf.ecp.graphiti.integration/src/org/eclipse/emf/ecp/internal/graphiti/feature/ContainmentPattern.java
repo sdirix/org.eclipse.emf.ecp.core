@@ -50,7 +50,7 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 		polyline.setForeground(manageColor(FOREGROUND));
 
 		ConnectionDecorator cd = peCreateService.createConnectionDecorator(
-				connection, false, 1.0, true);
+				connection, false, 0.0, true);
 		createArrow(cd);
 
 		return connection;
