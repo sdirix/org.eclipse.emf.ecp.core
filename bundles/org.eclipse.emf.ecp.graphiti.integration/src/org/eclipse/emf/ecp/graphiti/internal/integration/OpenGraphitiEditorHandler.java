@@ -63,7 +63,7 @@ public class OpenGraphitiEditorHandler extends AbstractHandler {
 		// "VIRTUAL_URI", false));
 		final URI diagramUri = URI.createFileURI(fileString);
 		File diagramFile=new File(diagramUri.toFileString());
-		boolean loadExisting=true;
+		boolean loadExisting=false;
 		if (diagramFile.exists())
 			loadExisting=MessageDialog.openQuestion(HandlerUtil.getActiveShell(event), "Regenerate Diagram", "A diagram file already exists. Should the existing file be loaded?");
 		Diagram createDiagram=getDiagram(selectedProject, editingDomain, resourceSet, diagramUri,loadExisting);
