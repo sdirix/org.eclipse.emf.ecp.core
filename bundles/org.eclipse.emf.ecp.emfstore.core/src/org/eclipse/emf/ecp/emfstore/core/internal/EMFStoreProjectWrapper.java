@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
@@ -64,9 +63,8 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
 	/** {@inheritDoc} **/
 	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
-		ESLocalProject localProject = null;
 		try {
-			localProject = remoteProject.checkout(new NullProgressMonitor(), projectName);
+			remoteProject.checkout(new NullProgressMonitor(), projectName);
 		} catch (ESException ex) {
 			Activator.log(ex);
 		}
