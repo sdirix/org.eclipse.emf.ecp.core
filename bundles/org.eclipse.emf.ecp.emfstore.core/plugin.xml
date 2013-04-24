@@ -10,10 +10,5 @@
             description="Integrates ECP with the EMFStore workspace.">
       </provider>
    </extension>
-   <extension
-         point="org.eclipse.emf.emfstore.client.checkoutObserver">
-      <observer
-            checkoutObserver="org.eclipse.emf.ecp.emfstore.core.internal.CheckoutObserver"></observer>
-   </extension>
 
 </plugin>

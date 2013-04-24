@@ -962,4 +962,10 @@
                          shareObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ProjectEMFStoreBranchDecorator">
                    </observer>
                 </extension>
+                <extension
+                      point="org.eclipse.emf.emfstore.client.checkoutObserver">
+                   <observer
+                         checkoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.observer.CheckoutObserver">
+                   </observer>
+                </extension>
 </plugin>

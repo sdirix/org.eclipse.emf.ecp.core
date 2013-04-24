@@ -1,13 +1,19 @@
-package org.eclipse.emf.ecp.emfstore.core.internal;
+package org.eclipse.emf.ecp.emfstore.internal.ui.observer;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver;
+
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Display;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -22,6 +28,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 	public void checkoutDone(ESLocalProject project) {
 
 		boolean ecpProjectExists = false;
+		boolean validProjectName = false;
 
 		for (ECPProject ecpProject : ECPProjectManager.INSTANCE.getProjects()) {
 			InternalProject internalProject = (InternalProject) ecpProject;
@@ -34,13 +41,35 @@ public class CheckoutObserver implements ESCheckoutObserver {
 			}
 		}
 
+		String projectName = project.getProjectName();
+
 		if (!ecpProjectExists) {
-			try {
-				ECPProjectManager.INSTANCE.createProject(EMFStoreProvider.INSTANCE.getProvider(),
-					project.getProjectName() + "@" + createDateString(), createECPProperties(project));
-			} catch (ProjectWithNameExistsException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+			while (!validProjectName) {
+				try {
+					ECPProjectManager.INSTANCE.createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
+						createECPProperties(project));
+					validProjectName = true;
+				} catch (ProjectWithNameExistsException ex) {
+					InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(), "Create project",
+						"Enter name for checked out project:", project.getProjectName() + "@" + createDateString(),
+						new IInputValidator() {
+
+							public String isValid(String newText) {
+								if (ECPProjectManager.INSTANCE.getProject(newText) == null) {
+									return null;
+								}
+								return "A project with this name already exists!";
+
+							}
+						});
+					int inputResult = id.open();
+					if (Window.OK != inputResult) {
+						// cancel, provide default name
+						projectName = project.getProjectName() + "@" + createDateString();
+					} else {
+						projectName = id.getValue();
+					}
+				}
 			}
 		}
 	}

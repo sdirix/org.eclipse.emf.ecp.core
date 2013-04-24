@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -21,6 +20,9 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
+import org.eclipse.emf.emfstore.server.exceptions.ESException;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * This is the EMFStore implementation of a {@link ECPCheckoutSource}.
@@ -62,14 +64,12 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
 	/** {@inheritDoc} **/
 	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
-
-		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getUIProvider().getAdapter(remoteProject,
-			ESLocalProject.class);
-		if (projectSpace != null) {
-			projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, projectSpace.getLocalProjectId()
-				.getId());
+		ESLocalProject localProject = null;
+		try {
+			localProject = remoteProject.checkout(new NullProgressMonitor(), projectName);
+		} catch (ESException ex) {
+			Activator.log(ex);
 		}
-		ECPProjectManager.INSTANCE.createProject(getRepository(), projectName, projectProperties);
 	}
 
 	/**

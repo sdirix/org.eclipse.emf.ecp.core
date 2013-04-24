@@ -12,24 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
-import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
-import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
-import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UICheckoutController;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -61,32 +51,6 @@ public class CheckoutBranchHandler extends AbstractHandler {
 	 * @param projectWrapper
 	 */
 	private void checkoutBranch(EMFStoreProjectWrapper projectWrapper, Shell shell) {
-		ESLocalProject localProject = new UICheckoutController(shell, projectWrapper.getCheckoutData(), true).execute();
-		if (localProject != null) {
-			InputDialog id = new InputDialog(shell, "Checkout Branch", "Enter Name for checked out project:",
-				localProject.getProjectName(), new IInputValidator() {
-
-					public String isValid(String newText) {
-						if (ECPProjectManager.INSTANCE.getProject(newText) == null) {
-							return null;
-						}
-						return "A project with this name already exists!";
-
-					}
-				});
-			int inputResult = id.open();
-			if (Window.OK == inputResult) {
-				ECPProperties projectProperties = ECPUtil.createProperties();
-
-				projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, localProject.getLocalProjectId()
-					.getId());
-				try {
-					ECPProjectManager.INSTANCE.createProject(projectWrapper.getRepository(), id.getValue(),
-						projectProperties);
-				} catch (ProjectWithNameExistsException ex) {
-					Activator.log(ex);
-				}
-			}
-		}
+		new UICheckoutController(shell, projectWrapper.getCheckoutData(), true).execute();
 	}
 }
