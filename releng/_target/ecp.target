@@ -32,7 +32,7 @@
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.0.v20130424-0407"/>
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130424-0407"/>
 <unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130424-0407"/>
-<repository location="http://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/799/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
+<repository location="http://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/801/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
 </location>
 </locations>
 </target>
