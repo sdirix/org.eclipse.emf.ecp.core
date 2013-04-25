@@ -95,8 +95,7 @@ public class StaticApplicableTester implements ECPApplicableTester {
 		// if the supported eobject is assignable from the current eobject and the supported feature is eitehr null or
 		// equals the current one
 		if (getSupportedEObject().isInstance(eObject)
-			&& (getSupportedFeature() == null || eObject.eClass().getEStructuralFeature(getSupportedFeature())
-				.equals(feature))) {
+			&& (getSupportedFeature() == null || feature.equals(eObject.eClass().getEStructuralFeature(getSupportedFeature())))) {
 			return getPriority();
 		}
 		return NOT_APPLICABLE;

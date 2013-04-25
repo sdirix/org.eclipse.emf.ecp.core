@@ -21,54 +21,59 @@ import org.eclipse.emf.ecp.edit.ControlFactory;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 /**
- * This is a dynamic tester for an attribute multi control. It tests whether there is a control with a static tester which would fit. 
+ * This is a dynamic tester for an attribute multi control. It tests whether there is a control with a static tester
+ * which would fit.
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public class AttributeMultiControlTester implements ECPApplicableTester {
 
-	/**{@inheritDoc} **/
+	/** {@inheritDoc} **/
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		int bestPriority=NOT_APPLICABLE;
-		for(ControlDescription description:ControlFactory.INSTANCE.getControlDescriptors()){
-			for(ECPApplicableTester tester:description.getTester()){
-				if(StaticApplicableTester.class.isInstance(tester)){
-					StaticApplicableTester test=(StaticApplicableTester) tester;
-					int priority=getTesterPriority(test,itemPropertyDescriptor,eObject);
-					if(bestPriority<priority){
-						bestPriority=priority;
+		int bestPriority = NOT_APPLICABLE;
+		for (ControlDescription description : ControlFactory.INSTANCE.getControlDescriptors()) {
+			for (ECPApplicableTester tester : description.getTester()) {
+				if (StaticApplicableTester.class.isInstance(tester)) {
+					StaticApplicableTester test = (StaticApplicableTester) tester;
+					int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
+					if (bestPriority < priority) {
+						bestPriority = priority;
 					}
-				}
-				else{
+				} else {
 					continue;
 				}
 			}
 		}
 		return bestPriority;
 	}
+
 	/**
 	 * Calculates the priority of the attribute tester.
-	 * @param tester the tester to get the priority for 
+	 * 
+	 * @param tester the tester to get the priority for
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param eObject the {@link EObject}
 	 * @return the priority
 	 */
-	public static int getTesterPriority(StaticApplicableTester tester,IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		if(!itemPropertyDescriptor.isMany(eObject)){
+	public static int getTesterPriority(StaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
+		EObject eObject) {
+		if (!itemPropertyDescriptor.isMany(eObject)) {
 			return NOT_APPLICABLE;
 		}
-		EStructuralFeature feature=(EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
-		
-		if(EAttribute.class.isInstance(feature)){
-			Class<?> instanceClass = ((EAttribute)feature).getEAttributeType().getInstanceClass();
+		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
+
+		if (EAttribute.class.isInstance(feature)) {
+			Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 			if (instanceClass.isPrimitive()) {
 				try {
 					Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
 					if (!primitive.equals(instanceClass)) {
 						return NOT_APPLICABLE;
 					}
-	
+
 				} catch (IllegalArgumentException e) {
 					return NOT_APPLICABLE;
 				} catch (SecurityException e) {
@@ -78,20 +83,18 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 				} catch (NoSuchFieldException e) {
 					return NOT_APPLICABLE;
 				}
-			}
-			else if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
+			} else if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
 			}
+		} else if (EReference.class.isInstance(feature)) {
+			return NOT_APPLICABLE;
 		}
-		else if(EReference.class.isInstance(feature)){
-				return NOT_APPLICABLE;
-		}
-		if(!tester.isSingleValue()){
+		if (!tester.isSingleValue()) {
 			return NOT_APPLICABLE;
 		}
 		if (tester.getSupportedEObject().isInstance(eObject)
-			&& (tester.getSupportedFeature() == null || eObject.eClass()
-				.getEStructuralFeature(tester.getSupportedFeature()).equals(feature))) {
+			&& (tester.getSupportedFeature() == null || feature.equals(eObject.eClass().getEStructuralFeature(
+				tester.getSupportedFeature())))) {
 			return tester.getPriority();
 		}
 		return NOT_APPLICABLE;
