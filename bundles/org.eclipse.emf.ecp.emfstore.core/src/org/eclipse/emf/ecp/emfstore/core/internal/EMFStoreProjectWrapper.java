@@ -64,7 +64,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	/** {@inheritDoc} **/
 	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
 		try {
-			remoteProject.checkout(new NullProgressMonitor(), projectName);
+			remoteProject.checkout(projectName, new NullProgressMonitor());
 		} catch (ESException ex) {
 			Activator.log(ex);
 		}

@@ -64,7 +64,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		if (ESRemoteProject.class.isInstance(adaptable) && adapterType.equals(ESLocalProject.class)) {
 			ESRemoteProject checkoutData = (ESRemoteProject) adaptable;
 			try {
-				return (T) checkoutData.checkout(new NullProgressMonitor(), checkoutData.getProjectName());
+				return (T) checkoutData.checkout(checkoutData.getProjectName(), new NullProgressMonitor());
 			} catch (ESException e) {
 				Activator.log(e);
 				// BEGIN SUPRESS CATCH EXCEPTION
