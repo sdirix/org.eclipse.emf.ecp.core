@@ -92,7 +92,9 @@ public class DateTimeControl extends SingleControl {
 		IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
 		IObservableValue timeObserver = SWTObservables.observeSelection(timeWidget);
 		IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		return getDataBindingContext().bindValue(target, getModelValue());
+		Binding binding = getDataBindingContext().bindValue(target, getModelValue());
+		binding.updateTargetToModel();
+		return binding;
 	}
 
 	/*

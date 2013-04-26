@@ -71,8 +71,8 @@
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
-		<!-- Should now run on the integration job--> 
-		<!--<module>../../tests/ECPQ7Tests</module>-->
+		<!-- Should run on a seperate integration job--> 
+		<module>../../tests/ECPQ7Tests</module>
 		 
 	</modules>
 	<!-- 

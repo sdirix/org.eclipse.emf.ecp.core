@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _HZ-QoKEjEeKX8e34E6tWIg
-Save-Time: 4/9/13 5:01 PM
+Save-Time: 4/26/13 6:31 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -17,10 +17,7 @@ Entry-Name: .content
 get-view "Model Explorer" | get-tree | select "TestProject/League" | double-click
 get-editor League | get-editbox -after [get-label Name] | set-text Test
 get-view "Model Explorer" | get-tree | select "TestProject/League Test" | get-menu Player | click
-with [get-editor Player] {
-    get-editbox -after [get-label Name] | set-text Jonas
-    get-label "No date set! Click to set date." | click
-}
+get-editor Player | get-editbox -after [get-label Name] | set-text Jonas
 with [get-editor "Player Jonas"] {
     get-editbox -after [get-label Height] | set-text "10.0"
     get-button -after [get-label "Is Professional"] | click
@@ -37,7 +34,6 @@ with [get-editor Player | get-editbox -after [get-label Name]] {
     key-type "TRAVERSE_TAB_NEXT"
 }
 with [get-editor "Player Max"] {
-    get-label "No date set! Click to set date." | click
     get-button "Add Entry" | click
     with [get-editbox -after [get-label EMails]] {
         set-text max
@@ -50,7 +46,9 @@ with [get-editor "Player Max"] {
     get-editbox -after [get-label Name] | click-text 1
 }
 get-view "Model Explorer" | get-tree | select TestProject
+wait 500
 get-button "Save Project" | get-property enablement | equals true | verify-true
 get-button "Save Project" | click
+wait 500
 get-button "Save Project" | get-property enablement | equals false | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
