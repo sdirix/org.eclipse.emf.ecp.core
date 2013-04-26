@@ -155,7 +155,7 @@ public class TableControl extends SWTControl {
 
 		Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
-		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(true).applyTo(buttonComposite);
+		int numButtons = 2;
 
 		createAddRowButton(clazz, buttonComposite);
 		createRemoveRowButton(clazz, buttonComposite);
@@ -163,8 +163,9 @@ public class TableControl extends SWTControl {
 			unsetButton = new Button(buttonComposite, SWT.PUSH);
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			numButtons++;
 		}
-
+		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
 		final Composite composite = new Composite(parentComposite, SWT.NONE);
 		// composite.setLayout(new FillLayout());
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200).span(3, 1)
@@ -431,8 +432,10 @@ public class TableControl extends SWTControl {
 		return selectionAdapter;
 	}
 
+	private Button removeButton;
+
 	private void createRemoveRowButton(EClass clazz, final Composite buttonComposite) {
-		Button removeButton = new Button(buttonComposite, SWT.None);
+		removeButton = new Button(buttonComposite, SWT.None);
 		Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
 		removeButton.setImage(image);
 		removeButton.setToolTipText("Remove the selected " + clazz.getInstanceClass().getSimpleName());
@@ -461,6 +464,8 @@ public class TableControl extends SWTControl {
 						JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 						JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
+				final EObject modelElement = getModelElementContext().getModelElement();
+
 				new ECPDialogExecutor(dialog) {
 
 					@Override
@@ -469,18 +474,32 @@ public class TableControl extends SWTControl {
 							return;
 						}
 
-						EObject modelElement = getModelElementContext().getModelElement();
 						EditingDomain editingDomain = getModelElementContext().getEditingDomain();
 						editingDomain.getCommandStack().execute(
 							RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
 					}
 				}.execute();
+
+				List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+				if (containments.size() < getStructuralFeature().getUpperBound()) {
+					addButton.setEnabled(true);
+				}
+				if (containments.size() <= getStructuralFeature().getLowerBound()) {
+					removeButton.setEnabled(false);
+				}
 			}
 		});
+		EObject modelElement = getModelElementContext().getModelElement();
+		List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+		if (containments.size() <= getStructuralFeature().getLowerBound()) {
+			removeButton.setEnabled(false);
+		}
 	}
 
+	private Button addButton;
+
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
-		Button addButton = new Button(buttonComposite, SWT.None);
+		addButton = new Button(buttonComposite, SWT.None);
 		Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		addButton.setImage(image);
 		addButton.setToolTipText("Add an instance of " + clazz.getInstanceClass().getSimpleName());
@@ -492,8 +511,24 @@ public class TableControl extends SWTControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				addRow(clazz);
+				EObject modelElement = getModelElementContext().getModelElement();
+				List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+				if (getStructuralFeature().getUpperBound() != -1
+					&& containments.size() == getStructuralFeature().getUpperBound()) {
+					addButton.setEnabled(false);
+				}
+				if (containments.size() > getStructuralFeature().getLowerBound()) {
+					removeButton.setEnabled(true);
+				}
 			}
 		});
+
+		EObject modelElement = getModelElementContext().getModelElement();
+		List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+		if (getStructuralFeature().getUpperBound() != -1
+			&& containments.size() >= getStructuralFeature().getUpperBound()) {
+			addButton.setEnabled(false);
+		}
 	}
 
 	@Override

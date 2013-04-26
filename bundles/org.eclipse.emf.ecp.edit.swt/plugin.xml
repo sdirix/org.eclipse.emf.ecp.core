@@ -88,6 +88,11 @@
                singleValue="false"
                supportedClassType="org.eclipse.emf.ecore.EObject">
          </staticTest>
+         <staticTest
+               priority="1"
+               singleValue="false"
+               supportedClassType="java.util.Map$Entry">
+         </staticTest>
       </control>
       <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.XmlDateControl"
