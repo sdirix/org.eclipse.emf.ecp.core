@@ -90,7 +90,7 @@ public class OpenGraphitiEditorHandler extends AbstractHandler {
 			context.setTargetContainer(createDiagram);
 			
 				if(!loadExisting)
-				editor.executeFeature(
+				editor.getDiagramBehavior().executeFeature(
 						new LoadProjectFeature(dtp.getFeatureProvider(),
 								selectedProject), context);
 			

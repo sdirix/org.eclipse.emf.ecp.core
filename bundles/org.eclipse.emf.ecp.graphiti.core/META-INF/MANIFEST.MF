@@ -5,8 +5,8 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.graphiti.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.graphiti.Activator
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.graphiti;bundle-version="0.9.1",
- org.eclipse.graphiti.ui;bundle-version="0.9.1";visibility:=reexport,
+ org.eclipse.graphiti;bundle-version="0.10.0",
+ org.eclipse.graphiti.ui;bundle-version="0.10.0";visibility:=reexport,
  org.eclipse.gef;bundle-version="3.8.1";visibility:=reexport,
  org.eclipse.emf.transaction;bundle-version="1.4.0"
 Bundle-ActivationPolicy: lazy
