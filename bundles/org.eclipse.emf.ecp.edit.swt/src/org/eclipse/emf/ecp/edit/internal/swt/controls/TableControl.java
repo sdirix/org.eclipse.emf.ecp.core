@@ -569,44 +569,51 @@ public class TableControl extends SWTControl {
 		EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
 		EditingDomain editingDomain = getModelElementContext().getEditingDomain();
-		if (tableViewer.getSelection() == null) {
-			editingDomain.getCommandStack().execute(
-				AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
-		} else {
-			editingDomain.getCommandStack().execute(
-				AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance, tableViewer.getTable()
-					.getSelectionIndex()));
-		}
+		editingDomain.getCommandStack().execute(
+			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
 
 	}
 
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
-		private static final int DESCENDING = 1;
-		private int direction = DESCENDING;
+		private static final int NONE = 0;
+		private int direction = NONE;
 
 		public ECPTableViewerComparator() {
 			propertyIndex = 0;
-			direction = DESCENDING;
+			direction = NONE;
 		}
 
 		public int getDirection() {
-			return direction == 1 ? SWT.DOWN : SWT.UP;
+			switch (direction) {
+			case 0:
+				return SWT.NONE;
+			case 1:
+				return SWT.UP;
+			case 2:
+				return SWT.DOWN;
+			default:
+				return SWT.NONE;
+			}
+
 		}
 
 		public void setColumn(int column) {
 			if (column == propertyIndex) {
 				// Same column as last sort; toggle the direction
-				direction = 1 - direction;
+				direction = (direction + 1) % 3;
 			} else {
 				// New column; do an ascending sort
 				propertyIndex = column;
-				direction = DESCENDING;
+				direction = 1;
 			}
 		}
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
+			if (direction == 0) {
+				return 0;
+			}
 			int rc = 0;
 			EObject object1 = (EObject) e1;
 			EObject object2 = (EObject) e2;
@@ -624,7 +631,7 @@ public class TableControl extends SWTControl {
 				rc = value1.toString().compareTo(value2.toString());
 			}
 			// If descending order, flip the direction
-			if (direction == DESCENDING) {
+			if (direction == 2) {
 				rc = -rc;
 			}
 			return rc;

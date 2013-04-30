@@ -40,8 +40,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
-import java.util.Arrays;
-
 /**
  * This class defines a SWTCOntrol which is an abstract class defining an {@link AbstractControl} for SWT.
  * 
@@ -131,7 +129,9 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 				}
 
 			});
-			Control[] tabList = Arrays.copyOfRange(composite.getTabList(), 0, composite.getTabList().length - 1);
+			// Control[] tabList = Arrays.copyOfRange(composite.getTabList(), 0, composite.getTabList().length - 1);
+			Control[] tabList = new Control[composite.getTabList().length - 1];
+			System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
 			composite.setTabList(tabList);
 		}
 		return composite;
