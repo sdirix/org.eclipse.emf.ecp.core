@@ -119,21 +119,37 @@ public class TableControl extends SWTControl {
 
 		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
-		Label label = new Label(parent, SWT.NONE);
-		label.setText(getItemPropertyDescriptor().getDisplayName(null));
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(label);
+		Composite titleComposite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).align(SWT.FILL, SWT.BEGINNING)
+			.applyTo(titleComposite);
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
-		Composite parentComposite = new Composite(parent, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(parentComposite);
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(parentComposite);
+		Label label = new Label(titleComposite, SWT.NONE);
+		label.setText(getItemPropertyDescriptor().getDisplayName(null));
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		// VALIDATION
-		validationLabel = new Label(parentComposite, SWT.NONE);
+		validationLabel = new Label(titleComposite, SWT.NONE);
 		// set the size of the label to the size of the image
 		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 
-		Composite controlComposite = new Composite(parentComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(controlComposite);
+		// addButtons
+		Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+		int numButtons = 2;
+
+		createAddRowButton(clazz, buttonComposite);
+		createRemoveRowButton(clazz, buttonComposite);
+		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			unsetButton = new Button(buttonComposite, SWT.PUSH);
+			unsetButton.setToolTipText(getUnsetButtonTooltip());
+			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			numButtons++;
+		}
+		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
+
+		Composite controlComposite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).span(2, 1).align(SWT.FILL, SWT.FILL).applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 
 		// delegate to super class
@@ -149,27 +165,9 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected void fillControlComposite(Composite parent) {
-		Composite parentComposite = new Composite(parent, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(parentComposite);
-		GridLayoutFactory.fillDefaults().spacing(2, 0).numColumns(2).applyTo(parentComposite);
-
-		Composite buttonComposite = new Composite(parentComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
-		int numButtons = 2;
-
-		createAddRowButton(clazz, buttonComposite);
-		createRemoveRowButton(clazz, buttonComposite);
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
-			unsetButton = new Button(buttonComposite, SWT.PUSH);
-			unsetButton.setToolTipText(getUnsetButtonTooltip());
-			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
-			numButtons++;
-		}
-		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
-		final Composite composite = new Composite(parentComposite, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
 		// composite.setLayout(new FillLayout());
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200).span(3, 1)
-			.applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200).applyTo(composite);
 
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, SWT.DEFAULT)
