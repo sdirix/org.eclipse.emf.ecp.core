@@ -213,7 +213,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	}
 
 	private void createAttributes(Composite column, List<IItemPropertyDescriptor> attributes) {
-		Composite attributeComposite = new Composite(column, SWT.TRANSPARENT);
+		Composite attributeComposite = new Composite(column, SWT.NONE);
 		attributeComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(attributeComposite);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)

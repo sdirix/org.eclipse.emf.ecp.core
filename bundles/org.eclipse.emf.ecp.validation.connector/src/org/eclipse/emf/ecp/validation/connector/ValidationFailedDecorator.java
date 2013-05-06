@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 
@@ -26,7 +27,7 @@ import org.eclipse.jface.viewers.LabelProvider;
  * @author Eugen Neufeld
  * @author emueller
  */
-public class ValidationFailedDecorator extends LabelProvider implements ILightweightLabelDecorator {
+public class ValidationFailedDecorator  implements ILightweightLabelDecorator {
 
 	/**
 	 * {@inheritDoc}
@@ -72,6 +73,21 @@ public class ValidationFailedDecorator extends LabelProvider implements ILightwe
 			break;
 		}
 
+	}
+	/** {@inheritDoc} */
+	public void addListener(ILabelProviderListener listener) {
+		
+	}
+	/** {@inheritDoc} */
+	public void dispose() {
+		
+	}
+	/** {@inheritDoc} */
+	public boolean isLabelProperty(Object element, String property) {
+		return false;
+	}
+	/** {@inheritDoc} */
+	public void removeListener(ILabelProviderListener listener) {
 	}
 
 }
