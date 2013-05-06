@@ -13,6 +13,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -75,15 +76,6 @@ public class XmlDateControl extends SingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "A XMLGregorianDate control showing a date. The format is DD.MM.YYYY";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
 	 */
 	@Override
@@ -99,6 +91,15 @@ public class XmlDateControl extends SingleControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset date";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlForTooltip()
+	 */
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { dateWidget };
 	}
 
 }

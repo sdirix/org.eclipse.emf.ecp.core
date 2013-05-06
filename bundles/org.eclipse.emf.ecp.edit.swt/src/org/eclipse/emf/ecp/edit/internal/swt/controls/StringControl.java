@@ -76,15 +76,6 @@ public class StringControl extends AbstractTextControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is a free text control.";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
 	 */
 	@Override

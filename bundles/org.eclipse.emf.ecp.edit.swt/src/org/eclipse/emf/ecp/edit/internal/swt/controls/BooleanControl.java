@@ -22,6 +22,7 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * This class defines a BooleanControl which is used for displaying {@link EStructuralFeature}s which have a Boolean
@@ -73,15 +74,6 @@ public class BooleanControl extends SingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is a boolean field";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
 	 */
 	@Override
@@ -97,5 +89,14 @@ public class BooleanControl extends SingleControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset boolean";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlForTooltip()
+	 */
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { check };
 	}
 }

@@ -57,7 +57,11 @@ public abstract class SingleControl extends SWTControl {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
 			Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
 			validationLabel.setImage(image);
-			validationLabel.setToolTipText(diagnostic.getMessage());
+			Diagnostic reason = diagnostic;
+			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+				reason = diagnostic.getChildren().get(0);
+			}
+			validationLabel.setToolTipText(reason.getMessage());
 			updateValidationColor(validationLabel.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 		} else {
 			resetValidation();

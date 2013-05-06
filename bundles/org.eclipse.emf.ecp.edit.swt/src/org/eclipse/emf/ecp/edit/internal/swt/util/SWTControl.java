@@ -133,9 +133,22 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 			Control[] tabList = new Control[composite.getTabList().length - 1];
 			System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
 			composite.setTabList(tabList);
+		} else {
+			Control[] controls = getControlsForTooltip();
+			if (controls != null) {
+				for (Control control : controls) {
+					control.setToolTipText(getHelpText());
+				}
+			}
+
 		}
 		return composite;
 	}
+
+	/**
+	 * @return
+	 */
+	protected abstract Control[] getControlsForTooltip();
 
 	/**
 	 * Helper for creating the unset stacklayout and creating the control's composite.
@@ -294,7 +307,9 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	 * 
 	 * @return The help text
 	 */
-	protected abstract String getHelpText();
+	protected String getHelpText() {
+		return getItemPropertyDescriptor().getDescription(null);
+	}
 
 	/**
 	 * Returns the string for the unset label.

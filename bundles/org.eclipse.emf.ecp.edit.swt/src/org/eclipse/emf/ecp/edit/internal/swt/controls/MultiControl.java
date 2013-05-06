@@ -45,6 +45,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import java.lang.reflect.Constructor;
@@ -76,6 +77,7 @@ public abstract class MultiControl extends SWTControl {
 	private ECPSWTAction[] actions;
 
 	private Button unsetButton;
+	private Label tooltipLabel;
 
 	/**
 	 * Constructor for a multi control.
@@ -272,23 +274,26 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void createButtonBar() {
-		Composite buttonComposite = new Composite(mainComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+		Composite toolbarComposite = new Composite(mainComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(toolbarComposite);
 
-		int colNum = actions.length;
+		int colNum = actions.length + 1;
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			colNum++;
 		}
 
-		GridLayoutFactory.fillDefaults().numColumns(colNum).equalWidth(true).applyTo(buttonComposite);
+		GridLayoutFactory.fillDefaults().numColumns(colNum).equalWidth(false).applyTo(toolbarComposite);
+
+		tooltipLabel = new Label(toolbarComposite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(tooltipLabel);
 
 		for (ECPSWTAction action : actions) {
 			action.setEnabled(isEditable());
-			Button button = createButtonForAction(action, buttonComposite);
+			Button button = createButtonForAction(action, toolbarComposite);
 		}
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
-			unsetButton = new Button(buttonComposite, SWT.PUSH);
+			unsetButton = new Button(toolbarComposite, SWT.PUSH);
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		}
@@ -473,6 +478,11 @@ public abstract class MultiControl extends SWTControl {
 		for (ECPSWTAction action : actions) {
 			action.setEnabled(isEditable);
 		}
+	}
+
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { tooltipLabel };
 	}
 
 }

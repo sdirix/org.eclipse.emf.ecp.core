@@ -58,15 +58,6 @@ public class AttributeMultiControl extends MultiControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is an attribute multi control.";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
 	 */
 	@Override

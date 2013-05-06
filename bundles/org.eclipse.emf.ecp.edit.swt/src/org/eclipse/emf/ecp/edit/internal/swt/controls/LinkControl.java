@@ -38,6 +38,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -302,15 +303,6 @@ public class LinkControl extends SingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "A link control pointing to a referenced element.";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
 	 */
 	@Override
@@ -326,5 +318,14 @@ public class LinkControl extends SingleControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset Link";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlForTooltip()
+	 */
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { hyperlink, imageHyperlink };
 	}
 }

@@ -71,6 +71,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -638,15 +639,6 @@ public class TableControl extends SWTControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is a table control";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
 	 */
 	@Override
@@ -661,5 +653,14 @@ public class TableControl extends SWTControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlForTooltip()
+	 */
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { tableViewer.getControl() };
 	}
 }

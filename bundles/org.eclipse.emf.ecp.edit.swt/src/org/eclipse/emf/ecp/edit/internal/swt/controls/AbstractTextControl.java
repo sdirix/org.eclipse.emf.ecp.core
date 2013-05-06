@@ -29,6 +29,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -124,6 +125,11 @@ public abstract class AbstractTextControl extends SingleControl {
 	 */
 	protected int getTextWidgetStyle() {
 		return SWT.SINGLE | SWT.BORDER;
+	}
+
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { text };
 	}
 
 	@Override

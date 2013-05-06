@@ -60,15 +60,6 @@ public class ReferenceMultiControl extends MultiControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is a reference multi control.";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
 	 */
 	@Override

@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a enum
@@ -82,15 +83,6 @@ public class EEnumControl extends SingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is an enum field. You can select a value here.";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
 	 */
 	@Override
@@ -106,6 +98,15 @@ public class EEnumControl extends SingleControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset value";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlForTooltip()
+	 */
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { combo.getControl() };
 	}
 
 }

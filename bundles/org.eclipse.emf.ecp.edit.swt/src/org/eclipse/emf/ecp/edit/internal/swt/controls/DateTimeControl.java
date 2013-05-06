@@ -24,6 +24,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
 /**
@@ -72,11 +73,11 @@ public class DateTimeControl extends SingleControl {
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(2, 0).equalWidth(false).applyTo(composite);
 
-		dateWidget = new DateTime(composite, SWT.DATE);
+		dateWidget = new DateTime(composite, SWT.DATE | SWT.BORDER);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_date");
 
-		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT);
+		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT | SWT.BORDER);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_time");
 	}
@@ -99,15 +100,6 @@ public class DateTimeControl extends SingleControl {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getHelpText()
-	 */
-	@Override
-	protected String getHelpText() {
-		return "This is a date-time control. The date field is DD.MM.YYYY and the time field is mm:hh";
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#getUnsetLabelText()
 	 */
 	@Override
@@ -123,5 +115,14 @@ public class DateTimeControl extends SingleControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset Date";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlForTooltip()
+	 */
+	@Override
+	protected Control[] getControlsForTooltip() {
+		return new Control[] { dateWidget, timeWidget };
 	}
 }
