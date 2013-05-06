@@ -70,7 +70,6 @@ public class XmlDateControl extends SingleControl {
 				return gregorianCalendar.toGregorianCalendar().getTime();
 			}
 		});
-		binding.updateTargetToModel();
 		return binding;
 	}
 

@@ -106,7 +106,16 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
 		setEditable(isEditable());
+
 		binding = bindValue();
+
+		// write initial values to model (if they differ from the default value of the model-element)
+		if (!getStructuralFeature().isUnsettable()
+			&& !getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
+			if (binding != null) {
+				binding.updateTargetToModel();
+			}
+		}
 
 		if (getModelElementContext().isRunningAsWebApplication()) {
 			Button b = new Button(composite, SWT.PUSH);
