@@ -4,28 +4,20 @@
 
    
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            name="RAP Perspective"
-            class="org.eclipse.emf.ecp.rap.Perspective"
-            id="org.eclipse.emf.ecp.rap.perspective">
-      </perspective>
-   </extension>
-   <extension
-         point="org.eclipse.rap.ui.branding">
-      <branding
-            id="org.eclipse.emf.ecp.rap.branding"
-            title="RAP ECP">
-      </branding>
-   </extension>
-   <extension
          point="org.eclipse.rap.ui.entrypoint">
       <entrypoint
-            brandingId="org.eclipse.emf.ecp.rap.branding"
             class="org.eclipse.emf.ecp.rap.Application"
             id="org.eclipse.emf.ecp.rap.entrypoint"
             path="/ecpWeb">
       </entrypoint>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.emf.ecp.rap.Perspective"
+            id="org.eclipse.emf.ecp.rap.perspective"
+            name="RAP Perspective">
+      </perspective>
    </extension>
    <!--
    <extension
