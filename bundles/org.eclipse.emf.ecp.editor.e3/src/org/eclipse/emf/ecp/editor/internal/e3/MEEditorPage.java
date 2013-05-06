@@ -106,6 +106,7 @@ public class MEEditorPage extends FormPage {
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 		FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();
+		form.setShowFocusedControl(true);
 		toolkit.decorateFormHeading(form.getForm());
 		Composite body = form.getBody();
 		body.setLayout(new GridLayout());
@@ -116,6 +117,7 @@ public class MEEditorPage extends FormPage {
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
+
 	}
 
 	/**
