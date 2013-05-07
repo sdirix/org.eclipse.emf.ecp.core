@@ -14,9 +14,14 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Text;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  * This class is used as a common class for all number controls.
@@ -70,5 +75,43 @@ public class NumericalControl extends AbstractTextControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset number";
+	}
+
+	@Override
+	protected void customizeText(Text text) {
+		super.customizeText(text);
+		text.setMessage(getFormatText());
+	}
+
+	private String getFormatText() {
+		Class<?> instanceClass = getStructuralFeature().getEType().getInstanceClass();
+		String formatText = "";
+		if (instanceClass.isPrimitive()) {
+			try {
+				if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+					formatText = "The format is '#'.";
+				} else if (Double.class.getField("TYPE").get(null).equals(instanceClass)) {
+					formatText = "The format is '#.#'.";
+				}
+			} catch (NoSuchFieldException e) {
+				Activator.logException(e);
+			} catch (IllegalArgumentException e) {
+				Activator.logException(e);
+			} catch (IllegalAccessException e) {
+				Activator.logException(e);
+			} catch (SecurityException e) {
+				Activator.logException(e);
+			}
+
+		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
+			formatText = "The format is '#'.";
+		} else if (Integer.class.isAssignableFrom(instanceClass)) {
+			formatText = "The format is '#'.";
+		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
+			formatText = "The format is '#.#'.";
+		} else if (Double.class.isAssignableFrom(instanceClass)) {
+			formatText = "The format is '#.#'.";
+		}
+		return formatText;
 	}
 }

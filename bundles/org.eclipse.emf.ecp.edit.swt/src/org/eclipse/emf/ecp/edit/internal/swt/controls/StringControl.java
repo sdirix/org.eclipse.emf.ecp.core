@@ -18,6 +18,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * The class describing a String control.
@@ -91,5 +92,11 @@ public class StringControl extends AbstractTextControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset text";
+	}
+
+	@Override
+	protected void customizeText(Text text) {
+		super.customizeText(text);
+		text.setMessage(getItemPropertyDescriptor().getDisplayName(null));
 	}
 }
