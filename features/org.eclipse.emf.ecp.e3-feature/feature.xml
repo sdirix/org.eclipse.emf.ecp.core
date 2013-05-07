@@ -2,7 +2,9 @@
 <feature
       id="org.eclipse.emf.ecp.e3"
       label="ECP UI 3.x Feature"
-      version="1.0.0.qualifier">
+      version="1.0.0.qualifier"
+      license-feature="org.eclipse.emf.ecp.license"
+      license-feature-version="1.0.0">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -12,7 +14,7 @@
       [Enter Copyright Description here.]
    </copyright>
 
-   <license url="http://www.example.com/license">
+   <license url="org.eclipse.emf.ecp.license">
       [Enter License Description here.]
    </license>
 
