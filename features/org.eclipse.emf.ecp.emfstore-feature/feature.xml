@@ -19,10 +19,6 @@
       [Enter License Description here.]
    </license>
 
-   <url>
-      <discovery label="EMFStore Update Site 1.0.0" url="http://download.eclipse.org/emf-store/releases/1.0.0"/>
-   </url>
-
    <plugin
          id="org.eclipse.emf.ecp.emfstore.core"
          download-size="0"
