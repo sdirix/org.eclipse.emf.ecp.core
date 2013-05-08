@@ -136,7 +136,7 @@ public class NewReferenceAction extends ECPSWTAction {
 			return;
 		}
 		getModelElementContext().addModelElement(eObject, (EReference) getFeature());
-		getModelElementContext().openEditor(eObject);
+		getModelElementContext().openInNewContext(eObject);
 	}
 
 }

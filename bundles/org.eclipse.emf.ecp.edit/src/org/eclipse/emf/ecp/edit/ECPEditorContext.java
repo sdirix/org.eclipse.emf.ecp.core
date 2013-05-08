@@ -1,46 +1,35 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
-import org.eclipse.emf.ecore.EObject;
+/**
+ * This Context adds methods that are specifically needed by an editor.
+ * @author Eugen Neufeld
+ *
+ */
+public interface ECPEditorContext extends ECPControlContext{
 
-public interface ECPEditorContext {
-
-	/**
-	 * Checks whether the current {@link ECPControlContext} has unsaved changes.
-	 * 
-	 * @return true if there are unsaved changes
-	 */
-	boolean isDirty();
-
-	/**
-	 * Triggers the save of the changes.
-	 */
-	void save();
+	
 	/**
 	 * Called if the context is not used anymore. Use for cleanup.
 	 */
 	void dispose();
-	/**
-	 * Adds a {@link EditModelElementContextListener}.
-	 * 
-	 * @param modelElementContextListener
-	 *            the {@link EditModelElementContextListener}
-	 */
-	void addModelElementContextListener(EditModelElementContextListener modelElementContextListener);
-
-	/**
-	 * Removes a {@link EditModelElementContextListener}.
-	 * 
-	 * @param modelElementContextListener
-	 *            the {@link EditModelElementContextListener}
-	 */
-	void removeModelElementContextListener(EditModelElementContextListener modelElementContextListener);
 	
 	/**
-	 * Returns the {@link EObject} of this {@link ECPControlContext}.
+	 * Adds a {@link ECPContextDisposedListener}.
 	 * 
-	 * @return the {@link EObject} of this context
+	 * @param ecpContextDisposedListener
+	 *            the {@link ECPContextDisposedListener}
 	 */
-	EObject getModelElement();
-	
-	ECPControlContext getECPControlContext();
+	void addECPContextDisposeListener(ECPContextDisposedListener ecpContextDisposedListener);
 }

@@ -241,9 +241,9 @@ public abstract class MultiControl extends SWTControl {
 	@SuppressWarnings({ "unchecked" })
 	private SWTControl getSingleInstance() {
 		try {
-			Constructor<? extends AbstractControl<Composite>> widgetConstructor = (Constructor<? extends AbstractControl<Composite>>) controlDescription
-				.getControlClass().getConstructor(boolean.class, IItemPropertyDescriptor.class,
-					EStructuralFeature.class, ECPControlContext.class, boolean.class);
+			Constructor<? extends AbstractControl> widgetConstructor = controlDescription.getControlClass()
+				.getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
+					ECPControlContext.class, boolean.class);
 			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
 				getStructuralFeature(), getModelElementContext(), true);
 		} catch (IllegalArgumentException ex) {

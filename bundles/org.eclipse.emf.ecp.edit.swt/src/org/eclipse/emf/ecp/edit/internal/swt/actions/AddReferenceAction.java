@@ -90,7 +90,7 @@ public class AddReferenceAction extends ECPSWTAction {
 			return;
 		}
 		getModelElementContext().addModelElement(selectedEObject, (EReference) getFeature());
-		getModelElementContext().openEditor(selectedEObject);
+		getModelElementContext().openInNewContext(selectedEObject);
 
 	}
 

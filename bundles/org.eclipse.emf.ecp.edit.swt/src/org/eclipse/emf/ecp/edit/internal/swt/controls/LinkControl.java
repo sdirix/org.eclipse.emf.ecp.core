@@ -178,7 +178,7 @@ public class LinkControl extends SingleControl {
 	 * @param value
 	 */
 	protected void linkClicked(EObject value) {
-		getModelElementContext().openEditor(value);
+		getModelElementContext().openInNewContext(value);
 	}
 
 	@Override

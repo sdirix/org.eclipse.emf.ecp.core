@@ -23,26 +23,28 @@ import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 public class ControlDescription {
 
 	private final String id;
-	private final Class<? extends AbstractControl<?>> controlClass;
-	private final Class<?> supportedCompositeClass;
+	private final Class<? extends AbstractControl> controlClass;
 	private final boolean showLabel;
 	private final Set<ECPApplicableTester> tester;
 	
 	/**
 	 * The constructor of the ControlDescription.
 	 * @param controlClass the class implementing the control
-	 * @param supportedCompositeClass the composite this class is supporting
 	 * @param showLabel whether to show a label for this control or not
 	 * @param tester the class testing whether the control is applicable for the current feature of the current eobject
+	 * @param id the id of the control that is being described
 	 */
-	public ControlDescription(String id,Class<? extends AbstractControl<?>> controlClass, Class<?> supportedCompositeClass, boolean showLabel, Set<ECPApplicableTester> tester) {
+	public ControlDescription(String id,Class<? extends AbstractControl> controlClass, boolean showLabel, Set<ECPApplicableTester> tester) {
 		super();
 		this.id=id;
 		this.controlClass = controlClass;
-		this.supportedCompositeClass=supportedCompositeClass;
 		this.showLabel=showLabel;
 		this.tester=tester;
 	}
+	/**
+	 * The id of this control.
+	 * @return the id of the control
+	 */
 	public String getId() {
 		return id;
 	}
@@ -50,15 +52,8 @@ public class ControlDescription {
 	 * The class implementing the Control. It extends the {@link AbstractControl}.
 	 * @return the class implementing this control
 	 */
-	public Class<? extends AbstractControl<?>> getControlClass() {
+	public Class<? extends AbstractControl> getControlClass() {
 		return controlClass;
-	}
-	/**
-	 * The class of the supported composite. For SWT this is for example the org.eclipse.swt.Composite class.
-	 * @return the class of the composite
-	 */
-	public Class<?> getSupportedCompositeClass() {
-		return supportedCompositeClass;
 	}
 	/**
 	 * Whether to show a label for this control or not.

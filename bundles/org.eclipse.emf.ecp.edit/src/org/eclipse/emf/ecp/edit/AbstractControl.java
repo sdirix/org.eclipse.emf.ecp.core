@@ -19,13 +19,10 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * The {@link AbstractControl} is the abstract class describing a control.
  * This class provides the necessary common access methods.
  * 
- * @param <COMPOSITE> this binds the composite to a specific rendering engine. e.g. for SWT this would be a
- *            {@link org.eclipse.swt.widgets.Composite}
- * 
  * @author Eugen Neufeld
  * 
  */
-public abstract class AbstractControl<COMPOSITE> {
+public abstract class AbstractControl {
 
 	private final ECPControlContext modelElementContext;
 	private final IItemPropertyDescriptor itemPropertyDescriptor;
@@ -77,16 +74,6 @@ public abstract class AbstractControl<COMPOSITE> {
 	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
 		return itemPropertyDescriptor;
 	}
-
-	/**
-	 * This method triggers the creation of the control.
-	 * 
-	 * @param parent the container to create the control onto
-	 * @return the composite this control was rendered onto
-	 */
-	public abstract COMPOSITE createControl(COMPOSITE parent);
-
-
 
 	/**
 	 * Whether this control should be editable.

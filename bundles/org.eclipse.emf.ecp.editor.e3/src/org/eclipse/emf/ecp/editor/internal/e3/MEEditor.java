@@ -11,9 +11,8 @@
 package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
-import org.eclipse.emf.ecp.edit.EditModelElementContextListener;
 import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
@@ -58,7 +57,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private ECPEditorContext modelElementContext;
 
-	private EditModelElementContextListener modelElementContextListener;
+	private ECPContextDisposedListener modelElementContextListener;
 
 	private MEEditorInput meInput;
 
@@ -97,7 +96,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 				try {
 					newPage = (AbstractMEEditorPage) configTemp[i].createExecutableExtension("class");
-					FormPage createPage = newPage.createPage(this, modelElementContext.getECPControlContext());
+					FormPage createPage = newPage.createPage(this, modelElementContext);
 					if (createPage != null) {
 						addPage(createPage);
 					}
@@ -125,10 +124,10 @@ public class MEEditor extends SharedHeaderFormEditor {
 		if (!replaceMEEditor) {
 			try {
 				if (editorInput.getProblemFeature() != null) {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext.getECPControlContext(),
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
 						modelElementContext.getModelElement(), editorInput.getProblemFeature());
 				} else {
-					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext.getECPControlContext(),
+					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
 						modelElementContext.getModelElement());
 				}
 
@@ -145,7 +144,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 		for (IConfigurationElement e : config) {
 			try {
 				AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class");
-				FormPage createPage = newPage.createPage(this, modelElementContext.getECPControlContext());
+				FormPage createPage = newPage.createPage(this, modelElementContext);
 				if (createPage != null) {
 					addPage(createPage);
 				}
@@ -165,7 +164,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		modelElementContext.save();
 		firePropertyChange(IEditorPart.PROP_DIRTY);
 	}
 
@@ -202,20 +200,14 @@ public class MEEditor extends SharedHeaderFormEditor {
 			setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
 			setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 
-			modelElementContextListener = new EditModelElementContextListener() {
+			modelElementContextListener = new ECPContextDisposedListener() {
 
-				public void onModelElementDeleted(EObject deleted) {
-					if (modelElementContext.getModelElement().equals(deleted)) {
-						close(false);
-					}
+				public void contextDisposed() {
+					close(false);
 				}
 
-				public void onContextDeleted() {
-					onModelElementDeleted(modelElementContext.getModelElement());
-
-				}
 			};
-			modelElementContext.addModelElementContextListener(modelElementContextListener);
+			modelElementContext.addECPContextDisposeListener(modelElementContextListener);
 			modelElementChangeListener = new ModelElementChangeListener(modelElementContext.getModelElement()) {
 
 				@Override
@@ -286,7 +278,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	@Override
 	public boolean isDirty() {
-		return modelElementContext.isDirty();
+		return false;
 	}
 
 	/**
@@ -309,7 +301,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 	@Override
 	public void dispose() {
 		modelElementChangeListener.remove();
-		modelElementContext.removeModelElementContextListener(modelElementContextListener);
 		modelElementContext.dispose();
 		meInput.dispose();
 		// ((MEEditorInput) getEditorInput()).getLabelProvider().removeListener(labelProviderListener);

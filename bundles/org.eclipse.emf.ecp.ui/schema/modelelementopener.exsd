@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.ecp.ui" id="modelelementopener" name="Open Handler for Modelelements"/>
       </appinfo>
       <documentation>
-         A model element opener is responsible to handle the double click action in the navigator on a model element.
+         A model element opener is used to open model elements with a specific editor. You have to add a tester to determine the model element for which this opener applies.
       </documentation>
    </annotation>
 
@@ -53,17 +53,10 @@
             <element ref="dynamicTester"/>
             <element ref="staticTester"/>
          </choice>
-         <attribute name="name" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The class implementing the model element opener.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ECPModelElementOpener"/>
@@ -83,7 +76,7 @@
          <attribute name="priority" use="required">
             <annotation>
                <documentation>
-                  
+                  The model element opener which tester returns the highest priority will be use to open the model element.
                </documentation>
             </annotation>
             <simpleType>
@@ -114,7 +107,7 @@
          <attribute name="modelElement" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The EObject for which the registered opener is valid.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecore.EObject"/>
@@ -127,14 +120,14 @@
    <element name="dynamicTester">
       <annotation>
          <documentation>
-            Use a dynamicTester to be able to decide on more then the EObejct class which editor to open.
+            Use a dynamicTester to be able to decide on more then the EObject class which editor to open.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="tester" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The model element opener which tester returns the highest priority will be use to open the model element.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.ui.util.ECPModelElementOpenTester"/>
@@ -149,28 +142,12 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         0.4
+         1.0
       </documentation>
    </annotation>
 
 
-   <annotation>
-      <appinfo>
-         <meta.section type="apiinfo"/>
-      </appinfo>
-      <documentation>
-         [Enter API information here.]
-      </documentation>
-   </annotation>
 
-   <annotation>
-      <appinfo>
-         <meta.section type="implementation"/>
-      </appinfo>
-      <documentation>
-         [Enter information about supplied implementation of this extension point.]
-      </documentation>
-   </annotation>
 
 
 </schema>

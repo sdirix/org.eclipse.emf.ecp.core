@@ -33,25 +33,24 @@ public interface ControlFactory {
 	 * Creates an {@link AbstractControl} from the provided {@link IItemPropertyDescriptor} and the
 	 * {@link ECPControlContext}.
 	 * 
-	 * @param <T> the Type of the composite where we want to add the control onto
-	 * @param parent the Composite the control will be added to
+	 * @param <T> the type of the control to create
+	 * @param controlTypeClass the class of the control to create
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param context the {@link ECPControlContext}
 	 * @return the created {@link AbstractControl} or null if nothing fitting could be created
 	 */
-	<T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
+	<T extends AbstractControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context);
 	/**
 	 * Creates an {@link AbstractControl} based on a provided id.
 	 * 
-	 * @param <T> the Type of the composite where we want to add the control onto
-	 * @param parent the Composite the control will be added to
+	 * @param <T> the type of the control to create
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param context the {@link ECPControlContext}
 	 * @param controlId the id of the control to create
 	 * @return the created {@link AbstractControl} or null if id is unknown
 	 */
-	<T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
+	<T extends AbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context,String controlId);
 	/**
 	 * A copy of all known {@link ControlDescription}.

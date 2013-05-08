@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,26 +12,16 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
- * Listens to the changes of a context. notify ui provider to close
+ * Listens to the changes of a context. 
  * 
  * @author Eugen Neufeld
- * @author helming
  */
-public interface EditModelElementContextListener {
-
+public interface ECPContextDisposedListener {
 	/**
-	 * Called if a model element is deleted. Is only called for the root node if
-	 * a tree of model elements is deleted.
-	 * @param deleted the {@link EObject} that was deleted
+	 * Called when the context is disposed. 
 	 */
-	void onModelElementDeleted(EObject deleted);
-
-	/**
-	 * Call if the context gets deleted.
-	 */
-	void onContextDeleted();
+	void contextDisposed();
 
 }

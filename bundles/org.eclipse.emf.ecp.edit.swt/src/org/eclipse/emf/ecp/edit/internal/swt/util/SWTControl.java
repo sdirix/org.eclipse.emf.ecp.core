@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTControl extends AbstractControl<Composite> {
+public abstract class SWTControl extends AbstractControl {
 
 	/**
 	 * RAP theming variable to set.
@@ -83,7 +83,6 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
 	 */
-	@Override
 	public Composite createControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		int numColumns = 2;

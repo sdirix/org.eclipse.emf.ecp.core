@@ -76,7 +76,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	}
 
 	/** {@inheritDoc} */
-	public void openEditor(EObject o) {
+	public void openInNewContext(EObject o) {
 		// TODO only elements of the same project?
 		ECPHandlerHelper.openModelElement(o, ecpProject);
 	}

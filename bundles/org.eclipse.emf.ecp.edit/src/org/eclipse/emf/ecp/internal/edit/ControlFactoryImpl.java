@@ -44,7 +44,6 @@ public final class ControlFactoryImpl implements ControlFactory{
 	
 	private static final String CLASS_ATTRIBUTE = "class";//$NON-NLS-1$
 	private static final String CONTROL_ID = "id";//$NON-NLS-1$
-	private static final String COMPOSITE_CLASS_ATTRIBUTE = "supportedCompositeClass";//$NON-NLS-1$
 	private static final String LABEL_ATTRIBUTE = "showLabel";//$NON-NLS-1$
 	
 	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
@@ -75,9 +74,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 			try {
 				String id=e.getAttribute(CONTROL_ID);
 				String clazz = e.getAttribute(CLASS_ATTRIBUTE);
-				Class<? extends AbstractControl<?>> resolvedClass = loadClass(e.getContributor().getName(), clazz);
-				String compositeClazz = e.getAttribute(COMPOSITE_CLASS_ATTRIBUTE);
-				Class<?> resolvedCompositeClass = loadClass(e.getContributor().getName(), compositeClazz);
+				Class<? extends AbstractControl> resolvedClass = loadClass(e.getContributor().getName(), clazz);
 				boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
 				
 //				ECPApplicableTester tester=null;
@@ -104,7 +101,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 						tester.add(new StaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature));
 					}
 				}
-				ControlDescription controlDescription = new ControlDescription(id,resolvedClass,resolvedCompositeClass,showLabel,tester);
+				ControlDescription controlDescription = new ControlDescription(id,resolvedClass,showLabel,tester);
 				controlDescriptors.add(controlDescription);
 			} catch (ClassNotFoundException e1) {
 				Activator.logException(e1);
@@ -129,14 +126,14 @@ public final class ControlFactoryImpl implements ControlFactory{
 	/**
 	 * {@inheritDoc}
 	 */
-	public <T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
+	public <T extends AbstractControl> T createControl(Class<T> controlType, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context) {
 
-		ControlDescription controlDescription = getControlCandidate(parent.getClass(),itemPropertyDescriptor, context.getModelElement());
+		ControlDescription controlDescription = getControlCandidate(controlType,itemPropertyDescriptor, context.getModelElement());
 		if(controlDescription==null){
 			return null;
 		}
-		AbstractControl<T> control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
+		T control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
 
 		
 		return control;
@@ -144,7 +141,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	/**
 	 * {@inheritDoc}
 	 */
-	public <T> AbstractControl<T> createControl(T parent, IItemPropertyDescriptor itemPropertyDescriptor,
+	public <T extends AbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId) {
 		
 		ControlDescription controlDescription = null;
@@ -157,7 +154,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 		if(controlDescription==null){
 			return null;
 		}
-		AbstractControl<T> control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
+		T control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
 
 		
 		return control;
@@ -171,13 +168,13 @@ public final class ControlFactoryImpl implements ControlFactory{
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T> AbstractControl<T> getControlInstance(ControlDescription controlDescription,
+	private static <T extends AbstractControl> T getControlInstance(ControlDescription controlDescription,
 		IItemPropertyDescriptor itemPropertyDescriptor,  ECPControlContext modelElementContext) {
 		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement());
 		try {
-			Constructor<? extends AbstractControl<?>> controlConstructor = controlDescription.getControlClass().getConstructor(boolean.class,
+			Constructor<? extends AbstractControl> controlConstructor = controlDescription.getControlClass().getConstructor(boolean.class,
 				IItemPropertyDescriptor.class, EStructuralFeature.class, ECPControlContext.class,boolean.class);
-			return (AbstractControl<T>) controlConstructor.newInstance(controlDescription.isShowLabel(),itemPropertyDescriptor, feature, modelElementContext,false);
+			return (T) controlConstructor.newInstance(controlDescription.isShowLabel(),itemPropertyDescriptor, feature, modelElementContext,false);
 		} catch (IllegalArgumentException ex) {
 			Activator.logException(ex);
 		} catch (InstantiationException ex) {
@@ -194,13 +191,13 @@ public final class ControlFactoryImpl implements ControlFactory{
 		return null;
 	}
 
-	private ControlDescription getControlCandidate(Class<?> compositeClass,IItemPropertyDescriptor itemPropertyDescriptor,
+	private ControlDescription getControlCandidate(Class<?> controlClass,IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject modelElement) {
 		int highestPriority = -1;
 		ControlDescription bestCandidate = null;
 		for (ControlDescription description : controlDescriptors) {
 			
-			if(!description.getSupportedCompositeClass().isAssignableFrom(compositeClass)){
+			if(!controlClass.isAssignableFrom(description.getControlClass())){
 				continue;
 			}
 			int currentPriority=-1;

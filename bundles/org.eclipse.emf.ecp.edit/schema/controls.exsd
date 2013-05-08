@@ -76,17 +76,6 @@ Controls are used to render features of an EObejct in the editor or some other v
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="supportedCompositeClass" type="string" use="required">
-            <annotation>
-               <documentation>
-                  The type of the composite this control can be rendered onto. 
-For SWT this is org.eclipse.swt.Composite.
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="java" basedOn="java.lang.Object:"/>
-               </appinfo>
-            </annotation>
-         </attribute>
          <attribute name="showLabel" type="boolean" use="default" value="true">
             <annotation>
                <documentation>
