@@ -212,7 +212,7 @@ public abstract class AbstractTextControl extends SingleControl {
 				if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
 					return null;
 				}
-				Object result = getStructuralFeature().getDefaultValue();
+				Object result = getModelValue().getValue();
 
 				MessageDialog messageDialog = new MessageDialog(text.getShell(), "Invalid Number", null,
 					"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
@@ -231,7 +231,7 @@ public abstract class AbstractTextControl extends SingleControl {
 				} else {
 					text.setText(result.toString());
 				}
-				if (getStructuralFeature().isUnsettable()) {
+				if (getStructuralFeature().isUnsettable() && result == null) {
 					showUnsetLabel();
 					return SetCommand.UNSET_VALUE;
 				}
