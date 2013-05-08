@@ -216,8 +216,7 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
 								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
 
-					sl.topControl = unsetLabel;
-					parentComposite.layout();
+					showUnsetLabel();
 				}
 			});
 		}
@@ -229,6 +228,14 @@ public abstract class SWTControl extends AbstractControl<Composite> {
 			sl.topControl = unsetLabel;
 		}
 
+		parentComposite.layout();
+	}
+
+	/**
+	 * 
+	 */
+	protected void showUnsetLabel() {
+		sl.topControl = unsetLabel;
 		parentComposite.layout();
 	}
 

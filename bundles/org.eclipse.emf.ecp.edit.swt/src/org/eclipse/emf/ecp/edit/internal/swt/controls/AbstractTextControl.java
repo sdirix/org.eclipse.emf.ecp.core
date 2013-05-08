@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.Binding;
@@ -22,9 +24,12 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -204,10 +209,33 @@ public abstract class AbstractTextControl extends SingleControl {
 				}
 				return super.convert(value);
 			} catch (NumberFormatException e) {
-				controlDecoration.show();
-				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
-				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
-				throw e;
+				if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
+					return null;
+				}
+				Object result = getStructuralFeature().getDefaultValue();
+
+				MessageDialog messageDialog = new MessageDialog(text.getShell(), "Invalid Number", null,
+					"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
+					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+				new ECPDialogExecutor(messageDialog) {
+
+					@Override
+					public void handleResult(int codeResult) {
+
+					}
+				}.execute();
+
+				if (result == null) {
+					text.setText("");
+				} else {
+					text.setText(result.toString());
+				}
+				if (getStructuralFeature().isUnsettable()) {
+					showUnsetLabel();
+					return SetCommand.UNSET_VALUE;
+				}
+				return result;
 			} catch (IllegalArgumentException e) {
 				controlDecoration.show();
 				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
