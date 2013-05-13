@@ -238,7 +238,6 @@ public abstract class MultiControl extends SWTControl {
 	 * 
 	 * @return the created {@link SWTControl}
 	 */
-	@SuppressWarnings({ "unchecked" })
 	private SWTControl getSingleInstance() {
 		try {
 			Constructor<? extends AbstractControl> widgetConstructor = controlDescription.getControlClass()
@@ -289,7 +288,7 @@ public abstract class MultiControl extends SWTControl {
 
 		for (ECPSWTAction action : actions) {
 			action.setEnabled(isEditable());
-			Button button = createButtonForAction(action, toolbarComposite);
+			createButtonForAction(action, toolbarComposite);
 		}
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {

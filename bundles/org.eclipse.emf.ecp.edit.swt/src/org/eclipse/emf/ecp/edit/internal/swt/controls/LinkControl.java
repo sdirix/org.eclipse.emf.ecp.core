@@ -175,7 +175,10 @@ public class LinkControl extends SingleControl {
 	}
 
 	/**
-	 * @param value
+	 * This code is called whenever the link of the link widget is clicked. You can overwrite this to change the
+	 * behavior.
+	 * 
+	 * @param value the EObject that is linked
 	 */
 	protected void linkClicked(EObject value) {
 		getModelElementContext().openInNewContext(value);

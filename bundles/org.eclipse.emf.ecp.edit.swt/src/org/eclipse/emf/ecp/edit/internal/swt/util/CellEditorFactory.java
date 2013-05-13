@@ -1,22 +1,35 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
+
+import org.osgi.framework.Bundle;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
-import org.osgi.framework.Bundle;
 
 public final class CellEditorFactory {
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.swt.celleditor"; //$NON-NLS-1$
@@ -79,7 +92,7 @@ public final class CellEditorFactory {
 				Constructor<? extends CellEditor> constructor = bestCandidate.getCellEditorClass().getConstructor(
 					Composite.class);
 				result = constructor.newInstance(table);
-				ECPCellEditor ecpCellEditor=(ECPCellEditor)result;
+				ECPCellEditor ecpCellEditor = (ECPCellEditor) result;
 				ecpCellEditor.instantiate(propertyDescriptor);
 			} catch (SecurityException e) {
 				Activator.logException(e);
@@ -93,7 +106,7 @@ public final class CellEditorFactory {
 				Activator.logException(e);
 			} catch (InvocationTargetException e) {
 				Activator.logException(e);
-			}catch(ClassCastException e){
+			} catch (ClassCastException e) {
 				Activator.logException(e);
 			}
 		}
