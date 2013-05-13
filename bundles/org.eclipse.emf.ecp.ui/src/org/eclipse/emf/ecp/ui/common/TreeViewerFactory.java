@@ -102,7 +102,7 @@ public final class TreeViewerFactory {
 		ECPDropAdapter dropAdapter = null;
 		// read extensionpoint, if no defined take default
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-			"org.eclipse.emf.ecp.ui.dropadapter");
+			"org.eclipse.emf.ecp.ui.dropAdapter");
 		for (IExtension extension : extensionPoint.getExtensions()) {
 			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
