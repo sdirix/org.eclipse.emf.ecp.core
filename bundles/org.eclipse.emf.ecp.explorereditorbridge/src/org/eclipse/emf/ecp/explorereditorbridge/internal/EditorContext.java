@@ -43,8 +43,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedObserver,
 		ECPProjectOpenClosedObserver, ECPProjectObjectsChangedObserver {
 		/** {@inheritDoc} */
-		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)
-			throws Exception {
+		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 			// TODO Auto-generated method stub
 			if (!newProjects.contains(ecpProject)) {
 				for (ECPContextDisposedListener contextListener : contextListeners) {
@@ -55,7 +54,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		}
 
 		/** {@inheritDoc} */
-		public void projectChanged(ECPProject project, boolean opened) throws Exception {
+		public void projectChanged(ECPProject project, boolean opened) {
 			if (!opened) {
 				for (ECPContextDisposedListener contextListener : contextListeners) {
 					contextListener.contextDisposed();
@@ -65,7 +64,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		}
 
 		/** {@inheritDoc} */
-		public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
+		public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself
