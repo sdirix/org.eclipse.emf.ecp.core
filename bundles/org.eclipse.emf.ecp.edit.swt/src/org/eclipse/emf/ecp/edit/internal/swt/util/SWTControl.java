@@ -184,6 +184,9 @@ public abstract class SWTControl extends AbstractControl {
 				parentComposite.layout(true);
 				if (binding != null) {
 					binding.updateTargetToModel();
+				} else {
+					Object currentUnsetValue = getModelElementContext().getModelElement().eGet(getStructuralFeature());
+					getModelElementContext().getModelElement().eSet(getStructuralFeature(), currentUnsetValue);
 				}
 			}
 

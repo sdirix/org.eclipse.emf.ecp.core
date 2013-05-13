@@ -239,7 +239,8 @@ public class LinkControl extends SingleControl {
 				return getImage(value);
 			}
 		});
-		return binding;
+
+		return null;
 	}
 
 	protected Object getImage(Object value) {
