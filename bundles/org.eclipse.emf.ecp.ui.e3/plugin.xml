@@ -108,6 +108,11 @@
                               value="org.eclipse.emf.ecp.core.util.ECPDeletable">
                         </instanceof>
                      </and>
+                     <test
+                           args="org.eclipse.emf.ecp.ui.delete"
+                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </with>
             </visibleWhen>
@@ -141,6 +146,19 @@
                icon="icons/checkout_project_old.gif"
                label="%CreateNewProject"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <test
+                           args="org.eclipse.emf.ecp.ui.project.createProject"
+                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           value="true">
+                     </test>
+                  </iterate>
+               </with>
+            </visibleWhen>
          </command>
          <separator
                name="common"
@@ -247,6 +265,11 @@
                      <instanceof
                            value="org.eclipse.emf.ecore.EObject">
                      </instanceof>
+                     <test
+                           args="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
+                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </with>
             </visibleWhen>
