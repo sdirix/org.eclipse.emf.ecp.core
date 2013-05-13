@@ -69,7 +69,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		load();
 	}
 
-	protected void load() throws IOException {
+	protected void load() {
 		// TODO Trace properly
 		System.out.println("Loading " + getClass().getSimpleName() + " from " + folder.getAbsolutePath());
 
@@ -102,7 +102,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 						}
 					}
 				}
-			} catch (Exception ex) {
+			} catch (IOException ex) {
 				Activator.log(ex);
 			}
 		}

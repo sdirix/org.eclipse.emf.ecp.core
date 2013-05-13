@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsPreChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsPreChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
@@ -204,8 +204,8 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	public void notifyObjectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 
 		try {
-			Collection<Object> affected = ECPObserverBus.getInstance().notify(ECPProjectObjectsPreChangedObserver.class)
-				.objectsChanged(project, objects);
+			Collection<Object> affected = ECPObserverBus.getInstance()
+				.notify(ECPProjectObjectsPreChangedObserver.class).objectsChanged(project, objects);
 			Set<Object> toUpdate = new HashSet<Object>(objects);
 			if (affected != null) {
 				toUpdate.addAll(affected);
@@ -218,8 +218,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
-	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories)
-		throws Exception {
+	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) {
 		Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
 		Collection<InternalProject> projects = getElements();
 

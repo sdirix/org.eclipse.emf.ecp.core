@@ -29,7 +29,6 @@ public interface ECPProjectObjectsChangedObserver extends ECPProjectManagerObser
 	 * @param project the project where the changed occurred.
 	 * @param objects the objects that changed and the objects affected by the change
 	 * @param structural whether the change was structural
-	 * @throws Exception thrown when something unexpected happens
 	 */
-	void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception;
+	void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural);
 }

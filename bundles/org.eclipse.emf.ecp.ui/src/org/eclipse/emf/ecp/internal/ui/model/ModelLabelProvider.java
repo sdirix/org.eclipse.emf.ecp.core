@@ -44,7 +44,7 @@ public class ModelLabelProvider extends ECPLabelProvider implements ECPProjectOp
 	}
 
 	/** {@inheritDoc} */
-	public void projectChanged(final ECPProject project, boolean opened) throws Exception {
+	public void projectChanged(final ECPProject project, boolean opened) {
 		fireEvent(new LabelProviderChangedEvent(this, project));
 	}
 }

@@ -33,8 +33,7 @@ public interface ECPProvidersChangedObserver extends ECPProviderRegistryObserver
 	 * 
 	 * @param oldProviders provider before change
 	 * @param newProviders providers after change
-	 * @throws Exception thrown when something unexpected happens
 	 */
-	void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) throws Exception;
+	void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders);
 
 }

@@ -128,8 +128,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
-	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
-		throws Exception {
+	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
 		Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {
 			load();

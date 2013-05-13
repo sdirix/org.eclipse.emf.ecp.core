@@ -29,18 +29,17 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 	}
 
 	/** {@inheritDoc} */
-	public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)
-		throws Exception {
+	public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 		refreshViewer();
 	}
 
 	/** {@inheritDoc} */
-	public void projectChanged(ECPProject project, boolean opened) throws Exception {
+	public void projectChanged(ECPProject project, boolean opened) {
 		refreshViewer(true, project);
 	}
 
 	/** {@inheritDoc} */
-	public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) throws Exception {
+	public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 		refreshViewer(structural, objects.toArray());
 		if (!objects.contains(project)) {
 			refreshViewer(false, project);

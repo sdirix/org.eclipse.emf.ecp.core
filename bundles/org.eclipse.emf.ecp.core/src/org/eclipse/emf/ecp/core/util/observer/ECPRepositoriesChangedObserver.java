@@ -33,8 +33,6 @@ public interface ECPRepositoriesChangedObserver extends ECPRepositoryManagerObse
 	 * 
 	 * @param oldRepositories repositories before change
 	 * @param newRepositories repositories after change
-	 * @throws Exception thrown when something unexpected happens
 	 */
-	void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories)
-		throws Exception;
+	void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories);
 }

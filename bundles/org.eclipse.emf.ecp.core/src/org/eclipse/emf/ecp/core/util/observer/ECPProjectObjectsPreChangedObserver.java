@@ -27,10 +27,9 @@ public interface ECPProjectObjectsPreChangedObserver extends ECPProjectManagerOb
 	/**
 	 * Return an Collection affected Objects.
 	 * 
-	 * @param project the {@link ECPProject} where the change occured
+	 * @param project the {@link ECPProject} where the change occurred
 	 * @param objects the objects that changed
 	 * @return Collection of affected Objects
-	 * @throws Exception when the call goes wrong
 	 */
-	Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) throws Exception;
+	Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects);
 }

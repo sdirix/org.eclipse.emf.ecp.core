@@ -26,7 +26,6 @@ public interface ECPProjectOpenClosedObserver extends ECPProjectManagerObserver 
 	 * 
 	 * @param project the {@link ECPProject} that changed
 	 * @param opened whether it was opened or closed
-	 * @throws Exception thrown when something unexpected happens
 	 */
-	void projectChanged(ECPProject project, boolean opened) throws Exception;
+	void projectChanged(ECPProject project, boolean opened);
 }

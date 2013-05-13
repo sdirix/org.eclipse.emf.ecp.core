@@ -33,7 +33,6 @@ public interface ECPRepositoryObjectsChangedObserver extends ECPRepositoryManage
 	 * 
 	 * @param repository the repository the changes occurred
 	 * @param objects the objects that changed
-	 * @throws Exception thrown when something unexpected happens
 	 */
-	void objectsChanged(ECPRepository repository, Collection<Object> objects) throws Exception;
+	void objectsChanged(ECPRepository repository, Collection<Object> objects);
 }

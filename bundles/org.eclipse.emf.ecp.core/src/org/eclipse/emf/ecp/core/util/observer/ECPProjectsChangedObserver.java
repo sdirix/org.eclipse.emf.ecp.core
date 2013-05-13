@@ -34,8 +34,7 @@ public interface ECPProjectsChangedObserver extends ECPProjectManagerObserver {
 	 * 
 	 * @param oldProjects the collection of projects before the change
 	 * @param newProjects the collection of projects after the change
-	 * @throws Exception thrown when something unexpected happens
 	 */
-	void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception;
+	void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects);
 
 }

@@ -54,8 +54,7 @@ public class ProvidersContentProvider extends TreeContentProvider<ECPProviderReg
 		}
 	}
 
-	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
-		throws Exception {
+	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
 		refreshViewer();
 	}
 

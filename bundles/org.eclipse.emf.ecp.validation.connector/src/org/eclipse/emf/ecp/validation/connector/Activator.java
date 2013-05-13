@@ -117,7 +117,7 @@ public class Activator extends Plugin {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		/** {@inheritDoc} **/
-		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) throws Exception {
+		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)  {
 //			List<ECPProject> newProjectList = Arrays.asList(newProjects);
 			for (ECPProject project : oldProjects) {
 				if (!newProjects.contains(project)) {
@@ -126,7 +126,7 @@ public class Activator extends Plugin {
 			}
 		}
 		/** {@inheritDoc} **/
-		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) throws Exception {
+		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects)  {
 			Set<Object> allAffectedElements = new HashSet<Object>();
 			
 			for (Object object : objects) {
