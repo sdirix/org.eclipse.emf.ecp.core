@@ -3,8 +3,8 @@
 <plugin>
 
    <extension-point id="uiProviders" name="ECP UI Providers" schema="schema/uiProviders.exsd"/>
-   <extension-point id="modelelementopener" name="Modelelement Opener" schema="schema/modelelementopener.exsd"/>
-   <extension-point id="dropadapter" name="ECP UI DropAdapaters" schema="schema/dropadapter.exsd"/>
+   <extension-point id="modelElementOpener" name="Modelelement Opener" schema="schema/modelElementOpener.exsd"/>
+   <extension-point id="dropAdapter" name="ECP UI DropAdapaters" schema="schema/dropAdapter.exsd"/>
    <extension-point id="modelExplorerSettings" name="ECP Model Explorer Settings" schema="schema/modelExplorerSettings.exsd"/>
 	
 </plugin>

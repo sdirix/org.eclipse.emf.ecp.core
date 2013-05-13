@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.emf.ecp.ui.modelelementopener">
+         point="org.eclipse.emf.ecp.ui.modelElementOpener">
       <ModelElementOpener
             class="org.eclipse.emf.ecp.explorereditorbridge.internal.EditorModelElementOpener"
             name="org.eclipse.emf.ecp.explorereditorbridge.ModelElementOpener">
