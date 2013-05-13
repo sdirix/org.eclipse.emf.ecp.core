@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="org.eclipse.emf.ecp.editor.attributecontrols" name="org.eclipse.emf.ecp.editor.attributecontrols" schema="schema/org.eclipse.emf.ecp.editor.attributecontrol.exsd"/>
-   <extension-point id="org.eclipse.emf.ecp.editor.referencecontrols" name="org.eclipse.emf.ecp.editor.referencecontrols" schema="schema/org.eclipse.emf.ecp.editor.referencecontrol.exsd"/>
    
    
    <!--
