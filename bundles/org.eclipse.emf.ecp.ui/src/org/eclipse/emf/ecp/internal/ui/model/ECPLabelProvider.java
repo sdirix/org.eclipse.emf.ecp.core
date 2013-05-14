@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.internal.ui.model;
 
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider.ErrorElement;
@@ -71,7 +71,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	public UIProvider getUIProvider(Object element) {
 		UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(element);
 		if (uiProvider == null) {
-			ECPModelContext modelContext = getModelContext(element);
+			ECPModelContainer modelContext = getModelContext(element);
 			if (modelContext != null) {
 				uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(modelContext);
 			}
@@ -81,7 +81,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	}
 
 	/** {@inheritDoc} */
-	public ECPModelContext getModelContext(Object element) {
+	public ECPModelContainer getModelContext(Object element) {
 		if (modelContextProvider != null) {
 			return modelContextProvider.getModelContext(element);
 		}

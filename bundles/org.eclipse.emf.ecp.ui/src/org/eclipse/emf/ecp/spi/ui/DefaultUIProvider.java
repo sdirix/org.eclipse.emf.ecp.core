@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
@@ -199,7 +199,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	/** {@inheritDoc} **/
 	// TODO is this the right place for this implementation?
-	public void fillContextMenu(IMenuManager manager, ECPModelContext context, Object[] elements) {
+	public void fillContextMenu(IMenuManager manager, ECPModelContainer context, Object[] elements) {
 		if (elements.length == 1) {
 			Object element = elements[0];
 			if (context instanceof ECPProject) {

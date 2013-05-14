@@ -13,12 +13,7 @@
 
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.ECPDeletable;
-import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
-
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 
 /**
  * This class describes a repository.
@@ -27,7 +22,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface ECPRepository extends ECPElement, ECPModelContext, ECPPropertiesAware, ECPDeletable, IAdaptable {
+public interface ECPRepository extends ECPModelContainer {
 	/**
 	 * The type of this ECPElement.
 	 */

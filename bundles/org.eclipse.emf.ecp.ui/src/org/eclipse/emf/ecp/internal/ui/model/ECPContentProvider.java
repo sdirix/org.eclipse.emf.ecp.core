@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
@@ -41,7 +41,7 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 
 	@Override
 	protected void fillChildren(Object parent, InternalChildrenList childrenList) {
-		ECPModelContext context = getModelContext(parent);
+		ECPModelContainer context = getModelContext(parent);
 		if (context != null) {
 			InternalProvider provider = (InternalProvider) context.getProvider();
 			provider.fillChildren(context, parent, childrenList);
@@ -49,16 +49,16 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 	}
 
 	/** {@inheritDoc} */
-	public ECPModelContext getModelContext(Object element) {
+	public ECPModelContainer getModelContext(Object element) {
 		while (element != null) {
-			if (element instanceof ECPModelContext) {
+			if (element instanceof ECPModelContainer) {
 				break;
 			}
 
 			element = getParent(element);
 		}
 
-		return (ECPModelContext) element;
+		return (ECPModelContainer) element;
 	}
 
 	/** {@inheritDoc} */

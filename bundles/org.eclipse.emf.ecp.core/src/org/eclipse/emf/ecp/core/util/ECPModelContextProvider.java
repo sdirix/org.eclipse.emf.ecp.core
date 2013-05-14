@@ -15,8 +15,8 @@
 package org.eclipse.emf.ecp.core.util;
 
 /**
- * The {@link ECPModelContextProvider} can return the {@link ECPModelContext} of a certain Object.
- * This class should not be mixed up with {@link ECPModelContextAware} which can only return the {@link ECPModelContext}
+ * The {@link ECPModelContextProvider} can return the {@link ECPModelContainer} of a certain Object.
+ * This class should not be mixed up with {@link ECPModelContextAware} which can only return the {@link ECPModelContainer}
  * it knows.
  * 
  * @author Eike Stepper
@@ -24,10 +24,10 @@ package org.eclipse.emf.ecp.core.util;
  */
 public interface ECPModelContextProvider {
 	/**
-	 * Returns the first {@link ECPModelContext} that can be found for the provided Object.
+	 * Returns the first {@link ECPModelContainer} that can be found for the provided Object.
 	 * 
-	 * @param element the element to search the {@link ECPModelContext} for
-	 * @return the {@link ECPModelContext} of this element
+	 * @param element the element to search the {@link ECPModelContainer} for
+	 * @return the {@link ECPModelContainer} of this element
 	 */
-	ECPModelContext getModelContext(Object element);
+	ECPModelContainer getModelContext(Object element);
 }

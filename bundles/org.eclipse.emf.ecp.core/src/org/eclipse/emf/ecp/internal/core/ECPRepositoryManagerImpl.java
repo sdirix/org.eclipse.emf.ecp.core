@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -238,7 +238,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		}
 
 		/** {@inheritDoc} */
-		public ECPModelContext getContext() {
+		public ECPModelContainer getContext() {
 			return this;
 		}
 

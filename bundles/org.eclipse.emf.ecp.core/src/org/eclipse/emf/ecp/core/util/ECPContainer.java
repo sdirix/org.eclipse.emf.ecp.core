@@ -7,22 +7,14 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eike Stepper - initial API and implementation
- * Eugen Neufeld - JavaDoc
- * 
+ * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util;
 
 /**
- * A ModelContextAware knows its {@link ECPModelContainer}.
- * 
- * @author Eike Stepper
+ * @author Eugen Neufeld
+ *
  */
-public interface ECPModelContextAware extends ECPProviderAware {
-	/**
-	 * Returns the {@link ECPModelContainer} this interface is aware of.
-	 * 
-	 * @return {@link ECPModelContainer}
-	 */
-	ECPModelContainer getContext();
+public interface ECPContainer {
+
 }

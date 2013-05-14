@@ -14,6 +14,8 @@
 
 package org.eclipse.emf.ecp.core.util;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * Common super interface for ECP containers, model elements can belong to. E.g. a
  * {@link org.eclipse.emf.ecp.core.ECPProject ECPProject} or {@link org.eclipse.emf.ecp.core.ECPRepository
@@ -21,7 +23,7 @@ package org.eclipse.emf.ecp.core.util;
  * 
  * 
  * 
- * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public interface ECPModelContext extends ECPModelContextAware {
+public interface ECPModelContainer extends ECPElement, ECPPropertiesAware, ECPDeletable, ECPProviderAware, IAdaptable {
 }

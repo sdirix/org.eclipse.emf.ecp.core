@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
@@ -329,7 +329,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public ECPModelContext getContext() {
+	public ECPModelContainer getContext() {
 		return this;
 	}
 
@@ -469,7 +469,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		/** {@inheritDoc} */
-		public ECPModelContext getContext() {
+		public ECPModelContainer getContext() {
 			return null;
 		}
 

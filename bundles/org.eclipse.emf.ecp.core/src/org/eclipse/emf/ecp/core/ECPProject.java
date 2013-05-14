@@ -13,14 +13,9 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
-import org.eclipse.emf.ecp.core.util.ECPDeletable;
-import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
-import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-
-import org.eclipse.core.runtime.IAdaptable;
 
 import java.util.Collection;
 
@@ -35,8 +30,7 @@ import java.util.Collection;
  * @noextend This interface is not intended to be extended by clients.
  */
 
-public interface ECPProject extends ECPElement, ECPModelContext, ECPRepositoryAware, ECPPropertiesAware, ECPCloseable,
-	ECPDeletable, IEditingDomainProvider, IAdaptable {
+public interface ECPProject extends ECPModelContainer, ECPRepositoryAware, ECPCloseable, IEditingDomainProvider {
 	/**
 	 * The type of the ECPElement.
 	 */

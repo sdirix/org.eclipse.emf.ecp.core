@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.Activator;
@@ -247,9 +247,9 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
-	public ECPModelContext getModelContext(Object element) {
-		if (element instanceof ECPModelContext) {
-			return (ECPModelContext) element;
+	public ECPModelContainer getModelContext(Object element) {
+		if (element instanceof ECPModelContainer) {
+			return (ECPModelContainer) element;
 		}
 
 		if (element instanceof ECPModelContextProvider) {
@@ -258,7 +258,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 		if (element instanceof EObject) {
 			EObject eObject = (EObject) element;
-			ECPModelContext context = getModelContextFromAdapter(eObject);
+			ECPModelContainer context = getModelContextFromAdapter(eObject);
 			if (context != null) {
 				return context;
 			}
@@ -268,7 +268,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 		if (element instanceof Resource) {
 			Resource resource = (Resource) element;
-			ECPModelContext context = getModelContextFromAdapter(resource);
+			ECPModelContainer context = getModelContextFromAdapter(resource);
 			if (context != null) {
 				return context;
 			}
@@ -278,7 +278,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 		if (element instanceof ResourceSet) {
 			ResourceSet resourceSet = (ResourceSet) element;
-			ECPModelContext context = getModelContextFromAdapter(resourceSet);
+			ECPModelContainer context = getModelContextFromAdapter(resourceSet);
 			if (context != null) {
 				return context;
 			}
@@ -288,13 +288,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/**
-	 * This allows to get the {@link ECPModelContext} from a {@link Notifier} using the EcoreUtil.
-	 * This first gets the {@link ECPModelContextAdapter} and from it it gets the {@link ECPModelContext}.
+	 * This allows to get the {@link ECPModelContainer} from a {@link Notifier} using the EcoreUtil.
+	 * This first gets the {@link ECPModelContextAdapter} and from it it gets the {@link ECPModelContainer}.
 	 * 
-	 * @param notifier the {@link Notifier} to get the {@link ECPModelContext} from
-	 * @return the {@link ECPModelContext} registered as an Adapter on this {@link Notifier} or null
+	 * @param notifier the {@link Notifier} to get the {@link ECPModelContainer} from
+	 * @return the {@link ECPModelContainer} registered as an Adapter on this {@link Notifier} or null
 	 */
-	protected final ECPModelContext getModelContextFromAdapter(Notifier notifier) {
+	protected final ECPModelContainer getModelContextFromAdapter(Notifier notifier) {
 		ECPModelContextAdapter adapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(notifier.eAdapters(),
 			ECPModelContextAdapter.class);
 		if (adapter != null) {
@@ -305,7 +305,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
-	public void fillChildren(ECPModelContext context, Object parent, InternalChildrenList childrenList) {
+	public void fillChildren(ECPModelContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent == ECPProjectManager.INSTANCE) {
 			childrenList.addChildren(ECPProjectManager.INSTANCE.getProjects());
 		} else if (parent == ECPRepositoryManager.INSTANCE) {
@@ -324,7 +324,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
-	public void handleLifecycle(ECPModelContext context, LifecycleEvent event) {
+	public void handleLifecycle(ECPModelContainer context, LifecycleEvent event) {
 		String providerClass = getClass().getSimpleName();
 		String contextClass = context.getClass().getSimpleName();
 		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context);

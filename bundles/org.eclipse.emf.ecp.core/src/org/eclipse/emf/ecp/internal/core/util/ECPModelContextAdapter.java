@@ -14,33 +14,33 @@
 package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 
 /**
- * The {@link ECPModelContextAdapter} can be used to be able to get the {@link ECPModelContext} from a Notifier.
+ * The {@link ECPModelContextAdapter} can be used to be able to get the {@link ECPModelContainer} from a Notifier.
  * 
  * @author Eike Stepper
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  */
 public class ECPModelContextAdapter extends AdapterImpl {
-	private final ECPModelContext context;
+	private final ECPModelContainer context;
 
 	/**
-	 * Constructor of this Adapter which expects an {@link ECPModelContext}.
+	 * Constructor of this Adapter which expects an {@link ECPModelContainer}.
 	 * 
-	 * @param context the {@link ECPModelContext} of this adapter
+	 * @param context the {@link ECPModelContainer} of this adapter
 	 */
-	public ECPModelContextAdapter(ECPModelContext context) {
+	public ECPModelContextAdapter(ECPModelContainer context) {
 		this.context = context;
 	}
 
 	/**
-	 * The {@link ECPModelContext} of this Adapter.
+	 * The {@link ECPModelContainer} of this Adapter.
 	 * 
-	 * @return the {@link ECPModelContext}
+	 * @return the {@link ECPModelContainer}
 	 */
-	public final ECPModelContext getContext() {
+	public final ECPModelContainer getContext() {
 		return context;
 	}
 

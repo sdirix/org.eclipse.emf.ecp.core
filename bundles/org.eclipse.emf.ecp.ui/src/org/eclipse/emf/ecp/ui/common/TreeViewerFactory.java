@@ -16,7 +16,7 @@ package org.eclipse.emf.ecp.ui.common;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.util.ECPModelContext;
+import org.eclipse.emf.ecp.core.util.ECPModelContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.Activator;
@@ -76,7 +76,7 @@ public final class TreeViewerFactory {
 					}
 					ECPProject project = null;
 					if (elements[0] instanceof ECPProject) {
-						ECPModelContext context = ECPUtil.getModelContext(contentProvider, elements);
+						ECPModelContainer context = ECPUtil.getModelContext(contentProvider, elements);
 						if (context != null && context instanceof ECPProject) {
 							project = (ECPProject) context;
 						}
