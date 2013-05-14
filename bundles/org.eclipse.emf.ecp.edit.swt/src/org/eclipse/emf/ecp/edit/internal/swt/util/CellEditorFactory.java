@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class CellEditorFactory {
-	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.swt.celleditor"; //$NON-NLS-1$
+	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.swt.cellEditor"; //$NON-NLS-1$
 
 	private static final String CLASS_ATTRIBUTE = "class";//$NON-NLS-1$
 	private static final String ID = "id";//$NON-NLS-1$

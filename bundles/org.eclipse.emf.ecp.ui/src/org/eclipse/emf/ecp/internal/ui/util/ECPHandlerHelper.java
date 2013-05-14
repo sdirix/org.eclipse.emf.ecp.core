@@ -344,7 +344,7 @@ public final class ECPHandlerHelper {
 			return;
 		}
 		IConfigurationElement[] modelelementopener = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.ui.modelelementopener"); //$NON-NLS-1$
+			"org.eclipse.emf.ecp.ui.modelElementOpener"); //$NON-NLS-1$
 		ECPModelElementOpener bestCandidate = null;
 		int bestValue = -1;
 		for (IConfigurationElement element : modelelementopener) {
