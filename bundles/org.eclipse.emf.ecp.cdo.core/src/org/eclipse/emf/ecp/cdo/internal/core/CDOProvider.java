@@ -32,6 +32,7 @@ import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
@@ -140,7 +141,8 @@ public class CDOProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public EList<Object> getElements(InternalProject project) {
 		// TODO: implement CDOProvider.addRootElement(project, rootElement)
-		throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException();
+		return new BasicEList<Object>();
 	}
 
 	@Override
@@ -177,7 +179,7 @@ public class CDOProvider extends DefaultProvider {
 
 		CDOProjectData projectData = getProjectData(project);
 		projectData.checkoutWorkspace();
-
+		project.saveProperties();
 		File folder = getProjectFolder(project);
 		PrintStream stream = null;
 
@@ -293,6 +295,10 @@ public class CDOProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	public Notifier getRoot(InternalProject project) {
-		throw new UnsupportedOperationException();
+		CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
+		if (data != null) {
+			return data.getRootResource();
+		}
+		return null;
 	}
 }

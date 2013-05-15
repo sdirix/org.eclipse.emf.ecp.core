@@ -32,7 +32,11 @@ public class EMFStoreProjectIsDirtyTester extends PropertyTester {
 	 *      java.lang.Object)
 	 */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		ESLocalProject ps = EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) receiver);
+		InternalProject ip = (InternalProject) receiver;
+		if (!ip.getProvider().getName().equals(EMFStoreProvider.NAME)) {
+			return false;
+		}
+		ESLocalProject ps = EMFStoreProvider.INSTANCE.getProjectSpace(ip);
 		if (ps != null) {
 			return Boolean.valueOf(ps.hasUncommitedChanges()).equals(expectedValue);
 		}

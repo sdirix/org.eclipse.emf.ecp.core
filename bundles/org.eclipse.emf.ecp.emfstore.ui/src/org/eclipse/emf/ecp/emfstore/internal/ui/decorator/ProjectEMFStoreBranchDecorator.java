@@ -53,14 +53,16 @@ public class ProjectEMFStoreBranchDecorator implements ILabelDecorator, ESShareO
 	}
 
 	public String decorateText(String text, Object element) {
-		ESLocalProject localProject;
+		ESLocalProject localProject = null;
 		if (element instanceof ESLocalProject) {
 			localProject = (ESLocalProject) element;
 		} else if (element instanceof ECPProject) {
 			ECPProvider ecpProvider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 			EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
 			InternalProject project = (InternalProject) element;
-			localProject = provider.getProjectSpace(project);
+			if (ecpProvider.equals(project)) {
+				localProject = provider.getProjectSpace(project);
+			}
 		} else {
 			return text;
 		}

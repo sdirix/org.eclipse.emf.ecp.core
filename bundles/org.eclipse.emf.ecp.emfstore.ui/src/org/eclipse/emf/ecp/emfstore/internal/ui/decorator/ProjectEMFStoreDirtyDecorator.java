@@ -49,6 +49,9 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 		ECPProvider ecpProvider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 		EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
 		InternalProject project = (InternalProject) element;
+		if (!project.getProvider().equals(provider)) {
+			return;
+		}
 		ESLocalProject projectSpace = provider.getProjectSpace(project);
 
 		if (projectSpace == null) {

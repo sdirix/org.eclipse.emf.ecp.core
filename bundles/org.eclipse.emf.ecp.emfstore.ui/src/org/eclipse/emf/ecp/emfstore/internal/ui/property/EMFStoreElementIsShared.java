@@ -29,7 +29,7 @@ public class EMFStoreElementIsShared extends PropertyTester {
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(receiver);
-		if (project != null) {
+		if (project != null && project.getProvider().getName().equals(EMFStoreProvider.NAME)) {
 			ESLocalProject ps = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 			if (ps != null) {
 				return Boolean.valueOf(ps.isShared()).equals(expectedValue);
