@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.observer;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -41,7 +40,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 		boolean ecpProjectExists = false;
 		boolean validProjectName = false;
 
-		for (ECPProject ecpProject : ECPProjectManager.INSTANCE.getProjects()) {
+		for (ECPProject ecpProject : ECPUtil.getECPProjectManager().getProjects()) {
 			InternalProject internalProject = (InternalProject) ecpProject;
 			Object localProject = internalProject.getProviderSpecificData();
 			if (localProject instanceof ESLocalProject) {
@@ -57,7 +56,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 		if (!ecpProjectExists) {
 			while (!validProjectName) {
 				try {
-					ECPProjectManager.INSTANCE.createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
+					ECPUtil.getECPProjectManager().createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
 						createECPProperties(project));
 					validProjectName = true;
 				} catch (ProjectWithNameExistsException ex) {
@@ -66,7 +65,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 						new IInputValidator() {
 
 							public String isValid(String newText) {
-								if (ECPProjectManager.INSTANCE.getProject(newText) == null) {
+								if (ECPUtil.getECPProjectManager().getProject(newText) == null) {
 									return null;
 								}
 								return "A project with this name already exists!";

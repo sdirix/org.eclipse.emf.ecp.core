@@ -19,7 +19,7 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.ecp.core.util.ECPDeletable;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -37,11 +37,11 @@ public class DeleteHandler extends AbstractHandler {
 		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection ssel = (IStructuredSelection) selection;
 		
-		List<ECPDeletable> deletables = new ArrayList<ECPDeletable>();
+		List<ECPContainer> deletables = new ArrayList<ECPContainer>();
 		for (Iterator<?> it = ssel.iterator(); it.hasNext();) {
 			Object element = it.next();
-			if (element instanceof ECPDeletable) {
-				deletables.add((ECPDeletable) element);
+			if (element instanceof ECPContainer) {
+				deletables.add((ECPContainer) element);
 			}
 		}
 		ECPHandlerHelper.deleteHandlerHelper(deletables, HandlerUtil.getActiveShell(event));

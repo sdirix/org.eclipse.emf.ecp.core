@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecp.validation.test;
 
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

@@ -14,7 +14,7 @@
 package org.eclipse.emf.ecp.internal.wizards.page;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesLabelProvider;
@@ -56,7 +56,7 @@ public class SelectRepositoryPage extends WizardPage {
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(new RepositoriesLabelProvider(contentProvider));
 		viewer.setSorter(new ViewerSorter());
-		viewer.setInput(ECPRepositoryManager.INSTANCE);
+		viewer.setInput(ECPUtil.getECPRepositoryManager());
 		viewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {

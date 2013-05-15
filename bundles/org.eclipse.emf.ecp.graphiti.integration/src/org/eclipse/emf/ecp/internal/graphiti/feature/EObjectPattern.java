@@ -3,7 +3,7 @@ package org.eclipse.emf.ecp.internal.graphiti.feature;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -56,7 +56,7 @@ public class EObjectPattern extends AbstractPattern {
 	@Override
 	public Object[] create(ICreateContext context) {
 		Object o = getBusinessObjectForPictogramElement(getDiagram());
-		final ECPProject project = ECPProjectManager.INSTANCE.getProject(o);
+		final ECPProject project = ECPUtil.getECPProjectManager().getProject(o);
 		final EObject createdEObject=ECPHandlerHelper.addModelElement(project, getShell(), false);
 		// Add model element to resource.
 		// We add the model element to the resource of the diagram for

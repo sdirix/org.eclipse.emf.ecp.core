@@ -3,14 +3,13 @@
 <plugin>
    <extension
          point="org.eclipse.emf.ecp.ui.modelElementOpener">
-      <ModelElementOpener
-            class="org.eclipse.emf.ecp.explorereditorbridge.internal.EditorModelElementOpener"
-            name="org.eclipse.emf.ecp.explorereditorbridge.ModelElementOpener">
+      <modelElementOpener
+            class="org.eclipse.emf.ecp.explorereditorbridge.internal.EditorModelElementOpener">
          <staticTester
                modelElement="org.eclipse.emf.ecore.EObject"
                priority="1">
          </staticTester>
-      </ModelElementOpener>
+      </modelElementOpener>
    </extension>
 
 </plugin>

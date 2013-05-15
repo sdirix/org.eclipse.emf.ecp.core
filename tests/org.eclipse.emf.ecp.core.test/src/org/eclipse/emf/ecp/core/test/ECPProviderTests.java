@@ -7,13 +7,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
@@ -55,7 +54,7 @@ public class ECPProviderTests extends AbstractTest {
 		boolean canAddRepositories = getProvider().canAddRepositories();
 
 		int countReposBefore = getProvider().getRepositories().size();
-		repository = ECPRepositoryManager.INSTANCE.addRepository(getProvider(), "repository4Name", "repository4Label",
+		repository = ECPUtil.getECPRepositoryManager().addRepository(getProvider(), "repository4Name", "repository4Label",
 			"description", getNewProperties());
 		int countReposAfterAdd = getProvider().getRepositories().size();
 

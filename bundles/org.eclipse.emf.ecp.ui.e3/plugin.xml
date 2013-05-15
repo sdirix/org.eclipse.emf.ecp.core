@@ -40,7 +40,7 @@
                label="%OpenClosable"
                style="push">
             <parameter
-                  name="org.eclipse.emf.ecp.ecpclosable.type"
+                  name="org.eclipse.emf.ecp.project.type"
                   value="open">
             </parameter>
             <visibleWhen
@@ -52,10 +52,10 @@
                         operator="or">
                      <and>
                         <instanceof
-                              value="org.eclipse.emf.ecp.core.util.ECPCloseable">
+                              value="org.eclipse.emf.ecp.core.ECPProject">
                         </instanceof>
                         <test
-                              property="org.eclipse.emf.ecp.core.closeable.closed"
+                              property="org.eclipse.emf.ecp.core.project.closed"
                               value="true">
                         </test>
                      </and>
@@ -68,7 +68,7 @@
                label="%CloseClosable"
                style="push">
             <parameter
-                  name="org.eclipse.emf.ecp.ecpclosable.type"
+                  name="org.eclipse.emf.ecp.project.type"
                   value="close">
             </parameter>
             <visibleWhen
@@ -80,10 +80,10 @@
                         operator="or">
                      <and>
                         <instanceof
-                              value="org.eclipse.emf.ecp.core.util.ECPCloseable">
+                              value="org.eclipse.emf.ecp.core.ECPProject">
                         </instanceof>
                         <test
-                              property="org.eclipse.emf.ecp.core.closeable.open"
+                              property="org.eclipse.emf.ecp.core.project.open"
                               value="true">
                         </test>
                      </and>
@@ -105,7 +105,7 @@
                         operator="or">
                      <and>
                         <instanceof
-                              value="org.eclipse.emf.ecp.core.util.ECPDeletable">
+                              value="org.eclipse.emf.ecp.core.util.ECPContainer">
                         </instanceof>
                      </and>
                      <test
@@ -422,7 +422,7 @@
             id="org.eclipse.emf.ecp.ui.closable"
             name="Close/Open">
          <commandParameter
-               id="org.eclipse.emf.ecp.ecpclosable.type"
+               id="org.eclipse.emf.ecp.project.type"
                name="ECPCloseable Type"
                optional="true">
          </commandParameter>
@@ -481,7 +481,7 @@
                      ifEmpty="false"
                      operator="or">
                   <test
-                        property="org.eclipse.emf.ecp.core.deletable.canDelete"
+                        property="org.eclipse.emf.ecp.core.container.canDelete"
                         value="true">
                   </test>
                </iterate>
@@ -535,7 +535,7 @@
                         ifEmpty="false"
                         operator="and">
                      <test
-                           property="org.eclipse.emf.ecp.core.closeable.open"
+                           property="org.eclipse.emf.ecp.core.project.open"
                            value="true">
                      </test>
                   </iterate>
@@ -569,7 +569,7 @@
                         ifEmpty="false"
                         operator="and">
                      <test
-                           property="org.eclipse.emf.ecp.core.closeable.open"
+                           property="org.eclipse.emf.ecp.core.project.open"
                            value="true">
                      </test>
                   </iterate>

@@ -29,10 +29,4 @@ public interface ECPElement extends Comparable<ECPElement> {
 	 */
 	String getName();
 
-	/**
-	 * This return the type of the object.
-	 * 
-	 * @return the type
-	 */
-	String getType();
 }

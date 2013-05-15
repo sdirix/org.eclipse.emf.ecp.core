@@ -1,9 +1,5 @@
 package org.eclipse.emf.ecp.rap;
 
-import org.eclipse.rap.rwt.application.EntryPoint;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.application.WorkbenchAdvisor;
 
 /**
  * This class controls all aspects of the application's execution

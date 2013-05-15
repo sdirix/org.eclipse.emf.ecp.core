@@ -12,16 +12,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.localserver.internal;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
+import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
-import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
-import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * The LocalEmfStore contains static methods to manually start the EmfStrore.

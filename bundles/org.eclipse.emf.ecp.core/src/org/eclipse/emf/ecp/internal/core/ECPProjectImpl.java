@@ -20,14 +20,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
@@ -125,8 +123,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		boolean shared = in.readBoolean();
 		if (shared) {
 			String repositoryName = in.readUTF();
-			InternalRepository repository = (InternalRepository) ECPRepositoryManager.INSTANCE
-				.getRepository(repositoryName);
+			InternalRepository repository = (InternalRepository) ECPUtil.getECPRepositoryManager().getRepository(
+				repositoryName);
 			if (repository == null) {
 				repository = new Disposed(repositoryName);
 			}
@@ -135,7 +133,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			provider = repository.getProvider();
 		} else {
 			String providerName = in.readUTF();
-			provider = (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);
+			provider = (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 			if (provider == null) {
 				throw new IllegalStateException("Provider not found: " + providerName);
 			}
@@ -226,6 +224,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getType() {
 		return TYPE;
 	}

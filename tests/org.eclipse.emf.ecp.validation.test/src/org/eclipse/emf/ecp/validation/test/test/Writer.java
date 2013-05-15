@@ -6,12 +6,12 @@
  */
 package org.eclipse.emf.ecp.validation.test.test;
 
-import java.util.Date;
-import java.util.Map;
-
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->

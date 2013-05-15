@@ -14,7 +14,6 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -122,7 +121,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 				// EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
 				// .toInternalAPI())));
-					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPProviderRegistry.INSTANCE
+					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
 						.getProvider(EMFStoreProvider.NAME))).getRepository(((ESServerImpl) usersession.getServer())
 						.toInternalAPI())));
 			}

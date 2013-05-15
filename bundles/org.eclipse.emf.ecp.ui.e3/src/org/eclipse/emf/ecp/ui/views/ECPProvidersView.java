@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.views;
 
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.model.ProvidersContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.ProvidersLabelProvider;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
@@ -34,7 +34,7 @@ public class ECPProvidersView extends TreeView
   protected TreeViewer createViewer(Composite parent)
   {
     TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new ProvidersLabelProvider(),
-        new ProvidersContentProvider(), ECPProviderRegistry.INSTANCE, createLabelDecorator(),true);
+        new ProvidersContentProvider(), ECPUtil.getECPProviderRegistry(), createLabelDecorator(),true);
     return viewer;
   }
 }

@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.ui.common.dnd;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 
@@ -49,7 +49,7 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 	 * @return
 	 */
 	protected EditingDomain getProjectDomain(Object object) {
-		ECPProject project = ECPProjectManager.INSTANCE.getProject(object);
+		ECPProject project = ECPUtil.getECPProjectManager().getProject(object);
 		if (project != null) {
 			return project.getEditingDomain();
 		}

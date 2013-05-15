@@ -14,7 +14,6 @@
 package org.eclipse.emf.ecp.internal.core.util.observer;
 
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverCall.Result;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

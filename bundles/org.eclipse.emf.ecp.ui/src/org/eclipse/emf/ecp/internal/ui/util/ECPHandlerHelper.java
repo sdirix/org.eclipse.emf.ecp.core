@@ -17,15 +17,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
-import org.eclipse.emf.ecp.core.util.ECPCloseable;
-import org.eclipse.emf.ecp.core.util.ECPDeletable;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -130,7 +126,7 @@ public final class ECPHandlerHelper {
 	 */
 	public static ECPProject createProject(final Shell shell) {
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
-		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
 			if (provider.canAddOfflineProjects()) {
 				providers.add(provider);
 			}
@@ -159,7 +155,8 @@ public final class ECPHandlerHelper {
 
 			ECPProject project = null;
 			try {
-				project = ECPProjectManager.INSTANCE.createProject(selectedProvider, projectName, projectProperties);
+				project = ECPUtil.getECPProjectManager()
+					.createProject(selectedProvider, projectName, projectProperties);
 			} catch (ProjectWithNameExistsException ex) {
 				showError(shell, "No project created", "A project with name " + projectName
 					+ " already exists in the workspace.");
@@ -275,7 +272,7 @@ public final class ECPHandlerHelper {
 
 		int wizardResult = wd.open();
 		if (wizardResult == WizardDialog.OK) {
-			ECPRepository ecpRepository = ECPRepositoryManager.INSTANCE.addRepository(
+			ECPRepository ecpRepository = ECPUtil.getECPRepositoryManager().addRepository(
 				addRepositoryComposite.getProvider(), addRepositoryComposite.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
 				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
@@ -286,13 +283,13 @@ public final class ECPHandlerHelper {
 	}
 
 	/**
-	 * This method closes/opens an array of closables.
+	 * This method closes/opens an array of ECPProject.
 	 * 
-	 * @param closeables the {@link ECPCloseable}s to change the state for
+	 * @param closeables the {@link ECPProject}s to change the state for
 	 * @param currentType the action to do
 	 */
-	public static void changeCloseState(ECPCloseable[] closeables, String currentType) {
-		for (ECPCloseable closeable : closeables) {
+	public static void changeCloseState(ECPProject[] closeables, String currentType) {
+		for (ECPProject closeable : closeables) {
 			if ("open".equalsIgnoreCase(currentType)) { //$NON-NLS-1$
 				closeable.open();
 			} else if ("close".equalsIgnoreCase(currentType)) { //$NON-NLS-1$
@@ -302,17 +299,17 @@ public final class ECPHandlerHelper {
 	}
 
 	/**
-	 * Deletes the provided {@link ECPDeletable} elements.
+	 * Deletes the provided {@link ECPContainer} elements.
 	 * 
-	 * @param deletables the List of {@link ECPDeletable}s to delete
+	 * @param deletables the List of {@link ECPContainer}s to delete
 	 * @param shell the shell to use for UI
 	 */
-	public static void deleteHandlerHelper(List<ECPDeletable> deletables, Shell shell) {
+	public static void deleteHandlerHelper(List<ECPContainer> deletables, Shell shell) {
 
 		if (!deletables.isEmpty()) {
 			DeleteDialog dialog = new DeleteDialog(shell, deletables);
 			if (dialog.open() == DeleteDialog.OK) {
-				for (ECPDeletable deletable : deletables) {
+				for (ECPContainer deletable : deletables) {
 					deletable.delete();
 				}
 			}

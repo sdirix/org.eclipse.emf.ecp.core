@@ -16,7 +16,7 @@ package org.eclipse.emf.ecp.ui.common.dnd;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -150,7 +150,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 
 			} else if (sourceObject instanceof ECPProject) {
 				ECPProject oldProject = (ECPProject) sourceObject;
-				ECPProjectManager.INSTANCE.cloneProject(oldProject);
+				ECPUtil.getECPProjectManager().cloneProject(oldProject);
 			}
 		} else if (event.detail != DND.DROP_NONE) {
 			super.drop(event);

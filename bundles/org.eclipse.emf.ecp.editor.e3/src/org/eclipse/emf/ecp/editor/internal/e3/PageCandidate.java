@@ -10,13 +10,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
  * Represents a page candidate to be showsn in meeditor.

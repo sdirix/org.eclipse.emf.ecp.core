@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.ui.views;
 import java.util.Collection;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.jface.action.Action;
@@ -39,7 +39,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
   @Override
   public void dispose()
   {
-    ECPProviderRegistry.INSTANCE.removeObserver(this);
+    ECPUtil.getECPProviderRegistry().removeObserver(this);
     super.dispose();
   }
   /**{@inheritDoc} */
@@ -52,7 +52,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
   protected TreeViewer createViewer(Composite parent)
   {
 	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
-    ECPProviderRegistry.INSTANCE.addObserver(this);
+    ECPUtil.getECPProviderRegistry().addObserver(this);
     return viewer;
   }
 

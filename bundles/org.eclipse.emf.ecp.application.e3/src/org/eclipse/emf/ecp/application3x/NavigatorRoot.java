@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.application3x;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.IElementFactory;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPersistableElement;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**

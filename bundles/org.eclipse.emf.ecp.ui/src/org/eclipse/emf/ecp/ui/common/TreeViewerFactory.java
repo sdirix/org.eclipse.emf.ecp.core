@@ -14,8 +14,6 @@
 package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -59,7 +57,7 @@ public final class TreeViewerFactory {
 	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD, ILabelDecorator labelDecorator) {
 		final ModelContentProvider contentProvider = new ModelContentProvider();
 		final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
-			ECPProjectManager.INSTANCE, labelDecorator, false);
+			ECPUtil.getECPProjectManager(), labelDecorator, false);
 		if (hasDnD) {
 			final ECPDropAdapter dropAdapter = getDropAdapter(contentProvider, viewer);
 
@@ -122,7 +120,7 @@ public final class TreeViewerFactory {
 	public static TreeViewer createRepositoryExplorerViewer(Composite parent, ILabelDecorator labelDecorator) {
 		RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
 		TreeViewer viewer = createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider), contentProvider,
-			ECPRepositoryManager.INSTANCE, labelDecorator, true);
+			ECPUtil.getECPRepositoryManager(), labelDecorator, true);
 		return viewer;
 	}
 

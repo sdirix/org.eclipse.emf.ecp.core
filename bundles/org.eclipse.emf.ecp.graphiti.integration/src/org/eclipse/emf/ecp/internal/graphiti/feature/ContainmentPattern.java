@@ -1,16 +1,14 @@
 package org.eclipse.emf.ecp.internal.graphiti.feature;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.graphiti.internal.integration.ECPTutorialToolBehaviorProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -89,7 +87,7 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 		for (EReference eReference : source.eClass().getEAllContainments()) {
 			
 		EClass referenceClass=eReference.getEReferenceType();
-		ECPProject project=ECPProjectManager.INSTANCE.getProject(getBusinessObjectForPictogramElement(getDiagram()));
+		ECPProject project=ECPUtil.getECPProjectManager().getProject(getBusinessObjectForPictogramElement(getDiagram()));
 		InternalProject internalProject=(InternalProject)project;
 		Iterator<EObject> referenceIterator=internalProject.getReferenceCandidates(source, eReference);
 		
@@ -174,7 +172,7 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 		EReference eReference = (EReference) context.getProperty("containment");
 
 		Object o = getBusinessObjectForPictogramElement(getDiagram());
-		final ECPProject project = ECPProjectManager.INSTANCE.getProject(o);
+		final ECPProject project = ECPUtil.getECPProjectManager().getProject(o);
 		EditingDomain editingDomain = project.getEditingDomain();
 		Command command = null;
 		if (eReference.isMany()) {

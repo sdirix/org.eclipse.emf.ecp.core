@@ -17,28 +17,21 @@ import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
-import org.eclipse.emf.ecp.core.util.ECPCloseable;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 
 /**
- * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public final class ECPCloseableProperties extends Properties<ECPCloseable> {
-	private static final IProperties<ECPCloseable> INSTANCE = new ECPCloseableProperties();
+public final class ECPContainerProperties extends Properties<ECPContainer> {
+	private static final IProperties<ECPContainer> INSTANCE = new ECPContainerProperties();
 
-	private ECPCloseableProperties() {
-		super(ECPCloseable.class);
+	private ECPContainerProperties() {
+		super(ECPContainer.class);
 
-		add(new Property<ECPCloseable>("open") {
+		add(new Property<ECPContainer>("canDelete") {
 			@Override
-			protected Object eval(ECPCloseable closeable) {
-				return closeable.isOpen();
-			}
-		});
-
-		add(new Property<ECPCloseable>("closed") {
-			@Override
-			protected Object eval(ECPCloseable closeable) {
-				return !closeable.isOpen();
+			protected Object eval(ECPContainer deletable) {
+				return deletable.canDelete();
 			}
 		});
 	}
@@ -46,8 +39,8 @@ public final class ECPCloseableProperties extends Properties<ECPCloseable> {
 	/**
 	 * @author Eike Stepper
 	 */
-	public static final class Tester extends DefaultPropertyTester<ECPCloseable> {
-		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.closeable";
+	public static final class Tester extends DefaultPropertyTester<ECPContainer> {
+		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.container";
 
 		/** The tester constructor. */
 		public Tester() {

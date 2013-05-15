@@ -1,11 +1,6 @@
 package org.eclipse.emf.ecp.rap;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.ui.application.ActionBarAdvisor;
-import org.eclipse.ui.application.IActionBarConfigurer;
-import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
-import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+import java.awt.Point;
 
 /**
  * Configures the initial size and appearance of a workbench window.

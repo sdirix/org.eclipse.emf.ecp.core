@@ -79,6 +79,19 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 				return project.hasDirtyContents();
 			}
 		});
+		add(new Property<ECPProject>("open") {
+			@Override
+			protected Object eval(ECPProject closeable) {
+				return closeable.isOpen();
+			}
+		});
+
+		add(new Property<ECPProject>("closed") {
+			@Override
+			protected Object eval(ECPProject closeable) {
+				return !closeable.isOpen();
+			}
+		});
 	}
 
 	/**

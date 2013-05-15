@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
@@ -87,7 +87,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		super(modelElement, ecpProject, shell);
 		this.ecpProject = ecpProject;
 		projectObserver = new IECPProjectsChangedUIObserverImplementation();
-		ECPProjectManager.INSTANCE.addObserver(projectObserver);
+		ECPUtil.getECPProjectManager().addObserver(projectObserver);
 	}
 
 	/** {@inheritDoc} */
@@ -99,7 +99,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	 * Dispose the context.
 	 */
 	public void dispose() {
-		ECPProjectManager.INSTANCE.removeObserver(projectObserver);
+		ECPUtil.getECPProjectManager().removeObserver(projectObserver);
 		contextListeners.clear();
 	}
 }

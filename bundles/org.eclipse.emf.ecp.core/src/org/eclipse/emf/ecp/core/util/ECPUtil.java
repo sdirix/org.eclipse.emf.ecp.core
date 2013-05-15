@@ -18,6 +18,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
 
@@ -89,14 +94,14 @@ public final class ECPUtil {
 	}
 
 	/**
-	 * Checks whether an object is an {@link ECPCloseable} and closed.
+	 * Checks whether an object is an {@link ECPProject} and closed.
 	 * 
 	 * @param object the object to check
-	 * @return true if the object is an instance of {@link ECPCloseable} and not open, false otherwise
+	 * @return true if the object is an instance of {@link ECPProject} and not open, false otherwise
 	 */
 	public static boolean isClosed(Object object) {
-		if (object instanceof ECPCloseable) {
-			ECPCloseable closeable = (ECPCloseable) object;
+		if (object instanceof ECPProject) {
+			ECPProject closeable = (ECPProject) object;
 			return !closeable.isOpen();
 		}
 
@@ -153,5 +158,56 @@ public final class ECPUtil {
 			ePackages.add(ePackage);
 		}
 		return ePackages;
+	}
+
+	/**
+	 * Instance of the ECPProjectManager.
+	 */
+	private static ECPProjectManager ecpProjectManagerInstance;
+
+	/**
+	 * Helper method to get the instance of the {@link ECPProjectManager}.
+	 * 
+	 * @return the {@link ECPProjectManager}
+	 */
+	public static ECPProjectManager getECPProjectManager() {
+		if (ecpProjectManagerInstance == null) {
+			ecpProjectManagerInstance = Activator.getECPProjectManager();
+		}
+		return ecpProjectManagerInstance;
+	}
+
+	/**
+	 * The {@link ECPRepositoryManager} instance.
+	 */
+	private static ECPRepositoryManager ecpRepositoryManagerInstance;
+
+	/**
+	 * Helper method to get the instance of the {@link ECPRepositoryManager}.
+	 * 
+	 * @return the {@link ECPRepositoryManager}
+	 */
+	public static ECPRepositoryManager getECPRepositoryManager() {
+		if (ecpRepositoryManagerInstance == null) {
+			ecpRepositoryManagerInstance = Activator.getECPRepositoryManager();
+		}
+		return ecpRepositoryManagerInstance;
+	}
+
+	/**
+	 * Instance of the ECPProviderRegistry.
+	 */
+	private static ECPProviderRegistry ecpProviderRegistryInstance;
+
+	/**
+	 * Helper method to get the instance of the {@link ECPProviderRegistry}.
+	 * 
+	 * @return the {@link ECPProviderRegistry}
+	 */
+	public static ECPProviderRegistry getECPProviderRegistry() {
+		if (ecpProviderRegistryInstance == null) {
+			ecpProviderRegistryInstance = Activator.getECPProviderRegistry();
+		}
+		return ecpProviderRegistryInstance;
 	}
 }

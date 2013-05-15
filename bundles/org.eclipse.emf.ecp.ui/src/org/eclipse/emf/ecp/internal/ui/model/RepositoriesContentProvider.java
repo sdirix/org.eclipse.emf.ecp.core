@@ -15,6 +15,7 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -53,12 +54,12 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	@Override
 	protected void connectInput(ECPRepositoryManager input) {
 		super.connectInput(input);
-		ECPRepositoryManager.INSTANCE.addObserver(this);
+		ECPUtil.getECPRepositoryManager().addObserver(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPRepositoryManager input) {
-		ECPRepositoryManager.INSTANCE.removeObserver(this);
+		ECPUtil.getECPRepositoryManager().removeObserver(this);
 		super.disconnectInput(input);
 	}
 
@@ -75,11 +76,11 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 
 	@Override
 	protected void fillChildren(Object parent, InternalChildrenList childrenList) {
-		if (parent == ECPRepositoryManager.INSTANCE) {
+		if (parent == ECPUtil.getECPRepositoryManager()) {
 			if (allowedProvider == null) {
-				childrenList.addChildren(ECPRepositoryManager.INSTANCE.getRepositories());
+				childrenList.addChildren(ECPUtil.getECPRepositoryManager().getRepositories());
 			} else {
-				for (ECPRepository ecpRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
+				for (ECPRepository ecpRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 					if (allowedProvider.equals(ecpRepository.getProvider())) {
 						childrenList.addChild(ecpRepository);
 					}

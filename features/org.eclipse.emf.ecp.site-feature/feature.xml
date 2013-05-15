@@ -52,10 +52,6 @@
          name="org.eclipse.emf.ecp.validation"/>
 
    <includes
-         id="org.eclipse.emf.ecp.example"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.target"
          version="0.0.0"/>
 

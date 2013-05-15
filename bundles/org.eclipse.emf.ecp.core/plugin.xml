@@ -8,23 +8,17 @@
 
    <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-         id="org.eclipse.emf.ecp.core.closeable.properties"
-         type="org.eclipse.emf.ecp.core.util.ECPCloseable"
-         namespace="org.eclipse.emf.ecp.core.closeable"
-         properties="open,closed"
-         class="org.eclipse.emf.ecp.internal.core.properties.ECPCloseableProperties$Tester"/>
-      <propertyTester
          id="org.eclipse.emf.ecp.core.project.properties"
          type="org.eclipse.emf.ecp.core.ECPProject"
          namespace="org.eclipse.emf.ecp.core.project"
-         properties="name,repositoryName,repositoryLabel,providerName,providerLabel,hasAutosave,isDirty"
+         properties="name,repositoryName,repositoryLabel,providerName,providerLabel,hasAutosave,isDirty,open,closed"
          class="org.eclipse.emf.ecp.internal.core.properties.ECPProjectProperties$Tester"/>
       <propertyTester
-            class="org.eclipse.emf.ecp.internal.core.properties.ECPDeletableProperties$Tester"
+            class="org.eclipse.emf.ecp.internal.core.properties.ECPContainerProperties$Tester"
             id="org.eclipse.emf.ecp.core.deletable.properties"
-            namespace="org.eclipse.emf.ecp.core.deletable"
+            namespace="org.eclipse.emf.ecp.core.container"
             properties="canDelete"
-            type="org.eclipse.emf.ecp.core.util.ECPDeletable">
+            type="org.eclipse.emf.ecp.core.util.ECPContainer">
       </propertyTester>
       <propertyTester
             class="org.eclipse.emf.ecp.internal.core.properties.ECPRepositoryProperties$Tester"

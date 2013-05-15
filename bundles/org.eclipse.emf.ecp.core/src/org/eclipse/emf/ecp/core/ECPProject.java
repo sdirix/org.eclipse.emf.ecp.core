@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.core.util.ECPCloseable;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -30,7 +29,7 @@ import java.util.Collection;
  * @noextend This interface is not intended to be extended by clients.
  */
 
-public interface ECPProject extends ECPContainer, ECPRepositoryAware, ECPCloseable, IEditingDomainProvider {
+public interface ECPProject extends ECPContainer, ECPRepositoryAware, IEditingDomainProvider {
 	/**
 	 * The type of the ECPElement.
 	 */
@@ -63,5 +62,22 @@ public interface ECPProject extends ECPContainer, ECPRepositoryAware, ECPCloseab
 	 * @param objects the collection of {@link Object}s to delete
 	 */
 	void deleteElements(Collection<Object> objects);
+
+	/**
+	 * Whether an object is open or not.
+	 * 
+	 * @return true if it is open, false otherwise
+	 */
+	boolean isOpen();
+
+	/**
+	 * This opens a closed object. If the object was already opened, nothing happens.
+	 */
+	void open();
+
+	/**
+	 * This closes an opened object. If the object was already closed, nothing happens.
+	 */
+	void close();
 
 }

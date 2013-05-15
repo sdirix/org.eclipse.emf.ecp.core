@@ -16,7 +16,6 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryManagerObserver;
-import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
@@ -28,11 +27,6 @@ import java.util.Collection;
  * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPRepositoryManager {
-
-	/**
-	 * The {@link ECPRepositoryManager} instance.
-	 */
-	ECPRepositoryManager INSTANCE = Activator.getECPRepositoryManager();
 
 	/**
 	 * This method returns a {@link ECPRepository} from an adaptable.

@@ -19,11 +19,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -101,7 +101,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	/** {@inheritDoc} **/
 	public InternalProvider getProvider() {
-		return (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(getName());
+		return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(getName());
 	}
 
 	/** {@inheritDoc} **/

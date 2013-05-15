@@ -13,7 +13,6 @@
 
 package org.eclipse.emf.ecp.ui.util;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
@@ -27,10 +26,10 @@ public interface ECPModelElementOpener {
 	/**
 	 * The action to open the model element.
 	 * 
-	 * @param modelElement
-	 *            the model element to open
+	 * @param element
+	 *            the element to open
 	 * @param ecpProject
 	 *            the project this element belongs to
 	 */
-	void openModelElement(EObject modelElement, ECPProject ecpProject);
+	void openModelElement(Object element, ECPProject ecpProject);
 }

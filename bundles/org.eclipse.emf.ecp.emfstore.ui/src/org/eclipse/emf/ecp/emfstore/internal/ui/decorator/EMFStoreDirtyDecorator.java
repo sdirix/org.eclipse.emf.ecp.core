@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
@@ -48,14 +48,14 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	 */
 	public EMFStoreDirtyDecorator() {
 		super();
-		ECPProjectManager.INSTANCE.addObserver(this);
+		ECPUtil.getECPProjectManager().addObserver(this);
 	}
 
 	/** {@inheritDoc} */
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPProject) {
 			InternalProject project = (InternalProject) element;
-			if (ECPProjectManager.INSTANCE.getProject(project.getName()) == null) {
+			if (ECPUtil.getECPProjectManager().getProject(project.getName()) == null) {
 				return;
 			}
 			ProjectSpace projectSpace = ((ESLocalProjectImpl) EMFStoreProvider.INSTANCE.getProjectSpace(project))
@@ -74,7 +74,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 		else if (element instanceof EObject) {
 			InternalProject project = null;
 			try {
-				project = (InternalProject) ECPProjectManager.INSTANCE.getProject(element);
+				project = (InternalProject) ECPUtil.getECPProjectManager().getProject(element);
 			} catch (IllegalArgumentException iae) {
 				// ignore
 			}

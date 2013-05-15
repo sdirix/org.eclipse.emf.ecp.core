@@ -13,9 +13,8 @@
 
 package org.eclipse.emf.ecp.internal.wizards;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
@@ -49,7 +48,7 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 	public void addPages() {
 		super.addPages();
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
-		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
 			if (provider.canAddOfflineProjects()) {
 				providers.add(provider);
 			}
@@ -65,7 +64,7 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 					}
 
 					public void projectNameChanged(String projectName) {
-						if (projectName != null && ECPProjectManager.INSTANCE.getProject(projectName) != null) {
+						if (projectName != null && ECPUtil.getECPProjectManager().getProject(projectName) != null) {
 							setErrorMessage("A project with name " + projectName + " already exists in the workspace.");
 						} else {
 							setErrorMessage(null);

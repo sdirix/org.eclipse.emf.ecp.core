@@ -14,7 +14,6 @@
 package org.eclipse.emf.ecp.internal.ui.composites;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Messages;
@@ -153,7 +152,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 		providersViewer.setContentProvider(new ProvidersContentProvider(true));
 		providersViewer.setLabelProvider(new ProvidersLabelProvider());
 		providersViewer.setSorter(new ViewerSorter());
-		providersViewer.setInput(ECPProviderRegistry.INSTANCE);
+		providersViewer.setInput(ECPUtil.getECPProviderRegistry());
 		providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
@@ -167,7 +166,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 			}
 		});
 
-		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
+		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
 			if (provider.canAddRepositories()) {
 				providersViewer.setSelection(new StructuredSelection(provider));
 				break;

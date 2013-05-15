@@ -6,8 +6,6 @@
  */
 package org.eclipse.emf.ecp.validation.test.test.util;
 
-import java.util.Map;
-
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
@@ -16,6 +14,8 @@ import org.eclipse.emf.ecp.validation.test.test.Book;
 import org.eclipse.emf.ecp.validation.test.test.Library;
 import org.eclipse.emf.ecp.validation.test.test.TestPackage;
 import org.eclipse.emf.ecp.validation.test.test.Writer;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->

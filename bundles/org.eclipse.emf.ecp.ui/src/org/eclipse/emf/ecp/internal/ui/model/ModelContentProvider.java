@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
@@ -48,18 +49,18 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 
 	@Override
 	protected void connectInput(ECPProjectManager input) {
-		ECPProjectManager.INSTANCE.addObserver(this);
+		ECPUtil.getECPProjectManager().addObserver(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPProjectManager input) {
-		ECPProjectManager.INSTANCE.removeObserver(this);
+		ECPUtil.getECPProjectManager().removeObserver(this);
 	}
 
 	@Override
 	protected void fillChildren(Object parent, InternalChildrenList childrenList) {
-		if (parent == ECPProjectManager.INSTANCE) {
-			childrenList.addChildren(ECPProjectManager.INSTANCE.getProjects());
+		if (parent == ECPUtil.getECPProjectManager()) {
+			childrenList.addChildren(ECPUtil.getECPProjectManager().getProjects());
 		} else {
 			super.fillChildren(parent, childrenList);
 		}

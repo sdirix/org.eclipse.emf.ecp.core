@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -137,7 +136,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 				}
 				if (projectName == null) {
 					topStatus = false;
-				} else if (ECPProjectManager.INSTANCE.getProject(projectName) != null) {
+				} else if (ECPUtil.getECPProjectManager().getProject(projectName) != null) {
 					topStatus = false;
 				} else {
 					topStatus = true;

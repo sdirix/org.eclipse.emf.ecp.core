@@ -21,10 +21,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -56,13 +54,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		protected void doDispose() {
 			uiProvider = null;
 
-			for (ECPRepository repository : ECPRepositoryManager.INSTANCE.getRepositories()) {
+			for (ECPRepository repository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 				if (repository.getProvider().getName().equals(getName())) {
 					handleLifecycle(repository, LifecycleEvent.DISPOSE);
 				}
 			}
 
-			for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
+			for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
 				if (project.getProvider().getName().equals(getName())) {
 					handleLifecycle(project, LifecycleEvent.DISPOSE);
 				}
@@ -90,6 +88,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getType() {
 		return TYPE;
 	}
@@ -132,7 +131,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/** {@inheritDoc} */
 	public final Set<ECPRepository> getRepositories() {
 		Set<InternalRepository> result = new LinkedHashSet<InternalRepository>();
-		for (ECPRepository repository : ECPRepositoryManager.INSTANCE.getRepositories()) {
+		for (ECPRepository repository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 			if (!ECPUtil.isDisposed(repository)) {
 				ECPProvider provider = repository.getProvider();
 				if (provider.equals(this)) {
@@ -148,7 +147,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/** {@inheritDoc} */
 	public final Set<InternalProject> getOpenProjects() {
 		Set<InternalProject> result = new LinkedHashSet<InternalProject>();
-		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
+		for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
 			if (project.isOpen()) {
 				if (project.getProvider().equals(this)) {
 					result.add((InternalProject) project);
@@ -306,10 +305,10 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	/** {@inheritDoc} */
 	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
-		if (parent == ECPProjectManager.INSTANCE) {
-			childrenList.addChildren(ECPProjectManager.INSTANCE.getProjects());
-		} else if (parent == ECPRepositoryManager.INSTANCE) {
-			childrenList.addChildren(ECPRepositoryManager.INSTANCE.getRepositories());
+		if (parent == ECPUtil.getECPProjectManager()) {
+			childrenList.addChildren(ECPUtil.getECPProjectManager().getProjects());
+		} else if (parent == ECPUtil.getECPRepositoryManager()) {
+			childrenList.addChildren(ECPUtil.getECPRepositoryManager().getRepositories());
 		} else {
 			// Get the adapter from the factory.
 			ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider) EMF_ADAPTER_FACTORY.adapt(

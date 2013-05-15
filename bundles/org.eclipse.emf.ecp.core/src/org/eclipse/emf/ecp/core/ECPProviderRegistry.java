@@ -16,7 +16,6 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
-import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
@@ -29,10 +28,6 @@ import java.util.Collection;
  * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPProviderRegistry {
-	/**
-	 * Instance of the ECPProviderRegistry.
-	 */
-	ECPProviderRegistry INSTANCE = Activator.getECPProviderRegistry();
 
 	/**
 	 * This method returns the ECPProvider based on the name.

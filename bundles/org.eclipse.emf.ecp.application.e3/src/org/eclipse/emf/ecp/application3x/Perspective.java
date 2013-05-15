@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.application3x;
 
 import org.eclipse.emf.ecp.ui.views.ModelExplorerView;
 import org.eclipse.emf.ecp.ui.views.ModelRepositoriesView;
+
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
 /**

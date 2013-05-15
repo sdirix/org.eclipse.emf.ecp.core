@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
@@ -28,7 +28,7 @@ public class EMFStoreElementIsShared extends PropertyTester {
 
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		InternalProject project = (InternalProject) ECPProjectManager.INSTANCE.getProject(receiver);
+		InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(receiver);
 		if (project != null) {
 			ESLocalProject ps = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 			if (ps != null) {

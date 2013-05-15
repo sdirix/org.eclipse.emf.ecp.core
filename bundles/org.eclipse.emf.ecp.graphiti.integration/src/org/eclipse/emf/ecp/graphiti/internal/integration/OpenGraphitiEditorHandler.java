@@ -1,7 +1,6 @@
 package org.eclipse.emf.ecp.graphiti.internal.integration;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -9,13 +8,11 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.graphiti.GraphitiDiagramEditorInput;
 import org.eclipse.emf.ecp.internal.graphiti.feature.LoadProjectFeature;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;

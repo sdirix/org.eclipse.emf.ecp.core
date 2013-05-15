@@ -14,7 +14,6 @@
 
 package org.eclipse.emf.ecp.core.util;
 
-
 /**
  * Common super interface for ECP containers, model elements can belong to. E.g. a
  * {@link org.eclipse.emf.ecp.core.ECPProject ECPProject} or {@link org.eclipse.emf.ecp.core.ECPRepository
@@ -24,5 +23,16 @@ package org.eclipse.emf.ecp.core.util;
  * 
  * @author Eugen Neufeld
  */
-public interface ECPContainer extends ECPElement, ECPPropertiesAware, ECPDeletable, ECPProviderAware {
+public interface ECPContainer extends ECPElement, ECPPropertiesAware, ECPProviderAware {
+	/**
+	 * Whether this instance can be deleted or not.
+	 * 
+	 * @return true if this instance can be deleted, false otherwise.
+	 */
+	boolean canDelete();
+
+	/**
+	 * Deletes the current instance.
+	 */
+	void delete();
 }

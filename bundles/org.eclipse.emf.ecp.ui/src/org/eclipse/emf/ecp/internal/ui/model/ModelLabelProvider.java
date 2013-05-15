@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
@@ -25,12 +25,12 @@ public class ModelLabelProvider extends ECPLabelProvider implements ECPProjectOp
 
 	public ModelLabelProvider(ECPModelContextProvider modelContextProvider) {
 		super(modelContextProvider);
-		ECPProjectManager.INSTANCE.addObserver(this);
+		ECPUtil.getECPProjectManager().addObserver(this);
 	}
 
 	@Override
 	public void dispose() {
-		ECPProjectManager.INSTANCE.removeObserver(this);
+		ECPUtil.getECPProjectManager().removeObserver(this);
 	}
 
 	@Override

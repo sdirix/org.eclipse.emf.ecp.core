@@ -1,8 +1,5 @@
 package org.eclipse.emf.ecp.graphiti.internal.integration;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.graphiti.feature.ECPDoubleClickFeature;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;

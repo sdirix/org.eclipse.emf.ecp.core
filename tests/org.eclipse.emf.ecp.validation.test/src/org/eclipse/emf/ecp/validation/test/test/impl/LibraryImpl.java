@@ -6,8 +6,6 @@
  */
 package org.eclipse.emf.ecp.validation.test.test.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,6 +20,8 @@ import org.eclipse.emf.ecp.validation.test.test.Book;
 import org.eclipse.emf.ecp.validation.test.test.Library;
 import org.eclipse.emf.ecp.validation.test.test.TestPackage;
 import org.eclipse.emf.ecp.validation.test.test.Writer;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->

@@ -13,9 +13,9 @@
 
 package org.eclipse.emf.ecp.internal.wizards;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
@@ -58,7 +58,7 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 			}
 
 			private void validateName(String projectName) {
-				if (ECPProjectManager.INSTANCE.getProject(projectName) != null) {
+				if (ECPUtil.getECPProjectManager().getProject(projectName) != null) {
 					setPageComplete(false);
 					setErrorMessage("A project with name " + projectName + " already exists in the workspace.");
 				} else {

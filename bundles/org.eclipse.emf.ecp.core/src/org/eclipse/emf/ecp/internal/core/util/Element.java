@@ -61,8 +61,8 @@ public abstract class Element implements ECPElement {
 			return false;
 		}
 
-		if (obj instanceof ECPElement) {
-			ECPElement that = (ECPElement) obj;
+		if (obj instanceof Element) {
+			Element that = (Element) obj;
 			return getType().equals(that.getType()) && name.equals(that.getName());
 		}
 
@@ -73,4 +73,11 @@ public abstract class Element implements ECPElement {
 	public String toString() {
 		return name;
 	}
+
+	/**
+	 * This return the type of the object.
+	 * 
+	 * @return the type
+	 */
+	public abstract String getType();
 }

@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -36,7 +35,7 @@ public class EmfStoreLocalServerAndNotRunningTester extends PropertyTester {
 		if (receiver instanceof ECPRepository && expectedValue instanceof Boolean) {
 			final ECPRepository ecpRepository = (ECPRepository) receiver;
 			EMFStoreProvider emfStoreProvider = (EMFStoreProvider) ECPUtil
-				.getResolvedElement(ECPProviderRegistry.INSTANCE.getProvider(EMFStoreProvider.NAME));
+				.getResolvedElement(ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME));
 			final ESServer serverInfo = emfStoreProvider.getServerInfo((InternalRepository) ecpRepository);
 			if (allowedLocalUris.contains(serverInfo.getURL())) {
 				if (EMFStoreController.getInstance() == null) {

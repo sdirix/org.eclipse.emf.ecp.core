@@ -4,9 +4,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -19,10 +17,11 @@ public abstract class AbstractTest {
 	private static ECPRepository repository;
 	@BeforeClass
 	public static void init() throws ProjectWithNameExistsException {
-		provider = ECPProviderRegistry.INSTANCE.getProvider(EMFStoreProvider.NAME);
-		repository = ECPRepositoryManager.INSTANCE.addRepository(provider, "repositoryName", "repositoryLabel",
+		provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
+		repository = ECPUtil.getECPRepositoryManager().addRepository(provider, "repositoryName", "repositoryLabel",
 			"description", getNewProperties());
-		projectManager = ECPProjectManager.INSTANCE;
+		projectManager = ECPUtil.getECPProjectManager();
+		
 		
 	}
 

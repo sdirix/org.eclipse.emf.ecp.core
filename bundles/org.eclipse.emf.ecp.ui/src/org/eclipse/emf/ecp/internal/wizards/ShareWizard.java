@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.internal.wizards;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.wizards.page.AddRepositoryPage;
 import org.eclipse.emf.ecp.internal.wizards.page.SelectOrCreateRepositoryPage;
@@ -93,7 +93,7 @@ public class ShareWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		if (selectedRepository == null) {
-			selectedRepository = ECPRepositoryManager.INSTANCE
+			selectedRepository = ECPUtil.getECPRepositoryManager()
 				.addRepository(
 					provider,
 					repositoryComposite.getRepositoryName(),

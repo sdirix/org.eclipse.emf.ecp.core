@@ -16,7 +16,6 @@ package org.eclipse.emf.ecp.internal.core;
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
@@ -156,12 +155,12 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	protected void doActivate() throws Exception {
 		super.doActivate();
 		extensionParser.activate();
-		ECPProviderRegistry.INSTANCE.addObserver(this);
+		ECPUtil.getECPProviderRegistry().addObserver(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPProviderRegistry.INSTANCE.removeObserver(this);
+		ECPUtil.getECPProviderRegistry().removeObserver(this);
 		extensionParser.deactivate();
 		super.doDeactivate();
 	}
@@ -214,7 +213,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		/** {@inheritDoc} */
 		public InternalProvider getProvider() {
 			String providerName = getConfigurationElement().getAttribute("provider");
-			return (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);
+			return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		}
 
 		/** {@inheritDoc} */

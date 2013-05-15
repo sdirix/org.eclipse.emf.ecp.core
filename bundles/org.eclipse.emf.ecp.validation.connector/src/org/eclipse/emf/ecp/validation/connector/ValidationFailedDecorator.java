@@ -15,11 +15,10 @@ package org.eclipse.emf.ecp.validation.connector;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
-import org.eclipse.jface.viewers.LabelProvider;
 
 /**
  * This class decorates the navigator if the validation of a project fails.
@@ -43,13 +42,13 @@ public class ValidationFailedDecorator  implements ILightweightLabelDecorator {
 		
 		if (element instanceof EObject) {
 
-			ECPProject project = ECPProjectManager.INSTANCE.getProject(element);
+			ECPProject project = ECPUtil.getECPProjectManager().getProject(element);
 			
 			if (project != null&&project.isOpen()) {
 				severity = Activator.getDefault().getValidationService(project).getDiagnostic(element).getSeverity();
 			}
 		} else if (element instanceof ECPProject && ((ECPProject)element).isOpen()) {
-			if (ECPProjectManager.INSTANCE.getProject(((ECPProject) element).getName()) == null) {
+			if (ECPUtil.getECPProjectManager().getProject(((ECPProject) element).getName()) == null) {
 				return;
 			}
 			severity = Activator.getDefault().getValidationService((ECPProject) element).getRootDiagnostic().getSeverity();

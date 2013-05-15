@@ -17,7 +17,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsPreChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
@@ -65,14 +65,14 @@ public class Activator extends Plugin {
 		plugin = this;
 
 		validationObserver = new ValidationObserver();
-		ECPProjectManager.INSTANCE.addObserver(validationObserver);
+		ECPUtil.getECPProjectManager().addObserver(validationObserver);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext context) throws Exception {
-		ECPProjectManager.INSTANCE.removeObserver(validationObserver);
+		ECPUtil.getECPProjectManager().removeObserver(validationObserver);
 		plugin = null;
 		super.stop(context);
 	}

@@ -11,7 +11,7 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.dialogs;
 
-import org.eclipse.emf.ecp.core.util.ECPDeletable;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 
@@ -30,9 +30,9 @@ import java.util.List;
  * @author Eike Stepper
  */
 public class DeleteDialog extends TitleAreaDialog {
-	private final List<ECPDeletable> deletables;
+	private final List<ECPContainer> deletables;
 
-	public DeleteDialog(Shell parentShell, List<ECPDeletable> deletables) {
+	public DeleteDialog(Shell parentShell, List<ECPContainer> deletables) {
 		super(parentShell);
 		this.deletables = deletables;
 	}

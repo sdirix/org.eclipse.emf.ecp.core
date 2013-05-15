@@ -12,8 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 
 import org.eclipse.core.expressions.PropertyTester;
@@ -27,7 +28,11 @@ public class EMFStoreHistoryAvailable extends PropertyTester {
 
 	/** {@inheritDoc} */
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		ECPProvider provider = ECPProjectManager.INSTANCE.getProject(receiver).getProvider();
+		ECPProject project = ECPUtil.getECPProjectManager().getProject(receiver);
+		if (project == null) {
+			return false;
+		}
+		ECPProvider provider = project.getProvider();
 		if (provider != null) {
 			return Boolean.valueOf(provider.getName().equals(EMFStoreProvider.NAME)).equals(expectedValue);
 		}

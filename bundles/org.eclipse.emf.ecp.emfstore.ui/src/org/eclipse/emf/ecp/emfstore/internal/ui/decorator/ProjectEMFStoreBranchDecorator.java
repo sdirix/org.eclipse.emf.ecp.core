@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -58,7 +57,7 @@ public class ProjectEMFStoreBranchDecorator implements ILabelDecorator, ESShareO
 		if (element instanceof ESLocalProject) {
 			localProject = (ESLocalProject) element;
 		} else if (element instanceof ECPProject) {
-			ECPProvider ecpProvider = ECPProviderRegistry.INSTANCE.getProvider(EMFStoreProvider.NAME);
+			ECPProvider ecpProvider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 			EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
 			InternalProject project = (InternalProject) element;
 			localProject = provider.getProjectSpace(project);

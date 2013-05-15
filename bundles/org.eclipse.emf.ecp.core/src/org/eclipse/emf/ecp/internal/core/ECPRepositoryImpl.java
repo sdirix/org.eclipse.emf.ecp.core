@@ -14,14 +14,13 @@
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -96,7 +95,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 		description = in.readUTF();
 
 		String providerName = in.readUTF();
-		provider = (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(providerName);
+		provider = (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		if (provider == null) {
 			throw new IllegalStateException("Provider not found: " + providerName);
 		}
@@ -105,6 +104,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getType() {
 		return ECPRepository.TYPE;
 	}
@@ -252,7 +252,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	 */
 	public InternalProject[] getOpenProjects() {
 		List<InternalProject> result = new ArrayList<InternalProject>();
-		for (ECPProject project : ECPProjectManager.INSTANCE.getProjects()) {
+		for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
 			if (project.isOpen() && project.getRepository().equals(this)) {
 				result.add((InternalProject) project);
 			}

@@ -23,9 +23,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -555,7 +555,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	public ECPRepository getRepository(ServerInfo serverInfo) {
 		if (serverInfo != null) {
-			for (ECPRepository internalRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
+			for (ECPRepository internalRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 				if (internalRepository.getProvider().equals(this)) {
 					if (serverInfo.equals(((InternalRepository) internalRepository).getProviderSpecificData())) {
 						return internalRepository;
