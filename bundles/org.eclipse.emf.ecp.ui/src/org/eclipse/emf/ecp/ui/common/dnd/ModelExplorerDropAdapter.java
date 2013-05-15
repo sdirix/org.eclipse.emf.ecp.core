@@ -97,7 +97,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 				event.feedback = DND.FEEDBACK_INSERT_AFTER | DND.FEEDBACK_INSERT_BEFORE | DND.FEEDBACK_SCROLL;
 			}
 			// TODO delegate to provider?
-			else if (project.getElements().contains(sourceObject)) {
+			else if (project.getContents().contains(sourceObject)) {
 				if (originalOperation != DND.DROP_COPY) {
 					event.detail = DND.DROP_NONE;
 				} else {
@@ -141,9 +141,9 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 					@Override
 					protected void doExecute() {
 						if (event.detail == DND.DROP_MOVE) {
-							project.getElements().add(sourceObject);
+							project.getContents().add(sourceObject);
 						} else if (event.detail == DND.DROP_COPY) {
-							project.getElements().add(EcoreUtil.copy((EObject) sourceObject));
+							project.getContents().add(EcoreUtil.copy((EObject) sourceObject));
 						}
 					}
 				});

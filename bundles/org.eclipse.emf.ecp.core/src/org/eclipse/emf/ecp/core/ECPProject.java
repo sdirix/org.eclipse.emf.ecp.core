@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.util.ECPCloseable;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 
@@ -30,7 +30,7 @@ import java.util.Collection;
  * @noextend This interface is not intended to be extended by clients.
  */
 
-public interface ECPProject extends ECPModelContainer, ECPRepositoryAware, ECPCloseable, IEditingDomainProvider {
+public interface ECPProject extends ECPContainer, ECPRepositoryAware, ECPCloseable, IEditingDomainProvider {
 	/**
 	 * The type of the ECPElement.
 	 */
@@ -43,19 +43,19 @@ public interface ECPProject extends ECPModelContainer, ECPRepositoryAware, ECPCl
 	 * 
 	 * @return A list of {@link Object}
 	 */
-	EList<Object> getElements();
+	EList<Object> getContents();
 
 	/**
 	 * Saves the currently pending changes of the model. This method delegates to the provider.
 	 */
-	void saveModel();
+	void saveContents();
 
 	/**
 	 * Checks whether the model, associated with this project is dirty.
 	 * 
 	 * @return true if model is dirty, false otherwise
 	 */
-	boolean isModelDirty();
+	boolean hasDirtyContents();
 
 	/**
 	 * Deletes a collection of {@link Object}s by delegating the task to the provider.

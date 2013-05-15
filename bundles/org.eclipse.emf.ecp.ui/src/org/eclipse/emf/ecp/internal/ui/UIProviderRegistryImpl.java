@@ -15,7 +15,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
@@ -170,7 +170,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 			return getResolvedElement().getImage(element);
 		}
 
-		public void fillContextMenu(IMenuManager manager, ECPModelContainer context, Object[] elements) {
+		public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 			getResolvedElement().fillContextMenu(manager, context, elements);
 		}
 

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
@@ -105,7 +105,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param parent the parent to read the children from
 	 * @param childrenList the list to fill
 	 */
-	void fillChildren(ECPModelContainer context, Object parent, InternalChildrenList childrenList);
+	void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList);
 
 	/**
 	 * This method is called to handle a specific life cycle.
@@ -113,7 +113,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param context the context to handle the lifecycle for
 	 * @param event the lifecycle event to handle
 	 */
-	void handleLifecycle(ECPModelContainer context, LifecycleEvent event);
+	void handleLifecycle(ECPContainer context, LifecycleEvent event);
 
 	/**
 	 * This method returns an {@link EList} of the root elements.

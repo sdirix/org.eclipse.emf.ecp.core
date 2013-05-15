@@ -209,7 +209,7 @@ public final class ECPHandlerHelper {
 
 					@Override
 					protected void doExecute() {
-						ecpProject.getElements().add(newMEInstance);
+						ecpProject.getContents().add(newMEInstance);
 					}
 				});
 				if (open) {
@@ -325,7 +325,7 @@ public final class ECPHandlerHelper {
 	 * @param project the project to save the changes on
 	 */
 	public static void saveProject(ECPProject project) {
-		project.saveModel();
+		project.saveContents();
 	}
 
 	/**

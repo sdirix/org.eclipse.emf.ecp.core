@@ -12,9 +12,9 @@
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -64,11 +64,12 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 
 	@Override
 	protected boolean isSlow(Object parent) {
-		InternalProvider provider = (InternalProvider) ECPProviderRegistry.INSTANCE.getProvider(parent);
-		if (provider != null) {
-			return provider.isSlow(parent);
+		if (parent instanceof ECPProviderAware) {
+			InternalProvider provider = (InternalProvider) ((ECPProviderAware) parent).getProvider();
+			if (provider != null) {
+				return provider.isSlow(parent);
+			}
 		}
-
 		return super.isSlow(parent);
 	}
 
@@ -78,13 +79,11 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 			if (allowedProvider == null) {
 				childrenList.addChildren(ECPRepositoryManager.INSTANCE.getRepositories());
 			} else {
-				childrenList.addChildren(allowedProvider.getRepositories());
-				// TODO test
-				// for (ECPRepository ecpRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
-				// if (allowedProvider.equals(ecpRepository.getProvider())) {
-				// childrenList.addChild(ecpRepository);
-				// }
-				// }
+				for (ECPRepository ecpRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
+					if (allowedProvider.equals(ecpRepository.getProvider())) {
+						childrenList.addChild(ecpRepository);
+					}
+				}
 			}
 		} else {
 			super.fillChildren(parent, childrenList);

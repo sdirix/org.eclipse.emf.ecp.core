@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.workspace.internal.ui;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
@@ -60,7 +60,7 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 	}
 
 	@Override
-	public void fillContextMenu(IMenuManager manager, ECPModelContainer context, Object[] elements) {
+	public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 		super.fillContextMenu(manager, context, elements);
 	}
 

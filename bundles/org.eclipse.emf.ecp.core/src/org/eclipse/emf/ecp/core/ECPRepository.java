@@ -13,7 +13,7 @@
 
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 
 /**
  * This class describes a repository.
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.core.util.ECPModelContainer;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface ECPRepository extends ECPModelContainer {
+public interface ECPRepository extends ECPContainer {
 	/**
 	 * The type of this ECPElement.
 	 */

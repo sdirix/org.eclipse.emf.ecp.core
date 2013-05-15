@@ -76,7 +76,7 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 		add(new Property<ECPProject>("isDirty", "Is project dirty", "Has this project unsaved changes?") {
 			@Override
 			protected Object eval(ECPProject project) {
-				return project.isModelDirty();
+				return project.hasDirtyContents();
 			}
 		});
 	}

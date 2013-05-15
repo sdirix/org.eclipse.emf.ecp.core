@@ -68,7 +68,7 @@ public class EObjectPattern extends AbstractPattern {
 
 					@Override
 					protected void doExecute() {
-						project.getElements().add(createdEObject);
+						project.getContents().add(createdEObject);
 					}
 				});
 

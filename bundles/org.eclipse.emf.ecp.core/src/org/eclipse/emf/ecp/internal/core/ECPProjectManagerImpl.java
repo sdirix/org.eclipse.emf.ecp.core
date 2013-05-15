@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -133,7 +133,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	private InternalProject getInternalProject(Object object) {
 		for (ECPProvider provider : ECPProviderRegistry.INSTANCE.getProviders()) {
 			InternalProvider internalProvider = (InternalProvider) ECPUtil.getResolvedElement(provider);
-			ECPModelContainer modelContext = internalProvider.getModelContext(object);
+			ECPContainer modelContext = internalProvider.getModelContext(object);
 			if (modelContext != null && InternalProject.class.isInstance(modelContext)) {
 				return (InternalProject) modelContext;
 			}

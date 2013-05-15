@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
@@ -214,7 +214,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
-	public ECPModelContainer getContext() {
+	public ECPContainer getContext() {
 		return this;
 	}
 

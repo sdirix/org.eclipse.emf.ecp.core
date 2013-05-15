@@ -70,7 +70,7 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 	private Collection<EObject> getAllChildEObjects(ECPProject project) {
 		List<EObject> result = new ArrayList<EObject>();
 	
-		for (Object object : project.getElements()) {
+		for (Object object : project.getContents()) {
 			if (EObject.class.isInstance(object)) {
 				EObject eObject = (EObject) object;
 			    result.add(eObject);	     

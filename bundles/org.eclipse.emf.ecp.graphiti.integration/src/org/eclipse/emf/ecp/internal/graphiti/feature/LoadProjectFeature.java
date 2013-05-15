@@ -32,7 +32,7 @@ public class LoadProjectFeature extends AbstractAddFeature {
 		// Object object=getBusinessObjectForPictogramElement(createDiagram);
 
 		int currentXOffset = DEFAULT_OFFSET_X;
-		for (Object rootObject : project.getElements()) {
+		for (Object rootObject : project.getContents()) {
 			if (!EObject.class.isInstance(rootObject)) {
 				continue;
 			}
@@ -45,7 +45,7 @@ public class LoadProjectFeature extends AbstractAddFeature {
 				currentXOffset += nextXOffset;
 		}
 
-		for (Object rootObject : project.getElements()) {
+		for (Object rootObject : project.getContents()) {
 			if (!EObject.class.isInstance(rootObject))
 				continue;
 			EObject eObject = (EObject) rootObject;

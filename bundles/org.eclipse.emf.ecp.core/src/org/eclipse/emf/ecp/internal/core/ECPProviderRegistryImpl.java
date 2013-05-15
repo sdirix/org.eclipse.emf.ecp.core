@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
@@ -210,17 +210,17 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public ECPModelContainer getModelContext(Object element) {
+		public ECPContainer getModelContext(Object element) {
 			return getResolvedElement().getModelContext(element);
 		}
 
 		/** {@inheritDoc} */
-		public void fillChildren(ECPModelContainer context, Object parent, InternalChildrenList childrenList) {
+		public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 			getResolvedElement().fillChildren(context, parent, childrenList);
 		}
 
 		/** {@inheritDoc} */
-		public void handleLifecycle(ECPModelContainer context, LifecycleEvent event) {
+		public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 			getResolvedElement().handleLifecycle(context, event);
 		}
 

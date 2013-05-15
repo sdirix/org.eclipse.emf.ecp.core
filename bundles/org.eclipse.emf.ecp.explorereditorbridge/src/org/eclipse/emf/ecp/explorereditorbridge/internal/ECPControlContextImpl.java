@@ -114,7 +114,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		// }
 		if (eReference == null) {
 			// TODO needed?
-			ecpProject.getElements().add(newMEInstance);
+			ecpProject.getContents().add(newMEInstance);
 		}
 		if (eReference.isContainer()) {
 			// TODO language

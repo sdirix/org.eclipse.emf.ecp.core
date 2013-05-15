@@ -164,7 +164,7 @@ public class ECPProjectManagerTests extends AbstractTest {
 			ECPProject project = getProjectManager().createProject(
 					getProvider(), projectName);
 			EObject object=EcoreFactory.eINSTANCE.createEObject();
-			project.getElements().add(object);
+			project.getContents().add(object);
 			
 			ECPProject project2 = getProjectManager().getProject(object);
 			assertTrue(project == project2);

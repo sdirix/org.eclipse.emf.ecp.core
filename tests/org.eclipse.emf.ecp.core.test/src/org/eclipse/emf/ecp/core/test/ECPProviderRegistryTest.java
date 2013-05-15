@@ -9,11 +9,12 @@ import org.junit.Test;
 
 public class ECPProviderRegistryTest extends AbstractTest {
 
-	@Test
-	public void getProviderByItselfTest(){
-		ECPProvider ecpProvider=ECPProviderRegistry.INSTANCE.getProvider(getProvider());
-		assertEquals(ecpProvider,getProvider());
-	}
+//	@Test
+//	public void getProviderByItselfTest(){
+//		ECPProvider ecpProvider=ECPProviderRegistry.INSTANCE.getProvider(getProvider());
+//		assertEquals(ecpProvider,getProvider());
+//	}
+//	
 	@Test
 	public void removeAddProviderTest(){
 		ECPProviderRegistry.INSTANCE.removeProvider(EMFStoreProvider.NAME);

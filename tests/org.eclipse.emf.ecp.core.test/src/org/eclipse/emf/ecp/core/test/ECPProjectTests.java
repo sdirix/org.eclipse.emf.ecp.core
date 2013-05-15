@@ -80,37 +80,37 @@ public class ECPProjectTests extends AbstractTest {
 	 */
 	@Test
 	public void testGetElements() {
-		assertEquals(0,project.getElements().size());
+		assertEquals(0,project.getContents().size());
 
 		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
 		EObject reference = EcoreFactory.eINSTANCE.createEReference();
 		
-		project.getElements().add(clazz);
+		project.getContents().add(clazz);
 		
-		assertEquals(1,project.getElements().size());
+		assertEquals(1,project.getContents().size());
 		assertTrue(project.contains(clazz));
-		assertTrue(project.getElements().contains(clazz));
+		assertTrue(project.getContents().contains(clazz));
 		
-		project.getElements().add(reference);
-		assertEquals(2,project.getElements().size());
+		project.getContents().add(reference);
+		assertEquals(2,project.getContents().size());
 		assertTrue(project.contains(clazz));
-		assertTrue(project.getElements().contains(clazz));
+		assertTrue(project.getContents().contains(clazz));
 		assertTrue(project.contains(reference));
-		assertTrue(project.getElements().contains(reference));
+		assertTrue(project.getContents().contains(reference));
 		
-		project.getElements().remove(clazz);
-		assertEquals(1,project.getElements().size());
+		project.getContents().remove(clazz);
+		assertEquals(1,project.getContents().size());
 		assertFalse(project.contains(clazz));
-		assertFalse(project.getElements().contains(clazz));
+		assertFalse(project.getContents().contains(clazz));
 		assertTrue(project.contains(reference));
-		assertTrue(project.getElements().contains(reference));
+		assertTrue(project.getContents().contains(reference));
 		
-		project.getElements().remove(reference);
-		assertEquals(0,project.getElements().size());
+		project.getContents().remove(reference);
+		assertEquals(0,project.getContents().size());
 		assertFalse(project.contains(clazz));
-		assertFalse(project.getElements().contains(clazz));
+		assertFalse(project.getContents().contains(clazz));
 		assertFalse(project.contains(reference));
-		assertFalse(project.getElements().contains(reference));
+		assertFalse(project.getContents().contains(reference));
 	}
 	
 	/**
@@ -133,13 +133,13 @@ public class ECPProjectTests extends AbstractTest {
 		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
 		EObject reference = EcoreFactory.eINSTANCE.createEReference();
 		
-		project.getElements().add(clazz);
+		project.getContents().add(clazz);
 		assertTrue(project.contains(clazz));
 		
 		packages.add(EcorePackage.eINSTANCE);
 		assertTrue(packages.contains(EcorePackage.eINSTANCE));
 				
-		project.getElements().add(reference);
+		project.getContents().add(reference);
 		assertTrue(project.contains(reference));	
 	}
 	
@@ -194,11 +194,11 @@ public class ECPProjectTests extends AbstractTest {
 		
 		EReference reference = (EReference) clazz.eClass().getEStructuralFeature(EcorePackage.EREFERENCE);
 		
-		project.getElements().add(clazz);
+		project.getContents().add(clazz);
 		
 		assertFalse(project.getReferenceCandidates(clazz, reference).hasNext());
 		
-		project.getElements().add(referenceObjectA);
+		project.getContents().add(referenceObjectA);
 		
 		Iterator<EObject> iterator = project.getReferenceCandidates(clazz, reference);
 		List<EObject> objects = new ArrayList<EObject>(2);
@@ -211,7 +211,7 @@ public class ECPProjectTests extends AbstractTest {
 		assertTrue(objects.contains(referenceObjectA));
 		objects.clear();
 		
-		project.getElements().add(referenceObjectB);
+		project.getContents().add(referenceObjectB);
 		iterator = project.getReferenceCandidates(clazz, reference);
 		
 		while (iterator.hasNext()) {
@@ -238,11 +238,11 @@ public class ECPProjectTests extends AbstractTest {
 	@Test
 	public void testDirtySaveModel() {
 		EObject clazz = EcoreFactory.eINSTANCE.createEClass();	
-		assertFalse(project.isModelDirty());
-		project.getElements().add(clazz);
-		assertTrue(project.isModelDirty());
-		project.saveModel();
-		assertFalse(project.isModelDirty());
+		assertFalse(project.hasDirtyContents());
+		project.getContents().add(clazz);
+		assertTrue(project.hasDirtyContents());
+		project.saveContents();
+		assertFalse(project.hasDirtyContents());
 	}
 	
 	/**
@@ -254,26 +254,26 @@ public class ECPProjectTests extends AbstractTest {
 		EObject reference = EcoreFactory.eINSTANCE.createEReference();
 		EObject attribute = EcoreFactory.eINSTANCE.createEAttribute();
 		
-		assertEquals(0,project.getElements().size());
-		project.getElements().add(clazz);
-		project.getElements().add(reference);
-		assertEquals(2,project.getElements().size());
+		assertEquals(0,project.getContents().size());
+		project.getContents().add(clazz);
+		project.getContents().add(reference);
+		assertEquals(2,project.getContents().size());
 		
 		project.deleteElements((Collection)Collections.singleton(clazz));
-		assertEquals(1,project.getElements().size());
+		assertEquals(1,project.getContents().size());
 		assertTrue(project.contains(reference));
 		assertFalse(project.contains(clazz));
 		
 		project.deleteElements((Collection)Collections.singleton(reference));
-		assertEquals(0,project.getElements().size());
+		assertEquals(0,project.getContents().size());
 		
-		project.getElements().add(clazz);
-		project.getElements().add(reference);
-		project.getElements().add(attribute);
+		project.getContents().add(clazz);
+		project.getContents().add(reference);
+		project.getContents().add(attribute);
 		
-		assertEquals(3,project.getElements().size());
+		assertEquals(3,project.getContents().size());
 		project.deleteElements((Collection)Arrays.asList(clazz,reference,attribute));
-		assertEquals(0,project.getElements().size());
+		assertEquals(0,project.getContents().size());
 		
 		boolean thrown=false;
 		try {
@@ -293,11 +293,11 @@ public class ECPProjectTests extends AbstractTest {
 		EObject reference = EcoreFactory.eINSTANCE.createEReference();
 		EObject attribute = EcoreFactory.eINSTANCE.createEAttribute();
 		
-		assertEquals(0,project.getElements().size());
-		project.getElements().add(clazz);
-		project.getElements().add(reference);
-		project.getElements().add(attribute);
-		assertEquals(3,project.getElements().size());
+		assertEquals(0,project.getContents().size());
+		project.getContents().add(clazz);
+		project.getContents().add(reference);
+		project.getContents().add(attribute);
+		assertEquals(3,project.getContents().size());
 		
 		assertFalse(project.isModelRoot(clazz));
 		assertFalse(project.isModelRoot(reference));

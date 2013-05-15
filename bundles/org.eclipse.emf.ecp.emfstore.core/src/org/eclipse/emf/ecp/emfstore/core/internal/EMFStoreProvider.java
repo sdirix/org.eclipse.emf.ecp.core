@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -129,7 +130,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void fillChildren(ECPModelContainer context, Object parent, InternalChildrenList childrenList) {
+	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
 			ESLocalProject projectSpace = getProjectSpace((InternalProject) parent);
 			if (projectSpace != null) {
@@ -164,7 +165,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void handleLifecycle(ECPModelContainer context, LifecycleEvent event) {
+	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 		switch (event) {
 		case INIT:
 			handleInit(context);
@@ -187,11 +188,11 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/**
-	 * Called to handle the remove operation on an {@link ECPModelContainer}.
+	 * Called to handle the remove operation on an {@link ECPContainer}.
 	 * 
-	 * @param context the {@link ECPModelContainer} to remove
+	 * @param context the {@link ECPContainer} to remove
 	 */
-	private void handleRemove(ECPModelContainer context) {
+	private void handleRemove(ECPContainer context) {
 		if (context instanceof InternalProject) {
 			InternalProject project = (InternalProject) context;
 			ESLocalProject ps = (ESLocalProject) project.getProviderSpecificData();
@@ -213,7 +214,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * @param context
 	 */
-	private void handleCreate(final ECPModelContainer context) {
+	private void handleCreate(final ECPContainer context) {
 		if (context instanceof InternalRepository) {
 			ESServer serverInfo = getServerInfo((InternalRepository) context);
 			// TODO autologin?
@@ -235,7 +236,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * @param context
 	 */
-	private void handelDispose(ECPModelContainer context) {
+	private void handelDispose(ECPContainer context) {
 		if (context instanceof InternalProject) {
 			ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
 
@@ -256,7 +257,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * @param context
 	 */
-	private void handleInit(final ECPModelContainer context) {
+	private void handleInit(final ECPContainer context) {
 		if (context instanceof InternalProject) {
 			ESLocalProject localProject = getProjectSpace((InternalProject) context, true);
 			if (localProject == null) {
@@ -400,9 +401,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	@Override
-	public ECPModelContainer getModelContext(Object element) {
-		if (element instanceof ECPModelContainer) {
-			return (ECPModelContainer) element;
+	public ECPContainer getModelContext(Object element) {
+		if (element instanceof ECPContainer) {
+			return (ECPContainer) element;
 		}
 
 		if (element instanceof ECPModelContextProvider) {
@@ -418,7 +419,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 				return null;
 			}
 			if (ps != null) {
-				ECPModelContainer context = getModelContextFromAdapter(ps.getProject());
+				ECPContainer context = getModelContextFromAdapter(ps.getProject());
 				if (context != null) {
 					return context;
 				}
@@ -428,7 +429,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (element instanceof Resource) {
 			Resource resource = (Resource) element;
-			ECPModelContainer context = getModelContextFromAdapter(resource);
+			ECPContainer context = getModelContextFromAdapter(resource);
 			if (context != null) {
 				return context;
 			}
@@ -438,7 +439,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (element instanceof ResourceSet) {
 			ResourceSet resourceSet = (ResourceSet) element;
-			ECPModelContainer context = getModelContextFromAdapter(resourceSet);
+			ECPContainer context = getModelContextFromAdapter(resourceSet);
 			if (context != null) {
 				return context;
 			}
@@ -554,7 +555,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	public ECPRepository getRepository(ServerInfo serverInfo) {
 		if (serverInfo != null) {
-			for (ECPRepository internalRepository : getRepositories()) {
+			for (ECPRepository internalRepository : ECPRepositoryManager.INSTANCE.getRepositories()) {
 				if (internalRepository.getProvider().equals(this)) {
 					if (serverInfo.equals(((InternalRepository) internalRepository).getProviderSpecificData())) {
 						return internalRepository;

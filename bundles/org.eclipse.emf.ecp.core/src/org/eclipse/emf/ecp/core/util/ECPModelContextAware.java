@@ -14,15 +14,15 @@
 package org.eclipse.emf.ecp.core.util;
 
 /**
- * A ModelContextAware knows its {@link ECPModelContainer}.
+ * A ModelContextAware knows its {@link ECPContainer}.
  * 
  * @author Eike Stepper
  */
 public interface ECPModelContextAware extends ECPProviderAware {
 	/**
-	 * Returns the {@link ECPModelContainer} this interface is aware of.
+	 * Returns the {@link ECPContainer} this interface is aware of.
 	 * 
-	 * @return {@link ECPModelContainer}
+	 * @return {@link ECPContainer}
 	 */
-	ECPModelContainer getContext();
+	ECPContainer getContext();
 }

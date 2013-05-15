@@ -34,7 +34,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -103,7 +103,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	@Override
-	public void fillChildren(ECPModelContainer context, Object parent, InternalChildrenList childrenList) {
+	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
 			InternalProject project = (InternalProject) parent;
 			CDOProjectData projectData = getProjectData(project);
@@ -144,7 +144,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	@Override
-	public void handleLifecycle(ECPModelContainer context, LifecycleEvent event) {
+	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 		super.handleLifecycle(context, event);
 
 		if (context instanceof InternalProject) {

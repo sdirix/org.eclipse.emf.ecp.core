@@ -35,14 +35,6 @@ public interface ECPProviderRegistry {
 	ECPProviderRegistry INSTANCE = Activator.getECPProviderRegistry();
 
 	/**
-	 * This method returns the {@link ECPProvider} based on the adaptable.
-	 * 
-	 * @param adaptable the adaptable to adapt
-	 * @return the adapted {@link ECPProvider} or null
-	 */
-	ECPProvider getProvider(Object adaptable);
-
-	/**
 	 * This method returns the ECPProvider based on the name.
 	 * 
 	 * @param name the name of the {@link ECPProvider} to search for

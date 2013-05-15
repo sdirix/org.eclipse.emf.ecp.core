@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
@@ -72,7 +72,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 					}
 				}
 				else if (firstElement instanceof EObject) {
-					ECPModelContainer context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
+					ECPContainer context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
 					ECPHandlerHelper.openModelElement((EObject) firstElement, (ECPProject) context);
 				} 
 			}
@@ -184,7 +184,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	protected void fillContextMenu(IMenuManager manager) {
 		Object[] elements = getSelection().toArray();
 
-		ECPModelContainer context = ECPUtil.getModelContext(contentProvider, elements);
+		ECPContainer context = ECPUtil.getModelContext(contentProvider, elements);
 		if (context != null) {
 			UIProvider provider = UIProviderRegistry.INSTANCE.getUIProvider(context);
 			if (provider != null) {

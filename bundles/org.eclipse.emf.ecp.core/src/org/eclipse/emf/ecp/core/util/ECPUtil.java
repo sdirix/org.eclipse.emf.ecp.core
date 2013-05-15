@@ -37,16 +37,16 @@ public final class ECPUtil {
 	}
 
 	/**
-	 * Return the common {@link ECPModelContainer} for the provided elements.
+	 * Return the common {@link ECPContainer} for the provided elements.
 	 * 
 	 * @param contextProvider the {@link ECPModelContextProvider} to use
 	 * @param elements the elements to check
-	 * @return the common {@link ECPModelContainer} for the elements or null
+	 * @return the common {@link ECPContainer} for the elements or null
 	 */
-	public static ECPModelContainer getModelContext(ECPModelContextProvider contextProvider, Object... elements) {
-		ECPModelContainer commonContext = null;
+	public static ECPContainer getModelContext(ECPModelContextProvider contextProvider, Object... elements) {
+		ECPContainer commonContext = null;
 		for (Object element : elements) {
-			ECPModelContainer elementContext = contextProvider.getModelContext(element);
+			ECPContainer elementContext = contextProvider.getModelContext(element);
 			if (elementContext == null) {
 				return null;
 			}

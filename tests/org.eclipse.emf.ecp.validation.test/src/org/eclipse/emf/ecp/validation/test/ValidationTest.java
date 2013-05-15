@@ -178,8 +178,8 @@ public class ValidationTest {
 			correctWriter.setFirstName("Hans");
 			Writer errorWriter = TestFactory.eINSTANCE.createWriter();
 
-			project.getElements().add(errorWriter);
-			project.getElements().add(correctWriter);
+			project.getContents().add(errorWriter);
+			project.getContents().add(correctWriter);
 
 			IValidationService validationService = validationServiceProvider.getValidationService(project);
 

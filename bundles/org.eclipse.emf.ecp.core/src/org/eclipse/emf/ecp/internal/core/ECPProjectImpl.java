@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
@@ -329,7 +329,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public ECPModelContainer getContext() {
+	public ECPContainer getContext() {
 		return this;
 	}
 
@@ -469,7 +469,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		/** {@inheritDoc} */
-		public ECPModelContainer getContext() {
+		public ECPContainer getContext() {
 			return null;
 		}
 
@@ -537,7 +537,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
-	public EList<Object> getElements() {
+	public EList<Object> getContents() {
 		return (EList<Object>) getProvider().getElements(this);
 	}
 
@@ -574,12 +574,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public void saveModel() {
+	public void saveContents() {
 		getProvider().doSave(this);
 	}
 
 	/** {@inheritDoc} */
-	public boolean isModelDirty() {
+	public boolean hasDirtyContents() {
 		return getProvider().isDirty(this);
 	}
 

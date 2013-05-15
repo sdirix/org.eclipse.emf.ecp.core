@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.internal.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -80,7 +80,7 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void handleLifecycle(ECPModelContainer context, LifecycleEvent event) {
+	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 		switch (event) {
 		case INIT:
 			handleInit(context);
@@ -99,7 +99,7 @@ public class WorkspaceProvider extends DefaultProvider {
 		}
 	}
 
-	private void handleInit(ECPModelContainer context) {
+	private void handleInit(ECPContainer context) {
 		if (context instanceof InternalProject) {
 			final InternalProject project = (InternalProject) context;
 			EditingDomain editingDomain = project.getEditingDomain();
@@ -108,17 +108,17 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	}
 
-	private void handleRemove(ECPModelContainer context) {
+	private void handleRemove(ECPContainer context) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void handleCreate(ECPModelContainer context) {
+	private void handleCreate(ECPContainer context) {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void handelDispose(ECPModelContainer context) {
+	private void handelDispose(ECPContainer context) {
 		// TODO Auto-generated method stub
 
 	}
@@ -139,7 +139,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	@Override
-	public void fillChildren(ECPModelContainer context, Object parent, InternalChildrenList childrenList) {
+	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof ECPRepository) {
 		} else if (parent instanceof ECPProject) {
 			ECPProject project = (ECPProject) parent;
@@ -263,7 +263,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	@Override
-	public ECPModelContainer getModelContext(Object element) {
+	public ECPContainer getModelContext(Object element) {
 		return super.getModelContext(element);
 	}
 

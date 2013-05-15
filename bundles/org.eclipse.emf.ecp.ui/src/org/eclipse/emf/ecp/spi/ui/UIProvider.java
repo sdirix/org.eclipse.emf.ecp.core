@@ -15,7 +15,7 @@
 package org.eclipse.emf.ecp.spi.ui;
 
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
-import org.eclipse.emf.ecp.core.util.ECPModelContainer;
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
@@ -67,10 +67,10 @@ public interface UIProvider extends InternalRegistryElement, IAdaptable, Adapter
 	 * Allows the UIProvider to fill the context menu specifically.
 	 * 
 	 * @param manager the {@link IMenuManager} to fill
-	 * @param context the current selected {@link ECPModelContainer}
+	 * @param context the current selected {@link ECPContainer}
 	 * @param elements the selected elements
 	 */
-	void fillContextMenu(IMenuManager manager, ECPModelContainer context, Object[] elements);
+	void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements);
 
 	/**
 	 * The UIProvider can return its provider specific UI to allow the user to fill in provider specific data during the
