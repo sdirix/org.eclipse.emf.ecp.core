@@ -81,8 +81,7 @@ public class EObjectPattern extends AbstractPattern {
 
 	@Override
 	public String getCreateName() {
-		// TODO Auto-generated method stub
-		return "EObject";
+		return "Node";
 	}
 	@Override
 	public String getCreateImageId() {
