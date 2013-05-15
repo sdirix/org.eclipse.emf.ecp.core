@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _IDNr4LZhEeKIbujrltRAUA
-Save-Time: 5/13/13 6:23 PM
+Save-Time: 5/15/13 2:27 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -141,8 +141,7 @@ with [get-editor Fan] {
     get-button "The Has Season Ticket of the Fan" | get-property selected | equals false | verify-true
     get-button "Unset boolean" | get-property tooltip | equals "Unset boolean" | verify-true
     get-button Unset | get-property tooltip | equals Unset | verify-true
-    with [get-control Any -index 58] {
-        get-property className | equals "org.eclipse.swt.widgets.Composite" | verify-true
+    with [get-control Any -index 59] {
         get-property enablement | equals true | verify-true
         get-property containMenu | equals false | verify-true
         get-property borderWith | equals 0 | verify-true
@@ -154,8 +153,7 @@ with [get-editor Fan] {
     get-button "Unset Link" | get-property tooltip | equals "Unset Link" | verify-true
     get-label "(Not Set)" | get-property caption | equals "(Not Set)" | verify-true
     get-button Unset -after [get-label "Visited Tournaments"] | get-property tooltip | equals Unset | verify-true
-    with [get-control Any -index 94] {
-        get-property className | equals "org.eclipse.swt.widgets.Composite" | verify-true
+    with [get-control Any -index 95] {
         get-property enablement | equals true | verify-true
         get-property containMenu | equals false | verify-true
         get-property borderWith | equals 0 | verify-true
@@ -194,8 +192,7 @@ with [get-editor Fan] {
     get-date-time -after [get-label "Date Of Birth"] -index 1 | get-property time | equals "17:9:46" | verify-true
     get-button "Unset Date" | get-property caption | equals "" | verify-true
     get-button Unset | get-property tooltip | equals Unset | verify-true
-    with [get-control Any -index 58] {
-        get-property className | equals "org.eclipse.swt.widgets.Composite" | verify-true
+    with [get-control Any -index 59] {
         get-property enablement | equals true | verify-true
         get-property containMenu | equals false | verify-true
         get-property borderWith | equals 0 | verify-true
@@ -209,8 +206,7 @@ with [get-editor Fan] {
     get-button "Unset Link" | get-property tooltip | equals "Unset Link" | verify-true
     get-label "(Not Set)" | get-property caption | equals "(Not Set)" | verify-true
     get-button Unset -after [get-label "Visited Tournaments"] | get-property tooltip | equals Unset | verify-true
-    with [get-control Any -index 94] {
-        get-property className | equals "org.eclipse.swt.widgets.Composite" | verify-true
+    with [get-control Any -index 95] {
         get-property enablement | equals true | verify-true
         get-property containMenu | equals false | verify-true
         get-property borderWith | equals 0 | verify-true
