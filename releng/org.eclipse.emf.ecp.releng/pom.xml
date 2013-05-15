@@ -60,8 +60,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.example-feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module>
+		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module>-->
 		
 		<!-- Graphiti -->
 		<module>../../features/org.eclipse.emf.ecp.graphiti-feature</module>
