@@ -54,12 +54,12 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	@Override
 	protected void connectInput(ECPRepositoryManager input) {
 		super.connectInput(input);
-		ECPUtil.getECPRepositoryManager().addObserver(this);
+		ECPUtil.getECPObserverBus().register(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPRepositoryManager input) {
-		ECPUtil.getECPRepositoryManager().removeObserver(this);
+		ECPUtil.getECPObserverBus().register(this);
 		super.disconnectInput(input);
 	}
 

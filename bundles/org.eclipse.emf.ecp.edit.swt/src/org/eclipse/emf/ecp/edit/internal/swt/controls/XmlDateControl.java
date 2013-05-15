@@ -74,7 +74,9 @@ public class XmlDateControl extends SingleControl {
 		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_xml_date");
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		dateWidget.setEnabled(isEditable);
 	}

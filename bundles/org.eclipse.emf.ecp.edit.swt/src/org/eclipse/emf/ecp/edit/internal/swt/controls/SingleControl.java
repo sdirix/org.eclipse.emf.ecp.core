@@ -52,7 +52,6 @@ public abstract class SingleControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
 			Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
@@ -81,7 +80,6 @@ public abstract class SingleControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
@@ -91,7 +89,9 @@ public abstract class SingleControl extends SWTControl {
 		updateValidationColor(null);
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void dispose() {
 		validationLabel.dispose();
 	}

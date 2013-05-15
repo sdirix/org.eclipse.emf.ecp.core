@@ -49,12 +49,12 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 
 	@Override
 	protected void connectInput(ECPProjectManager input) {
-		ECPUtil.getECPProjectManager().addObserver(this);
+		ECPUtil.getECPObserverBus().register(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPProjectManager input) {
-		ECPUtil.getECPProjectManager().removeObserver(this);
+		ECPUtil.getECPObserverBus().unregister(this);
 	}
 
 	@Override

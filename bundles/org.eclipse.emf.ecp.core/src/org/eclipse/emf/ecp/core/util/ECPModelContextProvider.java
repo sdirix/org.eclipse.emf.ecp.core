@@ -12,9 +12,8 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.spi.core.util;
+package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 
 /**
  * The {@link ECPModelContextProvider} can return the {@link ECPContainer} of a certain Object.

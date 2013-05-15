@@ -530,7 +530,9 @@ public class TableControl extends SWTControl {
 		}
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void dispose() {
 		composedAdapterFactory.dispose();
 	}
@@ -538,7 +540,6 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
 			Image image = Activator.getImage(VALIDATION_ERROR_ICON);
@@ -550,7 +551,6 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
@@ -558,7 +558,9 @@ public class TableControl extends SWTControl {
 		validationLabel.setImage(null);
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		tableViewer.getTable().setEnabled(false);
 	}

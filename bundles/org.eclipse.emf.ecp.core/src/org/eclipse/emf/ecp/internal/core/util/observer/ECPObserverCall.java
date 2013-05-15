@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ProxyObserver, returned by the {@link ECPObserverBus} when calling {@link ECPObserverBus#notify(Class)}, normally it
+ * ProxyObserver, returned by the {@link ECPObserverBusImpl} when calling {@link ECPObserverBusImpl#notify(Class)}, normally it
  * has
  * the type of the class extending IObserver in order to call the observer interface with type safety.
  * However, the same proxies can be casted into {@link ECPObserverCall} in order to access the results by all registered

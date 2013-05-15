@@ -24,12 +24,12 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -105,7 +105,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	@Override
 	protected void notifyObservers(Collection<InternalProvider> oldProviders, Collection<InternalProvider> newProviders)
 		throws Exception {
-		ECPObserverBus.getInstance().notify(ECPProvidersChangedObserver.class)
+		ECPUtil.getECPObserverBus().notify(ECPProvidersChangedObserver.class)
 			.providersChanged((Collection) oldProviders, (Collection) newProviders);
 	}
 

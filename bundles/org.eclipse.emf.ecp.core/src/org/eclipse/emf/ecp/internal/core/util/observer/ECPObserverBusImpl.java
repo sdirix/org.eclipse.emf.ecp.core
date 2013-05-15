@@ -14,6 +14,7 @@
 package org.eclipse.emf.ecp.internal.core.util.observer;
 
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -85,13 +86,13 @@ import java.util.Set;
  * 
  * @author wesendon
  */
-public class ECPObserverBus {
+public class ECPObserverBusImpl implements ECPObserverBus {
 
 	/**
 	 * Initializes the singleton instance statically.
 	 */
 	private static class SingletonHolder {
-		public static final ECPObserverBus INSTANCE = new ECPObserverBus();
+		public static final ECPObserverBusImpl INSTANCE = new ECPObserverBusImpl();
 	}
 
 	/**
@@ -99,7 +100,7 @@ public class ECPObserverBus {
 	 * 
 	 * @return Static instance of the observerbus
 	 */
-	public static ECPObserverBus getInstance() {
+	public static ECPObserverBusImpl getInstance() {
 		return SingletonHolder.INSTANCE;
 	}
 
@@ -108,7 +109,7 @@ public class ECPObserverBus {
 	/**
 	 * Default constructor.
 	 */
-	public ECPObserverBus() {
+	public ECPObserverBusImpl() {
 		observerMap = new HashMap<Class<? extends ECPObserver>, List<ECPObserver>>();
 	}
 

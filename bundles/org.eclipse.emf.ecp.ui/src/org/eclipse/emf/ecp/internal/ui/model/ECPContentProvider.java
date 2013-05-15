@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
+import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IViewerNotification;

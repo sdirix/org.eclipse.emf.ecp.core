@@ -22,11 +22,12 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
+import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBusImpl;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
-import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -211,5 +212,9 @@ public final class ECPUtil {
 			ecpProviderRegistryInstance = Activator.getECPProviderRegistry();
 		}
 		return ecpProviderRegistryInstance;
+	}
+
+	public static ECPObserverBus getECPObserverBus() {
+		return ECPObserverBusImpl.getInstance();
 	}
 }

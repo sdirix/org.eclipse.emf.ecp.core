@@ -70,7 +70,9 @@ public class EEnumControl extends SingleControl {
 		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_enum");
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		combo.getControl().setEnabled(isEditable);
 	}

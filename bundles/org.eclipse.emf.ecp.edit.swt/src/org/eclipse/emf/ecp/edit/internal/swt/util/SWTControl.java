@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.AbstractControl;
+import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -41,12 +41,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * This class defines a SWTCOntrol which is an abstract class defining an {@link AbstractControl} for SWT.
+ * This class defines a SWTCOntrol which is an abstract class defining an {@link ECPAbstractControl} for SWT.
  * 
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTControl extends AbstractControl {
+public abstract class SWTControl extends ECPAbstractControl {
 
 	/**
 	 * RAP theming variable to set.

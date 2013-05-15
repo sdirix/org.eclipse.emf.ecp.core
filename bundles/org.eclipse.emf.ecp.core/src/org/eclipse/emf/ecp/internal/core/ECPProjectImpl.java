@@ -29,13 +29,12 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
+import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
-import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import org.eclipse.core.runtime.CoreException;
@@ -339,7 +338,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/** {@inheritDoc} */
 	public void delete() {
-		ECPObserverBus.getInstance().notify(ECPProjectPreDeleteObserver.class).projectDelete(this);
+		ECPUtil.getECPObserverBus().notify(ECPProjectPreDeleteObserver.class).projectDelete(this);
 		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
 		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
 	}

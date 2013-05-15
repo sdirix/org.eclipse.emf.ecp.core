@@ -15,10 +15,10 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.AbstractControl;
+import org.eclipse.emf.ecp.edit.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
@@ -240,7 +240,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	private SWTControl getSingleInstance() {
 		try {
-			Constructor<? extends AbstractControl> widgetConstructor = controlDescription.getControlClass()
+			Constructor<? extends ECPAbstractControl> widgetConstructor = controlDescription.getControlClass()
 				.getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
 					ECPControlContext.class, boolean.class);
 			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
@@ -435,7 +435,9 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
 			Image image = Activator.getImage(VALIDATION_ERROR_ICON);
@@ -447,7 +449,9 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
@@ -455,7 +459,9 @@ public abstract class MultiControl extends SWTControl {
 		validationLabel.setImage(null);
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void dispose() {
 
 		model.removeListChangeListener(changeListener);
@@ -472,7 +478,9 @@ public abstract class MultiControl extends SWTControl {
 		return null;
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		for (ECPSWTAction action : actions) {
 			action.setEnabled(isEditable);

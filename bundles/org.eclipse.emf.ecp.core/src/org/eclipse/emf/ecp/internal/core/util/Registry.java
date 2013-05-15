@@ -13,9 +13,9 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
 
@@ -169,18 +169,18 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 	}
 
 	public void addObserver(OBSERVER observer) {
-		ECPObserverBus.getInstance().register(observer);
+		ECPUtil.getECPObserverBus().register(observer);
 	}
 
 	public void removeObserver(OBSERVER observer) {
-		ECPObserverBus.getInstance().unregister(observer);
+		ECPUtil.getECPObserverBus().unregister(observer);
 	}
 
 	// private void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray) throws Exception {
 	// // TODO: remove warning
 	// Class<OBSERVER> observerType = (Class<OBSERVER>) ((ParameterizedType) getClass().getGenericSuperclass())
 	// .getActualTypeArguments()[1];
-	// OBSERVER notify = ECPObserverBus.getInstance().notify(observerType);
+	// OBSERVER notify = ECPObserverBusImpl.getInstance().notify(observerType);
 	// notifyObservers(notify, oldArray, newArray);
 	// }
 

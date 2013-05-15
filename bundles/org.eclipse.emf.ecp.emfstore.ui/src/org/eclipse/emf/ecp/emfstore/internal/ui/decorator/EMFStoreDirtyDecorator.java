@@ -48,7 +48,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	 */
 	public EMFStoreDirtyDecorator() {
 		super();
-		ECPUtil.getECPProjectManager().addObserver(this);
+		ECPUtil.getECPObserverBus().register(this);
 	}
 
 	/** {@inheritDoc} */

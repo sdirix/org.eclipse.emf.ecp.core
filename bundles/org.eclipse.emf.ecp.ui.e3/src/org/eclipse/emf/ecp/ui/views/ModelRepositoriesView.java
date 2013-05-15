@@ -39,7 +39,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
   @Override
   public void dispose()
   {
-    ECPUtil.getECPProviderRegistry().removeObserver(this);
+	  ECPUtil.getECPObserverBus().unregister(this);
     super.dispose();
   }
   /**{@inheritDoc} */
@@ -52,7 +52,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
   protected TreeViewer createViewer(Composite parent)
   {
 	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
-    ECPUtil.getECPProviderRegistry().addObserver(this);
+	  ECPUtil.getECPObserverBus().register(this);
     return viewer;
   }
 

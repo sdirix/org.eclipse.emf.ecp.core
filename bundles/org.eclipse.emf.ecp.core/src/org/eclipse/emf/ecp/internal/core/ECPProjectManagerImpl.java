@@ -31,7 +31,6 @@ import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
@@ -84,6 +83,10 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
 			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists");
+		}
+		if (!provider.hasCreateProjectWithoutRepositorySupport()) {
+			throw new UnsupportedOperationException("The provider " + provider.getLabel()
+				+ " doesn't support the creation of projects without an ECPRepository (aka offline project).");
 		}
 		InternalProject project = new ECPProjectImpl((InternalProvider) provider, name, properties);
 		return createProject(project);
@@ -186,7 +189,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		}
 
 		try {
-			ECPObserverBus.getInstance().notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
+			ECPUtil.getECPObserverBus().notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
 		} catch (Exception ex) {
 			Activator.log(ex);
 		}
@@ -204,13 +207,13 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	public void notifyObjectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 
 		try {
-			Collection<Object> affected = ECPObserverBus.getInstance()
-				.notify(ECPProjectObjectsPreChangedObserver.class).objectsChanged(project, objects);
+			Collection<Object> affected = ECPUtil.getECPObserverBus().notify(ECPProjectObjectsPreChangedObserver.class)
+				.objectsChanged(project, objects);
 			Set<Object> toUpdate = new HashSet<Object>(objects);
 			if (affected != null) {
 				toUpdate.addAll(affected);
 			}
-			ECPObserverBus.getInstance().notify(ECPProjectObjectsChangedObserver.class)
+			ECPUtil.getECPObserverBus().notify(ECPProjectObjectsChangedObserver.class)
 				.objectsChanged(project, toUpdate, structural);
 		} catch (Exception ex) {
 			Activator.log(ex);
@@ -239,12 +242,12 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	@Override
 	protected void doActivate() throws Exception {
 		super.doActivate();
-		ECPObserverBus.getInstance().register(this);
+		ECPUtil.getECPObserverBus().register(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPObserverBus.getInstance().unregister(this);
+		ECPUtil.getECPObserverBus().unregister(this);
 		super.doDeactivate();
 	}
 
@@ -261,7 +264,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	@Override
 	protected void notifyObservers(Collection<InternalProject> oldElements, Collection<InternalProject> newElements)
 		throws Exception {
-		ECPObserverBus.getInstance().notify(ECPProjectsChangedObserver.class)
+		ECPUtil.getECPObserverBus().notify(ECPProjectsChangedObserver.class)
 			.projectsChanged((Collection) oldElements, (Collection) newElements);
 	}
 

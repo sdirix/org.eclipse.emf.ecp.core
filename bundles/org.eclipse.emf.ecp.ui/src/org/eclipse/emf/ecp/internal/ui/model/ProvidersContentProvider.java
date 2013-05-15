@@ -62,12 +62,12 @@ public class ProvidersContentProvider extends TreeContentProvider<ECPProviderReg
 	@Override
 	protected void connectInput(ECPProviderRegistry input) {
 		super.connectInput(input);
-		input.addObserver(this);
+		ECPUtil.getECPObserverBus().register(this);
 	}
 
 	@Override
 	protected void disconnectInput(ECPProviderRegistry input) {
-		input.removeObserver(this);
+		ECPUtil.getECPObserverBus().unregister(this);
 		super.disconnectInput(input);
 	}
 }

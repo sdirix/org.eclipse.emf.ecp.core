@@ -65,14 +65,14 @@ public class Activator extends Plugin {
 		plugin = this;
 
 		validationObserver = new ValidationObserver();
-		ECPUtil.getECPProjectManager().addObserver(validationObserver);
+		ECPUtil.getECPObserverBus().register(validationObserver);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext context) throws Exception {
-		ECPUtil.getECPProjectManager().removeObserver(validationObserver);
+		ECPUtil.getECPObserverBus().unregister(validationObserver);
 		plugin = null;
 		super.stop(context);
 	}

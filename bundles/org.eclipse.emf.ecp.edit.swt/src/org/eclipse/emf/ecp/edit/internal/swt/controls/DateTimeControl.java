@@ -82,7 +82,9 @@ public class DateTimeControl extends SingleControl {
 		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_time");
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		dateWidget.setEnabled(isEditable);
 		timeWidget.setEnabled(isEditable);

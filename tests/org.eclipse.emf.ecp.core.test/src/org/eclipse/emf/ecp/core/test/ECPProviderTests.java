@@ -43,30 +43,24 @@ public class ECPProviderTests extends AbstractTest {
 		assertEquals("EMFStore", getProvider().getLabel());
 	}
 
-	@Test
-	public void getRepositoriesTest() {
-		Set<ECPRepository> repositories = getProvider().getRepositories();
-		assertTrue(repositories.contains(getRepository()));
-	}
-
-	@Test
-	public void canAddRepositoriesTest() {
-		boolean canAddRepositories = getProvider().hasCreateRepositorySupport();
-
-		int countReposBefore = getProvider().getRepositories().size();
-		repository = ECPUtil.getECPRepositoryManager().addRepository(getProvider(), "repository4Name", "repository4Label",
-			"description", getNewProperties());
-		int countReposAfterAdd = getProvider().getRepositories().size();
-
-		if (countReposAfterAdd - countReposBefore == 1) {
-			assertTrue(canAddRepositories);
-		} else if (countReposAfterAdd - countReposBefore == 0) {
-			assertFalse(canAddRepositories);
-		} else {
-			fail("More than one repository was added or deleted.");
-		}
-
-	}
+//	@Test
+//	public void canAddRepositoriesTest() {
+//		boolean canAddRepositories = getProvider().hasCreateRepositorySupport();
+//
+//		int countReposBefore = getProvider().getRepositories().size();
+//		repository = ECPUtil.getECPRepositoryManager().addRepository(getProvider(), "repository4Name", "repository4Label",
+//			"description", getNewProperties());
+//		int countReposAfterAdd = getProvider().getRepositories().size();
+//
+//		if (countReposAfterAdd - countReposBefore == 1) {
+//			assertTrue(canAddRepositories);
+//		} else if (countReposAfterAdd - countReposBefore == 0) {
+//			assertFalse(canAddRepositories);
+//		} else {
+//			fail("More than one repository was added or deleted.");
+//		}
+//
+//	}
 
 	@Test
 	public void hasUnsharedProjectSupportTest() {

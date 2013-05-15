@@ -30,7 +30,6 @@ import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
@@ -101,6 +100,10 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	/** {@inheritDoc} **/
 	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties) {
+		if (!provider.hasCreateRepositorySupport()) {
+			throw new UnsupportedOperationException("The provider " + provider.getLabel()
+				+ " doesn't support the addition of new repositories.");
+		}
 		InternalRepository repository = new ECPRepositoryImpl(provider, name, properties);
 		repository.setLabel(label);
 		repository.setDescription(description);
@@ -119,7 +122,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	public void notifyObjectsChanged(ECPRepository repository, Collection<Object> objects) {
 
 		try {
-			ECPObserverBus.getInstance().notify(ECPRepositoryObjectsChangedObserver.class)
+			ECPUtil.getECPObserverBus().notify(ECPRepositoryObjectsChangedObserver.class)
 				.objectsChanged(repository, objects);
 		} catch (Exception ex) {
 			Activator.log(ex);
@@ -147,7 +150,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	@Override
 	protected void notifyObservers(Collection<InternalRepository> oldRepositories,
 		Collection<InternalRepository> newRepositories) throws Exception {
-		ECPObserverBus.getInstance().notify(ECPRepositoriesChangedObserver.class)
+		ECPUtil.getECPObserverBus().notify(ECPRepositoriesChangedObserver.class)
 			.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
 	}
 
@@ -155,12 +158,12 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	protected void doActivate() throws Exception {
 		super.doActivate();
 		extensionParser.activate();
-		ECPUtil.getECPProviderRegistry().addObserver(this);
+		ECPUtil.getECPObserverBus().register(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPUtil.getECPProviderRegistry().removeObserver(this);
+		ECPUtil.getECPObserverBus().unregister(this);
 		extensionParser.deactivate();
 		super.doDeactivate();
 	}

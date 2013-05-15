@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecp.edit.AbstractControl;
+import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
@@ -86,9 +86,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	private final ECPControlContext modelElementContext;
 
-	private Map<EStructuralFeature, AbstractControl> meControls = new LinkedHashMap<EStructuralFeature, AbstractControl>();
+	private Map<EStructuralFeature, ECPAbstractControl> meControls = new LinkedHashMap<EStructuralFeature, ECPAbstractControl>();
 
-	private Map<AbstractControl, Diagnostic> valdiatedControls = new HashMap<AbstractControl, Diagnostic>();
+	private Map<ECPAbstractControl, Diagnostic> valdiatedControls = new HashMap<ECPAbstractControl, Diagnostic>();
 
 	private List<IItemPropertyDescriptor> leftColumnAttributes = new ArrayList<IItemPropertyDescriptor>();
 
@@ -249,7 +249,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 	/** {@inheritDoc} */
 	public void dispose() {
-		for (AbstractControl control : meControls.values()) {
+		for (ECPAbstractControl control : meControls.values()) {
 			control.dispose();
 		}
 		meControls.clear();
@@ -260,7 +260,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	/** {@inheritDoc} */
 	public void updateLiveValidation() {
 		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(modelElementContext.getModelElement());
-		List<AbstractControl> affectedControls = new ArrayList<AbstractControl>();
+		List<ECPAbstractControl> affectedControls = new ArrayList<ECPAbstractControl>();
 
 		for (Iterator<Diagnostic> i = diagnostic.getChildren().iterator(); i.hasNext();) {
 			Diagnostic childDiagnostic = i.next();
@@ -274,7 +274,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 			if (childDiagnostic.getData().size() < 2) {
 				continue;
 			}
-			AbstractControl meControl = meControls.get(childDiagnostic.getData().get(1));
+			ECPAbstractControl meControl = meControls.get(childDiagnostic.getData().get(1));
 			if (meControl == null) {
 				continue;
 			}
@@ -291,10 +291,10 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 		}
 
-		Map<AbstractControl, Diagnostic> temp = new HashMap<AbstractControl, Diagnostic>();
+		Map<ECPAbstractControl, Diagnostic> temp = new HashMap<ECPAbstractControl, Diagnostic>();
 		temp.putAll(valdiatedControls);
-		for (Map.Entry<AbstractControl, Diagnostic> entry : temp.entrySet()) {
-			AbstractControl meControl = entry.getKey();
+		for (Map.Entry<ECPAbstractControl, Diagnostic> entry : temp.entrySet()) {
+			ECPAbstractControl meControl = entry.getKey();
 			if (!affectedControls.contains(meControl)) {
 				valdiatedControls.remove(meControl);
 				meControl.resetValidation();

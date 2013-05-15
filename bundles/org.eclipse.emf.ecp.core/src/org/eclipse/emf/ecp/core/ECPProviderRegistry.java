@@ -15,8 +15,6 @@
 
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
-
 import java.util.Collection;
 
 /**
@@ -58,17 +56,17 @@ public interface ECPProviderRegistry {
 	 */
 	void removeProvider(String name);
 
-	/**
-	 * Add an {@link ECPProviderRegistryObserver} to be notified.
-	 * 
-	 * @param changeObserver the observer to add
-	 */
-	void addObserver(ECPProviderRegistryObserver changeObserver);
-
-	/**
-	 * Remove an {@link ECPProviderRegistryObserver} from the list of the providers to be notified.
-	 * 
-	 * @param changeObserver the observer to remove
-	 */
-	void removeObserver(ECPProviderRegistryObserver changeObserver);
+	// /**
+	// * Add an {@link ECPProviderRegistryObserver} to be notified.
+	// *
+	// * @param changeObserver the observer to add
+	// */
+	// void addObserver(ECPProviderRegistryObserver changeObserver);
+	//
+	// /**
+	// * Remove an {@link ECPProviderRegistryObserver} from the list of the providers to be notified.
+	// *
+	// * @param changeObserver the observer to remove
+	// */
+	// void removeObserver(ECPProviderRegistryObserver changeObserver);
 }

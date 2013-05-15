@@ -69,10 +69,10 @@ Controls are used to render features of an EObejct in the editor or some other v
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The class implementing the control. This must extend org.eclipse.emf.ecp.edit.AbstractControl.
+                  The class implementing the control. This must extend org.eclipse.emf.ecp.edit.ECPAbstractControl.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.edit.AbstractControl:"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.ECPControl"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -199,26 +199,26 @@ The default is the org.eclipse.emf.ecore.EObject itself.
          Example 1:&lt;br/&gt;
 &lt;pre&gt;
 &lt;control
-		class=&quot;org.eclipse.emf.ecp.internal.edit.swt.controls.StringControl&quot;
-		showLabel=&quot;true&quot;
-		id=&quot;org.eclipse.emf.ecp.control.swt.string&quot;&gt;
-	&lt;staticTest
-		priority=&quot;1&quot;
-		singleValue=&quot;true&quot;
-		supportedClassType=&quot;java.lang.String&quot;&gt;
-	&lt;/staticTest&gt;
+  class=&quot;org.eclipse.emf.ecp.internal.edit.swt.controls.StringControl&quot;
+  showLabel=&quot;true&quot;
+  id=&quot;org.eclipse.emf.ecp.control.swt.string&quot;&gt;
+ &lt;staticTest
+  priority=&quot;1&quot;
+  singleValue=&quot;true&quot;
+  supportedClassType=&quot;java.lang.String&quot;&gt;
+ &lt;/staticTest&gt;
 &lt;/control&gt;
 &lt;/pre&gt;      
 &lt;br/&gt;
 Example 2:&lt;br/&gt;
 &lt;pre&gt;
 &lt;control
-		class=&quot;org.eclipse.emf.ecp.internal.edit.swt.controls.ReferenceMultiControl&quot;
-		showLabel=&quot;true&quot;
-		id=&quot;org.eclipse.emf.ecp.control.swt.multiReference&quot;&gt;
-	&lt;dynamicTest
-		testClass=&quot;org.eclipse.emf.ecp.internal.edit.swt.controls.ReferenceMultiControlTester&quot;&gt;
-	&lt;/dynamicTest&gt;
+  class=&quot;org.eclipse.emf.ecp.internal.edit.swt.controls.ReferenceMultiControl&quot;
+  showLabel=&quot;true&quot;
+  id=&quot;org.eclipse.emf.ecp.control.swt.multiReference&quot;&gt;
+ &lt;dynamicTest
+  testClass=&quot;org.eclipse.emf.ecp.internal.edit.swt.controls.ReferenceMultiControlTester&quot;&gt;
+ &lt;/dynamicTest&gt;
 &lt;/control&gt;
 &lt;/pre&gt;
       </documentation>

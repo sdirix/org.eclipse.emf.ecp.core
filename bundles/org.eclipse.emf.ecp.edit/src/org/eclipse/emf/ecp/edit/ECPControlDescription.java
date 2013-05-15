@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 public final class ECPControlDescription {
 
 	private final String id;
-	private final Class<? extends AbstractControl> controlClass;
+	private final Class<? extends ECPAbstractControl> controlClass;
 	private final boolean showLabel;
 	private final Set<ECPApplicableTester> tester;
 	
@@ -34,7 +34,7 @@ public final class ECPControlDescription {
 	 * @param tester the class testing whether the control is applicable for the current feature of the current eobject
 	 * @param id the id of the control that is being described
 	 */
-	public ECPControlDescription(String id,Class<? extends AbstractControl> controlClass, boolean showLabel, Set<ECPApplicableTester> tester) {
+	public ECPControlDescription(String id,Class<? extends ECPAbstractControl> controlClass, boolean showLabel, Set<ECPApplicableTester> tester) {
 		super();
 		this.id=id;
 		this.controlClass = controlClass;
@@ -49,10 +49,10 @@ public final class ECPControlDescription {
 		return id;
 	}
 	/**
-	 * The class implementing the Control. It extends the {@link AbstractControl}.
+	 * The class implementing the Control. It extends the {@link ECPAbstractControl}.
 	 * @return the class implementing this control
 	 */
-	public Class<? extends AbstractControl> getControlClass() {
+	public Class<? extends ECPAbstractControl> getControlClass() {
 		return controlClass;
 	}
 	/**

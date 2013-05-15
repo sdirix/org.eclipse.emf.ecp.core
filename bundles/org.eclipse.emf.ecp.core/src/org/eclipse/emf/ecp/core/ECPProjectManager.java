@@ -13,8 +13,6 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
-import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
@@ -28,13 +26,10 @@ import java.util.Collection;
 public interface ECPProjectManager {
 
 	/**
-	 * Instance of the ECPProjectManager.
-	 */
-	ECPProjectManager INSTANCE = Activator.getECPProjectManager();
-
-	/**
 	 * Method to construct an offline Project, this method calls
-	 * {@link #createProject(ECPProvider, String, ECPProperties)} with empty properties.
+	 * {@link #createProject(ECPProvider, String, ECPProperties)} with empty properties. If
+	 * {@link ECPProvider#hasCreateProjectWithoutRepositorySupport()} returns
+	 * false an UnsupportedOperationException is thrown.
 	 * 
 	 * @param provider the {@link ECPProvider} of this project
 	 * @param name the name of the project
@@ -45,7 +40,9 @@ public interface ECPProjectManager {
 	ECPProject createProject(ECPProvider provider, String name) throws ECPProjectWithNameExistsException;
 
 	/**
-	 * Method to construct an offline Project and notify listeners about this add.
+	 * Method to construct an offline Project and notify listeners about this add. If
+	 * {@link ECPProvider#hasCreateProjectWithoutRepositorySupport()} returns
+	 * false an UnsupportedOperationException is thrown.
 	 * 
 	 * @param provider the {@link ECPProvider} of this project
 	 * @param name the name of the project
@@ -106,18 +103,18 @@ public interface ECPProjectManager {
 	 */
 	Collection<ECPProject> getProjects();
 
-	/**
-	 * This method adds a observer to the observer of the ECPProjectManager.
-	 * 
-	 * @param observer the {@link ECPProjectManagerObserver} to add
-	 */
-	void addObserver(ECPProjectManagerObserver observer);
+	// /**
+	// * This method adds a observer to the observer of the ECPProjectManager.
+	// *
+	// * @param observer the {@link ECPProjectManagerObserver} to add
+	// */
+	// void addObserver(ECPProjectManagerObserver observer);
 
-	/**
-	 * This method removes a observer from the observer of the ECPProjectManager.
-	 * 
-	 * @param observer the {@link ECPProjectManagerObserver} to remove
-	 */
-	void removeObserver(ECPProjectManagerObserver observer);
+	// /**
+	// * This method removes a observer from the observer of the ECPProjectManager.
+	// *
+	// * @param observer the {@link ECPProjectManagerObserver} to remove
+	// */
+	// void removeObserver(ECPProjectManagerObserver observer);
 
 }

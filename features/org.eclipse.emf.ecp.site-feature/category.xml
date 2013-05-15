@@ -18,9 +18,6 @@
    <feature url="features/org.eclipse.emf.ecp.e3_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.e3" version="1.0.0.qualifier">
       <category name="org.eclipse.emf.ecp.3x.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.graphiti_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.graphiti" version="1.0.0.qualifier">
-      <category name="org.eclipse.emf.ecp.extra.category"/>
-   </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
    <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (at least one is required)"/>
    <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>

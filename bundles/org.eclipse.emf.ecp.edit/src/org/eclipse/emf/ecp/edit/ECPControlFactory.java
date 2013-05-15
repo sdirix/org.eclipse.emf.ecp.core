@@ -30,27 +30,27 @@ public interface ECPControlFactory {
 	 */
 	ECPControlFactory INSTANCE = ControlFactoryImpl.INSTANCE;
 	/**
-	 * Creates an {@link AbstractControl} from the provided {@link IItemPropertyDescriptor} and the
+	 * Creates an {@link ECPAbstractControl} from the provided {@link IItemPropertyDescriptor} and the
 	 * {@link ECPControlContext}.
 	 * 
 	 * @param <T> the type of the control to create
 	 * @param controlTypeClass the class of the control to create
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param context the {@link ECPControlContext}
-	 * @return the created {@link AbstractControl} or null if nothing fitting could be created
+	 * @return the created {@link ECPControl} or null if nothing fitting could be created
 	 */
-	<T extends AbstractControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
+	<T extends ECPControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context);
 	/**
-	 * Creates an {@link AbstractControl} based on a provided id.
+	 * Creates an {@link ECPAbstractControl} based on a provided id.
 	 * 
 	 * @param <T> the type of the control to create
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
 	 * @param context the {@link ECPControlContext}
 	 * @param controlId the id of the control to create
-	 * @return the created {@link AbstractControl} or null if id is unknown
+	 * @return the created {@link ECPControl} or null if id is unknown
 	 */
-	<T extends AbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
+	<T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context,String controlId);
 	/**
 	 * A copy of all known {@link ECPControlDescription}.

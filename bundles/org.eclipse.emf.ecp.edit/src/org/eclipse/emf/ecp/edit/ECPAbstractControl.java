@@ -11,18 +11,17 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * The {@link AbstractControl} is the abstract class describing a control.
+ * The {@link ECPAbstractControl} is the abstract class describing a control.
  * This class provides the necessary common access methods.
  * 
  * @author Eugen Neufeld
  * 
  */
-public abstract class AbstractControl {
+public abstract class ECPAbstractControl implements ECPControl {
 
 	private final ECPControlContext modelElementContext;
 	private final IItemPropertyDescriptor itemPropertyDescriptor;
@@ -39,13 +38,13 @@ public abstract class AbstractControl {
 	 * @param modelElementContext the {@link ECPControlContext}
 	 * @param embedded whether this control will be embedded in another control e.g. multicontrol
 	 */
-	public AbstractControl(boolean showLabel,IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext,boolean embedded) {
+	public ECPAbstractControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
+		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		this.feature = feature;
 		this.modelElementContext = modelElementContext;
 		this.itemPropertyDescriptor = itemPropertyDescriptor;
-		this.showLabel=showLabel;
-		this.embedded=embedded;
+		this.showLabel = showLabel;
+		this.embedded = embedded;
 	}
 
 	/**
@@ -92,8 +91,11 @@ public abstract class AbstractControl {
 	protected boolean hasUnsetState() {
 		return feature.isUnsettable();
 	}
+
 	/**
-	 * Whether a control is embedded. An embedded control can be rendered in an other fashion then an not embedded version.
+	 * Whether a control is embedded. An embedded control can be rendered in an other fashion then an not embedded
+	 * version.
+	 * 
 	 * @return true if the control is embedded in another control
 	 */
 	protected boolean isEmbedded() {
@@ -101,37 +103,10 @@ public abstract class AbstractControl {
 	}
 
 	/**
-	 * This method should be triggered when the Composite containing this Control is disposed.
+	 * {@inheritDoc}
 	 */
-	public abstract void dispose();
-
-	/**
-	 * Handle live validation.
-	 * 
-	 * @param diagnostic of type Diagnostic
-	 * **/
-	public abstract void handleValidation(Diagnostic diagnostic);
-
-	/**
-	 * Reset the MEControl to validation status 'ok'.
-	 * **/
-	public abstract void resetValidation();
-	
-	/**
-	 * Whether a label should be shown for this control.
-	 * @return true if a label should be created, false otherwise
-	 */
-	public boolean showLabel(){
+	public boolean showLabel() {
 		return showLabel;
 	}
-	
-	
-	/**
-	 * Sets the state of the widget to be either editable or not.
-	 * 
-	 * @param isEditable whether to set the widget editable
-	 */
-	public abstract void setEditable(boolean isEditable);
-	
-	
+
 }

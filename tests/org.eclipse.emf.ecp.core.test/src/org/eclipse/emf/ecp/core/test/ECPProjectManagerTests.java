@@ -122,7 +122,7 @@ public class ECPProjectManagerTests extends AbstractTest {
 		} catch (ECPProjectWithNameExistsException e) {
 			fail(e.getMessage());
 		}
-		ECPProject clonedProject = getProjectManager().cloneProject(project);
+		ECPProject clonedProject = getProjectManager().createProject(project,project.getName()+"Copy");
 		assertTrue(project.equals(clonedProject));
 	}
 

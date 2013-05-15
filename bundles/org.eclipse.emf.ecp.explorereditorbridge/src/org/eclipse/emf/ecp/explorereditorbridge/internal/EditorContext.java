@@ -87,7 +87,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		super(modelElement, ecpProject, shell);
 		this.ecpProject = ecpProject;
 		projectObserver = new IECPProjectsChangedUIObserverImplementation();
-		ECPUtil.getECPProjectManager().addObserver(projectObserver);
+		ECPUtil.getECPObserverBus().register(projectObserver);
 	}
 
 	/** {@inheritDoc} */
@@ -99,7 +99,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	 * Dispose the context.
 	 */
 	public void dispose() {
-		ECPUtil.getECPProjectManager().removeObserver(projectObserver);
+		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
 	}
 }

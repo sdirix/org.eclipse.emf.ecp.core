@@ -137,7 +137,9 @@ public abstract class AbstractTextControl extends SingleControl {
 		return new Control[] { text };
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		text.setEditable(isEditable);
 	}

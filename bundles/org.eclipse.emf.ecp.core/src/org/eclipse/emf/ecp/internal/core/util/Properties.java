@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.internal.core.util;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -109,8 +108,7 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	@Override
 	protected void notifyObservers(Collection<Map.Entry<String, String>> oldProperties,
 		Collection<Map.Entry<String, String>> newProperties) throws Exception {
-		ECPObserverBus.getInstance().notify(ECPPropertiesObserver.class)
-			.propertiesChanged(oldProperties, newProperties);
+		ECPUtil.getECPObserverBus().notify(ECPPropertiesObserver.class).propertiesChanged(oldProperties, newProperties);
 	}
 
 	// @Override

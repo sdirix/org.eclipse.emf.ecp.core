@@ -184,7 +184,9 @@ public class LinkControl extends SingleControl {
 		getModelElementContext().openInNewContext(value);
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		if (!isEmbedded()) {
 			for (Button button : buttons) {

@@ -15,7 +15,6 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryManagerObserver;
 
 import java.util.Collection;
 
@@ -55,7 +54,8 @@ public interface ECPRepositoryManager {
 	Collection<ECPRepository> getRepositories();
 
 	/**
-	 * This method allows the user to create a repository.
+	 * This method allows the user to create a repository. If {@link ECPProvider#hasCreateRepositorySupport()} returns
+	 * false an UnsupportedOperationException is thrown.
 	 * 
 	 * @param provider the {@link ECPProvider} of this repository
 	 * @param name the name of the new repository
@@ -67,17 +67,17 @@ public interface ECPRepositoryManager {
 	ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties);
 
-	/**
-	 * Add an {@link ECPRepositoryManagerObserver} to be notified.
-	 * 
-	 * @param changeObserver the observer to add
-	 */
-	void addObserver(ECPRepositoryManagerObserver changeObserver);
-
-	/**
-	 * Remove an {@link ECPRepositoryManagerObserver} from the list of the providers to be notified.
-	 * 
-	 * @param changeObserver the observer to remove
-	 */
-	void removeObserver(ECPRepositoryManagerObserver changeObserver);
+	// /**
+	// * Add an {@link ECPRepositoryManagerObserver} to be notified.
+	// *
+	// * @param changeObserver the observer to add
+	// */
+	// void addObserver(ECPRepositoryManagerObserver changeObserver);
+	//
+	// /**
+	// * Remove an {@link ECPRepositoryManagerObserver} from the list of the providers to be notified.
+	// *
+	// * @param changeObserver the observer to remove
+	// */
+	// void removeObserver(ECPRepositoryManagerObserver changeObserver);
 }

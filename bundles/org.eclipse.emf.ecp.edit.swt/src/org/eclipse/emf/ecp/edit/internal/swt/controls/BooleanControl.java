@@ -55,7 +55,9 @@ public class BooleanControl extends SingleControl {
 		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_boolean");
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setEditable(boolean isEditable) {
 		check.setEnabled(isEditable);
 	}

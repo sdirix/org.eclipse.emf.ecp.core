@@ -12,10 +12,10 @@
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.util.ECPContainer;
+import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider.ErrorElement;
 import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider.SlowElement;
-import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 
