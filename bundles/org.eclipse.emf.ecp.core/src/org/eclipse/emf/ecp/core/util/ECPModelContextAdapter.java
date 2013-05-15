@@ -11,10 +11,9 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.internal.core.util;
+package org.eclipse.emf.ecp.core.util;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 
 /**
  * The {@link ECPModelContextAdapter} can be used to be able to get the {@link ECPContainer} from a Notifier.

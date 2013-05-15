@@ -25,6 +25,8 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
+import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 
 import java.util.Collection;
 import java.util.HashSet;

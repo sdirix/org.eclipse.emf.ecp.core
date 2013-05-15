@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPRegistryElement;
 
 /**

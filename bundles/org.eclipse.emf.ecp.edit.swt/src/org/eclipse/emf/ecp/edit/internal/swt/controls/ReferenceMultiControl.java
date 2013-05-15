@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
-import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -53,7 +53,7 @@ public class ReferenceMultiControl extends MultiControl {
 	}
 
 	@Override
-	protected int getTesterPriority(StaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
+	protected int getTesterPriority(ECPStaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject eObject) {
 		return ReferenceMultiControlTester.getTesterPriority(tester, itemPropertyDescriptor, eObject);
 	}

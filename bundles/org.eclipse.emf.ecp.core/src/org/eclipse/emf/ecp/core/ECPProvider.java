@@ -15,8 +15,6 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 
 import org.eclipse.core.runtime.IAdaptable;
 
-import java.util.Set;
-
 /**
  * @author Eike Stepper
  * @author Jonas
@@ -37,24 +35,17 @@ public interface ECPProvider extends ECPElement, IAdaptable {
 	String getLabel();
 
 	/**
-	 * Array of all {@link ECPRepository}s known to this ECPProvider.
-	 * 
-	 * @return repositories using this ECPProvider
-	 */
-	Set<ECPRepository> getRepositories();
-
-	/**
 	 * Check whether a new repository can be added to this ECPProvider.
 	 * 
 	 * @return true if new repositories can be added.
 	 */
-	boolean canAddRepositories();
+	boolean hasCreateRepositorySupport();
 
 	/**
 	 * Whether this ECPProvider can have an offline project.
 	 * 
 	 * @return true if offline projects are allowed, false otherwise.
 	 */
-	boolean canAddOfflineProjects();
+	boolean hasCreateProjectWithoutRepositorySupport();
 
 }

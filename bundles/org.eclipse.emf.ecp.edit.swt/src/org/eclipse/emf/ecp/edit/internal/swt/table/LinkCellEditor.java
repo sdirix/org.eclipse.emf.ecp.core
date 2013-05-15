@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -37,7 +37,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private IItemPropertyDescriptor descriptor;
-	private ModelElementChangeListener modelElementChangeListener;
+	private ECPModelElementChangeListener modelElementChangeListener;
 
 	public LinkCellEditor() {
 		// TODO Auto-generated constructor stub

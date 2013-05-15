@@ -16,15 +16,15 @@ import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.AbstractControl;
-import org.eclipse.emf.ecp.edit.ControlDescription;
-import org.eclipse.emf.ecp.edit.ControlFactory;
+import org.eclipse.emf.ecp.edit.ECPControlDescription;
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -72,7 +72,7 @@ public abstract class MultiControl extends SWTControl {
 	private List<ECPSWTAction> toolBarActions = new ArrayList<ECPSWTAction>();
 	private Composite mainComposite;
 	private Composite sectionComposite;
-	private ControlDescription controlDescription;
+	private ECPControlDescription controlDescription;
 	private Class<?> supportedClassType;
 	private ECPSWTAction[] actions;
 
@@ -104,10 +104,10 @@ public abstract class MultiControl extends SWTControl {
 
 	private void findControlDescription(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority = -1;
-		for (ControlDescription description : ControlFactory.INSTANCE.getControlDescriptors()) {
+		for (ECPControlDescription description : ECPControlFactory.INSTANCE.getControlDescriptors()) {
 			for (ECPApplicableTester tester : description.getTester()) {
-				if (StaticApplicableTester.class.isInstance(tester)) {
-					StaticApplicableTester test = (StaticApplicableTester) tester;
+				if (ECPStaticApplicableTester.class.isInstance(tester)) {
+					ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
 					int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
 					if (bestPriority < priority) {
 						bestPriority = priority;
@@ -124,12 +124,12 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * Checks the priority of a tester.
 	 * 
-	 * @param tester the {@link StaticApplicableTester} to test
+	 * @param tester the {@link ECPStaticApplicableTester} to test
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param eObject the {@link EObject} to use
 	 * @return the priority
 	 */
-	protected abstract int getTesterPriority(StaticApplicableTester tester,
+	protected abstract int getTesterPriority(ECPStaticApplicableTester tester,
 		IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
 
 	@Override

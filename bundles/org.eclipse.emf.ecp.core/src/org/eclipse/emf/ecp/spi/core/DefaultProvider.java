@@ -24,13 +24,13 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
-import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
+import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
-import org.eclipse.emf.ecp.internal.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
+import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -236,7 +236,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
-	public boolean canAddRepositories() {
+	public boolean hasCreateRepositorySupport() {
 		return true;
 	}
 
@@ -397,7 +397,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * 
 	 * @return false
 	 */
-	public boolean canAddOfflineProjects() {
+	public boolean hasCreateProjectWithoutRepositorySupport() {
 		return false;
 	}
 

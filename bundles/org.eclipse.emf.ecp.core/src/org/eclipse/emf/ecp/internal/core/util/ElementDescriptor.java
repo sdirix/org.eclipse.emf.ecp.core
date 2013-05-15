@@ -11,12 +11,12 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPDisposable;
-import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.InternalDescriptor;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
 
 /**
  * @author Eike Stepper

@@ -3,11 +3,6 @@ package org.eclipse.emf.ecp.graphiti;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
-import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
-import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
-import org.eclipse.graphiti.ui.editor.DiagramBehavior;
-import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.ui.IWorkbenchPart;
 
 public class ECPDiagramBehavior extends DiagramBehavior {

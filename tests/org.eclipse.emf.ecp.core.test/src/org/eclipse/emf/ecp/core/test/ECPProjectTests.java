@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.junit.After;
 import org.junit.Before;
@@ -62,7 +62,7 @@ public class ECPProjectTests extends AbstractTest {
 			try {
 				this.project = (InternalProject)getProjectManager().createProject(getProvider(), "Projekt " + UUID.randomUUID());
 				done = true;
-			} catch (ProjectWithNameExistsException e) {}
+			} catch (ECPProjectWithNameExistsException e) {}
 	}
 			
 	/**

@@ -11,8 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
+import org.eclipse.emf.ecp.internal.core.Activator;
 
 import java.util.Collection;
 
@@ -26,16 +28,21 @@ import java.util.Collection;
 public interface ECPProjectManager {
 
 	/**
+	 * Instance of the ECPProjectManager.
+	 */
+	ECPProjectManager INSTANCE = Activator.getECPProjectManager();
+
+	/**
 	 * Method to construct an offline Project, this method calls
 	 * {@link #createProject(ECPProvider, String, ECPProperties)} with empty properties.
 	 * 
 	 * @param provider the {@link ECPProvider} of this project
 	 * @param name the name of the project
 	 * @return created {@link ECPProject}
-	 * @throws ProjectWithNameExistsException when a project with the same name already exists
+	 * @throws ECPProjectWithNameExistsException when a project with the same name already exists
 	 */
 
-	ECPProject createProject(ECPProvider provider, String name) throws ProjectWithNameExistsException;
+	ECPProject createProject(ECPProvider provider, String name) throws ECPProjectWithNameExistsException;
 
 	/**
 	 * Method to construct an offline Project and notify listeners about this add.
@@ -44,11 +51,11 @@ public interface ECPProjectManager {
 	 * @param name the name of the project
 	 * @param properties the project properties
 	 * @return created {@link ECPProject}
-	 * @throws ProjectWithNameExistsException when a project with the same name already exists
+	 * @throws ECPProjectWithNameExistsException when a project with the same name already exists
 	 */
 
 	ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
-		throws ProjectWithNameExistsException;
+		throws ECPProjectWithNameExistsException;
 
 	/**
 	 * Method to construct an shared Project, e.g. during a checkout, and notify listeners about this add.
@@ -57,20 +64,23 @@ public interface ECPProjectManager {
 	 * @param name the name of the project
 	 * @param properties the project properties
 	 * @return created {@link ECPProject}
-	 * @throws ProjectWithNameExistsException when a project with the same name already exists
+	 * @throws ECPProjectWithNameExistsException when a project with the same name already exists
 	 */
 	ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
-		throws ProjectWithNameExistsException;
+		throws ECPProjectWithNameExistsException;
 
 	/**
-	 * Clones an {@link ECPProject} within the same provider.
+	 * Method to construct a new Project based on an existing project as template. If the template project is shared, so
+	 * is the created project.
 	 * 
-	 * @param project the {@link ECPProject} to clone
+	 * @param project the template {@link ECPProject}
+	 * @param name the name of the created project
 	 * @return the clone of the {@link ECPProject}
 	 */
-	ECPProject cloneProject(ECPProject project);
+	ECPProject createProject(ECPProject project, String name);
 
 	/**
+	 * Retrieves the project the adaptable belongs to if possible.
 	 * This method checks whether the adaptable is {@link org.eclipse.emf.ecp.core.util.ECPProjectAware ECPProjectAware}
 	 * and else uses the AdapterUtil to adapt to a
 	 * project.
@@ -110,26 +120,4 @@ public interface ECPProjectManager {
 	 */
 	void removeObserver(ECPProjectManagerObserver observer);
 
-	/**
-	 * This exception is thrown when we try to add a project with a name that already exists.
-	 * 
-	 * @author Eugen Neufeld
-	 * @noextend This class is not intended to be subclassed by clients.
-	 * @noinstantiate This class is not intended to be instantiated by clients.
-	 * 
-	 */
-	public class ProjectWithNameExistsException extends Exception {
-
-		private static final long serialVersionUID = 2896166396540238251L;
-
-		/**
-		 * Convenient Constructor for this Exception.
-		 * 
-		 * @param message the message of this exception
-		 */
-
-		public ProjectWithNameExistsException(String message) {
-			super(message);
-		}
-	}
 }

@@ -15,13 +15,13 @@ package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
-import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.ModelLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesLabelProvider;
+import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.ui.common.dnd.ECPDropAdapter;
 import org.eclipse.emf.ecp.ui.common.dnd.ModelExplorerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;

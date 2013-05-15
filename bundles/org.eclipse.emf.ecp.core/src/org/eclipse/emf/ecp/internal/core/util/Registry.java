@@ -13,11 +13,11 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
-import org.eclipse.emf.ecp.core.util.ECPDisposable;
-import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
 
 import java.util.ArrayList;
 import java.util.Collection;

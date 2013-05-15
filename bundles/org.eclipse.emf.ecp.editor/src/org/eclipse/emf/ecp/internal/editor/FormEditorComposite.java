@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.edit.AbstractControl;
-import org.eclipse.emf.ecp.edit.ControlFactory;
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationHiddenDescriptor;
 import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPositionDescriptor;
@@ -55,7 +55,7 @@ import java.util.Map;
  */
 public class FormEditorComposite implements IEditorCompositeProvider {
 
-	private ModelElementChangeListener modelElementChangeListener;
+	private ECPModelElementChangeListener modelElementChangeListener;
 
 	/**
 	 * Default Constructor.
@@ -71,7 +71,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	 * 
 	 */
 	private void addModelElementListener() {
-		modelElementChangeListener = new ModelElementChangeListener(modelElementContext.getModelElement()) {
+		modelElementChangeListener = new ECPModelElementChangeListener(modelElementContext.getModelElement()) {
 
 			@Override
 			public void onChange(Notification notification) {
@@ -220,7 +220,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 			.applyTo(attributeComposite);
 
-		ControlFactory controlFactory = ControlFactory.INSTANCE;
+		ECPControlFactory controlFactory = ECPControlFactory.INSTANCE;
 		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {
 
 			SWTControl control = controlFactory.createControl(SWTControl.class, itemPropertyDescriptor,

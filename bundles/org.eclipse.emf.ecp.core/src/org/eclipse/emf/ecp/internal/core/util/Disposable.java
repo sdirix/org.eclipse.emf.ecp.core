@@ -11,8 +11,8 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 
 import java.util.ArrayList;
 import java.util.List;

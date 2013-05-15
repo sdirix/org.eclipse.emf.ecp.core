@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
  * This class describes the control extensionpoint. It is used to provide the possibility to access all known controls without reading the extension point.
  * @author Eugen Neufeld
  */
-public class ControlDescription {
+public final class ECPControlDescription {
 
 	private final String id;
 	private final Class<? extends AbstractControl> controlClass;
@@ -34,7 +34,7 @@ public class ControlDescription {
 	 * @param tester the class testing whether the control is applicable for the current feature of the current eobject
 	 * @param id the id of the control that is being described
 	 */
-	public ControlDescription(String id,Class<? extends AbstractControl> controlClass, boolean showLabel, Set<ECPApplicableTester> tester) {
+	public ECPControlDescription(String id,Class<? extends AbstractControl> controlClass, boolean showLabel, Set<ECPApplicableTester> tester) {
 		super();
 		this.id=id;
 		this.controlClass = controlClass;

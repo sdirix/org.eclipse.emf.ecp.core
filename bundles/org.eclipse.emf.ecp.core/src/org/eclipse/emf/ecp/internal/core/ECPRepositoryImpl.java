@@ -17,8 +17,6 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
-import org.eclipse.emf.ecp.core.util.ECPDisposable;
-import org.eclipse.emf.ecp.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
@@ -26,6 +24,8 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import org.eclipse.core.runtime.Platform;

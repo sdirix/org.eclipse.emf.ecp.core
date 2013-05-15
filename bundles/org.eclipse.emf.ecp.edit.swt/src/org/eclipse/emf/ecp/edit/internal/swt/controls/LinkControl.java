@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
-import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -79,7 +79,7 @@ public class LinkControl extends SingleControl {
 
 	// private ShortLabelProvider shortLabelProvider;
 
-	private ModelElementChangeListener modelElementChangeListener;
+	private ECPModelElementChangeListener modelElementChangeListener;
 
 	private Label unsetLabel;
 
@@ -272,7 +272,7 @@ public class LinkControl extends SingleControl {
 				mainComposite.layout();
 			}
 
-			modelElementChangeListener = new ModelElementChangeListener(value) {
+			modelElementChangeListener = new ECPModelElementChangeListener(value) {
 
 				@Override
 				public void onChange(Notification notification) {

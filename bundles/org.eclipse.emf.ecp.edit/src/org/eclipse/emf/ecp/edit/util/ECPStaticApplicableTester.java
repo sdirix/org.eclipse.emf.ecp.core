@@ -24,7 +24,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @author Eugen Neufeld
  * 
  */
-public class StaticApplicableTester implements ECPApplicableTester {
+public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	private final boolean singleValue;
 	private final int priority;
@@ -41,7 +41,7 @@ public class StaticApplicableTester implements ECPApplicableTester {
 	 * @param supportedEObject the eobject this tester allows
 	 * @param supportedFeature the feature this tester allows
 	 */
-	public StaticApplicableTester(boolean singleValue, int priority, Class<?> supportedClassType,
+	public ECPStaticApplicableTester(boolean singleValue, int priority, Class<?> supportedClassType,
 		Class<? extends EObject> supportedEObject, String supportedFeature) {
 		this.singleValue = singleValue;
 		this.priority = priority;

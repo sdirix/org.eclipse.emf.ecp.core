@@ -49,7 +49,7 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 		super.addPages();
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
 		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
-			if (provider.canAddOfflineProjects()) {
+			if (provider.hasCreateProjectWithoutRepositorySupport()) {
 				providers.add(provider);
 			}
 		}

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @author helming
  */
-public abstract class ModelElementChangeListener extends AdapterImpl {
+public abstract class ECPModelElementChangeListener extends AdapterImpl {
 
 	private final EObject modelelement;
 
@@ -32,7 +32,7 @@ public abstract class ModelElementChangeListener extends AdapterImpl {
 	 * @param modelelement
 	 *            the modelelement to listen on
 	 */
-	public ModelElementChangeListener(EObject modelelement) {
+	public ECPModelElementChangeListener(EObject modelelement) {
 		this.modelelement = modelelement;
 		modelelement.eAdapters().add(this);
 	}
@@ -78,7 +78,7 @@ public abstract class ModelElementChangeListener extends AdapterImpl {
 	}
 
 	/**
-	 * Removes the {@link ModelElementChangeListener}.
+	 * Removes the {@link ECPModelElementChangeListener}.
 	 */
 	public void remove() {
 		modelelement.eAdapters().remove(this);

@@ -18,17 +18,17 @@ import org.eclipse.emf.ecp.internal.edit.ControlFactoryImpl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * The ControlFactory provides a
- * method ({@link ControlFactory#createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
+ * method ({@link ECPControlFactory#createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
  * control with the known widgets.
  * 
  * @author Eugen Neufeld
  * 
  */
-public interface ControlFactory {
+public interface ECPControlFactory {
 	/**
 	 * The Singleton for accessing the ControlFactory.
 	 */
-	ControlFactory INSTANCE = ControlFactoryImpl.INSTANCE;
+	ECPControlFactory INSTANCE = ControlFactoryImpl.INSTANCE;
 	/**
 	 * Creates an {@link AbstractControl} from the provided {@link IItemPropertyDescriptor} and the
 	 * {@link ECPControlContext}.
@@ -53,8 +53,8 @@ public interface ControlFactory {
 	<T extends AbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context,String controlId);
 	/**
-	 * A copy of all known {@link ControlDescription}.
+	 * A copy of all known {@link ECPControlDescription}.
 	 * @return a copy of the set of all known controlDescriptions
 	 */
-	Set<ControlDescription> getControlDescriptors();
+	Set<ECPControlDescription> getControlDescriptors();
 }

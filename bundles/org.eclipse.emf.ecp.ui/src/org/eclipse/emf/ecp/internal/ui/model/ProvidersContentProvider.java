@@ -47,7 +47,7 @@ public class ProvidersContentProvider extends TreeContentProvider<ECPProviderReg
 				childrenList.addChildren(providers);
 			} else {
 				for (ECPProvider provider : providers) {
-					if (provider.canAddRepositories()) {
+					if (provider.hasCreateRepositorySupport()) {
 						childrenList.addChild(provider);
 					}
 				}

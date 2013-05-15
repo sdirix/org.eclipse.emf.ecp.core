@@ -11,18 +11,23 @@
  * Eugen Neufeld - JavaDoc
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.core.util;
+
+package org.eclipse.emf.ecp.spi.core.util;
+
+import org.eclipse.emf.ecp.core.util.ECPContainer;
 
 /**
- * A ModelContextAware knows its {@link ECPContainer}.
+ * The {@link ECPModelContextProvider} can return the {@link ECPContainer} of a certain Object.
  * 
  * @author Eike Stepper
+ * @author Eugen Neufeld
  */
-public interface ECPModelContextAware extends ECPProviderAware {
+public interface ECPModelContextProvider {
 	/**
-	 * Returns the {@link ECPContainer} this interface is aware of.
+	 * Returns the first {@link ECPContainer} that can be found for the provided Object.
 	 * 
-	 * @return {@link ECPContainer}
+	 * @param element the element to search the {@link ECPContainer} for
+	 * @return the {@link ECPContainer} of this element
 	 */
-	ECPContainer getContext();
+	ECPContainer getModelContext(Object element);
 }

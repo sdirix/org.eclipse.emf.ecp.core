@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
@@ -192,7 +192,7 @@ public class ValidationTest {
 			assertEquals(2, diagnostic.getChildren().get(0).getData().size());
 			assertEquals(TestPackage.eINSTANCE.getWriter_FirstName(), diagnostic.getChildren().get(0).getData().get(1));
 
-		} catch (ProjectWithNameExistsException ex) {
+		} catch (ECPProjectWithNameExistsException ex) {
 		}
 	}
 

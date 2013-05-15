@@ -3,7 +3,7 @@ package org.eclipse.emf.ecp.core.test;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.internal.core.ECPRepositoryImpl;
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class ECPRepositoryTest extends AbstractTest {
 			project.delete();
 			project2.delete();
 			assertEquals(0, repository.getOpenProjects().length);
-		} catch (ProjectWithNameExistsException e) {
+		} catch (ECPProjectWithNameExistsException e) {
 		}
 	}
 }

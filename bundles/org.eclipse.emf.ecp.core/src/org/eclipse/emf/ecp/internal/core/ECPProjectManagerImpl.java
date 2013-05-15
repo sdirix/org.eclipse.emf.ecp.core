@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -74,15 +75,15 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
-	public ECPProject createProject(ECPProvider provider, String name) throws ProjectWithNameExistsException {
+	public ECPProject createProject(ECPProvider provider, String name) throws ECPProjectWithNameExistsException {
 		return this.createProject(provider, name, ECPUtil.createProperties());
 	}
 
 	/** {@inheritDoc} */
 	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
-		throws ProjectWithNameExistsException {
+		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
-			throw new ProjectWithNameExistsException("A project with name " + name + " already exists");
+			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists");
 		}
 		InternalProject project = new ECPProjectImpl((InternalProvider) provider, name, properties);
 		return createProject(project);
@@ -90,9 +91,9 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/** {@inheritDoc} */
 	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
-		throws ProjectWithNameExistsException {
+		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
-			throw new ProjectWithNameExistsException("A project with name " + name + " already exists");
+			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists");
 		}
 		InternalProject project = new ECPProjectImpl(repository, name, properties);
 		return createProject(project);
@@ -110,7 +111,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
-	public ECPProject cloneProject(ECPProject project) {
+	public ECPProject createProject(ECPProject project, String name) {
 		InternalProject internalProject = (InternalProject) project;
 		InternalProject newProject = internalProject.clone();
 		return createProject(newProject);

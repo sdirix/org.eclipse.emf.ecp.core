@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.graphiti.internal.integration;
 
-import org.eclipse.graphiti.ui.platform.AbstractImageProvider;
 
 public class ECPImageProvider extends AbstractImageProvider {
 

@@ -2,9 +2,9 @@ package org.eclipse.emf.ecp.core.test;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -16,7 +16,7 @@ public abstract class AbstractTest {
 	private static ECPProvider provider;
 	private static ECPRepository repository;
 	@BeforeClass
-	public static void init() throws ProjectWithNameExistsException {
+	public static void init() throws ECPProjectWithNameExistsException {
 		provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 		repository = ECPUtil.getECPRepositoryManager().addRepository(provider, "repositoryName", "repositoryLabel",
 			"description", getNewProperties());
@@ -26,7 +26,7 @@ public abstract class AbstractTest {
 	}
 
 	@Before
-	public void cleanup() throws ProjectWithNameExistsException {
+	public void cleanup() throws ECPProjectWithNameExistsException {
 		for(ECPProject existingProject:projectManager.getProjects()){
 			existingProject.delete();
 		}

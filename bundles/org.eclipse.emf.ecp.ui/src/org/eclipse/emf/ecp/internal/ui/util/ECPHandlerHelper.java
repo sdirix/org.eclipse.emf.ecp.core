@@ -17,9 +17,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -98,7 +98,7 @@ public final class ECPHandlerHelper {
 				ECPProperties projectProperties = checkoutCompposite.getProjectProperties();
 				try {
 					checkoutSource.checkout(projectName, projectProperties);
-				} catch (ProjectWithNameExistsException ex) {
+				} catch (ECPProjectWithNameExistsException ex) {
 					showError(shell, "Cannot checkout project", "A project with name " + projectName
 						+ " already exists in the workspace.");
 				}
@@ -127,7 +127,7 @@ public final class ECPHandlerHelper {
 	public static ECPProject createProject(final Shell shell) {
 		List<ECPProvider> providers = new ArrayList<ECPProvider>();
 		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
-			if (provider.canAddOfflineProjects()) {
+			if (provider.hasCreateProjectWithoutRepositorySupport()) {
 				providers.add(provider);
 			}
 		}
@@ -157,7 +157,7 @@ public final class ECPHandlerHelper {
 			try {
 				project = ECPUtil.getECPProjectManager()
 					.createProject(selectedProvider, projectName, projectProperties);
-			} catch (ProjectWithNameExistsException ex) {
+			} catch (ECPProjectWithNameExistsException ex) {
 				showError(shell, "No project created", "A project with name " + projectName
 					+ " already exists in the workspace.");
 				return null;

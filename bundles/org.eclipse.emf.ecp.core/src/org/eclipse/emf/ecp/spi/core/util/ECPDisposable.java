@@ -11,7 +11,7 @@
  * Eugen Neufeld - JavaDoc
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.core.util;
+package org.eclipse.emf.ecp.spi.core.util;
 
 /**
  * This interface is used on classes that can be disposed.

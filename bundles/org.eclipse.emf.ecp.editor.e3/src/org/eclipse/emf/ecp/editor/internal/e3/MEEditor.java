@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.editor.internal.e3;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
-import org.eclipse.emf.ecp.edit.util.ModelElementChangeListener;
+import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
@@ -53,7 +53,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private StatusMessageProvider statusMessageProvider;
 
-	private ModelElementChangeListener modelElementChangeListener;
+	private ECPModelElementChangeListener modelElementChangeListener;
 
 	private ECPEditorContext modelElementContext;
 
@@ -208,7 +208,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 			};
 			modelElementContext.addECPContextDisposeListener(modelElementContextListener);
-			modelElementChangeListener = new ModelElementChangeListener(modelElementContext.getModelElement()) {
+			modelElementChangeListener = new ECPModelElementChangeListener(modelElementContext.getModelElement()) {
 
 				@Override
 				public void onChange(Notification notification) {

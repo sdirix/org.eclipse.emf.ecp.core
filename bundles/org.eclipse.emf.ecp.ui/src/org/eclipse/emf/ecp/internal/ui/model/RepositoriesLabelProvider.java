@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
+import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 
 /**
  * @author Eike Stepper

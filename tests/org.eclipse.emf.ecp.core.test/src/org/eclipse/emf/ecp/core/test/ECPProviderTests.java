@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPRepository;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -51,7 +51,7 @@ public class ECPProviderTests extends AbstractTest {
 
 	@Test
 	public void canAddRepositoriesTest() {
-		boolean canAddRepositories = getProvider().canAddRepositories();
+		boolean canAddRepositories = getProvider().hasCreateRepositorySupport();
 
 		int countReposBefore = getProvider().getRepositories().size();
 		repository = ECPUtil.getECPRepositoryManager().addRepository(getProvider(), "repository4Name", "repository4Label",
@@ -70,7 +70,7 @@ public class ECPProviderTests extends AbstractTest {
 
 	@Test
 	public void hasUnsharedProjectSupportTest() {
-		boolean hasUnsharedProjectSupport = getProvider().canAddOfflineProjects();
+		boolean hasUnsharedProjectSupport = getProvider().hasCreateProjectWithoutRepositorySupport();
 		boolean isActuallyPossible = false;
 
 		try {
@@ -81,7 +81,7 @@ public class ECPProviderTests extends AbstractTest {
 			} else {
 				isActuallyPossible = true;
 			}
-		} catch (ProjectWithNameExistsException e) {
+		} catch (ECPProjectWithNameExistsException e) {
 			fail("Project with name already existing. Fix test setup.");
 		} catch (Exception e) {
 			isActuallyPossible = false;
@@ -113,7 +113,7 @@ public class ECPProviderTests extends AbstractTest {
 		try {
 			project = (InternalProject) getProjectManager().createProject(
 					getProvider(), "test");
-		} catch (ProjectWithNameExistsException e) {
+		} catch (ECPProjectWithNameExistsException e) {
 			fail(e.getMessage());
 		}
 		EditingDomain editingDomain=provider.createEditingDomain(project);
@@ -127,7 +127,7 @@ public class ECPProviderTests extends AbstractTest {
 		try {
 			project = (InternalProject)getProjectManager().createProject(
 					getProvider(), "test");
-		} catch (ProjectWithNameExistsException e) {
+		} catch (ECPProjectWithNameExistsException e) {
 			fail(e.getMessage());
 		}
 		assertEquals(1,provider.getOpenProjects().size());

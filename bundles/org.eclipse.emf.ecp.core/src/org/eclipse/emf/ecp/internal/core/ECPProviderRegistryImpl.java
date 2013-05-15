@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
-import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
@@ -185,11 +184,6 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public Set<ECPRepository> getRepositories() {
-			return getResolvedElement().getRepositories();
-		}
-
-		/** {@inheritDoc} */
 		public Set<InternalProject> getOpenProjects() {
 			return getResolvedElement().getOpenProjects();
 		}
@@ -200,8 +194,8 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public boolean canAddRepositories() {
-			return getResolvedElement().canAddRepositories();
+		public boolean hasCreateRepositorySupport() {
+			return getResolvedElement().hasCreateRepositorySupport();
 		}
 
 		/** {@inheritDoc} */
@@ -241,8 +235,8 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
-		public boolean canAddOfflineProjects() {
-			return getResolvedElement().canAddOfflineProjects();
+		public boolean hasCreateProjectWithoutRepositorySupport() {
+			return getResolvedElement().hasCreateProjectWithoutRepositorySupport();
 		}
 
 		/** {@inheritDoc} */

@@ -24,11 +24,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
-import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
+import org.eclipse.emf.ecp.spi.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
@@ -154,7 +154,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	@Override
-	public boolean canAddOfflineProjects() {
+	public boolean hasCreateProjectWithoutRepositorySupport() {
 		return true;
 	}
 

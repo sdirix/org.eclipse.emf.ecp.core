@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.core;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -60,7 +60,7 @@ public class CDOBranchWrapper implements ECPCheckoutSource {
 	}
 
 	/** {@inheritDoc} */
-	public void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException {
+	public void checkout(String projectName, ECPProperties projectProperties) throws ECPProjectWithNameExistsException {
 		projectProperties.addProperty("branchPath", branchPath);
 		ECPUtil.getECPProjectManager().createProject(getRepository(), projectName, projectProperties);
 	}

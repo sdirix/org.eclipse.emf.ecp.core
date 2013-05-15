@@ -167,7 +167,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 		});
 
 		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
-			if (provider.canAddRepositories()) {
+			if (provider.hasCreateRepositorySupport()) {
 				providersViewer.setSelection(new StructuredSelection(provider));
 				break;
 			}

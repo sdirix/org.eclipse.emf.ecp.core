@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.emfstore.internal.ui.observer;
 
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -59,7 +59,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 					ECPUtil.getECPProjectManager().createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
 						createECPProperties(project));
 					validProjectName = true;
-				} catch (ProjectWithNameExistsException ex) {
+				} catch (ECPProjectWithNameExistsException ex) {
 					InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(), "Create project",
 						"Enter name for checked out project:", project.getProjectName() + "@" + createDateString(),
 						new IInputValidator() {

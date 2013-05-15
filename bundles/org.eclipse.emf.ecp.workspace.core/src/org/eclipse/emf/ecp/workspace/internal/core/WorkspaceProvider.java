@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
-import org.eclipse.emf.ecp.internal.core.util.ECPModelContextAdapter;
+import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
 import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -134,7 +134,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	@Override
-	public boolean canAddRepositories() {
+	public boolean hasCreateRepositorySupport() {
 		return false;
 	}
 
@@ -268,7 +268,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	@Override
-	public boolean canAddOfflineProjects() {
+	public boolean hasCreateProjectWithoutRepositorySupport() {
 		return true;
 	}
 

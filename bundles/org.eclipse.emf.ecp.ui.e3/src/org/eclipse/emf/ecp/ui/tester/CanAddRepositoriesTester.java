@@ -21,7 +21,7 @@ public class CanAddRepositoriesTester extends PropertyTester {
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders())
 	    {
-	      if (provider.canAddRepositories())
+	      if (provider.hasCreateRepositorySupport())
 	      {
 	        return expectedValue.equals(true);
 	      }

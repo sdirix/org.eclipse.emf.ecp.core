@@ -150,7 +150,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 
 			} else if (sourceObject instanceof ECPProject) {
 				ECPProject oldProject = (ECPProject) sourceObject;
-				ECPUtil.getECPProjectManager().cloneProject(oldProject);
+				ECPUtil.getECPProjectManager().createProject(oldProject, oldProject.getName() + "(Copy)");
 			}
 		} else if (event.detail != DND.DROP_NONE) {
 			super.drop(event);

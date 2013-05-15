@@ -14,7 +14,7 @@
 
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager.ProjectWithNameExistsException;
+import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 
 /**
  * This class describes an object that can be checked out.
@@ -35,8 +35,8 @@ public interface ECPCheckoutSource extends ECPRepositoryAware {
 	 * 
 	 * @param projectName the name of the project to create
 	 * @param projectProperties the {@link ECPProperties} to use
-	 * @throws ProjectWithNameExistsException is thrown when a project with such a name already exists
+	 * @throws ECPProjectWithNameExistsException is thrown when a project with such a name already exists
 	 */
 
-	void checkout(String projectName, ECPProperties projectProperties) throws ProjectWithNameExistsException;
+	void checkout(String projectName, ECPProperties projectProperties) throws ECPProjectWithNameExistsException;
 }

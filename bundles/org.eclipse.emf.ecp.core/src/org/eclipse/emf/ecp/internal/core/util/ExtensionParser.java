@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
-import org.eclipse.emf.ecp.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.core.util.ECPRegistryElement;
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 
 import org.eclipse.core.runtime.IConfigurationElement;

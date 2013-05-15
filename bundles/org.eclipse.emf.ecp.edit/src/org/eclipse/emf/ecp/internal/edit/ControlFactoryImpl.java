@@ -22,11 +22,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.AbstractControl;
-import org.eclipse.emf.ecp.edit.ControlDescription;
-import org.eclipse.emf.ecp.edit.ControlFactory;
+import org.eclipse.emf.ecp.edit.ECPControlDescription;
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.edit.util.StaticApplicableTester;
+import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.osgi.framework.Bundle;
 
@@ -38,7 +38,7 @@ import org.osgi.framework.Bundle;
  * @author Eugen Neufeld
  * 
  */
-public final class ControlFactoryImpl implements ControlFactory{
+public final class ControlFactoryImpl implements ECPControlFactory{
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
 	
@@ -56,7 +56,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	private static final String TESTER_FEATURE = "supportedFeature";//$NON-NLS-1$
 	private static final String TESTER_SINGLEVALUE = "singleValue";//$NON-NLS-1$
 	
-	private Set<ControlDescription> controlDescriptors = new HashSet<ControlDescription>();
+	private Set<ECPControlDescription> controlDescriptors = new HashSet<ECPControlDescription>();
 
 	/**
 	 * The Singleton for accessing the ControlFactoryImpl.
@@ -98,10 +98,10 @@ public final class ControlFactoryImpl implements ControlFactory{
 						
 						String supportedFeature = testerExtension.getAttribute(TESTER_FEATURE);
 						
-						tester.add(new StaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature));
+						tester.add(new ECPStaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature));
 					}
 				}
-				ControlDescription controlDescription = new ControlDescription(id,resolvedClass,showLabel,tester);
+				ECPControlDescription controlDescription = new ECPControlDescription(id,resolvedClass,showLabel,tester);
 				controlDescriptors.add(controlDescription);
 			} catch (ClassNotFoundException e1) {
 				Activator.logException(e1);
@@ -129,7 +129,7 @@ public final class ControlFactoryImpl implements ControlFactory{
 	public <T extends AbstractControl> T createControl(Class<T> controlType, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context) {
 
-		ControlDescription controlDescription = getControlCandidate(controlType,itemPropertyDescriptor, context.getModelElement());
+		ECPControlDescription controlDescription = getControlCandidate(controlType,itemPropertyDescriptor, context.getModelElement());
 		if(controlDescription==null){
 			return null;
 		}
@@ -144,8 +144,8 @@ public final class ControlFactoryImpl implements ControlFactory{
 	public <T extends AbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId) {
 		
-		ControlDescription controlDescription = null;
-		for(ControlDescription desc:controlDescriptors){
+		ECPControlDescription controlDescription = null;
+		for(ECPControlDescription desc:controlDescriptors){
 			if(desc.getId().equals(controlId)){
 				controlDescription=desc;
 				break;
@@ -163,12 +163,12 @@ public final class ControlFactoryImpl implements ControlFactory{
 	/**
 	 * {@inheritDoc}
 	 */
-	public Set<ControlDescription> getControlDescriptors() {
-		return new HashSet<ControlDescription>(controlDescriptors);
+	public Set<ECPControlDescription> getControlDescriptors() {
+		return new HashSet<ECPControlDescription>(controlDescriptors);
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends AbstractControl> T getControlInstance(ControlDescription controlDescription,
+	private static <T extends AbstractControl> T getControlInstance(ECPControlDescription controlDescription,
 		IItemPropertyDescriptor itemPropertyDescriptor,  ECPControlContext modelElementContext) {
 		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement());
 		try {
@@ -191,11 +191,11 @@ public final class ControlFactoryImpl implements ControlFactory{
 		return null;
 	}
 
-	private ControlDescription getControlCandidate(Class<?> controlClass,IItemPropertyDescriptor itemPropertyDescriptor,
+	private ECPControlDescription getControlCandidate(Class<?> controlClass,IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject modelElement) {
 		int highestPriority = -1;
-		ControlDescription bestCandidate = null;
-		for (ControlDescription description : controlDescriptors) {
+		ECPControlDescription bestCandidate = null;
+		for (ECPControlDescription description : controlDescriptors) {
 			
 			if(!controlClass.isAssignableFrom(description.getControlClass())){
 				continue;
