@@ -29,7 +29,6 @@ import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Text;
 
 import java.math.BigDecimal;
@@ -45,8 +44,6 @@ import java.text.ParseException;
  * @author emueller
  */
 public class NumericalControl extends AbstractTextControl {
-
-	private FocusListener focusListener;
 
 	/**
 	 * Constructor for a String control.
@@ -112,16 +109,6 @@ public class NumericalControl extends AbstractTextControl {
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			new NumericalTargetToModelUpdateStrategy(), new NumericalModelToTargetUpdateStrategy());
 		return binding;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl#dispose()
-	 */
-	@Override
-	public void dispose() {
-		super.dispose();
-		getText().removeFocusListener(focusListener);
 	}
 
 	private Class<?> getInstanceClass() {
@@ -195,6 +182,7 @@ public class NumericalControl extends AbstractTextControl {
 		@Override
 		public Object convertValue(Object value) {
 			final NumberFormat format = NumberFormat.getInstance(getModelElementContext().getLocale());
+			format.setGroupingUsed(false);
 			IConverter converter = new Converter(getInstanceClass(), String.class) {
 				public Object convert(Object toObject) {
 					return format.format(toObject);
