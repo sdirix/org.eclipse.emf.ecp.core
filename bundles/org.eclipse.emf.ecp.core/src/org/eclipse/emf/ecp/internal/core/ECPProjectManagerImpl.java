@@ -102,6 +102,13 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		return createProject(project);
 	}
 
+	/** {@inheritDoc} */
+	public ECPProject createProject(ECPProject project, String name) {
+		InternalProject internalProject = (InternalProject) project;
+		InternalProject newProject = internalProject.clone(name);
+		return createProject(newProject);
+	}
+
 	private boolean projectExists(String name) {
 		return getProject(name) != null;
 	}
@@ -111,13 +118,6 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		changeElements(null, Collections.singleton(project));
 
 		return project;
-	}
-
-	/** {@inheritDoc} */
-	public ECPProject createProject(ECPProject project, String name) {
-		InternalProject internalProject = (InternalProject) project;
-		InternalProject newProject = internalProject.clone();
-		return createProject(newProject);
 	}
 
 	/** {@inheritDoc} */

@@ -85,9 +85,10 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	/**
 	 * This method clones a project.
 	 * 
+	 * @param name the name of the project to create
 	 * @return the cloned project
 	 */
-	InternalProject clone();
+	InternalProject clone(String name);
 
 	/**
 	 * Saves the properties, such as visible packages or the name of the project into the workspace.

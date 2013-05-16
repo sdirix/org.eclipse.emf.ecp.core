@@ -588,14 +588,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	@Override
-	public InternalProject clone() {
+	public InternalProject clone(String name) {
 		try {
 			super.clone();
 		} catch (CloneNotSupportedException ex) {
 			Activator.log(ex);
 		}
-		InternalProject project = new ECPProjectImpl(getProvider(), getName() + "(Copy)", ECPUtil.createProperties());
+		InternalProject project = new ECPProjectImpl(getProvider(), name, ECPUtil.createProperties());
 		project.setVisibleEClasses(getVisibleEClasses());
 		project.setVisiblePackages(getVisiblePackages());
 		getProvider().cloneProject(this, project);
