@@ -6,12 +6,15 @@ Element-Name: No Local Store
 Element-Type: context
 Element-Version: 2.0
 Id: _IuFcgFpZEeKcnaHGSt8OwA
-Save-Time: 4/8/13 1:49 PM
+Save-Time: 5/16/13 11:38 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
 Entry-Name: .ecl.context
 
+try {
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Start Local server" | click
+} -catch {}
 try {
 	get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
 } -catch {}
