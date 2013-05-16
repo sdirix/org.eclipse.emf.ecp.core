@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _HZ-QoKEjEeKX8e34E6tWIg
-Save-Time: 4/26/13 6:31 PM
+Save-Time: 5/17/13 12:34 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -19,7 +19,7 @@ get-editor League | get-editbox -after [get-label Name] | set-text Test
 get-view "Model Explorer" | get-tree | select "TestProject/League Test" | get-menu Player | click
 get-editor Player | get-editbox -after [get-label Name] | set-text Jonas
 with [get-editor "Player Jonas"] {
-    get-editbox -after [get-label Height] | set-text "10.0"
+    get-editbox -after [get-label Height] | set-text "10"
     get-button -after [get-label "Is Professional"] | click
     get-button "Add Entry" | click
     with [get-editbox -after [get-label EMails]] {
@@ -41,7 +41,7 @@ with [get-editor "Player Max"] {
         set-text "max@example.org"
     }
     get-editbox -after [get-label "Number Of Victories"] | set-text 1
-    get-editbox -after [get-label Height] | set-text "20.0"
+    get-editbox -after [get-label Height] | set-text "20"
     get-date-time | set-value "1980/4/10 16:48:17"
     get-editbox -after [get-label Name] | click-text 1
 }

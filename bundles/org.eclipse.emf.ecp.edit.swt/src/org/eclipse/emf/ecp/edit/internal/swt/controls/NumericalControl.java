@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Text;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 
 /**
@@ -180,10 +180,12 @@ public class NumericalControl extends AbstractTextControl {
 
 		@Override
 		public Object convertValue(Object value) {
-			final NumberFormat format = NumberFormat.getInstance(getModelElementContext().getLocale());
-			format.setGroupingUsed(false);
-			format.setMaximumFractionDigits(128);
-			format.setMaximumIntegerDigits(128);
+			// final DecimalFormat format = (DecimalFormat) DecimalFormat
+			// .getInstance(getModelElementContext().getLocale());
+			// format.setGroupingUsed(false);
+			// format.setParseIntegerOnly(isInteger());
+			final DecimalFormat format = setupFormat();
+
 			IConverter converter = new Converter(getInstanceClass(), String.class) {
 				public Object convert(Object toObject) {
 					return format.format(toObject);
@@ -195,14 +197,12 @@ public class NumericalControl extends AbstractTextControl {
 
 	private class NumericalTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
-		private NumberFormat format;
+		private DecimalFormat format;
 
 		NumericalTargetToModelUpdateStrategy() {
 			super();
-			format = NumberFormat.getInstance(getModelElementContext().getLocale());
-			format.setMaximumFractionDigits(128);
-			format.setMaximumIntegerDigits(128);
-			format.setGroupingUsed(false);
+			format = setupFormat();
+
 		}
 
 		@Override
@@ -210,8 +210,11 @@ public class NumericalControl extends AbstractTextControl {
 			try {
 
 				Number number = format.parse((String) value);
-
-				if (((String) value).matches("0*" + format.format(number) + "0*")) {
+				String formatedNumber = format.format(number);
+				if (number.toString().contains("E")
+					|| ((String) value).matches("0*" + formatedNumber + "\\"
+						+ format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
+					getText().setText(formatedNumber);
 					return numberToInstanceClass(number);
 				}
 				return revertToOldValue(value);
@@ -253,37 +256,51 @@ public class NumericalControl extends AbstractTextControl {
 			}
 			return number;
 		}
-	}
 
-	private Object revertToOldValue(final Object value) {
+		private Object revertToOldValue(final Object value) {
 
-		if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
-			return null;
-		}
-
-		Object result = getModelValue().getValue();
-
-		MessageDialog messageDialog = new MessageDialog(getText().getShell(), "Invalid Number", null,
-			"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
-			new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-
-		new ECPDialogExecutor(messageDialog) {
-			@Override
-			public void handleResult(int codeResult) {
-
+			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
+				return null;
 			}
-		}.execute();
 
-		if (result == null) {
-			getText().setText("");
-		} else {
-			getText().setText(result.toString());
-		}
+			Object result = getModelValue().getValue();
 
-		if (getStructuralFeature().isUnsettable() && result == null) {
-			showUnsetLabel();
-			return SetCommand.UNSET_VALUE;
+			MessageDialog messageDialog = new MessageDialog(getText().getShell(), "Invalid Number", null,
+				"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
+				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+			new ECPDialogExecutor(messageDialog) {
+				@Override
+				public void handleResult(int codeResult) {
+
+				}
+			}.execute();
+
+			if (result == null) {
+				getText().setText("");
+			} else {
+				getText().setText(format.format(result));
+			}
+
+			if (getStructuralFeature().isUnsettable() && result == null) {
+				showUnsetLabel();
+				return SetCommand.UNSET_VALUE;
+			}
+			return result;
 		}
-		return result;
 	}
+
+	private DecimalFormat setupFormat() {
+		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(getModelElementContext().getLocale());
+		// if (isDouble()) {
+		// format = new DecimalFormat("#0.0#", DecimalFormatSymbols.getInstance(getModelElementContext().getLocale()));
+		// } else if (isInteger()) {
+		// format = new DecimalFormat("#", DecimalFormatSymbols.getInstance(getModelElementContext().getLocale()));
+		// }
+		format.setParseIntegerOnly(isInteger());
+		format.setGroupingUsed(false);
+		format.setMaximumFractionDigits(20);
+		return format;
+	}
+
 }
