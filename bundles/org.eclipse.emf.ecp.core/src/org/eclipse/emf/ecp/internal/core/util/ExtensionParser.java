@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
-import org.eclipse.emf.ecp.core.util.ECPRegistryElement;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 
@@ -34,7 +33,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extends Lifecycle implements
+public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> extends Lifecycle implements
 	IRegistryChangeListener {
 	private final ElementRegistry<ELEMENT, ?> elementRegistry;
 
@@ -82,7 +81,7 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
 		if (removedElements != null) {
 			for (ELEMENT removedElement : removedElements) {
 				if (removedElement instanceof ECPDisposable) {
-					ECPDisposable disposable = (ECPDisposable) removedElement;
+					ECPDisposable disposable = removedElement;
 					disposable.dispose();
 				}
 			}
@@ -116,8 +115,8 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
 		IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 
 		ELEMENT element = createElement(name, configurationElement);
-		((InternalRegistryElement) element).setLabel(extension.getLabel());
-		((InternalRegistryElement) element).setDescription(configurationElement.getAttribute("description"));
+		element.setLabel(extension.getLabel());
+		element.setDescription(configurationElement.getAttribute("description"));
 		result.add(element);
 	}
 
@@ -131,7 +130,7 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
 	/**
 	 * @author Eike Stepper
 	 */
-	public static class ExtensionDescriptor<ELEMENT extends ECPRegistryElement> extends ElementDescriptor<ELEMENT> {
+	public static class ExtensionDescriptor<ELEMENT extends InternalRegistryElement> extends ElementDescriptor<ELEMENT> {
 		private final String type;
 
 		private final IConfigurationElement configurationElement;
@@ -165,6 +164,7 @@ public abstract class ExtensionParser<ELEMENT extends ECPRegistryElement> extend
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String getType() {
 			return type;
 		}

@@ -12,20 +12,37 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPRegistryElement;
+import org.eclipse.emf.ecp.core.util.ECPElement;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalRegistryElement extends ECPRegistryElement, ECPDisposable {
+public interface InternalRegistryElement extends ECPElement, ECPDisposable {
+	/**
+	 * Returns the label.
+	 * 
+	 * @return the label
+	 */
+	String getLabel();
 
 	/**
-	 * {@inheritDoc}
+	 * Return the description.
+	 * 
+	 * @return the description
+	 */
+	String getDescription();
+
+	/**
+	 * Sets the label.
+	 * 
+	 * @param label the Label to set
 	 */
 	void setLabel(String label);
 
 	/**
-	 * {@inheritDoc}
+	 * Sets the description.
+	 * 
+	 * @param description the Description to set
 	 */
 	void setDescription(String description);
 }
