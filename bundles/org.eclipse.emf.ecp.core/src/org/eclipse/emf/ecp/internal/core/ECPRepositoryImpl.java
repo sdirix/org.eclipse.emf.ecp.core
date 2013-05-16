@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
+import org.eclipse.emf.ecp.spi.core.util.DisposeException;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;

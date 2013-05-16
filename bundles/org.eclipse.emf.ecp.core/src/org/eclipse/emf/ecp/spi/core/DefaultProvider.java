@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
@@ -77,7 +76,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	private AdapterProvider uiProvider;
 
 	/**
-	 * Convenient constructor for an {@link ECPProvider}.
+	 * Convenient constructor for an {@link org.eclipse.emf.ecp.core.ECPProvider ECPProvider}.
 	 * 
 	 * @param name the name of the implementing provider
 	 */
@@ -126,22 +125,6 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/** {@inheritDoc} */
 	public final void setUIProvider(AdapterProvider uiProvider) {
 		this.uiProvider = uiProvider;
-	}
-
-	/** {@inheritDoc} */
-	public final Set<ECPRepository> getRepositories() {
-		Set<InternalRepository> result = new LinkedHashSet<InternalRepository>();
-		for (ECPRepository repository : ECPUtil.getECPRepositoryManager().getRepositories()) {
-			if (!ECPUtil.isDisposed(repository)) {
-				ECPProvider provider = repository.getProvider();
-				if (provider.equals(this)) {
-					result.add((InternalRepository) repository);
-				}
-			}
-		}
-
-		// TODO Consider to cache the result
-		return (Set) result;
 	}
 
 	/** {@inheritDoc} */

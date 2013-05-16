@@ -62,36 +62,4 @@ public interface ECPDisposable {
 		 */
 		void disposed(ECPDisposable disposable) throws DisposeException;
 	}
-
-	/**
-	 * This is an Exception that is thrown during dispose actions.
-	 * 
-	 * @author Eugen Neufeld
-	 * 
-	 */
-	public class DisposeException extends Exception {
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Constructs a new exception with the specified detail message and cause.
-		 * 
-		 * @param message the detail message (which is saved for later retrieval by the getMessage() method).
-		 * @param cause the cause (which is saved for later retrieval by the getCause() method). (A null value is
-		 *            permitted, and indicates that the cause is nonexistent or unknown.)
-		 */
-		public DisposeException(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * Constructs a new exception with the specified cause and a detail message of (cause==null ? null :
-		 * cause.toString())
-		 * 
-		 * @param cause the cause (which is saved for later retrieval by the getCause() method).
-		 */
-		public DisposeException(Throwable cause) {
-			super(cause);
-		}
-
-	}
 }

@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.spi.core.util.DisposeException;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class Disposable implements ECPDisposable {
 
 				try {
 					listener.disposed(delegate);
-				} catch (Exception ex) {
+				} catch (DisposeException ex) {
 					Activator.log(ex);
 				}
 			}
