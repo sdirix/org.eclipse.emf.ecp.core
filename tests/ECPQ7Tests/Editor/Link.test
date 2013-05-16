@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _yMGr8HHTEeKndsdNMEr_UQ
-Save-Time: 3/24/13 9:07 PM
+Save-Time: 5/16/13 9:38 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -67,7 +67,7 @@ with [get-editor Player] {
     get-editbox -after [get-label Name] | set-text Walter
     get-editbox -after [get-label Height] | click-text 1
 }
-get-editor "Player Walter" | get-editbox -after [get-label Height] | click-text 4
+get-editor "Player Walter" | get-editbox -after [get-label Height] | click-text 1
 get-editor "Player Walter" | get-label "Player Walter [Player]" | get-property caption 
     | equals "Player Walter [Player]" | verify-true
 get-editor Game | click

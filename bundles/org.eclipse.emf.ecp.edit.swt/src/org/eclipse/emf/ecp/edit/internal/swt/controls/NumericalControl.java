@@ -210,10 +210,11 @@ public class NumericalControl extends AbstractTextControl {
 			try {
 
 				Number number = format.parse((String) value);
-				if (!format.format(number).equals(value)) {
-					return revertToOldValue(value);
+
+				if (((String) value).matches("0*" + format.format(number) + "0*")) {
+					return numberToInstanceClass(number);
 				}
-				return numberToInstanceClass(number);
+				return revertToOldValue(value);
 			} catch (ParseException ex) {
 				return revertToOldValue(value);
 			}
