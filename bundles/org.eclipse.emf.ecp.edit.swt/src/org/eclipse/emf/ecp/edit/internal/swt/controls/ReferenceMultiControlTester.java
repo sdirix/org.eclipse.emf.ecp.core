@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -34,7 +35,11 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	/** {@inheritDoc} **/
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority = NOT_APPLICABLE;
-		for (ECPControlDescription description : ECPControlFactory.INSTANCE.getControlDescriptors()) {
+		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+		if (controlFactory == null) {
+			return bestPriority;
+		}
+		for (ECPControlDescription description : controlFactory.getControlDescriptors()) {
 			for (ECPApplicableTester tester : description.getTester()) {
 				if (ECPStaticApplicableTester.class.isInstance(tester)) {
 					ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
@@ -47,6 +52,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 				}
 			}
 		}
+		Activator.getDefault().ungetECPControlFactory();
 		return bestPriority;
 	}
 
@@ -58,8 +64,8 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	 * @param eObject the {@link EObject}
 	 * @return the priority
 	 */
-	public static int getTesterPriority(ECPStaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
-		EObject eObject) {
+	public static int getTesterPriority(ECPStaticApplicableTester tester,
+		IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 
 		if (!itemPropertyDescriptor.isMany(eObject)) {
 			return NOT_APPLICABLE;

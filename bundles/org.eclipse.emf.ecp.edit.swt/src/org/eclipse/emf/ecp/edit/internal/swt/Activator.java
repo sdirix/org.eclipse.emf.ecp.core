@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt;
 
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
@@ -19,6 +21,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 import java.net.URL;
 import java.util.LinkedHashMap;
@@ -121,4 +124,23 @@ public class Activator extends Plugin {
 		return getDefault().imageRegistry.get(path).getImageDescriptor();
 
 	}
+
+	private ServiceReference<ECPControlFactory> controlFactoryReference;
+
+	public ECPControlFactory getECPControlFactory() {
+		if (controlFactoryReference == null) {
+			controlFactoryReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ECPControlFactory.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
+	}
+
+	public void ungetECPControlFactory() {
+		if (controlFactoryReference == null) {
+			return;
+		}
+		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
+		controlFactoryReference = null;
+	}
+
 }

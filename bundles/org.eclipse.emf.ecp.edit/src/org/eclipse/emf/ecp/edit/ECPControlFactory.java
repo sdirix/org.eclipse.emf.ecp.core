@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.edit;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.internal.edit.ControlFactoryImpl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * The ControlFactory provides a
@@ -25,10 +24,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  */
 public interface ECPControlFactory {
-	/**
-	 * The Singleton for accessing the ControlFactory.
-	 */
-	ECPControlFactory INSTANCE = ControlFactoryImpl.INSTANCE;
 	/**
 	 * Creates an {@link ECPAbstractControl} from the provided {@link IItemPropertyDescriptor} and the
 	 * {@link ECPControlContext}.

@@ -13,11 +13,14 @@
 
 package org.eclipse.emf.ecp.internal.editor;
 
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
+
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -89,4 +92,21 @@ public class Activator extends AbstractUIPlugin {
 			new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 	}
 
+	private ServiceReference<ECPControlFactory> controlFactoryReference;
+
+	public ECPControlFactory getECPControlFactory() {
+		if (controlFactoryReference == null) {
+			controlFactoryReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ECPControlFactory.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
+	}
+
+	public void ungetECPControlFactory() {
+		if (controlFactoryReference == null) {
+			return;
+		}
+		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
+		controlFactoryReference = null;
+	}
 }

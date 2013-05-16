@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.edit.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
@@ -220,7 +220,10 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.BEGINNING).indent(10, 0)
 			.applyTo(attributeComposite);
 
-		ECPControlFactory controlFactory = ECPControlFactory.INSTANCE;
+		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+		if (controlFactory == null) {
+			return;
+		}
 		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {
 
 			SWTControl control = controlFactory.createControl(SWTControl.class, itemPropertyDescriptor,
@@ -243,7 +246,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 				.applyTo(composite);
 			meControls.put(
 				(EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement()), control);
-
+			Activator.getDefault().ungetECPControlFactory();
 		}
 	}
 

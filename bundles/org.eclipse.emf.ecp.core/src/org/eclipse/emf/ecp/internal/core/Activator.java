@@ -117,21 +117,36 @@ public final class Activator extends Plugin {
 		return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
 	}
 
+	private static ECPProjectManager ecpProjectManager;
+
 	public static ECPProjectManager getECPProjectManager() {
-		ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPProjectManager.class);
-		return instance.getBundle().getBundleContext().getService(serviceRef);
+		if (ecpProjectManager == null) {
+			ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
+				.getServiceReference(ECPProjectManager.class);
+			ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
+		}
+		return ecpProjectManager;
 	}
+
+	private static ECPRepositoryManager ecpRepositoryManager;
 
 	public static ECPRepositoryManager getECPRepositoryManager() {
-		ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPRepositoryManager.class);
-		return instance.getBundle().getBundleContext().getService(serviceRef);
+		if (ecpRepositoryManager == null) {
+			ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
+				.getServiceReference(ECPRepositoryManager.class);
+			ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
+		}
+		return ecpRepositoryManager;
 	}
 
+	private static ECPProviderRegistry ecpProviderRegistry;
+
 	public static ECPProviderRegistry getECPProviderRegistry() {
-		ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
-			.getServiceReference(ECPProviderRegistry.class);
-		return instance.getBundle().getBundleContext().getService(serviceRef);
+		if (ecpProviderRegistry == null) {
+			ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
+				.getServiceReference(ECPProviderRegistry.class);
+			ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
+		}
+		return ecpProviderRegistry;
 	}
 }

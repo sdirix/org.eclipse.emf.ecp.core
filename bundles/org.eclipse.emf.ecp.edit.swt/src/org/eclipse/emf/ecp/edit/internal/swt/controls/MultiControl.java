@@ -104,7 +104,11 @@ public abstract class MultiControl extends SWTControl {
 
 	private void findControlDescription(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority = -1;
-		for (ECPControlDescription description : ECPControlFactory.INSTANCE.getControlDescriptors()) {
+		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+		if (controlFactory == null) {
+			return;
+		}
+		for (ECPControlDescription description : controlFactory.getControlDescriptors()) {
 			for (ECPApplicableTester tester : description.getTester()) {
 				if (ECPStaticApplicableTester.class.isInstance(tester)) {
 					ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
@@ -119,6 +123,7 @@ public abstract class MultiControl extends SWTControl {
 				}
 			}
 		}
+		Activator.getDefault().ungetECPControlFactory();
 	}
 
 	/**

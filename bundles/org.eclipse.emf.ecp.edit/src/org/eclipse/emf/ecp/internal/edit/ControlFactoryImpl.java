@@ -64,7 +64,7 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 	 */
 	public static final ControlFactoryImpl INSTANCE = new ControlFactoryImpl();
 
-	private ControlFactoryImpl() {
+	public ControlFactoryImpl() {
 		readExtensionPoint();
 	}
 
