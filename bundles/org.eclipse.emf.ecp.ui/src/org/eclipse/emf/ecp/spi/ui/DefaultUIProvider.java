@@ -95,6 +95,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getType() {
 		return TYPE;
 	}
@@ -232,6 +233,9 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		final EObject eObject = (EObject) object;
 		for (Object descriptor : descriptors) {
 			final CommandParameter cp = (CommandParameter) descriptor;
+			if (cp.getEReference() == null) {
+				continue;
+			}
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
 			} else if (cp.getEReference().isMany() && cp.getEReference().getUpperBound() != -1

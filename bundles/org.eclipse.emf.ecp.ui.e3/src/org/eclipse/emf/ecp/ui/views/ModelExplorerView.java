@@ -71,7 +71,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 						project.open();
 					}
 				}
-				else if (firstElement instanceof EObject) {
+				else if (firstElement instanceof Object) {
 					ECPContainer context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
 					ECPHandlerHelper.openModelElement( firstElement, (ECPProject) context);
 				} 
