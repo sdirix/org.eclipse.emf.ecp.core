@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentTouchedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
@@ -41,7 +41,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	 * 
 	 */
 	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedObserver,
-		ECPProjectOpenClosedObserver, ECPProjectObjectsChangedObserver {
+		ECPProjectOpenClosedObserver, ECPProjectContentTouchedObserver {
 		/** {@inheritDoc} */
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 			// TODO Auto-generated method stub
@@ -64,7 +64,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		}
 
 		/** {@inheritDoc} */
-		public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
+		public void contentTouched(ECPProject project, Collection<Object> objects, boolean structural) {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself

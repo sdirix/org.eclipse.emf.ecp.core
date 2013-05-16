@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 
@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositoryManager> implements
 // ECPRepositoryManager.Listener
-	ECPRepositoriesChangedObserver, ECPRepositoryObjectsChangedObserver {
+	ECPRepositoriesChangedObserver, ECPRepositoryContentChangedObserver {
 	private final ECPProvider allowedProvider;
 
 	public RepositoriesContentProvider() {
@@ -46,7 +46,7 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	}
 
 	/** {@inheritDoc} */
-	public void objectsChanged(ECPRepository repository, Collection<Object> objects) {
+	public void contentChanged(ECPRepository repository, Collection<Object> objects) {
 		// do always a full refresh
 		refreshViewer(true, objects.toArray());
 	}

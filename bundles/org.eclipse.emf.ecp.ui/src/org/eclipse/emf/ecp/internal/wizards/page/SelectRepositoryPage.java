@@ -37,7 +37,9 @@ import org.eclipse.swt.widgets.Composite;
 public class SelectRepositoryPage extends WizardPage {
 
 	/**
-	 * @param pageName
+	 * A WizardPage for selecting a repository.
+	 * 
+	 * @param pageName the name of the wizard page, needed due to the {@link WizardPage} constructor
 	 */
 	public SelectRepositoryPage(String pageName) {
 		super(pageName);

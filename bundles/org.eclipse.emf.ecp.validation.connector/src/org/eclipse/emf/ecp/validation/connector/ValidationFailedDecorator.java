@@ -32,8 +32,6 @@ public class ValidationFailedDecorator  implements ILightweightLabelDecorator {
 	 * {@inheritDoc}
 	 */
 	public void decorate(final Object element, IDecoration decoration) {
-		
-		
 		if (!(element instanceof EObject) && !(element instanceof ECPProject)) {
 			return;
 		}

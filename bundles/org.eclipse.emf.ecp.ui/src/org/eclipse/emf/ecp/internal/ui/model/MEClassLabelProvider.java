@@ -25,6 +25,8 @@ public class MEClassLabelProvider extends AdapterFactoryLabelProvider {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param adapterFactory the {@link AdapterFactory} to use
 	 */
 	public MEClassLabelProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);

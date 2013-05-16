@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
@@ -122,8 +122,8 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	public void notifyObjectsChanged(ECPRepository repository, Collection<Object> objects) {
 
 		try {
-			ECPUtil.getECPObserverBus().notify(ECPRepositoryObjectsChangedObserver.class)
-				.objectsChanged(repository, objects);
+			ECPUtil.getECPObserverBus().notify(ECPRepositoryContentChangedObserver.class)
+				.contentChanged(repository, objects);
 		} catch (Exception ex) {
 			Activator.log(ex);
 		}

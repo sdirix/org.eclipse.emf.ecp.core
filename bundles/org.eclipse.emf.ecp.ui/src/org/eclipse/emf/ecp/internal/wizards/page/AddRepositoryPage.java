@@ -28,7 +28,10 @@ import org.eclipse.swt.widgets.Composite;
 public class AddRepositoryPage extends WizardPage {
 
 	/**
-	 * @param pageName
+	 * A WizardPage for adding a repository.
+	 * 
+	 * @param pageName the name of the wizard page, needed due to the {@link WizardPage} constructor
+	 * @param addRepositoryComposite the {@link AddRepositoryComposite} to use in this page
 	 */
 	public AddRepositoryPage(String pageName, AddRepositoryComposite addRepositoryComposite) {
 		super(pageName);

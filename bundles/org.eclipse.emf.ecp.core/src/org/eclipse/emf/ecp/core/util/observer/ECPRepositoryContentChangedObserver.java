@@ -26,7 +26,7 @@ import java.util.Collection;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPRepositoryObjectsChangedObserver extends ECPObserver {
+public interface ECPRepositoryContentChangedObserver extends ECPObserver {
 
 	/**
 	 * This is called to indicate, that objects inside the repository changed.
@@ -34,5 +34,5 @@ public interface ECPRepositoryObjectsChangedObserver extends ECPObserver {
 	 * @param repository the repository the changes occurred
 	 * @param objects the objects that changed
 	 */
-	void objectsChanged(ECPRepository repository, Collection<Object> objects);
+	void contentChanged(ECPRepository repository, Collection<Object> objects);
 }

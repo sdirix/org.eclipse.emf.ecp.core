@@ -161,7 +161,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 	/**
 	 * Helper for creating the unset stacklayout and creating the control's composite.
 	 * 
-	 * @param composite
+	 * @param composite the parent {@link Composite} to create the control onto
 	 */
 	protected void createContentControl(Composite composite) {
 		parentComposite = new Composite(composite, SWT.NONE);

@@ -89,25 +89,16 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 		return null;
 	}
 
-	/**
-	 * @deprecated Call {@link #fireEvent(LabelProviderChangedEvent)}
-	 */
-	@Deprecated
-	@Override
-	protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
-		super.fireLabelProviderChanged(event);
-	}
-
 	protected final void fireEvent(final LabelProviderChangedEvent event) {
 		Display display = Display.getCurrent();
 		if (display == null) {
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
-					fireLabelProviderChanged(event);
+					fireEvent(event);
 				}
 			});
 		} else {
-			fireLabelProviderChanged(event);
+			fireEvent(event);
 		}
 	}
 }

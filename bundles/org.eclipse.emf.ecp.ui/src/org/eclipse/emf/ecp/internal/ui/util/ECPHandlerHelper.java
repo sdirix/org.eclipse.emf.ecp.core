@@ -110,7 +110,7 @@ public final class ECPHandlerHelper {
 	 * This helper method is used to delete model elements from a project.
 	 * 
 	 * @param project the project to delete from
-	 * @param eObjects the model elements to delete
+	 * @param objects the model elements to delete
 	 */
 	public static void deleteModelElement(final ECPProject project, final Collection<Object> objects) {
 		if (project != null) {
@@ -406,18 +406,22 @@ public final class ECPHandlerHelper {
 	}
 
 	/**
-	 * @param project
-	 * @param editable
-	 * @param shell
+	 * Opens a Dialog showing the properties of the provided {@link ECPProject}.
+	 * 
+	 * @param project the project whose properties should be shown
+	 * @param editable whether the properties should be editable
+	 * @param shell the {@link Shell} to use for the dialog
 	 */
 	public static void openProjectProperties(ECPProject project, boolean editable, Shell shell) {
 		new ProjectPropertiesDialog(shell, editable, project).open();
 	}
 
 	/**
-	 * @param firstElement
-	 * @param b
-	 * @param activeShell
+	 * Opens a Dialog showing the properties of the provided {@link ECPRepository}.
+	 * 
+	 * @param repository the repository whose properties should be shown
+	 * @param editable whether the properties should be editable
+	 * @param shell the {@link Shell} to use for the dialog
 	 */
 	public static void openRepositoryProperties(ECPRepository repository, boolean editable, Shell shell) {
 		new RepositoryPropertiesDialog(shell, editable, repository).open();

@@ -31,7 +31,9 @@ import org.eclipse.swt.widgets.Composite;
 public class SelectOrCreateRepositoryPage extends WizardPage {
 
 	/**
-	 * @param pageName
+	 * A WizardPage allowing the user to choose whether to use an existing repository or to create a new one.
+	 * 
+	 * @param pageName the name of the wizard page, needed due to the {@link WizardPage} constructor
 	 */
 	public SelectOrCreateRepositoryPage(String pageName) {
 		super(pageName);
