@@ -60,7 +60,7 @@ public class ProjectEMFStoreBranchDecorator implements ILabelDecorator, ESShareO
 			ECPProvider ecpProvider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 			EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
 			InternalProject project = (InternalProject) element;
-			if (ecpProvider.equals(project)) {
+			if (ecpProvider.equals(project.getProvider())) {
 				localProject = provider.getProjectSpace(project);
 			}
 		} else {
