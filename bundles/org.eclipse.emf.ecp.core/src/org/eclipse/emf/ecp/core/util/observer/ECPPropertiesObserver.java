@@ -14,6 +14,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
+import org.eclipse.emf.ecp.core.util.ECPProperties;
+
 import java.util.Collection;
 import java.util.Map.Entry;
 
@@ -30,8 +32,10 @@ public interface ECPPropertiesObserver extends ECPObserver {
 	/**
 	 * This is called to indicate, that properties changed.
 	 * 
+	 * @param properties the {@link ECPProperties} that are chnaged
 	 * @param oldProperties the properties before changing
 	 * @param newProperties the properties after changing
 	 */
-	void propertiesChanged(Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties);
+	void propertiesChanged(ECPProperties properties, Collection<Entry<String, String>> oldProperties,
+		Collection<Entry<String, String>> newProperties);
 }

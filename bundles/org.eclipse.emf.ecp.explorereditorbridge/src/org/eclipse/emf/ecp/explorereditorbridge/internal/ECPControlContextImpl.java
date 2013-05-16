@@ -59,9 +59,11 @@ public class ECPControlContextImpl implements ECPControlContext {
 	private EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
 
 	/**
-	 * @param modelElement
-	 * @param ecpProject
-	 * @param shell
+	 * Constructor for the default implementation of the ECPControlContext.
+	 * 
+	 * @param modelElement the {@link EObject} which will be opened in the editor
+	 * @param ecpProject the {@link ECPProject} to which the modelElement belongs
+	 * @param shell the {@link Shell} to use for UI elements
 	 */
 	public ECPControlContextImpl(EObject modelElement, ECPProject ecpProject, Shell shell) {
 		super();

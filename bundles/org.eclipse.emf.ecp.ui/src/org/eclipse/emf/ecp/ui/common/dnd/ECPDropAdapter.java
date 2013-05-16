@@ -29,8 +29,10 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 	}
 
 	/**
-	 * @param domain
-	 * @param viewer
+	 * Constructor.
+	 * 
+	 * @param domain the {@link EditingDomain} to use
+	 * @param viewer the Viewer this {@link EditingDomainViewerDropAdapter} is applied to
 	 */
 	public ECPDropAdapter(EditingDomain domain, Viewer viewer) {
 		super(domain, viewer);
@@ -45,8 +47,10 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 	}
 
 	/**
-	 * @param object
-	 * @return
+	 * Helper method to find the editing domain the provided object belongs to.
+	 * 
+	 * @param object the {@link Object} to find the {@link EditingDomain} for
+	 * @return the EditingDomain of this Object or null
 	 */
 	protected EditingDomain getProjectDomain(Object object) {
 		ECPProject project = ECPUtil.getECPProjectManager().getProject(object);

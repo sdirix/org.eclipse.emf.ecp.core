@@ -22,7 +22,7 @@ import java.util.Collection;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProjectObjectsPreChangedObserver extends ECPObserver {
+public interface ECPProjectContentChangedObserver extends ECPObserver {
 
 	/**
 	 * Return an Collection affected Objects.

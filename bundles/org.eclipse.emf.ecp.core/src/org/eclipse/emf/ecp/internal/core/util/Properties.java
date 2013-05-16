@@ -108,7 +108,8 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	@Override
 	protected void notifyObservers(Collection<Map.Entry<String, String>> oldProperties,
 		Collection<Map.Entry<String, String>> newProperties) throws Exception {
-		ECPUtil.getECPObserverBus().notify(ECPPropertiesObserver.class).propertiesChanged(oldProperties, newProperties);
+		ECPUtil.getECPObserverBus().notify(ECPPropertiesObserver.class)
+			.propertiesChanged(this, oldProperties, newProperties);
 	}
 
 	// @Override

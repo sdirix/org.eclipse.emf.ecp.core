@@ -16,19 +16,22 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import java.util.Collection;
 
 /**
- * This Observer is called when objects of an project are changed. This Observer is notified after the
- * {@link ECPProjectObjectsPreChangedObserver}. It will also get all Elements that where affected by the change.
+ * This Observer is called when objects of an project are touched. Touching means changed or affected indirectly by the
+ * change. This implies that the objects might not have changed any of their attributes or references. Should be mainly
+ * used to update UI correctly. This Observer is notified after the {@link ECPProjectContentChangedObserver}. It will
+ * also get all Elements that where affected by the change.
  * 
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProjectObjectsChangedObserver extends ECPObserver {
+public interface ECPProjectContentTouchedObserver extends ECPObserver {
 	/**
 	 * This is called when objects of a project changed.
 	 * 
 	 * @param project the project where the changed occurred.
 	 * @param objects the objects that changed and the objects affected by the change
-	 * @param structural whether the change was structural
+	 * @param structural whether the change was structural that is changes to containment references
 	 */
-	void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural);
+	void contentTouched(ECPProject project, Collection<Object> objects, boolean structural);
+
 }

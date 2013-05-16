@@ -13,9 +13,9 @@
 
 package org.eclipse.emf.ecp.core.util.observer;
 
-
 /**
- * Universal observer super interface. To be used with an ObserverBus.
+ * Universal observer super interface. To be used with an ObserverBus. Can be used to discover available observer types
+ * using the type hierarchy.
  * 
  * @author wesendon
  */

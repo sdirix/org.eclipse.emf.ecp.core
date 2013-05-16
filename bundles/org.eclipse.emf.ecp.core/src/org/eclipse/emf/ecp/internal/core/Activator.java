@@ -63,7 +63,11 @@ public final class Activator extends Plugin {
 	}
 
 	// END SUPRESS CATCH EXCEPTION
-
+	/**
+	 * Returns the instance of this Activator.
+	 * 
+	 * @return the saved instance
+	 */
 	public static Activator getInstance() {
 		return instance;
 	}
@@ -119,6 +123,11 @@ public final class Activator extends Plugin {
 
 	private static ECPProjectManager ecpProjectManager;
 
+	/**
+	 * Helper method to get the {@link ECPProjectManager}.
+	 * 
+	 * @return the {@link ECPProjectManager}
+	 */
 	public static ECPProjectManager getECPProjectManager() {
 		if (ecpProjectManager == null) {
 			ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
@@ -130,6 +139,11 @@ public final class Activator extends Plugin {
 
 	private static ECPRepositoryManager ecpRepositoryManager;
 
+	/**
+	 * Helper method to get the {@link ECPRepositoryManager}.
+	 * 
+	 * @return the {@link ECPRepositoryManager}
+	 */
 	public static ECPRepositoryManager getECPRepositoryManager() {
 		if (ecpRepositoryManager == null) {
 			ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
@@ -141,6 +155,11 @@ public final class Activator extends Plugin {
 
 	private static ECPProviderRegistry ecpProviderRegistry;
 
+	/**
+	 * Helper method to get the {@link ECPProviderRegistry}.
+	 * 
+	 * @return the {@link ECPProviderRegistry}
+	 */
 	public static ECPProviderRegistry getECPProviderRegistry() {
 		if (ecpProviderRegistry == null) {
 			ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()

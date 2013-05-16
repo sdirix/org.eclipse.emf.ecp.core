@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.internal.ui.model;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentTouchedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
@@ -25,7 +25,7 @@ import java.util.Collection;
  * @author Eike Stepper
  */
 public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> implements ECPProjectsChangedObserver,
-	ECPProjectOpenClosedObserver, ECPProjectObjectsChangedObserver {
+	ECPProjectOpenClosedObserver, ECPProjectContentTouchedObserver {
 	public ModelContentProvider() {
 	}
 
@@ -40,7 +40,7 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 	}
 
 	/** {@inheritDoc} */
-	public void objectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
+	public void contentTouched(ECPProject project, Collection<Object> objects, boolean structural) {
 		refreshViewer(structural, objects.toArray());
 		if (!objects.contains(project)) {
 			refreshViewer(false, project);

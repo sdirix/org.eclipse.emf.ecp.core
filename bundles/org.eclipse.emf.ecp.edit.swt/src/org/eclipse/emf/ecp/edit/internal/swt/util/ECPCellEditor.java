@@ -16,9 +16,15 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
 
+/**
+ * A common super interface for all CellEditors contributed to ECP.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public interface ECPCellEditor {
 	/**
-	 * RAP theming variable to set
+	 * RAP theming variable.
 	 */
 	String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";
 
@@ -29,8 +35,10 @@ public interface ECPCellEditor {
 	int getStyle();
 
 	/**
-	 * @param value
-	 * @return
+	 * This returns the String which will be shown in the table when no cell editor is open.
+	 * 
+	 * @param value the Object to get the formated String for
+	 * @return the formated String
 	 */
 	String getFormatedString(Object value);
 

@@ -23,17 +23,26 @@ public abstract class ECPDialogExecutor {
 	private Dialog dialog;
 
 	/**
-	 * @param dialog
+	 * Constructor.
+	 * 
+	 * @param dialog the Dialog to show
 	 */
 	public ECPDialogExecutor(Dialog dialog) {
 		this.dialog = dialog;
 	}
 
 	/**
-	 * @param codeResult
+	 * Callback method which will get notified when the user presses a button leading to a close of the dialog. (e.g Ok
+	 * or Cancel)
+	 * 
+	 * @param codeResult the result code of the dialog. Constants are defined in {@link org.eclipse.jface.window.Window
+	 *            Window}
 	 */
 	public abstract void handleResult(int codeResult);
 
+	/**
+	 * This is the method to run the {@link ECPDialogExecutor}.
+	 */
 	public void execute() {
 		DialogOpener.openDialog(dialog, this);
 	}
