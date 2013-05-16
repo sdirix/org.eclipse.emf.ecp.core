@@ -216,7 +216,9 @@ public class NumericalControl extends AbstractTextControl {
 
 		@Override
 		public Format getLocaleFormat() {
-			return NumberFormat.getInstance(getModelElementContext().getLocale());
+			NumberFormat localeFormat = NumberFormat.getInstance(getModelElementContext().getLocale());
+			localeFormat.setGroupingUsed(false);
+			return localeFormat;
 		}
 
 		@Override
