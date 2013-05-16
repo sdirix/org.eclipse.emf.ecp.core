@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
+import java.util.Locale;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -82,4 +84,11 @@ public interface ECPControlContext {
 	 * @return true if the current environment is a web environment
 	 */
 	boolean isRunningAsWebApplication();
+	
+	/**
+	 * Returns the locale for this context. 
+	 * 
+	 * @return the locale for this context
+	 */
+	Locale getLocale();
 }

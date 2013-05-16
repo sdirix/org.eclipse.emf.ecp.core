@@ -42,6 +42,7 @@ import org.eclipse.ui.PlatformUI;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -301,6 +302,14 @@ public class ECPControlContextImpl implements ECPControlContext {
 	public boolean isRunningAsWebApplication() {
 		// TODO IMPLEMENT to be generic
 		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getLocale()
+	 */
+	public Locale getLocale() {
+		return Locale.getDefault();
 	}
 
 }
