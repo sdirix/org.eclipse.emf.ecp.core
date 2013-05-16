@@ -15,27 +15,23 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
-import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.dialogs.IDialogLabelKeys;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+
+import java.text.Format;
 
 /**
  * This abstract class is used as a common superclass for all widgets that use a {@link Text} widget.
@@ -147,17 +143,8 @@ public abstract class AbstractTextControl extends SingleControl {
 	@Override
 	public Binding bindValue() {
 		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
-		Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new HighlightUpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new EMFUpdateValueStrategy() {
-
-				@Override
-				public Object convert(Object value) {
-					controlDecoration.hide();
-					updateValidationColor(null);
-					return super.convert(value);
-				}
-
-			});
+		Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new TargetToModelUpdateStrategy(),
+			new ModelToTargetUpdateStrategy());
 		return binding;
 	}
 
@@ -181,10 +168,60 @@ public abstract class AbstractTextControl extends SingleControl {
 		super.dispose();
 	}
 
-	private class HighlightUpdateValueStrategy extends EMFUpdateValueStrategy {
+	/**
+	 * @return the text
+	 */
+	public Text getText() {
+		return text;
+	}
 
-		HighlightUpdateValueStrategy(int updatePolicy) {
-			super(updatePolicy);
+	/**
+	 * An {@link EMFUpdateConvertValueStrategy} that encapsulates the converting
+	 * of the actual value. Use this class to provide a specific context
+	 * for the conversion of the value, but likewise enable it clients to modify
+	 * the conversion behavior.
+	 * 
+	 * @author emueller
+	 * 
+	 */
+	class EMFUpdateConvertValueStrategy extends EMFUpdateValueStrategy {
+
+		/**
+		 * Constructor.
+		 */
+		public EMFUpdateConvertValueStrategy() {
+			super();
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+		 */
+		@Override
+		public Object convert(Object value) {
+			return convertValue(value);
+		}
+
+		protected Object convertValue(Object value) {
+			return super.convert(value);
+		}
+	}
+
+	protected class ModelToTargetUpdateStrategy extends EMFUpdateConvertValueStrategy {
+
+		@Override
+		public Object convert(Object value) {
+			controlDecoration.hide();
+			updateValidationColor(null);
+			return convertValue(value);
+		}
+
+	}
+
+	protected class TargetToModelUpdateStrategy extends EMFUpdateConvertValueStrategy {
+
+		TargetToModelUpdateStrategy() {
+			super();
 		}
 
 		@Override
@@ -200,6 +237,20 @@ public abstract class AbstractTextControl extends SingleControl {
 			return status;
 		}
 
+		/**
+		 * Returns the formatter specific for ecp
+		 * By default this is <code>null</code>. In case clients override this,
+		 * the update strategy will
+		 * 
+		 * @return
+		 */
+		protected Format getLocaleFormat() {
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public Object convert(Object value) {
 			try {
@@ -209,38 +260,19 @@ public abstract class AbstractTextControl extends SingleControl {
 					&& ((String) value).equals("")) {
 					return null;
 				}
-				return super.convert(value);
-			} catch (NumberFormatException e) {
-				if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
-					return null;
+
+				Format format = getLocaleFormat();
+				Object convertedValue = convertValue(value);
+
+				if (format != null && !convertedValue.equals(value)) {
+					getText().setText(format.format(convertedValue));
 				}
-				Object result = getModelValue().getValue();
 
-				MessageDialog messageDialog = new MessageDialog(text.getShell(), "Invalid Number", null,
-					"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
-					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+				return convertedValue;
 
-				new ECPDialogExecutor(messageDialog) {
-
-					@Override
-					public void handleResult(int codeResult) {
-
-					}
-				}.execute();
-
-				if (result == null) {
-					text.setText("");
-				} else {
-					text.setText(result.toString());
-				}
-				if (getStructuralFeature().isUnsettable() && result == null) {
-					showUnsetLabel();
-					return SetCommand.UNSET_VALUE;
-				}
-				return result;
 			} catch (IllegalArgumentException e) {
 				controlDecoration.show();
-				updateValidationColor(text.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
 				throw e;
 			}
