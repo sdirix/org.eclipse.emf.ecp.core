@@ -222,6 +222,7 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 
 		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
+			Activator.getDefault().ungetECPControlFactory();
 			return;
 		}
 		for (IItemPropertyDescriptor itemPropertyDescriptor : attributes) {

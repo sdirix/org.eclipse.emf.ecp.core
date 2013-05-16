@@ -37,6 +37,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 		int bestPriority = NOT_APPLICABLE;
 		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
+			Activator.getDefault().ungetECPControlFactory();
 			return bestPriority;
 		}
 		for (ECPControlDescription description : controlFactory.getControlDescriptors()) {

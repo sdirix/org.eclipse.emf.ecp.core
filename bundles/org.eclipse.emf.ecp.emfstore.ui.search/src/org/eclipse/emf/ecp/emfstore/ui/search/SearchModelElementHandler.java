@@ -71,7 +71,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 				Object[] selections = dialog.getResult();
 
 				if (selections != null && selections.length == 1 && selections[0] instanceof EObject) {
-					ECPHandlerHelper.openModelElement((EObject) selections[0],
+					ECPHandlerHelper.openModelElement(selections[0],
 						 project);
 				}
 			}

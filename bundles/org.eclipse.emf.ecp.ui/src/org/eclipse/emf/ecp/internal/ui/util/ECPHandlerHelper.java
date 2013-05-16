@@ -334,7 +334,7 @@ public final class ECPHandlerHelper {
 	 *            the view that requested the open model element
 	 * @param ecpProject the {@link ECPProject} of the model element
 	 */
-	public static void openModelElement(final EObject me, ECPProject ecpProject) {
+	public static void openModelElement(final Object me, ECPProject ecpProject) {
 		if (me == null) {
 			MessageDialog.openError(Display.getCurrent().getActiveShell(),
 				Messages.ActionHelper_ErrorTitle_ElementDeleted, Messages.ActionHelper_ErrorMessage_ElementDeleted);

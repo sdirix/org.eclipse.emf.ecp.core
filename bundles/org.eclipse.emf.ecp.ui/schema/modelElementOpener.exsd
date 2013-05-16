@@ -107,10 +107,10 @@
          <attribute name="modelElement" type="string" use="required">
             <annotation>
                <documentation>
-                  The EObject for which the registered opener is valid.
+                  The Object for which the registered opener is valid.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecore.EObject"/>
+                  <meta.attribute kind="java" basedOn="java.lang.Object:"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -154,14 +154,14 @@
          The following is a sample usage of the model element opener extension point: &lt;br/&gt;
 &lt;pre&gt;
 &lt;extension point=&quot;org.eclipse.emf.ecp.ui.modelElementOpener&quot;&gt;
-	&lt;ModelElementOpener 
-			class=&quot;org.eclipse.emf.ecp.explorereditorbridge.internal.EditorModelElementOpener&quot;
-			name=&quot;org.eclipse.emf.ecp.explorereditorbridge.ModelElementOpener&quot;&gt;
-		&lt;staticTester
-			modelElement=&quot;org.eclipse.emf.ecore.EObject&quot;
-			priority=&quot;1&quot;&gt;
-		&lt;/staticTester&gt;
-	&lt;/ModelElementOpener&gt;
+ &lt;ModelElementOpener 
+   class=&quot;org.eclipse.emf.ecp.explorereditorbridge.internal.EditorModelElementOpener&quot;
+   name=&quot;org.eclipse.emf.ecp.explorereditorbridge.ModelElementOpener&quot;&gt;
+  &lt;staticTester
+   modelElement=&quot;org.eclipse.emf.ecore.EObject&quot;
+   priority=&quot;1&quot;&gt;
+  &lt;/staticTester&gt;
+ &lt;/ModelElementOpener&gt;
 &lt;/extension&gt;
 &lt;/pre&gt;
       </documentation>

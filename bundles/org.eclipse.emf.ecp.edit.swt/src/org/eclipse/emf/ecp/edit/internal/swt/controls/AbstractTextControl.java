@@ -262,10 +262,14 @@ public abstract class AbstractTextControl extends SingleControl {
 				}
 
 				Format format = getLocaleFormat();
+
 				Object convertedValue = convertValue(value);
 
-				if (format != null && !convertedValue.equals(value)) {
-					getText().setText(format.format(convertedValue));
+				if (format != null) {
+					String formatedValue = format.format(convertedValue);
+					if (!formatedValue.equals(value)) {
+						getText().setText(formatedValue);
+					}
 				}
 
 				return convertedValue;

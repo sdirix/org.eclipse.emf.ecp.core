@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.Binding;
@@ -27,8 +27,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -88,8 +92,22 @@ public class XmlDateControl extends SingleControl {
 
 			@Override
 			public Object convert(Object value) {
-				Date date = (Date) value;
-				return new XMLCalendar(date, XMLCalendar.DATE);
+				try {
+					Date date = (Date) value;
+					Calendar targetCal = Calendar.getInstance();
+					targetCal.setTime(date);
+					XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+					cal.setYear(targetCal.get(Calendar.YEAR));
+					cal.setMonth(targetCal.get(Calendar.MONTH) + 1);
+					cal.setDay(targetCal.get(Calendar.DAY_OF_MONTH));
+
+					cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+
+					return cal;
+				} catch (DatatypeConfigurationException ex) {
+					Activator.logException(ex);
+				}
+				return null;
 			}
 
 		}, new UpdateValueStrategy() {

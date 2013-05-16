@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Text;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -183,6 +182,8 @@ public class NumericalControl extends AbstractTextControl {
 		public Object convertValue(Object value) {
 			final NumberFormat format = NumberFormat.getInstance(getModelElementContext().getLocale());
 			format.setGroupingUsed(false);
+			format.setMaximumFractionDigits(128);
+			format.setMaximumIntegerDigits(128);
 			IConverter converter = new Converter(getInstanceClass(), String.class) {
 				public Object convert(Object toObject) {
 					return format.format(toObject);
@@ -198,47 +199,58 @@ public class NumericalControl extends AbstractTextControl {
 
 		NumericalTargetToModelUpdateStrategy() {
 			super();
-			format = NumberFormat.getInstance();
+			format = NumberFormat.getInstance(getModelElementContext().getLocale());
+			format.setMaximumFractionDigits(128);
+			format.setMaximumIntegerDigits(128);
 			format.setGroupingUsed(false);
 		}
 
 		@Override
-		public Format getLocaleFormat() {
-			NumberFormat localeFormat = NumberFormat.getInstance(getModelElementContext().getLocale());
-			localeFormat.setGroupingUsed(false);
-			return localeFormat;
+		protected Object convertValue(final Object value) {
+			try {
+
+				Number number = format.parse((String) value);
+				if (!format.format(number).equals(value)) {
+					return revertToOldValue(value);
+				}
+				return numberToInstanceClass(number);
+			} catch (ParseException ex) {
+				return revertToOldValue(value);
+			}
 		}
 
-		@Override
-		protected Object convertValue(final Object value) {
-
-			if (isDouble()) {
-				IConverter toDouble = new Converter(String.class, getInstanceClass()) {
-
-					public Object convert(Object fromObject) {
-						try {
-							return new Double(format.parse((String) fromObject).doubleValue());
-						} catch (ParseException ex) {
-							return revertToOldValue(value);
-						}
+		/**
+		 * @param number
+		 * @return
+		 */
+		private Object numberToInstanceClass(Number number) {
+			Class<?> instanceClass = getInstanceClass();
+			if (instanceClass.isPrimitive()) {
+				try {
+					if (Double.class.getField("TYPE").get(null).equals(instanceClass)) {
+						return number.doubleValue();
+					} else if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+						return number.intValue();
 					}
-				};
-
-				return toDouble.convert(value);
-			}
-
-			// must be integer
-			IConverter toInteger = new Converter(String.class, getInstanceClass()) {
-				public Object convert(Object fromObject) {
-					try {
-						return new Integer(format.parse((String) fromObject).intValue());
-					} catch (ParseException ex) {
-						return revertToOldValue(value);
-					}
+				} catch (IllegalArgumentException ex) {
+					Activator.logException(ex);
+				} catch (SecurityException ex) {
+					Activator.logException(ex);
+				} catch (IllegalAccessException ex) {
+					Activator.logException(ex);
+				} catch (NoSuchFieldException ex) {
+					Activator.logException(ex);
 				}
-			};
-
-			return toInteger.convert(value);
+			} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
+				return BigDecimal.valueOf(number.doubleValue());
+			} else if (Double.class.isAssignableFrom(instanceClass)) {
+				return Double.valueOf(number.doubleValue());
+			} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
+				return BigInteger.valueOf(number.longValue());
+			} else if (Integer.class.isAssignableFrom(instanceClass)) {
+				return Integer.valueOf(number.intValue());
+			}
+			return number;
 		}
 	}
 

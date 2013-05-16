@@ -106,6 +106,7 @@ public abstract class MultiControl extends SWTControl {
 		int bestPriority = -1;
 		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
+			Activator.getDefault().ungetECPControlFactory();
 			return;
 		}
 		for (ECPControlDescription description : controlFactory.getControlDescriptors()) {
