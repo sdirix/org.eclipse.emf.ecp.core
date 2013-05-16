@@ -22,9 +22,9 @@ import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryManagerObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryObjectsChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
@@ -50,8 +50,8 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPRepositoryManagerObserver>
-	implements ECPRepositoryManager, ECPProvidersChangedObserver {
+public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPObserver> implements
+	ECPRepositoryManager, ECPProvidersChangedObserver {
 	/**
 	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
 	 */

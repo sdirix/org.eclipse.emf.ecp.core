@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProviderAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPProviderRegistryObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
@@ -50,8 +50,8 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPProviderRegistryObserver>
-	implements ECPProviderRegistry {
+public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver> implements
+	ECPProviderRegistry {
 	/**
 	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
 	 */

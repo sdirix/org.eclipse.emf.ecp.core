@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPProjectManagerObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectObjectsPreChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
@@ -52,7 +52,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPProjectManagerObserver> implements
+public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver> implements
 	ECPProjectManager, ECPRepositoriesChangedObserver {
 
 	/**

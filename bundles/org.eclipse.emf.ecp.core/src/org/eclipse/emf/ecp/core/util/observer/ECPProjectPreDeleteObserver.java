@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProjectPreDeleteObserver extends ECPProjectManagerObserver {
+public interface ECPProjectPreDeleteObserver extends ECPObserver {
 
 	/**
 	 * Method that gets notified before a project is deleted.

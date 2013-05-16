@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProjectOpenClosedObserver extends ECPProjectManagerObserver {
+public interface ECPProjectOpenClosedObserver extends ECPObserver {
 	/**
 	 * This is called when a project is opened or closed.
 	 * 

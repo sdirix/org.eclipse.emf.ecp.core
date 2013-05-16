@@ -27,7 +27,7 @@ import java.util.Collection;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProjectsChangedObserver extends ECPProjectManagerObserver {
+public interface ECPProjectsChangedObserver extends ECPObserver {
 
 	/**
 	 * This is called when a project changes, so if it is either added or removed.

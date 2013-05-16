@@ -214,6 +214,11 @@ public final class ECPUtil {
 		return ecpProviderRegistryInstance;
 	}
 
+	/**
+	 * Helper method to get the instance of the {@link ECPObserverBus}.
+	 * 
+	 * @return the {@link ECPObserverBus}
+	 */
 	public static ECPObserverBus getECPObserverBus() {
 		return ECPObserverBusImpl.getInstance();
 	}

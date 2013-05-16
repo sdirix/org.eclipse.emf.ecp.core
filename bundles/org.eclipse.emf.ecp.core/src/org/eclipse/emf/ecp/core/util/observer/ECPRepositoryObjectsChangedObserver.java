@@ -26,7 +26,7 @@ import java.util.Collection;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPRepositoryObjectsChangedObserver extends ECPRepositoryManagerObserver {
+public interface ECPRepositoryObjectsChangedObserver extends ECPObserver {
 
 	/**
 	 * This is called to indicate, that objects inside the repository changed.

@@ -22,7 +22,7 @@ import java.util.Collection;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProjectObjectsChangedObserver extends ECPProjectManagerObserver {
+public interface ECPProjectObjectsChangedObserver extends ECPObserver {
 	/**
 	 * This is called when objects of a project changed.
 	 * 

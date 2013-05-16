@@ -26,7 +26,7 @@ import java.util.Collection;
  * @author Eugen Neufeld
  * 
  */
-public interface ECPProvidersChangedObserver extends ECPProviderRegistryObserver {
+public interface ECPProvidersChangedObserver extends ECPObserver {
 
 	/**
 	 * This is called to indicate, that providers changed. Either a provider was added or removed.
