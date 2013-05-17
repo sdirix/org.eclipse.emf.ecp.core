@@ -340,8 +340,6 @@ public class NumericalControl extends AbstractTextControl {
 	}
 
 	private DecimalFormat setupFormat() {
-		EAnnotation annotation = getStructuralFeature().getEType().getEAnnotation(
-			"http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
 
 		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(getModelElementContext().getLocale());
 		// if (isDouble()) {
@@ -354,8 +352,10 @@ public class NumericalControl extends AbstractTextControl {
 			|| getInstanceClass().equals(BigInteger.class));
 		format.setGroupingUsed(false);
 
-		if (annotation != null) {
-			String stringTotalDigits = annotation.getDetails().get("totalDigits");
+		EAnnotation annotation = getStructuralFeature().getEType().getEAnnotation(
+			"http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+		String stringTotalDigits = annotation.getDetails().get("totalDigits");
+		if (stringTotalDigits != null) {
 			String stringFractionDigits = annotation.getDetails().get("fractionDigits");
 			int fractionalDigits = 0;
 			if (stringFractionDigits != null) {
