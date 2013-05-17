@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
@@ -337,6 +338,9 @@ public class NumericalControl extends AbstractTextControl {
 	}
 
 	private DecimalFormat setupFormat() {
+		EAnnotation annotation = getStructuralFeature().getEAnnotation(
+			"http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+
 		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(getModelElementContext().getLocale());
 		// if (isDouble()) {
 		// format = new DecimalFormat("#0.0#", DecimalFormatSymbols.getInstance(getModelElementContext().getLocale()));
@@ -347,7 +351,22 @@ public class NumericalControl extends AbstractTextControl {
 		format.setParseBigDecimal(getInstanceClass().equals(BigDecimal.class)
 			|| getInstanceClass().equals(BigInteger.class));
 		format.setGroupingUsed(false);
-		format.setMaximumFractionDigits(100);
+
+		if (annotation != null) {
+			String stringTotalDigits = annotation.getDetails().get("totalDigits");
+			String stringFractionDigits = annotation.getDetails().get("fractionDigits");
+			int fractionalDigits = 0;
+			if (stringFractionDigits != null) {
+				fractionalDigits = Integer.valueOf(stringFractionDigits);
+				format.setMaximumFractionDigits(fractionalDigits);
+				format.setMinimumFractionDigits(fractionalDigits);
+			}
+			Integer totalDigits = Integer.valueOf(stringTotalDigits);
+			int integerDigits = totalDigits - fractionalDigits;
+			format.setMaximumIntegerDigits(integerDigits);
+		} else {
+			format.setMaximumFractionDigits(100);
+		}
 		return format;
 	}
 
