@@ -4,11 +4,12 @@
       label="EMF Client Platform (EMFStore Support)"
       version="1.0.0.qualifier"
       provider-name="%providerName"
+      image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="1.0.0">
 
    <description>
-      This Feature allows the use of the EMFStore for the EMF Client Platform.
+      %description
    </description>
 
    <copyright url="%copyrightURL">

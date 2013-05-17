@@ -94,11 +94,11 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 		if (display == null) {
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
-					fireEvent(event);
+					fireLabelProviderChanged(event);
 				}
 			});
 		} else {
-			fireEvent(event);
+			fireLabelProviderChanged(event);
 		}
 	}
 }

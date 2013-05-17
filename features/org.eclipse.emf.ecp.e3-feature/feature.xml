@@ -3,19 +3,21 @@
       id="org.eclipse.emf.ecp.e3"
       label="ECP UI 3.x Feature"
       version="1.0.0.qualifier"
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="1.0.0">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      %description
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="%copyrightURL">
+      %copyright
    </copyright>
 
-   <license url="org.eclipse.emf.ecp.license">
-      [Enter License Description here.]
+   <license url="%licenseURL">
+      %license
    </license>
 
    <plugin
