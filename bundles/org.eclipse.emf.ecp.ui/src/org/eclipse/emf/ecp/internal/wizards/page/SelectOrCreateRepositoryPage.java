@@ -14,6 +14,7 @@
 package org.eclipse.emf.ecp.internal.wizards.page;
 
 import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.wizards.ShareWizard;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -41,7 +42,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 		setDescription(Messages.SelectOrCreateRepositoryPage_PageDescription_ExistingOrNewRepository);
 	}
 
-	private boolean createNewRepository = true;
+	private boolean createNewRepository = false;
 
 	/** {@inheritDoc} */
 	public void createControl(Composite parent) {
@@ -54,6 +55,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 
 			public void widgetSelected(SelectionEvent e) {
 				createNewRepository = true;
+				((ShareWizard) getWizard()).setUseExistingRepository(false);
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -68,6 +70,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 
 			public void widgetSelected(SelectionEvent e) {
 				createNewRepository = false;
+				((ShareWizard) getWizard()).setUseExistingRepository(true);
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -75,7 +78,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 			}
 		});
 
-		bCreateNewRepository.setSelection(true);
+		bSelectRepository.setSelection(true);
 
 		setControl(container);
 		setPageComplete(true);

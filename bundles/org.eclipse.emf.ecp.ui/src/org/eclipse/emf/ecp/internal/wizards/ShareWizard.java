@@ -38,6 +38,8 @@ public class ShareWizard extends Wizard {
 
 	private AddRepositoryComposite repositoryComposite;
 
+	private boolean useExistingRepository = true;
+
 	/**
 	 * @return the provider
 	 */
@@ -60,6 +62,10 @@ public class ShareWizard extends Wizard {
 		this.selectedRepository = selectedRepository;
 	}
 
+	public void setUseExistingRepository(boolean useExistingRepository) {
+		this.useExistingRepository = useExistingRepository;
+	}
+
 	/**
 	 * . ({@inheritDoc})
 	 */
@@ -80,9 +86,11 @@ public class ShareWizard extends Wizard {
 	 */
 	@Override
 	public boolean canFinish() {
-
-		return selectedRepository != null || repositoryComposite.getProperties() != null
-			&& repositoryComposite.getRepositoryName() != null;
+		if (useExistingRepository) {
+			return selectedRepository != null;
+		}
+		return repositoryComposite.getProperties() != null && repositoryComposite.getProperties().hasProperties()
+			&& repositoryComposite.getRepositoryName() != null && !repositoryComposite.getRepositoryName().isEmpty();
 
 	}
 
@@ -93,9 +101,9 @@ public class ShareWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		if (selectedRepository == null) {
-			selectedRepository = ECPUtil.getECPRepositoryManager()
-				.addRepository(
-					provider,
+			selectedRepository = ECPUtil
+				.getECPRepositoryManager()
+				.addRepository(provider,
 					repositoryComposite.getRepositoryName(),
 					repositoryComposite.getRepositoryLabel() == null ? "" : repositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
 					repositoryComposite.getRepositoryDescription() == null ? "" : repositoryComposite.getRepositoryDescription(), //$NON-NLS-1$
