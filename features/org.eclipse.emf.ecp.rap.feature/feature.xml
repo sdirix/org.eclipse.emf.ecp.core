@@ -2,7 +2,8 @@
 <feature
       id="org.eclipse.emf.ecp.rap.feature"
       label="RAP Feature"
-      version="1.0.0.qualifier">
+      version="1.0.0.qualifier"
+      provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -535,7 +536,6 @@
          version="0.0.0"
          unpack="false"/>
 
-   
    <plugin
          id="org.eclipse.emf.ecore.edit"
          download-size="0"
@@ -550,7 +550,6 @@
          version="0.0.0"
          unpack="false"/>
 
-  
    <plugin
          id="org.eclipse.emf.cdo.common"
          download-size="0"
@@ -565,7 +564,6 @@
          version="0.0.0"
          unpack="false"/>
 
-  
    <plugin
          id="org.eclipse.emf.emfstore.ecore"
          download-size="0"

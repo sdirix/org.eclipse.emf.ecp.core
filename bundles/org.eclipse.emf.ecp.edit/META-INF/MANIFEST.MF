@@ -15,3 +15,4 @@ Export-Package: org.eclipse.emf.ecp.edit;version="1.0.0",
  org.eclipse.emf.ecp.edit.util;version="1.0.0",
  org.eclipse.emf.ecp.internal.edit;version="1.0.0";x-internal:=true
 Service-Component: OSGI-INF/ecpControlFactory.xml
+Bundle-Vendor: Eclipse Modeling Project

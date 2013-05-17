@@ -14,3 +14,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.cdo.internal.ui;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.cdo.internal.ui.handlers;version="1.0.0";x-internal:=true
+Bundle-Vendor: Eclipse Modeling Project

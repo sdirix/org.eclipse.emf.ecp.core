@@ -3,7 +3,7 @@
       id="org.eclipse.emf.ecp.emfstore"
       label="EMF Client Platform (EMFStore Support)"
       version="1.0.0.qualifier"
-      provider-name="%providerName"
+      provider-name="Eclipse Modeling Project"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="1.0.0">

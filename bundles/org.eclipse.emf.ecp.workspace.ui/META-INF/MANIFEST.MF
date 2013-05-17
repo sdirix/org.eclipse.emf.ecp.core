@@ -33,3 +33,4 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.ui.model;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0",
  org.eclipse.ui.wizards.newresource;version="0.0.0"
+Bundle-Vendor: Eclipse Modeling Project

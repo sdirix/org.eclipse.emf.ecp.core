@@ -13,7 +13,7 @@
       id="org.eclipse.emf.ecp.cdo"
       label="EMF Client Platform (CDO Support)"
       version="1.0.0.qualifier"
-      provider-name="%providerName"
+      provider-name="Eclipse Modeling Project"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="1.0.0">

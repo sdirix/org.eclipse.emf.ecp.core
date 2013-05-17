@@ -3,6 +3,7 @@
       id="org.eclipse.emf.ecp.graphiti"
       label="Graphiti Feature"
       version="1.0.0.qualifier"
+      provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="1.0.0">
 

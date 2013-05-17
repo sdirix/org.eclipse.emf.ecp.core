@@ -35,3 +35,4 @@ Export-Package: org.eclipse.emf.ecp.ui;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.ui.platform;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.ui.tester;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.ui.views;version="1.0.0";x-internal:=true
+Bundle-Vendor: Eclipse Modeling Project

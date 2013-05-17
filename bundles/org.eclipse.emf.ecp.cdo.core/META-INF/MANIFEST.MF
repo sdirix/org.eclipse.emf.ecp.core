@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";visibili
 Import-Package: org.h2;version="[1.0.0.qualifier,2.0.0)",
  org.h2.jdbcx;version="[1.0.0.qualifier,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.cdo.internal.core;version="1.0.0";x-friends:="org.eclipse.emf.ecp.cdo.ui"
+Bundle-Vendor: Eclipse Modeling Project

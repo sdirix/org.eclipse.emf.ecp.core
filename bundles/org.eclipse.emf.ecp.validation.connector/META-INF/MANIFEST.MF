@@ -13,3 +13,4 @@ Export-Package: org.eclipse.emf.ecp.validation.connector;version="1.0.0";x-inter
 Import-Package: org.eclipse.jface.resource,
  org.eclipse.jface.viewers,
  org.eclipse.swt.graphics
+Bundle-Vendor: Eclipse Modeling Project
