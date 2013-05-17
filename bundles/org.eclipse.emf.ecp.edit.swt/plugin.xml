@@ -130,6 +130,16 @@
                singleValue="true"
                supportedClassType="java.math.BigDecimal">
          </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Float">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Long">
+         </staticTest>
       </control>
    </extension>
    <extension

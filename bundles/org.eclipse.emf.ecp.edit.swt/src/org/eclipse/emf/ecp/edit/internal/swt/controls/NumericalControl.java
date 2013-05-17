@@ -129,7 +129,8 @@ public class NumericalControl extends AbstractTextControl {
 		Class<?> instanceClass = getInstanceClass();
 		if (instanceClass.isPrimitive()) {
 			try {
-				return Double.class.getField("TYPE").get(null).equals(instanceClass);
+				return Double.class.getField("TYPE").get(null).equals(instanceClass)
+					|| Float.class.getField("TYPE").get(null).equals(instanceClass);
 			} catch (IllegalArgumentException ex) {
 				Activator.logException(ex);
 			} catch (SecurityException ex) {
@@ -143,6 +144,8 @@ public class NumericalControl extends AbstractTextControl {
 			return true;
 		} else if (Double.class.isAssignableFrom(instanceClass)) {
 			return true;
+		} else if (Float.class.isAssignableFrom(instanceClass)) {
+			return true;
 		}
 
 		return false;
@@ -152,7 +155,8 @@ public class NumericalControl extends AbstractTextControl {
 		Class<?> instanceClass = getInstanceClass();
 		if (instanceClass.isPrimitive()) {
 			try {
-				return Integer.class.getField("TYPE").get(null).equals(instanceClass);
+				return Integer.class.getField("TYPE").get(null).equals(instanceClass)
+					|| Long.class.getField("TYPE").get(null).equals(instanceClass);
 			} catch (IllegalArgumentException ex) {
 				Activator.logException(ex);
 			} catch (SecurityException ex) {
@@ -165,6 +169,8 @@ public class NumericalControl extends AbstractTextControl {
 		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
 			return true;
 		} else if (Integer.class.isAssignableFrom(instanceClass)) {
+			return true;
+		} else if (Long.class.isAssignableFrom(instanceClass)) {
 			return true;
 		}
 
@@ -208,8 +214,40 @@ public class NumericalControl extends AbstractTextControl {
 		@Override
 		protected Object convertValue(final Object value) {
 			try {
-
 				Number number = format.parse((String) value);
+				if (isInteger()) {
+					boolean maxValue = false;
+					Class<?> instanceClass = getInstanceClass();
+					String formatedValue = "";
+					try {
+						if (Integer.class.isAssignableFrom(instanceClass)
+							|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+							if (Integer.MAX_VALUE == number.intValue()) {
+								maxValue = true;
+								formatedValue = format.format(Integer.MAX_VALUE);
+							}
+						} else if (Long.class.isAssignableFrom(instanceClass)
+							|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+							if (Long.MAX_VALUE == number.longValue()) {
+								maxValue = true;
+								formatedValue = format.format(Long.MAX_VALUE);
+							}
+						}
+					} catch (IllegalArgumentException ex) {
+						Activator.logException(ex);
+					} catch (SecurityException ex) {
+						Activator.logException(ex);
+					} catch (IllegalAccessException ex) {
+						Activator.logException(ex);
+					} catch (NoSuchFieldException ex) {
+						Activator.logException(ex);
+					}
+
+					if (maxValue) {
+						getText().setText(formatedValue);
+						return numberToInstanceClass(number);
+					}
+				}
 				String formatedNumber = format.format(number);
 				if (number.toString().contains("E")
 					|| ((String) value).matches("0*" + formatedNumber + "\\"
@@ -235,6 +273,10 @@ public class NumericalControl extends AbstractTextControl {
 						return number.doubleValue();
 					} else if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
 						return number.intValue();
+					} else if (Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+						return number.longValue();
+					} else if (Float.class.getField("TYPE").get(null).equals(instanceClass)) {
+						return number.floatValue();
 					}
 				} catch (IllegalArgumentException ex) {
 					Activator.logException(ex);
@@ -246,13 +288,17 @@ public class NumericalControl extends AbstractTextControl {
 					Activator.logException(ex);
 				}
 			} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
-				return BigDecimal.valueOf(number.doubleValue());
+				return number;
 			} else if (Double.class.isAssignableFrom(instanceClass)) {
 				return Double.valueOf(number.doubleValue());
 			} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
-				return BigInteger.valueOf(number.longValue());
+				return ((BigDecimal) number).toBigInteger();
 			} else if (Integer.class.isAssignableFrom(instanceClass)) {
 				return Integer.valueOf(number.intValue());
+			} else if (Long.class.isAssignableFrom(instanceClass)) {
+				return Long.valueOf(number.longValue());
+			} else if (Float.class.isAssignableFrom(instanceClass)) {
+				return Float.valueOf(number.floatValue());
 			}
 			return number;
 		}
@@ -298,8 +344,10 @@ public class NumericalControl extends AbstractTextControl {
 		// format = new DecimalFormat("#", DecimalFormatSymbols.getInstance(getModelElementContext().getLocale()));
 		// }
 		format.setParseIntegerOnly(isInteger());
+		format.setParseBigDecimal(getInstanceClass().equals(BigDecimal.class)
+			|| getInstanceClass().equals(BigInteger.class));
 		format.setGroupingUsed(false);
-		format.setMaximumFractionDigits(20);
+		format.setMaximumFractionDigits(100);
 		return format;
 	}
 
