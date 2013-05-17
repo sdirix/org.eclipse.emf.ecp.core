@@ -16,10 +16,10 @@
       %copyright
    </copyright>
 
-   <license url="%licenseURL">
+	<license url="%licenseURL">
       %license
    </license>
-
+   
    <plugin
          id="org.eclipse.emf.ecp.editor.e3"
          download-size="0"
