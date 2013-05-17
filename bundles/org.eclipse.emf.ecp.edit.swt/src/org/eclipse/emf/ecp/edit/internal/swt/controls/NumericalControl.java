@@ -249,14 +249,16 @@ public class NumericalControl extends AbstractTextControl {
 						return numberToInstanceClass(number);
 					}
 				}
+
 				String formatedNumber = format.format(number);
-				if (number.toString().contains("E")
-					|| ((String) value).matches("0*" + formatedNumber + "\\"
-						+ format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
-					getText().setText(formatedNumber);
-					return numberToInstanceClass(number);
-				}
-				return revertToOldValue(value);
+				// if (number.toString().contains("E")
+				// || ((String) value).matches("0*" + formatedNumber + "\\"
+				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
+				//
+				// }
+				// return revertToOldValue(value);
+				getText().setText(formatedNumber);
+				return numberToInstanceClass(format.parse(formatedNumber));
 			} catch (ParseException ex) {
 				return revertToOldValue(value);
 			}
@@ -338,7 +340,7 @@ public class NumericalControl extends AbstractTextControl {
 	}
 
 	private DecimalFormat setupFormat() {
-		EAnnotation annotation = getStructuralFeature().getEAnnotation(
+		EAnnotation annotation = getStructuralFeature().getEType().getEAnnotation(
 			"http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
 
 		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(getModelElementContext().getLocale());
