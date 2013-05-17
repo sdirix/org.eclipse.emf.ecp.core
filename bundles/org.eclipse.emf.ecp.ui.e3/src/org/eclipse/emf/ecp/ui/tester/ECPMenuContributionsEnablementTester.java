@@ -33,7 +33,7 @@ public class ECPMenuContributionsEnablementTester extends PropertyTester {
 			Boolean menuContributionEnabled = true;
 			//fetch contribution configuration
 			IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(
-				"org.eclipse.emf.ecp.ui.workbench.menuContributionEnablement");
+				"org.eclipse.emf.ecp.ui.e3.menuContributionEnablement");
 			if (elements != null && elements.length > 0) {
 				IConfigurationElement configurationElement = elements[0];
 				// fetch configured default option. true = blacklist; false = whitelist
