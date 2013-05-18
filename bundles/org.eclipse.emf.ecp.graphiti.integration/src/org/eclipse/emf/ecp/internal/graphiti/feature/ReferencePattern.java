@@ -19,6 +19,8 @@ import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.IContext;
 import org.eclipse.graphiti.features.context.ICreateConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
+import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.internal.features.context.impl.base.DefaultContext;
 import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Text;
@@ -223,8 +225,9 @@ public class ReferencePattern extends AbstractConnectionPattern {
 		gaService.setLocation(text, 10, 0);
 
 		// set reference name in the text decorator
-//		EReference eReference = (EReference) context.getNewObject();
-		EReference eReference = (EReference) context.getProperty("reference");
+		EReference eReference = (EReference) context.getNewObject();
+		if(eReference==null)
+			eReference = (EReference) context.getProperty("reference");
 		text.setValue(eReference.getName());
 		// create link and wire it
 //		link(connection, eReference);
@@ -259,8 +262,8 @@ public class ReferencePattern extends AbstractConnectionPattern {
 				.getBusinessObjectForPictogramElement(
 						(PictogramElement) connectionContext.getTargetAnchor()
 								.eContainer());
-//		return setReference(sourceObject, targetObject, context,false);
-		return sourceObject.eCrossReferences().contains(targetObject);
+		return setReference(sourceObject, targetObject, context,false);
+//		return sourceObject.eCrossReferences().contains(targetObject);
 
 	}
 

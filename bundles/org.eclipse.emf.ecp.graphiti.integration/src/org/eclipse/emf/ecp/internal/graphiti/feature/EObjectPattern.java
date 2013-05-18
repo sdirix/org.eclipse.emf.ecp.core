@@ -2,6 +2,7 @@ package org.eclipse.emf.ecp.internal.graphiti.feature;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
@@ -90,8 +91,8 @@ public class EObjectPattern extends AbstractPattern {
 
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
-		return mainBusinessObject instanceof EObject
-				&& !EAttribute.class.isInstance(mainBusinessObject);
+		return mainBusinessObject instanceof EObject && !EReference.class.isInstance(mainBusinessObject);
+		//		&& !EAttribute.class.isInstance(mainBusinessObject)
 	}
 
 	@Override
@@ -108,7 +109,7 @@ public class EObjectPattern extends AbstractPattern {
 
 	@Override
 	public boolean canAdd(IAddContext context) {
-		return context.getNewObject() instanceof EObject;
+		return context.getNewObject() instanceof EObject && !EReference.class.isInstance(context.getNewObject());
 	}
 
 	@Override

@@ -54,6 +54,8 @@ public class LoadProjectFeature extends AbstractAddFeature {
 						.getPictogramElementForBusinessObject(eObject);
 				ContainerShape shapeTo = (ContainerShape) getFeatureProvider()
 						.getPictogramElementForBusinessObject(crossReference);
+				if(shapeFrom==null||shapeTo==null)
+					continue;
 				AddConnectionContext referenceConnection = new AddConnectionContext(
 						shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
 								.get(0));
@@ -124,6 +126,7 @@ public class LoadProjectFeature extends AbstractAddFeature {
 				AddConnectionContext containmentConnection = new AddConnectionContext(
 						shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
 								.get(0));
+				containmentConnection.setNewObject(eObejct.eContainmentFeature());
 				getFeatureProvider().addIfPossible(containmentConnection);
 			}
 		}

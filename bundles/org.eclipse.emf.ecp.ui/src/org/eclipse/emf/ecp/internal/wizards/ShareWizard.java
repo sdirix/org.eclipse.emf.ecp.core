@@ -90,7 +90,7 @@ public class ShareWizard extends Wizard {
 			return selectedRepository != null;
 		}
 		return repositoryComposite.getProperties() != null && repositoryComposite.getProperties().hasProperties()
-			&& repositoryComposite.getRepositoryName() != null && !repositoryComposite.getRepositoryName().isEmpty();
+			&& repositoryComposite.getRepositoryName() != null && repositoryComposite.getRepositoryName().length() != 0;
 
 	}
 

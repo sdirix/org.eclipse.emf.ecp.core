@@ -62,8 +62,9 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 		gaService.setLocation(text, 10, 0);
 
 		// set reference name in the text decorator
-//		EReference eReference = (EReference) context.getNewObject();
-		EReference eReference = (EReference) context.getProperty("containment");
+		EReference eReference = (EReference) context.getNewObject();
+//		if(eReference==null)
+//			eReference = (EReference) context.getProperty("containment");
 		text.setValue(eReference.getName());
 		// create link and wire it
 //		link(connection, eReference);
