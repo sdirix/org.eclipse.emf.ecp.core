@@ -9,14 +9,14 @@
       license-feature-version="1.0.0">
 
    <description>
-      %description
+      Integration of the EMFStore model repository.
    </description>
 
    <copyright url="%copyrightURL">
       %copyright
    </copyright>
 
-	<license url="%licenseURL">
+   <license url="%licenseURL">
       %license
    </license>
 

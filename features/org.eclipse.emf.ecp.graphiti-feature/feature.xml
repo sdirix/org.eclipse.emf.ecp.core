@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.graphiti"
-      label="Graphiti Feature"
+      label="ECP Graphiti Feature"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license"
       license-feature-version="1.0.0">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      Integration of the Graphiti with EMF Client Platform.
    </description>
 
    <copyright url="http://www.example.com/copyright">

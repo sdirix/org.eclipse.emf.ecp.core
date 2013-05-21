@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Test
+Bundle-Name: ECP Core Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.core.test
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.core.test;version="1.0.0";x-internal:=true
+Bundle-Vendor: Eclipse Modeling Project

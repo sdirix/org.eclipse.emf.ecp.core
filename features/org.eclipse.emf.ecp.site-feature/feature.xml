@@ -19,7 +19,7 @@
       license-feature-version="1.0.0">
 
    <description>
-      %description
+      The update site for the EMF Client Platform
    </description>
 
    <copyright url="%copyrightURL">

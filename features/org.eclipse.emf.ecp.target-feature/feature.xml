@@ -5,8 +5,8 @@
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      The target platform feature for the EMF Client Platform, for developer use only.
    </description>
 
    <copyright url="http://www.example.com/copyright">

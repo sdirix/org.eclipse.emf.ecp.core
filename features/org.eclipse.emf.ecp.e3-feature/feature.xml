@@ -9,17 +9,17 @@
       license-feature-version="1.0.0">
 
    <description>
-      %description
+      Integration of the EMF Client Platform UI into the Eclipse 3.x workbench, including views and perspectives.
    </description>
 
    <copyright url="%copyrightURL">
       %copyright
    </copyright>
 
-	<license url="%licenseURL">
+   <license url="%licenseURL">
       %license
    </license>
-   
+
    <plugin
          id="org.eclipse.emf.ecp.editor.e3"
          download-size="0"

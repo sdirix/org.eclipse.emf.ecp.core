@@ -19,7 +19,7 @@
       license-feature-version="1.0.0">
 
    <description>
-      %description
+      Integration of the CDO model repository.
    </description>
 
    <copyright url="%copyrightURL">

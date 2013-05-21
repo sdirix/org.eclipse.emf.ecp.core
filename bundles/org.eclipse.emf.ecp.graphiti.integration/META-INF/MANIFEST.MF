@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Graphiti Integration
+Bundle-Name: ECP Graphiti Integration
 Bundle-SymbolicName: org.eclipse.emf.ecp.graphiti.integration;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.graphiti.internal.integration.Activator
