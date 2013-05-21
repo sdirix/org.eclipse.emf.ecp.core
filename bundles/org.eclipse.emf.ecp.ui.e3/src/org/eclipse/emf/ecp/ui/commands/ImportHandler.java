@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.commands;
 
+import java.io.File;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.ui.platform.Activator;
+import org.eclipse.emf.ecp.ui.platform.PreferenceHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -29,7 +32,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class ImportHandler extends AbstractHandler {
@@ -180,24 +186,24 @@ public class ImportHandler extends AbstractHandler {
 
 	private String getFileName() {
 
-//		FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.OPEN);
-//		dialog.setFilterNames(FILTER_NAMES);
-//		dialog.setFilterExtensions(FILTER_EXTS);
-//		String initialPath = PreferenceHelper.getPreference(IMPORT_MODEL_PATH, System.getProperty("user.home"));
-//		dialog.setFilterPath(initialPath);
-//
-//		String fileName = dialog.open();
-//
-//		if (fileName == null) {
-//			return null;
-//		}
-//
-//		final File file = new File(dialog.getFilterPath(), dialog.getFileName());
-//
-//		PreferenceHelper.setPreference(IMPORT_MODEL_PATH, file.getParent());
-//
-//		return file.getAbsolutePath();
-		return "";
+		FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.OPEN);
+		dialog.setFilterNames(FILTER_NAMES);
+		dialog.setFilterExtensions(FILTER_EXTS);
+		String initialPath = PreferenceHelper.getPreference(IMPORT_MODEL_PATH, System.getProperty("user.home"));
+		dialog.setFilterPath(initialPath);
+
+		String fileName = dialog.open();
+
+		if (fileName == null) {
+			return null;
+		}
+
+		final File file = new File(dialog.getFilterPath(), dialog.getFileName());
+
+		PreferenceHelper.setPreference(IMPORT_MODEL_PATH, file.getParent());
+
+		return file.getAbsolutePath();
+//		return "";
 	}
 
 }
