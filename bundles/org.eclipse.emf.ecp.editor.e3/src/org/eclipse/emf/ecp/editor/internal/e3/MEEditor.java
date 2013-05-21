@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
@@ -18,6 +19,7 @@ import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -195,7 +197,10 @@ public class MEEditor extends SharedHeaderFormEditor {
 			meInput = (MEEditorInput) input;
 
 			modelElementContext = meInput.getModelElementContext();
-			composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+			;
 			shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 			setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
 			setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));

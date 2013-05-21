@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -146,7 +148,10 @@ public class LinkControl extends SingleControl {
 	}
 
 	private void createHyperlink() {
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		;
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		// adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		// shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);

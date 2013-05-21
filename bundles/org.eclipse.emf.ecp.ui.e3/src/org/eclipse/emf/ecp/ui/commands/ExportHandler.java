@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.platform.PreferenceHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -94,8 +96,9 @@ public class ExportHandler extends AbstractHandler {
 		ComposedAdapterFactory adapterFactory=null;
 		
 		if (labelProvider == null) {
-			adapterFactory = new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
 			labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		}
 		

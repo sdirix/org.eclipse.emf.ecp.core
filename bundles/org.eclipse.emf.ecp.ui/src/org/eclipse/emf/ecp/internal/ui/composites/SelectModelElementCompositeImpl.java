@@ -11,10 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.ECPViewerFilter;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -51,7 +53,10 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 	 */
 	public SelectModelElementCompositeImpl(Object input) {
 		super();
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		;
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		filter = new ModelElementViewerFilter(adapterFactoryLabelProvider);
 		this.input = input;

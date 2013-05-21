@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecp.internal.ui.model.MEClassLabelProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -52,7 +54,10 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	public AbstractEClassTreeSelectionComposite(Collection<EPackage> unsupportedEPackages,
 		Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses) {
 		super();
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+
 		meClassLabelProvider = new MEClassLabelProvider(composedAdapterFactory);
 		// modelTreeContentProvider = new ModelTreeContentProvider(composedAdapterFactory, ePackages,
 		// unsupportedEPackages, filteredEPackages, filteredEClasses);

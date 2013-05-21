@@ -125,6 +125,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		EditingDomain domain = ((ESWorkspaceImpl) ESWorkspaceProvider.INSTANCE.getWorkspace()).toInternalAPI()
 			.getEditingDomain();
+
 		return domain;
 	}
 

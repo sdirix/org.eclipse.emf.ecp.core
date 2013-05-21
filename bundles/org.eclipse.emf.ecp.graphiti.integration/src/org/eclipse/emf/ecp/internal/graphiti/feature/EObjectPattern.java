@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecp.internal.graphiti.feature;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -10,6 +11,7 @@ import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -161,8 +163,9 @@ public class EObjectPattern extends AbstractPattern {
 
 		// SHAPE WITH TEXT
 		{
-			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 					composedAdapterFactory);
 
@@ -206,8 +209,9 @@ public class EObjectPattern extends AbstractPattern {
 			}
 		}
 
-		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 				composedAdapterFactory);
 
@@ -234,8 +238,9 @@ public class EObjectPattern extends AbstractPattern {
 		String businessName = null;
 		PictogramElement pictogramElement = context.getPictogramElement();
 		Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 				composedAdapterFactory);
 		if (bo instanceof EObject) {

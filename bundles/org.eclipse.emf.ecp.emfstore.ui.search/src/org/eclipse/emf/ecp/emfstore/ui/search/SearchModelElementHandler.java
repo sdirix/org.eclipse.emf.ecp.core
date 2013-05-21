@@ -18,12 +18,14 @@ import java.util.Set;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.jface.dialogs.Dialog;
@@ -58,8 +60,9 @@ public class SearchModelElementHandler extends AbstractHandler {
 			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "Information",
 				"You must first select the Project.");
 		} else {
-			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 			AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 			ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event),
 				adapterFactoryLabelProvider);

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
@@ -102,7 +104,10 @@ public class MEEditorPage extends FormPage {
 	@Override
 	protected void createFormContent(IManagedForm managedForm) {
 		super.createFormContent(managedForm);
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		;
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 		FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();

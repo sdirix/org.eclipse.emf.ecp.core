@@ -13,6 +13,7 @@
 
 package org.eclipse.emf.ecp.internal.editor;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPriorityDescript
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -172,6 +174,9 @@ public class FormEditorComposite implements IEditorCompositeProvider {
 	private void sortAndOrderAttributes() {
 
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] { composedAdapterFactory,
+			new ReflectiveItemProviderAdapterFactory() });
+
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator

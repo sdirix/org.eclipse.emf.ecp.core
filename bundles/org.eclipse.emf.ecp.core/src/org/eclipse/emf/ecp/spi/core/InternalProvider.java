@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -65,8 +67,9 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	/**
 	 * {@link ComposedAdapterFactory} to use.
 	 */
-	ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(
-		ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+	ComposedAdapterFactory EMF_ADAPTER_FACTORY = new ComposedAdapterFactory(new AdapterFactory[] {
+		new ReflectiveItemProviderAdapterFactory(),
+		new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 
 	/**
 	 * Allows access of the corresponding UI Adapter.

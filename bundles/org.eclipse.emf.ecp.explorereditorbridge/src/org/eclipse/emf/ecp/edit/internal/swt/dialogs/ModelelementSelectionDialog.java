@@ -10,9 +10,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.dialogs;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.Activator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -88,7 +90,10 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 
 		super(shell, multiSelection);
 
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		;
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		if (modelElements != null) {
 			this.modelElements = modelElements;

@@ -62,6 +62,9 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 		// if we have an attribute
 		if (EAttribute.class.isInstance(feature)) {
 			Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
+			if (instanceClass == null) {
+				return NOT_APPLICABLE;
+			}
 			// if the attribute class is an primitive test the primitive types
 			if (instanceClass.isPrimitive()) {
 				try {
@@ -88,6 +91,9 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 		// if we have an reference the the classes
 		else if (EReference.class.isInstance(feature)) {
 			Class<?> instanceClass = feature.getEType().getInstanceClass();
+			if (instanceClass == null) {
+				instanceClass = EObject.class;
+			}
 			if (!getSupportedClassType().isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
 			}
