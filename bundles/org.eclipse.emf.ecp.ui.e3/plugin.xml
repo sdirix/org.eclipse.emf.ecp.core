@@ -509,14 +509,14 @@
                <iterate
                      ifEmpty="false"
                      operator="and">
-                  <instanceof
-                        value="org.eclipse.emf.ecp.core.ECPProject">
-                  </instanceof>
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.core.project.isDirty"
-                        value="true">
-                  </test>
+                  <adapt
+                        type="org.eclipse.emf.ecp.core.ECPProject">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.emf.ecp.core.project.isDirty"
+                           value="true">
+                     </test>
+                  </adapt>
                </iterate>
             </with>
          </enabledWhen>
