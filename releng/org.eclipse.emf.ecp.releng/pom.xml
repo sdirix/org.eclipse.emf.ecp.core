@@ -23,7 +23,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../../bundles/org.eclipse.emf.ecp.common</module>
-		<module>../../bundles/org.eclipse.emf.ecp.doc</module>
 		<module>../../bundles/org.eclipse.emf.ecp.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.editor</module>
@@ -157,10 +156,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${javadoc-version}</version>
-				<configuration>
-					<reportOutputDirectory>../../bundles/org.eclipse.emf.ecp.doc/</reportOutputDirectory>
-					<destDir>target/ecp-doc</destDir>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

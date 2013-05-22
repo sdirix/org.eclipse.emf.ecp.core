@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: ECP Documentation
-Bundle-SymbolicName: org.eclipse.emf.ecp.doc
-Bundle-Version: 1.0.0.qualifier
-Bundle-Vendor: Eclipse Modeling Project
