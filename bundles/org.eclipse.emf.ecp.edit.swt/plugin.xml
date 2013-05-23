@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="celleditor" name="ECP SWT Table CellEditor" schema="schema/cellEditor.exsd"/>
+   <extension-point id="cellEditor" name="ECP SWT Table CellEditor" schema="schema/cellEditor.exsd"/>
    <extension-point id="dialogWrapper" name="Dialog Wrapper" schema="schema/dialogWrapper.exsd"/>
    <extension
          point="org.eclipse.emf.ecp.edit.controls">
@@ -143,7 +143,7 @@
       </control>
    </extension>
    <extension
-         point="org.eclipse.emf.ecp.edit.swt.celleditor">
+         point="org.eclipse.emf.ecp.edit.swt.cellEditor">
       <cellEditor
             class="org.eclipse.emf.ecp.edit.internal.swt.table.NumberCellEditor"
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.number"
