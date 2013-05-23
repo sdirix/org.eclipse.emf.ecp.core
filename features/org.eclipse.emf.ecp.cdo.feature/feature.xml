@@ -15,7 +15,7 @@
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
       image="eclipse_update_120.jpg"
-      license-feature="org.eclipse.emf.ecp.license"
+      license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.0.0">
 
    <description>
