@@ -49,6 +49,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		addGMFModels(packages);
 		addGraphitiModels(packages);
 		addQ7Models(packages);
+		addNet4jModels(packages);
 
 		// xml
 		packages.add("http://www.eclipse.org/xsd/2002/XSD"); //$NON-NLS-1$
@@ -123,6 +124,7 @@ public class DefaultFilter implements ECPFilterProvider {
 	 */
 	private static void addEMFCompareModels(Set<String> packages) {
 		// emf compare
+		packages.add("http://www.eclipse.org/emf/compare"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/compare/match/1.1"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/compare/epatch/0.1"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/compare/diff/1.1"); //$NON-NLS-1$
@@ -217,6 +219,16 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/commands"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic"); //$NON-NLS-1$
+	}
+	
+	/**
+	 * @param packages
+	 */
+	private static void addNet4jModels(Set<String> packages) {
+		// NET4J
+		packages.add("http://www.eclipse.org/NET4J/defs/1.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/NET4J/ui/defs/1.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/NET4J/util/defs/1.0.0"); //$NON-NLS-1$
 	}
 
 }
