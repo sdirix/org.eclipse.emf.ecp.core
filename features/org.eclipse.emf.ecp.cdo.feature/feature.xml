@@ -10,7 +10,7 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.ecp.cdo"
+      id="org.eclipse.emf.ecp.cdo.feature"
       label="EMF Client Platform CDO Integration"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"

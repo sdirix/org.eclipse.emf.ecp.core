@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.target"
+      id="org.eclipse.emf.ecp.target.feature"
       label="ECP Target Feature"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project">

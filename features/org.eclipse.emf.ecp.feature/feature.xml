@@ -10,7 +10,7 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.ecp"
+      id="org.eclipse.emf.ecp.feature"
       label="EMF Client Platform (Core)"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"

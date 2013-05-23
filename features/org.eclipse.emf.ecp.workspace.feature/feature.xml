@@ -10,7 +10,7 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.ecp.workspace"
+      id="org.eclipse.emf.ecp.workspace.feature"
       label="EMF Client Platform File Integration"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"

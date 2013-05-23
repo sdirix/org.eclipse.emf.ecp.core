@@ -19,7 +19,7 @@
 
 	<modules>
 		<module>../../releng/_target</module>
-		<module>../../features/org.eclipse.emf.ecp-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../../bundles/org.eclipse.emf.ecp.common</module>
@@ -29,40 +29,40 @@
 		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui</module>	
 		
-		<module>../../features/org.eclipse.emf.ecp.cdo-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.emfstore-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.emfstore.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.search</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.license-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.license.feature</module>
 		
 		<module>../../releng/org.eclipse.emf.ecp.products</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.site-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.site.feature</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.target-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.e3-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.e3.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.e3</module>
 		<module>../../bundles/org.eclipse.emf.ecp.application.e3</module>
 		<module>../../bundles/org.eclipse.emf.ecp.editor.e3</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.validation-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.validation.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.validation</module>
 		<module>../../bundles/org.eclipse.emf.ecp.validation.connector</module>
 		
-		<module>../../features/org.eclipse.emf.ecp.workspace-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.workspace.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
 		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module>-->
 		
 		<!-- Graphiti -->
-		<module>../../features/org.eclipse.emf.ecp.graphiti-feature</module>
+		<module>../../features/org.eclipse.emf.ecp.graphiti.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.graphiti.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>
 				 

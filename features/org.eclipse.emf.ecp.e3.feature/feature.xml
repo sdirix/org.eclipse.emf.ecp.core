@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.e3"
+      id="org.eclipse.emf.ecp.e3.feature"
       label="EMF Client Platform UI 3.x Feature"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
