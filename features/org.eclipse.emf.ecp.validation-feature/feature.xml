@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.validation.feature"
-      label="ECP Validation Feature"
+      label="EMF Client Platform Validation Feature"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
       image="eclipse_update_120.jpg"
