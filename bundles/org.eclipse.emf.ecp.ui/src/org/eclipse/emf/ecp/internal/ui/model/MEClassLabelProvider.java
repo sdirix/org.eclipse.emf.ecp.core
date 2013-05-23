@@ -18,6 +18,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.swt.graphics.Image;
 
+import java.util.MissingResourceException;
+
 /**
  * @author Hodaie LabelProvider for TreeViewer that is shown on ModelTreePage
  */
@@ -61,6 +63,8 @@ public class MEClassLabelProvider extends AdapterFactoryLabelProvider {
 				try {
 					return super.getImage(newMEInstance);
 				} catch (NullPointerException e) {
+					return super.getImage(object);
+				} catch (MissingResourceException mre) {
 					return super.getImage(object);
 				}
 
