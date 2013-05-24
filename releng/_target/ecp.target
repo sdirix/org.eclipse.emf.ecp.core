@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="211">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="212">
 <locations>
-<location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130319-1346"/>
-<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130319-1346"/>
-<repository location="http://download.eclipse.org/graphiti/updates/milestones"/>
-</location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.8.3.v20130125-0826"/>
 <unit id="org.eclipse.equinox.sdk.feature.group" version="3.8.0.v20121212-203907-7M7fA78g4_y-gDvtH0ZcFvhMPDZJ"/>
@@ -38,6 +33,11 @@
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130513-1206"/>
 <unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130513-1206"/>
 <repository location="http://download.eclipse.org/emf-store/milestones/100RC3"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130522-0609"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130522-0609"/>
+<repository location="http://download.eclipse.org/graphiti/updates/milestones/S-0.10.0RC1-201305220609"/>
 </location>
 </locations>
 </target>
