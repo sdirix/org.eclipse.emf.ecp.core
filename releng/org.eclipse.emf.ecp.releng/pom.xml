@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.17.0</tycho-version>
-		<javadoc-version>2.9</javadoc-version>
+		
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 	</properties>
 	<profiles>
@@ -56,7 +56,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.search</module>
-		
+
+		<module>../../bundles/org.eclipse.emf.ecp.doc</module>
 		<module>../../bundles/org.eclipse.emf.ecp.branding</module>
 		<module>../../features/org.eclipse.emf.ecp.license.feature</module>
 
@@ -164,11 +165,13 @@
 					<newVersion>${ecp-version}</newVersion>
 				</configuration>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${javadoc-version}</version>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
@@ -183,6 +186,20 @@
 							<goal>check</goal>
 						</goals>
 						<phase>verify</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- enable source bundle generation -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
