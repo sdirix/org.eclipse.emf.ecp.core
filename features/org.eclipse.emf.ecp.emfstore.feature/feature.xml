@@ -4,6 +4,7 @@
       label="EMF Client Platform EMFStore Integration"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emf.ecp.branding"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.0.0">

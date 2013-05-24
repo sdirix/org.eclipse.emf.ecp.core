@@ -91,7 +91,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	protected Control createControl(Composite parent) {
 		// Composite composite = new Composite(parent, SWT.NONE);
 		dateWidget = new DateTime(parent, SWT.DATE);
-		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_swt_cellEditor_date");
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_date");
 		// timeWidget = new DateTime(composite, SWT.TIME);
 		// timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_swt_cellEditor_time");
 

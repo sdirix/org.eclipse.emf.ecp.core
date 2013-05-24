@@ -70,7 +70,7 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getTextVariantID() {
-		return "org_eclipse_emf_ecp_control_swt_number";
+		return "org_eclipse_emf_ecp_control_numerical";
 	}
 
 	/*

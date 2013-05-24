@@ -75,7 +75,7 @@ public class XmlDateControl extends SingleControl {
 
 		dateWidget = new DateTime(composite, SWT.DATE | SWT.DROP_DOWN | SWT.BORDER);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_xml_date");
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmlDate");
 	}
 
 	/**

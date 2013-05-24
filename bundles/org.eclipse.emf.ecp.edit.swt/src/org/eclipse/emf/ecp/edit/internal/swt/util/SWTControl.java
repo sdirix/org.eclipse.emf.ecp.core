@@ -221,6 +221,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 					showUnsetLabel();
 				}
 			});
+			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help");
 		}
 
 		if (!getStructuralFeature().isUnsettable()
