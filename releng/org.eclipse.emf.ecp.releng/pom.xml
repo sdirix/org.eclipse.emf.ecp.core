@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.17.0</tycho-version>
-		
+		<javadoc-version>2.9</javadoc-version>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 	</properties>
 	<profiles>
@@ -165,13 +165,12 @@
 					<newVersion>${ecp-version}</newVersion>
 				</configuration>
 			</plugin>
-			<!-- 
+			<!-- enable javadocgeneration -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${javadoc-version}</version>
 			</plugin>
-			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
