@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ECP 3.x" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/org.eclipse.emf.ecp.branding/emfstore.png"/>
+      <image path="/org.eclipse.emf.ecp.application.e3/icons/eclipse_lg.gif"/>
       <text>
-         asdasd
+         %productBlurb
       </text>
    </aboutInfo>
 
@@ -18,7 +18,6 @@
    </launcherArgs>
 
    <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
-
 
    <launcher name="ecp">
       <solaris/>
@@ -49,8 +48,8 @@
       <feature id="org.eclipse.emf.ecp.emfstore.feature"/>
       <feature id="org.eclipse.emf.ecp.feature"/>
       <feature id="org.eclipse.emf.ecp.license.feature"/>
-      <feature id="org.eclipse.emf.ecp.target.feature"/>
       <feature id="org.eclipse.emf.ecp.workspace.feature"/>
+      <feature id="org.eclipse.emf.ecp.target.feature"/>
    </features>
 
    <configurations>
@@ -59,7 +58,7 @@
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="3" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="1" />
-      <property name="eclipse.buildId" value="${BUILD_ID}" />
+      <property name="eclipse.buildId" value="${BUILD_NUMBER}" />
    </configurations>
 
 </product>

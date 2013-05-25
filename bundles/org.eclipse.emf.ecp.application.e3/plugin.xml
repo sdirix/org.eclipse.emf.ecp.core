@@ -25,10 +25,11 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.emf.ecp.application.e3.application"
-            name="ECP 3.x">
+            description="%productBlurb"
+            name="%productName">
          <property
                name="appName"
-               value="ECP 3.x">
+               value="%productName">
          </property>
          <property
                name="windowImages"
@@ -36,11 +37,11 @@
          </property>
          <property
                name="aboutImage"
-               value="platform:/plugin/org.eclipse.emf.ecp.branding/emfstore.png">
+               value="icons/eclipse_lg.gif">
          </property>
          <property
                name="aboutText"
-               value="asdasd">
+               value="%productBlurb">
          </property>
       </product>
    </extension>

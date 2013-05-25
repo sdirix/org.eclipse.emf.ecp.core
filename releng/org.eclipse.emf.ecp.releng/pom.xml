@@ -58,7 +58,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.search</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.doc</module>
-		<module>../../bundles/org.eclipse.emf.ecp.branding</module>
 		<module>../../features/org.eclipse.emf.ecp.license.feature</module>
 
 		<module>../../releng/org.eclipse.emf.ecp.products</module>

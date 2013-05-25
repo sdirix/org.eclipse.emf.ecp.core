@@ -4,7 +4,6 @@
       label="EMF Client Platform License"
       version="1.0.0"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.branding"
       image="eclipse_update_120.jpg">
 
    <description>
@@ -18,12 +17,6 @@
    <license url="%licenseURL">
       %license
    </license>
-
-   <plugin
-         id="org.eclipse.emf.ecp.branding"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.ecp.doc"

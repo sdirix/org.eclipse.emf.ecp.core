@@ -4,7 +4,7 @@
       label="ECP RAP Feature"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.branding">
+      plugin="org.eclipse.emf.ecp.rap">
 
    <description url="http://www.example.com/description">
       Integration of the RAP with the EMF Client Platform.

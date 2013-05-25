@@ -14,7 +14,7 @@
       label="EMF Client Platform CDO Integration"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.branding"
+      plugin="org.eclipse.emf.ecp.cdo.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.0.0">
