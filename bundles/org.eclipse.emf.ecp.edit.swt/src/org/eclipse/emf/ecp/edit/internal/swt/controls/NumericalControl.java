@@ -266,7 +266,7 @@ public class NumericalControl extends AbstractTextControl {
 				// }
 				// return revertToOldValue(value);
 				getText().setText(formatedNumber);
-				if (formatedNumber.isEmpty()) {
+				if (formatedNumber.length() == 0) {
 					return null;
 				}
 				return numberToInstanceClass(format.parse(formatedNumber));
