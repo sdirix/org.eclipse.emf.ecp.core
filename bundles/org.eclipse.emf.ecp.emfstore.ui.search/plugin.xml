@@ -13,6 +13,32 @@
       <handler
             class="org.eclipse.emf.ecp.emfstore.ui.search.SearchModelElementHandler"
             commandId="org.eclipse.emf.ecp.emfstore.ui.search.modelelement">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <and>
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <and>
+                           <instanceof
+                                 value="org.eclipse.emf.ecp.core.ECPProject">
+                           </instanceof>
+                           <test
+                                 property="org.eclipse.emf.ecp.core.project.providerName"
+                                 value="org.eclipse.emf.ecp.emfstore.provider">
+                           </test>
+                        </and>
+                        <instanceof
+                              value="org.eclipse.emf.ecore.EObject">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </and>
+            </with>
+         </enabledWhen>
       </handler>
    </extension>
    <extension
@@ -24,33 +50,6 @@
                commandId="org.eclipse.emf.ecp.emfstore.ui.search.modelelement"
                icon="icons/magnifier.png"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                  variable="selection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <or>
-                           <and>
-                              <instanceof
-                                    value="org.eclipse.emf.ecp.core.ECPProject">
-                              </instanceof>
-                              <test
-                                    property="org.eclipse.emf.ecp.core.project.providerName"
-                                    value="org.eclipse.emf.ecp.emfstore.provider">
-                              </test>
-                           </and>
-                           <instanceof
-                                 value="org.eclipse.emf.ecore.EObject">
-                           </instanceof>
-                        </or>
-					  </iterate>
-					</and>
-				</with>
-			</visibleWhen>
 		 </command>
 	  </menuContribution>
                         
