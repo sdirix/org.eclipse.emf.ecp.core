@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _k5jCAHHZEeKndsdNMEr_UQ
-Save-Time: 5/17/13 9:58 AM
+Save-Time: 5/28/13 11:57 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -26,6 +26,7 @@ with [get-editor "Player Jonas"] {
     close
 }
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
+
 get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "124354254245.97868" 
     | verify-true
 get-editor "Player Jonas" | get-editbox -after [get-label Height] | set-text gzfghjcjhcxhjf
@@ -35,11 +36,11 @@ with [get-window "Invalid Number"] {
         | equals "The Number you have entered is invalid. The value will be unset." | verify-true
 }
 get-window "Invalid Number" | get-button OK | click
-get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "1.2435425424597868E11" 
+get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "124354254245.97868" 
     | verify-true
 get-editor "Player Jonas" | close
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
-get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "1.2435425424597868E11" 
+get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "124354254245.97868" 
     | verify-true
 get-editor "Player Jonas" | get-editbox -after [get-label Height] | set-text hallo89
 with [get-window "Invalid Number"] {
@@ -66,12 +67,13 @@ get-editor "Player Jonas" | close
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
 get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "656.89" | verify-true
 with [get-editor "Player Jonas"] {
+	// 10e3 gets converted to 10 since  scientific notation is not accepted
     get-editbox -after [get-label Height] | set-text "10e3"
     get-editbox -after [get-label Name] | click-text 6
     close
 }
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
-get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "10000.0" | verify-true
+get-editor "Player Jonas" | get-editbox -after [get-label Height] | get-property text | equals "10" | verify-true
 
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/League America/Player Maximilian" 
     | double-click
@@ -84,7 +86,7 @@ with [get-window Commit] {
 get-editor "Player Maximilian" | close
 get-editor "Player Jonas" | click
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Maximilian" | double-click
-get-editor "Player Maximilian" | get-editbox -after [get-label Height] | get-property text | equals "0.0" | verify-true
+get-editor "Player Maximilian" | get-editbox -after [get-label Height] | get-property text | equals "0" | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Update | click
 get-window Update | get-button OK | click
 get-editor "Player Maximilian" | get-editbox -after [get-label Height] | get-property text | equals "178.234" 
