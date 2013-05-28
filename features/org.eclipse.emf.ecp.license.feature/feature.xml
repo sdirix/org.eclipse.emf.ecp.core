@@ -4,9 +4,7 @@
       label="EMF Client Platform License"
       version="1.0.0"
       provider-name="Eclipse Modeling Project"
-      image="eclipse_update_120.jpg"
-      license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.0.0">
+      image="eclipse_update_120.jpg">
 
    <description>
       Contains the shared license for all ECP features.
@@ -16,8 +14,14 @@
       %copyright
    </copyright>
 
-   <license url="org.eclipse.emf.ecp.license.feature">
+   <license url="%licenseURL">
       %license
    </license>
+
+   <plugin
+         id="org.eclipse.emf.ecp.doc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

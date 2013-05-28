@@ -25,14 +25,23 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.emf.ecp.application.e3.application"
-            name="ECP 3.x">
+            description="%productBlurb"
+            name="%productName">
          <property
                name="appName"
-               value="ECP 3.x">
+               value="%productName">
          </property>
          <property
                name="windowImages"
                value="platform:/plugin/org.eclipse.emf.ecp.ui.e3/icons/bricks.png">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/eclipse_lg.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="%productBlurb">
          </property>
       </product>
    </extension>
@@ -42,6 +51,17 @@
             class="org.eclipse.emf.ecp.application3x.NavigatorRoot"
             id="org.eclipse.emf.ecp.NavigatorRoot">
       </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <command
+               commandId="org.eclipse.ui.help.aboutAction"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 

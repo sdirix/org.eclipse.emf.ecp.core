@@ -70,7 +70,7 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getTextVariantID() {
-		return "org_eclipse_emf_ecp_control_swt_number";
+		return "org_eclipse_emf_ecp_control_numerical";
 	}
 
 	/*
@@ -214,43 +214,51 @@ public class NumericalControl extends AbstractTextControl {
 
 		@Override
 		protected Object convertValue(final Object value) {
-			try {
-				Number number = format.parse((String) value);
-				if (isInteger()) {
-					boolean maxValue = false;
-					Class<?> instanceClass = getInstanceClass();
-					String formatedValue = "";
-					try {
-						if (Integer.class.isAssignableFrom(instanceClass)
-							|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
-							if (Integer.MAX_VALUE == number.intValue()) {
-								maxValue = true;
-								formatedValue = format.format(Integer.MAX_VALUE);
-							}
-						} else if (Long.class.isAssignableFrom(instanceClass)
-							|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
-							if (Long.MAX_VALUE == number.longValue()) {
-								maxValue = true;
-								formatedValue = format.format(Long.MAX_VALUE);
-							}
-						}
-					} catch (IllegalArgumentException ex) {
-						Activator.logException(ex);
-					} catch (SecurityException ex) {
-						Activator.logException(ex);
-					} catch (IllegalAccessException ex) {
-						Activator.logException(ex);
-					} catch (NoSuchFieldException ex) {
-						Activator.logException(ex);
-					}
 
-					if (maxValue) {
-						getText().setText(formatedValue);
-						return numberToInstanceClass(number);
+			try {
+				Number number = null;
+				if (value == null) {
+					number = getDefaultValue();
+				} else {
+					number = format.parse((String) value);
+					if (isInteger()) {
+						boolean maxValue = false;
+						Class<?> instanceClass = getInstanceClass();
+						String formatedValue = "";
+						try {
+							if (Integer.class.isAssignableFrom(instanceClass)
+								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+								if (Integer.MAX_VALUE == number.intValue()) {
+									maxValue = true;
+									formatedValue = format.format(Integer.MAX_VALUE);
+								}
+							} else if (Long.class.isAssignableFrom(instanceClass)
+								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+								if (Long.MAX_VALUE == number.longValue()) {
+									maxValue = true;
+									formatedValue = format.format(Long.MAX_VALUE);
+								}
+							}
+						} catch (IllegalArgumentException ex) {
+							Activator.logException(ex);
+						} catch (SecurityException ex) {
+							Activator.logException(ex);
+						} catch (IllegalAccessException ex) {
+							Activator.logException(ex);
+						} catch (NoSuchFieldException ex) {
+							Activator.logException(ex);
+						}
+
+						if (maxValue) {
+							getText().setText(formatedValue);
+							return numberToInstanceClass(number);
+						}
 					}
 				}
-
-				String formatedNumber = format.format(number);
+				String formatedNumber = "";
+				if (number != null) {
+					formatedNumber = format.format(number);
+				}
 				// if (number.toString().contains("E")
 				// || ((String) value).matches("0*" + formatedNumber + "\\"
 				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
@@ -258,6 +266,9 @@ public class NumericalControl extends AbstractTextControl {
 				// }
 				// return revertToOldValue(value);
 				getText().setText(formatedNumber);
+				if (formatedNumber.length() == 0) {
+					return null;
+				}
 				return numberToInstanceClass(format.parse(formatedNumber));
 			} catch (ParseException ex) {
 				return revertToOldValue(value);
@@ -370,6 +381,44 @@ public class NumericalControl extends AbstractTextControl {
 			format.setMaximumFractionDigits(100);
 		}
 		return format;
+	}
+
+	/**
+	 * @return
+	 */
+	private Number getDefaultValue() {
+		Class<?> instanceClass = getInstanceClass();
+		if (instanceClass.isPrimitive()) {
+			try {
+				if (Double.class.getField("TYPE").get(null).equals(instanceClass)
+					|| Float.class.getField("TYPE").get(null).equals(instanceClass)
+					|| Integer.class.getField("TYPE").get(null).equals(instanceClass)
+					|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+					return 0;
+				}
+			} catch (IllegalArgumentException ex) {
+				Activator.logException(ex);
+			} catch (SecurityException ex) {
+				Activator.logException(ex);
+			} catch (IllegalAccessException ex) {
+				Activator.logException(ex);
+			} catch (NoSuchFieldException ex) {
+				Activator.logException(ex);
+			}
+		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
+			return null;
+		} else if (Double.class.isAssignableFrom(instanceClass)) {
+			return null;
+		} else if (Float.class.isAssignableFrom(instanceClass)) {
+			return null;
+		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
+			return null;
+		} else if (Integer.class.isAssignableFrom(instanceClass)) {
+			return null;
+		} else if (Long.class.isAssignableFrom(instanceClass)) {
+			return null;
+		}
+		return null;
 	}
 
 }

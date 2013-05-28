@@ -67,7 +67,7 @@ public class EEnumControl extends SingleControl {
 
 		});
 		combo.setInput(getStructuralFeature().getEType().getInstanceClass().getEnumConstants());
-		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_enum");
+		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum");
 	}
 
 	/**

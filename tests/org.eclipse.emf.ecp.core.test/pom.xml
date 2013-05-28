@@ -30,17 +30,17 @@
 					<dependencies>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target</artifactId>
+							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp</artifactId>
+							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.emfstore</artifactId>
+							<artifactId>org.eclipse.emf.ecp.emfstore.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 					</dependencies>

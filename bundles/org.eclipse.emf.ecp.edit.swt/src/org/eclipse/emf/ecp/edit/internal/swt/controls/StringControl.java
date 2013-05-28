@@ -72,7 +72,7 @@ public class StringControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getTextVariantID() {
-		return "org_eclipse_emf_ecp_control_swt_string";
+		return "org_eclipse_emf_ecp_control_string";
 	}
 
 	/*

@@ -75,11 +75,11 @@ public class DateTimeControl extends SingleControl {
 
 		dateWidget = new DateTime(composite, SWT.DATE | SWT.BORDER);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_date");
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_date");
 
 		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT | SWT.BORDER);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_dateTime_time");
+		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_time");
 	}
 
 	/**

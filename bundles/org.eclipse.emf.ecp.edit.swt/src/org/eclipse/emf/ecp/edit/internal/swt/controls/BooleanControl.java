@@ -52,7 +52,7 @@ public class BooleanControl extends SingleControl {
 	@Override
 	protected void fillControlComposite(Composite composite) {
 		check = new Button(composite, SWT.CHECK);
-		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_boolean");
+		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_boolean");
 	}
 
 	/**

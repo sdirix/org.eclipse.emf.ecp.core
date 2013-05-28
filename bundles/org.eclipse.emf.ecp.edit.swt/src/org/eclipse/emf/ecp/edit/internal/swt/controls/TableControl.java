@@ -92,7 +92,7 @@ public class TableControl extends SWTControl {
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
-	private Button unsetButton = null;
+	private Button unsetButton;
 	private EClass clazz;
 
 	/**
@@ -120,7 +120,7 @@ public class TableControl extends SWTControl {
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
+
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
 		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
@@ -178,7 +178,7 @@ public class TableControl extends SWTControl {
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, SWT.DEFAULT)
 		// .applyTo(tableViewer.getTable());
-		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_swt_table");
+		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table");
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
@@ -243,8 +243,9 @@ public class TableControl extends SWTControl {
 						cell.setText(text == null ? "" : text);
 
 					} else {
-						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
 
+						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
+						cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string");
 					}
 				}
 			});

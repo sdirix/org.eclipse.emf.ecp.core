@@ -89,9 +89,10 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
+
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		link = new Link(parent, SWT.NONE);
+		link.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_reference");
 		link.addSelectionListener(new SelectionAdapter() {
 
 			@Override
