@@ -95,7 +95,7 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.XmlDateControl"
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.XmlDateControlText"
             id="org.eclipse.emf.ecp.control.swt.xml.date"
             showLabel="true"
             >

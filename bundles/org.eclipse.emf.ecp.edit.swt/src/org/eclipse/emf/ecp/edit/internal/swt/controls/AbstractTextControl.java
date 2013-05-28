@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.Binding;
@@ -30,8 +31,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-
-import java.text.Format;
 
 /**
  * This abstract class is used as a common superclass for all widgets that use a {@link Text} widget.
@@ -220,10 +219,6 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	protected class TargetToModelUpdateStrategy extends EMFUpdateConvertValueStrategy {
 
-		TargetToModelUpdateStrategy() {
-			super();
-		}
-
 		@Override
 		public IStatus validateAfterGet(Object value) {
 			IStatus status = super.validateAfterGet(value);
@@ -238,39 +233,22 @@ public abstract class AbstractTextControl extends SingleControl {
 		}
 
 		/**
-		 * Returns the formatter specific for ecp
-		 * By default this is <code>null</code>. In case clients override this,
-		 * the update strategy will
-		 * 
-		 * @return
-		 */
-		protected Format getLocaleFormat() {
-			return null;
-		}
-
-		/**
 		 * {@inheritDoc}
 		 */
 		@Override
 		public Object convert(Object value) {
 			try {
+
 				controlDecoration.hide();
 				updateValidationColor(null);
-				if (getStructuralFeature().isUnsettable() && value != null && String.class.isInstance(value)
-					&& ((String) value).equals("")) {
-					return null;
+				if ("".equals(value)) {
+					value = null;
 				}
-
-				Format format = getLocaleFormat();
+				if (value == null && getStructuralFeature().isUnsettable()) {
+					return SetCommand.UNSET_VALUE;
+				}
 
 				Object convertedValue = convertValue(value);
-
-				if (format != null) {
-					String formatedValue = format.format(convertedValue);
-					if (!formatedValue.equals(value)) {
-						getText().setText(formatedValue);
-					}
-				}
 
 				return convertedValue;
 
@@ -281,6 +259,5 @@ public abstract class AbstractTextControl extends SingleControl {
 				throw e;
 			}
 		}
-
 	}
 }
