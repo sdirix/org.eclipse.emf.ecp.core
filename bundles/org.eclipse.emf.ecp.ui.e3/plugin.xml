@@ -58,6 +58,11 @@
                               property="org.eclipse.emf.ecp.core.project.closed"
                               value="true">
                         </test>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.closable"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
                      </and>
                   </iterate>
                </with>
@@ -86,6 +91,11 @@
                               property="org.eclipse.emf.ecp.core.project.open"
                               value="true">
                         </test>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.closable"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
                      </and>
                   </iterate>
                </with>
@@ -107,12 +117,12 @@
                         <instanceof
                               value="org.eclipse.emf.ecp.core.util.ECPContainer">
                         </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.delete"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
                      </and>
-                     <test
-                           args="org.eclipse.emf.ecp.ui.delete"
-                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
-                           value="true">
-                     </test>
                   </iterate>
                </with>
             </visibleWhen>
@@ -133,6 +143,11 @@
                         <instanceof
                               value="org.eclipse.emf.ecp.core.util.ECPCheckoutSource">
                         </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.checkout"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
                      </and>
                   </iterate>
                </with>
@@ -153,7 +168,7 @@
                   <iterate>
                      <test
                            args="org.eclipse.emf.ecp.ui.project.createProject"
-                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                            value="true">
                      </test>
                   </iterate>
@@ -184,7 +199,7 @@
                         </instanceof>
                         <test
                               args="org.eclipse.emf.ecp.ui.properties.project"
-                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                               value="true">
                         </test>
                      </iterate>
@@ -213,7 +228,7 @@
                         </instanceof>
                         <test
                               args="org.eclipse.emf.ecp.ui.project.filterModelElements"
-                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                               value="true">
                         </test>
                      </iterate>
@@ -242,7 +257,7 @@
                         </instanceof>
                         <test
                               args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
-                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                               value="true">
                         </test>
                      </iterate>
@@ -267,7 +282,7 @@
                      </instanceof>
                      <test
                            args="org.eclipse.emf.ecp.ui.workbench.deleteModelElement"
-                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                            value="true">
                      </test>
                   </iterate>
@@ -288,7 +303,7 @@
                         </instanceof>
                         <test
                               args="org.eclipse.emf.ecp.ui.workbench.import"
-                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                               value="true">
                         </test>
                      </and>
@@ -314,7 +329,7 @@
                            </instanceof>
                            <test
                                  args="org.eclipse.emf.ecp.ui.workbench.export"
-                                 property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                                 property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                                  value="true">
                            </test>
                         </and>
@@ -367,7 +382,7 @@
                         </instanceof>
                         <test
                               args="org.eclipse.emf.ecp.ui.properties.repository"
-                              property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                               value="true">
                         </test>
                      </iterate>
@@ -606,8 +621,8 @@
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
             class="org.eclipse.emf.ecp.ui.tester.ECPMenuContributionsEnablementTester"
-            id="org.eclipse.emf.ecp.ui.workbench.menu.properties"
-            namespace="org.eclipse.emf.ecp.ui.workbench.menu"
+            id="org.eclipse.emf.ecp.ui.e3.workbench.menu.properties"
+            namespace="org.eclipse.emf.ecp.ui.e3.workbench.menu"
             properties="enablement"
             type="java.lang.Object">
       </propertyTester>

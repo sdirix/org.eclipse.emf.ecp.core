@@ -127,6 +127,11 @@
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.share"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -153,6 +158,11 @@
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.commit"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -178,6 +188,11 @@
                      <test
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.update"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
                      </test>
                   </iterate>
                </and>
@@ -207,8 +222,8 @@
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
                      <test
-                           args="org.eclipse.emf.ecp.navigator.exportModel"
-                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           args="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                            value="true">
                      </test>
                   </iterate>
@@ -239,8 +254,8 @@
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
                      <test
-                           args="org.eclipse.emf.ecp.navigator.exportModel"
-                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
+                           args="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                            value="true">
                      </test>
                   </iterate>
@@ -272,6 +287,11 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.hasHistory"
                            value="true">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -297,6 +317,11 @@
                      <test
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.branchCreate"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
                      </test>
                   </iterate>
                </and>
@@ -324,6 +349,11 @@
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.branchMerge"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -349,6 +379,11 @@
                      <test
                            property="org.eclipse.emf.ecp.core.project.providerName"
                            value="org.eclipse.emf.ecp.emfstore.provider">
+                     </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
                      </test>
                   </iterate>
                </and>
@@ -384,6 +419,11 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
                            value="false">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -412,6 +452,11 @@
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                           value="true">
+                     </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                            value="true">
                      </test>
                   </iterate>
@@ -443,6 +488,11 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
                            value="true">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -466,6 +516,11 @@
                      <instanceof
                            value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
                      </instanceof>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.branchCheckout"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -501,6 +556,11 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
                            value="true">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -534,6 +594,11 @@
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                           value="true">
+                     </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.emfserverRegisterEPackage"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
                            value="true">
                      </test>
                   </iterate>
@@ -572,6 +637,11 @@
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
                            value="true">
                      </test>
+                     <test
+                           args="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
                   </iterate>
                </and>
                </with>
@@ -597,6 +667,11 @@
                               forcePluginActivation="true"
                               property="org.eclipse.emf.ecp.core.repository.providerName"
                               value="org.eclipse.emf.ecp.emfstore.provider">
+                        </test>
+                        <test
+                              args="org.eclipse.emf.ecp.emfstore.ui.startLocalServer"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
                         </test>
                      </iterate>
                   </and>
