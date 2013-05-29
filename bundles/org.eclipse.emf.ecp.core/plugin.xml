@@ -27,6 +27,13 @@
             properties="name,repositoryLabel,providerName"
             type="org.eclipse.emf.ecp.core.ECPRepository">
       </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.internal.core.util.ECPDirtyTester"
+            id="org.eclipse.emf.ecp.core.util.dirtytester"
+            namespace="org.eclipse.emf.ecp.core.util"
+            properties="isDirty"
+            type="java.lang.Object">
+      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.core.expressions.definitions">
