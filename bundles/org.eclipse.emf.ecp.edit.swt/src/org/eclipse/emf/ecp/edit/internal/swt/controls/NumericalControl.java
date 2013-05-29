@@ -22,9 +22,9 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.conversion.Converter;
-import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.IValueChangeListener;
+import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -105,9 +105,30 @@ public class NumericalControl extends AbstractTextControl {
 	@Override
 	public Binding bindValue() {
 		// TODO: FocusOut doesn't seem to fire in case the same invalid text is entered twice
-		IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new NumericalTargetToModelUpdateStrategy(), new NumericalModelToTargetUpdateStrategy());
+		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy();
+		NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy();
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), targetToModelStrategy,
+			modelToTargetStrategy);
+
+		if (isEmbedded()) {
+			// focus out is not fired if control is embedded;
+			// use value change listener to get same behavior for control
+			value.addValueChangeListener(new IValueChangeListener() {
+				public void handleValueChange(ValueChangeEvent event) {
+					Object newValue = event.diff.getNewValue();
+					DecimalFormat format = setupFormat();
+					try {
+						Number number = format.parse((String) newValue);
+						value.setValue(format.format(number));
+						binding.updateTargetToModel();
+					} catch (ParseException ex) {
+						targetToModelStrategy.revertToOldValue(value);
+					}
+				}
+			});
+		}
+
 		return binding;
 	}
 
@@ -187,18 +208,8 @@ public class NumericalControl extends AbstractTextControl {
 
 		@Override
 		public Object convertValue(Object value) {
-			// final DecimalFormat format = (DecimalFormat) DecimalFormat
-			// .getInstance(getModelElementContext().getLocale());
-			// format.setGroupingUsed(false);
-			// format.setParseIntegerOnly(isInteger());
 			final DecimalFormat format = setupFormat();
-
-			IConverter converter = new Converter(getInstanceClass(), String.class) {
-				public Object convert(Object toObject) {
-					return format.format(toObject);
-				}
-			};
-			return converter.convert(value);
+			return format.format(value);
 		}
 	}
 
