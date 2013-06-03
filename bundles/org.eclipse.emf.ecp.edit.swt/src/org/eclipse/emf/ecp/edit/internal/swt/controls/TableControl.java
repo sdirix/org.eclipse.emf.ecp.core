@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
+import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
@@ -78,8 +80,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The class describing a table control.
@@ -94,6 +98,7 @@ public class TableControl extends SWTControl {
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private Button unsetButton;
 	private EClass clazz;
+	private TableControlConfiguration tableControlConfiguration;
 
 	/**
 	 * Constructor for a String control.
@@ -107,6 +112,21 @@ public class TableControl extends SWTControl {
 	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
 		ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+	}
+
+	/**
+	 * Constructor for a String control.
+	 * 
+	 * @param showLabel whether to show a label
+	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
+	 * @param feature the {@link EStructuralFeature} to use
+	 * @param modelElementContext the {@link ECPControlContext} to use
+	 * @param embedded whether this control is embedded in another control
+	 */
+	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
+		ECPControlContext modelElementContext, boolean embedded, TableControlConfiguration tableControlConfiguration) {
+		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+		this.tableControlConfiguration = tableControlConfiguration;
 	}
 
 	@Override
@@ -139,21 +159,26 @@ public class TableControl extends SWTControl {
 		// set the size of the label to the size of the image
 		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 
-		// addButtons
-		Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
-		int numButtons = 2;
-
-		createAddRowButton(clazz, buttonComposite);
-		createRemoveRowButton(clazz, buttonComposite);
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
-			unsetButton = new Button(buttonComposite, SWT.PUSH);
-			unsetButton.setToolTipText(getUnsetButtonTooltip());
-			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
-			numButtons++;
+		boolean createButtons = true;
+		if (tableControlConfiguration != null) {
+			createButtons = !tableControlConfiguration.isAddRemoveDisabled();
 		}
-		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
+		if (createButtons) {
+			// addButtons
+			Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+			int numButtons = 2;
 
+			createAddRowButton(clazz, buttonComposite);
+			createRemoveRowButton(clazz, buttonComposite);
+			if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+				unsetButton = new Button(buttonComposite, SWT.PUSH);
+				unsetButton.setToolTipText(getUnsetButtonTooltip());
+				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+				numButtons++;
+			}
+			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
+		}
 		Composite controlComposite = new Composite(parent, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).span(2, 1).align(SWT.FILL, SWT.FILL).applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
@@ -205,7 +230,18 @@ public class TableControl extends SWTControl {
 		ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;
-		for (final EStructuralFeature feature : clazz.getEAllStructuralFeatures()) {
+		List<EStructuralFeature> structuralFeatures = clazz.getEAllStructuralFeatures();
+		Map<EStructuralFeature, Boolean> readOnlyColumn = null;
+		if (tableControlConfiguration != null) {
+			structuralFeatures = new ArrayList<EStructuralFeature>();
+			readOnlyColumn = new HashMap<EStructuralFeature, Boolean>();
+			for (TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
+				structuralFeatures.add(tcc.getColumnAttribute());
+				readOnlyColumn.put(tcc.getColumnAttribute(), tcc.isReadOnly());
+			}
+		}
+
+		for (final EStructuralFeature feature : structuralFeatures) {
 			IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 				tempInstance, feature);
 			if (itemPropertyDescriptor == null) {
@@ -256,147 +292,152 @@ public class TableControl extends SWTControl {
 			column.getColumn().setToolTipText(itemPropertyDescriptor.getDescription(null));
 			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(false);
-			// remove if no editing needed
-			EditingSupport observableSupport = new EditingSupport(tableViewer) {
-				private EditingState editingState;
+			boolean addEditingSupport = true;
+			if (readOnlyColumn != null) {
+				addEditingSupport = !readOnlyColumn.get(feature);
+			}
+			if (addEditingSupport) {
+				// remove if no editing needed
+				EditingSupport observableSupport = new EditingSupport(tableViewer) {
+					private EditingState editingState;
 
-				private final ColumnViewerEditorActivationListenerHelper activationListener = new ColumnViewerEditorActivationListenerHelper();
+					private final ColumnViewerEditorActivationListenerHelper activationListener = new ColumnViewerEditorActivationListenerHelper();
 
-				/**
-				 * Default implementation always returns <code>true</code>.
-				 * 
-				 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
-				 */
-				@Override
-				protected boolean canEdit(Object element) {
-					// return false here otherwise
-					return true;
-				}
-
-				/**
-				 * Default implementation always returns <code>null</code> as this will be
-				 * handled by the Binding.
-				 * 
-				 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
-				 */
-				@Override
-				protected Object getValue(Object element) {
-					// no op
-					return null;
-				}
-
-				/**
-				 * Default implementation does nothing as this will be handled by the
-				 * Binding.
-				 * 
-				 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
-				 */
-				@Override
-				protected void setValue(Object element, Object value) {
-					// no op
-				}
-
-				/**
-				 * Creates a {@link Binding} between the editor and the element to be
-				 * edited. Invokes {@link #doCreateCellEditorObservable(CellEditor)},
-				 * {@link #doCreateElementObservable(Object, ViewerCell)}, and then
-				 * {@link #createBinding(IObservableValue, IObservableValue)}.
-				 */
-				@Override
-				protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
-					IObservableValue target = doCreateCellEditorObservable(cellEditor);
-					Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
-
-					IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
-					Assert.isNotNull(model, "doCreateElementObservable(...) did not return an observable"); //$NON-NLS-1$
-
-					Binding binding = createBinding(target, model);
-
-					Assert.isNotNull(binding, "createBinding(...) did not return a binding"); //$NON-NLS-1$
-
-					editingState = new EditingState(binding, target, model);
-
-					getViewer().getColumnViewerEditor().addEditorActivationListener(activationListener);
-				}
-
-				@Override
-				protected CellEditor getCellEditor(Object element) {
-					return cellEditor;
-				}
-
-				protected Binding createBinding(IObservableValue target, IObservableValue model) {
-					return getDataBindingContext().bindValue(target, model);
-				}
-
-				protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-					return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
-						(EObject) element, feature);
-				}
-
-				protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
-					if (ECPCellEditor.class.isInstance(cellEditor)) {
-						return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
-					}
-					return SWTObservables.observeText(cellEditor.getControl(), SWT.FocusOut);
-				}
-
-				@Override
-				final protected void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
-					editingState.binding.updateTargetToModel();
-				}
-
-				class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
-
+					/**
+					 * Default implementation always returns <code>true</code>.
+					 * 
+					 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
+					 */
 					@Override
-					public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
-						// do nothing
+					protected boolean canEdit(Object element) {
+						// return false here otherwise
+						return true;
+					}
+
+					/**
+					 * Default implementation always returns <code>null</code> as this will be
+					 * handled by the Binding.
+					 * 
+					 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
+					 */
+					@Override
+					protected Object getValue(Object element) {
+						// no op
+						return null;
+					}
+
+					/**
+					 * Default implementation does nothing as this will be handled by the
+					 * Binding.
+					 * 
+					 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
+					 */
+					@Override
+					protected void setValue(Object element, Object value) {
+						// no op
+					}
+
+					/**
+					 * Creates a {@link Binding} between the editor and the element to be
+					 * edited. Invokes {@link #doCreateCellEditorObservable(CellEditor)},
+					 * {@link #doCreateElementObservable(Object, ViewerCell)}, and then
+					 * {@link #createBinding(IObservableValue, IObservableValue)}.
+					 */
+					@Override
+					protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
+						IObservableValue target = doCreateCellEditorObservable(cellEditor);
+						Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
+
+						IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
+						Assert.isNotNull(model, "doCreateElementObservable(...) did not return an observable"); //$NON-NLS-1$
+
+						Binding binding = createBinding(target, model);
+
+						Assert.isNotNull(binding, "createBinding(...) did not return a binding"); //$NON-NLS-1$
+
+						editingState = new EditingState(binding, target, model);
+
+						getViewer().getColumnViewerEditor().addEditorActivationListener(activationListener);
 					}
 
 					@Override
-					public void afterEditorDeactivated(ColumnViewerEditorDeactivationEvent event) {
-						editingState.dispose();
-						editingState = null;
+					protected CellEditor getCellEditor(Object element) {
+						return cellEditor;
+					}
 
-						getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
+					protected Binding createBinding(IObservableValue target, IObservableValue model) {
+						return getDataBindingContext().bindValue(target, model);
+					}
+
+					protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
+						return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
+							(EObject) element, feature);
+					}
+
+					protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
+						if (ECPCellEditor.class.isInstance(cellEditor)) {
+							return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
+						}
+						return SWTObservables.observeText(cellEditor.getControl(), SWT.FocusOut);
 					}
 
 					@Override
-					public void beforeEditorActivated(ColumnViewerEditorActivationEvent event) {
-						// do nothing
+					final protected void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
+						editingState.binding.updateTargetToModel();
 					}
 
-					@Override
-					public void beforeEditorDeactivated(ColumnViewerEditorDeactivationEvent event) {
-						// do nothing
+					class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
+
+						@Override
+						public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
+							// do nothing
+						}
+
+						@Override
+						public void afterEditorDeactivated(ColumnViewerEditorDeactivationEvent event) {
+							editingState.dispose();
+							editingState = null;
+
+							getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
+						}
+
+						@Override
+						public void beforeEditorActivated(ColumnViewerEditorActivationEvent event) {
+							// do nothing
+						}
+
+						@Override
+						public void beforeEditorDeactivated(ColumnViewerEditorDeactivationEvent event) {
+							// do nothing
+						}
 					}
-				}
 
-				/**
-				 * Maintains references to objects that only live for the length of the edit
-				 * cycle.
-				 */
-				class EditingState {
-					IObservableValue target;
+					/**
+					 * Maintains references to objects that only live for the length of the edit
+					 * cycle.
+					 */
+					class EditingState {
+						IObservableValue target;
 
-					IObservableValue model;
+						IObservableValue model;
 
-					Binding binding;
+						Binding binding;
 
-					EditingState(Binding binding, IObservableValue target, IObservableValue model) {
-						this.binding = binding;
-						this.target = target;
-						this.model = model;
+						EditingState(Binding binding, IObservableValue target, IObservableValue model) {
+							this.binding = binding;
+							this.target = target;
+							this.model = model;
+						}
+
+						void dispose() {
+							binding.dispose();
+							target.dispose();
+							model.dispose();
+						}
 					}
-
-					void dispose() {
-						binding.dispose();
-						target.dispose();
-						model.dispose();
-					}
-				}
-			};
-			column.setEditingSupport(observableSupport);
-
+				};
+				column.setEditingSupport(observableSupport);
+			}
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);

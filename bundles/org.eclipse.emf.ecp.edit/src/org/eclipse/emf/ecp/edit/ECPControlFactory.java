@@ -44,7 +44,10 @@ public interface ECPControlFactory {
 	 * @param context the {@link ECPControlContext}
 	 * @param controlId the id of the control to create
 	 * @return the created {@link ECPControl} or null if id is unknown
+	 * 
+	 * @deprecated
 	 */
+	
 	<T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context,String controlId);
 	/**
