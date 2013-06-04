@@ -116,7 +116,8 @@ public abstract class SWTControl extends ECPAbstractControl {
 			}
 		}
 
-		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null && !getHelpText().isEmpty()) {
+		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null
+			&& getHelpText().length() != 0) {
 			Label l = new Label(composite, SWT.PUSH);
 			l.setImage(Activator.getImage("icons/help.png"));
 			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help");
