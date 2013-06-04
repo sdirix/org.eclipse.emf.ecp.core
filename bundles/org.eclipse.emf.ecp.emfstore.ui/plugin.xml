@@ -279,11 +279,6 @@
                   </count>
                   <iterate>
                      <test
-                           args="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
-                           property="org.eclipse.emf.ecp.ui.workbench.menu.enablement"
-                           value="true">
-                     </test>
-                     <test
                            property="org.eclipse.emf.ecp.emfstore.ui.testers.hasHistory"
                            value="true">
                      </test>
