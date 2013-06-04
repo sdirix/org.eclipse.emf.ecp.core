@@ -207,6 +207,7 @@
 				</executions>
 			</plugin>
 			<!-- enable source feature generation -->
+			<!-- 
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-source-feature-plugin</artifactId>
@@ -240,6 +241,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			 -->
 		</plugins>
 	</build>
 	<reporting>

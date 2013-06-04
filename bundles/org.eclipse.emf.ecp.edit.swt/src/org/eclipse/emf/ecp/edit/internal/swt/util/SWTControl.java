@@ -116,14 +116,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 			}
 		}
 
-		if (getModelElementContext().isRunningAsWebApplication()) {
-			Button b = new Button(composite, SWT.PUSH);
-			b.setImage(Activator.getImage("icons/help.png"));
-			b.addSelectionListener(new SelectionAdapter() {
+		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null && !getHelpText().isEmpty()) {
+			Label l = new Label(composite, SWT.PUSH);
+			l.setImage(Activator.getImage("icons/help.png"));
+			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help");
+			l.addMouseListener(new MouseListener() {
 
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					super.widgetSelected(e);
+				public void mouseUp(MouseEvent e) {
 					MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
 						MessageDialog.INFORMATION, new String[] { JFaceResources
 							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
@@ -136,11 +135,38 @@ public abstract class SWTControl extends ECPAbstractControl {
 					}.execute();
 				}
 
+				public void mouseDown(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
+
+				public void mouseDoubleClick(MouseEvent e) {
+					// TODO Auto-generated method stub
+
+				}
 			});
-			// Control[] tabList = Arrays.copyOfRange(composite.getTabList(), 0, composite.getTabList().length - 1);
-			Control[] tabList = new Control[composite.getTabList().length - 1];
-			System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
-			composite.setTabList(tabList);
+			// Button b = new Button(composite, SWT.PUSH);
+			// b.addSelectionListener(new SelectionAdapter() {
+			//
+			// @Override
+			// public void widgetSelected(SelectionEvent e) {
+			// super.widgetSelected(e);
+			// MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
+			// MessageDialog.INFORMATION, new String[] { JFaceResources
+			// .getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+			// new ECPDialogExecutor(dialog) {
+			//
+			// @Override
+			// public void handleResult(int codeResult) {
+			//
+			// }
+			// }.execute();
+			// }
+			//
+			// });
+			// Control[] tabList = new Control[composite.getTabList().length - 1];
+			// System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
+			// composite.setTabList(tabList);
 		} else {
 			Control[] controls = getControlsForTooltip();
 			if (controls != null) {
@@ -221,7 +247,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 					showUnsetLabel();
 				}
 			});
-			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help");
+			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset");
 		}
 
 		if (!getStructuralFeature().isUnsettable()
