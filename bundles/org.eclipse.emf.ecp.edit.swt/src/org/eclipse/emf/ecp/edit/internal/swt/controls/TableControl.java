@@ -76,6 +76,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -99,6 +100,8 @@ public class TableControl extends SWTControl {
 	private Button unsetButton;
 	private EClass clazz;
 	private TableControlConfiguration tableControlConfiguration;
+
+	private Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
 
 	/**
 	 * Constructor for a String control.
@@ -270,7 +273,7 @@ public class TableControl extends SWTControl {
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
 				@Override
 				public void update(ViewerCell cell) {
-					Object element = cell.getElement();
+					EObject element = (EObject) cell.getElement();
 					Object value = attributeMaps[0].get(element);
 
 					if (ECPCellEditor.class.isInstance(cellEditor)) {
@@ -282,6 +285,13 @@ public class TableControl extends SWTControl {
 
 						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
 						cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string");
+					}
+
+					if (featureErrorMap.containsKey(element)
+						&& featureErrorMap.get(element).containsKey(attributeMaps[0].getValueType())) {
+						cell.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+					} else {
+						cell.setBackground(null);
 					}
 				}
 			});
@@ -592,6 +602,13 @@ public class TableControl extends SWTControl {
 			Image image = Activator.getImage(VALIDATION_ERROR_ICON);
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
+			EObject object = (EObject) diagnostic.getData().get(0);
+			if (!featureErrorMap.containsKey(object)) {
+				featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
+			}
+			featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
+			tableViewer.update(object, null);
+			// tableViewer.refresh();
 		}
 	}
 
@@ -599,10 +616,13 @@ public class TableControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void resetValidation() {
+		featureErrorMap.clear();
+		tableViewer.refresh();
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
 		validationLabel.setImage(null);
+
 	}
 
 	/**

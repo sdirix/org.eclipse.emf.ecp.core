@@ -13,7 +13,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
@@ -36,6 +35,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 
 /**
  * This class is used as a common class for all number controls.
@@ -231,7 +231,11 @@ public class NumericalControl extends AbstractTextControl {
 				if (value == null) {
 					number = getDefaultValue();
 				} else {
-					number = format.parse((String) value);
+					ParsePosition pp = new ParsePosition(0);
+					number = format.parse((String) value, pp);
+					if (pp.getErrorIndex() != -1 || pp.getIndex() != ((String) value).length()) {
+						return revertToOldValue(value);
+					}
 					if (isInteger()) {
 						boolean maxValue = false;
 						Class<?> instanceClass = getInstanceClass();
@@ -364,33 +368,28 @@ public class NumericalControl extends AbstractTextControl {
 	private DecimalFormat setupFormat() {
 
 		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(getModelElementContext().getLocale());
-		// if (isDouble()) {
-		// format = new DecimalFormat("#0.0#", DecimalFormatSymbols.getInstance(getModelElementContext().getLocale()));
-		// } else if (isInteger()) {
-		// format = new DecimalFormat("#", DecimalFormatSymbols.getInstance(getModelElementContext().getLocale()));
-		// }
 		format.setParseIntegerOnly(isInteger());
 		format.setParseBigDecimal(getInstanceClass().equals(BigDecimal.class)
 			|| getInstanceClass().equals(BigInteger.class));
 		format.setGroupingUsed(false);
 
-		EAnnotation annotation = getStructuralFeature().getEType().getEAnnotation(
-			"http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
-		String stringTotalDigits = annotation.getDetails().get("totalDigits");
-		if (stringTotalDigits != null) {
-			String stringFractionDigits = annotation.getDetails().get("fractionDigits");
-			int fractionalDigits = 0;
-			if (stringFractionDigits != null) {
-				fractionalDigits = Integer.valueOf(stringFractionDigits);
-				format.setMaximumFractionDigits(fractionalDigits);
-				format.setMinimumFractionDigits(fractionalDigits);
-			}
-			Integer totalDigits = Integer.valueOf(stringTotalDigits);
-			int integerDigits = totalDigits - fractionalDigits;
-			format.setMaximumIntegerDigits(integerDigits);
-		} else {
-			format.setMaximumFractionDigits(100);
-		}
+		// EAnnotation annotation = getStructuralFeature().getEType().getEAnnotation(
+		// "http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
+		// String stringTotalDigits = annotation.getDetails().get("totalDigits");
+		// if (stringTotalDigits != null) {
+		// String stringFractionDigits = annotation.getDetails().get("fractionDigits");
+		// int fractionalDigits = 0;
+		// if (stringFractionDigits != null) {
+		// fractionalDigits = Integer.valueOf(stringFractionDigits);
+		// format.setMaximumFractionDigits(fractionalDigits);
+		// format.setMinimumFractionDigits(fractionalDigits);
+		// }
+		// Integer totalDigits = Integer.valueOf(stringTotalDigits);
+		// int integerDigits = totalDigits - fractionalDigits;
+		// format.setMaximumIntegerDigits(integerDigits);
+		// } else {
+		format.setMaximumFractionDigits(100);
+		// }
 		return format;
 	}
 
