@@ -15,9 +15,8 @@ package org.eclipse.emf.ecp.internal.editor;
 
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -25,7 +24,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends Plugin {
 
 	/**
 	 * The plug-in ID.
@@ -70,16 +69,6 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
-	}
-
-	/**
-	 * Returns an image descriptor for the image file at the given. plug-in relative path
-	 * 
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 	/**

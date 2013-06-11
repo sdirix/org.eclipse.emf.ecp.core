@@ -25,6 +25,7 @@ import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -166,7 +167,7 @@ public class MEEditorPage extends FormPage {
 		// .getService(IEvaluationService.class);
 		// service.addSourceProvider(sourceProvider);
 
-		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor("icons/delete.gif")) {
+		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) {
 
 			@Override
 			public void run() {
