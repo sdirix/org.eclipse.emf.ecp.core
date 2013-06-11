@@ -11,7 +11,7 @@
 -->
 <feature
       id="org.eclipse.emf.ecp.workspace.feature"
-      label="EMF Client Platform File Integration"
+      label="EMF Client Platform File Integration (Experimental)"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.workspace.core"

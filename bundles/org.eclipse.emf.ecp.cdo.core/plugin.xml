@@ -4,7 +4,7 @@
 
    <extension
          id="org.eclipse.emf.ecp.cdo.provider"
-         name="CDO Model Repository"
+         name="CDO Model Repository (Experimental)"
          point="org.eclipse.emf.ecp.core.providers">
       <provider
             class="org.eclipse.emf.ecp.cdo.internal.core.CDOProvider"
