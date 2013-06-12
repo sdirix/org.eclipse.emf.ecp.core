@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MPI UI View
+Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.emf.ecp.internal.ui.view.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecp.view.model;bundle-version="1.0.0",
+ org.eclipse.emf.ecp.edit;bundle-version="1.0.0",
+ org.eclipse.emf.ecp.edit.swt;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.emf.ecp.internal.ui.view;x-internal:=true,
+ org.eclipse.emf.ecp.ui.view
+Import-Package: org.eclipse.emf.ecp.edit.internal.swt.util;version="1.0.0",
+ org.eclipse.jface.action,
+ org.eclipse.jface.databinding.swt,
+ org.eclipse.jface.layout,
+ org.eclipse.jface.resource,
+ org.eclipse.jface.viewers,
+ org.eclipse.swt,
+ org.eclipse.swt.custom,
+ org.eclipse.swt.events,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.layout,
+ org.eclipse.swt.widgets
+Bundle-Vendor: Eclipse Modeling Project
