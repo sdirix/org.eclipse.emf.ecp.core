@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Controls
-Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.model;singleton:=true
+Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.editor.controls;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.editor.controls.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
