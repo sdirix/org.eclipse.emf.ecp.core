@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/model" nsPrefix="org.eclipse.emf.ecp.view.model">
+  <eClassifiers xsi:type="ecore:EClass" name="View" eSuperTypes="#//Categorization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rootEClass" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractCategorization" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//Rule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rule" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//Condition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ShowRule" eSuperTypes="#//Rule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hide" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnableRule" eSuperTypes="#//Rule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="disable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LeafCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedValue" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathToAttribute" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" lowerBound="2"
+        upperBound="-1" eType="#//Condition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AndCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" lowerBound="2"
+        upperBound="-1" eType="#//Condition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Categorization" eSuperTypes="#//AbstractCategorization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
+        eType="#//AbstractCategorization" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//AbstractCategorization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="#//Composite"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Composite" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule" eType="#//Rule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//Composite">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetFeature" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hint" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathToFeature" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TableControl" eSuperTypes="#//Control">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" lowerBound="1"
+        upperBound="-1" eType="#//TableColumn" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="addRemoveDisabled" lowerBound="1"
+        eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TableColumn">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="readOnly" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomComposite" eSuperTypes="#//Composite">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundle" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Seperator" eSuperTypes="#//Composite"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompositeCollection" abstract="true"
+      eSuperTypes="#//Composite">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composites" upperBound="-1"
+        eType="#//Composite" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ColumnComposite" eSuperTypes="#//CompositeCollection"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Column" eSuperTypes="#//CompositeCollection"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//CompositeCollection"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TreeCategory" eSuperTypes="#//AbstractCategorization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="childComposite" eType="#//Composite"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetFeature" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathToFeature" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+  </eClassifiers>
+</ecore:EPackage>

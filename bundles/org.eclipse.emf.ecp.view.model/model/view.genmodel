@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.ecp.view.model/src" editDirectory="/org.eclipse.emf.ecp.view.model.edit/src"
+    editorDirectory="/org.eclipse.emf.ecp.view.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.model"
+    modelName="View" editPluginClass="org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin"
+    editorPluginClass="org.eclipse.emf.ecp.view.model.presentation.ViewEditorPlugin"
+    testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.model"
+    editorPluginID="org.eclipse.emf.ecp.view.model.editor" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+  <foreignModel>view.ecore</foreignModel>
+  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view" disposableProviderFactory="true"
+      childCreationExtenders="true" ecorePackage="view.ecore#/">
+    <genClasses ecoreClass="view.ecore#//View">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//AbstractCategorization">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//AbstractCategorization/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//AbstractCategorization/rule"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//Rule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Rule/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//ShowRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//ShowRule/hide"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//EnableRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//EnableRule/disable"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Condition"/>
+    <genClasses ecoreClass="view.ecore#//LeafCondition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//LeafCondition/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//LeafCondition/expectedValue"/>
+      <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference view.ecore#//LeafCondition/pathToAttribute"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//OrCondition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//OrCondition/conditions"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//AndCondition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//AndCondition/conditions"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Categorization">
+      <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"
+          ecoreFeature="ecore:EReference view.ecore#//Categorization/categorizations"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Category">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Category/composite"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Composite">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Composite/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Composite/rule"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Control">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Control/targetFeature"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/hint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/mandatory"/>
+      <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference view.ecore#//Control/pathToFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//TableControl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//TableControl/columns"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//TableControl/addRemoveDisabled"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//TableColumn">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//TableColumn/attribute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//TableColumn/readOnly"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//CustomComposite">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//CustomComposite/bundle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//CustomComposite/className"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Seperator"/>
+    <genClasses ecoreClass="view.ecore#//CompositeCollection">
+      <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"
+          ecoreFeature="ecore:EReference view.ecore#//CompositeCollection/composites"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//ColumnComposite"/>
+    <genClasses ecoreClass="view.ecore#//Column"/>
+    <genClasses ecoreClass="view.ecore#//Group"/>
+    <genClasses ecoreClass="view.ecore#//TreeCategory">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//TreeCategory/childComposite"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//TreeCategory/targetFeature"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//TreeCategory/pathToFeature"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
