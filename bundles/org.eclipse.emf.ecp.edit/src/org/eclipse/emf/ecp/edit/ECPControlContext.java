@@ -26,6 +26,14 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  * @author Eugen Neufeld
  */
 public interface ECPControlContext {
+	
+	/**
+	 * Initializes a context for a given {@link EObject} that is based on the current context
+	 * 
+	 * @param eObject the {@link EObject} for which to initialize a sub context 
+	 * @return the initalized sub context
+	 */
+	ECPControlContext createSubContext(EObject eObject);
 
 	/**
 	 * Return the {@link DataBindingContext} to use in the editor.
