@@ -12,6 +12,7 @@
 		<tycho-version>0.18.0</tycho-version>
 		<tycho-extras-version>0.18.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
+		<javadoc-title>EMF Client Platform 1.0.0 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
@@ -195,6 +196,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${javadoc-version}</version>
 				<configuration>
+					<doctitle>${javadoc-title}</doctitle>
 					<show>protected</show>
 					<show>public</show>
 					<nohelp>true</nohelp>
