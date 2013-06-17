@@ -84,7 +84,9 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public Composite createControl(final Composite parent) {
+
 		final Composite composite = new Composite(parent, SWT.NONE);
+		composite.setBackground(parent.getBackground());
 		int numColumns = 2;
 		if (isEmbedded()) {
 			numColumns--;
@@ -96,11 +98,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 		if (!isEmbedded()) {
 			validationLabel = new Label(composite, SWT.NONE);
+			validationLabel.setBackground(parent.getBackground());
 			// set the size of the label to the size of the image
 			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 		}
 
 		Composite innerComposite = new Composite(composite, SWT.NONE);
+		innerComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
@@ -192,10 +196,12 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 */
 	protected void createContentControl(Composite composite) {
 		parentComposite = new Composite(composite, SWT.NONE);
+		parentComposite.setBackground(composite.getBackground());
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(parentComposite);
 		sl = new StackLayout();
 		parentComposite.setLayout(sl);
 		controlComposite = new Composite(parentComposite, SWT.NONE);
+		controlComposite.setBackground(parentComposite.getBackground());
 		// 1 column for control, 1 for default unset button
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(controlComposite);
 

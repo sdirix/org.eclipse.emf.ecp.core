@@ -310,4 +310,8 @@ public class ECPControlContextImpl implements ECPControlContext {
 		return Locale.getDefault();
 	}
 
+	public ECPControlContext createSubContext(EObject eObject) {
+		return new ECPControlContextImpl(eObject, ecpProject, shell);
+	}
+
 }

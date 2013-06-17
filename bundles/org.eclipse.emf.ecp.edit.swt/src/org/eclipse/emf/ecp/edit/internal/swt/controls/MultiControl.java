@@ -141,6 +141,7 @@ public abstract class MultiControl extends SWTControl {
 	@Override
 	protected void fillControlComposite(Composite parent) {
 		mainComposite = new Composite(parent, SWT.BORDER);
+		mainComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(mainComposite);
 
@@ -280,6 +281,7 @@ public abstract class MultiControl extends SWTControl {
 
 	private void createButtonBar() {
 		Composite toolbarComposite = new Composite(mainComposite, SWT.NONE);
+		toolbarComposite.setBackground(mainComposite.getBackground());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(toolbarComposite);
 
 		int colNum = actions.length + 1;

@@ -11,18 +11,26 @@
 package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
+import org.eclipse.emf.ecp.internal.ui.view.CompositeFactoryImpl;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.swt.ModelRenderer;
+import org.eclipse.emf.ecp.ui.view.RendererContext;
+import org.eclipse.emf.ecp.view.model.Category;
+import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.generator.ViewProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISharedImages;
@@ -114,10 +122,32 @@ public class MEEditorPage extends FormPage {
 		form = managedForm.getForm();
 		form.setShowFocusedControl(true);
 		toolkit.decorateFormHeading(form.getForm());
-		Composite body = form.getBody();
+		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
-		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
-		editorPageContent.createUI(body);
+		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		EClass eClass = modelElementContext.getModelElement().eClass();
+		ViewProvider viewProvider = new ViewProvider(eClass);
+		View view = viewProvider.generate();
+		final CompositeFactoryImpl factory = new CompositeFactoryImpl();
+		ModelRenderer renderer = new ModelRenderer() {
+
+			public RendererContext render(Composite composite, View view, ECPControlContext context) {
+				final RendererContext rendererContext = new RendererContext(view, context.getModelElement());
+
+				Category category = (Category) view.getCategorizations().get(0);
+				Composite tabContent = factory.getComposite(body, category.getComposite(), modelElementContext);
+				GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+				tabContent.setLayoutData(gridData);
+				return rendererContext;
+			}
+		};
+		RendererContext render = renderer.render(body, view, modelElementContext);
+		// / ModelRendererImpl.INSTANCE.render(body, view, modelElementContext);
+		//
+		//
+		// editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
+		// editorPageContent.createUI(body);
+		render.addListener(factory);
 
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		createToolbar();

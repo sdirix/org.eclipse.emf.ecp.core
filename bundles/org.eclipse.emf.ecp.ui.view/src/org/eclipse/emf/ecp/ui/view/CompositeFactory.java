@@ -12,7 +12,6 @@ public interface CompositeFactory extends ValidationListener {
 
     Composite getComposite(Composite composite, 
     		org.eclipse.emf.ecp.view.model.Composite modelComposite,
-            EObject eObject, 
             ECPControlContext context);
 
     void dispose();

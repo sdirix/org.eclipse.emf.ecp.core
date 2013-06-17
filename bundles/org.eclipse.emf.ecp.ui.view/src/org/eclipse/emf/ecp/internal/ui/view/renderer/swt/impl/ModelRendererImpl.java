@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecp.internal.ui.view;
+package org.eclipse.emf.ecp.internal.ui.view.renderer.swt.impl;
 
 import java.util.Locale;
 
@@ -6,8 +6,9 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.CompositeFactoryImpl;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.swt.ModelRenderer;
 import org.eclipse.emf.ecp.ui.view.CompositeFactory;
-import org.eclipse.emf.ecp.ui.view.ModelRenderer;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -31,9 +32,10 @@ public final class ModelRendererImpl implements ModelRenderer {
     }
 
     @Override
-    public RendererContext render(Composite composite, View view, final EObject article, ECPControlContext controlContext) {
-        RendererContext context = new RendererContext(view, article);
-        Composite renderedComposite = renderCategorization(composite, view, article, controlContext);
+    public RendererContext render(Composite composite, View view, ECPControlContext controlContext) {
+    	EObject modelElement = controlContext.getModelElement();
+        RendererContext context = new RendererContext(view, modelElement);
+        Composite renderedComposite = renderCategorization(composite, view, modelElement, controlContext);
         context.setComposite(renderedComposite);
         return context;
     }
@@ -83,7 +85,7 @@ public final class ModelRendererImpl implements ModelRenderer {
     private Composite createComposite(Composite composite,
             org.eclipse.emf.ecp.view.model.Composite modelComposite, EObject article, ECPControlContext controlContext) {
         CompositeFactory factory = new CompositeFactoryImpl();
-        Composite result = factory.getComposite(composite, modelComposite, article, controlContext);
+        Composite result = factory.getComposite(composite, modelComposite, controlContext);
         // factory.updateLiveValidation(article);
         return result;
     }

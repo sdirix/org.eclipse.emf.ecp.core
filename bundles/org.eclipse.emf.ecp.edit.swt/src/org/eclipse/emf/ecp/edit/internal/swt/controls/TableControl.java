@@ -149,16 +149,19 @@ public class TableControl extends SWTControl {
 		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
 		Composite titleComposite = new Composite(parent, SWT.NONE);
+		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).align(SWT.FILL, SWT.BEGINNING)
 			.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		Label label = new Label(titleComposite, SWT.NONE);
+		label.setBackground(parent.getBackground());
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		// VALIDATION
 		validationLabel = new Label(titleComposite, SWT.NONE);
+		validationLabel.setBackground(parent.getBackground());
 		// set the size of the label to the size of the image
 		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 
