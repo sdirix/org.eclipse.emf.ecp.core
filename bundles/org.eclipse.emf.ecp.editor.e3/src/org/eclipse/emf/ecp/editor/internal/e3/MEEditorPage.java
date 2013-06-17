@@ -60,6 +60,7 @@ public class MEEditorPage extends FormPage {
 	private ShortLabelProvider shortLabelProvider;
 
 	private ComposedAdapterFactory composedAdapterFactory;
+	private RendererContext render;
 
 	// private ISourceProvider sourceProvider;
 
@@ -141,7 +142,7 @@ public class MEEditorPage extends FormPage {
 				return rendererContext;
 			}
 		};
-		RendererContext render = renderer.render(body, view, modelElementContext);
+		render = renderer.render(body, view, modelElementContext);
 		// / ModelRendererImpl.INSTANCE.render(body, view, modelElementContext);
 		//
 		//
@@ -232,6 +233,7 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void dispose() {
+		render.dispose();
 		editorPageContent.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();

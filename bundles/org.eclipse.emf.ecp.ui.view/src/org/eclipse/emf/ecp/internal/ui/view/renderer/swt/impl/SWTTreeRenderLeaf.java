@@ -45,8 +45,10 @@ public class SWTTreeRenderLeaf extends SWTTreeRenderNode {
 		}
 		
 		swtControl.resetValidation();
-		for (Diagnostic diagnostic : affectedObjects.get(swtControl)) {
-			swtControl.handleValidation(diagnostic);
+		if (affectedObjects.containsKey(getModel())) { 
+			for (Diagnostic diagnostic : affectedObjects.get(getModel())) {
+				swtControl.handleValidation(diagnostic);
+			}
 		}
 	}
 	
