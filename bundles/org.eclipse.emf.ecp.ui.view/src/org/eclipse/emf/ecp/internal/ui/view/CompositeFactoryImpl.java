@@ -79,7 +79,6 @@ public class CompositeFactoryImpl implements CompositeFactory {
 				renderedResult.setBackground(parent.getBackground());
 			}
 		});
-        
         return (Composite) resultComposite.getRenderedResult();
     }
     

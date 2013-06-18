@@ -620,7 +620,7 @@ public class TableControl extends SWTControl {
 	 */
 	public void resetValidation() {
 		featureErrorMap.clear();
-		tableViewer.refresh();
+		// tableViewer.refresh();
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}

@@ -69,10 +69,10 @@ public class RendererContext {
         Diagnostic diagnostic = Diagnostician.INSTANCE.validate(article);
         validationMap.clear();
         for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-            if (childDiagnostic.getData().size() < 2) {
-                continue;
-            }
-            EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
+        	if (childDiagnostic.getData().size() < 2) {
+        		continue;
+        	}
+        	EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
 
             Set<EObject> objectsToMark = categoryValidationMap.get(feature);
             if (objectsToMark == null)
@@ -115,12 +115,11 @@ public class RendererContext {
                                 controls2.add(control);
                             }
                         } else {
-                            for (EAttribute attribute : eReference.getEReferenceType()
-                                    .getEAllAttributes()) {
-                                Set<EObject> controls2 = categoryValidationMap.get(attribute);
+                            for (EStructuralFeature feature : eReference.getEReferenceType().getEAllStructuralFeatures()) {
+                                Set<EObject> controls2 = categoryValidationMap.get(feature);
                                 if (controls2 == null) {
                                     controls2 = new HashSet<EObject>();
-                                    categoryValidationMap.put(attribute, controls2);
+                                    categoryValidationMap.put(feature, controls2);
                                 }
                                 controls2.add(control);
                             }
