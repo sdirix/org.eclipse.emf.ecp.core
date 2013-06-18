@@ -26,7 +26,7 @@ public abstract class XMIViewModelProvider implements IViewProvider{
 				new XMIResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(ViewPackage.eNS_URI,
 				ViewPackage.eINSTANCE);
-		Resource resource = resourceSet.createResource(URI.createFileURI(getXMIPath()));
+		Resource resource = resourceSet.createResource(getXMIPath());
 		try {
 			resource.load(null);
 		} catch (IOException exception) {
@@ -36,5 +36,5 @@ public abstract class XMIViewModelProvider implements IViewProvider{
 		return result;
 	}
 	
-	protected abstract String getXMIPath();
+	protected abstract URI getXMIPath();
 }

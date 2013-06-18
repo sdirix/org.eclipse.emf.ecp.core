@@ -35,29 +35,24 @@ public class ViewProviderHelper {
 			} catch (ClassNotFoundException ex) {
 				Activator.log(ex);
 			} catch (NoSuchMethodException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Activator.log(ex);
 			} catch (SecurityException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Activator.log(ex);
 			} catch (InstantiationException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Activator.log(ex);
 			} catch (IllegalAccessException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Activator.log(ex);
 			} catch (IllegalArgumentException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Activator.log(ex);
 			} catch (InvocationTargetException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Activator.log(ex);
 			}
 
 		}
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private static <T> Class<T> loadClass(String bundleName, String clazz)
 			throws ClassNotFoundException {
 		Bundle bundle = Platform.getBundle(bundleName);
