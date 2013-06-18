@@ -225,7 +225,8 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void setFocus() {
-		editorPageContent.focus();
+		// editorPageContent.focus();
+		// render.getComposite().setFocus();
 	}
 
 	/**
@@ -234,7 +235,7 @@ public class MEEditorPage extends FormPage {
 	@Override
 	public void dispose() {
 		render.dispose();
-		editorPageContent.dispose();
+		// editorPageContent.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		form.dispose();
