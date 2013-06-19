@@ -1,8 +1,9 @@
 package org.eclipse.emf.ecp.view.model.generator;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -10,14 +11,11 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
 public class ViewProvider implements IViewProvider {
-	
-	private EClass eClass;
 
-	public ViewProvider(EClass eClass) {
-		this.eClass = eClass;
+	public ViewProvider() {
 	}
 
-	public View generate() {
+	public View generate(EObject eObject) {
 		View view = ViewFactory.eINSTANCE.createView();
 		Category category = ViewFactory.eINSTANCE.createCategory();
 		view.getCategorizations().add(category);
@@ -25,7 +23,7 @@ public class ViewProvider implements IViewProvider {
 		Column column = ViewFactory.eINSTANCE.createColumn();
 		category.setComposite(column);
 		
-		for(EStructuralFeature feature : eClass.getEAllStructuralFeatures()) {
+		for(EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 			
 			if (isInvalidFeature(feature)) {
 				continue;
@@ -63,5 +61,10 @@ public class ViewProvider implements IViewProvider {
 	
 	private boolean isVolatile(EStructuralFeature feature) {
 		return feature.isVolatile();
+	}
+
+	@Override
+	public int canRender(EObject eObject) {
+		return 1;
 	}
 }

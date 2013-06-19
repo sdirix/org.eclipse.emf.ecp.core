@@ -2,5 +2,5 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="renderer" name="Renderer" schema="schema/renderer.exsd"/>
-
+   <extension-point id="viewModelProviders" name="View Model Providers" schema="schema/viewModelProviders.exsd"/>
 </plugin>

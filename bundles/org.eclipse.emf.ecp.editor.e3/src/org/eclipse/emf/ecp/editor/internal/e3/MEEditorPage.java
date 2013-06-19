@@ -17,10 +17,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
+import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
+import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.generator.ViewProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
@@ -125,8 +126,7 @@ public class MEEditorPage extends FormPage {
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		EClass eClass = modelElementContext.getModelElement().eClass();
-		ViewProvider viewProvider = new ViewProvider(eClass);
-		View view = viewProvider.generate();
+		View view = getView();
 
 		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { body });
 		rendererContext = renderer.render(view, modelElementContext);
@@ -142,6 +142,30 @@ public class MEEditorPage extends FormPage {
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
+
+	}
+
+	/**
+	 * @return
+	 */
+	private View getView() {
+		// IViewProvider viewProvider = new ViewProvider(eClass);
+		// IViewProvider viewProvider = new PlayerViewProvider();
+		// View view = viewProvider.generate(modelElementContext.getModelElement());
+		// return view;
+		int highestPrio = IViewProvider.NOT_APPLICABLE;
+		IViewProvider selectedProvider = null;
+		for (IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
+			int prio = viewProvider.canRender(modelElementContext.getModelElement());
+			if (prio > highestPrio) {
+				highestPrio = prio;
+				selectedProvider = viewProvider;
+			}
+		}
+		if (selectedProvider != null) {
+			return selectedProvider.generate(modelElementContext.getModelElement());
+		}
+		return null;
 
 	}
 
