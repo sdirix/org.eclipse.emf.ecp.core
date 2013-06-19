@@ -31,14 +31,35 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.model.generator"
+         id="org.eclipse.emf.ecp.ui.view"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.ui.view"
+         id="org.eclipse.emf.ecp.ui.view.editor.controls"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.ui.view.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.model.provider.generator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.model.provider.xmi"
          download-size="0"
          install-size="0"
          version="0.0.0"
