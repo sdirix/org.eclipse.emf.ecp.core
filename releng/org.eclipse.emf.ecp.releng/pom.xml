@@ -80,6 +80,9 @@
 		<module>../../features/org.eclipse.emf.ecp.workspace.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
 
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
