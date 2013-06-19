@@ -611,7 +611,9 @@ public class TableControl extends SWTControl {
 			if (!featureErrorMap.containsKey(object)) {
 				featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
 			}
-			featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
+			if (diagnostic.getData().size() > 1) {
+				featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
+			}
 			tableViewer.update(object, null);
 			// tableViewer.refresh();
 		}
