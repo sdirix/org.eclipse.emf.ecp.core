@@ -11,7 +11,7 @@
     <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
   </parent>
 
-  <artifactId>org.eclipse.emf.ecp.ui.view.model.generator</artifactId>
+  <artifactId>org.eclipse.emf.ecp.view.model.provider.generator</artifactId>
   <packaging>eclipse-plugin</packaging>
 
 </project>
