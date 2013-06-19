@@ -253,7 +253,7 @@ public class TableControl extends SWTControl {
 			}
 
 			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
-				tempInstance, tableViewer.getTable());
+				tempInstance, tableViewer.getTable(), getModelElementContext());
 			// create a new column
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
 
@@ -376,6 +376,11 @@ public class TableControl extends SWTControl {
 					}
 
 					protected Binding createBinding(IObservableValue target, IObservableValue model) {
+						if (ECPCellEditor.class.isInstance(cellEditor)) {
+							return getDataBindingContext().bindValue(target, model,
+								((ECPCellEditor) cellEditor).getTargetToModelStrategy(),
+								((ECPCellEditor) cellEditor).getModelToTargetStrategy());
+						}
 						return getDataBindingContext().bindValue(target, model);
 					}
 
