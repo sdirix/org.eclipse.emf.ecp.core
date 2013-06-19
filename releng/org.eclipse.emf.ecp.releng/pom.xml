@@ -90,7 +90,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
 
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
-
+		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
 		<!-- Graphiti -->
@@ -107,15 +107,6 @@
 		<!-- SDK Feature -->
 
 		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
-
-		<! -- View model -->
-		<module>org.eclipse.emf.ecp.ui.view</module>
-		<module>org.eclipse.emf.ecp.ui.view.editor.controls</module>
-		<module>org.eclipse.emf.ecp.ui.view.model</module>
-		<module>org.eclipse.emf.ecp.ui.view.model.edit</module>
-		<module>org.eclipse.emf.ecp.ui.view.model.generator</module>
-		<module>org.eclipse.emf.ecp.ui.view.model.swt</module>
-
 	</modules>
 	<!-- <repositories> <repository> <id>emfstore-repository</id> <layout>p2</layout> 
 		<url>http://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/lastSuccessfulBuild/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/</url> 
