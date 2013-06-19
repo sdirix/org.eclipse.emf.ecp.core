@@ -36,7 +36,8 @@ public final class EditorFactoryImpl implements EditorFactory {
 	 * {@inheritDoc}
 	 */
 	public IEditorCompositeProvider getEditorComposite(ECPControlContext modelElementContext) {
-		return new FormEditorComposite(modelElementContext);
+		// return new FormEditorComposite(modelElementContext);
+		return new ViewModelEditorComposite(modelElementContext);
 	}
 
 }

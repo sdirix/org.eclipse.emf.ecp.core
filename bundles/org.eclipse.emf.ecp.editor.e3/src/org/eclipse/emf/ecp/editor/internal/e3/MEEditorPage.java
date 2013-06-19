@@ -16,12 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
-import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
-import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
@@ -29,7 +25,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISharedImages;
@@ -60,7 +55,6 @@ public class MEEditorPage extends FormPage {
 	private ShortLabelProvider shortLabelProvider;
 
 	private ComposedAdapterFactory composedAdapterFactory;
-	private RendererContext rendererContext;
 
 	// private ISourceProvider sourceProvider;
 
@@ -126,46 +120,14 @@ public class MEEditorPage extends FormPage {
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		EClass eClass = modelElementContext.getModelElement().eClass();
-		View view = getView();
 
-		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { body });
-		rendererContext = renderer.render(view, modelElementContext);
-		// TODO: remove cast via type parameterization
-		Composite tabContent = (Composite) rendererContext.getNode().getRenderedResult();
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		tabContent.setLayoutData(gridData);
-		// TODO: strange api
-		rendererContext.addListener(rendererContext.getNode());
-		rendererContext.triggerValidation();
+		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
+		editorPageContent.createUI(body);
 
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
-
-	}
-
-	/**
-	 * @return
-	 */
-	private View getView() {
-		// IViewProvider viewProvider = new ViewProvider(eClass);
-		// IViewProvider viewProvider = new PlayerViewProvider();
-		// View view = viewProvider.generate(modelElementContext.getModelElement());
-		// return view;
-		int highestPrio = IViewProvider.NOT_APPLICABLE;
-		IViewProvider selectedProvider = null;
-		for (IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
-			int prio = viewProvider.canRender(modelElementContext.getModelElement());
-			if (prio > highestPrio) {
-				highestPrio = prio;
-				selectedProvider = viewProvider;
-			}
-		}
-		if (selectedProvider != null) {
-			return selectedProvider.generate(modelElementContext.getModelElement());
-		}
-		return null;
 
 	}
 
@@ -246,8 +208,7 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void dispose() {
-		rendererContext.dispose();
-		// editorPageContent.dispose();
+		editorPageContent.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		form.dispose();
