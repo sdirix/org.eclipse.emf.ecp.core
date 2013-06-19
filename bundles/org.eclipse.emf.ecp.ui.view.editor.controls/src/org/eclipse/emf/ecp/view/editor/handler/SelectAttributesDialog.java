@@ -168,7 +168,6 @@ public class SelectAttributesDialog extends Dialog {
         GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false)
                 .applyTo(bDeSelectAll);
 
-//        Set<EClass> datasegments = getDatasegmentInput();
         Set<EClass> datasegments=getDatasegmentSubclasses(rootClass);
         cvDatasegment.setInput(datasegments);
         if (datasegments.size() > 0)
@@ -199,8 +198,8 @@ public class SelectAttributesDialog extends Dialog {
     }
     private Set<EClass> getDatasegmentSubclasses(EClass root){
     	 Set<EClass> possibleSegments = new LinkedHashSet<EClass>();
+    	 possibleSegments.add(root);
     	for(EReference eReference:root.getEAllContainments()){
-        	possibleSegments.add(eReference.getEReferenceType());
         	possibleSegments.addAll(getDatasegmentSubclasses(eReference.getEReferenceType()));
         }
     	return possibleSegments;

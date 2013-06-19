@@ -22,8 +22,10 @@ public class GenerateControlsHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        Object selection = ((IStructuredSelection) HandlerUtil.getCurrentSelection(event))
+        Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
                 .getFirstElement();
+        if(selection==null)
+        	return null;
         final ECPProject project = ECPUtil.getECPProjectManager().getProject(selection);
         final EClass rootClass=Helper.getRootEClass((EObject)selection);
         SelectAttributesDialog sad = new SelectAttributesDialog(project,rootClass,
