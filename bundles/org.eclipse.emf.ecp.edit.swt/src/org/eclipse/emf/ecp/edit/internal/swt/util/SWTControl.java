@@ -125,6 +125,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 			Label l = new Label(composite, SWT.PUSH);
 			l.setImage(Activator.getImage("icons/help.png"));
 			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help");
+			l.setBackground(parent.getBackground());
 			l.addMouseListener(new MouseListener() {
 
 				public void mouseUp(MouseEvent e) {

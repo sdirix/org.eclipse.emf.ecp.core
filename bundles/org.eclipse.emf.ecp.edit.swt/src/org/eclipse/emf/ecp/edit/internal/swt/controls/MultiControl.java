@@ -292,6 +292,7 @@ public abstract class MultiControl extends SWTControl {
 		GridLayoutFactory.fillDefaults().numColumns(colNum).equalWidth(false).applyTo(toolbarComposite);
 
 		tooltipLabel = new Label(toolbarComposite, SWT.NONE);
+		tooltipLabel.setBackground(mainComposite.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(tooltipLabel);
 
 		for (ECPSWTAction action : actions) {
@@ -329,6 +330,7 @@ public abstract class MultiControl extends SWTControl {
 		void createControl(Composite parent, int style) {
 			composite = new Composite(parent, style);
 			composite.setBackgroundMode(SWT.INHERIT_FORCE);
+			composite.setBackground(parent.getBackground());
 			GridLayoutFactory.fillDefaults().numColumns(5).spacing(2, 0).applyTo(composite);
 			GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
 

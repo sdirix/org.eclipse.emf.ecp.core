@@ -105,6 +105,7 @@ public class LinkControl extends SingleControl {
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
 
 		mainComposite = new Composite(composite, SWT.NONE);
+		mainComposite.setBackground(composite.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(mainComposite);
 
 		stackLayout = new StackLayout();
@@ -119,6 +120,7 @@ public class LinkControl extends SingleControl {
 
 		linkComposite = new Composite(mainComposite, SWT.NONE);
 		linkComposite.setLayout(new GridLayout(2, false));
+		linkComposite.setBackground(composite.getBackground());
 
 		createHyperlink();
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(linkComposite);
@@ -157,9 +159,11 @@ public class LinkControl extends SingleControl {
 		// shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 
 		imageHyperlink = new Label(linkComposite, SWT.NONE);
+		imageHyperlink.setBackground(linkComposite.getBackground());
 
 		hyperlink = new Link(linkComposite, SWT.NONE);
 		hyperlink.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_reference");
+		hyperlink.setBackground(linkComposite.getBackground());
 		hyperlink.addSelectionListener(new SelectionAdapter() {
 
 			@Override

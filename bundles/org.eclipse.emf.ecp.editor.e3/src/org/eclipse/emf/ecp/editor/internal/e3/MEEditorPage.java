@@ -17,10 +17,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
-import org.eclipse.emf.ecp.internal.ui.view.CompositeFactoryImpl;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.swt.ModelRenderer;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.generator.ViewProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -55,12 +53,13 @@ public class MEEditorPage extends FormPage {
 	//
 	private final ECPControlContext modelElementContext;
 
+	// TODO: unused?
 	private IEditorCompositeProvider editorPageContent;
 
 	private ShortLabelProvider shortLabelProvider;
 
 	private ComposedAdapterFactory composedAdapterFactory;
-	private RendererContext render;
+	private RendererContext rendererContext;
 
 	// private ISourceProvider sourceProvider;
 
@@ -117,7 +116,6 @@ public class MEEditorPage extends FormPage {
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 		FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();
@@ -129,26 +127,16 @@ public class MEEditorPage extends FormPage {
 		EClass eClass = modelElementContext.getModelElement().eClass();
 		ViewProvider viewProvider = new ViewProvider(eClass);
 		View view = viewProvider.generate();
-		final CompositeFactoryImpl factory = new CompositeFactoryImpl();
-		ModelRenderer renderer = new ModelRenderer() {
 
-			public RendererContext render(Composite composite, View view, ECPControlContext context) {
-				final RendererContext rendererContext = new RendererContext(view, context.getModelElement());
-
-				Category category = (Category) view.getCategorizations().get(0);
-				Composite tabContent = factory.getComposite(body, category.getComposite(), modelElementContext);
-				GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-				tabContent.setLayoutData(gridData);
-				return rendererContext;
-			}
-		};
-		render = renderer.render(body, view, modelElementContext);
-		// / ModelRendererImpl.INSTANCE.render(body, view, modelElementContext);
-		//
-		//
-		// editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
-		// editorPageContent.createUI(body);
-		render.addListener(factory);
+		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { body });
+		rendererContext = renderer.render(view, modelElementContext);
+		// TODO: remove cast via type parameterization
+		Composite tabContent = (Composite) rendererContext.getNode().getRenderedResult();
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		tabContent.setLayoutData(gridData);
+		// TODO: strange api
+		rendererContext.addListener(rendererContext.getNode());
+		rendererContext.triggerValidation();
 
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		createToolbar();
@@ -225,7 +213,8 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void setFocus() {
-		editorPageContent.focus();
+		// TODO
+		// editorPageContent.focus();
 	}
 
 	/**
@@ -233,8 +222,8 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void dispose() {
-		render.dispose();
-		editorPageContent.dispose();
+		rendererContext.dispose();
+		// editorPageContent.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		form.dispose();

@@ -9,23 +9,22 @@ import java.util.Set;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.swt.widgets.Composite;
 
 public class RendererContext {
 
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-    private Composite composite;
+    private RendererNode node;
     private boolean alive = true;
     private EObject article;
     private View view;
@@ -135,12 +134,12 @@ public class RendererContext {
         }
     }
 
-    public Composite getComposite() {
-        return composite;
+    public RendererNode getNode() {
+        return node;
     }
 
-    public void setComposite(Composite composite) {
-        this.composite = composite;
+    public void setNode(RendererNode node) {
+        this.node = node;
     }
 
     public boolean isAlive() {
@@ -153,7 +152,7 @@ public class RendererContext {
         article.eAdapters().remove(contentAdapter);
         validationMap.clear();
         categoryValidationMap.clear();
-        composite = null;
+        node.dispose();
         article = null;
         view = null;
         contentAdapter = null;
