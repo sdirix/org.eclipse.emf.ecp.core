@@ -97,13 +97,6 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 				return null;
 			}
 			
-			node.execute(new TreeRendererNodeVisitor<org.eclipse.swt.widgets.Control>() {
-				@Override
-				public void executeOnNode(RendererNode<org.eclipse.swt.widgets.Control> node) {
-					org.eclipse.swt.widgets.Control renderedResult = node.getRenderedResult();
-					renderedResult.setBackground(currentParent.getBackground());
-				}
-			});
 			return node;
 		}
 		
