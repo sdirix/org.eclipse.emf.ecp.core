@@ -1,8 +1,6 @@
 package org.eclipse.emf.ecp.internal.ui.view;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EAttribute;
@@ -20,7 +18,6 @@ public final class ConditionEvaluator  {
     private EObject article;
     private Condition condition;
     private IConditionEvalResult callback;
-	private boolean adapterInitialized;
 	private EContentAdapter eContentAdapter;
     
     public ConditionEvaluator(EObject article, Condition condition) { 
@@ -95,6 +92,7 @@ public final class ConditionEvaluator  {
     
     public void dispose() {
     	article.eAdapters().remove(eContentAdapter);    
+    	eContentAdapter = null;
     }
 
     private void createAdapter(final LeafCondition condition) {
