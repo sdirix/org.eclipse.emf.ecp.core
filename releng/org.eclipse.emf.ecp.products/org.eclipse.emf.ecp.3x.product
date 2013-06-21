@@ -19,6 +19,7 @@
 
    <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
 
+
    <launcher name="ecp">
       <solaris/>
       <win useIco="false">
@@ -30,12 +31,6 @@
    <vm>
    </vm>
 
-   <license>
-        <url>asd</url>
-        <text>
-   asd
-         </text>
-   </license>
 
    <plugins>
    </plugins>
