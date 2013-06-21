@@ -33,7 +33,7 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 				continue;
 			}
 			node.addChild(childNode);
-			Control control = node.getRenderedResult();
+			Control control = childNode.getRenderedResult();
 			control.setBackground(getParent().getBackground());
 			
 			if (!childNode.isLeaf()) {

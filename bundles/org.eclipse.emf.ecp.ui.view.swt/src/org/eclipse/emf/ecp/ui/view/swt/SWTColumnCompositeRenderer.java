@@ -58,14 +58,11 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 					.grab(true, false)
 					.span(2, 1)
 					.applyTo(control);
-			} else {
-				column.dispose();
-				numHiddenColumns++;
-			}
+			} 
 		}
 		
-		((GridLayout) columnComposite.getLayout()).numColumns = 
-				modelColumnComposite.getComposites().size() - numHiddenColumns;
+//		((GridLayout) columnComposite.getLayout()).numColumns = 
+//				modelColumnComposite.getComposites().size() - numHiddenColumns;
 
 		return node;
 	}

@@ -74,6 +74,26 @@ public class ExpectedValueControl extends SingleControl {
                     return;
                 }
                 Class<?> attribuetClazz = attribute.getEAttributeType().getInstanceClass();
+                if(attribuetClazz.isPrimitive()){
+                	if(int.class.isAssignableFrom(attribuetClazz)){
+                		attribuetClazz=Integer.class;
+                	}
+                	else if(long.class.isAssignableFrom(attribuetClazz)){
+                		attribuetClazz=Long.class;
+                	}
+                	else if(float.class.isAssignableFrom(attribuetClazz)){
+                		attribuetClazz=Float.class;
+                	}
+                	else if(double.class.isAssignableFrom(attribuetClazz)){
+                		attribuetClazz=Double.class;
+                	}
+                	else if(boolean.class.isAssignableFrom(attribuetClazz)){
+                		attribuetClazz=Boolean.class;
+                	}
+                	else if(char.class.isAssignableFrom(attribuetClazz)){
+                		attribuetClazz=Character.class;
+                	}
+                }
                 Object object = null;
                 if (Enum.class.isAssignableFrom(attribuetClazz)) {
                     Object[] enumValues = attribuetClazz.getEnumConstants();
@@ -89,7 +109,8 @@ public class ExpectedValueControl extends SingleControl {
                         object = ld.getResult()[0];
                     }
                 } else if (String.class.isAssignableFrom(attribuetClazz)
-                        || Number.class.isAssignableFrom(attribuetClazz)) {
+                        || Number.class.isAssignableFrom(attribuetClazz)
+                        || Boolean.class.isAssignableFrom(attribuetClazz)) {
                     try {
                         Constructor<?> constructor = attribuetClazz.getConstructor(String.class);
                         InputDialog id = new InputDialog(

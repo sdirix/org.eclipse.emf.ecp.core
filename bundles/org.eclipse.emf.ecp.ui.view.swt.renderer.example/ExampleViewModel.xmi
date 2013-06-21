@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" name="MyView">
+  <categorizations xsi:type="org.eclipse.emf.ecp.view.model:Category" name="MyCategory">
+    <composite xsi:type="org.eclipse.emf.ecp.view.model:Column">
+      <composites xsi:type="org.eclipse.emf.ecp.view.model:ColumnComposite">
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control name">
+          <rule xsi:type="org.eclipse.emf.ecp.view.model:ShowRule">
+            <condition xsi:type="org.eclipse.emf.ecp.view.model:LeafCondition" expectedValue="ACED0005737200106A6176612E6C616E672E446F75626C6580B3C24A296BFB0402000144000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078704016000000000000">
+              <attribute href="http://org/eclipse/example/bowling#//Player/height"/>
+            </condition>
+          </rule>
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/name"/>
+        </composites>
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control dateOfBirth">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/dateOfBirth"/>
+        </composites>
+      </composites>
+      <composites xsi:type="org.eclipse.emf.ecp.view.model:ColumnComposite">
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control playedTournamentTypes">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/playedTournamentTypes"/>
+        </composites>
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control eMails">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/eMails"/>
+        </composites>
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control isProfessional">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/isProfessional"/>
+        </composites>
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control numberOfVictories">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/numberOfVictories"/>
+        </composites>
+      </composites>
+      <composites xsi:type="org.eclipse.emf.ecp.view.model:Column">
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control height">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/height"/>
+        </composites>
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control winLossRatio">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/winLossRatio"/>
+        </composites>
+        <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control gender">
+          <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/gender"/>
+        </composites>
+      </composites>
+    </composite>
+  </categorizations>
+  <rootEClass href="http://org/eclipse/example/bowling#//Player"/>
+</org.eclipse.emf.ecp.view.model:View>
