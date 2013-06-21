@@ -12,6 +12,11 @@
           <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/name"/>
         </composites>
         <composites xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control dateOfBirth">
+          <rule xsi:type="org.eclipse.emf.ecp.view.model:EnableRule">
+            <condition xsi:type="org.eclipse.emf.ecp.view.model:LeafCondition" expectedValue="ACED0005737200106A6176612E6C616E672E446F75626C6580B3C24A296BFB0402000144000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078704016000000000000">
+              <attribute href="http://org/eclipse/example/bowling#//Player/height"/>
+            </condition>
+          </rule>
           <targetFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/dateOfBirth"/>
         </composites>
       </composites>
