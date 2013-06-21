@@ -7,9 +7,9 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 
 public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnComposite> {
 	
@@ -19,7 +19,10 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 	@Override
 	public SWTRendererNode render(ColumnComposite modelColumnComposite,
 			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-
+		//TODO Add check whether label is shown
+//		Label l=new Label(getParent(), SWT.NONE);
+//		l.setText(modelColumnComposite.getName());
+		
 		Composite columnComposite = new Composite(getParent(), SWT.NONE);
 		columnComposite.setBackground(getParent().getBackground());
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
@@ -29,9 +32,14 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 			.equalWidth(true)
 			.applyTo(columnComposite);
 		
-		int numHiddenColumns = 0;
+		//TODO Add to handle differently if label is shown
+//		GridDataFactory.fillDefaults()
+//    	.align(SWT.FILL, SWT.BEGINNING)
+//    	.grab(true, false)
+//        .applyTo(columnComposite);
 		
 		SWTRendererNode node = new SWTRendererNode(columnComposite, modelColumnComposite, controlContext);
+		
 		
 		for (org.eclipse.emf.ecp.view.model.Composite modelComposite : modelColumnComposite.getComposites()) {
 			
@@ -55,7 +63,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 			if (!childNode.isLeaf()) {
 				GridDataFactory.fillDefaults()
 					.align(SWT.FILL, SWT.FILL)
-					.grab(true, false)
+					.grab(true, true)
 					.span(2, 1)
 					.applyTo(control);
 			} 

@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.ui.view.swt;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.view.model.Column;
+import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -23,7 +24,6 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 		columnComposite.setBackground(getParent().getBackground());
 		SWTRendererNode node = new SWTRendererNode(columnComposite, modelColumn, controlContext);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
-		
 		for (org.eclipse.emf.ecp.view.model.Composite modelComposite : modelColumn.getComposites()) {
 			
 			RendererNode<Control> childNode = SWTRenderers.INSTANCE.render(
@@ -35,8 +35,8 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 			node.addChild(childNode);
 			Control control = childNode.getRenderedResult();
 			control.setBackground(getParent().getBackground());
-			
-			if (!childNode.isLeaf()) {
+			//TODO Add check to handle differently if label is shown 
+			if (!childNode.isLeaf() ) {
 				GridDataFactory.fillDefaults()
 					.align(SWT.FILL, SWT.BEGINNING)
 					.grab(true, false)
