@@ -15,61 +15,43 @@ import org.eclipse.emf.ecp.view.model.OrCondition;
 
 public final class ConditionEvaluator  {
     
-    private EObject article;
-    private Condition condition;
-    private IConditionEvalResult callback;
-	private EContentAdapter eContentAdapter;
-    
-    public ConditionEvaluator(EObject article, Condition condition) { 
-        this.article = article;
-        this.condition = condition;
-    }
-    
-    public ConditionEvaluator(EObject article, Condition condition, IConditionEvalResult callback) {
-        this.article = article;
-        this.condition = condition;
-        this.callback = callback;
-        boolean valid = evaluate(condition);
-        callback.evalFinished(valid);
-    }
-    
-    public boolean evaluate() {
-        return evaluate(condition);
+    private ConditionEvaluator() { 
+     
     }
 
-    private boolean evaluate(Condition condition) {
+    public static boolean evaluate(EObject eObject, Condition condition) {
         
         if (AndCondition.class.isInstance(condition)) {
-            return doEvaluate((AndCondition) condition);
+            return doEvaluate(eObject, (AndCondition) condition);
         }
         if (OrCondition.class.isInstance(condition)) {
-            return doEvaluate((OrCondition) condition);
+            return doEvaluate(eObject, (OrCondition) condition);
         }
         if (LeafCondition.class.isInstance(condition)) {
-            return doEvaluate((LeafCondition) condition);
+            return doEvaluate(eObject, (LeafCondition) condition);
         }
         return false;
     }
 
-    private boolean doEvaluate(AndCondition condition) {
+    private static boolean doEvaluate(EObject eObject, AndCondition condition) {
         boolean result = true;
         for (Condition innerCondition : condition.getConditions()) {
-            result &= evaluate(innerCondition);
+            result &= evaluate(eObject, innerCondition);
         }
         return result;
     }
 
-    private boolean doEvaluate(OrCondition condition) {
+    private static boolean doEvaluate(EObject eObject, OrCondition condition) {
         boolean result = false;
         for (Condition innerCondition : condition.getConditions()) {
-            result |= evaluate(innerCondition);
+            result |= evaluate(eObject, innerCondition);
         }
         return result;
     }
 
-    private boolean doEvaluate(LeafCondition condition) {
+    private static boolean doEvaluate(EObject eObject, LeafCondition condition) {
         EClass attributeClass = condition.getAttribute().getEContainingClass();
-        EObject parent = article;
+        EObject parent = eObject;
         List<EReference> referencePath = condition.getPathToAttribute();
         for (EReference eReference : referencePath) {
             if (eReference.getEReferenceType().isInstance(parent)) {
@@ -84,43 +66,8 @@ public final class ConditionEvaluator  {
         }
         if (!attributeClass.isInstance(parent))
             return false;
-        
-        createAdapter(condition);
-        
+                
         return parent.eGet(condition.getAttribute()).equals(condition.getExpectedValue());
     }
     
-    public void dispose() {
-    	article.eAdapters().remove(eContentAdapter);    
-    	eContentAdapter = null;
-    }
-
-    private void createAdapter(final LeafCondition condition) {
-    	
-    	if (eContentAdapter != null) {
-    		return;
-    	}
-        
-        if (callback == null) {
-            return;
-        }
-        
-        eContentAdapter = new EContentAdapter() {
-            @Override
-            public void notifyChanged(Notification notification) {
-                Object notifier = notification.getNotifier();
-                Object feature = notification.getFeature();
-
-                if (feature instanceof EAttribute && notifier instanceof EObject) {
-                    EAttribute attribute = (EAttribute) feature;
-                    if (condition.getAttribute().equals(attribute)) {
-                        boolean valid = evaluate(condition);
-                        callback.evalFinished(valid);
-                    }
-                }
-            }
-        };
-        
-        article.eAdapters().add(eContentAdapter);
-    }
 }

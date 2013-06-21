@@ -15,16 +15,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.TreeRendererNodeVisitor;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
-public class RendererContext {
+public class RendererContext<T> {
 
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-    private RendererNode node;
+    private RendererNode<T> node;
     private boolean alive = true;
     private EObject article;
     private View view;
@@ -39,10 +40,16 @@ public class RendererContext {
         this.contentAdapter = new EContentAdapter() {
 
             @Override
-            public void notifyChanged(Notification notification) {
+            public void notifyChanged(final Notification notification) {
                 super.notifyChanged(notification);
 
                 triggerValidation();
+                
+                // node is null, since render hasn't been called yet
+                if (getNode() != null) {
+                	getNode().checkEnable(notification);
+                	getNode().checkShow(notification);
+                }
             }
 
         };

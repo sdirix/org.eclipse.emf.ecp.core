@@ -6,21 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ConditionEvaluator;
-import org.eclipse.emf.ecp.internal.ui.view.IConditionEvalResult;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.ShowRule;
-import org.eclipse.swt.widgets.Composite;
 
 public abstract class RendererNode<T> implements ValidationListener {
 
@@ -29,8 +30,6 @@ public abstract class RendererNode<T> implements ValidationListener {
 	
 	private List<RendererNode<T>> children;
 	private ECPControlContext controlContext;
-	private ConditionEvaluator showEvaluator;
-	private ConditionEvaluator enablementEvaluator;
 	
 	public RendererNode(T result, 
 			org.eclipse.emf.ecp.view.model.Composite model, 
@@ -42,36 +41,65 @@ public abstract class RendererNode<T> implements ValidationListener {
 		this.children = new ArrayList<RendererNode<T>>();
 	}
 	
-	public void checkShow() {
-		if (ShowRule.class.isInstance(model.getRule())) {    
+	public void checkShow(Notification notification) {
+		
+		if (isLeafCondition()) {
 			Condition condition = model.getRule().getCondition();
-			if (showEvaluator == null) {
-				showEvaluator = new ConditionEvaluator(controlContext.getModelElement(), condition, new IConditionEvalResult() {
-					@Override
-					public void evalFinished(boolean v) {
-						if (v == ((ShowRule) model.getRule()).isHide()) {
-							if (result != null && result instanceof Composite) {
-
-								showIsTrue();
-
-								TreeIterator<EObject> eAllContents = model.eAllContents();
-								while (eAllContents.hasNext()) {
-									EObject o = eAllContents.next();
-									unset(controlContext, o);
-								}
-								unset(controlContext, model);
-							}
-						} else {
-							if (result != null) {
-								showIsFalse();
-							} 
+			if (!ShowRule.class.isInstance(model.getRule())) {
+				return;
+			}
+			LeafCondition leaf = (LeafCondition) condition;
+			EAttribute attr = null;
+			
+			if (isEAttributeNotification(notification)) { 
+				attr = (EAttribute) notification.getFeature();
+				if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
+					boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
+					if (v == ((ShowRule) model.getRule()).isHide()) {
+						showIsTrue();
+						TreeIterator<EObject> eAllContents = model.eAllContents();
+						while (eAllContents.hasNext()) {
+							EObject o = eAllContents.next();
+							unset(controlContext, o);
 						}
-
-						layout();
+						unset(controlContext, model);
+					} else {
+						showIsFalse();
 					}
-				});
+					
+					layout();
+				}
+			}
+			
+		} else {
+			for (RendererNode child : getChildren()) {
+				child.checkShow(notification);
 			}
 		}
+		
+//		if (ShowRule.class.isInstance(model.getRule())) {    
+//			Condition condition = model.getRule().getCondition();
+//			boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
+//			if (v == ((ShowRule) model.getRule()).isHide()) {
+//				if (result != null && result instanceof Composite) {
+//
+//					showIsTrue();
+//
+//					TreeIterator<EObject> eAllContents = model.eAllContents();
+//					while (eAllContents.hasNext()) {
+//						EObject o = eAllContents.next();
+//						unset(controlContext, o);
+//					}
+//					unset(controlContext, model);
+//				}
+//			} else {
+//				if (result != null) {
+//					showIsFalse();
+//				} 
+//			}
+//
+//			layout();
+//		}
 	}
 	
     
@@ -95,26 +123,50 @@ public abstract class RendererNode<T> implements ValidationListener {
         }
     }
 	
-	public void checkEnable() {
-		if (EnableRule.class.isInstance(model.getRule())) {
+	public void checkEnable(Notification notification) { 
+						
+		if (isLeafCondition()) {
 			Condition condition = model.getRule().getCondition();
-			if (enablementEvaluator == null) {
-				enablementEvaluator = new ConditionEvaluator(controlContext.getModelElement(), condition,
-						new IConditionEvalResult() {
-					@Override
-					public void evalFinished(boolean v) {
-						if (v == ((EnableRule) model.getRule()).isDisable()) {
-							enableIsFalse();
-						} else {
-							enableIsTrue();
-						}
+			if (!EnableRule.class.isInstance(model.getRule())) {
+				return;
+			}
+			
+			LeafCondition leaf = (LeafCondition) condition;
+			EAttribute attr = null;
+			
+			if (isEAttributeNotification(notification)) { 
+				attr = (EAttribute) notification.getFeature();
+				if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
+					boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
+					if (v == ((EnableRule) model.getRule()).isDisable()) {
+						enableIsFalse();
+					} else {
+						enableIsTrue();
 					}
-				});
+				}
+			}
+			
+		} else {
+			for (RendererNode child : getChildren()) {
+				child.checkEnable(notification);
 			}
 		}
-		for (RendererNode child : getChildren()) {
-			child.checkEnable();
+	}
+	
+	private boolean isLeafCondition() {
+		if (model.getRule() == null) {
+			return false;
 		}
+		
+		return  model.getRule().getCondition() instanceof LeafCondition;
+	}
+	
+	private boolean isEAttributeNotification(Notification notification) {
+		if (notification.getFeature() instanceof EAttribute) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	public abstract void enableIsTrue();
@@ -151,12 +203,6 @@ public abstract class RendererNode<T> implements ValidationListener {
 	}
 
 	public void dispose() {
-		if (enablementEvaluator != null) {
-			enablementEvaluator.dispose();
-		}
-		if (showEvaluator != null) {
-			showEvaluator.dispose();
-		}
 		cleanup();
 	}
 	

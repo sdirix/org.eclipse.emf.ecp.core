@@ -34,12 +34,10 @@ public class ModelRendererImpl implements ModelRenderer {
 		Category category = (Category) view.getCategorizations().get(0);
 		
 		if (renderer == null) {
-			throw new NullPointerException("Renderer not initialized!");
+			throw new IllegalStateException("Renderer not initialized!");
 		}
 		
 		RendererNode render = renderer.render(category.getComposite(), context, adapterFactoryItemDelegator);
-		render.checkShow();
-		render.checkEnable();
 		rendererContext.setNode(render);
 	
 		return rendererContext;
