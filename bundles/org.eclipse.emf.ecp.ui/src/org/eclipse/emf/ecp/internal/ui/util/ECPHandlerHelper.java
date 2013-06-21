@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
@@ -51,10 +52,15 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 
 import org.osgi.framework.Bundle;
 
@@ -425,5 +431,49 @@ public final class ECPHandlerHelper {
 	 */
 	public static void openRepositoryProperties(ECPRepository repository, boolean editable, Shell shell) {
 		new RepositoryPropertiesDialog(shell, editable, repository).open();
+	}
+
+	public static boolean showDirtyProjectsDialog(Shell shell) {
+		ECPProjectManager manager = ECPUtil.getECPProjectManager();
+
+		List<ECPProject> dirtyProjects = new ArrayList<ECPProject>();
+		for (ECPProject project : manager.getProjects()) {
+			if (project.hasDirtyContents()) {
+				dirtyProjects.add(project);
+			}
+		}
+		if (dirtyProjects.isEmpty()) {
+			return true;
+		}
+		ListSelectionDialog lsd = new ListSelectionDialog(shell, dirtyProjects, ArrayContentProvider.getInstance(),
+			new LabelProvider() {
+
+				@Override
+				public Image getImage(Object element) {
+					if (ECPProject.class.isInstance(element)) {
+						return Activator.getImage("icons/project_open.gif");
+					}
+					return super.getImage(element);
+				}
+
+				@Override
+				public String getText(Object element) {
+					if (ECPProject.class.isInstance(element)) {
+						return ((ECPProject) element).getName();
+					}
+					return super.getText(element);
+				}
+
+			}, "Select the projects, which should be saved.");
+		lsd.setInitialSelections(manager.getProjects().toArray());
+		lsd.setTitle("Dirty Projects");
+		int result = lsd.open();
+		if (Window.OK == result) {
+			for (Object o : lsd.getResult()) {
+				ECPHandlerHelper.saveProject((ECPProject) o);
+			}
+			return true;
+		}
+		return false;
 	}
 }
