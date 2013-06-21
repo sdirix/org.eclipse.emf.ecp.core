@@ -26,7 +26,7 @@
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130522-0609"/>
 <unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130522-0609"/>
-<repository location="http://download.eclipse.org/graphiti/updates/milestones/S-0.10.0RC1-201305220609"/>
+<repository location="http://archive.eclipse.org/graphiti/updates/milestones/Kepler/S-0.10.0RC1-201305220609"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.0.v20130523-0908"/>
