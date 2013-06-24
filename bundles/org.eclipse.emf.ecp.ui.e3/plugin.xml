@@ -355,23 +355,11 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <test
-                              args="org.eclipse.emf.ecp.ui.workbench.saveProject"
-                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                              value="true">
-                        </test>
-                     </iterate>
-                  </and>
-               </with>
+               <test
+                     args="org.eclipse.emf.ecp.ui.workbench.saveProject"
+                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                     value="true">
+               </test>
             </visibleWhen>
          </command>
       </menuContribution>
