@@ -466,7 +466,7 @@ public final class ECPHandlerHelper {
 
 			}, "Select the projects, which should be saved.");
 		lsd.setInitialSelections(manager.getProjects().toArray());
-		lsd.setTitle("Dirty Projects");
+		lsd.setTitle("Unsaved Projects");
 		int result = lsd.open();
 		if (Window.OK == result) {
 			for (Object o : lsd.getResult()) {
