@@ -101,7 +101,7 @@ public class ValidationTest {
 		Writer writer3 = TestFactory.eINSTANCE.createWriter();
 
 		Library lib = TestFactory.eINSTANCE.createLibrary();
-		lib.setName("Bücherei");
+		lib.setName("BÃ¼cherei");
 		lib.getWriters().add(writer1);
 		lib.getWriters().add(writer2);
 		lib.getWriters().add(writer3);
