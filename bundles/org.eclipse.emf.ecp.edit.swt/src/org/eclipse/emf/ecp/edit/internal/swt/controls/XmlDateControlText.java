@@ -123,6 +123,7 @@ public class XmlDateControlText extends AbstractTextControl {
 				calendar.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
+						binding.updateTargetToModel();
 						binding.dispose();
 						dialog.close();
 					}
@@ -131,6 +132,7 @@ public class XmlDateControlText extends AbstractTextControl {
 				calendar.addFocusListener(new FocusListener() {
 
 					public void focusLost(FocusEvent event) {
+						binding.updateTargetToModel();
 						binding.dispose();
 						dialog.close();
 					}
