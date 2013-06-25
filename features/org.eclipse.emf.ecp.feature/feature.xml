@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.ecp.feature"
       label="EMF Client Platform (Core)"
-      version="1.0.0.qualifier"
+      version="1.0.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.core"
       image="eclipse_update_120.jpg"

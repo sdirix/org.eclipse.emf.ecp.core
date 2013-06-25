@@ -353,6 +353,14 @@
                icon="icons/database_save.png"
                label="%SaveProject"
                style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     args="org.eclipse.emf.ecp.ui.workbench.saveProject"
+                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                     value="true">
+               </test>
+            </visibleWhen>
          </command>
       </menuContribution>
       <menuContribution

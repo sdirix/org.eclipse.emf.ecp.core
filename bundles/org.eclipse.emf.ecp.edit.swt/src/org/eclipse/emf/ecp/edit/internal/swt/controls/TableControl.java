@@ -253,7 +253,7 @@ public class TableControl extends SWTControl {
 			}
 
 			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
-				tempInstance, tableViewer.getTable());
+				tempInstance, tableViewer.getTable(), getModelElementContext());
 			// create a new column
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
 
@@ -376,6 +376,11 @@ public class TableControl extends SWTControl {
 					}
 
 					protected Binding createBinding(IObservableValue target, IObservableValue model) {
+						if (ECPCellEditor.class.isInstance(cellEditor)) {
+							return getDataBindingContext().bindValue(target, model,
+								((ECPCellEditor) cellEditor).getTargetToModelStrategy(),
+								((ECPCellEditor) cellEditor).getModelToTargetStrategy());
+						}
 						return getDataBindingContext().bindValue(target, model);
 					}
 
@@ -606,7 +611,9 @@ public class TableControl extends SWTControl {
 			if (!featureErrorMap.containsKey(object)) {
 				featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
 			}
-			featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
+			if (diagnostic.getData().size() > 1) {
+				featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
+			}
 			tableViewer.update(object, null);
 			// tableViewer.refresh();
 		}
@@ -617,7 +624,7 @@ public class TableControl extends SWTControl {
 	 */
 	public void resetValidation() {
 		featureErrorMap.clear();
-		tableViewer.refresh();
+		// tableViewer.refresh();
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}

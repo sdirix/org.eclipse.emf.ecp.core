@@ -12,8 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 
 /**
@@ -30,7 +32,7 @@ public interface ECPCellEditor {
 
 	IValueProperty getValueProperty();
 
-	void instantiate(IItemPropertyDescriptor descriptor);
+	void instantiate(IItemPropertyDescriptor descriptor, ECPControlContext ecpControlContext);
 
 	int getStyle();
 
@@ -50,4 +52,8 @@ public interface ECPCellEditor {
 	 * @return the relative column width
 	 */
 	int getColumnWidthWeight();
+
+	UpdateValueStrategy getTargetToModelStrategy();
+
+	UpdateValueStrategy getModelToTargetStrategy();
 }
