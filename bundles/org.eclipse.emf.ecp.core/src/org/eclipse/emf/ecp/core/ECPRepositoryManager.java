@@ -15,13 +15,23 @@
 package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver;
 
 import java.util.Collection;
 
 /**
  * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
+ * It publishes observable events on the {@link ECPObserverBus}.
+ * Related Observer types: {@link ECPRepositoriesChangedObserver}, {@link ECPRepositoryContentChangedObserver}.
+ * Use {@link ECPUtil#getECPObserverBus()} to retrieve the ObserverBus and {@link ECPObserverBus#register(ECPObserver)}
+ * to register an Observer.
  * 
  * @author Eike Stepper
+ * @author Jonas
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
