@@ -76,7 +76,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -290,12 +289,12 @@ public class TableControl extends SWTControl {
 						cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string");
 					}
 
-					if (featureErrorMap.containsKey(element)
-						&& featureErrorMap.get(element).containsKey(attributeMaps[0].getValueType())) {
-						cell.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					} else {
-						cell.setBackground(null);
-					}
+					// if (featureErrorMap.containsKey(element)
+					// && featureErrorMap.get(element).containsKey(attributeMaps[0].getValueType())) {
+					// cell.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+					// } else {
+					// cell.setBackground(null);
+					// }
 				}
 			});
 
