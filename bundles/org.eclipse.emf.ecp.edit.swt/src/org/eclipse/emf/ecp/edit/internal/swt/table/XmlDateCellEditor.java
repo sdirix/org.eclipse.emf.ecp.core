@@ -12,9 +12,11 @@
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
 import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
@@ -84,7 +86,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		};
 	}
 
-	public void instantiate(IItemPropertyDescriptor descriptor) {
+	public void instantiate(IItemPropertyDescriptor descriptor, ECPControlContext ecpControlContext) {
 
 	}
 
@@ -207,5 +209,23 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 */
 	public int getColumnWidthWeight() {
 		return 75;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
+	 */
+	public UpdateValueStrategy getTargetToModelStrategy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
+	 */
+	public UpdateValueStrategy getModelToTargetStrategy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

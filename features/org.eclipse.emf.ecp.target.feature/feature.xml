@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.target.feature"
       label="ECP Target Feature"
-      version="1.0.0.qualifier"
+      version="1.0.1.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.0.0">
@@ -21,13 +21,6 @@
 
    <plugin
          id="com.ibm.icu"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.slf4j.api"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1017,6 +1010,13 @@
 
    <plugin
          id="org.eclipse.equinox.p2.updatechecker"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.bidi"
          download-size="0"
          install-size="0"
          version="0.0.0"

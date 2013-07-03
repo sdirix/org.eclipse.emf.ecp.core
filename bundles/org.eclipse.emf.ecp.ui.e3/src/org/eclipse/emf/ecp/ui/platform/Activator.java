@@ -20,8 +20,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchListener;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -47,6 +56,18 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		instance = this;
+		
+		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+
+			public boolean preShutdown(IWorkbench workbench, boolean forced) {
+				
+				return ECPHandlerHelper.showDirtyProjectsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+			}
+
+			public void postShutdown(IWorkbench workbench) {
+				// do nothing
+			}
+		});
 	}
 	
 	@Override

@@ -305,9 +305,9 @@ public abstract class SWTControl extends ECPAbstractControl {
 		if (modelValue != null) {
 			return modelValue;
 		}
-		IObservableValue model = EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
+		modelValue = EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
 			getModelElementContext().getModelElement(), getStructuralFeature());
-		return model;
+		return modelValue;
 	}
 
 	/**
