@@ -13,6 +13,8 @@
 
 package org.eclipse.emf.ecp.internal.core;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -24,10 +26,10 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesElement;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
+import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.DisposeException;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
-import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 import org.eclipse.core.runtime.Platform;
 
@@ -38,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * This Class describes a repository.
@@ -46,6 +49,7 @@ import java.util.List;
  * @author Eugen Neufeld
  */
 public final class ECPRepositoryImpl extends PropertiesElement implements InternalRepository, DisposeListener {
+	@ExcludeFromDump
 	private final Disposable disposable = new Disposable(this) {
 		@Override
 		protected void doDispose() {
@@ -261,5 +265,11 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 
 		// TODO Consider to cache the result
 		return result.toArray(new InternalProject[result.size()]);
+	}
+
+	@Override
+	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
+		Collection<Entry<String, String>> newProperties) {
+		ECPRepositoryManagerImpl.INSTANCE.storeElement(this);
 	}
 }

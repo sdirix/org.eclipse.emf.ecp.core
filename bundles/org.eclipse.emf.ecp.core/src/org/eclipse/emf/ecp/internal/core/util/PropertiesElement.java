@@ -13,11 +13,14 @@ package org.eclipse.emf.ecp.internal.core.util;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Collection;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -28,11 +31,13 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 	public PropertiesElement(String name, ECPProperties properties) {
 		super(name);
 		this.properties = properties;
+		observeProperties();
 	}
 
 	public PropertiesElement(ObjectInput in) throws IOException {
 		super(in.readUTF());
 		properties = new Properties(in);
+		observeProperties();
 	}
 
 	/** {@inheritDoc} */
@@ -44,5 +49,19 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 	/** {@inheritDoc} */
 	public final ECPProperties getProperties() {
 		return properties;
+	}
+
+	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
+		Collection<Entry<String, String>> newProperties) {
+		// Do nothing
+	}
+
+	private void observeProperties() {
+		properties.addObserver(new ECPPropertiesObserver() {
+			public void propertiesChanged(ECPProperties properties, Collection<Entry<String, String>> oldProperties,
+				Collection<Entry<String, String>> newProperties) {
+				PropertiesElement.this.propertiesChanged(oldProperties, newProperties);
+			}
+		});
 	}
 }

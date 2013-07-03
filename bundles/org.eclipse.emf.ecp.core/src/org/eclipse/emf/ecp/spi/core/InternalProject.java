@@ -92,7 +92,10 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 
 	/**
 	 * Saves the properties, such as visible packages or the name of the project into the workspace.
+	 * 
+	 * @deprecated As of 1.1 properties are saved automatically when they're changed.
 	 */
+	@Deprecated
 	void saveProperties();
 
 	/**
