@@ -1038,4 +1038,10 @@
                          checkoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.observer.CheckoutObserver">
                    </observer>
                 </extension>
+                <extension
+                      point="org.eclipse.emf.emfstore.client.ui.disableSaveControls">
+                   <disableControls
+                         enabled="true">
+                   </disableControls>
+                </extension>
 </plugin>

@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -76,7 +77,8 @@ public final class CellEditorFactory {
 
 	}
 
-	public CellEditor getCellEditor(IItemPropertyDescriptor propertyDescriptor, EObject eObject, Table table) {
+	public CellEditor getCellEditor(IItemPropertyDescriptor propertyDescriptor, EObject eObject, Table table,
+		ECPControlContext ecpControlContext) {
 		int bestPriority = -1;
 		CellDescriptor bestCandidate = null;
 		for (CellDescriptor descriptor : descriptors) {
@@ -93,7 +95,7 @@ public final class CellEditorFactory {
 					Composite.class);
 				result = constructor.newInstance(table);
 				ECPCellEditor ecpCellEditor = (ECPCellEditor) result;
-				ecpCellEditor.instantiate(propertyDescriptor);
+				ecpCellEditor.instantiate(propertyDescriptor, ecpControlContext);
 			} catch (SecurityException e) {
 				Activator.logException(e);
 			} catch (NoSuchMethodException e) {

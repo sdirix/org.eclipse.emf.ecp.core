@@ -6,7 +6,7 @@ Element-Name: ImportWorkspaceProject
 Element-Type: context
 Element-Version: 2.0
 Id: _7kKq0KEjEeKX8e34E6tWIg
-Save-Time: 4/9/13 5:01 PM
+Save-Time: 6/22/13 3:05 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -14,7 +14,7 @@ Entry-Name: .ecl.context
 
 get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
 with [get-window "Create Project"] {
-    get-combo -after [get-label "Provider:"] | select "Eclipse Workspace"
+    get-combo -after [get-label "Provider:"] | select "Eclipse Workspace (Experimental)"
 }
 with [get-window "Create Project"] {
     get-button "Import existing XMI-File" | click

@@ -89,7 +89,8 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 						int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
 						
 						String type = testerExtension.getAttribute(TESTER_CLASSTYPE);
-						Class<?> supportedClassType = Class.forName(type);
+						Class<?> supportedClassType = loadClass(testerExtension.getContributor().getName(), type);
+						//Class.forName(type);
 						
 						String eObject = testerExtension.getAttribute(TESTER_EOBJECT);
 						if (eObject == null) {
