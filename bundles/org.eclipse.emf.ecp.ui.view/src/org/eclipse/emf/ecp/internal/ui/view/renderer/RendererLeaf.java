@@ -47,8 +47,8 @@ public abstract class RendererLeaf<T> extends RendererNode<T> {
 		}
 		
 		getEcpControl().resetValidation();
-		if (affectedObjects.containsKey(getModel())) { 
-			for (Diagnostic diagnostic : affectedObjects.get(getModel())) {
+		if (affectedObjects.containsKey(getRenderable())) { 
+			for (Diagnostic diagnostic : affectedObjects.get(getRenderable())) {
 				getEcpControl().handleValidation(diagnostic);
 			}
 		}

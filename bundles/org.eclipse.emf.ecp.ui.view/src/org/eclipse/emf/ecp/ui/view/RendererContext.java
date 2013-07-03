@@ -15,26 +15,26 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.TreeRendererNodeVisitor;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
-public class RendererContext<T> {
+public class RendererContext<CONTROL> {
 
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-    private RendererNode<T> node;
+    private RendererNode<CONTROL> node;
     private boolean alive = true;
     private EObject article;
-    private View view;
+    private Renderable renderable;
     private final Set<ValidationListener> listeners = new HashSet<RendererContext.ValidationListener>();
 
     private EContentAdapter contentAdapter;
 
-    public RendererContext(View view, EObject article) {
-        this.view = view;
+    public RendererContext(Renderable renderable, EObject article) {
+        this.renderable = renderable;
         analyseView();
         this.article = article;
         this.contentAdapter = new EContentAdapter() {
@@ -95,7 +95,7 @@ public class RendererContext<T> {
     }
 
     private void analyseView() {
-        TreeIterator<EObject> eAllContents = view.eAllContents();
+        TreeIterator<EObject> eAllContents = renderable.eAllContents();
         while (eAllContents.hasNext()) {
             EObject eObject = eAllContents.next();
             if (org.eclipse.emf.ecp.view.model.Control.class.isInstance(eObject)) {
@@ -141,11 +141,11 @@ public class RendererContext<T> {
         }
     }
 
-    public RendererNode getNode() {
+    public RendererNode<CONTROL> getNode() {
         return node;
     }
 
-    public void setNode(RendererNode node) {
+    public void setNode(RendererNode<CONTROL> node) {
         this.node = node;
     }
 
@@ -161,7 +161,7 @@ public class RendererContext<T> {
         categoryValidationMap.clear();
         node.dispose();
         article = null;
-        view = null;
+        renderable = null;
         contentAdapter = null;
     }
 

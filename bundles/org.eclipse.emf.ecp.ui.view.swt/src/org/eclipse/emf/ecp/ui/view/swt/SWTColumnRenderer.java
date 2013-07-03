@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
@@ -17,7 +18,7 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 
 	@Override
 	public SWTRendererNode render(Column modelColumn,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
 		
 		Composite columnComposite = new Composite(getParent(), SWT.NONE);
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN);

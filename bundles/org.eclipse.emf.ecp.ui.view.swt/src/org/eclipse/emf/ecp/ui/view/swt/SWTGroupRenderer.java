@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -19,7 +20,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 	@Override
 	public SWTRendererNode render(Group modelGroup,
 			ECPControlContext controlContext, 
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
 		
 		org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(getParent(), SWT.TITLE);
 		group.setText(modelGroup.getName());

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.OrCondition;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.Rule;
 import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.ShowRule;
@@ -197,6 +198,13 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	private EClass treeCategoryEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass renderableEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -294,15 +302,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getAbstractCategorization_Name() {
 		return (EAttribute)abstractCategorizationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getAbstractCategorization_Rule() {
-		return (EReference)abstractCategorizationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -492,15 +491,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getComposite_Name() {
 		return (EAttribute)compositeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getComposite_Rule() {
-		return (EReference)compositeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -733,6 +723,24 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getRenderable() {
+		return renderableEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRenderable_Rule() {
+		return (EReference)renderableEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ViewFactory getViewFactory() {
 		return (ViewFactory)getEFactoryInstance();
 	}
@@ -761,7 +769,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		abstractCategorizationEClass = createEClass(ABSTRACT_CATEGORIZATION);
 		createEAttribute(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__NAME);
-		createEReference(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__RULE);
 
 		ruleEClass = createEClass(RULE);
 		createEReference(ruleEClass, RULE__CONDITION);
@@ -793,7 +800,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		compositeEClass = createEClass(COMPOSITE);
 		createEAttribute(compositeEClass, COMPOSITE__NAME);
-		createEReference(compositeEClass, COMPOSITE__RULE);
 
 		controlEClass = createEClass(CONTROL);
 		createEReference(controlEClass, CONTROL__TARGET_FEATURE);
@@ -829,6 +835,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEReference(treeCategoryEClass, TREE_CATEGORY__CHILD_COMPOSITE);
 		createEReference(treeCategoryEClass, TREE_CATEGORY__TARGET_FEATURE);
 		createEReference(treeCategoryEClass, TREE_CATEGORY__PATH_TO_FEATURE);
+
+		renderableEClass = createEClass(RENDERABLE);
+		createEReference(renderableEClass, RENDERABLE__RULE);
 	}
 
 	/**
@@ -863,6 +872,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		// Add supertypes to classes
 		viewEClass.getESuperTypes().add(this.getCategorization());
+		abstractCategorizationEClass.getESuperTypes().add(this.getRenderable());
 		showRuleEClass.getESuperTypes().add(this.getRule());
 		enableRuleEClass.getESuperTypes().add(this.getRule());
 		leafConditionEClass.getESuperTypes().add(this.getCondition());
@@ -870,6 +880,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		andConditionEClass.getESuperTypes().add(this.getCondition());
 		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
+		compositeEClass.getESuperTypes().add(this.getRenderable());
 		controlEClass.getESuperTypes().add(this.getComposite());
 		tableControlEClass.getESuperTypes().add(this.getControl());
 		customCompositeEClass.getESuperTypes().add(this.getComposite());
@@ -886,7 +897,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		initEClass(abstractCategorizationEClass, AbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAbstractCategorization_Name(), theEcorePackage.getEString(), "name", null, 1, 1, AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAbstractCategorization_Rule(), this.getRule(), null, "rule", null, 0, 1, AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRule_Condition(), this.getCondition(), null, "condition", null, 1, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -918,7 +928,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComposite_Name(), theEcorePackage.getEString(), "name", null, 1, 1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComposite_Rule(), this.getRule(), null, "rule", null, 0, 1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getControl_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature", null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -954,6 +963,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEReference(getTreeCategory_ChildComposite(), this.getComposite(), null, "childComposite", null, 0, 1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTreeCategory_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature", null, 1, 1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTreeCategory_PathToFeature(), theEcorePackage.getEReference(), null, "pathToFeature", null, 0, -1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRenderable_Rule(), this.getRule(), null, "rule", null, 0, 1, Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

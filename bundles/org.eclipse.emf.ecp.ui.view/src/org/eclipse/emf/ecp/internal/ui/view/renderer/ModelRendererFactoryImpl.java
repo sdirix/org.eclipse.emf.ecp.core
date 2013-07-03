@@ -6,6 +6,7 @@ public class ModelRendererFactoryImpl implements ModelRendererFactory {
 	public ModelRenderer getRenderer(Object[] initData) {
 		// FIXME: shortcut
 		ModelRenderer renderer = new ModelRendererImpl(initData);
+		renderer.initialize(initData);
 		return renderer;
 	}
 

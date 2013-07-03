@@ -8,9 +8,9 @@ import org.eclipse.swt.widgets.Control;
 
 public class SWTRendererNode extends RendererNode<Control> {
 
-	public SWTRendererNode(Control result, org.eclipse.emf.ecp.view.model.Composite model,
+	public SWTRendererNode(Control result, org.eclipse.emf.ecp.view.model.Renderable renderable,
 			ECPControlContext controlContext) {
-		super(result, model, controlContext);
+		super(result, renderable, controlContext);
 	}
 
 	@Override

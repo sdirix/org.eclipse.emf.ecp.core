@@ -71,12 +71,14 @@ public class ViewSwitch<T> extends Switch<T> {
 				T result = caseView(view);
 				if (result == null) result = caseCategorization(view);
 				if (result == null) result = caseAbstractCategorization(view);
+				if (result == null) result = caseRenderable(view);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ViewPackage.ABSTRACT_CATEGORIZATION: {
 				AbstractCategorization abstractCategorization = (AbstractCategorization)theEObject;
 				T result = caseAbstractCategorization(abstractCategorization);
+				if (result == null) result = caseRenderable(abstractCategorization);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -131,6 +133,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				Categorization categorization = (Categorization)theEObject;
 				T result = caseCategorization(categorization);
 				if (result == null) result = caseAbstractCategorization(categorization);
+				if (result == null) result = caseRenderable(categorization);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -138,12 +141,14 @@ public class ViewSwitch<T> extends Switch<T> {
 				Category category = (Category)theEObject;
 				T result = caseCategory(category);
 				if (result == null) result = caseAbstractCategorization(category);
+				if (result == null) result = caseRenderable(category);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ViewPackage.COMPOSITE: {
 				Composite composite = (Composite)theEObject;
 				T result = caseComposite(composite);
+				if (result == null) result = caseRenderable(composite);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -151,6 +156,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				Control control = (Control)theEObject;
 				T result = caseControl(control);
 				if (result == null) result = caseComposite(control);
+				if (result == null) result = caseRenderable(control);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -159,6 +165,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				T result = caseTableControl(tableControl);
 				if (result == null) result = caseControl(tableControl);
 				if (result == null) result = caseComposite(tableControl);
+				if (result == null) result = caseRenderable(tableControl);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -172,6 +179,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				CustomComposite customComposite = (CustomComposite)theEObject;
 				T result = caseCustomComposite(customComposite);
 				if (result == null) result = caseComposite(customComposite);
+				if (result == null) result = caseRenderable(customComposite);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -179,6 +187,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				Seperator seperator = (Seperator)theEObject;
 				T result = caseSeperator(seperator);
 				if (result == null) result = caseComposite(seperator);
+				if (result == null) result = caseRenderable(seperator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -186,6 +195,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				CompositeCollection compositeCollection = (CompositeCollection)theEObject;
 				T result = caseCompositeCollection(compositeCollection);
 				if (result == null) result = caseComposite(compositeCollection);
+				if (result == null) result = caseRenderable(compositeCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -194,6 +204,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				T result = caseColumnComposite(columnComposite);
 				if (result == null) result = caseCompositeCollection(columnComposite);
 				if (result == null) result = caseComposite(columnComposite);
+				if (result == null) result = caseRenderable(columnComposite);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -202,6 +213,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				T result = caseColumn(column);
 				if (result == null) result = caseCompositeCollection(column);
 				if (result == null) result = caseComposite(column);
+				if (result == null) result = caseRenderable(column);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -210,6 +222,7 @@ public class ViewSwitch<T> extends Switch<T> {
 				T result = caseGroup(group);
 				if (result == null) result = caseCompositeCollection(group);
 				if (result == null) result = caseComposite(group);
+				if (result == null) result = caseRenderable(group);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -217,6 +230,13 @@ public class ViewSwitch<T> extends Switch<T> {
 				TreeCategory treeCategory = (TreeCategory)theEObject;
 				T result = caseTreeCategory(treeCategory);
 				if (result == null) result = caseAbstractCategorization(treeCategory);
+				if (result == null) result = caseRenderable(treeCategory);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ViewPackage.RENDERABLE: {
+				Renderable renderable = (Renderable)theEObject;
+				T result = caseRenderable(renderable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -551,6 +571,21 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTreeCategory(TreeCategory object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRenderable(Renderable object) {
 		return null;
 	}
 

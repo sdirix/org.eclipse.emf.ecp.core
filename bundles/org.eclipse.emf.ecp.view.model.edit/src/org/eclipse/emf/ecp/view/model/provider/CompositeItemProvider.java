@@ -102,7 +102,7 @@ public class CompositeItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.COMPOSITE__RULE);
+			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__RULE);
 		}
 		return childrenFeatures;
 	}
@@ -178,12 +178,12 @@ public class CompositeItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE__RULE,
+				(ViewPackage.Literals.RENDERABLE__RULE,
 				 ViewFactory.eINSTANCE.createShowRule()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE__RULE,
+				(ViewPackage.Literals.RENDERABLE__RULE,
 				 ViewFactory.eINSTANCE.createEnableRule()));
 	}
 

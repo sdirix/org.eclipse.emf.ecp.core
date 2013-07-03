@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.View;
 
@@ -41,7 +42,13 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 	public Composite createUI(Composite parent) {
 		View view = getView();
 		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { parent });
-		rendererContext = renderer.render(view, modelElementContext);
+
+		try {
+			rendererContext = renderer.render(view, modelElementContext);
+		} catch (NoRendererFoundException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
 		// TODO: remove cast via type parameterization
 		Composite tabContent = (Composite) rendererContext.getNode().getRenderedResult();
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);

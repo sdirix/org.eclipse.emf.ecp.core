@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.internal.ui.view.renderer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 /**
@@ -10,8 +11,12 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * 
  * @author emueller
  *
+ * @param <T>
+ * 			the actual type of the control being rendered
+ * @param <U>
+ * 			a subtype of {@link Composite} specifying the view model type to be rendered 
  */
-public interface ControlRenderer<T, U extends Composite> {
+public interface ControlRenderer<T, U extends Renderable> {
 	
 	/**
 	 * Render a control.
@@ -22,11 +27,13 @@ public interface ControlRenderer<T, U extends Composite> {
 	 * 			the control context containing the {@link EObject} to be rendered
 	 * @param adapterFactoryItemDelegator
 	 * 			an {@link AdapterFactoryItemDelegator} instance that may be used during rendering
+	 * 
 	 * @return
 	 */
+	// TODO: JAVADOC
 	RendererNode<T> render(U model, 
             ECPControlContext controlContext,
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator);
+            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException;
 
 	/**
 	 * Initializes a renderer.

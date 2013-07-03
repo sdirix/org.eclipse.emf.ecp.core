@@ -23,22 +23,28 @@ import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.ShowRule;
 
-public abstract class RendererNode<T> implements ValidationListener {
+/**
+ * 
+ * @author emueler
+ *
+ * @param <CONTROL>
+ * 			the type of the actual control
+ */
+public abstract class RendererNode<CONTROL> implements ValidationListener {
 
-	private T result;
-	private org.eclipse.emf.ecp.view.model.Composite model;
+	private CONTROL result;
+	private org.eclipse.emf.ecp.view.model.Renderable model;
 	
-	private List<RendererNode<T>> children;
+	private List<RendererNode<CONTROL>> children;
 	private ECPControlContext controlContext;
 	
-	public RendererNode(T result, 
-			org.eclipse.emf.ecp.view.model.Composite model, 
+	public RendererNode(CONTROL result, org.eclipse.emf.ecp.view.model.Renderable model,
 			ECPControlContext controlContext) {
 		
 		this.result = result;
 		this.model = model;
 		this.controlContext = controlContext;
-		this.children = new ArrayList<RendererNode<T>>();
+		this.children = new ArrayList<RendererNode<CONTROL>>();
 	}
 	
 	public void checkShow(Notification notification) {
@@ -72,7 +78,7 @@ public abstract class RendererNode<T> implements ValidationListener {
 			}
 			
 		} else {
-			for (RendererNode child : getChildren()) {
+			for (RendererNode<CONTROL> child : getChildren()) {
 				child.checkShow(notification);
 			}
 		}
@@ -176,24 +182,25 @@ public abstract class RendererNode<T> implements ValidationListener {
 	public abstract void layout();
 	public abstract void cleanup();
 	
-	public T getRenderedResult() {
+	public CONTROL getRenderedResult() {
 		return result;
 	}
 	
-	public org.eclipse.emf.ecp.view.model.Composite getModel() {
+	public org.eclipse.emf.ecp.view.model.Renderable getRenderable() {
 		return model;
 	}
-		public void addChild(RendererNode<T> node) {
+	
+	public void addChild(RendererNode<CONTROL> node) {
 		children.add(node);
 	}
 	
-	public List<RendererNode<T>> getChildren() {
+	public List<RendererNode<CONTROL>> getChildren() {
 		return children;
 	}
 
 	@Override
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-		for (RendererNode child : getChildren()) {
+		for (RendererNode<CONTROL> child : getChildren()) {
 			child.validationChanged(affectedObjects);
 		}
 	}
@@ -206,9 +213,9 @@ public abstract class RendererNode<T> implements ValidationListener {
 		cleanup();
 	}
 	
-	public void execute(TreeRendererNodeVisitor visitor) {
+	public void execute(TreeRendererNodeVisitor<CONTROL> visitor) {
 		visitor.executeOnNode(this);
-		for (RendererNode child : getChildren()) {
+		for (RendererNode<CONTROL> child : getChildren()) {
 			visitor.executeOnNode(child);
 		}
 	}

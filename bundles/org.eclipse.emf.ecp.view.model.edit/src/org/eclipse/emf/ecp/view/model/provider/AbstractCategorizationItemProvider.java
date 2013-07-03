@@ -102,7 +102,7 @@ public class AbstractCategorizationItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__RULE);
+			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__RULE);
 		}
 		return childrenFeatures;
 	}
@@ -180,12 +180,12 @@ public class AbstractCategorizationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__RULE,
+				(ViewPackage.Literals.RENDERABLE__RULE,
 				 ViewFactory.eINSTANCE.createShowRule()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__RULE,
+				(ViewPackage.Literals.RENDERABLE__RULE,
 				 ViewFactory.eINSTANCE.createEnableRule()));
 	}
 

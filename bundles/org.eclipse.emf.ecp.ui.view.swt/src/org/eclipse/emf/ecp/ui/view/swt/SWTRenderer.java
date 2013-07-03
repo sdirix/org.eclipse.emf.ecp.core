@@ -1,8 +1,7 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ControlRenderer;
-import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Control;
 
 
@@ -12,7 +11,7 @@ import org.eclipse.swt.widgets.Control;
  * @param T
  * 			the type of the SWT control 
  */
-public interface SWTRenderer<T extends Composite> 
+public interface SWTRenderer<T extends Renderable> 
 	extends ControlRenderer<Control, T> {
 		
 	/**

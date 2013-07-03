@@ -1,8 +1,8 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 
-public abstract class AbstractSWTRenderer<T extends Composite> 
+public abstract class AbstractSWTRenderer<T extends Renderable> 
 	implements SWTRenderer<T> {
 
 	private org.eclipse.swt.widgets.Composite parent;

@@ -13,24 +13,31 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.TreeRendererNodeVisitor;
+import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.Categorization;
+import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.TreeCategory;
+import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 
-public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.model.Composite> {
+public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.model.Renderable> {
 
 	public static final SWTRenderers INSTANCE = new SWTRenderers();
 
     @SuppressWarnings("rawtypes")
-	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Composite>, SWTRenderer> renderers;
+	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer> renderers;
 
 	private Composite currentParent;
 	private boolean renderersInitialized;
@@ -38,37 +45,47 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 	public SWTRenderers() {
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "serial" })
 	private void initRenderers() {
-		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Composite>, SWTRenderer>();
-		renderers.put(ColumnComposite.class, new SWTColumnCompositeRenderer());
-		renderers.put(Column.class, new SWTColumnRenderer());
-		renderers.put(Group.class, new SWTGroupRenderer());
-		renderers.put(TableControl.class, new SWTTableControlRenderer());
-		renderers.put(Control.class, new SWTControlRenderer());
-		renderers.put(Seperator.class, new SWTSeparatorRenderer());
-		renderers.put(CustomComposite.class, new SWTCustomCompositeRenderer());
+		
+		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer>() {{
+			put(ColumnComposite.class, new SWTColumnCompositeRenderer());
+			put(Column.class, new SWTColumnRenderer());
+			put(Group.class, new SWTGroupRenderer());
+			put(TableControl.class, new SWTTableControlRenderer());
+			put(Control.class, new SWTControlRenderer());
+			put(Seperator.class, new SWTSeparatorRenderer());
+			put(CustomComposite.class, new SWTCustomCompositeRenderer());
+			put(View.class, new SWTViewRenderer());
+			put(Category.class, new SWTCategoryRenderer());
+			put(Categorization.class, new SWTCategorizationRenderer());
+			put(AbstractCategorization.class, new SWTAbstractCategorizationRenderer());
+			put(TreeCategory.class, new SWTTreeCategoryRenderer());
+		}};
+		
 		for (CustomSWTRenderer customRenderer : getCustomRenderers()) {
 			for (Map.Entry<Class<? extends org.eclipse.emf.ecp.view.model.Composite>, SWTRenderer<?>> renderEntry :
 				customRenderer.getCustomRenderers().entrySet()) {
 				renderers.put(renderEntry.getKey(), renderEntry.getValue());
 			}
 		}
+		
+		renderersInitialized = true;
 	}
 	
-	public RendererNode<org.eclipse.swt.widgets.Control> render(
+	public SWTRendererNode render(
 			Composite parent,
-            final org.eclipse.emf.ecp.view.model.Composite model, 
+            final org.eclipse.emf.ecp.view.model.Renderable renderable, 
             ECPControlContext controlContext, 
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
 		currentParent = parent;
-		return render(model, controlContext, adapterFactoryItemDelegator);
+		return render(renderable, controlContext, adapterFactoryItemDelegator);
 	}
 		
-	public RendererNode<org.eclipse.swt.widgets.Control> render(
-            final org.eclipse.emf.ecp.view.model.Composite model, 
+	public SWTRendererNode render(
+            final org.eclipse.emf.ecp.view.model.Renderable renderable, 
             ECPControlContext controlContext, 
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
 		
 		if (!renderersInitialized) {
 			initRenderers();
@@ -76,7 +93,7 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 		
 		Class c = null;
 		for (Class cls : renderers.keySet()) {
-			Class<?>[] interfaces = model.getClass().getInterfaces();
+			Class<?>[] interfaces = renderable.getClass().getInterfaces();
 			int indexOf = Arrays.asList(interfaces).indexOf(cls);
 			if (indexOf != -1) {
 				c = interfaces[indexOf];
@@ -91,17 +108,11 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 			swtRenderer.initialize(new Object[] {currentParent});
 			@SuppressWarnings("unchecked")
 			RendererNode<org.eclipse.swt.widgets.Control> node = swtRenderer.render(
-					model, controlContext, adapterFactoryItemDelegator);
-			
-			if (node == null) {
-				return null;
-			}
-			
-			return node;
+					renderable, controlContext, adapterFactoryItemDelegator);
+			return new SWTRendererNode(node.getRenderedResult(), node.getRenderable(), controlContext);
 		}
 		
-		return null;
-//		throw new NoRendererFoundException();
+		throw new NoRendererFoundException("No renderer found for renderable " + renderable);
     }
 
 	@Override

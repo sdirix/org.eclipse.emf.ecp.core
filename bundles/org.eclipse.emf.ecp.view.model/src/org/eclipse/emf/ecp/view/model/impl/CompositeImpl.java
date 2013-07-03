@@ -22,14 +22,24 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.CompositeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.model.impl.CompositeImpl#getRule <em>Rule</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.model.impl.CompositeImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public abstract class CompositeImpl extends EObjectImpl implements Composite {
+	/**
+	 * The cached value of the '{@link #getRule() <em>Rule</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRule()
+	 * @generated
+	 * @ordered
+	 */
+	protected Rule rule;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -49,16 +59,6 @@ public abstract class CompositeImpl extends EObjectImpl implements Composite {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getRule() <em>Rule</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRule()
-	 * @generated
-	 * @ordered
-	 */
-	protected Rule rule;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -165,10 +165,10 @@ public abstract class CompositeImpl extends EObjectImpl implements Composite {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE__NAME:
-				return getName();
 			case ViewPackage.COMPOSITE__RULE:
 				return getRule();
+			case ViewPackage.COMPOSITE__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -181,11 +181,11 @@ public abstract class CompositeImpl extends EObjectImpl implements Composite {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE__NAME:
-				setName((String)newValue);
-				return;
 			case ViewPackage.COMPOSITE__RULE:
 				setRule((Rule)newValue);
+				return;
+			case ViewPackage.COMPOSITE__NAME:
+				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -199,11 +199,11 @@ public abstract class CompositeImpl extends EObjectImpl implements Composite {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case ViewPackage.COMPOSITE__RULE:
 				setRule((Rule)null);
+				return;
+			case ViewPackage.COMPOSITE__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -217,10 +217,10 @@ public abstract class CompositeImpl extends EObjectImpl implements Composite {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ViewPackage.COMPOSITE__RULE:
 				return rule != null;
+			case ViewPackage.COMPOSITE__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}

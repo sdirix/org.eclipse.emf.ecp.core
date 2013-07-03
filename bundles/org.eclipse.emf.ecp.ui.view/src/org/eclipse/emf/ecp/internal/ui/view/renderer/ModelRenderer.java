@@ -1,14 +1,13 @@
 package org.eclipse.emf.ecp.internal.ui.view.renderer;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 
-public interface ModelRenderer {
+public interface ModelRenderer<T, U extends Renderable> extends ControlRenderer<T, U> {
 
 	ModelRendererFactory INSTANCE = new ModelRendererFactoryImpl();
 	
-    RendererContext render(View view, ECPControlContext context);
+    RendererContext<T> render(U renderable, ECPControlContext context) throws NoRendererFoundException;
+    
 }

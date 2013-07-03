@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -9,6 +10,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnComposite> {
@@ -18,7 +20,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 	
 	@Override
 	public SWTRendererNode render(ColumnComposite modelColumnComposite,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
 		//TODO Add check whether label is shown
 //		Label l=new Label(getParent(), SWT.NONE);
 //		l.setText(modelColumnComposite.getName());
@@ -33,10 +35,10 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 			.applyTo(columnComposite);
 		
 		//TODO Add to handle differently if label is shown
-//		GridDataFactory.fillDefaults()
-//    	.align(SWT.FILL, SWT.BEGINNING)
-//    	.grab(true, false)
-//        .applyTo(columnComposite);
+		GridDataFactory.fillDefaults()
+			.align(SWT.FILL, SWT.BEGINNING)
+			.grab(true, false)
+			.applyTo(columnComposite);
 		
 		SWTRendererNode node = new SWTRendererNode(columnComposite, modelColumnComposite, controlContext);
 		

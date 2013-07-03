@@ -156,6 +156,10 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 				return createTreeCategoryAdapter();
 			}
 			@Override
+			public Adapter caseRenderable(Renderable object) {
+				return createRenderableAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -480,6 +484,20 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTreeCategoryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.Renderable
+	 * @generated
+	 */
+	public Adapter createRenderableAdapter() {
 		return null;
 	}
 

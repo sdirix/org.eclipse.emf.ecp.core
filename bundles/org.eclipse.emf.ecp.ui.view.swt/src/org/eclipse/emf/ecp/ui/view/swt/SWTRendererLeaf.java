@@ -45,8 +45,8 @@ public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
 		}
 		
 		control.resetValidation();
-		if (affectedObjects.containsKey(getModel())) { 
-			for (Diagnostic diagnostic : affectedObjects.get(getModel())) {
+		if (affectedObjects.containsKey(getRenderable())) { 
+			for (Diagnostic diagnostic : affectedObjects.get(getRenderable())) {
 				control.handleValidation(diagnostic);
 			}
 		}
