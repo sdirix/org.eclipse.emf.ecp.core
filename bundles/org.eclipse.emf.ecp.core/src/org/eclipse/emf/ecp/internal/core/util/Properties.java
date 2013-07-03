@@ -44,7 +44,7 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	}
 
 	public void write(ObjectOutput out) throws IOException {
-		Collection<Entry<String, String>> entries = getElements();
+		Collection<Entry<String, String>> entries = getElementsToWrite();
 		out.writeInt(entries.size());
 		for (Entry<String, String> entry : entries) {
 			out.writeUTF(entry.getKey());
@@ -53,13 +53,13 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	}
 
 	/** {@inheritDoc} */
-	public final void addProperty(String key, String value) {
+	public void addProperty(String key, String value) {
 		Map.Entry<String, String> property = new Property(key, value);
 		doChangeElements(null, Collections.singleton(property));
 	}
 
 	/** {@inheritDoc} */
-	public final void removeProperty(String key) {
+	public void removeProperty(String key) {
 		doChangeElements(Collections.singleton(key), null);
 	}
 
@@ -97,6 +97,10 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	@Override
 	protected String getElementName(Map.Entry<String, String> element) {
 		return element.getKey();
+	}
+
+	protected Collection<Entry<String, String>> getElementsToWrite() {
+		return getElements();
 	}
 
 	/*
