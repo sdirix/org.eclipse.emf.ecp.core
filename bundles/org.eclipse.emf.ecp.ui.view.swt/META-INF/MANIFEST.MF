@@ -5,8 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt;singleton:=true
 Bundle-Version: 1.0.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ui.view.swt.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.ui.view;bundle-version="1.0.0",
  org.eclipse.emf.ecp.view.model;bundle-version="1.0.0",
  org.eclipse.emf.ecp.edit.swt;bundle-version="1.0.0",
@@ -14,5 +13,10 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.ui.view.swt
-Import-Package: org.eclipse.emf.edit.ui.provider,
- org.eclipse.ui.views.properties;ui.views=split;version="0.0.0"
+Import-Package: org.eclipse.jface.layout,
+ org.eclipse.jface.viewers,
+ org.eclipse.swt,
+ org.eclipse.swt.custom,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.layout,
+ org.eclipse.swt.widgets

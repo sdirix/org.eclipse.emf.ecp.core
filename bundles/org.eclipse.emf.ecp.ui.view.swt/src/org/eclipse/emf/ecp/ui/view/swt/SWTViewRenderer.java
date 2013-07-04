@@ -7,6 +7,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider;
+import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
@@ -19,8 +21,6 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -245,8 +245,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 					 // TODO: create adapter factory item delegator
 					 RendererNode<Control> childNode = null;
 					 try {
-							System.out.println("Rendering with adapter factory " + newAdapterFactoryItemDelegator);
-							 childNode = SWTRenderers.INSTANCE.render(childComposite, (AbstractCategorization) selection, controlContext, newAdapterFactoryItemDelegator);
+						 childNode = SWTRenderers.INSTANCE.render(childComposite, (AbstractCategorization) selection, controlContext, newAdapterFactoryItemDelegator);
 					 } catch (NoRendererFoundException e) {
 						 // TODO Auto-generated catch block
 						 e.printStackTrace();

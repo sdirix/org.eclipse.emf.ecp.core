@@ -36,7 +36,6 @@ public class ModelRendererImpl<T, U extends Renderable> implements ModelRenderer
 		RendererNode<T> node = render(renderable, context, adapterFactoryItemDelegator);
 		
 		composedAdapterFactory.dispose();
-		System.out.println("Disposed composed adapter factory " + adapterFactoryItemDelegator);
 		
 		rendererContext.setNode(node);
 	
