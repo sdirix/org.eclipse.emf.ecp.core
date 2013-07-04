@@ -76,7 +76,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		Set<ELEMENT> elements = new HashSet<ELEMENT>();
 		for (File file : folder.listFiles()) {
 			try {
-				if (file.isFile()) {
+				if (isLoadableElement(file)) {
 					InputStream stream = null;
 
 					try {
@@ -97,9 +97,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 							elements.add(element);
 						}
 					} finally {
-						if (stream != null) {
-							stream.close();
-						}
+						IOUtil.close(stream);
 					}
 				}
 			} catch (IOException ex) {
@@ -108,6 +106,10 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		}
 
 		doChangeElements(null, elements);
+	}
+
+	protected boolean isLoadableElement(File file) {
+		return file.isFile();
 	}
 
 	protected abstract ELEMENT loadElement(ObjectInput in) throws IOException;
@@ -136,7 +138,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		}
 	}
 
-	protected void storeElement(ELEMENT element) {
+	public void storeElement(ELEMENT element) {
 		File file = getFile(element);
 		File temp = new File(file.getParentFile(), file.getName() + ".tmp");
 		if (temp.isFile()) {

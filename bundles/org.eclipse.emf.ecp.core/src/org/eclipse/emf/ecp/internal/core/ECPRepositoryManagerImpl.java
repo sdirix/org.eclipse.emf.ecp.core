@@ -14,6 +14,7 @@
 package org.eclipse.emf.ecp.internal.core;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
@@ -23,12 +24,14 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.InternalUtil;
+import org.eclipse.emf.ecp.internal.core.util.Properties;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
@@ -37,11 +40,19 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.core.runtime.IConfigurationElement;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -56,6 +67,11 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
 	 */
 	public static ECPRepositoryManagerImpl INSTANCE;
+
+	/**
+	 * The file extension that is used for dynamic properties of statically declared repositories.
+	 */
+	private static final String DYNAMIC_PROPERTIES_EXTENSION = ".dynamic_properties";
 
 	private final RepositoryParser extensionParser = new RepositoryParser();
 
@@ -138,6 +154,19 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	@Override
+	protected File getFile(InternalRepository element) {
+		if (element instanceof RepositoryDescriptor) {
+			return new File(getFolder(), element.getName() + DYNAMIC_PROPERTIES_EXTENSION);
+		}
+		return super.getFile(element);
+	}
+
+	@Override
+	protected boolean isLoadableElement(File file) {
+		return super.isLoadableElement(file) && !file.getName().endsWith(DYNAMIC_PROPERTIES_EXTENSION);
+	}
+
+	@Override
 	protected InternalRepository loadElement(ObjectInput in) throws IOException {
 		return new ECPRepositoryImpl(in);
 	}
@@ -156,8 +185,8 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 	@Override
 	protected void doActivate() throws Exception {
-		super.doActivate();
-		extensionParser.activate();
+		super.doActivate(); // 1. Load dynamic repositories
+		extensionParser.activate(); // 2. Register static repositories
 		ECPUtil.getECPObserverBus().register(this);
 	}
 
@@ -192,7 +221,38 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 */
 	private final class RepositoryDescriptor extends ExtensionDescriptor<InternalRepository> implements
 		InternalRepository {
-		private ECPProperties properties = ECPUtil.createProperties();
+		private Set<String> declaredPropertyKeys;
+		private ECPProperties properties = new Properties() {
+			@Override
+			public void addProperty(String key, String value) {
+				excludeDeclaredProperties(key);
+				super.addProperty(key, value);
+			}
+
+			@Override
+			public void removeProperty(String key) {
+				excludeDeclaredProperties(key);
+				super.removeProperty(key);
+			}
+
+			private void excludeDeclaredProperties(String key) {
+				if (declaredPropertyKeys != null && declaredPropertyKeys.contains(key)) {
+					throw new IllegalArgumentException("Statically declared property can not be changed: " + key);
+				}
+			}
+
+			@Override
+			protected Collection<Map.Entry<String, String>> getElementsToWrite() {
+				List<Map.Entry<String, String>> elementsToWrite = new ArrayList<Map.Entry<String, String>>();
+				for (Map.Entry<String, String> entry : getElements()) {
+					if (!declaredPropertyKeys.contains(entry.getKey())) {
+						elementsToWrite.add(entry);
+					}
+				}
+
+				return elementsToWrite;
+			}
+		};
 
 		public RepositoryDescriptor(String name, IConfigurationElement configurationElement) {
 			super(ECPRepositoryManagerImpl.this, name, TYPE, configurationElement);
@@ -201,16 +261,42 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 				String value = property.getAttribute("value");
 				properties.addProperty(key, value);
 			}
+
+			declaredPropertyKeys = new HashSet<String>(properties.getKeys());
+
+			InputStream stream = null;
+
+			try {
+				File file = getFile(this);
+				stream = new FileInputStream(file);
+				ObjectInputStream in = new ObjectInputStream(stream);
+
+				Properties dynamicProperties = new Properties(in);
+				for (Entry<String, String> property : dynamicProperties.getProperties()) {
+					properties.addProperty(property.getKey(), property.getValue());
+				}
+			} catch (IOException ex) {
+				Activator.log(ex);
+			} finally {
+				IOUtil.close(stream);
+			}
+
+			properties.addObserver(new ECPPropertiesObserver() {
+				public void propertiesChanged(ECPProperties properties,
+					Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties) {
+					ECPRepositoryManagerImpl.INSTANCE.storeElement(RepositoryDescriptor.this);
+				}
+			});
 		}
 
 		/** {@inheritDoc} */
 		public boolean isStorable() {
-			return false;
+			return true;
 		}
 
 		/** {@inheritDoc} */
 		public void write(ObjectOutput out) throws IOException {
-			throw new UnsupportedOperationException();
+			((Properties) properties).write(out);
 		}
 
 		/** {@inheritDoc} */

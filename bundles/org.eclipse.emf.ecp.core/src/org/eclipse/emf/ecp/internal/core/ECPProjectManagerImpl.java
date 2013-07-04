@@ -171,11 +171,6 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		return (Collection) projects;
 	}
 
-	@Override
-	public void storeElement(InternalProject project) {
-		super.storeElement(project);
-	}
-
 	/**
 	 * This is called by projects to notify observers about project changes.
 	 * 
