@@ -153,7 +153,6 @@ public class LinkControl extends SingleControl {
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		// adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		// shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
