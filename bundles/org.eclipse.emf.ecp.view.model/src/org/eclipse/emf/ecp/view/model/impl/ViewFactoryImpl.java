@@ -5,12 +5,27 @@ package org.eclipse.emf.ecp.view.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.emf.ecp.view.model.*;
+import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Categorization;
+import org.eclipse.emf.ecp.view.model.Category;
+import org.eclipse.emf.ecp.view.model.Column;
+import org.eclipse.emf.ecp.view.model.ColumnComposite;
+import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.CustomComposite;
+import org.eclipse.emf.ecp.view.model.EnableRule;
+import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.model.LeafCondition;
+import org.eclipse.emf.ecp.view.model.OrCondition;
+import org.eclipse.emf.ecp.view.model.Seperator;
+import org.eclipse.emf.ecp.view.model.ShowRule;
+import org.eclipse.emf.ecp.view.model.TableColumn;
+import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.TreeCategory;
+import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
  * <!-- begin-user-doc -->
