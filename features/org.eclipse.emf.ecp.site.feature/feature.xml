@@ -63,4 +63,12 @@
          id="org.eclipse.emf.ecp.graphiti.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.model.editor.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.viewmodel.feature"
+         version="0.0.0"/>
+
 </feature>

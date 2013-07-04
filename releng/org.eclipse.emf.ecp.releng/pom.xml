@@ -89,15 +89,16 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.provider.xmi</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
+		
 
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
 		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
-		<!-- Graphiti -->
+		<!-- Graphiti 
 		<module>../../features/org.eclipse.emf.ecp.graphiti.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.graphiti.core</module>
-		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>
+		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>-->
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>

@@ -21,7 +21,7 @@
    <feature url="features/org.eclipse.emf.ecp.sdk.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.sdk.feature" version="1.0.1.qualifier">
       <category name="org.eclipse.emf.ecp.sdk.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.viewmodel.feature_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.viewmodel.feature" version="1.0.0.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.viewmodel.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.viewmodel.feature" version="1.0.1.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
