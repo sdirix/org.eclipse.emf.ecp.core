@@ -29,5 +29,5 @@
    <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>
    <category-def name="org.eclipse.emf.ecp.extra.category" label="ECP Extra Feature"/>
    <category-def name="org.eclipse.emf.ecp.sdk.category" label="SDK"/>
-   <category-def name="org.eclipse.emf.ecp.view" label="New Category 1"/>
+   <category-def name="org.eclipse.emf.ecp.view" label="View Model Feature"/>
 </site>
