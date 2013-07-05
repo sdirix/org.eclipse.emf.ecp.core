@@ -34,12 +34,20 @@ import org.eclipse.emf.ecp.view.model.ShowRule;
 public class Node<T extends Renderable> implements ValidationListener {
 
 	private T model;
-	private List<Node> children;
+	private List<Node<?>> children;
 	private WithRenderedObject renderedObject;
+    private boolean isVisible;
 	
 	public Node(T model) {
 		this.model = model;
-		this.children = new ArrayList<Node>();
+		this.children = new ArrayList<Node<?>>();
+		isVisible = true;
+	}
+	
+	public Node(T model, boolean isVisible) {
+	    this.model = model;
+        this.isVisible = isVisible;
+	    this.children = new ArrayList<Node<?>>();
 	}
 	
 	public T getRenderable() {
@@ -50,7 +58,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 		children.add(node);
 	}
 	
-	public List<Node> getChildren() {
+	public List<Node<?>> getChildren() {
 		return children;
 	}
 
@@ -235,8 +243,15 @@ public class Node<T extends Renderable> implements ValidationListener {
 		}
 	}
 
-	
 	public void lift(WithRenderedObject rendered) {
 		renderedObject = rendered;
 	}
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
 }

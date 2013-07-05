@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 
 public class NodeBuilders implements NodeBuilder {
@@ -49,7 +50,8 @@ public class NodeBuilders implements NodeBuilder {
 			put(CustomComposite.class, new RenderableNodeBuilder<CustomComposite>());
 			put(View.class, new ViewNodeBuilder());
 			put(Category.class, new CategoryNodeBuilder());
-			put(Categorization.class, new CategorizationNodeBuilder()); 
+			put(Categorization.class, new CategorizationNodeBuilder());
+			put(TreeCategory.class, new TreeCategoryNodeBuilder());
 		}};
 		
 		for (CustomNodeBuilder customBuilder : getCustomNodeBuilders()) {
@@ -79,7 +81,7 @@ public class NodeBuilders implements NodeBuilder {
 		return builders;
 	}
 
-	public Node build(Renderable renderable, Object[] assets) {
+	public Node build(Renderable renderable, Object... assets) {
 		
 		if (!buildersInitialized) {
 			initBuilders();
