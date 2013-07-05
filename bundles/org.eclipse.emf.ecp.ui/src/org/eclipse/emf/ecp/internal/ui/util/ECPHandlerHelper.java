@@ -438,7 +438,7 @@ public final class ECPHandlerHelper {
 
 		List<ECPProject> dirtyProjects = new ArrayList<ECPProject>();
 		for (ECPProject project : manager.getProjects()) {
-			if (project.hasDirtyContents()) {
+			if (project.isOpen() && project.hasDirtyContents()) {
 				dirtyProjects.add(project);
 			}
 		}
