@@ -48,6 +48,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 			Composite composite = createComposite(getParent());
 			TreeViewer treeViewer = createTreeViewer(composite);
 			final ScrolledComposite scrolledComposite = createScrolledComposite(composite);
+			GridDataFactory.fillDefaults()
+                .grab(true, true)
+                .align(SWT.FILL, SWT.FILL)
+                .applyTo(scrolledComposite);
+			
 			Composite editorComposite = createComposite(scrolledComposite);
 			scrolledComposite.setContent(editorComposite);
 
@@ -128,8 +133,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 							return;
 						}
 						
-						org.eclipse.emf.ecp.view.model.Composite composite = null;
-						boolean treeCategoryElement = false;
 						
 						 for (Control control : scrolledComposite.getChildren()) {
 							 control.dispose();
@@ -143,14 +146,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 						if (Node.class.isInstance(selection)) {
 							Node node = (Node) selection;
 							Renderable renderable = node.getRenderable();
-							
-							 for (Control control : scrolledComposite.getChildren()) {
-								 control.dispose();
-							 }
 							 
 							if (renderable instanceof Category) {
 								Category category = (Category) renderable;
-								composite = category.getComposite();
 								try {
 									SWTRenderers.INSTANCE.render(childComposite, node, controlContext, newAdapterFactoryItemDelegator);
 								} catch (NoRendererFoundException e) {
@@ -182,10 +180,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 								 
 								 if (parent == null)
 									 return;
-
-								 TreeCategory category = (TreeCategory) parent;
-								 composite = category.getChildComposite();
-								 treeCategoryElement = true;
 							}
 							
 							childComposite.layout();
@@ -228,8 +222,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 	private TreeViewer createTreeViewer(Composite composite) {
 		TreeViewer treeViewer = new TreeViewer(composite);
 		GridDataFactory.fillDefaults()
-		.grab(true, true)
-		.align(SWT.FILL, SWT.FILL)
+		.grab(false, true)
+		.align(SWT.BEGINNING, SWT.FILL)
 		.applyTo(treeViewer.getControl());
 		return treeViewer;
 	}
@@ -239,7 +233,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 	 */
 	private Composite createComposite(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(getParent().getBackground());
+		composite.setBackground(parent.getBackground());
 		
 		GridLayoutFactory.fillDefaults()
 			.numColumns(2)
