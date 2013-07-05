@@ -10,7 +10,9 @@ public class CategoryNodeBuilder implements NodeBuilder<Category> {
 	@Override
 	public Node build(Category category, Object... assets) {
 		Node node = new Node(category);
-		node.addChild(NodeBuilders.INSTANCE.build(category.getComposite(), assets));
+		Node child = NodeBuilders.INSTANCE.build(category.getComposite(), assets);
+		child.setVisible(false);
+		node.addChild(child);
 		return node;
 	}
 

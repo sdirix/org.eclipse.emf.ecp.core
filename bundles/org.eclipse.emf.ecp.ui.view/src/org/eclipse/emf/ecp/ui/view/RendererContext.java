@@ -58,7 +58,7 @@ public class RendererContext<CONTROL> {
             }
 
         };
-        this.article.eAdapters().add(contentAdapter);
+//        this.article.eAdapters().add(contentAdapter);
     }
 
     public void triggerValidation() {

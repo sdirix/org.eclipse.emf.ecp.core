@@ -152,41 +152,49 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 						if (Node.class.isInstance(selection)) {
 							Node node = (Node) selection;
 							Renderable renderable = node.getRenderable();
-							 
-							if (renderable instanceof Category) {
-								Category category = (Category) renderable;
-								try {
-									SWTRenderers.INSTANCE.render(childComposite, node, controlContext, newAdapterFactoryItemDelegator);
-								} catch (NoRendererFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (NoPropertyDescriptorFoundExeption e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-
-							} else {
-								 TreePath path = treeSelection.getPathsFor(selection)[0];
-								 
-								 if (path.getSegmentCount() < 2) {
-									 return;
-								 }
-
-								 Object parent = null;
-								 for (int i = path.getSegmentCount() - 2; i >= 0; i--) {
-									 Object segment = path.getSegment(i);
-									 if (segment instanceof Node) {
-										 Node n = (Node) segment;
-										 if (TreeCategory.class.isInstance(n.getRenderable())) {
-											 parent = path.getSegment(i);
-											 break;											 
-										 }
-									 }
-								 }
-								 
-								 if (parent == null)
-									 return;
-							}
+							try {
+                                SWTRenderers.INSTANCE.render(childComposite, node, controlContext, newAdapterFactoryItemDelegator);
+                            } catch (NoRendererFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (NoPropertyDescriptorFoundExeption e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+//							if (renderable instanceof Category) {
+//								Category category = (Category) renderable;
+//								try {
+//									SWTRenderers.INSTANCE.render(childComposite, node, controlContext, newAdapterFactoryItemDelegator);
+//								} catch (NoRendererFoundException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								} catch (NoPropertyDescriptorFoundExeption e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//
+//							} else {
+//								 TreePath path = treeSelection.getPathsFor(selection)[0];
+//								 
+//								 if (path.getSegmentCount() < 2) {
+//									 return;
+//								 }
+//
+//								 Object parent = null;
+//								 for (int i = path.getSegmentCount() - 2; i >= 0; i--) {
+//									 Object segment = path.getSegment(i);
+//									 if (segment instanceof Node) {
+//										 Node n = (Node) segment;
+//										 if (TreeCategory.class.isInstance(n.getRenderable())) {
+//											 parent = path.getSegment(i);
+//											 break;											 
+//										 }
+//									 }
+//								 }
+//								 
+//								 if (parent == null)
+//									 return;
+//							}
 							
 							childComposite.layout();
 						}	
@@ -210,9 +218,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 	    for (Node child : children) { 
 	        if (child.isVisible()) {
 	            result.add(child);
-	        } else {
-	            result.addAll(filterVisisbleNodes(child));
-	        }
+	        } 
+//	        else {
+//	            result.addAll(filterVisisbleNodes(child));
+//	        }
 	    }
 	    return result;
 	}

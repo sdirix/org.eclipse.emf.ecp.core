@@ -1,7 +1,6 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ControlRenderer;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Control;
