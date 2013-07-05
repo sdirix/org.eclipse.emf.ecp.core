@@ -64,7 +64,7 @@ public final class SWTRenderers  implements SWTRenderer {
 		}};
 		
 		for (CustomSWTRenderer customRenderer : getCustomRenderers()) {
-			for (Map.Entry<Class<? extends org.eclipse.emf.ecp.view.model.Composite>, SWTRenderer<?>> renderEntry :
+			for (Map.Entry<Class<? extends Renderable>, SWTRenderer<?>> renderEntry :
 				customRenderer.getCustomRenderers().entrySet()) {
 				renderers.put(renderEntry.getKey(), renderEntry.getValue());
 			}
