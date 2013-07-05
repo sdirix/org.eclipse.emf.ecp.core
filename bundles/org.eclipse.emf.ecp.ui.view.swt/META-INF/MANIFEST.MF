@@ -13,7 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.ui.view.swt
-Import-Package: org.eclipse.jface.layout,
+Import-Package: org.eclipse.core.commands,
+ org.eclipse.jface.action,
+ org.eclipse.jface.layout,
  org.eclipse.jface.viewers,
  org.eclipse.swt,
  org.eclipse.swt.custom,

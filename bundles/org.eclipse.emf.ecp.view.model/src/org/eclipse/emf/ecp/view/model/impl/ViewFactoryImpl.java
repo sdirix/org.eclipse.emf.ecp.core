@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
@@ -88,6 +89,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			case ViewPackage.COLUMN: return createColumn();
 			case ViewPackage.GROUP: return createGroup();
 			case ViewPackage.TREE_CATEGORY: return createTreeCategory();
+			case ViewPackage.ACTION: return createAction();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -261,6 +263,16 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public TreeCategory createTreeCategory() {
 		TreeCategoryImpl treeCategory = new TreeCategoryImpl();
 		return treeCategory;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Action createAction() {
+		ActionImpl action = new ActionImpl();
+		return action;
 	}
 
 	/**

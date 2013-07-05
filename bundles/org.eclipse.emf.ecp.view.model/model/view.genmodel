@@ -5,7 +5,7 @@
     modelName="View" editPluginClass="org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin"
     editorPluginClass="org.eclipse.emf.ecp.view.model.presentation.ViewEditorPlugin"
     testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.model"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.model"
     editorPluginID="org.eclipse.emf.ecp.view.model.editor" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>view.ecore</foreignModel>
   <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view" disposableProviderFactory="true"
@@ -15,6 +15,8 @@
     </genClasses>
     <genClasses ecoreClass="view.ecore#//AbstractCategorization">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//AbstractCategorization/name"/>
+      <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"
+          ecoreFeature="ecore:EReference view.ecore#//AbstractCategorization/actions"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Rule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Rule/condition"/>
@@ -39,8 +41,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//AndCondition/conditions"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//Categorization">
-      <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"
-          ecoreFeature="ecore:EReference view.ecore#//Categorization/categorizations"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Categorization/categorizations"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//Category">
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Category/composite"/>
@@ -83,6 +84,10 @@
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Renderable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Renderable/rule"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/bundle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/className"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

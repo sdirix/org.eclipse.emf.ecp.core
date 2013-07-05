@@ -8,9 +8,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.ecp.view.model.util.ViewAdapterFactory;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -463,6 +461,29 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Action} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ActionItemProvider actionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.Action}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createActionAdapter() {
+		if (actionItemProvider == null) {
+			actionItemProvider = new ActionItemProvider(this);
+		}
+
+		return actionItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -578,6 +599,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		if (columnItemProvider != null) columnItemProvider.dispose();
 		if (groupItemProvider != null) groupItemProvider.dispose();
 		if (treeCategoryItemProvider != null) treeCategoryItemProvider.dispose();
+		if (actionItemProvider != null) actionItemProvider.dispose();
 	}
 
 }

@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
@@ -203,6 +204,13 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	private EClass renderableEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass actionEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -300,6 +308,15 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getAbstractCategorization_Name() {
 		return (EAttribute)abstractCategorizationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAbstractCategorization_Actions() {
+		return (EReference)abstractCategorizationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -739,6 +756,33 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getAction() {
+		return actionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAction_Bundle() {
+		return (EAttribute)actionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAction_ClassName() {
+		return (EAttribute)actionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ViewFactory getViewFactory() {
 		return (ViewFactory)getEFactoryInstance();
 	}
@@ -767,6 +811,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		abstractCategorizationEClass = createEClass(ABSTRACT_CATEGORIZATION);
 		createEAttribute(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__NAME);
+		createEReference(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__ACTIONS);
 
 		ruleEClass = createEClass(RULE);
 		createEReference(ruleEClass, RULE__CONDITION);
@@ -836,6 +881,10 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		renderableEClass = createEClass(RENDERABLE);
 		createEReference(renderableEClass, RENDERABLE__RULE);
+
+		actionEClass = createEClass(ACTION);
+		createEAttribute(actionEClass, ACTION__BUNDLE);
+		createEAttribute(actionEClass, ACTION__CLASS_NAME);
 	}
 
 	/**
@@ -895,6 +944,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		initEClass(abstractCategorizationEClass, AbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAbstractCategorization_Name(), theEcorePackage.getEString(), "name", null, 1, 1, AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAbstractCategorization_Actions(), this.getAction(), null, "actions", null, 0, -1, AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRule_Condition(), this.getCondition(), null, "condition", null, 1, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -964,6 +1014,10 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRenderable_Rule(), this.getRule(), null, "rule", null, 0, 1, Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAction_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

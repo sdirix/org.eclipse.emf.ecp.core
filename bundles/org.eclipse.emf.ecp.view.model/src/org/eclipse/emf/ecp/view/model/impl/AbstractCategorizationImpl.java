@@ -2,13 +2,19 @@
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Rule;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -21,6 +27,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <ul>
  *   <li>{@link org.eclipse.emf.ecp.view.model.impl.AbstractCategorizationImpl#getRule <em>Rule</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.model.impl.AbstractCategorizationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.model.impl.AbstractCategorizationImpl#getActions <em>Actions</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,6 +63,16 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getActions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Action> actions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -145,11 +162,25 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Action> getActions() {
+		if (actions == null) {
+			actions = new EObjectContainmentEList<Action>(Action.class, this, ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS);
+		}
+		return actions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 				return basicSetRule(null, msgs);
+			case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
+				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -166,6 +197,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 				return getRule();
 			case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 				return getName();
+			case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
+				return getActions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -175,6 +208,7 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -183,6 +217,10 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 				return;
 			case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 				setName((String)newValue);
+				return;
+			case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
+				getActions().clear();
+				getActions().addAll((Collection<? extends Action>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -202,6 +240,9 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 			case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
+				getActions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -218,6 +259,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 				return rule != null;
 			case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
+				return actions != null && !actions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

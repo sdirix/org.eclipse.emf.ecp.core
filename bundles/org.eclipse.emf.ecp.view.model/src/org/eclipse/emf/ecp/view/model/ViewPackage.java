@@ -212,13 +212,22 @@ public interface ViewPackage extends EPackage {
 	int ABSTRACT_CATEGORIZATION__NAME = RENDERABLE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__ACTIONS = RENDERABLE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Abstract Categorization</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 1;
+	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -237,6 +246,15 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORIZATION__NAME = ABSTRACT_CATEGORIZATION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__ACTIONS = ABSTRACT_CATEGORIZATION__ACTIONS;
 
 	/**
 	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
@@ -273,6 +291,15 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIEW__NAME = CATEGORIZATION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ACTIONS = CATEGORIZATION__ACTIONS;
 
 	/**
 	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
@@ -471,6 +498,15 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__ACTIONS = ABSTRACT_CATEGORIZATION__ACTIONS;
 
 	/**
 	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
@@ -1051,6 +1087,15 @@ public interface ViewPackage extends EPackage {
 	int TREE_CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TREE_CATEGORY__ACTIONS = ABSTRACT_CATEGORIZATION__ACTIONS;
+
+	/**
 	 * The feature id for the '<em><b>Child Composite</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1085,6 +1130,44 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TREE_CATEGORY_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 3;
+
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.ActionImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
+	 * @generated
+	 */
+	int ACTION = 23;
+
+	/**
+	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION__BUNDLE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION__CLASS_NAME = 1;
+
+	/**
+	 * The number of structural features of the '<em>Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION_FEATURE_COUNT = 2;
 
 
 	/**
@@ -1128,6 +1211,17 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAbstractCategorization_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.model.AbstractCategorization#getActions <em>Actions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Actions</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.AbstractCategorization#getActions()
+	 * @see #getAbstractCategorization()
+	 * @generated
+	 */
+	EReference getAbstractCategorization_Actions();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Rule <em>Rule</em>}'.
@@ -1637,6 +1731,38 @@ public interface ViewPackage extends EPackage {
 	EReference getRenderable_Rule();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Action <em>Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Action</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Action
+	 * @generated
+	 */
+	EClass getAction();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Action#getBundle <em>Bundle</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Bundle</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Action#getBundle()
+	 * @see #getAction()
+	 * @generated
+	 */
+	EAttribute getAction_Bundle();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Action#getClassName <em>Class Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Class Name</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Action#getClassName()
+	 * @see #getAction()
+	 * @generated
+	 */
+	EAttribute getAction_ClassName();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1693,6 +1819,14 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ABSTRACT_CATEGORIZATION__NAME = eINSTANCE.getAbstractCategorization_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ABSTRACT_CATEGORIZATION__ACTIONS = eINSTANCE.getAbstractCategorization_Actions();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RuleImpl <em>Rule</em>}' class.
@@ -2119,6 +2253,32 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RENDERABLE__RULE = eINSTANCE.getRenderable_Rule();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.model.impl.ActionImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
+		 * @generated
+		 */
+		EClass ACTION = eINSTANCE.getAction();
+
+		/**
+		 * The meta object literal for the '<em><b>Bundle</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACTION__BUNDLE = eINSTANCE.getAction_Bundle();
+
+		/**
+		 * The meta object literal for the '<em><b>Class Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ACTION__CLASS_NAME = eINSTANCE.getAction_ClassName();
 
 	}
 

@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
@@ -258,6 +259,12 @@ public class ViewSwitch<T> extends Switch<T> {
 			case ViewPackage.RENDERABLE: {
 				Renderable renderable = (Renderable)theEObject;
 				T result = caseRenderable(renderable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ViewPackage.ACTION: {
+				Action action = (Action)theEObject;
+				T result = caseAction(action);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -607,6 +614,21 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseRenderable(Renderable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Action</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Action</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAction(Action object) {
 		return null;
 	}
 
