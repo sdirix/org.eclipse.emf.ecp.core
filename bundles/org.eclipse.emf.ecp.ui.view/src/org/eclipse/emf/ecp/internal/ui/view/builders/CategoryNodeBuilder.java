@@ -8,9 +8,9 @@ import org.eclipse.emf.ecp.view.model.View;
 public class CategoryNodeBuilder implements NodeBuilder<Category> {
 
 	@Override
-	public Node build(Category category) {
+	public Node build(Category category, Object[] assets) {
 		Node node = new Node(category);
-		node.addChild(NodeBuilders.INSTANCE.build(category.getComposite()));
+		node.addChild(NodeBuilders.INSTANCE.build(category.getComposite(), assets));
 		return node;
 	}
 

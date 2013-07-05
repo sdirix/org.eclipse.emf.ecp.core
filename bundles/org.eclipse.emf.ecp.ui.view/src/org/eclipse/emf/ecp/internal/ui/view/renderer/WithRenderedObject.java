@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * 
- * @author emueler
+ * @author emueller
  *
  * @param <CONTROL>
  * 			the type of the actual control

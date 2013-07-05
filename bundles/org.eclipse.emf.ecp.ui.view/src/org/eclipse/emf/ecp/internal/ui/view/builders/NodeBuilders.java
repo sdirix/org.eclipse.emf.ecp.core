@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
-public class NodeBuilders {
+public class NodeBuilders implements NodeBuilder {
 
 	public static final NodeBuilders INSTANCE = new NodeBuilders();
 
@@ -79,7 +79,7 @@ public class NodeBuilders {
 		return builders;
 	}
 
-	public Node build(Renderable renderable) {
+	public Node build(Renderable renderable, Object[] assets) {
 		
 		if (!buildersInitialized) {
 			initBuilders();
@@ -99,7 +99,7 @@ public class NodeBuilders {
 		if (c != null) {
 			@SuppressWarnings("rawtypes") 
 			NodeBuilder builder = builders.get(c);
-			return builder.build(renderable);
+			return builder.build(renderable, assets);
 		}
 		
 		return null;

@@ -5,6 +5,6 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 
 public interface NodeBuilder<T extends Renderable> {
 	
-	Node build(T renderable);
+	Node build(T renderable, Object[] assets);
 	
 }
