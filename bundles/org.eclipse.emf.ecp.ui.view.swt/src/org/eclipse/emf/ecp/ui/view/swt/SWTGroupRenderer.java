@@ -1,9 +1,12 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -17,11 +20,12 @@ import org.eclipse.swt.widgets.Control;
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 
-	@Override
-	public SWTRendererNode render(Group modelGroup,
+	public Control render(Node<Group> node,
 			ECPControlContext controlContext, 
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
+		Group modelGroup = node.getRenderable();
 		org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(getParent(), SWT.TITLE);
 		group.setText(modelGroup.getName());
 		
@@ -30,16 +34,21 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 			.equalWidth(false)
 			.applyTo(group);
 		
-		SWTRendererNode node = new SWTRendererNode(group, modelGroup, controlContext);
+		node.lift(withSWT(group));
 		
-		for (org.eclipse.emf.ecp.view.model.Composite modelComposite : modelGroup.getComposites()) {
+		for (Node<? extends Renderable> child : node.getChildren()) {// org.eclipse.emf.ecp.view.model.Composite modelComposite : modelGroup.getComposites()) {
 			
-			RendererNode<Control> render = SWTRenderers.INSTANCE.render(group, modelComposite, controlContext, adapterFactoryItemDelegator);
-			node.addChild(render);
-			Control control = render.getRenderedResult();
-			control.setBackground(getParent().getBackground());
+			Control control;
+			try {
+				control = SWTRenderers.INSTANCE.render(child, controlContext, adapterFactoryItemDelegator);
+			} catch (NoPropertyDescriptorFoundExeption e) {
+				continue;
+			}
 			
-			if (!render.isLeaf()) {
+//			Control control = childNode.getRenderedResult();
+//			control.setBackground(getParent().getBackground());
+			
+			if (!child.isLeaf()) {
 				GridDataFactory.fillDefaults()
 					.align(SWT.FILL, SWT.BEGINNING)
 					.grab(true, false)
@@ -48,8 +57,6 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 			}
 		}
 		
-		return node;
+		return group;
 	}
-
-
 }

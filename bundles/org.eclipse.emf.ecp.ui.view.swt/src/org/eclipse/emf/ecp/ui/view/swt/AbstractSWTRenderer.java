@@ -1,9 +1,13 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.ControlRenderer;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.swt.widgets.Control;
 
-public abstract class AbstractSWTRenderer<T extends Renderable> 
-	implements SWTRenderer<T> {
+
+public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRenderer<R> {
 
 	private org.eclipse.swt.widgets.Composite parent;
 	
@@ -14,5 +18,13 @@ public abstract class AbstractSWTRenderer<T extends Renderable>
 	
 	public org.eclipse.swt.widgets.Composite getParent() {
 		return parent;
+	}
+	
+	public WithRenderedObject withSWT(Control control) {
+		return new SWTLifted(control);
+	}
+	
+	public WithRenderedObject withSWTControl(Control control, SWTControl swtControl, Renderable model) {
+		return new SWTLiftedControl(control, swtControl, model);
 	}
 }

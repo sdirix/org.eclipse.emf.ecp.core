@@ -13,8 +13,11 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.ControlRenderer;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.TreeRendererNodeVisitor;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -32,7 +35,7 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 
-public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.model.Renderable> {
+public final class SWTRenderers  implements SWTRenderer {
 
 	public static final SWTRenderers INSTANCE = new SWTRenderers();
 
@@ -58,9 +61,6 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 			put(CustomComposite.class, new SWTCustomCompositeRenderer());
 			put(View.class, new SWTViewRenderer());
 			put(Category.class, new SWTCategoryRenderer());
-			put(Categorization.class, new SWTCategorizationRenderer());
-			put(AbstractCategorization.class, new SWTAbstractCategorizationRenderer());
-			put(TreeCategory.class, new SWTTreeCategoryRenderer());
 		}};
 		
 		for (CustomSWTRenderer customRenderer : getCustomRenderers()) {
@@ -73,52 +73,51 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 		renderersInitialized = true;
 	}
 	
-	public SWTRendererNode render(
-			Composite parent,
-            final org.eclipse.emf.ecp.view.model.Renderable renderable, 
-            ECPControlContext controlContext, 
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
-		currentParent = parent;
-		return render(renderable, controlContext, adapterFactoryItemDelegator);
-	}
-		
-	public SWTRendererNode render(
-            final org.eclipse.emf.ecp.view.model.Renderable renderable, 
-            ECPControlContext controlContext, 
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
-		
-		if (!renderersInitialized) {
-			initRenderers();
-		}
-		
-		Class c = null;
-		for (Class cls : renderers.keySet()) {
-			Class<?>[] interfaces = renderable.getClass().getInterfaces();
-			int indexOf = Arrays.asList(interfaces).indexOf(cls);
-			if (indexOf != -1) {
-				c = interfaces[indexOf];
-				break;
-			}
-
-		}
-
-		if (c != null) {
-			@SuppressWarnings("rawtypes") 
-			SWTRenderer swtRenderer = renderers.get(c);
-			swtRenderer.initialize(new Object[] {currentParent});
-			@SuppressWarnings("unchecked")
-			RendererNode<org.eclipse.swt.widgets.Control> node = swtRenderer.render(
-					renderable, controlContext, adapterFactoryItemDelegator);
-			return new SWTRendererNode(node.getRenderedResult(), node.getRenderable(), controlContext);
-		}
-		
-		throw new NoRendererFoundException("No renderer found for renderable " + renderable);
-    }
+//	public SWTLifted render(
+//			Composite parent,
+//            final org.eclipse.emf.ecp.view.model.Renderable renderable, 
+//            ECPControlContext controlContext, 
+//            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+//		currentParent = parent;
+//		return render(renderable, controlContext, adapterFactoryItemDelegator);
+//	}
+//		
+//	public SWTLifted render(
+//            final org.eclipse.emf.ecp.view.model.Renderable renderable, 
+//            ECPControlContext controlContext, 
+//            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+//		
+//		if (!renderersInitialized) {
+//			initRenderers();
+//		}
+//		
+//		Class c = null;
+//		for (Class cls : renderers.keySet()) {
+//			Class<?>[] interfaces = renderable.getClass().getInterfaces();
+//			int indexOf = Arrays.asList(interfaces).indexOf(cls);
+//			if (indexOf != -1) {
+//				c = interfaces[indexOf];
+//				break;
+//			}
+//
+//		}
+//
+//		if (c != null) {
+//			@SuppressWarnings("rawtypes") 
+//			SWTRenderer swtRenderer = renderers.get(c);
+//			swtRenderer.initialize(new Object[] {currentParent});
+//			@SuppressWarnings("unchecked")
+//			SWTLifted node = (SWTLifted) swtRenderer.render(
+//					renderable, controlContext, adapterFactoryItemDelegator);
+//			return node;
+//		}
+//		
+//		throw new NoRendererFoundException("No renderer found for renderable " + renderable);
+//    }
 
 	@Override
 	public void initialize(Object[] initData) {
 		currentParent = (Composite) initData[0];
-		
 	}
 
 	public Set<CustomSWTRenderer> getCustomRenderers() {
@@ -136,5 +135,46 @@ public final class SWTRenderers implements SWTRenderer<org.eclipse.emf.ecp.view.
 		}
 		
 		return renderers;
+	}
+	
+	@Override
+	public org.eclipse.swt.widgets.Control render(Node node,
+			ECPControlContext controlContext,
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		if (!renderersInitialized) {
+			initRenderers();
+		}
+		
+		Class c = null;
+		for (Class cls : renderers.keySet()) {
+			Class<?>[] interfaces = node.getRenderable().getClass().getInterfaces();
+			int indexOf = Arrays.asList(interfaces).indexOf(cls);
+			if (indexOf != -1) {
+				c = interfaces[indexOf];
+				break;
+			}
+
+		}
+
+		if (c != null) {
+			@SuppressWarnings("rawtypes") 
+			SWTRenderer swtRenderer = renderers.get(c);
+			swtRenderer.initialize(new Object[] {currentParent});
+			Object render = swtRenderer.render(node, controlContext, adapterFactoryItemDelegator);
+			// TODO:? ?
+			return (org.eclipse.swt.widgets.Control) render;
+		}
+		
+		throw new NoRendererFoundException("No renderer found for renderable " + node.getRenderable());
+	}
+	
+	public org.eclipse.swt.widgets.Control render(Composite parent, Node node,
+			ECPControlContext controlContext,
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		currentParent = parent;
+		return render(node, controlContext, adapterFactoryItemDelegator);		
 	}
 }

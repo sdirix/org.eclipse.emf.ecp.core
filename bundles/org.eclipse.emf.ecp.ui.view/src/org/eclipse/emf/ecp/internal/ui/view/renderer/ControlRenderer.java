@@ -11,12 +11,13 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * 
  * @author emueller
  *
- * @param <T>
+ * @param <C>
  * 			the actual type of the control being rendered
- * @param <U>
+ * @param <R>
  * 			a subtype of {@link Composite} specifying the view model type to be rendered 
+ * @param <C>
  */
-public interface ControlRenderer<T, U extends Renderable> {
+public interface ControlRenderer<R extends Renderable, C> {
 	
 	/**
 	 * Render a control.
@@ -31,10 +32,9 @@ public interface ControlRenderer<T, U extends Renderable> {
 	 * @return
 	 */
 	// TODO: JAVADOC
-	RendererNode<T> render(U model, 
+	C render(Node<R> node,
             ECPControlContext controlContext,
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException;
-
+            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 	/**
 	 * Initializes a renderer.
 	 * 

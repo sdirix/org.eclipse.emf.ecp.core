@@ -12,8 +12,11 @@ import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererLeaf;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -21,16 +24,25 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 public class SWTTableControlRenderer extends AbstractSWTControlRenderer<TableControl> {
 
 	private org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control;
-	
+
 	@Override
-	public SWTRendererNode render(TableControl modelTableControl,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+	protected SWTControl getControl() {	
+		return control;
+	}
+
+	@Override
+	public Control render(Node<TableControl> node,
+			ECPControlContext controlContext,
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
+		TableControl modelTableControl = node.getRenderable();
 		ECPControlContext subContext = createSubcontext(modelTableControl, controlContext);
         EClass dataClass = modelTableControl.getTargetFeature().getEContainingClass();
         
@@ -89,15 +101,12 @@ public class SWTTableControlRenderer extends AbstractSWTControlRenderer<TableCon
             GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
                     .span(numControl, 1).applyTo(controlComposite);
             
-            return new SWTRendererLeaf(controlComposite, modelTableControl, controlContext, control);
+            node.lift(withSWTControl(controlComposite, control, modelTableControl));
+            
+            return controlComposite;
         }
         
         Activator.getDefault().ungetECPControlFactory();
         return null;
-	}
-
-	@Override
-	protected SWTControl getControl() {	
-		return control;
 	}
 }

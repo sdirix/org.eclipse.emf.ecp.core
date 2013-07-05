@@ -1,8 +1,10 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -19,11 +21,14 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_control_column_composite";
 	
 	@Override
-	public SWTRendererNode render(ColumnComposite modelColumnComposite,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
+	public Control render(Node<ColumnComposite> node,
+			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		//TODO Add check whether label is shown
 //		Label l=new Label(getParent(), SWT.NONE);
 //		l.setText(modelColumnComposite.getName());
+		
+		ColumnComposite modelColumnComposite = node.getRenderable();
 		
 		Composite columnComposite = new Composite(getParent(), SWT.NONE);
 		columnComposite.setBackground(getParent().getBackground());
@@ -40,10 +45,11 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 			.grab(true, false)
 			.applyTo(columnComposite);
 		
-		SWTRendererNode node = new SWTRendererNode(columnComposite, modelColumnComposite, controlContext);
+//		SWTLifted node = new SWTLifted(columnComposite, modelColumnComposite, controlContext);
 		
-		
-		for (org.eclipse.emf.ecp.view.model.Composite modelComposite : modelColumnComposite.getComposites()) {
+		node.lift(withSWT(columnComposite));
+
+		for (Node child : node.getChildren()) {
 			
 			Composite column = new Composite(columnComposite, SWT.NONE);
 			column.setBackground(getParent().getBackground());
@@ -58,22 +64,23 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 				.equalWidth(false)
 				.applyTo(column);
 			
-			RendererNode<Control> childNode = SWTRenderers.INSTANCE.render(column, modelComposite, controlContext, adapterFactoryItemDelegator);
-			node.addChild(childNode);
-			Control control = childNode.getRenderedResult();
+			Control childControl;
 			
-			if (!childNode.isLeaf()) {
+			try {
+				childControl = SWTRenderers.INSTANCE.render(column, child, controlContext, adapterFactoryItemDelegator);
+			} catch (NoPropertyDescriptorFoundExeption e) {
+				continue;
+			}
+						
+			if (!child.isLeaf()) {
 				GridDataFactory.fillDefaults()
 					.align(SWT.FILL, SWT.FILL)
 					.grab(true, true)
 					.span(2, 1)
-					.applyTo(control);
+					.applyTo(childControl);
 			} 
 		}
 		
-//		((GridLayout) columnComposite.getLayout()).numColumns = 
-//				modelColumnComposite.getComposites().size() - numHiddenColumns;
-
-		return node;
+		return columnComposite;
 	}
 }
