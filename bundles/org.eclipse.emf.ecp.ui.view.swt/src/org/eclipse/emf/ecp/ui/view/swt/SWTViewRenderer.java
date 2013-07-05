@@ -1,5 +1,8 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
@@ -95,7 +98,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 				@Override
 				public Object[] getChildren(Object parentElement) {
 					Node node = (Node) parentElement;
-					return node.getChildren().toArray();
+					
+					List<Node<?>> visisbleNodes = filterVisisbleNodes(node);
+					
+					return visisbleNodes.toArray();
 				}
 			});
 
@@ -196,6 +202,19 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 
 			return composite;
 		}
+	}
+	
+	private List<Node<?>> filterVisisbleNodes(Node node) {
+	    List<Node<?>> result = new ArrayList<Node<?>>();
+	    List<Node> children = node.getChildren();
+	    for (Node child : children) { 
+	        if (child.isVisible()) {
+	            result.add(child);
+	        } else {
+	            result.addAll(filterVisisbleNodes(child));
+	        }
+	    }
+	    return result;
 	}
 
 	/**

@@ -7,7 +7,7 @@ import org.eclipse.emf.ecp.view.model.View;
 public class ViewNodeBuilder implements NodeBuilder<View> {
 
 	@Override
-	public Node build(View view, Object[] assets) {
+	public Node build(View view, Object... assets) {
 		Node node = new Node(view);
 		
 		for (AbstractCategorization categorization : view.getCategorizations()) {

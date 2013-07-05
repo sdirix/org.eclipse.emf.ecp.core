@@ -9,7 +9,7 @@ import org.eclipse.emf.ecp.view.model.View;
 public class CategorizationNodeBuilder implements NodeBuilder<Categorization> {
 
 	@Override
-	public Node build(Categorization categorization, Object[] assets) {
+	public Node build(Categorization categorization, Object... assets) {
 		Node node = new Node(categorization);
 		for (AbstractCategorization childCategorization : categorization.getCategorizations()) {
 			node.addChild(NodeBuilders.INSTANCE.build(childCategorization, assets));
