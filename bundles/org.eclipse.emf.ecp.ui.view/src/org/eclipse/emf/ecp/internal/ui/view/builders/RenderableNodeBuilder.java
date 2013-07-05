@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.Control;
 public class RenderableNodeBuilder<T extends org.eclipse.emf.ecp.view.model.Renderable> implements NodeBuilder<T> {
 
 	@Override
-	public Node build(T model, Object... assets) {
-		return new Node(model);
+	public Node build(T model, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+		return new Node(model, context);
 	}
 	
 }

@@ -33,7 +33,6 @@ public interface ControlRenderer<R extends Renderable, C> {
 	 */
 	// TODO: JAVADOC
 	C render(Node<R> node,
-            ECPControlContext controlContext,
             AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 	/**
 	 * Initializes a renderer.

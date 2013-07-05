@@ -21,7 +21,7 @@ public class ModelRendererImpl<R extends Renderable,C> implements ModelRenderer<
 	}
 
 	@Override
-	public RendererContext render(Node<R> node, ECPControlContext context) 
+	public RendererContext render(Node<R> node) 
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		if (renderer == null) {
@@ -32,9 +32,9 @@ public class ModelRendererImpl<R extends Renderable,C> implements ModelRenderer<
     			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		
-		final RendererContext rendererContext = new RendererContext(node, context);
+		final RendererContext rendererContext = new RendererContext(node, node.getControlContext());
 
-		C control = render(node, context, adapterFactoryItemDelegator);
+		C control = render(node, adapterFactoryItemDelegator);
 		rendererContext.setRenderedResult(control);
 		composedAdapterFactory.dispose();
 	
@@ -62,10 +62,9 @@ public class ModelRendererImpl<R extends Renderable,C> implements ModelRenderer<
 
 	@Override
 	public C render(Node node,
-			ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		return renderer.render(node, controlContext, adapterFactoryItemDelegator);
+		return renderer.render(node, adapterFactoryItemDelegator);
 	}
 
 	@Override

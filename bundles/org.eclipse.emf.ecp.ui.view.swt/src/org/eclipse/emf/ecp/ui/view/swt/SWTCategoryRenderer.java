@@ -22,7 +22,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 
 	@Override
 	public Control render(Node<Category> node,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 //		return SWTRenderers.INSTANCE.render(getParent(), category.getComposite(), controlContext, adapterFactoryItemDelegator);
 		
 		Category category = node.getRenderable();
@@ -56,7 +56,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 			
 		Node childNode = node.getChildren().get(0);
 		
-		Control control = SWTRenderers.INSTANCE.render(categoryComposite, childNode, controlContext, adapterFactoryItemDelegator);
+		Control control = SWTRenderers.INSTANCE.render(categoryComposite, childNode, adapterFactoryItemDelegator);
 			
 		if (!childNode.isLeaf()) {
 			GridDataFactory.fillDefaults()

@@ -37,15 +37,20 @@ public class Node<T extends Renderable> implements ValidationListener {
 	private List<Node<?>> children;
 	private WithRenderedObject renderedObject;
     private boolean isVisible;
+    private ECPControlContext controlContext;
+	private Object labelObject;
 	
-	public Node(T model) {
+	public Node(T model, ECPControlContext controlContext) {
 		this.model = model;
+		this.labelObject = model;
+		this.controlContext = controlContext;
 		this.children = new ArrayList<Node<?>>();
 		isVisible = true;
 	}
 	
 	public Node(T model, boolean isVisible) {
 	    this.model = model;
+	    this.labelObject = model;
         this.isVisible = isVisible;
 	    this.children = new ArrayList<Node<?>>();
 	}
@@ -219,7 +224,14 @@ public class Node<T extends Renderable> implements ValidationListener {
 	public void cleanup() {
 		renderedObject.cleanup();
 	}
-	
+//	
+//	public String getLabel() {
+//		return "TODO";
+//	}
+//	
+//	public Image getImage() {
+//		throw new 
+//	}
 	
 	@Override
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
@@ -254,4 +266,20 @@ public class Node<T extends Renderable> implements ValidationListener {
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
+
+	public ECPControlContext getControlContext() {
+		return controlContext;
+	}
+
+	public void setControlContext(ECPControlContext controlContext) {
+		this.controlContext = controlContext;
+	}
+
+	public Object getLabelObject() {
+		return labelObject;
+	}
+	
+	public void setLabelObject(Object object) {
+		labelObject = object;
+	}
 }

@@ -21,8 +21,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_control_column_composite";
 	
 	@Override
-	public Control render(Node<ColumnComposite> node,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+	public Control render(Node<ColumnComposite> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		//TODO Add check whether label is shown
 //		Label l=new Label(getParent(), SWT.NONE);
@@ -67,7 +66,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 			Control childControl;
 			
 			try {
-				childControl = SWTRenderers.INSTANCE.render(column, child, controlContext, adapterFactoryItemDelegator);
+				childControl = SWTRenderers.INSTANCE.render(column, child, adapterFactoryItemDelegator);
 			} catch (NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

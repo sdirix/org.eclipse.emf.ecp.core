@@ -36,7 +36,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 	
 	@Override
 	public Control render(Node<View> node,
-			final ECPControlContext controlContext,
 			final AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 				
@@ -44,7 +43,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 		EList<AbstractCategorization> categorizations = view.getCategorizations();
 		
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
-			Control control = SWTRenderers.INSTANCE.render(getParent(), node.getChildren().get(0), controlContext, adapterFactoryItemDelegator);
+			Control control = SWTRenderers.INSTANCE.render(getParent(), node.getChildren().get(0), adapterFactoryItemDelegator);
 			node.lift(withSWT(control));
 			return control;
 		} else {
@@ -111,13 +110,13 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 				@Override
 				public String getText(Object object) {
 					Node node = (Node) object;
-					return super.getText(node.getRenderable());
+					return super.getText(node.getLabelObject());
 				}
 
 				@Override
 				public Image getImage(Object object) {
 					Node node = (Node) object;
-					return super.getImage(node.getRenderable());
+					return super.getImage(node.getLabelObject());
 				}
 			});
 
@@ -153,7 +152,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View>  {
 							Node node = (Node) selection;
 							Renderable renderable = node.getRenderable();
 							try {
-                                SWTRenderers.INSTANCE.render(childComposite, node, controlContext, newAdapterFactoryItemDelegator);
+                                SWTRenderers.INSTANCE.render(childComposite, node, newAdapterFactoryItemDelegator);
                             } catch (NoRendererFoundException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();

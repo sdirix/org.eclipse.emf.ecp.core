@@ -29,13 +29,12 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
 
 	@Override
 	public org.eclipse.swt.widgets.Control render(Node<Control> node,
-			ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		Control modelControl = node.getRenderable();
 		EClass dataClass = modelControl.getTargetFeature().getEContainingClass();
-        ECPControlContext subContext = createSubcontext(modelControl, controlContext);
+        ECPControlContext subContext = node.getControlContext();
         
         if (dataClass == null) {
             return null;

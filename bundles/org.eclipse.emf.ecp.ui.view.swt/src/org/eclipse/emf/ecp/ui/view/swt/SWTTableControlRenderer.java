@@ -1,11 +1,6 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import java.util.Map;
-import java.util.Set;
-
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
@@ -15,8 +10,6 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererLeaf;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -38,12 +31,11 @@ public class SWTTableControlRenderer extends AbstractSWTControlRenderer<TableCon
 
 	@Override
 	public Control render(Node<TableControl> node,
-			ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		TableControl modelTableControl = node.getRenderable();
-		ECPControlContext subContext = createSubcontext(modelTableControl, controlContext);
+		ECPControlContext subContext = node.getControlContext();
         EClass dataClass = modelTableControl.getTargetFeature().getEContainingClass();
         
         if (dataClass == null) {

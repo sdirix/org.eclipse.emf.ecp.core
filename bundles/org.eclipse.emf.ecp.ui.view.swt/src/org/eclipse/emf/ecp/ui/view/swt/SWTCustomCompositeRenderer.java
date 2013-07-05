@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -19,7 +18,7 @@ public class SWTCustomCompositeRenderer extends AbstractSWTRenderer<CustomCompos
 
 	@Override
 	public Control render(Node<CustomComposite> node,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		
 		CustomComposite customComposite = node.getRenderable();
 		
@@ -27,7 +26,7 @@ public class SWTCustomCompositeRenderer extends AbstractSWTRenderer<CustomCompos
 		try {
 			Class<?> clazz = getClass(customComposite.getBundle(), customComposite.getClassName());
 			Constructor<?> constructor = clazz.getConstructor(Composite.class, EObject.class);
-			Object obj = constructor.newInstance(getParent(), controlContext.getModelElement());
+			Object obj = constructor.newInstance(getParent(), node.getControlContext().getModelElement());
 			Composite categoryComposite = (Composite) obj;
 						
 			node.lift(withSWT(categoryComposite));

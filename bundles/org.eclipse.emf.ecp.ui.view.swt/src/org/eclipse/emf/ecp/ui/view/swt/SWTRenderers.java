@@ -139,7 +139,6 @@ public final class SWTRenderers  implements SWTRenderer {
 	
 	@Override
 	public org.eclipse.swt.widgets.Control render(Node node,
-			ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
@@ -162,7 +161,7 @@ public final class SWTRenderers  implements SWTRenderer {
 			@SuppressWarnings("rawtypes") 
 			SWTRenderer swtRenderer = renderers.get(c);
 			swtRenderer.initialize(new Object[] {currentParent});
-			Object render = swtRenderer.render(node, controlContext, adapterFactoryItemDelegator);
+			Object render = swtRenderer.render(node, adapterFactoryItemDelegator);
 			// TODO:? ?
 			return (org.eclipse.swt.widgets.Control) render;
 		}
@@ -171,10 +170,9 @@ public final class SWTRenderers  implements SWTRenderer {
 	}
 	
 	public org.eclipse.swt.widgets.Control render(Composite parent, Node node,
-			ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		currentParent = parent;
-		return render(node, controlContext, adapterFactoryItemDelegator);		
+		return render(node, adapterFactoryItemDelegator);		
 	}
 }

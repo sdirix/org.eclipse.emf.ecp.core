@@ -23,7 +23,7 @@ public abstract class RendererLeaf<R extends Renderable> extends Node<R> {
 			R model, 
 			ECPControlContext controlContext,
 			ECPControl ecpControl) {
-		super(model);
+		super(model, controlContext);
 		this.setEcpControl(ecpControl);
 	}
 

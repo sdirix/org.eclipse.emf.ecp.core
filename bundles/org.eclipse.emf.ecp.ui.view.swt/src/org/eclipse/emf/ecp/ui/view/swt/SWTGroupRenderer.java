@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Control;
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 
 	public Control render(Node<Group> node,
-			ECPControlContext controlContext, 
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
@@ -40,7 +39,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 			
 			Control control;
 			try {
-				control = SWTRenderers.INSTANCE.render(child, controlContext, adapterFactoryItemDelegator);
+				control = SWTRenderers.INSTANCE.render(child, adapterFactoryItemDelegator);
 			} catch (NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

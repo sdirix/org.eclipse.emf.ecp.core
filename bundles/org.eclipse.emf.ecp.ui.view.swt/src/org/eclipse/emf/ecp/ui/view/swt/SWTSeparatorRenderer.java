@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
@@ -19,7 +18,6 @@ public class SWTSeparatorRenderer extends AbstractSWTRenderer<Seperator> {
 
 	@Override
 	public Control render(Node<Seperator> node,
-			ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		

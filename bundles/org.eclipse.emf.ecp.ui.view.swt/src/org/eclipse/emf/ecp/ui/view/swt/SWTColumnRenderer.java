@@ -18,7 +18,7 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 
 	@Override
 	public Control render(Node<Column> node,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		Composite columnComposite = new Composite(getParent(), SWT.NONE);
@@ -36,7 +36,7 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 			Control childControl;
 			try {
 				childControl = SWTRenderers.INSTANCE.render(
-					columnComposite, child, controlContext, adapterFactoryItemDelegator);
+					columnComposite, child, adapterFactoryItemDelegator);
 			} catch (NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

@@ -8,7 +8,7 @@ public interface ModelRenderer<R extends Renderable, C> extends ControlRenderer<
 
 	ModelRendererFactory INSTANCE = new ModelRendererFactoryImpl();
 	
-    RendererContext<C> render(Node<R> node, ECPControlContext context) 
+    RendererContext<C> render(Node<R> node) 
     		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
     
 }

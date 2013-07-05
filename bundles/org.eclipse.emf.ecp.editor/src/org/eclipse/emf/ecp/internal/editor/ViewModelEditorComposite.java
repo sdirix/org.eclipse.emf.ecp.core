@@ -48,8 +48,8 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
 		Node node = null;
 		try {
-			node = NodeBuilders.INSTANCE.build(view);
-			rendererContext = renderer.render(node, modelElementContext);
+			node = NodeBuilders.INSTANCE.build(view, modelElementContext);
+			rendererContext = renderer.render(node);
 		} catch (NoRendererFoundException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
