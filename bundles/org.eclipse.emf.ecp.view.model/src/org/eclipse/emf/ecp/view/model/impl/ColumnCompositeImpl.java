@@ -3,7 +3,6 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
