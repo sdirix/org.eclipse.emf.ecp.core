@@ -10,29 +10,32 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public abstract class RendererLeaf<T> extends RendererNode<T> {
+// TODO: utility which is not in usgae
+public abstract class RendererLeaf<R extends Renderable> extends Node<R> {
 
 	private ECPControl ecpControl;
 	
-	public RendererLeaf(T result, 
-			org.eclipse.emf.ecp.view.model.Composite model, 
+	public RendererLeaf(
+			R model, 
 			ECPControlContext controlContext,
 			ECPControl ecpControl) {
-		super(result, model, controlContext);
+		super(model);
 		this.setEcpControl(ecpControl);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<RendererNode<T>> getChildren() {
-		return Collections.EMPTY_LIST;
+	public void addChild(Node node) {
+		// TODO
+		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	public void addChild(RendererNode<T> node) {
+	public List<Node> getChildren() {
+		// TODO docs
 		throw new UnsupportedOperationException();
 	}
 	

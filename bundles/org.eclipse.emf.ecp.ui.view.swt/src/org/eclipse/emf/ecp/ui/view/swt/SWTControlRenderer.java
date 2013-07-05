@@ -6,7 +6,10 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -18,11 +21,19 @@ import org.eclipse.swt.widgets.Label;
 public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
 
 	private SWTControl control;
+	
+	@Override
+	protected SWTControl getControl() {	
+		return control;
+	}
 
 	@Override
-	public SWTRendererNode render(Control modelControl,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+	public org.eclipse.swt.widgets.Control render(Node<Control> node,
+			ECPControlContext controlContext,
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
+		Control modelControl = node.getRenderable();
 		EClass dataClass = modelControl.getTargetFeature().getEContainingClass();
         ECPControlContext subContext = createSubcontext(modelControl, controlContext);
         
@@ -35,7 +46,7 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
                         modelControl.getTargetFeature());
         
         if (itemPropertyDescriptor == null) {
-            return null;
+            throw new NoPropertyDescriptorFoundExeption(subContext.getModelElement(), modelControl.getTargetFeature());
         }
 
         ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
@@ -71,7 +82,8 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
             controlComposite.setEnabled(!modelControl.isReadonly());
             controlComposite.setBackground(getParent().getBackground());
             
-            SWTRendererLeaf leaf = new SWTRendererLeaf(controlComposite, modelControl, controlContext, control);
+//            SWTRendererLeaf leaf = new SWTRendererLeaf(controlComposite, modelControl, controlContext, control);
+            node.lift(withSWT(controlComposite));
             
             GridDataFactory.fillDefaults()
             	.align(SWT.FILL, SWT.CENTER)
@@ -79,17 +91,12 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
                 .span(numControl, 1)
                 .applyTo(controlComposite);
             
-            return leaf;
+            return controlComposite;
         }
         
         Activator.getDefault().ungetECPControlFactory();
         
         return null;
-	}
-	
-	@Override
-	protected SWTControl getControl() {	
-		return control;
 	}
 
 }

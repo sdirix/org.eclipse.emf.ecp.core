@@ -1,20 +1,13 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import java.util.Map;
-import java.util.Set;
-
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.swt.widgets.Composite;
 
-public abstract class AbstractSWTControlRenderer<T extends Control> extends AbstractSWTRenderer<T> {
+public abstract class AbstractSWTControlRenderer<C extends Control> extends AbstractSWTRenderer<C> {
 
 	protected ECPControlContext createSubcontext(Control modelControl,
 			ECPControlContext controlContext) {

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.LeafCondition;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.ShowRule;
 
 /**
@@ -30,24 +31,30 @@ import org.eclipse.emf.ecp.view.model.ShowRule;
  * @param <CONTROL>
  * 			the type of the actual control
  */
-public abstract class RendererNode<CONTROL> implements ValidationListener {
+public class Node<T extends Renderable> implements ValidationListener {
 
-	private CONTROL result;
-	private org.eclipse.emf.ecp.view.model.Renderable model;
+	private T model;
+	private List<Node> children;
+	private WithRenderedObject renderedObject;
 	
-	private List<RendererNode<CONTROL>> children;
-	private ECPControlContext controlContext;
-	
-	public RendererNode(CONTROL result, org.eclipse.emf.ecp.view.model.Renderable model,
-			ECPControlContext controlContext) {
-		
-		this.result = result;
+	public Node(T model) {
 		this.model = model;
-		this.controlContext = controlContext;
-		this.children = new ArrayList<RendererNode<CONTROL>>();
+		this.children = new ArrayList<Node>();
 	}
 	
-	public void checkShow(Notification notification) {
+	public T getRenderable() {
+		return model;
+	}
+	
+	public void addChild(Node node) {
+		children.add(node);
+	}
+	
+	public List<Node> getChildren() {
+		return children;
+	}
+
+	public void checkShow(Notification notification, ECPControlContext controlContext) {
 		
 		if (isLeafCondition()) {
 			Condition condition = model.getRule().getCondition();
@@ -78,8 +85,8 @@ public abstract class RendererNode<CONTROL> implements ValidationListener {
 			}
 			
 		} else {
-			for (RendererNode<CONTROL> child : getChildren()) {
-				child.checkShow(notification);
+			for (Node child : getChildren()) {
+				child.checkShow(notification, controlContext);
 			}
 		}
 		
@@ -129,7 +136,7 @@ public abstract class RendererNode<CONTROL> implements ValidationListener {
         }
     }
 	
-	public void checkEnable(Notification notification) { 
+	public void checkEnable(Notification notification, ECPControlContext context) { 
 						
 		if (isLeafCondition()) {
 			Condition condition = model.getRule().getCondition();
@@ -143,7 +150,7 @@ public abstract class RendererNode<CONTROL> implements ValidationListener {
 			if (isEAttributeNotification(notification)) { 
 				attr = (EAttribute) notification.getFeature();
 				if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
-					boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
+					boolean v = ConditionEvaluator.evaluate(context.getModelElement(), condition);
 					if (v == ((EnableRule) model.getRule()).isDisable()) {
 						enableIsFalse();
 					} else {
@@ -153,8 +160,8 @@ public abstract class RendererNode<CONTROL> implements ValidationListener {
 			}
 			
 		} else {
-			for (RendererNode child : getChildren()) {
-				child.checkEnable(notification);
+			for (Node child : getChildren()) {
+				child.checkEnable(notification, context);				
 			}
 		}
 	}
@@ -174,33 +181,41 @@ public abstract class RendererNode<CONTROL> implements ValidationListener {
 		
 		return false;
 	}
-
-	public abstract void enableIsTrue();
-	public abstract void enableIsFalse();
-	public abstract void showIsFalse();
-	public abstract void showIsTrue();
-	public abstract void layout();
-	public abstract void cleanup();
 	
-	public CONTROL getRenderedResult() {
-		return result;
-	}
-	
-	public org.eclipse.emf.ecp.view.model.Renderable getRenderable() {
-		return model;
-	}
-	
-	public void addChild(RendererNode<CONTROL> node) {
-		children.add(node);
-	}
-	
-	public List<RendererNode<CONTROL>> getChildren() {
-		return children;
+	private void checkIsLifted() {
+		if (renderedObject == null) {
+			throw new IllegalStateException("Node hasn't been lifted!");
+		}
 	}
 
+	public void enableIsTrue() {
+		renderedObject.enableIsTrue();
+	}
+	
+	public void enableIsFalse() {
+		renderedObject.enableIsFalse();
+	}
+	
+	public void showIsFalse() {
+		renderedObject.showIsFalse();
+	}
+	
+	public void showIsTrue() {
+		renderedObject.showIsTrue();
+	}
+	
+	public void layout() {
+		renderedObject.layout();
+	}
+	
+	public void cleanup() {
+		renderedObject.cleanup();
+	}
+	
+	
 	@Override
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-		for (RendererNode<CONTROL> child : getChildren()) {
+		for (Node child : getChildren()) {
 			child.validationChanged(affectedObjects);
 		}
 	}
@@ -213,11 +228,15 @@ public abstract class RendererNode<CONTROL> implements ValidationListener {
 		cleanup();
 	}
 	
-	public void execute(TreeRendererNodeVisitor<CONTROL> visitor) {
+	public void execute(TreeRendererNodeVisitor visitor) {
 		visitor.executeOnNode(this);
-		for (RendererNode<CONTROL> child : getChildren()) {
+		for (Node child : getChildren()) {
 			visitor.executeOnNode(child);
 		}
 	}
 
+	
+	public void lift(WithRenderedObject rendered) {
+		renderedObject = rendered;
+	}
 }

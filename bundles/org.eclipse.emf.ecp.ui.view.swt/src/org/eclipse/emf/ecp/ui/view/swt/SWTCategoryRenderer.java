@@ -1,8 +1,10 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
@@ -19,9 +21,11 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_category";
 
 	@Override
-	public SWTRendererNode render(Category category,
-			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
+	public Control render(Node<Category> node,
+			ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 //		return SWTRenderers.INSTANCE.render(getParent(), category.getComposite(), controlContext, adapterFactoryItemDelegator);
+		
+		Category category = node.getRenderable();
 		
 		Composite categoryComposite = new Composite(getParent(), SWT.NONE);
 		categoryComposite.setBackground(getParent().getBackground());
@@ -37,7 +41,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 			.applyTo(categoryComposite);
 		
 		
-		SWTRendererNode node = new SWTRendererNode(categoryComposite, category, controlContext);
+		node.lift(withSWT(categoryComposite));
 //		
 //		Composite composite = new Composite(categoryComposite, SWT.NONE);
 //		composite.setBackground(getParent().getBackground());
@@ -50,9 +54,9 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 //		GridLayoutFactory.fillDefaults()
 //			.applyTo(composite);
 			
-		SWTRendererNode childNode = SWTRenderers.INSTANCE.render(categoryComposite, category.getComposite(), controlContext, adapterFactoryItemDelegator);
-		node.addChild(childNode);
-		Control control = childNode.getRenderedResult();
+		Node childNode = node.getChildren().get(0);
+		
+		Control control = SWTRenderers.INSTANCE.render(categoryComposite, childNode, controlContext, adapterFactoryItemDelegator);
 			
 		if (!childNode.isLeaf()) {
 			GridDataFactory.fillDefaults()
@@ -62,6 +66,6 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 			.applyTo(control);
 		} 
 		
-		return node;
+		return categoryComposite;
 	}
 }

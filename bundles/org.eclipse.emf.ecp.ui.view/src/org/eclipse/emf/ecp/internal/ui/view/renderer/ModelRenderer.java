@@ -4,10 +4,11 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
-public interface ModelRenderer<T, U extends Renderable> extends ControlRenderer<T, U> {
+public interface ModelRenderer<R extends Renderable, C> extends ControlRenderer<R, C> {
 
 	ModelRendererFactory INSTANCE = new ModelRendererFactoryImpl();
 	
-    RendererContext<T> render(U renderable, ECPControlContext context) throws NoRendererFoundException;
+    RendererContext<C> render(Node<R> node, ECPControlContext context) 
+    		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
     
 }

@@ -336,7 +336,6 @@ public final class ECPHandlerHelper {
 	 * 
 	 * @param me
 	 *            ModelElement to open
-	 * @param sourceView
 	 *            the view that requested the open model element
 	 * @param ecpProject the {@link ECPProject} of the model element
 	 */

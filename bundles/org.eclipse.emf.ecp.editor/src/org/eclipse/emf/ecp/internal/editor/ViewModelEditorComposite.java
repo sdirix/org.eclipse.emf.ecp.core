@@ -16,8 +16,11 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
+import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.View;
 
@@ -43,18 +46,23 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 		View view = getView();
 		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { parent });
 
+		Node node = null;
 		try {
-			rendererContext = renderer.render(view, modelElementContext);
+			node = NodeBuilders.INSTANCE.build(view);
+			rendererContext = renderer.render(node, modelElementContext);
 		} catch (NoRendererFoundException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		} catch (NoPropertyDescriptorFoundExeption ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
 		// TODO: remove cast via type parameterization
-		Composite tabContent = (Composite) rendererContext.getNode().getRenderedResult();
+		Composite tabContent = (Composite) rendererContext.getControl();
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		tabContent.setLayoutData(gridData);
 		// TODO: strange api
-		rendererContext.addListener(rendererContext.getNode());
+		rendererContext.addListener(node);
 		rendererContext.triggerValidation();
 		return tabContent;
 	}
@@ -69,7 +77,7 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 	}
 
 	public void focus() {
-		((Composite) rendererContext.getNode().getRenderedResult()).setFocus();
+		((Composite) rendererContext.getControl()).setFocus();
 	}
 
 	/**

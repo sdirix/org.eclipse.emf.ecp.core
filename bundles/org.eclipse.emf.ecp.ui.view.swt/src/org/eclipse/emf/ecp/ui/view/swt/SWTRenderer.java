@@ -11,8 +11,7 @@ import org.eclipse.swt.widgets.Control;
  * @param T
  * 			the type of the SWT control 
  */
-public interface SWTRenderer<T extends Renderable> 
-	extends ControlRenderer<Control, T> {
+public interface SWTRenderer<R extends Renderable> extends ControlRenderer<R, Control> {
 		
 	/**
 	 * Variant constant for indicating RAP controls.

@@ -14,7 +14,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RendererNode;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
@@ -25,18 +27,21 @@ public class RendererContext<CONTROL> {
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-    private RendererNode<CONTROL> node;
+    private Node node;
     private boolean alive = true;
     private EObject article;
     private Renderable renderable;
     private final Set<ValidationListener> listeners = new HashSet<RendererContext.ValidationListener>();
 
     private EContentAdapter contentAdapter;
+	private ECPControlContext context;
+	private CONTROL control;
 
-    public RendererContext(Renderable renderable, EObject article) {
-        this.renderable = renderable;
+    public RendererContext(@SuppressWarnings("rawtypes") final Node node, final ECPControlContext context) {
+    	this.node = node;
+    	this.renderable = node.getRenderable();
         analyseView();
-        this.article = article;
+        this.article = context.getModelElement();
         this.contentAdapter = new EContentAdapter() {
 
             @Override
@@ -46,9 +51,9 @@ public class RendererContext<CONTROL> {
                 triggerValidation();
                 
                 // node is null, since render hasn't been called yet
-                if (getNode() != null) {
-                	getNode().checkEnable(notification);
-                	getNode().checkShow(notification);
+                if (node != null) {
+                	node.checkEnable(notification, context);
+                	node.checkShow(notification, context);
                 }
             }
 
@@ -141,14 +146,6 @@ public class RendererContext<CONTROL> {
         }
     }
 
-    public RendererNode<CONTROL> getNode() {
-        return node;
-    }
-
-    public void setNode(RendererNode<CONTROL> node) {
-        this.node = node;
-    }
-
     public boolean isAlive() {
         return alive;
     }
@@ -185,4 +182,12 @@ public class RendererContext<CONTROL> {
     public Map<EObject, Set<Diagnostic>> getValidationMap() {
         return Collections.unmodifiableMap(validationMap);
     }
+    
+    public void setRenderedResult(CONTROL control) {
+		this.control = control;
+    }
+    
+    public CONTROL getControl() {
+		return control;
+	}
 }

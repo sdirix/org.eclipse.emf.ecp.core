@@ -1,21 +1,16 @@
 package org.eclipse.emf.ecp.core.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
-import java.util.Set;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.junit.After;
 import org.junit.Test;

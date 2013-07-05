@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecp.rap;
 
-import java.awt.Point;
 
 /**
  * Configures the initial size and appearance of a workbench window.

@@ -4,12 +4,32 @@ package org.eclipse.emf.ecp.view.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.ecp.view.model.*;
+import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Categorization;
+import org.eclipse.emf.ecp.view.model.Category;
+import org.eclipse.emf.ecp.view.model.Column;
+import org.eclipse.emf.ecp.view.model.ColumnComposite;
+import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.CompositeCollection;
+import org.eclipse.emf.ecp.view.model.Condition;
+import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.CustomComposite;
+import org.eclipse.emf.ecp.view.model.EnableRule;
+import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.model.LeafCondition;
+import org.eclipse.emf.ecp.view.model.OrCondition;
+import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.Rule;
+import org.eclipse.emf.ecp.view.model.Seperator;
+import org.eclipse.emf.ecp.view.model.ShowRule;
+import org.eclipse.emf.ecp.view.model.TableColumn;
+import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.TreeCategory;
+import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
  * <!-- begin-user-doc -->

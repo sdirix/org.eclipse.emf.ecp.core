@@ -580,7 +580,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void deleteElements(Collection<Object> objects) {
 		getProvider().delete(this, objects);
-		notifyObjectsChanged((Collection) Collections.singleton(this), true);
+		notifyObjectsChanged(Collections.singleton((Object) this), true);
 	}
 
 	/** {@inheritDoc} */

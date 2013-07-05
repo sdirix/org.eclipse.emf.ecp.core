@@ -56,7 +56,6 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		filter = new ModelElementViewerFilter(adapterFactoryLabelProvider);
 		this.input = input;

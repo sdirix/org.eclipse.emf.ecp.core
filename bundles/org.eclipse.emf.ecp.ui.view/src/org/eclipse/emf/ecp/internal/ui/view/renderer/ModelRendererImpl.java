@@ -12,16 +12,17 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
-public class ModelRendererImpl<T, U extends Renderable> implements ModelRenderer<T, U> {
+public class ModelRendererImpl<R extends Renderable,C> implements ModelRenderer<R,C> {
 	
-	private ControlRenderer<T, U> renderer;
+	private ControlRenderer<R,C> renderer;
 	
 	public ModelRendererImpl(Object[] initData) {
 		renderer = getControlRenderer(initData);
 	}
 
 	@Override
-	public RendererContext<T> render(U renderable, ECPControlContext context) throws NoRendererFoundException {
+	public RendererContext render(Node<R> node, ECPControlContext context) 
+			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		if (renderer == null) {
 			throw new IllegalStateException("Renderer not initialized!");
@@ -31,25 +32,23 @@ public class ModelRendererImpl<T, U extends Renderable> implements ModelRenderer
     			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		
-		final RendererContext<T> rendererContext = new RendererContext<T>(renderable, context.getModelElement());
+		final RendererContext rendererContext = new RendererContext(node, context);
 
-		RendererNode<T> node = render(renderable, context, adapterFactoryItemDelegator);
-		
+		C control = render(node, context, adapterFactoryItemDelegator);
+		rendererContext.setRenderedResult(control);
 		composedAdapterFactory.dispose();
-		
-		rendererContext.setNode(node);
 	
 		return rendererContext;
 	}
 
-	private ControlRenderer<T, U> getControlRenderer(Object[] initData) {
+	private ControlRenderer<R,C> getControlRenderer(Object[] initData) {
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 				"org.eclipse.emf.ecp.ui.view.renderer");
 		for (IExtension extension : extensionPoint.getExtensions()) {
 			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				@SuppressWarnings("unchecked") ControlRenderer<T, U> renderer = 
-						(ControlRenderer<T, U>) configurationElement.createExecutableExtension("class");
+				ControlRenderer<R,C> renderer = 
+						(ControlRenderer<R,C>) configurationElement.createExecutableExtension("class");
 				renderer.initialize(initData);
 				return renderer;
 			} catch (CoreException ex) {
@@ -62,10 +61,11 @@ public class ModelRendererImpl<T, U extends Renderable> implements ModelRenderer
 	}
 
 	@Override
-	public RendererNode<T> render(U model,
+	public C render(Node node,
 			ECPControlContext controlContext,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
-		return renderer.render(model, controlContext, adapterFactoryItemDelegator);
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		return renderer.render(node, controlContext, adapterFactoryItemDelegator);
 	}
 
 	@Override
