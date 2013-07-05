@@ -66,7 +66,7 @@ public class NodeBuilders implements NodeBuilder {
 	public Set<CustomNodeBuilder> getCustomNodeBuilders() {
 		Set<CustomNodeBuilder> builders = new LinkedHashSet<CustomNodeBuilder>();
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-				"org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers");
+				"org.eclipse.emf.ecp.ui.view.swt.customNodeBuilders");
 		for (IExtension extension : extensionPoint.getExtensions()) {
 			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
