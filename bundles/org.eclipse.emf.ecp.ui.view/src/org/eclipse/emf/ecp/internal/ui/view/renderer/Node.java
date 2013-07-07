@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ConditionEvaluator;
+import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -39,6 +40,7 @@ public class Node<T extends Renderable> implements ValidationListener {
     private boolean isVisible;
     private ECPControlContext controlContext;
 	private Object labelObject;
+	private List<ECPAction> actions;
 	
 	public Node(T model, ECPControlContext controlContext) {
 		this.model = model;
@@ -280,4 +282,21 @@ public class Node<T extends Renderable> implements ValidationListener {
 	public void setLabelObject(Object object) {
 		labelObject = object;
 	}
+
+    /**
+     * Actions of this node.
+     * @return the actions
+     */
+    public List<ECPAction> getActions() {
+        return actions;
+    }
+
+    /**
+     * Sets the available actions on this node.
+     * @param actions the actions to set
+     */
+    public void setActions(List<ECPAction> actions) {
+        this.actions = actions;
+    }
+	
 }

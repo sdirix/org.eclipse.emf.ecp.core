@@ -1,25 +1,29 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.custom.TreeEditor;
 
-public abstract class ECPTreeViewAction {
+public abstract class ECPTreeViewAction implements ECPAction{
 
-	private final TreeViewer treeViewer;
-	private final TreeSelection treeSelection;
-	private final EObject root;
-    private final TreeEditor treeEditor;
+	private  TreeViewer treeViewer;
+	private  TreeSelection treeSelection;
+	private  EObject root;
+    private  TreeEditor treeEditor;
 
-	public ECPTreeViewAction(TreeViewer treeViewer,
-			TreeSelection treeSelection,TreeEditor treeEditor, EObject root) {
+	public ECPTreeViewAction() {
 		super();
-		this.treeViewer = treeViewer;
-		this.treeSelection = treeSelection;
+		
+	}
+	public void init(TreeViewer treeViewer,
+            TreeSelection treeSelection,TreeEditor treeEditor, EObject root){
+	    this.treeViewer = treeViewer;
+        this.treeSelection = treeSelection;
         this.treeEditor = treeEditor;
-		this.root = root;
+        this.root = root;
 	}
 
 	protected TreeViewer getTreeViewer() {
@@ -37,7 +41,5 @@ public abstract class ECPTreeViewAction {
 	protected EObject getRootEObject() {
 		return root;
 	}
-	
-	public abstract void run();
 	
 }
