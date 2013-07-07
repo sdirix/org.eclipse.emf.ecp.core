@@ -48,11 +48,9 @@ public class Node<T extends Renderable> implements ValidationListener {
 		isVisible = true;
 	}
 	
-	public Node(T model, boolean isVisible) {
-	    this.model = model;
-	    this.labelObject = model;
+	public Node(T model, ECPControlContext context, boolean isVisible) {
+		this(model, context);
         this.isVisible = isVisible;
-	    this.children = new ArrayList<Node<?>>();
 	}
 	
 	public T getRenderable() {

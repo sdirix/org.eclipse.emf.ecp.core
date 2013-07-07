@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Leaf;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -15,7 +16,7 @@ public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		
 		ECPControlContext subcontext = createSubcontext(renderable, controlContext); 
-		return new Node<C>(renderable, subcontext);
+		return new Leaf<C>(renderable, subcontext);
 	}
 
 

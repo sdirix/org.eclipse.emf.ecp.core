@@ -59,6 +59,7 @@ public final class SWTRenderers  implements SWTRenderer {
 			put(Control.class, new SWTControlRenderer());
 			put(Seperator.class, new SWTSeparatorRenderer());
 			put(CustomComposite.class, new SWTCustomCompositeRenderer());
+			put(Categorization.class, new SWTCategorizationRenderer());
 			put(View.class, new SWTViewRenderer());
 			put(Category.class, new SWTCategoryRenderer());
 		}};

@@ -12,7 +12,7 @@ public class TreeCategoryNodeBuilder implements NodeBuilder<TreeCategory> {
 
 	@Override
 	public Node build(TreeCategory treeCategory, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		Node node = new Node(treeCategory, false);
+		Node node = new Node(treeCategory, context, false);
 		
 		node.addChild(NodeBuilders.INSTANCE.build(treeCategory.getChildComposite(), context, adapterFactoryItemDelegator));
 		
