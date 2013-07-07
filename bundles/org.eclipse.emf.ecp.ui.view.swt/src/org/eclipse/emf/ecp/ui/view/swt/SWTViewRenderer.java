@@ -5,21 +5,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObjectAdapter;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -41,7 +36,6 @@ import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
@@ -49,6 +43,14 @@ import org.eclipse.swt.widgets.TreeItem;
 
 public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
+    private TreeViewer treeViewer;
+    private WithRenderedObjectAdapter treeViewerRefreshAdapter = new WithRenderedObjectAdapter() {
+        @Override
+        public void show(boolean shouldShow) {
+            treeViewer.refresh();
+        }
+    };
+    
     @Override
     public Control render(final Node<View> viewNode,
             final AdapterFactoryItemDelegator adapterFactoryItemDelegator)
@@ -64,7 +66,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             return control;
         } else {
             Composite composite = createComposite(getParent());
-            final TreeViewer treeViewer = createTreeViewer(composite);
+            treeViewer = createTreeViewer(composite);
             final ScrolledComposite scrolledComposite = createScrolledComposite(composite);
             GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
                     .applyTo(scrolledComposite);
@@ -224,11 +226,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         List<Node> children = node.getChildren();
         for (Node child : children) {
             if (child.isVisible()) {
+                if (!child.isLifted()) {
+                    child.lift(treeViewerRefreshAdapter);
+                }
                 result.add(child);
             }
-            // else {
-            // result.addAll(filterVisisbleNodes(child));
-            // }
         }
         return result;
     }

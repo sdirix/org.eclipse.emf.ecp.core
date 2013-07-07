@@ -37,7 +37,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 
 	private T model;
 	private List<Node<?>> children;
-	private WithRenderedObject renderedObject;
+	protected WithRenderedObject renderedObject;
     private boolean isVisible;
     private ECPControlContext controlContext;
 	private Object labelObject;
@@ -83,7 +83,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 				if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
 					boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
 					if (v == ((ShowRule) model.getRule()).isHide()) {
-						showIsTrue();
+					    show(false);
 						TreeIterator<EObject> eAllContents = model.eAllContents();
 						while (eAllContents.hasNext()) {
 							EObject o = eAllContents.next();
@@ -91,7 +91,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 						}
 						unset(controlContext, model);
 					} else {
-						showIsFalse();
+					    show(true);
 					}
 					
 					layout();
@@ -170,9 +170,9 @@ public class Node<T extends Renderable> implements ValidationListener {
 				if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
 					boolean v = ConditionEvaluator.evaluate(context.getModelElement(), condition);
 					if (v == ((EnableRule) model.getRule()).isDisable()) {
-						enableIsFalse();
+						enable(false);
 					} else {
-						enableIsTrue();
+						enable(true);
 					}
 				}
 			}
@@ -206,24 +206,23 @@ public class Node<T extends Renderable> implements ValidationListener {
 		}
 	}
 
-	public void enableIsTrue() {
-	    if(renderedObject!=null)
-		renderedObject.enableIsTrue();
+	public void enable(boolean value) {
+	    if(renderedObject!=null) {
+	        renderedObject.enable(value);
+	    } 
 	}
 	
-	public void enableIsFalse() {
-	    if(renderedObject!=null)
-		renderedObject.enableIsFalse();
-	}
-	
-	public void showIsFalse() {
-	    if(renderedObject!=null)
-		renderedObject.showIsFalse();
-	}
-	
-	public void showIsTrue() {
-	    if(renderedObject!=null)
-		renderedObject.showIsTrue();
+	public void show(boolean value) {
+	    if(renderedObject!=null) {
+	        if (value) {
+	            setVisible(true);
+	            renderedObject.show(true);
+	        } else {
+	            setVisible(false);
+	            renderedObject.show(false);
+	        }
+	    } 
+
 	}
 	
 	public void layout() {
@@ -232,8 +231,9 @@ public class Node<T extends Renderable> implements ValidationListener {
 	}
 	
 	public void cleanup() {
-	    if(renderedObject!=null)
-		renderedObject.cleanup();
+	    if(renderedObject!=null) {
+	        renderedObject.cleanup();
+	    }
 	}
 //	
 //	public String getLabel() {
@@ -310,4 +310,7 @@ public class Node<T extends Renderable> implements ValidationListener {
         this.actions = actions;
     }
 	
+    public boolean isLifted() {
+        return renderedObject != null;
+    }
 }

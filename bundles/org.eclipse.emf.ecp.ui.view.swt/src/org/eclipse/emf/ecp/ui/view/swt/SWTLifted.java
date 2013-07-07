@@ -1,5 +1,10 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -14,31 +19,17 @@ public class SWTLifted implements WithRenderedObject {
 	}
 
 	@Override
-	public void enableIsTrue() {
-		control.setEnabled(true);
+	public void enable(boolean shouldEnable) {
+		control.setEnabled(shouldEnable);
 	}
 
 	@Override
-	public void enableIsFalse() {
-		control.setEnabled(false);
-	}
-
-	@Override
-	public void showIsFalse() {
+	public void show(boolean shouldShow) {
 		  GridData gridData = (GridData) control.getLayoutData();
           if (gridData != null) {
               gridData.exclude = false;
           }
-          control.setVisible(true);
-	}
-
-	@Override
-	public void showIsTrue() {
-        GridData gridData = (GridData) control.getLayoutData();
-        if (gridData != null) {
-            gridData.exclude = true;
-        }
-        control.setVisible(false);		
+          control.setVisible(shouldShow);
 	}
 
 	@Override
@@ -57,4 +48,10 @@ public class SWTLifted implements WithRenderedObject {
 	public Control getControl() {
 		return control;
 	}
+
+    @Override
+    public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+       
+    }
+	
 }
