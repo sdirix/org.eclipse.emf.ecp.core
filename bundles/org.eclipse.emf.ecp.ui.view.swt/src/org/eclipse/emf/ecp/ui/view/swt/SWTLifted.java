@@ -34,12 +34,11 @@ public class SWTLifted implements WithRenderedObject {
 
 	@Override
 	public void showIsTrue() {
-		Composite composite = (Composite) control;
-        GridData gridData = (GridData) composite.getLayoutData();
+        GridData gridData = (GridData) control.getLayoutData();
         if (gridData != null) {
             gridData.exclude = true;
         }
-        composite.setVisible(false);		
+        control.setVisible(false);		
 	}
 
 	@Override
