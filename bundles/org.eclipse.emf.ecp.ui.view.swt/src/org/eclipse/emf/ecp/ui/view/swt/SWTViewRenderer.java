@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -21,6 +23,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -42,6 +45,11 @@ import org.eclipse.swt.widgets.TreeItem;
 
 
 public class SWTViewRenderer extends AbstractSWTRenderer<View> {
+    
+    private static ImageDescriptor ERROR_DESCRIPTOR = Activator
+            .getImageDescriptor("icons/error_decorate.png");
+    private static ImageDescriptor WARNING_DESCRIPTOR = Activator
+            .getImageDescriptor("icons/warning_decorate.png");
 
     private TreeViewer treeViewer;
     private WithRenderedObjectAdapter treeViewerRefreshAdapter = new WithRenderedObjectAdapter() {
@@ -373,11 +381,59 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
         @Override
         public Image getColumnImage(Object object, int columnIndex) {
+            
             if (columnIndex != 0)
                 return null;
-            Node node = (Node) object;
-            return super.getImage(node.getLabelObject());
             
+            Image image = super.getColumnImage(object, columnIndex);
+            
+            EObject rootEObject = null;
+            if (!Node.class.isInstance(object)) {
+                return image;
+            }
+            
+            
+            // Integer highestSeverity=Diagnostic.OK;
+            // // if object categorization -> check all category
+            // if(Categorization.class.isInstance(object)){
+            // Categorization categorization=(Categorization)object;
+            // for(AbstractCategorization
+            // abstractCategorization:categorization.getCategorizations()){
+            //
+            // if(value!=null && value>highestSeverity)
+            // highestSeverity=value;
+            // }
+            //
+            // }
+            // else if(Category.class.isInstance(object)){
+            // Category category=(Category)object;
+            // Integer value=rendererContext.get(category);
+            // if(value!=null &&value>highestSeverity)
+            // highestSeverity=value;
+            // }
+//            Integer highestSeverity = rendererContext.getSeverity((EObject) object);
+            Node node = (Node) object;
+            image = super.getImage(node.getLabelObject());
+            ImageDescriptor overlay = null;
+            switch (node.getSeverity()) {
+
+            case Diagnostic.ERROR:
+                overlay = ERROR_DESCRIPTOR;
+                break;
+            case Diagnostic.WARNING:
+                overlay = WARNING_DESCRIPTOR;
+                break;
+            default:
+                break;
+            }
+            
+            if (overlay == null)
+                return image;
+            OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, overlay,
+                    OverlayImageDescriptor.LOWER_RIGHT);
+            Image resultImage = imageDescriptor.createImage();
+            
+            return resultImage;            
         }
 
         @Override

@@ -1,6 +1,10 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -46,5 +50,16 @@ public class Activator extends Plugin {
 	public static Activator getDefault() {
 		return plugin;
 	}
+
+    public static ImageDescriptor getImageDescriptor(String path) {
+        if (getDefault() == null)
+            try {
+                return ImageDescriptor.createFromURL(new File(path).toURI().toURL());
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        return ImageDescriptor.createFromURL(getDefault().getBundle().getResource(path));
+    }
 
 }

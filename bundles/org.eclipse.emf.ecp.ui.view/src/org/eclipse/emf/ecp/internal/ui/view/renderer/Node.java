@@ -42,6 +42,7 @@ public class Node<T extends Renderable> implements ValidationListener {
     private ECPControlContext controlContext;
 	private Object labelObject;
 	private List<ECPAction> actions;
+	private int severity;
 	
 	public Node(T model, ECPControlContext controlContext) {
 		this.model = model;
@@ -246,10 +247,23 @@ public class Node<T extends Renderable> implements ValidationListener {
 	
 	@Override
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+	    
+	    int max = Diagnostic.OK;
+	    if (affectedObjects.containsKey(model)) { 
+            for (Diagnostic diagnostic : affectedObjects.get(model)) {
+                if(diagnostic.getSeverity() > max){
+                    max = diagnostic.getSeverity();
+                }
+            }
+        }	    
+	    
+	    severity = max;
+	    
 		for (Node child : getChildren()) {
 			child.validationChanged(affectedObjects);
 		}
 	}
+	
 	
 	public boolean isLeaf() {
 		return false;
@@ -257,6 +271,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 
 	public void dispose() {
 		cleanup();
+		renderedObject = null;
 	}
 	
 	public void execute(TreeRendererNodeVisitor visitor) {
@@ -312,5 +327,13 @@ public class Node<T extends Renderable> implements ValidationListener {
 	
     public boolean isLifted() {
         return renderedObject != null;
+    }
+
+    public int getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(int severity) {
+        this.severity = severity;
     }
 }

@@ -16,6 +16,7 @@ Export-Package: org.eclipse.emf.ecp.ui.view.swt
 Import-Package: org.eclipse.core.commands,
  org.eclipse.jface.action,
  org.eclipse.jface.layout,
+ org.eclipse.jface.resource,
  org.eclipse.jface.viewers,
  org.eclipse.swt,
  org.eclipse.swt.custom,
