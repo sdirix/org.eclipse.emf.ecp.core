@@ -67,7 +67,7 @@ public final class ConditionEvaluator  {
         if (!attributeClass.isInstance(parent))
             return false;
                 
-        return parent.eGet(condition.getAttribute()).equals(condition.getExpectedValue());
+        return condition.getExpectedValue().equals(parent.eGet(condition.getAttribute()));
     }
     
 }

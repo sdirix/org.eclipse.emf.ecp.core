@@ -12,6 +12,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ConditionEvaluator;
@@ -132,7 +133,11 @@ public class Node<T extends Renderable> implements ValidationListener {
     private void unset(ECPControlContext context, EObject eObject) {
         if (eObject instanceof Control) {
             Control control = (Control) eObject;
-            ECPControlContext editContext = context.createSubContext(eObject);
+            EObject parent=context.getModelElement();
+            for(EReference eReference:control.getPathToFeature()){
+                parent=(EObject) parent.eGet(eReference);
+            }
+            ECPControlContext editContext = context.createSubContext(parent);
             EStructuralFeature targetFeature = control.getTargetFeature();
             if (targetFeature.isMany()) {
                 Collection<?> collection = (Collection<?>) editContext.getModelElement().eGet(targetFeature);
@@ -202,26 +207,32 @@ public class Node<T extends Renderable> implements ValidationListener {
 	}
 
 	public void enableIsTrue() {
+	    if(renderedObject!=null)
 		renderedObject.enableIsTrue();
 	}
 	
 	public void enableIsFalse() {
+	    if(renderedObject!=null)
 		renderedObject.enableIsFalse();
 	}
 	
 	public void showIsFalse() {
+	    if(renderedObject!=null)
 		renderedObject.showIsFalse();
 	}
 	
 	public void showIsTrue() {
+	    if(renderedObject!=null)
 		renderedObject.showIsTrue();
 	}
 	
 	public void layout() {
+	    if(renderedObject!=null)
 		renderedObject.layout();
 	}
 	
 	public void cleanup() {
+	    if(renderedObject!=null)
 		renderedObject.cleanup();
 	}
 //	

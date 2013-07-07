@@ -348,6 +348,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             return;
 
         final Node object = (Node) treeSelection.getFirstElement();
+        if(object.getActions()==null)
+            return;
         // if(AbstractCategorization.class.isInstance(object.getRenderable())){
         // List<Action> actions=((AbstractCategorization)object.getRenderable()).getActions();
         for (int i = 0; i < object.getActions().size(); i++) {
