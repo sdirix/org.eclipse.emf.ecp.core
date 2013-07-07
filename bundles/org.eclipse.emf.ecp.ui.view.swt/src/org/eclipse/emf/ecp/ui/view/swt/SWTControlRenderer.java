@@ -81,8 +81,7 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
             controlComposite.setEnabled(!modelControl.isReadonly());
             controlComposite.setBackground(getParent().getBackground());
             
-//            SWTRendererLeaf leaf = new SWTRendererLeaf(controlComposite, modelControl, controlContext, control);
-            node.lift(withSWT(controlComposite));
+            node.lift(withSWTControl(controlComposite, control, modelControl));
             
             GridDataFactory.fillDefaults()
             	.align(SWT.FILL, SWT.CENTER)
