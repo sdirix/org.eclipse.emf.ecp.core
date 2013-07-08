@@ -16,25 +16,24 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.TreeRendererNodeVisitor;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
-public class RendererContext<CONTROL> {
+public class RendererContext<CONTROL> implements ValidationResultProvider {
 
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-    private Node node;
+    private Node<?> node;
     private boolean alive = true;
     private EObject article;
     private Renderable renderable;
     private final Set<ValidationListener> listeners = new HashSet<RendererContext.ValidationListener>();
 
     private EContentAdapter contentAdapter;
-	private ECPControlContext context;
 	private CONTROL control;
 
     public RendererContext(@SuppressWarnings("rawtypes") final Node node, final ECPControlContext context) {
@@ -59,6 +58,13 @@ public class RendererContext<CONTROL> {
 
         };
         this.article.eAdapters().add(contentAdapter);
+        
+        node.execute(new TreeRendererNodeVisitor() {
+            @Override
+            public void executeOnNode(Node node) {
+                node.setValidationRequestProvider(RendererContext.this);
+            }
+        });
     }
 
     public void triggerValidation() {
@@ -190,4 +196,9 @@ public class RendererContext<CONTROL> {
     public CONTROL getControl() {
 		return control;
 	}
+
+    @Override
+    public Map<EObject, Set<Diagnostic>> provideValidationResult() {
+        return validationMap;
+    }
 }

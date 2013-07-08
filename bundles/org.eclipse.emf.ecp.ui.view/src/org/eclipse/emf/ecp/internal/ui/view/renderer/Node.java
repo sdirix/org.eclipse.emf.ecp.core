@@ -17,7 +17,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ConditionEvaluator;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
+import org.eclipse.emf.ecp.ui.view.ValidationRequestor;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
+import org.eclipse.emf.ecp.ui.view.ValidationResultProvider;
 import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.EnableRule;
@@ -33,7 +35,7 @@ import org.eclipse.emf.ecp.view.model.ShowRule;
  * @param <CONTROL>
  * 			the type of the actual control
  */
-public class Node<T extends Renderable> implements ValidationListener {
+public class Node<T extends Renderable> implements ValidationListener, ValidationRequestor {
 
 	private T model;
 	private List<Node<?>> children;
@@ -43,6 +45,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 	private Object labelObject;
 	private List<ECPAction> actions;
 	private int severity;
+    private ValidationResultProvider validationResultProvider;
 	
 	public Node(T model, ECPControlContext controlContext) {
 		this.model = model;
@@ -61,7 +64,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 		return model;
 	}
 	
-	public void addChild(Node node) {
+	public void addChild(Node<?> node) {
 		children.add(node);
 	}
 	
@@ -100,7 +103,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 			}
 			
 		} else {
-			for (Node child : getChildren()) {
+			for (Node<?> child : getChildren()) {
 				child.checkShow(notification, controlContext);
 			}
 		}
@@ -179,7 +182,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 			}
 			
 		} else {
-			for (Node child : getChildren()) {
+			for (Node<?> child : getChildren()) {
 				child.checkEnable(notification, context);				
 			}
 		}
@@ -259,7 +262,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 	    
 	    severity = max;
 	    
-		for (Node child : getChildren()) {
+		for (Node<?> child : getChildren()) {
 			child.validationChanged(affectedObjects);
 		}
 	}
@@ -272,11 +275,12 @@ public class Node<T extends Renderable> implements ValidationListener {
 	public void dispose() {
 		cleanup();
 		renderedObject = null;
+		validationResultProvider = null;
 	}
 	
 	public void execute(TreeRendererNodeVisitor visitor) {
 		visitor.executeOnNode(this);
-		for (Node child : getChildren()) {
+		for (Node<?> child : getChildren()) {
 			visitor.executeOnNode(child);
 		}
 	}
@@ -335,5 +339,22 @@ public class Node<T extends Renderable> implements ValidationListener {
 
     public void setSeverity(int severity) {
         this.severity = severity;
+    }
+
+    @Override
+    public void setValidationRequestProvider(ValidationResultProvider resultProvider) {
+        this.validationResultProvider = resultProvider;
+    }
+
+    @Override
+    public void requestValidation() {
+        if (validationResultProvider != null) {
+            Map<EObject, Set<Diagnostic>> provideValidationResult = this.validationResultProvider.provideValidationResult();
+            validationChanged(provideValidationResult);
+        }
+    }
+
+    public ValidationResultProvider getValidationRequestProvider() {
+        return validationResultProvider;
     }
 }

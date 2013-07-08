@@ -163,11 +163,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
                         // TODO: REVIEW
                         if (Node.class.isInstance(selection)) {
-                            Node node = (Node) selection;
-                            Renderable renderable = node.getRenderable();
+                            Node<?> node = (Node<?>) selection;
                             try {
                                 SWTRenderers.INSTANCE.render(childComposite, node,
                                         newAdapterFactoryItemDelegator);
+                                node.setValidationRequestProvider(viewNode.getValidationRequestProvider());
+                                node.requestValidation();
                             } catch (NoRendererFoundException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
@@ -175,41 +176,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
-                            // if (renderable instanceof Category) {
-                            // Category category = (Category) renderable;
-                            // try {
-                            // SWTRenderers.INSTANCE.render(childComposite, node, controlContext,
-                            // newAdapterFactoryItemDelegator);
-                            // } catch (NoRendererFoundException e) {
-                            // // TODO Auto-generated catch block
-                            // e.printStackTrace();
-                            // } catch (NoPropertyDescriptorFoundExeption e) {
-                            // // TODO Auto-generated catch block
-                            // e.printStackTrace();
-                            // }
-                            //
-                            // } else {
-                            // TreePath path = treeSelection.getPathsFor(selection)[0];
-                            //
-                            // if (path.getSegmentCount() < 2) {
-                            // return;
-                            // }
-                            //
-                            // Object parent = null;
-                            // for (int i = path.getSegmentCount() - 2; i >= 0; i--) {
-                            // Object segment = path.getSegment(i);
-                            // if (segment instanceof Node) {
-                            // Node n = (Node) segment;
-                            // if (TreeCategory.class.isInstance(n.getRenderable())) {
-                            // parent = path.getSegment(i);
-                            // break;
-                            // }
-                            // }
-                            // }
-                            //
-                            // if (parent == null)
-                            // return;
-                            // }
 
                             childComposite.layout();
                         }
@@ -387,31 +353,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             
             Image image = super.getColumnImage(object, columnIndex);
             
-            EObject rootEObject = null;
             if (!Node.class.isInstance(object)) {
                 return image;
             }
-            
-            
-            // Integer highestSeverity=Diagnostic.OK;
-            // // if object categorization -> check all category
-            // if(Categorization.class.isInstance(object)){
-            // Categorization categorization=(Categorization)object;
-            // for(AbstractCategorization
-            // abstractCategorization:categorization.getCategorizations()){
-            //
-            // if(value!=null && value>highestSeverity)
-            // highestSeverity=value;
-            // }
-            //
-            // }
-            // else if(Category.class.isInstance(object)){
-            // Category category=(Category)object;
-            // Integer value=rendererContext.get(category);
-            // if(value!=null &&value>highestSeverity)
-            // highestSeverity=value;
-            // }
-//            Integer highestSeverity = rendererContext.getSeverity((EObject) object);
+           
             Node node = (Node) object;
             image = super.getImage(node.getLabelObject());
             ImageDescriptor overlay = null;
