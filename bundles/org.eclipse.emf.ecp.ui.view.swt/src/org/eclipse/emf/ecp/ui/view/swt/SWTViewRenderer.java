@@ -27,6 +27,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -79,8 +80,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
                     .applyTo(scrolledComposite);
 
-            Composite editorComposite = createComposite(scrolledComposite);
-            scrolledComposite.setContent(editorComposite);
+//            Composite editorComposite = createComposite(scrolledComposite);
+//            scrolledComposite.setContent(editorComposite);
 
             GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true)
                     .hint(400, SWT.DEFAULT).applyTo(treeViewer.getTree());
@@ -135,6 +136,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                     .getAdapterFactory()));
 
             treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+                private Node lastSelection;
                 @Override
                 public void selectionChanged(SelectionChangedEvent event) {
 
@@ -152,11 +154,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                         if (selection == null) {
                             return;
                         }
-
-                        for (Control control : scrolledComposite.getChildren()) {
-                            control.dispose();
+                        if(lastSelection!=null){
+                            lastSelection.dispose();
+                            lastSelection=(Node) selection;
                         }
-
                         final Composite childComposite = createComposite(scrolledComposite);
                         childComposite.setBackground(getParent().getBackground());
                         scrolledComposite.setContent(childComposite);
@@ -188,7 +189,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), view);
 
             treeViewer.setInput(viewNode);
-
+            treeViewer.expandAll();
+            treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));
             viewNode.lift(withSWT(composite));
 
             return composite;
