@@ -222,6 +222,7 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
 
     @Override
     public Map<EObject, Set<Diagnostic>> provideValidationResult() {
+        triggerValidation();
         return validationMap;
     }
 }
