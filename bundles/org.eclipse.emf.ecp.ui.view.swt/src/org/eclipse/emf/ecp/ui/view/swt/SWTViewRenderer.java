@@ -38,6 +38,7 @@ import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
@@ -77,6 +78,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             Composite composite = createComposite(getParent());
             treeViewer = createTreeViewer(composite);
             final ScrolledComposite scrolledComposite = createScrolledComposite(composite);
+            scrolledComposite.setExpandHorizontal(true);
+            scrolledComposite.setExpandVertical(true);
+            scrolledComposite.setShowFocusedControl(true);
+            
             GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
                     .applyTo(scrolledComposite);
 
@@ -161,6 +166,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                         final Composite childComposite = createComposite(scrolledComposite);
                         childComposite.setBackground(getParent().getBackground());
                         scrolledComposite.setContent(childComposite);
+                        
 
                         // TODO: REVIEW
                         if (Node.class.isInstance(selection)) {
@@ -179,6 +185,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                             }
 
                             childComposite.layout();
+                            Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+                            scrolledComposite.setMinSize(point);
                         }
                     } finally {
                         composedAdapterFactory.dispose();

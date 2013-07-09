@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -32,6 +33,7 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
     private EObject article;
     private Renderable renderable;
     private final Set<ValidationListener> listeners = new HashSet<RendererContext.ValidationListener>();
+    private ValidationSeverityModifier validationSeverityHandler;
 
     private EContentAdapter contentAdapter;
 	private CONTROL control;
@@ -66,6 +68,10 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
             }
         });
     }
+    
+    public void setValidationSeverityHandler(ValidationSeverityModifier validationSeverityHandler) {
+        this.validationSeverityHandler = validationSeverityHandler;
+    }
 
     public void triggerValidation() {
         validate();
@@ -99,10 +105,24 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
                 if (currentValues == null){
                     validationMap.put(object, new HashSet<Diagnostic>());
                 }
+                if (validationSeverityHandler != null) {
+                    int severityForDiagnostic = validationSeverityHandler.getSeverityForDiagnostic(
+                            childDiagnostic, feature);
+                    if (severityForDiagnostic != childDiagnostic.getSeverity()) {
+                        childDiagnostic = createDiagnosticWithSeverity(childDiagnostic,
+                                severityForDiagnostic);
+                    }
+                }
                 validationMap.get(object).add(childDiagnostic);
             }
 
         }
+    }
+    private static BasicDiagnostic createDiagnosticWithSeverity(Diagnostic diagnosticTemplate,
+            int severity) {
+        return new BasicDiagnostic(severity, diagnosticTemplate.getSource(),
+                diagnosticTemplate.getCode(), diagnosticTemplate.getMessage(), diagnosticTemplate
+                        .getData().toArray());
     }
 
     private void analyseView() {
@@ -170,6 +190,9 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
 
     public interface ValidationListener {
         void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects);
+    }
+    public interface ValidationSeverityModifier {
+        int getSeverityForDiagnostic(Diagnostic diagnostic, EStructuralFeature feature);
     }
 
     public Integer getSeverity(EObject object) {
