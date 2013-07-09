@@ -184,7 +184,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
             @Override
             public Object[] getChildren(Object parentElement) {
-                Node node = (Node) parentElement;
+                Node<?> node = (Node<?>) parentElement;
 
                 List<Node<?>> visisbleNodes = filterVisisbleNodes(node);
 
@@ -196,7 +196,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                 .getAdapterFactory()));
 
         treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            private Node lastSelection;
+            private Node<?> lastSelection;
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
 
@@ -216,7 +216,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                     }
                     if(lastSelection!=null){
                         lastSelection.dispose();
-                        lastSelection=(Node) selection;
+                        lastSelection=(Node<?>) selection;
                     }
                     final Composite childComposite = createComposite(editorComposite);
                     childComposite.setBackground(getParent().getBackground());
@@ -226,10 +226,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                     // TODO: REVIEW
                     if (Node.class.isInstance(selection)) {
                         Node<?> node = (Node<?>) selection;
-                        viewNode.fireSelectedChildNodeChanged(node);
                         try {
                             SWTRenderers.INSTANCE.render(childComposite, node,
                                     newAdapterFactoryItemDelegator);
+                            viewNode.fireSelectedChildNodeChanged(node);
                         } catch (NoRendererFoundException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();

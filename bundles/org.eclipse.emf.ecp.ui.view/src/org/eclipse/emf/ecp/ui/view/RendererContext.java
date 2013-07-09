@@ -238,6 +238,8 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
     @Override
     public void childSelected(Node<?> child) {
+        // trigger validation in order to update validation status of controls
+        triggerValidation();
         fireSelectionChanged(child.getRenderable());
     }
 }
