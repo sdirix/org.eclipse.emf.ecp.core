@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.ValidationOccurredListener;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObjectAdapter;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -30,6 +31,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -62,7 +64,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         }
     };
     
-    @SuppressWarnings("serial")
     @Override
     public Control render(final Node<View> viewNode,
             final AdapterFactoryItemDelegator adapterFactoryItemDelegator)
@@ -78,145 +79,34 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             return control;
         } else {
             Composite composite = createComposite(getParent());
-            treeViewer = createTreeViewer(composite);
-            final ScrolledComposite scrolledComposite = createScrolledComposite(composite);
-            scrolledComposite.setExpandHorizontal(true);
-            scrolledComposite.setExpandVertical(true);
-            scrolledComposite.setShowFocusedControl(true);
+            createTreeViewer(composite,adapterFactoryItemDelegator,viewNode);
+            createdEditorPane(composite);
             
-            GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-                    .applyTo(scrolledComposite);
-
-//            Composite editorComposite = createComposite(scrolledComposite);
-//            scrolledComposite.setContent(editorComposite);
-
-            GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true)
-                    .hint(400, SWT.DEFAULT).applyTo(treeViewer.getTree());
-
-            treeViewer.setContentProvider(new ITreeContentProvider() {
-
-                @Override
-                public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-                    // TODO Auto-generated method stub
-
-                }
-
-                @Override
-                public void dispose() {
-                    // TODO Auto-generated method stub
-
-                }
-
-                @Override
-                public boolean hasChildren(Object element) {
-                    Object[] children = getChildren(element);
-
-                    if (children == null) {
-                        return false;
-                    }
-
-                    return children.length > 0;
-                }
-
-                @Override
-                public Object getParent(Object element) {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-                @Override
-                public Object[] getElements(Object inputElement) {
-                    return getChildren(inputElement);
-                }
-
-                @Override
-                public Object[] getChildren(Object parentElement) {
-                    Node<?> node = (Node<?>) parentElement;
-
-                    List<Node<?>> visisbleNodes = filterVisisbleNodes(node);
-
-                    return visisbleNodes.toArray();
-                }
-            });
-
-            treeViewer.setLabelProvider(new TreeTableLabelProvider(adapterFactoryItemDelegator
-                    .getAdapterFactory()));
-
-            treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-                private Node<?> lastSelection;
-                @Override
-                public void selectionChanged(SelectionChangedEvent event) {
-
-                    ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-                            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-                    AdapterFactoryItemDelegator newAdapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-                            composedAdapterFactory);
-
-                    try {
-                        TreeSelection treeSelection = (TreeSelection) event.getSelection();
-                        Object selection = treeSelection.getFirstElement();
-                        addButtons(treeViewer, treeSelection, viewNode.getControlContext()
-                                .getModelElement());
-
-                        if (selection == null) {
-                            return;
-                        }
-                        if(lastSelection!=null){
-                            lastSelection.dispose();
-                            lastSelection=(Node<?>) selection;
-                        }
-                        final Composite childComposite = createComposite(scrolledComposite);
-                        childComposite.setBackground(getParent().getBackground());
-                        scrolledComposite.setContent(childComposite);
-                        
-
-                        // TODO: REVIEW
-                        if (Node.class.isInstance(selection)) {
-                            Node<?> node = (Node<?>) selection;
-                            viewNode.fireSelectedChildNodeChanged(node);
-                            try {
-                                SWTRenderers.INSTANCE.render(childComposite, node,
-                                        newAdapterFactoryItemDelegator);
-                            } catch (NoRendererFoundException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (NoPropertyDescriptorFoundExeption e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-
-                            childComposite.layout();
-                            Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-                            scrolledComposite.setMinSize(point);
-                        }
-                    } finally {
-                        composedAdapterFactory.dispose();
-                    }
-                }
-            });
-
-            addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), view);
-
-            treeViewer.setInput(viewNode);
-            treeViewer.expandAll();
-            treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));
             viewNode.lift(withSWT(composite));
-            viewNode.setCallback(new ValidationOccurredListener() {
-                
-                @Override
-                public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-                   treeViewer.refresh();
-                }
-            });
 
+            
+            
+            initTreeViewer(viewNode);
+            
             return composite;
         }
     }
 
-    private List<Node<?>> filterVisisbleNodes(Node<?> node) {
+    protected void createdEditorPane(Composite composite) {
+    	editorComposite = createScrolledComposite(composite);
+        editorComposite.setExpandHorizontal(true);
+        editorComposite.setExpandVertical(true);
+        editorComposite.setShowFocusedControl(true);
+        
+        GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
+                .applyTo(editorComposite);
+
+	}
+
+	private List<Node<?>> filterVisisbleNodes(Node node) {
         List<Node<?>> result = new ArrayList<Node<?>>();
-        List<Node<?>> children = node.getChildren();
-        for (Node<?> child : children) {
+        List<Node> children = node.getChildren();
+        for (Node child : children) {
             if (child.isVisible()) {
                 if (!child.isLifted()) {
                     child.lift(treeViewerRefreshAdapter);
@@ -246,15 +136,136 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
     /**
      * @param composite
+     * @param adapterFactoryItemDelegator 
+     * @param viewNode 
      * @return
      */
-    private TreeViewer createTreeViewer(Composite composite) {
-        TreeViewer treeViewer = new TreeViewer(composite);
-        GridDataFactory.fillDefaults().grab(false, true).align(SWT.BEGINNING, SWT.FILL)
-                .applyTo(treeViewer.getControl());
-        return treeViewer;
+    protected void createTreeViewer(Composite composite, AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode) {
+        treeViewer = new TreeViewer(composite);
+        
+        GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true)
+        .hint(400, SWT.DEFAULT).applyTo(treeViewer.getTree());
+        
+        treeViewer.setContentProvider(new ITreeContentProvider() {
+
+            @Override
+            public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void dispose() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public boolean hasChildren(Object element) {
+                Object[] children = getChildren(element);
+
+                if (children == null) {
+                    return false;
+                }
+
+                return children.length > 0;
+            }
+
+            @Override
+            public Object getParent(Object element) {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            @Override
+            public Object[] getElements(Object inputElement) {
+                return getChildren(inputElement);
+            }
+
+            @Override
+            public Object[] getChildren(Object parentElement) {
+                Node node = (Node) parentElement;
+
+                List<Node<?>> visisbleNodes = filterVisisbleNodes(node);
+
+                return visisbleNodes.toArray();
+            }
+        });
+
+        treeViewer.setLabelProvider(new TreeTableLabelProvider(adapterFactoryItemDelegator
+                .getAdapterFactory()));
+
+        treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            private Node lastSelection;
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+
+                ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+                        ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+                AdapterFactoryItemDelegator newAdapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+                        composedAdapterFactory);
+
+                try {
+                    TreeSelection treeSelection = (TreeSelection) event.getSelection();
+                    Object selection = treeSelection.getFirstElement();
+                    addButtons(treeViewer, treeSelection, viewNode.getControlContext()
+                            .getModelElement());
+
+                    if (selection == null) {
+                        return;
+                    }
+                    if(lastSelection!=null){
+                        lastSelection.dispose();
+                        lastSelection=(Node) selection;
+                    }
+                    final Composite childComposite = createComposite(editorComposite);
+                    childComposite.setBackground(getParent().getBackground());
+                    editorComposite.setContent(childComposite);
+                    
+
+                    // TODO: REVIEW
+                    if (Node.class.isInstance(selection)) {
+                        Node<?> node = (Node<?>) selection;
+                        viewNode.fireSelectedChildNodeChanged(node);
+                        try {
+                            SWTRenderers.INSTANCE.render(childComposite, node,
+                                    newAdapterFactoryItemDelegator);
+                        } catch (NoRendererFoundException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (NoPropertyDescriptorFoundExeption e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+                        childComposite.layout();
+                        Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+                        editorComposite.setMinSize(point);
+                    }
+                } finally {
+                    composedAdapterFactory.dispose();
+                }
+            }
+        });
+
+        addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), viewNode.getRenderable());
+
+        
     }
 
+    protected void initTreeViewer(Node<View> viewNode){
+    	viewNode.setCallback(new ValidationOccurredListener() {
+            
+            @Override
+            public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+               treeViewer.refresh();
+            }
+        });
+    	treeViewer.setInput(viewNode);
+        treeViewer.expandAll();
+        treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));
+    }
+    
     /**
      * @return
      */
@@ -269,8 +280,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     }
 
     private List<TreeEditor> editors = new ArrayList<TreeEditor>();
+	private ScrolledComposite editorComposite;
 
-    private void addTreeEditor(final TreeViewer treeViewer, final EObject article, View view) {
+    protected void addTreeEditor(final TreeViewer treeViewer, final EObject article, View view) {
         // The text column
         final Tree tree = treeViewer.getTree();
         TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
@@ -329,20 +341,19 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         }
     }
 
-    private void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection,
+    protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection,
             EObject article) {
 
         cleanUpTreeEditors();
-        
         if(treeSelection.getPaths().length==0)
             return;
-        
+        final TreePath currentPath = treeSelection.getPaths()[0];
         // Identify the selected row
         TreeItem item = treeViewer.getTree().getSelection()[0];
         if (item == null)
             return;
 
-        final Node<?> object = (Node<?>) treeSelection.getFirstElement();
+        final Node object = (Node) treeSelection.getFirstElement();
         if(object.getActions()==null)
             return;
         // if(AbstractCategorization.class.isInstance(object.getRenderable())){
@@ -357,8 +368,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
     }
 
-    @SuppressWarnings("serial")
-    private class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements
+    protected class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements
             ITableItemLabelProvider {
 
         public TreeTableLabelProvider(AdapterFactory adapterFactory) {
@@ -377,7 +387,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                 return image;
             }
            
-            Node<?> node = (Node<?>) object;
+            Node node = (Node) object;
             image = super.getImage(node.getLabelObject());
             ImageDescriptor overlay = null;
             switch (node.getSeverity()) {
@@ -406,7 +416,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             if (columnIndex != 0)
                 return "";
 //            return super.getColumnText(object, columnIndex);
-            Node<?> node = (Node<?>) object;
+            Node node = (Node) object;
             return super.getText(node.getLabelObject());
         }
 
