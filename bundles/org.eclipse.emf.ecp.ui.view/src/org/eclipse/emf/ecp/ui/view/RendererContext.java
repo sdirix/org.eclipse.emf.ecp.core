@@ -1,8 +1,10 @@
 package org.eclipse.emf.ecp.ui.view;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,13 +19,13 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.TreeRendererNodeVisitor;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.SelectedChildNodeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
-public class RendererContext<CONTROL> implements ValidationResultProvider {
+public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
@@ -37,10 +39,12 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
 
     private EContentAdapter contentAdapter;
 	private CONTROL control;
+    private List<SelectedNodeChangedListener> selectionChangedListeners;
 
     public RendererContext(@SuppressWarnings("rawtypes") final Node node, final ECPControlContext context) {
     	this.node = node;
     	this.renderable = node.getRenderable();
+    	this.selectionChangedListeners = new ArrayList<SelectedNodeChangedListener>();
         analyseView();
         this.article = context.getModelElement();
         this.contentAdapter = new EContentAdapter() {
@@ -61,12 +65,9 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
         };
         this.article.eAdapters().add(contentAdapter);
         
-        node.execute(new TreeRendererNodeVisitor() {
-            @Override
-            public void executeOnNode(Node node) {
-                node.setValidationRequestProvider(RendererContext.this);
-            }
-        });
+        if (node.getRenderable() instanceof View) {
+            node.addSelectedChildNodeListener(this);
+        }
     }
     
     public void setValidationSeverityHandler(ValidationSeverityModifier validationSeverityHandler) {
@@ -182,6 +183,7 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
         article.eAdapters().remove(contentAdapter);
         validationMap.clear();
         categoryValidationMap.clear();
+        selectionChangedListeners.clear();
         node.dispose();
         article = null;
         renderable = null;
@@ -220,9 +222,22 @@ public class RendererContext<CONTROL> implements ValidationResultProvider {
 		return control;
 	}
 
+    public void addSelectionChangedListener(SelectedNodeChangedListener listener) {
+        selectionChangedListeners.add(listener);
+    }
+    
+    public void removeSelectionChangedListener(SelectedNodeChangedListener listener) {
+        selectionChangedListeners.remove(listener);
+    }
+    
+    private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
+        for (SelectedNodeChangedListener listener : selectionChangedListeners) {
+            listener.selectionChanged(selectedRenderable);
+        }
+    }
+
     @Override
-    public Map<EObject, Set<Diagnostic>> provideValidationResult() {
-        triggerValidation();
-        return validationMap;
+    public void childSelected(Node<?> child) {
+        fireSelectionChanged(child.getRenderable());
     }
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.crypto.NodeSetData;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -17,9 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ConditionEvaluator;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
-import org.eclipse.emf.ecp.ui.view.ValidationRequestor;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
-import org.eclipse.emf.ecp.ui.view.ValidationResultProvider;
 import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.EnableRule;
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecp.view.model.ShowRule;
  * @param <CONTROL>
  * 			the type of the actual control
  */
-public class Node<T extends Renderable> implements ValidationListener, ValidationRequestor {
+public class Node<T extends Renderable> implements ValidationListener {
 
 	private T model;
 	private List<Node<?>> children;
@@ -45,13 +45,15 @@ public class Node<T extends Renderable> implements ValidationListener, Validatio
 	private Object labelObject;
 	private List<ECPAction> actions;
 	private int severity;
-    private ValidationResultProvider validationResultProvider;
+    private ValidationOccurredListener callback;
+    private List<SelectedChildNodeListener> selectedChildNodeListeners;
 	
 	public Node(T model, ECPControlContext controlContext) {
 		this.model = model;
 		this.labelObject = model;
 		this.controlContext = controlContext;
 		this.children = new ArrayList<Node<?>>();
+		this.selectedChildNodeListeners = new ArrayList<SelectedChildNodeListener>();
 		isVisible = true;
 	}
 	
@@ -204,6 +206,7 @@ public class Node<T extends Renderable> implements ValidationListener, Validatio
 		return false;
 	}
 	
+	// TODO: how should we behave in case there is no renderable?
 	private void checkIsLifted() {
 		if (renderedObject == null) {
 			throw new IllegalStateException("Node hasn't been lifted!");
@@ -265,6 +268,10 @@ public class Node<T extends Renderable> implements ValidationListener, Validatio
 		for (Node<?> child : getChildren()) {
 			child.validationChanged(affectedObjects);
 		}
+		
+		if (callback != null) {
+		    callback.validationChanged(affectedObjects);
+		}
 	}
 	
 	
@@ -274,8 +281,9 @@ public class Node<T extends Renderable> implements ValidationListener, Validatio
 
 	public void dispose() {
 		cleanup();
+		selectedChildNodeListeners.clear();
 		renderedObject = null;
-		validationResultProvider = null;
+		callback = null;
 	}
 	
 	public void execute(TreeRendererNodeVisitor visitor) {
@@ -341,20 +349,25 @@ public class Node<T extends Renderable> implements ValidationListener, Validatio
         this.severity = severity;
     }
 
-    @Override
-    public void setValidationRequestProvider(ValidationResultProvider resultProvider) {
-        this.validationResultProvider = resultProvider;
+    public ValidationOccurredListener getCallback() {
+        return callback;
     }
 
-    @Override
-    public void requestValidation() {
-        if (validationResultProvider != null) {
-            Map<EObject, Set<Diagnostic>> provideValidationResult = this.validationResultProvider.provideValidationResult();
-            validationChanged(provideValidationResult);
+    public void setCallback(ValidationOccurredListener callback) {
+        this.callback = callback;
+    }
+    
+    public void addSelectedChildNodeListener(SelectedChildNodeListener listener) {
+        selectedChildNodeListeners.add(listener);
+    }
+    
+    public void removeSelectedChildNodeListener(SelectedChildNodeListener listener) {
+        selectedChildNodeListeners.add(listener);
+    }
+    
+    public void fireSelectedChildNodeChanged(Node<?> selectedChild) {
+        for (SelectedChildNodeListener listener : selectedChildNodeListeners) {
+            listener.childSelected(selectedChild);
         }
-    }
-
-    public ValidationResultProvider getValidationRequestProvider() {
-        return validationResultProvider;
     }
 }

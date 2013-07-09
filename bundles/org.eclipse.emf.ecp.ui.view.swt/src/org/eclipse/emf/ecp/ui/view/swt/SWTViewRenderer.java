@@ -3,6 +3,8 @@ package org.eclipse.emf.ecp.ui.view.swt;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -13,10 +15,10 @@ import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.ValidationOccurredListener;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObjectAdapter;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -28,7 +30,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -61,6 +62,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         }
     };
     
+    @SuppressWarnings("serial")
     @Override
     public Control render(final Node<View> viewNode,
             final AdapterFactoryItemDelegator adapterFactoryItemDelegator)
@@ -129,7 +131,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
                 @Override
                 public Object[] getChildren(Object parentElement) {
-                    Node node = (Node) parentElement;
+                    Node<?> node = (Node<?>) parentElement;
 
                     List<Node<?>> visisbleNodes = filterVisisbleNodes(node);
 
@@ -141,7 +143,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                     .getAdapterFactory()));
 
             treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-                private Node lastSelection;
+                private Node<?> lastSelection;
                 @Override
                 public void selectionChanged(SelectionChangedEvent event) {
 
@@ -161,7 +163,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                         }
                         if(lastSelection!=null){
                             lastSelection.dispose();
-                            lastSelection=(Node) selection;
+                            lastSelection=(Node<?>) selection;
                         }
                         final Composite childComposite = createComposite(scrolledComposite);
                         childComposite.setBackground(getParent().getBackground());
@@ -171,11 +173,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                         // TODO: REVIEW
                         if (Node.class.isInstance(selection)) {
                             Node<?> node = (Node<?>) selection;
+                            viewNode.fireSelectedChildNodeChanged(node);
                             try {
                                 SWTRenderers.INSTANCE.render(childComposite, node,
                                         newAdapterFactoryItemDelegator);
-                                node.setValidationRequestProvider(viewNode.getValidationRequestProvider());
-                                node.requestValidation();
                             } catch (NoRendererFoundException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
@@ -200,15 +201,22 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             treeViewer.expandAll();
             treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));
             viewNode.lift(withSWT(composite));
+            viewNode.setCallback(new ValidationOccurredListener() {
+                
+                @Override
+                public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+                   treeViewer.refresh();
+                }
+            });
 
             return composite;
         }
     }
 
-    private List<Node<?>> filterVisisbleNodes(Node node) {
+    private List<Node<?>> filterVisisbleNodes(Node<?> node) {
         List<Node<?>> result = new ArrayList<Node<?>>();
-        List<Node> children = node.getChildren();
-        for (Node child : children) {
+        List<Node<?>> children = node.getChildren();
+        for (Node<?> child : children) {
             if (child.isVisible()) {
                 if (!child.isLifted()) {
                     child.lift(treeViewerRefreshAdapter);
@@ -325,15 +333,16 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             EObject article) {
 
         cleanUpTreeEditors();
+        
         if(treeSelection.getPaths().length==0)
             return;
-        final TreePath currentPath = treeSelection.getPaths()[0];
+        
         // Identify the selected row
         TreeItem item = treeViewer.getTree().getSelection()[0];
         if (item == null)
             return;
 
-        final Node object = (Node) treeSelection.getFirstElement();
+        final Node<?> object = (Node<?>) treeSelection.getFirstElement();
         if(object.getActions()==null)
             return;
         // if(AbstractCategorization.class.isInstance(object.getRenderable())){
@@ -348,6 +357,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
     }
 
+    @SuppressWarnings("serial")
     private class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements
             ITableItemLabelProvider {
 
@@ -367,7 +377,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                 return image;
             }
            
-            Node node = (Node) object;
+            Node<?> node = (Node<?>) object;
             image = super.getImage(node.getLabelObject());
             ImageDescriptor overlay = null;
             switch (node.getSeverity()) {
@@ -396,7 +406,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             if (columnIndex != 0)
                 return "";
 //            return super.getColumnText(object, columnIndex);
-            Node node = (Node) object;
+            Node<?> node = (Node<?>) object;
             return super.getText(node.getLabelObject());
         }
 
