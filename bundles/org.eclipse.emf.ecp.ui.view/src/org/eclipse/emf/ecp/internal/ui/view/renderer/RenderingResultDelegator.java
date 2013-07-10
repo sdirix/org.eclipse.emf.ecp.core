@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * @param <CONTROL>
  * 			the type of the actual control
  */
-public interface WithRenderedObject {
+public interface RenderingResultDelegator {
 
 	void enable(boolean shouldEnable);
 	

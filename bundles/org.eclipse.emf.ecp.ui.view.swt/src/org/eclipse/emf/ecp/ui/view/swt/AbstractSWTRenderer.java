@@ -1,7 +1,7 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Control;
 
@@ -19,11 +19,11 @@ public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRe
 		return parent;
 	}
 	
-	public WithRenderedObject withSWT(Control control) {
+	public RenderingResultDelegator withSWT(Control control) {
 		return new SWTLifted(control);
 	}
 	
-	public WithRenderedObject withSWTControl(Control control, SWTControl swtControl, Renderable model) {
+	public RenderingResultDelegator withSWTControl(Control control, SWTControl swtControl, Renderable model) {
 		return new SWTLiftedControl(control, swtControl, model);
 	}
 }

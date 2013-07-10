@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * @param <CONTROL>
  * 			the type of the actual control
  */
-public class WithRenderedObjectAdapter implements WithRenderedObject{
+public class RenderingResultDelegatorAdapter implements RenderingResultDelegator{
 
     @Override
     public void enable(boolean shouldEnable) {

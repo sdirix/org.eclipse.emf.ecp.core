@@ -33,8 +33,7 @@ public class NodeBuilders implements NodeBuilder {
 
 	public static final NodeBuilders INSTANCE = new NodeBuilders();
 
-    @SuppressWarnings("rawtypes")
-	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
+    private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
     private boolean buildersInitialized;
 	
 	private NodeBuilders() {
@@ -75,7 +74,7 @@ public class NodeBuilders implements NodeBuilder {
 		Set<CustomNodeBuilder> builders = new LinkedHashSet<CustomNodeBuilder>();
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 				"org.eclipse.emf.ecp.ui.view.customNodeBuilders");
-		for (IExtension extension : extensionPoint.getExtensions()) {
+		for (IExtension extension : extensionPoint.getExtensions()) { 
 			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
 				CustomNodeBuilder renderer = (CustomNodeBuilder) configurationElement.createExecutableExtension("class");

@@ -4,7 +4,7 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObject;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;

@@ -12,7 +12,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
 
 	@Override
-	public Node build(C renderable, ECPControlContext controlContext,
+	public Node<C> build(C renderable, ECPControlContext controlContext,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		
 		ECPControlContext subcontext = createSubcontext(renderable, controlContext); 

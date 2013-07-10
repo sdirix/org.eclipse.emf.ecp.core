@@ -21,8 +21,8 @@ public class Leaf<T extends Renderable> extends Node<T> {
 	
 	@Override
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-	    if (renderedObject != null) {
-	        renderedObject.validationChanged(affectedObjects);
+	    if (renderingResultDelegator != null) {
+	        renderingResultDelegator.validationChanged(affectedObjects);
 	    }
 	}
 }

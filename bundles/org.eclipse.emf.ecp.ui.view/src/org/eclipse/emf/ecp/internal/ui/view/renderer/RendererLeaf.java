@@ -10,7 +10,6 @@ import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
-// TODO: utility which is not in usgae
 public abstract class RendererLeaf<R extends Renderable> extends Node<R> {
 
 	private ECPControl ecpControl;
@@ -24,13 +23,13 @@ public abstract class RendererLeaf<R extends Renderable> extends Node<R> {
 	}
 
 	@Override
-	public void addChild(Node node) {
+	public void addChild(Node<R> node) {
 		// TODO
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	public List<Node<?>> getChildren() {
+	public List<Node<R>> getChildren() {
 		// TODO docs
 		throw new UnsupportedOperationException();
 	}

@@ -32,8 +32,8 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
     private Node<?> node;
     private boolean alive = true;
-    private EObject article;
     private Renderable renderable;
+    private ECPControlContext context;
     private final Set<ValidationListener> listeners = new HashSet<RendererContext.ValidationListener>();
     private ValidationSeverityModifier validationSeverityHandler;
 
@@ -41,29 +41,12 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	private CONTROL control;
     private List<SelectedNodeChangedListener> selectionChangedListeners;
 
-    public RendererContext(@SuppressWarnings("rawtypes") final Node node, final ECPControlContext context) {
+    public RendererContext(final Node node, final ECPControlContext context) {
     	this.node = node;
     	this.renderable = node.getRenderable();
     	this.selectionChangedListeners = new ArrayList<SelectedNodeChangedListener>();
         analyseView();
-        this.article = context.getModelElement();
-        this.contentAdapter = new EContentAdapter() {
-
-            @Override
-            public void notifyChanged(final Notification notification) {
-                super.notifyChanged(notification);
-
-                triggerValidation();
-                
-                // node is null, since render hasn't been called yet
-                if (node != null) {
-                	node.checkEnable(notification, context);
-                	node.checkShow(notification, context);
-                }
-            }
-
-        };
-        this.article.eAdapters().add(contentAdapter);
+        this.context = context;
         
         if (node.getRenderable() instanceof View) {
             node.addSelectedChildNodeListener(this);
@@ -90,7 +73,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
     }
 
     private void validate() {
-        Diagnostic diagnostic = Diagnostician.INSTANCE.validate(article);
+        Diagnostic diagnostic = Diagnostician.INSTANCE.validate(context.getModelElement());
         validationMap.clear();
         for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
         	if (childDiagnostic.getData().size() < 2) {
@@ -180,12 +163,12 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
     public void dispose() {
         alive = false;
         listeners.clear();
-        article.eAdapters().remove(contentAdapter);
+        context.getModelElement().eAdapters().remove(contentAdapter);
         validationMap.clear();
         categoryValidationMap.clear();
         selectionChangedListeners.clear();
         node.dispose();
-        article = null;
+        context = null;
         renderable = null;
         contentAdapter = null;
     }
@@ -216,6 +199,23 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
     
     public void setRenderedResult(CONTROL control) {
 		this.control = control;
+        this.contentAdapter = new EContentAdapter() {
+
+            @Override
+            public void notifyChanged(final Notification notification) {
+                super.notifyChanged(notification);
+
+                triggerValidation();
+                
+                // node is null, since render hasn't been called yet
+                if (node != null) {
+                    node.checkEnable(notification, context);
+                    node.checkShow(notification, context);
+                }
+            }
+
+        };
+        this.context.getModelElement().eAdapters().add(contentAdapter);
     }
     
     public CONTROL getControl() {

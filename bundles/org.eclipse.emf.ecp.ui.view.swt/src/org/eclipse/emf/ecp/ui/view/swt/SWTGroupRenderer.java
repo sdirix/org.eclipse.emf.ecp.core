@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.ui.view.swt;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;

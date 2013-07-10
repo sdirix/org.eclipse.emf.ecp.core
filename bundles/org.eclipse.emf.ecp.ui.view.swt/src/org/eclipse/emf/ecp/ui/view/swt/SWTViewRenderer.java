@@ -15,11 +15,10 @@ import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ValidationOccurredListener;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.WithRenderedObjectAdapter;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -57,7 +56,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             .getImageDescriptor("icons/warning_decorate.png");
 
     private TreeViewer treeViewer;
-    private WithRenderedObjectAdapter treeViewerRefreshAdapter = new WithRenderedObjectAdapter() {
+    private RenderingResultDelegatorAdapter treeViewerRefreshAdapter = new RenderingResultDelegatorAdapter() {
         @Override
         public void show(boolean shouldShow) {
             treeViewer.refresh();
@@ -93,7 +92,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     }
 
     protected void createdEditorPane(Composite composite) {
-    	editorComposite = createScrolledComposite(composite);
+        editorComposite = createScrolledComposite(composite);
         editorComposite.setExpandHorizontal(true);
         editorComposite.setExpandVertical(true);
         editorComposite.setShowFocusedControl(true);
@@ -101,9 +100,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
                 .applyTo(editorComposite);
 
-	}
+    }
 
-	private List<Node<?>> filterVisisbleNodes(Node node) {
+    protected List<Node<?>> filterVisisbleNodes(Node node) {
         List<Node<?>> result = new ArrayList<Node<?>>();
         List<Node> children = node.getChildren();
         for (Node child : children) {
@@ -254,14 +253,14 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     }
 
     protected void initTreeViewer(Node<View> viewNode){
-    	viewNode.setCallback(new ValidationOccurredListener() {
+        viewNode.setCallback(new ValidationOccurredListener() {
             
             @Override
             public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
                treeViewer.refresh();
             }
         });
-    	treeViewer.setInput(viewNode);
+        treeViewer.setInput(viewNode);
         treeViewer.expandAll();
         treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));
     }
@@ -280,7 +279,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     }
 
     private List<TreeEditor> editors = new ArrayList<TreeEditor>();
-	private ScrolledComposite editorComposite;
+    private ScrolledComposite editorComposite;
 
     protected void addTreeEditor(final TreeViewer treeViewer, final EObject article, View view) {
         // The text column
