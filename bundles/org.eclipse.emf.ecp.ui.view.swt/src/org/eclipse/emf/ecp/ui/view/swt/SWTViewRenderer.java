@@ -55,7 +55,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     private static ImageDescriptor WARNING_DESCRIPTOR = Activator
             .getImageDescriptor("icons/warning_decorate.png");
 
-    private TreeViewer treeViewer;
+    protected TreeViewer treeViewer;
     private RenderingResultDelegatorAdapter treeViewerRefreshAdapter = new RenderingResultDelegatorAdapter() {
         @Override
         public void show(boolean shouldShow) {
