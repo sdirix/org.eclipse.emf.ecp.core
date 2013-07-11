@@ -30,7 +30,7 @@ Import-Package: org.eclipse.core.commands,
  org.eclipse.swt.widgets
 Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.swt.actions;version="1.0.0";x-internal:=true,
- org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.0.0";x-friends:="org.eclipse.emf.ecp.ui.view",
  org.eclipse.emf.ecp.edit.internal.swt.table;version="1.0.0";x-internal:=true,
- org.eclipse.emf.ecp.edit.internal.swt.util;version="1.0.0";x-internal:=true
+ org.eclipse.emf.ecp.edit.internal.swt.util;version="1.0.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt"
 Bundle-Vendor: Eclipse Modeling Project

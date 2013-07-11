@@ -22,9 +22,9 @@ public class Activator extends Plugin {
     // The shared instance
     private static Activator plugin;
 
-    private BundleContext context;
-
+    // TODO: can we reuse the validation service here?
     // private IValidationServiceProvider validationServiceProvider;
+    // private BundleContext context;
 
     /**
      * The constructor
@@ -39,7 +39,7 @@ public class Activator extends Plugin {
      */
     public void start(BundleContext context) throws Exception {
         super.start(context);
-        this.context = context;
+//        this.context = context;
         plugin = this;
     }
 

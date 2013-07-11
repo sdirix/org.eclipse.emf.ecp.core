@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.edit.swt;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.internal.ui.view;x-internal:=true,
+Export-Package: org.eclipse.emf.ecp.internal.ui.view;x-friends:="org.eclipse.emf.ecp.ui.view.swt",
  org.eclipse.emf.ecp.internal.ui.view.builders,
  org.eclipse.emf.ecp.internal.ui.view.emf,
  org.eclipse.emf.ecp.internal.ui.view.renderer,

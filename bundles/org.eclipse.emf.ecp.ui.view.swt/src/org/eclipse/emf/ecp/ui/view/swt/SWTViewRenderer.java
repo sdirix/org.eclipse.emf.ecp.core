@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAda
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ValidationOccurredListener;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -30,7 +31,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -102,10 +102,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
     }
 
-    protected List<Node<?>> filterVisisbleNodes(Node node) {
+    protected List<Node<? extends Renderable>> filterVisisbleNodes(Node<? extends Renderable> node) {
         List<Node<?>> result = new ArrayList<Node<?>>();
-        List<Node> children = node.getChildren();
-        for (Node child : children) {
+        List<Node<?>> children = node.getChildren();
+        for (Node<?> child : children) {
             if (child.isVisible()) {
                 if (!child.isLifted()) {
                     child.lift(treeViewerRefreshAdapter);
@@ -150,13 +150,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             @Override
             public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
             public void dispose() {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
@@ -281,7 +279,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     private List<TreeEditor> editors = new ArrayList<TreeEditor>();
     private ScrolledComposite editorComposite;
 
-    protected void addTreeEditor(final TreeViewer treeViewer, final EObject article, View view) {
+    protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, View view) {
         // The text column
         final Tree tree = treeViewer.getTree();
         TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
@@ -318,10 +316,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         tree.addTreeListener(new TreeListener() {
 
             @Override
-            public void treeExpanded(TreeEvent e) {
-                // TODO Auto-generated method stub
-
-            }
+            public void treeExpanded(TreeEvent e) { }
 
             @Override
             public void treeCollapsed(TreeEvent e) {
@@ -341,30 +336,29 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     }
 
     protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection,
-            EObject article) {
+            EObject modelElement) {
 
         cleanUpTreeEditors();
-        if(treeSelection.getPaths().length==0)
+        
+        if (treeSelection.getPaths().length==0) {
             return;
-        final TreePath currentPath = treeSelection.getPaths()[0];
+        }
+        
         // Identify the selected row
         TreeItem item = treeViewer.getTree().getSelection()[0];
-        if (item == null)
+        if (item == null) {
             return;
+        }
 
-        final Node object = (Node) treeSelection.getFirstElement();
+        final Node<?> object = (Node<?>) treeSelection.getFirstElement();
         if(object.getActions()==null)
             return;
-        // if(AbstractCategorization.class.isInstance(object.getRenderable())){
-        // List<Action> actions=((AbstractCategorization)object.getRenderable()).getActions();
         for (int i = 0; i < object.getActions().size(); i++) {
             ECPTreeViewAction action = (ECPTreeViewAction) object.getActions().get(i);
             TreeEditor editor = editors.get(i);
-            action.init(treeViewer, treeSelection, editor, article);
+            action.init(treeViewer, treeSelection, editor, modelElement);
             action.execute();
         }
-        // }
-
     }
 
     protected class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements
@@ -386,7 +380,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
                 return image;
             }
            
-            Node node = (Node) object;
+            Node<?> node = (Node<?>) object;
             image = super.getImage(node.getLabelObject());
             ImageDescriptor overlay = null;
             switch (node.getSeverity()) {
@@ -412,10 +406,13 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
         @Override
         public String getColumnText(Object object, int columnIndex) {
-            if (columnIndex != 0)
+        	
+            if (columnIndex != 0) {
                 return "";
-//            return super.getColumnText(object, columnIndex);
-            Node node = (Node) object;
+            }
+            
+            Node<?> node = (Node<?>) object;
+            
             return super.getText(node.getLabelObject());
         }
 

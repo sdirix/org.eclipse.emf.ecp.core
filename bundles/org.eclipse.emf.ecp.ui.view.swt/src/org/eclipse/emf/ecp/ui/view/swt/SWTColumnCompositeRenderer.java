@@ -1,19 +1,16 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 
 public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnComposite> {
 	
@@ -23,6 +20,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 	@Override
 	public Control render(Node<ColumnComposite> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		
 		//TODO Add check whether label is shown
 //		Label l=new Label(getParent(), SWT.NONE);
 //		l.setText(modelColumnComposite.getName());
@@ -48,7 +46,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 		
 		node.lift(withSWT(columnComposite));
 
-		for (Node child : node.getChildren()) {
+		for (Node<? extends Renderable> child : node.getChildren()) {
 			
 			Composite column = new Composite(columnComposite, SWT.NONE);
 			column.setBackground(getParent().getBackground());

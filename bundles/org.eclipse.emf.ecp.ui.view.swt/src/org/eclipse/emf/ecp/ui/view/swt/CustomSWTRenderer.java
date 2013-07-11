@@ -2,7 +2,6 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 public interface CustomSWTRenderer {

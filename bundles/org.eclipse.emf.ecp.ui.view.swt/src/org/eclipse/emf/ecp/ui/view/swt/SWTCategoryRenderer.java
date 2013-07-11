@@ -1,20 +1,16 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
 public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 	
@@ -23,10 +19,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 	@Override
 	public Control render(Node<Category> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-//		return SWTRenderers.INSTANCE.render(getParent(), category.getComposite(), controlContext, adapterFactoryItemDelegator);
-		
-		Category category = node.getRenderable();
-		
+
 		Composite categoryComposite = new Composite(getParent(), SWT.NONE);
 		categoryComposite.setBackground(getParent().getBackground());
 		// TODO: custom variant
@@ -54,7 +47,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 //		GridLayoutFactory.fillDefaults()
 //			.applyTo(composite);
 			
-		Node childNode = node.getChildren().get(0);
+		Node<? extends Renderable> childNode = node.getChildren().get(0);
 		
 		Control control = SWTRenderers.INSTANCE.render(categoryComposite, childNode, adapterFactoryItemDelegator);
 			

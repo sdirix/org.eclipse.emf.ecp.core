@@ -17,7 +17,6 @@ public final class Helper {
 
     public static EClass getRootEClass(ECPProject project) {
         return ((View) project.getContents().get(0)).getRootEClass();
-        // return LlPackage.eINSTANCE.getLLArticle();
     }
 
     public static EClass getRootEClass(EObject eObject) {

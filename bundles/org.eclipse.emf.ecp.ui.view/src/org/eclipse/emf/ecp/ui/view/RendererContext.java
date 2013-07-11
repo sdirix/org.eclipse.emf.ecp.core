@@ -30,7 +30,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
     final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
     final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-    private Node<?> node;
+    private Node<? extends Renderable> node;
     private boolean alive = true;
     private Renderable renderable;
     private ECPControlContext context;
@@ -41,12 +41,12 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	private CONTROL control;
     private List<SelectedNodeChangedListener> selectionChangedListeners;
 
-    public RendererContext(final Node node, final ECPControlContext context) {
+    public RendererContext(final Node<? extends Renderable> node, final ECPControlContext context) {
     	this.node = node;
     	this.renderable = node.getRenderable();
     	this.selectionChangedListeners = new ArrayList<SelectedNodeChangedListener>();
-        analyseView();
         this.context = context;
+        analyseView();
         
         if (node.getRenderable() instanceof View) {
             node.addSelectedChildNodeListener(this);

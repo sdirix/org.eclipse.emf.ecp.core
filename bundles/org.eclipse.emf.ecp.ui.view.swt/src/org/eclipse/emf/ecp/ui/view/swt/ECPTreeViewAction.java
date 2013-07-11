@@ -2,7 +2,6 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.custom.TreeEditor;

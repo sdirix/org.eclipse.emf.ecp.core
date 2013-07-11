@@ -2,12 +2,9 @@ package org.eclipse.emf.ecp.internal.ui.view;
 
 import java.util.List;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.LeafCondition;
@@ -58,7 +55,6 @@ public final class ConditionEvaluator  {
                 break;
             }
             EObject child = (EObject) parent.eGet(eReference);
-            //if the article is not fully filled
             if(child==null){
                 break;
             }

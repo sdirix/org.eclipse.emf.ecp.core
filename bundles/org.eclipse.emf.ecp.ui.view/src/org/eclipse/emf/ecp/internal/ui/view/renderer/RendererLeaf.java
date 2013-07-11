@@ -29,7 +29,7 @@ public abstract class RendererLeaf<R extends Renderable> extends Node<R> {
 	}
 	
 	@Override
-	public List<Node<R>> getChildren() {
+	public List<Node<?>> getChildren() {
 		// TODO docs
 		throw new UnsupportedOperationException();
 	}
