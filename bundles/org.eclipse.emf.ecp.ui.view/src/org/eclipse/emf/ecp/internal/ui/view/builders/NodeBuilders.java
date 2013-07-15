@@ -93,12 +93,12 @@ public class NodeBuilders implements NodeBuilder {
     			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		
-		Node build = build(renderable, controlContext, adapterFactoryItemDelegator);
+		Node<Renderable> build = build(renderable, controlContext, adapterFactoryItemDelegator);
 		composedAdapterFactory.dispose();
 		return build;
 	}
 
-	public Node build(Renderable renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+	public Node<Renderable> build(Renderable renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		
 		if (!buildersInitialized) {
 			initBuilders();

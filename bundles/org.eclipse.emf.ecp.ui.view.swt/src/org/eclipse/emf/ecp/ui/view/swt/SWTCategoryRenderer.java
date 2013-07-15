@@ -17,7 +17,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_category";
 
 	@Override
-	public Control render(Node<Category> node,
+	public Control renderSWT(Node<Category> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		Composite categoryComposite = new Composite(getParent(), SWT.NONE);
@@ -34,7 +34,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 			.applyTo(categoryComposite);
 		
 		
-		node.lift(withSWT(categoryComposite));
+		node.addRenderingResultDelegator(withSWT(categoryComposite));
 //		
 //		Composite composite = new Composite(categoryComposite, SWT.NONE);
 //		composite.setBackground(getParent().getBackground());

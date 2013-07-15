@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Label;
 public class SWTSeparatorRenderer extends AbstractSWTRenderer<Seperator> { 
 
 	@Override
-	public Control render(Node<Seperator> node,
+	public Control renderSWT(Node<Seperator> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
@@ -32,7 +32,7 @@ public class SWTSeparatorRenderer extends AbstractSWTRenderer<Seperator> {
 		.span(2, 1)
 		.applyTo(label);
 		
-		node.lift(withSWT(label));
+		node.addRenderingResultDelegator(withSWT(label));
 		
 		return label;
 	}

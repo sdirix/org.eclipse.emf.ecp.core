@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 
-public final class SWTRenderers  implements SWTRenderer {
+public final class SWTRenderers implements SWTRenderer {
 
 	public static final SWTRenderers INSTANCE = new SWTRenderers();
 
@@ -157,7 +157,6 @@ public final class SWTRenderers  implements SWTRenderer {
 			SWTRenderer swtRenderer = renderers.get(c);
 			swtRenderer.initialize(new Object[] {currentParent});
 			Object render = swtRenderer.render(node, adapterFactoryItemDelegator);
-			// TODO:? ?
 			return (org.eclipse.swt.widgets.Control) render;
 		}
 		

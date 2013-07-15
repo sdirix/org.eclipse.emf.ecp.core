@@ -13,7 +13,7 @@ public class CategoryNodeBuilder implements NodeBuilder<Category> {
 	public Node build(Category category,ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		Node node = new Node(category, context);
 		Node child = NodeBuilders.INSTANCE.build(category.getComposite(), context, adapterFactoryItemDelegator);
-		child.setVisible(false);
+//		child.setVisible(false);
 		node.addChild(child);
 		return node;
 	}

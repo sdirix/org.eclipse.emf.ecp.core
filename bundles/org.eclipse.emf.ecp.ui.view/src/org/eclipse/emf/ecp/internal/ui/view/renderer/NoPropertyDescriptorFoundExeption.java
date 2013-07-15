@@ -5,7 +5,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 public class NoPropertyDescriptorFoundExeption extends Exception {
 
-	private final EObject modelElement;
+    private static final long serialVersionUID = -4450264762772550298L;
+    
+    private final EObject modelElement;
 	private final EStructuralFeature targetFeature;
 
 	public NoPropertyDescriptorFoundExeption(EObject modelElement,

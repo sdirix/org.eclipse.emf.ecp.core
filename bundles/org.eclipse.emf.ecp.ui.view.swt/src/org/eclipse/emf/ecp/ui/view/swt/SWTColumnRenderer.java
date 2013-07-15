@@ -17,7 +17,7 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_control_column";
 
 	@Override
-	public Control render(Node<Column> node,
+	public Control renderSWT(Node<Column> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
@@ -25,7 +25,7 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN);
 		columnComposite.setBackground(getParent().getBackground());
 				
-		node.lift(withSWT(columnComposite));
+		node.addRenderingResultDelegator(withSWT(columnComposite));
 		
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
 		

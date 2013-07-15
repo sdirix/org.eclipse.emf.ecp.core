@@ -2,6 +2,7 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +17,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ValidationOccurredListener;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -56,15 +56,17 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
             .getImageDescriptor("icons/warning_decorate.png");
 
     protected TreeViewer treeViewer;
-    private RenderingResultDelegatorAdapter treeViewerRefreshAdapter = new RenderingResultDelegatorAdapter() {
-        @Override
-        public void show(boolean shouldShow) {
-            treeViewer.refresh();
-        }
-    };
+    
+    // TODO: move somewhere and filter based on interface types
+    private Set<Class> filteredClasses = new LinkedHashSet<Class>() {{
+//        add(ColumnCompositeImpl.class);
+//        add(ColumnImpl.class);
+//        add(ControlImpl.class);
+//        add(TableControlImpl.class);
+    }};
     
     @Override
-    public Control render(final Node<View> viewNode,
+    public Control renderSWT(final Node<View> viewNode,
             final AdapterFactoryItemDelegator adapterFactoryItemDelegator)
             throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
@@ -74,16 +76,14 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
             Control control = SWTRenderers.INSTANCE.render(getParent(),
                     viewNode.getChildren().get(0), adapterFactoryItemDelegator);
-            viewNode.lift(withSWT(control));
+            viewNode.addRenderingResultDelegator(withSWT(control));
             return control;
         } else {
             Composite composite = createComposite(getParent());
             createTreeViewer(composite,adapterFactoryItemDelegator,viewNode);
             createdEditorPane(composite);
             
-            viewNode.lift(withSWT(composite));
-
-            
+            viewNode.addRenderingResultDelegator(withSWT(composite));
             
             initTreeViewer(viewNode);
             
@@ -107,14 +107,17 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
         List<Node<?>> children = node.getChildren();
         for (Node<?> child : children) {
             if (child.isVisible()) {
-                if (!child.isLifted()) {
-                    child.lift(treeViewerRefreshAdapter);
+                if (filteredClasses.contains(child.getLabelObject().getClass())) {
+                    result.addAll(filterVisisbleNodes(child));
+                } else {
+                    result.add(child);
                 }
-                result.add(child);
             }
         }
         return result;
     }
+    
+    
 
     /**
      * @return
@@ -251,13 +254,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     }
 
     protected void initTreeViewer(Node<View> viewNode){
-        viewNode.setCallback(new ValidationOccurredListener() {
-            
-            @Override
-            public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-               treeViewer.refresh();
-            }
-        });
+    	viewNode.addRenderingResultDelegator(new RenderingResultDelegatorAdapter() {
+    		public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+    			treeViewer.refresh();
+    		}    		
+    	});
+        
         treeViewer.setInput(viewNode);
         treeViewer.expandAll();
         treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));

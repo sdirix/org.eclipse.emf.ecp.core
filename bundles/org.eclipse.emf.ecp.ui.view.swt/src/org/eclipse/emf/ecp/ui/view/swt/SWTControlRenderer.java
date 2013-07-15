@@ -27,7 +27,7 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
 	}
 
 	@Override
-	public org.eclipse.swt.widgets.Control render(Node<Control> node,
+	public org.eclipse.swt.widgets.Control renderSWT(Node<Control> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
@@ -80,13 +80,21 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
             controlComposite.setEnabled(!modelControl.isReadonly());
             controlComposite.setBackground(getParent().getBackground());
             
-            node.lift(withSWTControl(controlComposite, control, modelControl));
+            if (label == null) {
+            	node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite));
+            } else {
+            	node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite, label));
+            }
+            
+            if (!node.isVisible()) {
+            	node.show(false);
+            }
             
             GridDataFactory.fillDefaults()
             	.align(SWT.FILL, SWT.CENTER)
             	.grab(true, false)
                 .span(numControl, 1)
-                .applyTo(controlComposite);
+                .applyTo(controlComposite);            
             
             return controlComposite;
         }

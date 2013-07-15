@@ -18,7 +18,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_control_column_composite";
 	
 	@Override
-	public Control render(Node<ColumnComposite> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+	public Control renderSWT(Node<ColumnComposite> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		//TODO Add check whether label is shown
@@ -27,7 +27,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 		
 		ColumnComposite modelColumnComposite = node.getRenderable();
 		
-		Composite columnComposite = new Composite(getParent(), SWT.NONE);
+		Composite columnComposite = new Composite(getParent(), SWT.BORDER);
 		columnComposite.setBackground(getParent().getBackground());
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
 		
@@ -44,7 +44,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 		
 //		SWTLifted node = new SWTLifted(columnComposite, modelColumnComposite, controlContext);
 		
-		node.lift(withSWT(columnComposite));
+		node.addRenderingResultDelegator(withSWT(columnComposite));
 
 		for (Node<? extends Renderable> child : node.getChildren()) {
 			
@@ -75,7 +75,11 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 					.grab(true, true)
 					.span(2, 1)
 					.applyTo(childControl);
-			} 
+			}
+			
+			if (!node.isVisible()) {
+				node.show(false);
+			}
 		}
 		
 		return columnComposite;

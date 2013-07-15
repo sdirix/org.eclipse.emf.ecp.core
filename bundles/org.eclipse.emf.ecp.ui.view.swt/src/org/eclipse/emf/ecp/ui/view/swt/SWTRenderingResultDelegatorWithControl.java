@@ -9,19 +9,25 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Control;
 
-public class SWTLiftedControl extends SWTLifted {
+public class SWTRenderingResultDelegatorWithControl extends SWTRenderingResultDelegator {
 
 	private Renderable model;
 	private SWTControl swtControl;
 
-	public SWTLiftedControl(Control result, SWTControl swtControl, Renderable model) {
-		super(result);
+	public SWTRenderingResultDelegatorWithControl(Control[] results, SWTControl swtControl, Renderable model) {
+		super(results);
 		this.swtControl = swtControl;
 		this.model = model;
 	}
+	
+	@Override
+	public void cleanup() {
+		super.cleanup();
+		swtControl.dispose();
+	}
 
 	public boolean canValidate() {
-		return getControl() != null;
+		return getControls() != null;
 	}
 
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {

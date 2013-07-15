@@ -7,42 +7,26 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * Convenience adapter implementation for a {@link RenderingResultDelegator} that does nothing. 
+ * 
  * 
  * @author emueller
  *
- * @param <CONTROL>
- * 			the type of the actual control
  */
 public class RenderingResultDelegatorAdapter implements RenderingResultDelegator{
 
     @Override
-    public void enable(boolean shouldEnable) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void enable(boolean shouldEnable) { }
+    
     @Override
-    public void show(boolean shouldShow) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void show(boolean shouldShow) { }
 
     @Override
-    public void layout() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void layout() { }
 
     @Override
-    public void cleanup() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void cleanup() { }
+    
     @Override
-    public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-        // TODO Auto-generated method stub
-        
-    }
-	
-
-
+    public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) { }
 }

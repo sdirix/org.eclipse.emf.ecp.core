@@ -17,7 +17,7 @@ import org.osgi.framework.Bundle;
 public class SWTCustomCompositeRenderer extends AbstractSWTRenderer<CustomComposite> {
 
 	@Override
-	public Control render(Node<CustomComposite> node,
+	public Control renderSWT(Node<CustomComposite> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		
 		CustomComposite customComposite = node.getRenderable();
@@ -29,7 +29,7 @@ public class SWTCustomCompositeRenderer extends AbstractSWTRenderer<CustomCompos
 			Object obj = constructor.newInstance(getParent(), node.getControlContext().getModelElement());
 			Composite categoryComposite = (Composite) obj;
 						
-			node.lift(withSWT(categoryComposite));
+			node.addRenderingResultDelegator(withSWT(categoryComposite));
 			
 			GridDataFactory.fillDefaults()
 				.grab(true, true)

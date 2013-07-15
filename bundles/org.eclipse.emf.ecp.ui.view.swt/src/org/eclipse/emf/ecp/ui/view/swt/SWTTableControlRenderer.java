@@ -30,7 +30,7 @@ public class SWTTableControlRenderer extends AbstractSWTControlRenderer<TableCon
 	}
 
 	@Override
-	public Control render(Node<TableControl> node,
+	public Control renderSWT(Node<TableControl> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
@@ -93,7 +93,11 @@ public class SWTTableControlRenderer extends AbstractSWTControlRenderer<TableCon
             GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
                     .span(numControl, 1).applyTo(controlComposite);
             
-            node.lift(withSWTControl(controlComposite, control, modelTableControl));
+            if (label == null) {
+            	node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite));
+            } else {
+            	node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite, label));
+            }
             
             return controlComposite;
         }

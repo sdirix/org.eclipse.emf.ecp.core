@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Control;
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 
-	public Control render(Node<Group> node,
+	public Control renderSWT(Node<Group> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
@@ -30,7 +30,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 			.equalWidth(false)
 			.applyTo(group);
 		
-		node.lift(withSWT(group));
+		node.addRenderingResultDelegator(withSWT(group));
 		
 		for (Node<? extends Renderable> child : node.getChildren()) {// org.eclipse.emf.ecp.view.model.Composite modelComposite : modelGroup.getComposites()) {
 			
