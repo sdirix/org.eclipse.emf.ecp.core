@@ -404,7 +404,7 @@ public class Node<T extends Renderable> implements ValidationListener {
     }
 	
     public boolean isLifted() {
-        return delegators != null;
+        return !delegators.isEmpty();
     }
 
     public int getSeverity() {

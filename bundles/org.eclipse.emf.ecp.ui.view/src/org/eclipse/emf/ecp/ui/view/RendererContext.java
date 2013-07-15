@@ -204,14 +204,14 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
             @Override
             public void notifyChanged(final Notification notification) {
                 super.notifyChanged(notification);
-
-                triggerValidation();
                 
                 // node is null, since render hasn't been called yet
                 if (node != null) {
                     node.checkEnable(notification);
                     node.checkShow(notification);
                 }
+                
+                triggerValidation();
             }
         };
         
