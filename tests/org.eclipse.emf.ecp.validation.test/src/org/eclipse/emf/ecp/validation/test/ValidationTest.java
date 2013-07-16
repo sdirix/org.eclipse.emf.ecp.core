@@ -9,6 +9,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.eclipse.emf.ecp.internal.validation.Activator;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 import org.eclipse.emf.ecp.validation.api.IValidationServiceProvider;
 import org.eclipse.emf.ecp.validation.test.test.Library;
@@ -21,6 +22,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +34,12 @@ public class ValidationTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		validationServiceProvider = Activator.getValidationService();
+		BundleContext bundleContext = Activator.getDefault().getBundle().getBundleContext();
+		ServiceReference<?> eventServiceReference = bundleContext.getServiceReference(IValidationServiceProvider.class
+			.getName());
+		if (eventServiceReference != null) {
+			validationServiceProvider = (IValidationServiceProvider) bundleContext.getService(eventServiceReference);
+		}
 	}
 
 	@AfterClass
