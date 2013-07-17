@@ -543,7 +543,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
-		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
 	/** {@inheritDoc} */
@@ -559,7 +559,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
-		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
 	/** {@inheritDoc} */

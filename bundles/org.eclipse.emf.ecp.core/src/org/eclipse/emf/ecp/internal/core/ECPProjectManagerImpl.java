@@ -172,7 +172,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/**
-	 * This is called by projects to notify observers about project changes.
+	 * This is called by projects to notify observers if a project gets openes or closed.
 	 * 
 	 * @param project the project that called this method
 	 * @param opened whether the project is open

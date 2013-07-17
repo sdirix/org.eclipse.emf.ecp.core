@@ -1,8 +1,11 @@
 package org.eclipse.emf.ecp.core.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -10,6 +13,10 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
+import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.junit.Test;
 
 public class ECPProjectManagerTests extends AbstractTest {
@@ -183,6 +190,8 @@ public class ECPProjectManagerTests extends AbstractTest {
 			ECPProject project2 = getProjectManager().createProject(
 					getProvider(), projectName+"2");
 			assertEquals(2, getProjectManager().getProjects().size());
+			assertTrue(getProjectManager().getProjects().contains(project));
+			assertTrue(getProjectManager().getProjects().contains(project2));
 		} catch (ECPProjectWithNameExistsException e) {
 			fail();
 		}
@@ -193,4 +202,39 @@ public class ECPProjectManagerTests extends AbstractTest {
 		ECPProject project = getProjectManager().getProject(projectName);
 		assertTrue(null == project);
 	}
+	
+	private boolean projectChangeObserverNotified;
+	private boolean projectOpenCloseObserverNotified;
+
+	@Test
+	public void createProjectWithObservers() {
+		projectChangeObserverNotified = false;
+		projectOpenCloseObserverNotified = false;
+		ECPUtil.getECPObserverBus().register(new ECPProjectOpenClosedObserver() {
+			
+			public void projectChanged(ECPProject project, boolean opened) {
+				projectOpenCloseObserverNotified=true;
+				
+			}
+		});
+		ECPUtil.getECPObserverBus().register(new ECPProjectsChangedObserver() {
+			
+			public void projectsChanged(Collection<ECPProject> oldProjects,
+					Collection<ECPProject> newProjects) {
+				projectChangeObserverNotified = true;
+				
+			}
+		});
+		
+		try {
+			ECPUtil.getECPProjectManager().createProject(getProvider(), "TestProject");
+		} catch (ECPProjectWithNameExistsException e) {
+			fail("Project does already exist");
+		}
+		
+		assertTrue(projectChangeObserverNotified);
+		assertFalse("Open Close Observer should not be notified",projectOpenCloseObserverNotified);
+	}
+
+	
 }
