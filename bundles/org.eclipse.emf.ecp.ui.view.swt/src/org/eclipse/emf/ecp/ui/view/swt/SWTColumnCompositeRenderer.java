@@ -27,7 +27,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 		
 		ColumnComposite modelColumnComposite = node.getRenderable();
 		
-		Composite columnComposite = new Composite(getParent(), SWT.BORDER);
+		Composite columnComposite = new Composite(getParent(), SWT.NONE);
 		columnComposite.setBackground(getParent().getBackground());
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
 		
