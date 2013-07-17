@@ -12,10 +12,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+// TODO: do we need to set a custom variant
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorization> {
 	
-	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_category";
-
 	@Override
 	public Control renderSWT(Node<Categorization> node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
@@ -23,8 +22,6 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorizatio
 				
 		Composite categoryComposite = new Composite(getParent(), SWT.NONE);
 		categoryComposite.setBackground(getParent().getBackground());
-		// TODO: custom variant
-//		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
 		
 		GridLayoutFactory.fillDefaults()
 			.numColumns(1)
@@ -36,17 +33,6 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorizatio
 		
 		
 		node.addRenderingResultDelegator(withSWT(categoryComposite));
-//		
-//		Composite composite = new Composite(categoryComposite, SWT.NONE);
-//		composite.setBackground(getParent().getBackground());
-//			
-//		GridDataFactory.fillDefaults()
-//			.align(SWT.FILL, SWT.FILL)
-//			.grab(true, true)
-//			.applyTo(composite);
-//			
-//		GridLayoutFactory.fillDefaults()
-//			.applyTo(composite);
 			
 		Node<? extends Renderable> childNode = node.getChildren().get(0);
 		

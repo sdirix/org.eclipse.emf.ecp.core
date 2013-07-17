@@ -12,9 +12,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+// TODO: do we need to set a custom variant?
 public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 	
-	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_category";
 
 	@Override
 	public Control renderSWT(Node<Category> node,
@@ -22,8 +22,6 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 
 		Composite categoryComposite = new Composite(getParent(), SWT.NONE);
 		categoryComposite.setBackground(getParent().getBackground());
-		// TODO: custom variant
-//		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
 		
 		GridLayoutFactory.fillDefaults()
 			.numColumns(1)

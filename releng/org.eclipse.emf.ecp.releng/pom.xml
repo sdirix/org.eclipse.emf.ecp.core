@@ -103,6 +103,7 @@
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
 		<!-- Should run on a seperate integration job -->
 		<!-- Deactivated till monday <module>../../tests/ECPQ7Tests</module> -->
 

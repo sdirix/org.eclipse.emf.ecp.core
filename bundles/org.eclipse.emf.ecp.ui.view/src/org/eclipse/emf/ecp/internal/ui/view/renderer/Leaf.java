@@ -26,9 +26,4 @@ public final class Leaf<T extends Renderable> extends Node<T> {
 	public boolean isLeaf() {
 		return true;
 	}
-	
-	@Override
-	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-	    super.validationChanged(affectedObjects);
-	}
 }

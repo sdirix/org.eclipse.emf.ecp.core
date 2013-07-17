@@ -7,8 +7,8 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 public class RenderableNodeBuilder<T extends org.eclipse.emf.ecp.view.model.Renderable> implements NodeBuilder<T> {
 
 	@Override
-	public Node build(T model, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		return new Node(model, context);
+	public Node<T> build(T model, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+		return new Node<T>(model, context);
 	}
 	
 }

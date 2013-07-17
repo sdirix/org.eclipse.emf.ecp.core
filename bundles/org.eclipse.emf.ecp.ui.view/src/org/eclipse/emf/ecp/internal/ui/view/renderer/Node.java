@@ -69,7 +69,7 @@ public class Node<T extends Renderable> implements ValidationListener {
 		return viewModelElement;
 	}
 	
-	public void addChild(Node<T> node) {
+	public void addChild(Node<? extends Renderable> node) {
 		children.add(node);
 	}
 	

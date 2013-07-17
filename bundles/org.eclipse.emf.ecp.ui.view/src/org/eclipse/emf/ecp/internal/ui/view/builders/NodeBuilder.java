@@ -7,6 +7,6 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 public interface NodeBuilder<T extends Renderable> {
 	
-	Node build(T renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator);
+	Node<T> build(T renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator);
 	
 }

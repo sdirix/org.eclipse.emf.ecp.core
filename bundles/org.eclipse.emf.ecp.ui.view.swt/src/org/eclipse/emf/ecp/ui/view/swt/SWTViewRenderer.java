@@ -63,7 +63,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
     protected TreeViewer treeViewer;
     
     // TODO: move somewhere and filter based on interface types
-    private Set<Class> filteredClasses = new LinkedHashSet<Class>() {{
+    @SuppressWarnings("serial")
+	private Set<Class<?>> filteredClasses = new LinkedHashSet<Class<?>>() {{
         add(ColumnCompositeImpl.class);
         add(ColumnImpl.class);
         add(ControlImpl.class);

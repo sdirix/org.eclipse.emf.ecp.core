@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
-public class NodeBuilders implements NodeBuilder {
+public class NodeBuilders {
 
 	public static final NodeBuilders INSTANCE = new NodeBuilders();
 
@@ -56,8 +56,6 @@ public class NodeBuilders implements NodeBuilder {
 			put(TableControl.class, new ControlNodeBuilder<TableControl>());
 			put(Control.class, new ControlNodeBuilder<Control>());
 			put(TreeCategory.class, new TreeCategoryNodeBuilder());
-
-
 		}};
 		
 		for (CustomNodeBuilder customBuilder : getCustomNodeBuilders()) {
@@ -87,37 +85,36 @@ public class NodeBuilders implements NodeBuilder {
 		return builders;
 	}
 	
-	public Node build(Renderable renderable, ECPControlContext controlContext) {
+	public <R extends Renderable> Node<R> build(R renderable, ECPControlContext controlContext) {
 		
 		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
     			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		
-		Node<Renderable> build = build(renderable, controlContext, adapterFactoryItemDelegator);
+		Node<R> build = build(renderable, controlContext, adapterFactoryItemDelegator);
 		composedAdapterFactory.dispose();
 		return build;
 	}
 
-	public Node<Renderable> build(Renderable renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+	public <R extends Renderable> Node<R> build(R renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		
 		if (!buildersInitialized) {
 			initBuilders();
 		}
 		
-		Class c = null;
-		for (Class cls : builders.keySet()) {
+		Class<?> c = null;
+		for (Class<? extends Renderable> cls : builders.keySet()) {
 			Class<?>[] interfaces = renderable.getClass().getInterfaces();
 			int indexOf = Arrays.asList(interfaces).indexOf(cls);
 			if (indexOf != -1) {
 				c = interfaces[indexOf];
 				break;
 			}
-
 		}
 
 		if (c != null) {
-			@SuppressWarnings("rawtypes") 
-			NodeBuilder builder = builders.get(c);
+			@SuppressWarnings("unchecked")
+			NodeBuilder<R> builder = (NodeBuilder<R>) builders.get(c);
 			return builder.build(renderable, controlContext, adapterFactoryItemDelegator);
 		}
 		
