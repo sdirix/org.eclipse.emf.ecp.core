@@ -17,18 +17,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
-
-	private SWTControl control;
-	
-	@Override
-	protected SWTControl getControl() {	
-		return control;
-	}
+public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
+	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
+//	private SWTControl control;
+//	
+//	@Override
+//	protected SWTControl getControl() {	
+//		return control;
+//	}
 
 	@Override
 	public org.eclipse.swt.widgets.Control renderSWT(Node<Control> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		Control modelControl = node.getRenderable();
@@ -56,16 +56,16 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
         
         SWTControl control = controlFactory.createControl(SWTControl.class, itemPropertyDescriptor,
                 subContext);
-        this.control = control;
 
         if (control != null) {
+        	Composite parent=getParentFromInitData(initData);
             int numControl = 2;
             Label label = null;
             if (control.showLabel()) {
                 numControl = 1;
-                label = new Label(getParent(), SWT.NONE);
+                label = new Label(parent, SWT.NONE);
                 label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
-                label.setBackground(getParent().getBackground());
+                label.setBackground(parent.getBackground());
                 String extra = "";
                 if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
                     extra = "*";
@@ -76,9 +76,9 @@ public class SWTControlRenderer extends AbstractSWTControlRenderer<Control> {
                 GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
             }
             
-            Composite controlComposite = control.createControl(getParent());
+            Composite controlComposite = control.createControl(parent);
             controlComposite.setEnabled(!modelControl.isReadonly());
-            controlComposite.setBackground(getParent().getBackground());
+            controlComposite.setBackground(parent.getBackground());
             
             if (label == null) {
             	node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite));

@@ -8,6 +8,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -19,14 +20,8 @@ import org.eclipse.swt.widgets.Control;
  */
 public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRenderer<R> {
 
-	private org.eclipse.swt.widgets.Composite parent;
-
-	public void initialize(Object[] initData) {
-		parent = (org.eclipse.swt.widgets.Composite) initData[0];
-	}
-
-	public org.eclipse.swt.widgets.Composite getParent() {
-		return parent;
+	protected org.eclipse.swt.widgets.Composite getParentFromInitData(Object[] initData) {
+		return (Composite) initData[0];
 	}
 
 	public RenderingResultDelegator withSWT(Control control) {
@@ -37,9 +32,9 @@ public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRe
 		return new SWTRenderingResultDelegatorWithControl(controls, swtControl, model);
 	}
 
-	public Control render(Node<R> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+	public Control render(Node<R> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		Control swtControl = renderSWT(node, adapterFactoryItemDelegator);
+		Control swtControl = renderSWT(node, adapterFactoryItemDelegator, initData);
 
 		if (!node.isVisible()) {
 			node.show(false);
@@ -52,6 +47,6 @@ public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRe
 		return swtControl;
 	}
 
-	protected abstract Control renderSWT(Node<R> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
+	protected abstract Control renderSWT(Node<R> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 }

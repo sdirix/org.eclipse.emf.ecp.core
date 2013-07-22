@@ -14,14 +14,15 @@ import org.eclipse.swt.widgets.Control;
 
 // TODO: do we need to set a custom variant
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorization> {
-	
+	public static final SWTCategorizationRenderer INSTANCE = new SWTCategorizationRenderer();
 	@Override
 	public Control renderSWT(Node<Categorization> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-				
-		Composite categoryComposite = new Composite(getParent(), SWT.NONE);
-		categoryComposite.setBackground(getParent().getBackground());
+
+		Composite parent=getParentFromInitData(initData);
+		Composite categoryComposite = new Composite(parent, SWT.NONE);
+		categoryComposite.setBackground(parent.getBackground());
 		
 		GridLayoutFactory.fillDefaults()
 			.numColumns(1)

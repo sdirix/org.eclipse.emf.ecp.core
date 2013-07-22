@@ -54,11 +54,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class SWTViewRenderer extends AbstractSWTRenderer<View> {
-
+	public static final SWTViewRenderer INSTANCE = new SWTViewRenderer();
 	private static ImageDescriptor ERROR_DESCRIPTOR = Activator.getImageDescriptor("icons/error_decorate.png");
 	private static ImageDescriptor WARNING_DESCRIPTOR = Activator.getImageDescriptor("icons/warning_decorate.png");
 
-	protected TreeViewer treeViewer;
+	// protected TreeViewer treeViewer;
 
 	// TODO: move somewhere and filter based on interface types
 	@SuppressWarnings("serial")
@@ -73,25 +73,25 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	};
 
 	@Override
-	public Control renderSWT(final Node<View> viewNode, final AdapterFactoryItemDelegator adapterFactoryItemDelegator)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
+	public Control renderSWT(final Node<View> viewNode, final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		Composite parent = getParentFromInitData(initData);
 		View view = viewNode.getRenderable();
 		EList<AbstractCategorization> categorizations = view.getCategorizations();
 
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
-			Control control = SWTRenderers.INSTANCE.render(getParent(), viewNode.getChildren().get(0),
+			Control control = SWTRenderers.INSTANCE.render(parent, viewNode.getChildren().get(0),
 				adapterFactoryItemDelegator);
 			viewNode.addRenderingResultDelegator(withSWT(control));
 			return control;
 		} else {
-			Composite composite = createComposite(getParent());
-			createTreeViewer(composite, adapterFactoryItemDelegator, viewNode);
+			Composite composite = createComposite(parent);
+			TreeViewer treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode);
 			createdEditorPane(composite);
 
 			viewNode.addRenderingResultDelegator(withSWT(composite));
 
-			initTreeViewer(viewNode);
+			initTreeViewer(treeViewer, viewNode);
 
 			return composite;
 		}
@@ -107,13 +107,13 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 	}
 
-	protected List<Node<? extends Renderable>> filterVisisbleNodes(Node<? extends Renderable> node) {
+	protected List<Node<? extends Renderable>> filterVisibleNodes(TreeViewer treeViewer, Node<? extends Renderable> node) {
 		List<Node<?>> result = new ArrayList<Node<?>>();
 		List<Node<?>> children = node.getChildren();
 		for (Node<?> child : children) {
 			if (child.isVisible()) {
 				if (filteredClasses.contains(child.getLabelObject().getClass())) {
-					result.addAll(filterVisisbleNodes(child));
+					result.addAll(filterVisibleNodes(treeViewer, child));
 				} else {
 					result.add(child);
 				}
@@ -131,10 +131,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		scrolledComposite.setShowFocusedControl(true);
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setBackground(getParent().getBackground());
+		scrolledComposite.setBackground(parent.getBackground());
 
 		final Composite childComposite = new Composite(scrolledComposite, SWT.NONE);
-		childComposite.setBackground(getParent().getBackground());
+		childComposite.setBackground(parent.getBackground());
 
 		return scrolledComposite;
 	}
@@ -145,9 +145,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @param viewNode
 	 * @return
 	 */
-	protected void createTreeViewer(Composite composite, AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		final Node<View> viewNode) {
-		treeViewer = new TreeViewer(composite);
+	protected TreeViewer createTreeViewer(final Composite composite,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode) {
+		final TreeViewer treeViewer = new TreeViewer(composite);
 
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
@@ -184,7 +184,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			public Object[] getChildren(Object parentElement) {
 				Node<?> node = (Node<?>) parentElement;
 
-				List<Node<?>> visisbleNodes = filterVisisbleNodes(node);
+				List<Node<?>> visisbleNodes = filterVisibleNodes(treeViewer, node);
 
 				return visisbleNodes.toArray();
 			}
@@ -215,7 +215,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 						lastSelection = (Node<?>) selection;
 					}
 					final Composite childComposite = createComposite(editorComposite);
-					childComposite.setBackground(getParent().getBackground());
+					childComposite.setBackground(composite.getBackground());
 					editorComposite.setContent(childComposite);
 
 					// TODO: REVIEW
@@ -244,9 +244,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 		addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), viewNode.getRenderable());
 
+		return treeViewer;
+
 	}
 
-	protected void initTreeViewer(Node<View> viewNode) {
+	protected void initTreeViewer(final TreeViewer treeViewer, Node<View> viewNode) {
 		viewNode.addRenderingResultDelegator(new RenderingResultDelegatorAdapter() {
 			@Override
 			public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {

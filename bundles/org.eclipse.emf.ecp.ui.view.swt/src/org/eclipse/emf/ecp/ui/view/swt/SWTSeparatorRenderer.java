@@ -7,6 +7,7 @@ import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
@@ -15,14 +16,14 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class SWTSeparatorRenderer extends AbstractSWTRenderer<Seperator> { 
-
+	public static final SWTSeparatorRenderer INSTANCE = new SWTSeparatorRenderer();
 	@Override
 	public Control renderSWT(Node<Seperator> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		
+		Composite parent=getParentFromInitData(initData);
 		Seperator separator = node.getRenderable();
-		Label label = new Label(getParent(), SWT.NONE);
+		Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator");
 		

@@ -15,10 +15,10 @@ import org.eclipse.swt.widgets.Control;
 import org.osgi.framework.Bundle;
 
 public class SWTCustomCompositeRenderer extends AbstractSWTRenderer<CustomComposite> {
-
+	public static final SWTCustomCompositeRenderer INSTANCE = new SWTCustomCompositeRenderer();
 	@Override
 	public Control renderSWT(Node<CustomComposite> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) {
 		
 		CustomComposite customComposite = node.getRenderable();
 		
@@ -26,7 +26,8 @@ public class SWTCustomCompositeRenderer extends AbstractSWTRenderer<CustomCompos
 		try {
 			Class<?> clazz = getClass(customComposite.getBundle(), customComposite.getClassName());
 			Constructor<?> constructor = clazz.getConstructor(Composite.class, EObject.class);
-			Object obj = constructor.newInstance(getParent(), node.getControlContext().getModelElement());
+			Composite parent=getParentFromInitData(initData);
+			Object obj = constructor.newInstance(parent, node.getControlContext().getModelElement());
 			Composite categoryComposite = (Composite) obj;
 						
 			node.addRenderingResultDelegator(withSWT(categoryComposite));

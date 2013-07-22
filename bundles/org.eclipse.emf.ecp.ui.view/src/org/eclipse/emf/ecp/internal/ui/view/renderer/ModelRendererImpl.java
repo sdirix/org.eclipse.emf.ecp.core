@@ -14,16 +14,13 @@ import org.eclipse.core.runtime.Platform;
 
 public class ModelRendererImpl<C> implements ModelRenderer<C> {
 
-	private Object[] initData;
-
-	public ModelRendererImpl(Object[] initData) {
-		this.initData = initData;
+	public ModelRendererImpl() {
 	}
 
-	public <R extends Renderable> RendererContext<C> render(Node<R> node) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	public <R extends Renderable> RendererContext<C> render(Node<R> node, Object... initData)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		ControlRenderer<R, C> renderer = getControlRenderer(initData);
+		ControlRenderer<R, C> renderer = getControlRenderer();
 
 		if (renderer == null) {
 			throw new IllegalStateException("Renderer not initialized!");
@@ -36,14 +33,14 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 
 		final RendererContext<C> rendererContext = new RendererContext<C>(node, node.getControlContext());
 
-		C control = renderer.render(node, adapterFactoryItemDelegator);
+		C control = renderer.render(node, adapterFactoryItemDelegator, initData);
 		rendererContext.setRenderedResult(control);
 		composedAdapterFactory.dispose();
 
 		return rendererContext;
 	}
 
-	private <R extends Renderable> ControlRenderer<R, C> getControlRenderer(Object[] initData) {
+	private <R extends Renderable> ControlRenderer<R, C> getControlRenderer() {
 		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.ui.view.renderer");
 		for (IExtension extension : extensionPoint.getExtensions()) {
@@ -52,7 +49,6 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 				@SuppressWarnings("unchecked")
 				ControlRenderer<R, C> renderer = (ControlRenderer<R, C>) configurationElement
 					.createExecutableExtension("class");
-				renderer.initialize(initData);
 				return renderer;
 			} catch (CoreException ex) {
 				Activator.log(ex);
@@ -61,17 +57,6 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 
 		// TODO: provide default renderer?
 		return null;
-	}
-
-	// @Override
-	// public <R extends Renderable> C render(Node<R> node,
-	// AdapterFactoryItemDelegator adapterFactoryItemDelegator)
-	// throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-	// return renderer.render(node, adapterFactoryItemDelegator);
-	// }
-
-	public void initialize(Object[] initData) {
-
 	}
 
 }
