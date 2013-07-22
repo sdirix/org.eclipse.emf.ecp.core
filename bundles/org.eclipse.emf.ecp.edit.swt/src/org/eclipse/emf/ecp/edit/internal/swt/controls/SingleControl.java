@@ -53,6 +53,14 @@ public abstract class SingleControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getData().size() < 2) {
+			return;
+		}
+		if (!diagnostic.getData().get(0).equals(getModelElementContext().getModelElement())
+			|| !diagnostic.getData().get(1).equals(getStructuralFeature())) {
+			return;
+		}
+
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
 			Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
 			validationLabel.setImage(image);
