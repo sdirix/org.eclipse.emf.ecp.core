@@ -1,13 +1,5 @@
 package org.eclipse.emf.ecp.ui.view;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -25,6 +17,14 @@ import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 	final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
@@ -41,8 +41,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	private CONTROL control;
 	private List<SelectedNodeChangedListener> selectionChangedListeners;
 
-	public RendererContext(final Node<? extends Renderable> node,
-			final ECPControlContext context) {
+	public RendererContext(final Node<? extends Renderable> node, final ECPControlContext context) {
 		this.node = node;
 		this.renderable = node.getRenderable();
 		this.selectionChangedListeners = new ArrayList<SelectedNodeChangedListener>();
@@ -54,8 +53,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		}
 	}
 
-	public void setValidationSeverityHandler(
-			ValidationSeverityModifier validationSeverityHandler) {
+	public void setValidationSeverityHandler(ValidationSeverityModifier validationSeverityHandler) {
 		this.validationSeverityHandler = validationSeverityHandler;
 	}
 
@@ -75,30 +73,28 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	}
 
 	private void validate() {
-		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(context
-				.getModelElement());
+		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(context.getModelElement());
 		validationMap.clear();
 		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 			if (childDiagnostic.getData().size() < 2) {
 				continue;
 			}
-			EStructuralFeature feature = (EStructuralFeature) childDiagnostic
-					.getData().get(1);
+			EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
 
 			Set<EObject> objectsToMark = categoryValidationMap.get(feature);
-			if (objectsToMark == null)
+			if (objectsToMark == null) {
 				continue;
+			}
 			for (EObject object : objectsToMark) {
 				Set<Diagnostic> currentValues = validationMap.get(object);
 				if (currentValues == null) {
 					validationMap.put(object, new HashSet<Diagnostic>());
 				}
 				if (validationSeverityHandler != null) {
-					int severityForDiagnostic = validationSeverityHandler
-							.getSeverityForDiagnostic(childDiagnostic, feature);
+					int severityForDiagnostic = validationSeverityHandler.getSeverityForDiagnostic(childDiagnostic,
+						feature);
 					if (severityForDiagnostic != childDiagnostic.getSeverity()) {
-						childDiagnostic = createDiagnosticWithSeverity(
-								childDiagnostic, severityForDiagnostic);
+						childDiagnostic = createDiagnosticWithSeverity(childDiagnostic, severityForDiagnostic);
 					}
 				}
 				validationMap.get(object).add(childDiagnostic);
@@ -107,56 +103,44 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		}
 	}
 
-	private static BasicDiagnostic createDiagnosticWithSeverity(
-			Diagnostic diagnosticTemplate, int severity) {
-		return new BasicDiagnostic(severity, diagnosticTemplate.getSource(),
-				diagnosticTemplate.getCode(), diagnosticTemplate.getMessage(),
-				diagnosticTemplate.getData().toArray());
+	private static BasicDiagnostic createDiagnosticWithSeverity(Diagnostic diagnosticTemplate, int severity) {
+		return new BasicDiagnostic(severity, diagnosticTemplate.getSource(), diagnosticTemplate.getCode(),
+			diagnosticTemplate.getMessage(), diagnosticTemplate.getData().toArray());
 	}
 
 	private void analyseView() {
 		TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
 			EObject eObject = eAllContents.next();
-			if (org.eclipse.emf.ecp.view.model.AbstractControl.class
-					.isInstance(eObject)) {
+			if (org.eclipse.emf.ecp.view.model.AbstractControl.class.isInstance(eObject)) {
 				org.eclipse.emf.ecp.view.model.AbstractControl control = (org.eclipse.emf.ecp.view.model.AbstractControl) eObject;
-				for (EStructuralFeature structuralFeature : control
-						.getTargetFeatures()) {
-					Set<EObject> controls = categoryValidationMap
-							.get(structuralFeature);
+				for (EStructuralFeature structuralFeature : control.getTargetFeatures()) {
+					Set<EObject> controls = categoryValidationMap.get(structuralFeature);
 					if (controls == null) {
 						controls = new HashSet<EObject>();
 						categoryValidationMap.put(structuralFeature, controls);
 					}
 					controls.add(control);
-					if (structuralFeature.isMany()
-							&& EReference.class.isInstance(structuralFeature)) {
+					if (structuralFeature.isMany() && EReference.class.isInstance(structuralFeature)) {
 						EReference eReference = (EReference) structuralFeature;
 						if (eReference.isContainment()) {
 							if (TableControl.class.isInstance(control)) {
 								TableControl tc = (TableControl) control;
 								for (TableColumn column : tc.getColumns()) {
-									Set<EObject> controls2 = categoryValidationMap
-											.get(column.getAttribute());
+									Set<EObject> controls2 = categoryValidationMap.get(column.getAttribute());
 									if (controls2 == null) {
 										controls2 = new HashSet<EObject>();
-										categoryValidationMap.put(
-												column.getAttribute(),
-												controls2);
+										categoryValidationMap.put(column.getAttribute(), controls2);
 									}
 									controls2.add(control);
 								}
 							} else {
-								for (EStructuralFeature feature : eReference
-										.getEReferenceType()
-										.getEAllStructuralFeatures()) {
-									Set<EObject> controls2 = categoryValidationMap
-											.get(feature);
+								for (EStructuralFeature feature : eReference.getEReferenceType()
+									.getEAllStructuralFeatures()) {
+									Set<EObject> controls2 = categoryValidationMap.get(feature);
 									if (controls2 == null) {
 										controls2 = new HashSet<EObject>();
-										categoryValidationMap.put(feature,
-												controls2);
+										categoryValidationMap.put(feature, controls2);
 									}
 									controls2.add(control);
 								}
@@ -195,8 +179,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	}
 
 	public interface ValidationSeverityModifier {
-		int getSeverityForDiagnostic(Diagnostic diagnostic,
-				EStructuralFeature feature);
+		int getSeverityForDiagnostic(Diagnostic diagnostic, EStructuralFeature feature);
 	}
 
 	public Integer getSeverity(EObject object) {
@@ -245,19 +228,16 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		selectionChangedListeners.add(listener);
 	}
 
-	public void removeSelectionChangedListener(
-			SelectedNodeChangedListener listener) {
+	public void removeSelectionChangedListener(SelectedNodeChangedListener listener) {
 		selectionChangedListeners.remove(listener);
 	}
 
-	private <T extends Renderable> void fireSelectionChanged(
-			T selectedRenderable) {
+	private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
 		for (SelectedNodeChangedListener listener : selectionChangedListeners) {
 			listener.selectionChanged(selectedRenderable);
 		}
 	}
 
-	@Override
 	public void childSelected(Node<?> child) {
 		// trigger validation in order to update validation status of controls
 		triggerValidation();

@@ -19,51 +19,47 @@ public class ViewProvider implements IViewProvider {
 		View view = ViewFactory.eINSTANCE.createView();
 		Category category = ViewFactory.eINSTANCE.createCategory();
 		view.getCategorizations().add(category);
-		
+
 		Column column = ViewFactory.eINSTANCE.createColumn();
 		category.setComposite(column);
-		
-		for(EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
-			
+
+		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
+
 			if (isInvalidFeature(feature)) {
 				continue;
 			}
-			
+
 			Control control = ViewFactory.eINSTANCE.createControl();
 			control.setTargetFeature(feature);
 			column.getComposites().add(control);
 		}
-		
+
 		return view;
 	}
-	
-	
+
 	private boolean isInvalidFeature(EStructuralFeature feature) {
-		return isContainerReference(feature)
-				|| isTransient(feature)
-				|| isVolatile(feature);
+		return isContainerReference(feature) || isTransient(feature) || isVolatile(feature);
 	}
 
 	private boolean isContainerReference(EStructuralFeature feature) {
-		if (feature instanceof EReference){
+		if (feature instanceof EReference) {
 			EReference reference = (EReference) feature;
 			if (reference.isContainer()) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	private boolean isTransient(EStructuralFeature feature) {
 		return feature.isTransient();
 	}
-	
+
 	private boolean isVolatile(EStructuralFeature feature) {
 		return feature.isVolatile();
 	}
 
-	@Override
 	public int canRender(EObject eObject) {
 		return 1;
 	}

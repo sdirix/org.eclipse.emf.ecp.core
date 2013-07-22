@@ -1,53 +1,50 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import java.util.Map;
-import java.util.Set;
-
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
+
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import java.util.Map;
+import java.util.Set;
+
 public class SWTRenderingResultDelegator implements RenderingResultDelegator {
 
 	private final Control[] controls;
-	
+
 	public SWTRenderingResultDelegator(Control... control) {
-		this.controls = control;
+		controls = control;
 	}
 
-	@Override
 	public void enable(boolean shouldEnable) {
 		for (Control control : controls) {
 			control.setEnabled(shouldEnable);
 		}
 	}
 
-	@Override
 	public void show(boolean shouldShow) {
 		for (Control control : controls) {
 			GridData gridData = (GridData) control.getLayoutData();
 			if (gridData != null) {
 				gridData.exclude = false;
 			}
-			control.setVisible(shouldShow);			
+			control.setVisible(shouldShow);
 		}
 	}
 
-	@Override
 	public void layout() {
 		for (Control control : controls) {
 			Composite parent = control.getParent();
-			parent.layout(true, true);			
+			parent.layout(true, true);
 		}
 	}
 
-	@Override
 	public void cleanup() {
 		for (Control control : controls) {
-			control.dispose();			
+			control.dispose();
 		}
 	}
 
@@ -55,7 +52,6 @@ public class SWTRenderingResultDelegator implements RenderingResultDelegator {
 		return controls;
 	}
 
-	@Override
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
 
 	}

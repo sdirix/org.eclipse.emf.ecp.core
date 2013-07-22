@@ -8,10 +8,11 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 public class CategoryNodeBuilder implements NodeBuilder<Category> {
 
-	@Override
-	public Node<Category> build(Category category,ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+	public Node<Category> build(Category category, ECPControlContext context,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		Node<Category> node = new Node<Category>(category, context);
-		Node<Composite> child = NodeBuilders.INSTANCE.build(category.getComposite(), context, adapterFactoryItemDelegator);
+		Node<Composite> child = NodeBuilders.INSTANCE.build(category.getComposite(), context,
+			adapterFactoryItemDelegator);
 		node.addChild(child);
 		return node;
 	}
