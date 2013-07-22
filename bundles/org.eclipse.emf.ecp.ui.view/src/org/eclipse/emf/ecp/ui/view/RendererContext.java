@@ -1,12 +1,15 @@
 package org.eclipse.emf.ecp.ui.view;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
@@ -79,7 +82,9 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 			if (childDiagnostic.getData().size() < 2) {
 				continue;
 			}
+
 			EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
+			Setting setting = ((InternalEObject) childDiagnostic.getData().get(0)).eSetting(feature);
 
 			Set<EObject> objectsToMark = categoryValidationMap.get(feature);
 			if (objectsToMark == null) {
@@ -109,6 +114,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	}
 
 	private void analyseView() {
+		categoryValidationMap.clear();
 		TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
 			EObject eObject = eAllContents.next();
@@ -215,6 +221,14 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 				triggerValidation();
 			}
+
+			@Override
+			protected void addAdapter(Notifier notifier) {
+				super.addAdapter(notifier);
+				// FIXME HACK
+				analyseView();
+			}
+
 		};
 
 		this.context.getModelElement().eAdapters().add(contentAdapter);
