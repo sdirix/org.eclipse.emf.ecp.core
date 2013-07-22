@@ -77,8 +77,7 @@ public class AddReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		// TODO language dependent
-		setToolTipText("Link " + attribute);//$NON-NLS-1$
+		setToolTipText(ActionMessages.AddReferenceAction_Link + attribute);
 	}
 
 	/**

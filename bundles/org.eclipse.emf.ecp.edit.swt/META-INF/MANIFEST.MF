@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Edit SWT
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.emf.ecp.edit.swt;singleton:=true
 Bundle-Version: 1.0.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.edit.internal.swt.Activator
@@ -33,4 +33,4 @@ Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.0.0";x-internal
  org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.0.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt",
  org.eclipse.emf.ecp.edit.internal.swt.table;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.swt.util;version="1.0.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt"
-Bundle-Vendor: Eclipse Modeling Project
+Bundle-Vendor: %Bundle-Vendor

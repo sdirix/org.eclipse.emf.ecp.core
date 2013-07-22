@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -32,31 +32,31 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.osgi.framework.Bundle;
 
 /**
- * The ControlFactoryImpl is a Singelton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides a
- * method ({@link #createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
+ * The ControlFactoryImpl is a Singleton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides
+ * a method ({@link #createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
  * control for with the known widgets.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class ControlFactoryImpl implements ECPControlFactory{
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
-	
+
 	private static final String CLASS_ATTRIBUTE = "class";//$NON-NLS-1$
 	private static final String CONTROL_ID = "id";//$NON-NLS-1$
 	private static final String LABEL_ATTRIBUTE = "showLabel";//$NON-NLS-1$
-	
+
 	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
 	private static final String CONTROL_TESTER = "testClass";//$NON-NLS-1$
-	
+
 	private static final String TEST_STATIC = "staticTest";//$NON-NLS-1$
 	private static final String TESTER_PRIORITY = "priority";//$NON-NLS-1$
 	private static final String TESTER_CLASSTYPE = "supportedClassType";//$NON-NLS-1$
 	private static final String TESTER_EOBJECT = "supportedEObject";//$NON-NLS-1$
 	private static final String TESTER_FEATURE = "supportedFeature";//$NON-NLS-1$
 	private static final String TESTER_SINGLEVALUE = "singleValue";//$NON-NLS-1$
-	
+
 	private Set<ECPControlDescription> controlDescriptors = new HashSet<ECPControlDescription>();
 
 	/**
@@ -77,7 +77,7 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 				String clazz = e.getAttribute(CLASS_ATTRIBUTE);
 				Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(), clazz);
 				boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
-				
+
 //				ECPApplicableTester tester=null;
 				Set<ECPApplicableTester> tester=new HashSet<ECPApplicableTester>();
 				for(IConfigurationElement testerExtension: e.getChildren()){
@@ -87,19 +87,19 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 					else if(TEST_STATIC.equals(testerExtension.getName())){
 						boolean singleValue = Boolean.parseBoolean(testerExtension.getAttribute(TESTER_SINGLEVALUE));
 						int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
-						
+
 						String type = testerExtension.getAttribute(TESTER_CLASSTYPE);
 						Class<?> supportedClassType = loadClass(testerExtension.getContributor().getName(), type);
 						//Class.forName(type);
-						
+
 						String eObject = testerExtension.getAttribute(TESTER_EOBJECT);
 						if (eObject == null) {
 							eObject = "org.eclipse.emf.ecore.EObject";//$NON-NLS-1$
 						}
 						Class<? extends EObject> supportedEObject = loadClass(testerExtension.getContributor().getName(), eObject);
-						
+
 						String supportedFeature = testerExtension.getAttribute(TESTER_FEATURE);
-						
+
 						tester.add(new ECPStaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature));
 					}
 				}
@@ -117,9 +117,8 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			//TODO externalize strings
-			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-				+ " cannot be resolved"); //$NON-NLS-1$
+			throw new ClassNotFoundException(clazz + EditMessages.ControlFactoryImpl_CannotBeLoadedBecauseBundle + bundleName
+				+ EditMessages.ControlFactoryImpl_CannotBeResolved);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
@@ -137,15 +136,15 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 		}
 		T control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
 
-		
 		return control;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public <T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId) {
-		
+
 		ECPControlDescription controlDescription = null;
 		for(ECPControlDescription desc:controlDescriptors){
 			if(desc.getId().equals(controlId)){
@@ -158,7 +157,7 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 		}
 		T control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
 
-		
+
 		return control;
 	}
 
@@ -198,20 +197,20 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 		int highestPriority = -1;
 		ECPControlDescription bestCandidate = null;
 		for (ECPControlDescription description : controlDescriptors) {
-			
+
 			if(!controlClass.isAssignableFrom(description.getControlClass())){
 				continue;
 			}
 			int currentPriority=-1;
-			
+
 			for(ECPApplicableTester tester:description.getTester()){
 				int testerPriority=tester.isApplicable(itemPropertyDescriptor, modelElement);
 				if(testerPriority>currentPriority){
 					currentPriority=testerPriority;
 				}
-				
+
 			}
-			
+
 			if(currentPriority>highestPriority){
 				highestPriority=currentPriority;
 				bestCandidate=description;
@@ -219,8 +218,5 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 		}
 		return bestCandidate;
 	}
-
-	
-	
 
 }

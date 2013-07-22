@@ -93,7 +93,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	@Override
 	protected Control createControl(Composite parent) {
 		dateWidget = new DateTime(parent, SWT.DATE | SWT.DROP_DOWN);
-		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_xmlDate");
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_xmlDate"); //$NON-NLS-1$
 		dateWidget.addKeyListener(new KeyAdapter() {
 			// hook key pressed - see PR 14201
 			@Override
@@ -198,7 +198,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	public String getFormatedString(Object value) {
 		XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
 		if (value == null) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		return dateFormat.format(cal.toGregorianCalendar().getTime());
 	}

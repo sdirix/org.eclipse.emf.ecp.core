@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ECP Edit
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.emf.ecp.edit;singleton:=true
 Bundle-Version: 1.0.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.edit.Activator
@@ -15,4 +15,4 @@ Export-Package: org.eclipse.emf.ecp.edit;version="1.0.0",
  org.eclipse.emf.ecp.edit.util;version="1.0.0",
  org.eclipse.emf.ecp.internal.edit;version="1.0.0";x-internal:=true
 Service-Component: OSGI-INF/ecpControlFactory.xml
-Bundle-Vendor: Eclipse Modeling Project
+Bundle-Vendor: %Bundle-Vendor

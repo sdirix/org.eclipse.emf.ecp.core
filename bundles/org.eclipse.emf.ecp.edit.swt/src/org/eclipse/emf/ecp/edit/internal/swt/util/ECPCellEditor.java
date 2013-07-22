@@ -28,7 +28,7 @@ public interface ECPCellEditor {
 	/**
 	 * RAP theming variable.
 	 */
-	String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";
+	String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 
 	IValueProperty getValueProperty();
 

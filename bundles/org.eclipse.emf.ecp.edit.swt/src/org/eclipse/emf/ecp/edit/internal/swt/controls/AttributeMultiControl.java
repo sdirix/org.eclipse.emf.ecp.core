@@ -62,7 +62,7 @@ public class AttributeMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return "Not set. Click to set!";
+		return ControlMessages.AttributeMultiControl_NotSetClickToSet;
 	}
 
 	/*
@@ -71,7 +71,7 @@ public class AttributeMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset";
+		return ControlMessages.AttributeMultiControl_Unset;
 	}
 
 }

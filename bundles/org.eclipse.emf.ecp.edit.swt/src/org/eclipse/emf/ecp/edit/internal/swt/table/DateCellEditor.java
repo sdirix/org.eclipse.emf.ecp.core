@@ -93,9 +93,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	protected Control createControl(Composite parent) {
 		// Composite composite = new Composite(parent, SWT.NONE);
 		dateWidget = new DateTime(parent, SWT.DATE);
-		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_date");
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_date"); //$NON-NLS-1$
 		// timeWidget = new DateTime(composite, SWT.TIME);
-		// timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_swt_cellEditor_time");
+		// timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_swt_cellEditor_time"); //$NON-NLS-1$
 
 		dateWidget.addKeyListener(new KeyAdapter() {
 			// hook key pressed - see PR 14201
@@ -205,7 +205,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	public String getFormatedString(Object value) {
 		Date cal = (Date) value;
 		if (value == null) {
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 		return dateFormat.format(cal);
 	}

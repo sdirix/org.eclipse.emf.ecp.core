@@ -94,7 +94,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 		link = new Link(parent, SWT.NONE);
-		link.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_reference");
+		link.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_reference"); //$NON-NLS-1$
 		link.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -134,7 +134,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	@Override
 	protected void doSetValue(Object value) {
 		String linkName = adapterFactoryItemDelegator.getText(value);
-		link.setText("<a>" + linkName + "</a>");
+		link.setText("<a>" + linkName + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/*

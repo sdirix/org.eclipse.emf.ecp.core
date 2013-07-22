@@ -75,11 +75,11 @@ public class DateTimeControl extends SingleControl {
 
 		dateWidget = new DateTime(composite, SWT.DATE | SWT.BORDER);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_date");
+		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_date"); //$NON-NLS-1$
 
 		timeWidget = new DateTime(composite, SWT.TIME | SWT.SHORT | SWT.BORDER);
 		timeWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_time");
+		timeWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_time"); //$NON-NLS-1$
 	}
 
 	/**
@@ -105,8 +105,7 @@ public class DateTimeControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO language
-		return "No date set! Click to set date."; //$NON-NLS-1$
+		return ControlMessages.DateTimeControl_NoDateSetClickToSetDate;
 	}
 
 	/*
@@ -115,7 +114,7 @@ public class DateTimeControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset Date";
+		return ControlMessages.DateTimeControl_UnsetDate;
 	}
 
 	/*

@@ -68,7 +68,7 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getTextVariantID() {
-		return "org_eclipse_emf_ecp_control_numerical";
+		return "org_eclipse_emf_ecp_control_numerical"; //$NON-NLS-1$
 	}
 
 	/*
@@ -77,8 +77,7 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO language
-		return "No number set! Click to set number."; //$NON-NLS-1$
+		return ControlMessages.NumericalControl_NoNumberClickToSetNumber;
 	}
 
 	/*
@@ -87,7 +86,7 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset number";
+		return ControlMessages.NumericalControl_UnsetNumber;
 	}
 
 	@Override
@@ -138,12 +137,12 @@ public class NumericalControl extends AbstractTextControl {
 	private String getFormatText() {
 
 		if (NumericalHelper.isInteger(getInstanceClass())) {
-			return "The format is '#'.";
+			return ControlMessages.NumericalControl_FormatNumerical;
 		} else if (NumericalHelper.isDouble(getInstanceClass())) {
-			return "The format is '#.#'.";
+			return ControlMessages.NumericalControl_FormatNumericalDecimal;
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	// TODO: Remarks EM:
@@ -187,16 +186,16 @@ public class NumericalControl extends AbstractTextControl {
 					if (NumericalHelper.isInteger(getInstanceClass())) {
 						boolean maxValue = false;
 						Class<?> instanceClass = getInstanceClass();
-						String formatedValue = "";
+						String formatedValue = ""; //$NON-NLS-1$
 						try {
 							if (Integer.class.isAssignableFrom(instanceClass)
-								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 								if (Integer.MAX_VALUE == number.intValue()) {
 									maxValue = true;
 									formatedValue = format.format(Integer.MAX_VALUE);
 								}
 							} else if (Long.class.isAssignableFrom(instanceClass)
-								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 								if (Long.MAX_VALUE == number.longValue()) {
 									maxValue = true;
 									formatedValue = format.format(Long.MAX_VALUE);
@@ -218,13 +217,13 @@ public class NumericalControl extends AbstractTextControl {
 						}
 					}
 				}
-				String formatedNumber = "";
+				String formatedNumber = ""; //$NON-NLS-1$
 				if (number != null) {
 					formatedNumber = format.format(number);
 				}
-				// if (number.toString().contains("E")
-				// || ((String) value).matches("0*" + formatedNumber + "\\"
-				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
+				// if (number.toString().contains("E") //$NON-NLS-1$
+				// || ((String) value).matches("0*" + formatedNumber + "\\"  //$NON-NLS-1$  //$NON-NLS-2$
+				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {  //$NON-NLS-1$
 				//
 				// }
 				// return revertToOldValue(value);
@@ -240,14 +239,15 @@ public class NumericalControl extends AbstractTextControl {
 
 		private Object revertToOldValue(final Object value) {
 
-			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
+			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 				return null;
 			}
 
 			Object result = getModelValue().getValue();
 
-			MessageDialog messageDialog = new MessageDialog(getText().getShell(), "Invalid Number", null,
-				"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
+			MessageDialog messageDialog = new MessageDialog(getText().getShell(),
+				ControlMessages.NumericalControl_InvalidNumber, null,
+				ControlMessages.NumericalControl_InvalidNumberWillBeUnset, MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -258,7 +258,7 @@ public class NumericalControl extends AbstractTextControl {
 			}.execute();
 
 			if (result == null) {
-				getText().setText("");
+				getText().setText(""); //$NON-NLS-1$
 			} else {
 				getText().setText(format.format(result));
 			}

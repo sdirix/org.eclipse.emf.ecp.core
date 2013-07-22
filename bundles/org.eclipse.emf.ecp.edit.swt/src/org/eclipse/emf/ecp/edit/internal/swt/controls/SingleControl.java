@@ -93,7 +93,7 @@ public abstract class SingleControl extends SWTControl {
 			return;
 		}
 		validationLabel.setImage(null);
-		validationLabel.setToolTipText("");
+		validationLabel.setToolTipText(""); //$NON-NLS-1$
 		updateValidationColor(null);
 	}
 

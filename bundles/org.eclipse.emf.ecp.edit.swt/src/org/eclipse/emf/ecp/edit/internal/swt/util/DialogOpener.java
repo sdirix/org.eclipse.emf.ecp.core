@@ -28,10 +28,10 @@ public class DialogOpener {
 	public static void openDialog(Dialog dialog, ECPDialogExecutor callBack) {
 		DialogWrapper wrapper = null;
 		IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.edit.swt.dialogWrapper");
+			"org.eclipse.emf.ecp.edit.swt.dialogWrapper"); //$NON-NLS-1$
 		for (IConfigurationElement e : controls) {
 			try {
-				wrapper = (DialogWrapper) e.createExecutableExtension("class");
+				wrapper = (DialogWrapper) e.createExecutableExtension("class"); //$NON-NLS-1$
 				break;
 			} catch (CoreException e1) {
 				Activator.logException(e1);

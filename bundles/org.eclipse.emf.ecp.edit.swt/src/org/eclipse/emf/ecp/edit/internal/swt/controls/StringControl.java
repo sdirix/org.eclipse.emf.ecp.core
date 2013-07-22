@@ -72,7 +72,7 @@ public class StringControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getTextVariantID() {
-		return "org_eclipse_emf_ecp_control_string";
+		return "org_eclipse_emf_ecp_control_string"; //$NON-NLS-1$
 	}
 
 	/*
@@ -81,8 +81,7 @@ public class StringControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO language
-		return "No text set! Click to set text."; //$NON-NLS-1$
+		return ControlMessages.StringControl_NoTextSetClickToSetText;
 	}
 
 	/*
@@ -91,7 +90,7 @@ public class StringControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset text";
+		return ControlMessages.StringControl_UnsetText;
 	}
 
 	@Override
