@@ -71,4 +71,8 @@
          id="org.eclipse.emf.ecp.viewmodel.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.custom.feature"
+         version="0.0.0"/>
+
 </feature>

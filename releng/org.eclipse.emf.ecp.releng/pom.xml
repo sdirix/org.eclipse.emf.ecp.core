@@ -93,6 +93,13 @@
 
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
 		
+		<!-- Custom Control Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.feature</module>
+		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
 		<!-- Graphiti 
