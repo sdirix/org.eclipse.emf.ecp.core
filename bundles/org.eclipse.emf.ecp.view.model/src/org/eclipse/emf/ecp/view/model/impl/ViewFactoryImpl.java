@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;

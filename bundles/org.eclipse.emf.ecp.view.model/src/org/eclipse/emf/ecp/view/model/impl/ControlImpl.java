@@ -5,6 +5,7 @@ package org.eclipse.emf.ecp.view.model.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  *
  * @generated
  */
-public class ControlImpl extends CompositeImpl implements Control {
+public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * The cached value of the '{@link #getTargetFeature() <em>Target Feature</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -347,6 +348,18 @@ public class ControlImpl extends CompositeImpl implements Control {
 		result.append(mandatory);
 		result.append(')');
 		return result.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public EList<EStructuralFeature> getTargetFeatures() {
+		EList<EStructuralFeature> result=new BasicEList<EStructuralFeature>();
+		result.add(getTargetFeature());
+		return result;
 	}
 
 } //ControlImpl

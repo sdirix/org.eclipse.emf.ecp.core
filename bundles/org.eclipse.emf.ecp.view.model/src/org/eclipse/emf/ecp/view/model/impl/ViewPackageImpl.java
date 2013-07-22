@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -209,6 +210,13 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass actionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass abstractControlEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -783,6 +791,24 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getAbstractControl() {
+		return abstractControlEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAbstractControl_TargetFeatures() {
+		return (EReference)abstractControlEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ViewFactory getViewFactory() {
 		return (ViewFactory)getEFactoryInstance();
 	}
@@ -885,6 +911,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		actionEClass = createEClass(ACTION);
 		createEAttribute(actionEClass, ACTION__BUNDLE);
 		createEAttribute(actionEClass, ACTION__CLASS_NAME);
+
+		abstractControlEClass = createEClass(ABSTRACT_CONTROL);
+		createEReference(abstractControlEClass, ABSTRACT_CONTROL__TARGET_FEATURES);
 	}
 
 	/**
@@ -928,7 +957,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		compositeEClass.getESuperTypes().add(this.getRenderable());
-		controlEClass.getESuperTypes().add(this.getComposite());
+		controlEClass.getESuperTypes().add(this.getAbstractControl());
 		tableControlEClass.getESuperTypes().add(this.getControl());
 		customCompositeEClass.getESuperTypes().add(this.getComposite());
 		seperatorEClass.getESuperTypes().add(this.getComposite());
@@ -937,6 +966,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		columnEClass.getESuperTypes().add(this.getCompositeCollection());
 		groupEClass.getESuperTypes().add(this.getCompositeCollection());
 		treeCategoryEClass.getESuperTypes().add(this.getAbstractCategorization());
+		abstractControlEClass.getESuperTypes().add(this.getComposite());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(viewEClass, View.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1018,6 +1048,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAction_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(abstractControlEClass, AbstractControl.class, "AbstractControl", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAbstractControl_TargetFeatures(), theEcorePackage.getEStructuralFeature(), null, "targetFeatures", null, 0, -1, AbstractControl.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -6,6 +6,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
@@ -183,6 +184,10 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseAction(Action object) {
 				return createActionAdapter();
+			}
+			@Override
+			public Adapter caseAbstractControl(AbstractControl object) {
+				return createAbstractControlAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -537,6 +542,20 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractControl <em>Abstract Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
+	 * @generated
+	 */
+	public Adapter createAbstractControlAdapter() {
 		return null;
 	}
 

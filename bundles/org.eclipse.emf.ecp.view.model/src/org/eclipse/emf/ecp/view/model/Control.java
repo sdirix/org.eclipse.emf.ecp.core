@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @model
  * @generated
  */
-public interface Control extends Composite {
+public interface Control extends AbstractControl {
 	/**
 	 * Returns the value of the '<em><b>Target Feature</b></em>' reference.
 	 * <!-- begin-user-doc -->

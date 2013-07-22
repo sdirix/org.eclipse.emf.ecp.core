@@ -574,78 +574,6 @@ public interface ViewPackage extends EPackage {
 	int CONTROL = 12;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__RULE = COMPOSITE__RULE;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__NAME = COMPOSITE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Target Feature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__TARGET_FEATURE = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__HINT = COMPOSITE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__READONLY = COMPOSITE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__MANDATORY = COMPOSITE_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Path To Feature</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__PATH_TO_FEATURE = COMPOSITE_FEATURE_COUNT + 4;
-
-	/**
-	 * The number of structural features of the '<em>Control</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 5;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl <em>Table Control</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -654,6 +582,223 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	int TABLE_CONTROL = 13;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl <em>Table Column</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
+	 * @generated
+	 */
+	int TABLE_COLUMN = 14;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl <em>Custom Composite</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
+	 * @generated
+	 */
+	int CUSTOM_COMPOSITE = 15;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.SeperatorImpl <em>Seperator</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.SeperatorImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getSeperator()
+	 * @generated
+	 */
+	int SEPERATOR = 16;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl <em>Composite Collection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
+	 * @generated
+	 */
+	int COMPOSITE_COLLECTION = 17;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl <em>Column Composite</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
+	 * @generated
+	 */
+	int COLUMN_COMPOSITE = 18;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
+	 * @generated
+	 */
+	int COLUMN = 19;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.GroupImpl <em>Group</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.GroupImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getGroup()
+	 * @generated
+	 */
+	int GROUP = 20;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl <em>Tree Category</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTreeCategory()
+	 * @generated
+	 */
+	int TREE_CATEGORY = 21;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.ActionImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
+	 * @generated
+	 */
+	int ACTION = 23;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl <em>Abstract Control</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
+	 * @generated
+	 */
+	int ABSTRACT_CONTROL = 24;
+
+	/**
+	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__RULE = COMPOSITE__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__NAME = COMPOSITE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__TARGET_FEATURES = COMPOSITE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Abstract Control</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__RULE = ABSTRACT_CONTROL__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__TARGET_FEATURES = ABSTRACT_CONTROL__TARGET_FEATURES;
+
+	/**
+	 * The feature id for the '<em><b>Target Feature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__TARGET_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__HINT = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__READONLY = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Path To Feature</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__PATH_TO_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Control</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -672,6 +817,15 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__NAME = CONTROL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__TARGET_FEATURES = CONTROL__TARGET_FEATURES;
 
 	/**
 	 * The feature id for the '<em><b>Target Feature</b></em>' reference.
@@ -746,16 +900,6 @@ public interface ViewPackage extends EPackage {
 	int TABLE_CONTROL_FEATURE_COUNT = CONTROL_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl <em>Table Column</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
-	 * @generated
-	 */
-	int TABLE_COLUMN = 14;
-
-	/**
 	 * The feature id for the '<em><b>Attribute</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -781,16 +925,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_COLUMN_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl <em>Custom Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
-	 * @generated
-	 */
-	int CUSTOM_COMPOSITE = 15;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -838,16 +972,6 @@ public interface ViewPackage extends EPackage {
 	int CUSTOM_COMPOSITE_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.SeperatorImpl <em>Seperator</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.SeperatorImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getSeperator()
-	 * @generated
-	 */
-	int SEPERATOR = 16;
-
-	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -873,16 +997,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int SEPERATOR_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl <em>Composite Collection</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
-	 * @generated
-	 */
-	int COMPOSITE_COLLECTION = 17;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -921,16 +1035,6 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_COLLECTION_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl <em>Column Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
-	 * @generated
-	 */
-	int COLUMN_COMPOSITE = 18;
-
-	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -965,16 +1069,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLUMN_COMPOSITE_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
-	 * @generated
-	 */
-	int COLUMN = 19;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -1013,16 +1107,6 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.GroupImpl <em>Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.GroupImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getGroup()
-	 * @generated
-	 */
-	int GROUP = 20;
-
-	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1057,16 +1141,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUP_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl <em>Tree Category</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTreeCategory()
-	 * @generated
-	 */
-	int TREE_CATEGORY = 21;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -1130,17 +1204,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TREE_CATEGORY_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 3;
-
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.ActionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
-	 * @generated
-	 */
-	int ACTION = 23;
 
 	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
@@ -1763,6 +1826,27 @@ public interface ViewPackage extends EPackage {
 	EAttribute getAction_ClassName();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.AbstractControl <em>Abstract Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Abstract Control</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
+	 * @generated
+	 */
+	EClass getAbstractControl();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.emf.ecp.view.model.AbstractControl#getTargetFeatures <em>Target Features</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Target Features</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.AbstractControl#getTargetFeatures()
+	 * @see #getAbstractControl()
+	 * @generated
+	 */
+	EReference getAbstractControl_TargetFeatures();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2279,6 +2363,24 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ACTION__CLASS_NAME = eINSTANCE.getAction_ClassName();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl <em>Abstract Control</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
+		 * @generated
+		 */
+		EClass ABSTRACT_CONTROL = eINSTANCE.getAbstractControl();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Features</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ABSTRACT_CONTROL__TARGET_FEATURES = eINSTANCE.getAbstractControl_TargetFeatures();
 
 	}
 
