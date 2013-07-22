@@ -98,7 +98,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.custom.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
 		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
