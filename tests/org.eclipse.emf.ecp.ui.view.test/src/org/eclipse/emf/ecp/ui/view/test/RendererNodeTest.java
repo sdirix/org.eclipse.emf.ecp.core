@@ -85,7 +85,7 @@ public class RendererNodeTest {
 	                		throw new IllegalStateException("@ViewModel annotation missing or view model does not exist.");
 	                	}
 	                	
-	            		ModelRenderer<Composite> renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { parent });
+	            		ModelRenderer<Composite> renderer = ModelRenderer.INSTANCE.getRenderer();
 	            		ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 
 	            		ECPProject p = ECPProjectManagerImpl.INSTANCE.getProject("hello");
@@ -98,7 +98,7 @@ public class RendererNodeTest {
 	            				shell);
 	            		root = NodeBuilders.INSTANCE.build(view, context);
 	            		
-	            		rendererContext = renderer.render(root);
+	            		rendererContext = renderer.render(root,parent);
 	            		rendererContext.addListener(root);
 	            		rendererContext.triggerValidation();
 	            				 
