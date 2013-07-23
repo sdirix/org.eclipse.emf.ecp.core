@@ -19,16 +19,15 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130603-0742"/>
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.9.0.v20130529-1710"/>
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130605-1155"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.9.0.v20130530-1629"/>
+<unit id="org.eclipse.net4j.sdk.feature.group" version="4.2.0.v20130601-1611"/>
 <unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.2.0.v20130603-0949"/>
 <unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.7.0.201305221412"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130605-1155"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130603-0742"/>
 <unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.7.0.201305212004"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.9.0.201305060205"/>
-<unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130605-1155"/>
-<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130605-1155"/>
-<unit id="org.eclipse.net4j.sdk.feature.group" version="4.2.0.v20130601-1611"/>
-<unit id="org.eclipse.jdt.feature.group" version="3.9.0.v20130530-1629"/>
 <repository location="http://download.eclipse.org/releases/kepler"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">

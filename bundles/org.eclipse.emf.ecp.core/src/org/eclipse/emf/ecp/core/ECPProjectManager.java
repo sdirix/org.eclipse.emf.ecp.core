@@ -13,10 +13,23 @@ package org.eclipse.emf.ecp.core;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectPreDeleteObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 
 import java.util.Collection;
 
 /**
+ * The ECPProjectManager provides access to ECPProjects and manages their lifecycle.
+ * It publishes observable events on the {@link ECPObserverBus}.
+ * Related Observer types: {@link ECPProjectsChangedObserver}, {@link ECPProjectContentChangedObserver},
+ * {@link ECPProjectOpenClosedObserver}, {@link ECPProjectPreDeleteObserver}. Use {@link ECPUtil#getECPObserverBus()} to
+ * retrieve the ObserverBus and {@link ECPObserverBus#register(ECPObserver)} to register an Observer.
+ * 
  * @author Eike Stepper
  * @author Jonas
  * @author Eugen Neufeld

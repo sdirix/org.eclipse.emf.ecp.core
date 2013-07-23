@@ -15,10 +15,18 @@
 
 package org.eclipse.emf.ecp.core;
 
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
+import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
+
 import java.util.Collection;
 
 /**
  * Registry class to manage the registered providers.
+ * It publishes observable events on the {@link ECPObserverBus}.
+ * Related ECPObserver types: {@link ECPProvidersChangedObserver}. Use {@link ECPUtil#getECPObserverBus()} to
+ * retrieve the ObserverBus and {@link ECPObserverBus#register(ECPObserver)} to register an Observer.
  * 
  * @author Eike Stepper
  * @author Jonas
