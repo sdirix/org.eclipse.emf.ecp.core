@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.emf.ecp.validation.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.validation.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.validation.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.validation.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.extra.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.cdo.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.cdo.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.cdo.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.cdo.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.provider.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.emfstore.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.emfstore.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.emfstore.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.emfstore.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.provider.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.workspace.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.workspace.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.workspace.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.workspace.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.provider.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.e3.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.e3.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.e3.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.e3.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.3x.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.sdk.feature_1.0.1.qualifier.jar" id="org.eclipse.emf.ecp.sdk.feature" version="1.0.1.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.sdk.feature_1.0.2.qualifier.jar" id="org.eclipse.emf.ecp.sdk.feature" version="1.0.2.qualifier">
       <category name="org.eclipse.emf.ecp.sdk.category"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>

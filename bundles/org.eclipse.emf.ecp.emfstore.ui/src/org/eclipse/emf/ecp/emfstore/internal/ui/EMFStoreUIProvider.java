@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
-import org.eclipse.emf.emfstore.client.exceptions.ESCertificateStoreException;
+import org.eclipse.emf.emfstore.client.exceptions.ESCertificateException;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
@@ -182,7 +182,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		try {
 			certificates = KeyStoreManager.getInstance().getCertificates();
 			csd.setElements(certificates.toArray());
-		} catch (ESCertificateStoreException e1) {
+		} catch (ESCertificateException e1) {
 			csd.setErrorMessage(e1.getMessage());
 		}
 		csd.setBlockOnOpen(true);

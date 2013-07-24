@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -327,11 +328,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
-	public ECPContainer getContext() {
-		return this;
-	}
-
-	/** {@inheritDoc} */
 	public boolean canDelete() {
 		return true;
 	}
@@ -601,7 +597,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		return project;
 	}
 
-	/** {@inheritDoc} */
+	@Override
+	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
+		Collection<Entry<String, String>> newProperties) {
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+	}
+
+	@Deprecated
 	public void saveProperties() {
 		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}

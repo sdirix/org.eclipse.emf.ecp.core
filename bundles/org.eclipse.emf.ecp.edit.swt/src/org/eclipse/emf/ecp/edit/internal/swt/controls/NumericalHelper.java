@@ -26,7 +26,7 @@ public class NumericalHelper {
 
 	public static DecimalFormat setupFormat(Locale locale, Class<?> instanceClass) {
 
-		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance();
+		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(locale);
 		format.setParseIntegerOnly(isInteger(instanceClass));
 		format.setParseBigDecimal(instanceClass.equals(BigDecimal.class) || instanceClass.equals(BigInteger.class));
 		format.setGroupingUsed(false);
