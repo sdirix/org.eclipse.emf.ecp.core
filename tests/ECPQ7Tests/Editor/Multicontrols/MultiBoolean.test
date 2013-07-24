@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _7xT6QXXGEeK2tZkPdpUavQ
-Save-Time: 5/15/13 9:52 AM
+Save-Time: 6/22/13 1:09 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -15,170 +15,56 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 83 | get-property "getChildren().length" | equals 0 | verify-true
-with [get-editor "Tournament Pro" | get-button "Add Entry" -after [get-label "Receives Trophy"]] {
-    click
-    click
-    click
-    click
-}
 with [get-editor "Tournament Pro"] {
-    get-control Any -index 83 | get-property "getChildren().length" | equals 4 | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 1 | get-property "getSelection()" | equals false | verify-true
-}
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 5 | get-property "getSelection()" | equals false | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 9 | get-property "getSelection()" | equals false | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 13 | get-property "getSelection()" | equals false 
-        | verify-true
-}
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 5 | click
-    get-button -after [get-label "Receives Trophy"] -index 13 | click
+    with [get-button "Add Entry" -after [get-label "Receives Trophy"]] {
+        click
+        click
+        click
+    }
+    get-button "The Receives Trophy of the Tournament" | click
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 2 | click
+    get-button "Add Entry" -after [get-label "Receives Trophy"] | click
     close
 }
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
 with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 1 | get-property "getSelection()" | equals false | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 5 | get-property "getSelection()" | equals true 
-        | verify-true
+    get-button "The Receives Trophy of the Tournament" | get-property selected | equals true | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 1 
+        | get-property selected | equals false | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 2 
+        | get-property selected | equals true | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 3 
+        | get-property selected | equals false | verify-true
 }
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 9 | get-property "getSelection()" | equals false | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 13 | get-property "getSelection()" | equals true 
-        | verify-true
-}
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 7 | click
-    get-button -after [get-label "Receives Trophy"] -index 15 | click
-    get-button -after [get-label "Receives Trophy"] -index 11 | click
-    with [get-button -after [get-label "Receives Trophy"] -index 15] {
-        click
-        click
-    }
-}
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 1 | get-property "getSelection()" | equals true 
-        | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 5 | get-property "getSelection()" | equals true 
-        | verify-true
-}
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 9 | get-property "getSelection()" | equals false | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 13 | get-property "getSelection()" | equals false 
-        | verify-true
-}
-with [get-editor "Tournament Pro" | get-button "Add Entry" -index 1] {
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-    click
-}
-get-editor "Tournament Pro" | get-control Any -index 83 | get-property "getChildren().length" | equals 40 | verify-true
-get-editor "Tournament Pro" | get-button -after [get-label "Receives Trophy"] -index 2 | click
-get-editor "Tournament Pro" | get-button -after [get-label "Receives Trophy"] -index 1 | get-property "getSelection()" 
-    | equals true | verify-true
-get-editor "Tournament Pro" | get-button -after [get-label "Receives Trophy"] -index 2 | click
-with [get-editor "Tournament Pro"] {
-    get-control Any -index 83 | get-property "getChildren().length" | equals 38 | verify-true
-    get-button -after [get-label "Receives Trophy"] -index 1 | get-property "getSelection()" | equals false | verify-true
-}
-with [get-editor "Tournament Pro"] {
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 14 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 14 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 14 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 14 | click
-    get-button -after [get-label "Receives Trophy"] -index 10 | click
-    get-button -after [get-label "Receives Trophy"] -index 6 | click
-    get-button -after [get-label "Receives Trophy"] -index 2 | click
-}
-get-editor "Tournament Pro" | get-control Any -index 83 | get-property "getChildren().length" | equals 0 | verify-true
+get-editor "Tournament Pro" | get-button -after [get-label "Receives Trophy"] -index 15 | click
+get-editor "Tournament Pro" | get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] 
+    -index 2 | get-property selected | equals false | verify-true
 get-editor "Tournament Pro" | close
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 83 | get-property "getChildren().length" | equals 0 | verify-true
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu "New Model Element" | click
-
-get-window "Add new model element" | get-button Cancel | click
 with [get-editor "Tournament Pro"] {
-    with [get-button "Add Entry" -index 1] {
-        click
-        click
-        click
-    }
-    get-button -after [get-label "Receives Trophy"] -index 1 | click
-    get-button -after [get-label "Receives Trophy"] -index 5 | click
+    get-button "The Receives Trophy of the Tournament" | get-property selected | equals true | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 3 
+        | get-property selected | equals true | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 2 
+        | get-property selected | equals false | verify-true
 }
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
-with [get-window Commit] {
-    get-editbox -after [get-label "Log message:"] | set-text Bool
-    get-button OK | click
-}
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 83 | get-property "getChildren().length" | equals 0 | verify-true
-get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update | click
+get-window Commit | get-button OK | click
+get-editor "Tournament Pro" | close
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update 
+    | click
+
 get-window Update | get-button OK | click
-get-editor "Tournament Pro" | get-control Any -index 83 | get-property "getChildren().length" | equals 3 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 1\\]/Tournament Pro" 
+    | double-click
+
+with [get-editor "Tournament Pro"] {
+    get-button "The Receives Trophy of the Tournament" | get-property selected | equals true | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 1 
+        | get-property selected | equals false | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 2 
+        | get-property selected | equals false | verify-true
+    get-button "The Receives Trophy of the Tournament" -after [get-label "Receives Trophy"] -index 3 
+        | get-property selected | equals true | verify-true
+}
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

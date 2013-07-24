@@ -26,16 +26,14 @@
 <repository location="http://download.eclipse.org/eclipse/updates/4.2"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.historybrowsercomparator.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.modelmutator.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130716-1532"/>
-<repository location="http://download.eclipse.org/emf-store/milestones/100-integration/100_1307161127"/>
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130724-1332"/>
+<repository location="http://download.eclipse.org/emf-store/releases/100"/>
 </location>
 </locations>
 </target>
