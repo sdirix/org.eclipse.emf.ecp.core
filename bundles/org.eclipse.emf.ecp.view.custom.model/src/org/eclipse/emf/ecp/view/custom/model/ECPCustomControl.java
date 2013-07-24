@@ -94,6 +94,7 @@ public interface ECPCustomControl extends ECPControl{
 			if(relevantEObject!=null){
 				relevantEObject.eAdapters().remove(adapter);
 			}
+			relevantEObject=null;
 		}
 
 		@Override
