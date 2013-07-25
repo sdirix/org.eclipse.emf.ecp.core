@@ -13,35 +13,36 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.model.separator.*;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
+ * 
  * @generated
  */
-public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFactory {
+public class SeparatorFactoryImpl extends EFactoryImpl implements
+		SeparatorFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static SeparatorFactory init() {
 		try {
-			SeparatorFactory theSeparatorFactory = (SeparatorFactory)EPackage.Registry.INSTANCE.getEFactory(SeparatorPackage.eNS_URI);
+			SeparatorFactory theSeparatorFactory = (SeparatorFactory) EPackage.Registry.INSTANCE
+					.getEFactory(SeparatorPackage.eNS_URI);
 			if (theSeparatorFactory != null) {
 				return theSeparatorFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new SeparatorFactoryImpl();
 	}
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SeparatorFactoryImpl() {
@@ -49,22 +50,24 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case SeparatorPackage.SEPARATOR: return createSeparator();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case SeparatorPackage.SEPARATOR:
+			return createSeparator();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName()
+					+ "' is not a valid classifier");
 		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Separator createSeparator() {
@@ -73,17 +76,17 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SeparatorPackage getSeparatorPackage() {
-		return (SeparatorPackage)getEPackage();
+		return (SeparatorPackage) getEPackage();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -92,4 +95,4 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 		return SeparatorPackage.eINSTANCE;
 	}
 
-} //SeparatorFactoryImpl
+} // SeparatorFactoryImpl

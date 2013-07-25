@@ -15,26 +15,25 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.separator.*;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Adapter Factory</b> for the model.
- * It provides an adapter <code>createXXX</code> method for each class of the model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides
+ * an adapter <code>createXXX</code> method for each class of the model. <!--
+ * end-user-doc -->
+ * 
  * @see org.eclipse.emf.ecp.view.model.separator.SeparatorPackage
  * @generated
  */
 public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	/**
-	 * The cached model package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected static SeparatorPackage modelPackage;
 
 	/**
-	 * Creates an instance of the adapter factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SeparatorAdapterFactory() {
@@ -45,9 +44,10 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Returns whether this factory is applicable for the type of the object.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> This implementation returns <code>true</code> if
+	 * the object is either the model's package or is an instance object of the
+	 * model. <!-- end-user-doc -->
+	 * 
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -57,57 +57,61 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 			return true;
 		}
 		if (object instanceof EObject) {
-			return ((EObject)object).eClass().getEPackage() == modelPackage;
+			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
 	}
 
 	/**
-	 * The switch that delegates to the <code>createXXX</code> methods.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The switch that delegates to the <code>createXXX</code> methods. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected SeparatorSwitch<Adapter> modelSwitch =
-		new SeparatorSwitch<Adapter>() {
-			@Override
-			public Adapter caseSeparator(Separator object) {
-				return createSeparatorAdapter();
-			}
-			@Override
-			public Adapter caseRenderable(Renderable object) {
-				return createRenderableAdapter();
-			}
-			@Override
-			public Adapter caseComposite(Composite object) {
-				return createCompositeAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+	protected SeparatorSwitch<Adapter> modelSwitch = new SeparatorSwitch<Adapter>() {
+		@Override
+		public Adapter caseSeparator(Separator object) {
+			return createSeparatorAdapter();
+		}
+
+		@Override
+		public Adapter caseRenderable(Renderable object) {
+			return createRenderableAdapter();
+		}
+
+		@Override
+		public Adapter caseComposite(Composite object) {
+			return createCompositeAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
-	 * Creates an adapter for the <code>target</code>.
-	 * <!-- begin-user-doc -->
+	 * Creates an adapter for the <code>target</code>. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param target the object to adapt.
+	 * 
+	 * @param target
+	 *            the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
 	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject)target);
+		return modelSwitch.doSwitch((EObject) target);
 	}
 
-
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.separator.Separator <em>Separator</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.model.separator.Separator
+	 * <em>Separator</em>}'. <!-- begin-user-doc --> This default implementation
+	 * returns null so that we can easily ignore cases; it's useful to ignore a
+	 * case when inheritance will catch all the cases anyway. <!-- end-user-doc
+	 * -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.model.separator.Separator
 	 * @generated
@@ -117,11 +121,12 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.model.Renderable
 	 * @generated
@@ -131,11 +136,12 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Composite <em>Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.model.Composite <em>Composite</em>}'.
+	 * <!-- begin-user-doc --> This default implementation returns null so that
+	 * we can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.model.Composite
 	 * @generated
@@ -145,10 +151,9 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for the default case.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null.
-	 * <!-- end-user-doc -->
+	 * Creates a new adapter for the default case. <!-- begin-user-doc --> This
+	 * default implementation returns null. <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @generated
 	 */
@@ -156,4 +161,4 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //SeparatorAdapterFactory
+} // SeparatorAdapterFactory
