@@ -2,8 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +14,8 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
@@ -353,13 +353,16 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
 	public EList<EStructuralFeature> getTargetFeatures() {
-		EList<EStructuralFeature> result=new BasicEList<EStructuralFeature>();
-		result.add(getTargetFeature());
+		EList<EStructuralFeature> result = new BasicEList<EStructuralFeature>();
+		if (getTargetFeature() != null) {
+			result.add(getTargetFeature());
+		}
 		return result;
 	}
 
-} //ControlImpl
+} // ControlImpl

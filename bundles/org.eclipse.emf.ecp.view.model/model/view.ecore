@@ -108,6 +108,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="AbstractControl" abstract="true" eSuperTypes="#//Composite">
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetFeatures" upperBound="-1"
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"
-        changeable="false" volatile="true" transient="true" derived="true"/>
+        changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
   </eClassifiers>
 </ecore:EPackage>

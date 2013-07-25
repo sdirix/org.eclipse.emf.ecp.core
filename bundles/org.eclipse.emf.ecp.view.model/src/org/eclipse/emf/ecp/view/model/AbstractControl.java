@@ -34,7 +34,7 @@ public interface AbstractControl extends Composite {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target Features</em>' reference list.
 	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getAbstractControl_TargetFeatures()
-	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
 	EList<EStructuralFeature> getTargetFeatures();

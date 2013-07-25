@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecp.internal.edit.Activator;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
@@ -233,7 +234,9 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	@Override
 	public EList<EStructuralFeature> getTargetFeatures() {
 		EList<EStructuralFeature> result=new BasicEList<EStructuralFeature>();
-		
+		if(getBundle()==null || getClassName()==null){
+			return result;
+		}
 		try {
 			Class<?> clazz = getClass(this.getBundle(),
 					this.getClassName());
@@ -247,23 +250,23 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 				result.add(refFeature.getTargetFeature());
 			}
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//TODO activate?
+//			Activator.logException(e);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//TODO activate?
+//			Activator.logException(e);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//TODO activate?
+//			Activator.logException(e);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//TODO activate?
+//			Activator.logException(e);
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//TODO activate?
+//			Activator.logException(e);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//TODO activate?
+//			Activator.logException(e);
 		}
 
 		return result;
