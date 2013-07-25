@@ -8,9 +8,9 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 public class CategorizationNodeBuilder implements NodeBuilder<Categorization> {
 
-	@Override
-	public Node<Categorization> build(Categorization categorization, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		Node<Categorization> node = new Node<Categorization>(categorization,context);
+	public Node<Categorization> build(Categorization categorization, ECPControlContext context,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+		Node<Categorization> node = new Node<Categorization>(categorization, context);
 		for (AbstractCategorization childCategorization : categorization.getCategorizations()) {
 			node.addChild(NodeBuilders.INSTANCE.build(childCategorization, context, adapterFactoryItemDelegator));
 		}

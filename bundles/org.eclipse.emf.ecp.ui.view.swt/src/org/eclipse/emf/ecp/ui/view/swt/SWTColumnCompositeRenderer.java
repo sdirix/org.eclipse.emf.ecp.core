@@ -14,21 +14,21 @@ import org.eclipse.swt.widgets.Control;
 
 public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnComposite> {
 	
-
+	public static final SWTColumnCompositeRenderer INSTANCE = new SWTColumnCompositeRenderer();
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_control_column_composite";
 	
 	@Override
-	public Control renderSWT(Node<ColumnComposite> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+	public Control renderSWT(Node<ColumnComposite> node, AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
 		//TODO Add check whether label is shown
 //		Label l=new Label(getParent(), SWT.NONE);
 //		l.setText(modelColumnComposite.getName());
-		
+		Composite parent=getParentFromInitData(initData);
 		ColumnComposite modelColumnComposite = node.getRenderable();
 		
-		Composite columnComposite = new Composite(getParent(), SWT.NONE);
-		columnComposite.setBackground(getParent().getBackground());
+		Composite columnComposite = new Composite(parent, SWT.NONE);
+		columnComposite.setBackground(parent.getBackground());
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
 		
 		GridLayoutFactory.fillDefaults()
@@ -49,7 +49,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 		for (Node<? extends Renderable> child : node.getChildren()) {
 			
 			Composite column = new Composite(columnComposite, SWT.NONE);
-			column.setBackground(getParent().getBackground());
+			column.setBackground(parent.getBackground());
 			
 			GridDataFactory.fillDefaults()
 				.align(SWT.FILL, SWT.FILL)

@@ -350,7 +350,7 @@ public abstract class MultiControl extends SWTControl {
 		 */
 		private void createDeleteButton(Composite composite) {
 			Button delB = new Button(composite, SWT.PUSH);
-			delB.setImage(Activator.getImage("icons/delete.png"));
+			delB.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 			delB.addSelectionListener(new SelectionAdapter() {
 
 				/*

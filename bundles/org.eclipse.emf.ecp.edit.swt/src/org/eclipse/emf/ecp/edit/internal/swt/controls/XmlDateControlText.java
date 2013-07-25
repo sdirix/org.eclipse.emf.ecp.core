@@ -72,18 +72,17 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	@Override
 	protected String getTextVariantID() {
-		return "org_eclipse_emf_ecp_control_xmldate";
+		return "org_eclipse_emf_ecp_control_xmldate"; //$NON-NLS-1$
 	}
 
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO language
-		return "No date set! Click to set date."; //$NON-NLS-1$
+		return ControlMessages.XmlDateControlText_NoDateSetClickToSetDate;
 	}
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset date";
+		return ControlMessages.XmlDateControlText_UnsetDate;
 	}
 
 	@Override
@@ -97,7 +96,7 @@ public class XmlDateControlText extends AbstractTextControl {
 		super.fillControlComposite(composite);
 		((GridLayout) composite.getLayout()).numColumns = 2;
 		final Button button = new Button(composite, SWT.PUSH);
-		button.setText("Datum wählen");
+		button.setText(ControlMessages.XmlDateControlText_SelectDate);
 		button.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -221,14 +220,15 @@ public class XmlDateControlText extends AbstractTextControl {
 
 		private Object revertToOldValue(final Object value) {
 
-			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
+			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 				return null;
 			}
 
 			Object result = getModelValue().getValue();
 
-			MessageDialog messageDialog = new MessageDialog(getText().getShell(), "Invalid Number", null,
-				"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
+			MessageDialog messageDialog = new MessageDialog(getText().getShell(),
+				ControlMessages.XmlDateControlText_InvalidNumber, null,
+				ControlMessages.XmlDateControlText_NumberInvalidValueWillBeUnset, MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -239,7 +239,7 @@ public class XmlDateControlText extends AbstractTextControl {
 			}.execute();
 
 			if (result == null) {
-				getText().setText("");
+				getText().setText(""); //$NON-NLS-1$
 			} else {
 				XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) result;
 				Date date = gregorianCalendar.toGregorianCalendar().getTime();

@@ -112,8 +112,7 @@ public class LinkControl extends SingleControl {
 		mainComposite.setLayout(stackLayout);
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
-		// TODO language
-		unsetLabel.setText("(Not Set)");//$NON-NLS-1$
+		unsetLabel.setText(ControlMessages.LinkControl_NotSet);
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -161,7 +160,7 @@ public class LinkControl extends SingleControl {
 		imageHyperlink.setBackground(linkComposite.getBackground());
 
 		hyperlink = new Link(linkComposite, SWT.NONE);
-		hyperlink.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_reference");
+		hyperlink.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_reference"); //$NON-NLS-1$
 		hyperlink.setBackground(linkComposite.getBackground());
 		hyperlink.addSelectionListener(new SelectionAdapter() {
 
@@ -219,7 +218,7 @@ public class LinkControl extends SingleControl {
 			@Override
 			public Object convert(Object value) {
 				updateChangeListener((EObject) value);
-				return "<a>" + getLinkText(value) + "</a>";
+				return "<a>" + getLinkText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
 		IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
@@ -259,7 +258,7 @@ public class LinkControl extends SingleControl {
 
 	protected Object getLinkText(Object value) {
 		String linkName = adapterFactoryItemDelegator.getText(value);
-		return linkName == null ? "" : linkName;
+		return linkName == null ? "" : linkName; //$NON-NLS-1$
 	}
 
 	private void updateChangeListener(final EObject value) {
@@ -321,8 +320,7 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO language
-		return "No link set! Click to set link."; //$NON-NLS-1$
+		return ControlMessages.LinkControl_NoLinkSetClickToSetLink;
 	}
 
 	/*
@@ -331,7 +329,7 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset Link";
+		return ControlMessages.LinkControl_UnsetLink;
 	}
 
 	/*

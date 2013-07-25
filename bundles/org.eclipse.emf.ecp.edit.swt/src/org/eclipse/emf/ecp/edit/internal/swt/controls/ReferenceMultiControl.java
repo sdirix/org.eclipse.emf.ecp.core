@@ -64,7 +64,7 @@ public class ReferenceMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return "Not set. Click to set!";
+		return ControlMessages.ReferenceMultiControl_NotSetClickToSet;
 	}
 
 	/*
@@ -73,6 +73,6 @@ public class ReferenceMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset";
+		return ControlMessages.ReferenceMultiControl_Unset;
 	}
 }

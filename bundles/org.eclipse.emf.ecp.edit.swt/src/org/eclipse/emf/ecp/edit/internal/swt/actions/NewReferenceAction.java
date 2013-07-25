@@ -75,7 +75,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText("Create and link new " + attribute);//$NON-NLS-1$
+		setToolTipText(ActionMessages.NewReferenceAction_CreateAndLinkNew + attribute);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class NewReferenceAction extends ECPSWTAction {
 	// }
 	// Image image = labelProvider.getImage(obj);
 	//
-	// ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");
+	// ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
 	// OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
 	// OverlayImageDescriptor.LOWER_RIGHT);
 	// setImageDescriptor(imageDescriptor);
@@ -114,12 +114,12 @@ public class NewReferenceAction extends ECPSWTAction {
 	// String attribute = descriptor.getDisplayName(eReference);
 	//
 	// // make singular attribute labels
-	// if (attribute.endsWith("ies")) {
-	// attribute = attribute.substring(0, attribute.length() - 3) + "y";
-	// } else if (attribute.endsWith("s")) {
+	// if (attribute.endsWith("ies")) {//$NON-NLS-1$
+	// attribute = attribute.substring(0, attribute.length() - 3) + "y";//$NON-NLS-1$
+	// } else if (attribute.endsWith("s")) {//$NON-NLS-1$
 	// attribute = attribute.substring(0, attribute.length() - 1);
 	// }
-	// setToolTipText("Create and link new " + attribute);
+	// setToolTipText(ActionMessages.NewReferenceAction_CreateAndLinkNew + attribute);
 	//
 	// }
 

@@ -44,12 +44,12 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
 	public Composite createUI(Composite parent) {
 		View view = getView();
-		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer(new Object[] { parent });
+		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer();
 
 		Node node = null;
 		try {
 			node = NodeBuilders.INSTANCE.build(view, modelElementContext);
-			rendererContext = renderer.render(node);
+			rendererContext = renderer.render(node, parent);
 		} catch (NoRendererFoundException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();

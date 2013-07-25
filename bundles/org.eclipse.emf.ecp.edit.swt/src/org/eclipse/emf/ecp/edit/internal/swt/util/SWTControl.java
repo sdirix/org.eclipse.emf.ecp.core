@@ -51,7 +51,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 	/**
 	 * RAP theming variable to set.
 	 */
-	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";
+	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";//$NON-NLS-1$
 
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 
@@ -123,13 +123,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null
 			&& getHelpText().length() != 0) {
 			Label l = new Label(composite, SWT.PUSH);
-			l.setImage(Activator.getImage("icons/help.png"));
-			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help");
+			l.setImage(Activator.getImage("icons/help.png")); //$NON-NLS-1$
+			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help"); //$NON-NLS-1$
 			l.setBackground(parent.getBackground());
 			l.addMouseListener(new MouseListener() {
 
 				public void mouseUp(MouseEvent e) {
-					MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
+					MessageDialog dialog = new MessageDialog(parent.getShell(), UtilMessages.SWTControl_Help, null, getHelpText(),
 						MessageDialog.INFORMATION, new String[] { JFaceResources
 							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 					new ECPDialogExecutor(dialog) {
@@ -255,7 +255,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 					showUnsetLabel();
 				}
 			});
-			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset");
+			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset"); //$NON-NLS-1$
 		}
 
 		if (!getStructuralFeature().isUnsettable()

@@ -11,28 +11,25 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
 
-	@Override
 	public Node<C> build(C renderable, ECPControlContext controlContext,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		
-		ECPControlContext subcontext = createSubcontext(renderable, controlContext); 
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+
+		ECPControlContext subcontext = createSubcontext(renderable, controlContext);
 		return new Leaf<C>(renderable, subcontext);
 	}
 
-
-	protected ECPControlContext createSubcontext(Control modelControl,
-			ECPControlContext controlContext) {
+	protected ECPControlContext createSubcontext(Control modelControl, ECPControlContext controlContext) {
 		EObject parent = controlContext.getModelElement();
-        
-        for (EReference eReference : modelControl.getPathToFeature()) {
-            EObject child = (EObject) parent.eGet(eReference);
-            if (child == null) {
-                child = EcoreUtil.create(eReference.getEReferenceType());
-                parent.eSet(eReference, child);
-            }
-            parent = child;
-        }
-        ECPControlContext subContext = controlContext.createSubContext(parent);
+
+		for (EReference eReference : modelControl.getPathToFeature()) {
+			EObject child = (EObject) parent.eGet(eReference);
+			if (child == null) {
+				child = EcoreUtil.create(eReference.getEReferenceType());
+				parent.eSet(eReference, child);
+			}
+			parent = child;
+		}
+		ECPControlContext subContext = controlContext.createSubContext(parent);
 		return subContext;
 	}
 }

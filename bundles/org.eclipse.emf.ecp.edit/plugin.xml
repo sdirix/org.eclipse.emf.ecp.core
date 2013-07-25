@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-<extension-point id="controls" name="ECP Controls" schema="schema/controls.exsd"/>
+<extension-point id="controls" name="%extension-point.controls" schema="schema/controls.exsd"/>
 <extension
       point="org.eclipse.equinox.preferences.preferences">
 </extension>

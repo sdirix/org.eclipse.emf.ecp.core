@@ -13,17 +13,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
-	
+	public static final SWTColumnRenderer INSTANCE = new SWTColumnRenderer();
 	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_control_column";
 
 	@Override
 	public Control renderSWT(Node<Column> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		
-		Composite columnComposite = new Composite(getParent(), SWT.NONE);
+		Composite parent=getParentFromInitData(initData);
+		Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN);
-		columnComposite.setBackground(getParent().getBackground());
+		columnComposite.setBackground(parent.getBackground());
 				
 		node.addRenderingResultDelegator(withSWT(columnComposite));
 		

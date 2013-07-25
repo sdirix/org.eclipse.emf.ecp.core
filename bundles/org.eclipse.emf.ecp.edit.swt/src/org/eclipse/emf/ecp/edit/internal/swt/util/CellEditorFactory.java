@@ -69,9 +69,8 @@ public final class CellEditorFactory {
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			// TODO externalize strings
-			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-				+ " cannot be resolved"); //$NON-NLS-1$
+			throw new ClassNotFoundException(clazz + UtilMessages.CellEditorFactory_CannotBeLoadedBecauseBundle + bundleName
+				+ UtilMessages.CellEditorFactory_CannotBeResolved);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 

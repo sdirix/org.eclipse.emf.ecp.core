@@ -48,9 +48,8 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		// TODO remove PlatformUI
 
-		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png"));
-		// TODO language
-		setToolTipText("Delete Reference"); //$NON-NLS-1$
+		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png")); //$NON-NLS-1$
+		setToolTipText(ActionMessages.DeleteReferenceAction_DeleteReference);
 	}
 
 	@Override
@@ -92,13 +91,14 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
 		// AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		String modelElementName = adapterFactoryItemDelegator.getText(toBeDeleted);
-		// TODO language
-		question = "Do you really want to delete the model element " + modelElementName + "?";//$NON-NLS-1$ //$NON-NLS-2$
+		question = ActionMessages.DeleteReferenceAction_DeleteModelQuestion + modelElementName
+			+ ActionMessages.DeleteReferenceAction_Questionmark;
 		// } else {
 		// question = "Do you really want to delete these " + toBeDeleted.size() + " model elements?";
 		// }
-		MessageDialog dialog = new MessageDialog(null, "Confirmation", null, question, MessageDialog.QUESTION,//$NON-NLS-1$
-			new String[] { "Yes", "No" }, 0);//$NON-NLS-1$//$NON-NLS-2$
+		MessageDialog dialog = new MessageDialog(null, ActionMessages.DeleteReferenceAction_Confirmation, null,
+			question, MessageDialog.QUESTION, new String[] { ActionMessages.DeleteReferenceAction_Yes,
+				ActionMessages.DeleteReferenceAction_No }, 0);
 
 		boolean confirm = false;
 		if (dialog.open() == Window.OK) {

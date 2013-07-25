@@ -9,7 +9,7 @@
     editorPluginID="org.eclipse.emf.ecp.view.model.editor" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>view.ecore</foreignModel>
   <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view" disposableProviderFactory="true"
-      childCreationExtenders="true" ecorePackage="view.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="view.ecore#/">
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
     </genClasses>
@@ -88,6 +88,9 @@
     <genClasses ecoreClass="view.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/bundle"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/className"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//AbstractControl">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference view.ecore#//AbstractControl/targetFeatures"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

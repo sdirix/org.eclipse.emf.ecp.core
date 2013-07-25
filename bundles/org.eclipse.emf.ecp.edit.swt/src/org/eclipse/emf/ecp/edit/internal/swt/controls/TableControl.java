@@ -208,7 +208,7 @@ public class TableControl extends SWTControl {
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, SWT.DEFAULT)
 		// .applyTo(tableViewer.getTable());
-		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table");
+		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table"); //$NON-NLS-1$
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
@@ -260,9 +260,9 @@ public class TableControl extends SWTControl {
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
-				column.getColumn().setData("width", ((ECPCellEditor) cellEditor).getColumnWidthWeight());
+				column.getColumn().setData("width", ((ECPCellEditor) cellEditor).getColumnWidthWeight()); //$NON-NLS-1$
 			} else {
-				column.getColumn().setData("width", 100);
+				column.getColumn().setData("width", 100); //$NON-NLS-1$
 			}
 
 			// determine the attribute that should be observed
@@ -281,12 +281,12 @@ public class TableControl extends SWTControl {
 					if (ECPCellEditor.class.isInstance(cellEditor)) {
 						ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
 						String text = ecpCellEditor.getFormatedString(value);
-						cell.setText(text == null ? "" : text);
+						cell.setText(text == null ? "" : text); //$NON-NLS-1$
 
 					} else {
 
 						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
-						cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string");
+						cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
 					}
 
 					// if (featureErrorMap.containsKey(element)
@@ -469,7 +469,7 @@ public class TableControl extends SWTControl {
 		TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
 		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
-			Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width");
+			Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width"); //$NON-NLS-1$
 			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
 				: storedValue));
 		}
@@ -501,7 +501,7 @@ public class TableControl extends SWTControl {
 		removeButton = new Button(buttonComposite, SWT.None);
 		Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
 		removeButton.setImage(image);
-		removeButton.setToolTipText("Remove the selected " + clazz.getInstanceClass().getSimpleName());
+		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected + clazz.getInstanceClass().getSimpleName());
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			/*
 			 * (non-Javadoc)
@@ -522,8 +522,8 @@ public class TableControl extends SWTControl {
 					deletionList.add((EObject) iterator.next());
 				}
 
-				MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(), "Delete?", null,
-					"Are you sure you want to delete the selected Elements?", MessageDialog.CONFIRM, new String[] {
+				MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(), ControlMessages.TableControl_Delete, null,
+					ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
 						JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 						JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
@@ -565,7 +565,7 @@ public class TableControl extends SWTControl {
 		addButton = new Button(buttonComposite, SWT.None);
 		Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		addButton.setImage(image);
-		addButton.setToolTipText("Add an instance of " + clazz.getInstanceClass().getSimpleName());
+		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
 			/*
 			 * (non-Javadoc)
@@ -721,7 +721,7 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return "Not set. Click to set!";
+		return ControlMessages.TableControl_NotSetClickToSet;
 	}
 
 	/*
@@ -730,7 +730,7 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset";
+		return ControlMessages.TableControl_Unset;
 	}
 
 	/*

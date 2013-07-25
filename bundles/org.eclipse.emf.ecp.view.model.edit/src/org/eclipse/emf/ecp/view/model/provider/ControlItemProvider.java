@@ -27,7 +27,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ControlItemProvider
-	extends CompositeItemProvider
+	extends AbstractControlItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,

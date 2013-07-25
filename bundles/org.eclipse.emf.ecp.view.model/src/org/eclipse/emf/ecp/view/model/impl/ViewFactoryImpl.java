@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -42,8 +43,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public static ViewFactory init() {
 		try {
-			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
-					.getEFactory(ViewPackage.eNS_URI);
+			ViewFactory theViewFactory = (ViewFactory)EPackage.Registry.INSTANCE.getEFactory(ViewPackage.eNS_URI);
 			if (theViewFactory != null) {
 				return theViewFactory;
 			}

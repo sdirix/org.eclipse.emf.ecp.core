@@ -6,6 +6,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
@@ -85,127 +86,113 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>() {
-		@Override
-		public Adapter caseView(View object) {
-			return createViewAdapter();
-		}
-
-		@Override
-		public Adapter caseAbstractCategorization(AbstractCategorization object) {
-			return createAbstractCategorizationAdapter();
-		}
-
-		@Override
-		public Adapter caseRule(Rule object) {
-			return createRuleAdapter();
-		}
-
-		@Override
-		public Adapter caseShowRule(ShowRule object) {
-			return createShowRuleAdapter();
-		}
-
-		@Override
-		public Adapter caseEnableRule(EnableRule object) {
-			return createEnableRuleAdapter();
-		}
-
-		@Override
-		public Adapter caseCondition(Condition object) {
-			return createConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseLeafCondition(LeafCondition object) {
-			return createLeafConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseOrCondition(OrCondition object) {
-			return createOrConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseAndCondition(AndCondition object) {
-			return createAndConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseCategorization(Categorization object) {
-			return createCategorizationAdapter();
-		}
-
-		@Override
-		public Adapter caseCategory(Category object) {
-			return createCategoryAdapter();
-		}
-
-		@Override
-		public Adapter caseComposite(Composite object) {
-			return createCompositeAdapter();
-		}
-
-		@Override
-		public Adapter caseControl(Control object) {
-			return createControlAdapter();
-		}
-
-		@Override
-		public Adapter caseTableControl(TableControl object) {
-			return createTableControlAdapter();
-		}
-
-		@Override
-		public Adapter caseTableColumn(TableColumn object) {
-			return createTableColumnAdapter();
-		}
-
-		@Override
-		public Adapter caseCustomComposite(CustomComposite object) {
-			return createCustomCompositeAdapter();
-		}
-
-		@Override
-		public Adapter caseCompositeCollection(CompositeCollection object) {
-			return createCompositeCollectionAdapter();
-		}
-
-		@Override
-		public Adapter caseColumnComposite(ColumnComposite object) {
-			return createColumnCompositeAdapter();
-		}
-
-		@Override
-		public Adapter caseColumn(Column object) {
-			return createColumnAdapter();
-		}
-
-		@Override
-		public Adapter caseGroup(Group object) {
-			return createGroupAdapter();
-		}
-
-		@Override
-		public Adapter caseTreeCategory(TreeCategory object) {
-			return createTreeCategoryAdapter();
-		}
-
-		@Override
-		public Adapter caseRenderable(Renderable object) {
-			return createRenderableAdapter();
-		}
-
-		@Override
-		public Adapter caseAction(Action object) {
-			return createActionAdapter();
-		}
-
-		@Override
-		public Adapter defaultCase(EObject object) {
-			return createEObjectAdapter();
-		}
-	};
+	protected ViewSwitch<Adapter> modelSwitch =
+		new ViewSwitch<Adapter>() {
+			@Override
+			public Adapter caseView(View object) {
+				return createViewAdapter();
+			}
+			@Override
+			public Adapter caseAbstractCategorization(AbstractCategorization object) {
+				return createAbstractCategorizationAdapter();
+			}
+			@Override
+			public Adapter caseRule(Rule object) {
+				return createRuleAdapter();
+			}
+			@Override
+			public Adapter caseShowRule(ShowRule object) {
+				return createShowRuleAdapter();
+			}
+			@Override
+			public Adapter caseEnableRule(EnableRule object) {
+				return createEnableRuleAdapter();
+			}
+			@Override
+			public Adapter caseCondition(Condition object) {
+				return createConditionAdapter();
+			}
+			@Override
+			public Adapter caseLeafCondition(LeafCondition object) {
+				return createLeafConditionAdapter();
+			}
+			@Override
+			public Adapter caseOrCondition(OrCondition object) {
+				return createOrConditionAdapter();
+			}
+			@Override
+			public Adapter caseAndCondition(AndCondition object) {
+				return createAndConditionAdapter();
+			}
+			@Override
+			public Adapter caseCategorization(Categorization object) {
+				return createCategorizationAdapter();
+			}
+			@Override
+			public Adapter caseCategory(Category object) {
+				return createCategoryAdapter();
+			}
+			@Override
+			public Adapter caseComposite(Composite object) {
+				return createCompositeAdapter();
+			}
+			@Override
+			public Adapter caseControl(Control object) {
+				return createControlAdapter();
+			}
+			@Override
+			public Adapter caseTableControl(TableControl object) {
+				return createTableControlAdapter();
+			}
+			@Override
+			public Adapter caseTableColumn(TableColumn object) {
+				return createTableColumnAdapter();
+			}
+			@Override
+			public Adapter caseCustomComposite(CustomComposite object) {
+				return createCustomCompositeAdapter();
+			}
+			@Override
+			public Adapter caseSeperator(Seperator object) {
+				return createSeperatorAdapter();
+			}
+			@Override
+			public Adapter caseCompositeCollection(CompositeCollection object) {
+				return createCompositeCollectionAdapter();
+			}
+			@Override
+			public Adapter caseColumnComposite(ColumnComposite object) {
+				return createColumnCompositeAdapter();
+			}
+			@Override
+			public Adapter caseColumn(Column object) {
+				return createColumnAdapter();
+			}
+			@Override
+			public Adapter caseGroup(Group object) {
+				return createGroupAdapter();
+			}
+			@Override
+			public Adapter caseTreeCategory(TreeCategory object) {
+				return createTreeCategoryAdapter();
+			}
+			@Override
+			public Adapter caseRenderable(Renderable object) {
+				return createRenderableAdapter();
+			}
+			@Override
+			public Adapter caseAction(Action object) {
+				return createActionAdapter();
+			}
+			@Override
+			public Adapter caseAbstractControl(AbstractControl object) {
+				return createAbstractControlAdapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object) {
+				return createEObjectAdapter();
+			}
+		};
 
 	/**
 	 * Creates an adapter for the <code>target</code>. <!-- begin-user-doc -->
@@ -576,9 +563,24 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for the default case. <!-- begin-user-doc --> This
-	 * default implementation returns null. <!-- end-user-doc -->
-	 * 
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractControl <em>Abstract Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
+	 * @generated
+	 */
+	public Adapter createAbstractControlAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for the default case.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null.
+	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @generated
 	 */

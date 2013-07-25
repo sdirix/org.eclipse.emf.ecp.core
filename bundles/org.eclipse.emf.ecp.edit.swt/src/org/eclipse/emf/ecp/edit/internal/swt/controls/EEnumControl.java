@@ -67,7 +67,7 @@ public class EEnumControl extends SingleControl {
 
 		});
 		combo.setInput(getStructuralFeature().getEType().getInstanceClass().getEnumConstants());
-		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum");
+		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
 	}
 
 	/**
@@ -89,8 +89,7 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO language
-		return "No value set! Click to set value."; //$NON-NLS-1$
+		return ControlMessages.EEnumControl_NoValueSetClickToSetValue;
 	}
 
 	/*
@@ -99,7 +98,7 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset value";
+		return ControlMessages.EEnumControl_UnsetValue;
 	}
 
 	/*

@@ -75,8 +75,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void addControlDecoration(Composite composite) {
 		controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP, composite);
 		controlDecoration.hide();
-		// TODO language
-		controlDecoration.setDescriptionText("Invalid input");//$NON-NLS-1$
+		controlDecoration.setDescriptionText(ControlMessages.AbstractTextControl_InvalidInput);
 		controlDecoration.setShowHover(true);
 		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
 			FieldDecorationRegistry.DEC_ERROR);
@@ -87,7 +86,7 @@ public abstract class AbstractTextControl extends SingleControl {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
 		if (getStructuralFeature().isUnsettable()) {
-			text.setMessage("<unset>");
+			text.setMessage(ControlMessages.AbstractTextControl_Unset);
 		}
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		customizeText(text);
@@ -241,7 +240,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 				controlDecoration.hide();
 				updateValidationColor(null);
-				if ("".equals(value)) {
+				if ("".equals(value)) { //$NON-NLS-1$
 					value = null;
 				}
 				if (value == null && getStructuralFeature().isUnsettable()) {
@@ -255,7 +254,7 @@ public abstract class AbstractTextControl extends SingleControl {
 			} catch (IllegalArgumentException e) {
 				controlDecoration.show();
 				updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
-				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
+				controlDecoration.setDescriptionText(ControlMessages.AbstractTextControl_InvalidInputSpace + e.getLocalizedMessage());
 				throw e;
 			}
 		}

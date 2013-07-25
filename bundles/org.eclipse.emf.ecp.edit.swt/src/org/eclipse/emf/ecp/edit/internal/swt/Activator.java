@@ -108,11 +108,11 @@ public class Activator extends Plugin {
 	}
 
 	public static Image getImage(URL url) {
-		if (!getDefault().imageRegistry.containsKey(url == null ? "NULL" : url.toExternalForm())) {
-			getDefault().imageRegistry.put(url == null ? "NULL" : url.toExternalForm(), new ImageDescriptorToImage(
+		if (!getDefault().imageRegistry.containsKey(url == null ? "NULL" : url.toExternalForm())) { //$NON-NLS-1$
+			getDefault().imageRegistry.put(url == null ? "NULL" : url.toExternalForm(), new ImageDescriptorToImage( //$NON-NLS-1$
 				ImageDescriptor.createFromURL(url)));
 		}
-		return getDefault().imageRegistry.get(url == null ? "NULL" : url.toExternalForm()).getImage();
+		return getDefault().imageRegistry.get(url == null ? "NULL" : url.toExternalForm()).getImage(); //$NON-NLS-1$
 
 	}
 

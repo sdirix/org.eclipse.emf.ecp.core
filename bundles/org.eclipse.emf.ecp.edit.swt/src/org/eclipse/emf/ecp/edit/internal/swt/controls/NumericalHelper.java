@@ -32,10 +32,10 @@ public class NumericalHelper {
 		format.setGroupingUsed(false);
 
 		// EAnnotation annotation = getStructuralFeature().getEType().getEAnnotation(
-		// "http:///org/eclipse/emf/ecore/util/ExtendedMetaData");
-		// String stringTotalDigits = annotation.getDetails().get("totalDigits");
+		// "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"); //$NON-NLS-1$
+		// String stringTotalDigits = annotation.getDetails().get("totalDigits"); //$NON-NLS-1$
 		// if (stringTotalDigits != null) {
-		// String stringFractionDigits = annotation.getDetails().get("fractionDigits");
+		// String stringFractionDigits = annotation.getDetails().get("fractionDigits"); //$NON-NLS-1$
 		// int fractionalDigits = 0;
 		// if (stringFractionDigits != null) {
 		// fractionalDigits = Integer.valueOf(stringFractionDigits);
@@ -57,10 +57,10 @@ public class NumericalHelper {
 	public static Number getDefaultValue(Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
-				if (Double.class.getField("TYPE").get(null).equals(instanceClass)
-					|| Float.class.getField("TYPE").get(null).equals(instanceClass)
-					|| Integer.class.getField("TYPE").get(null).equals(instanceClass)
-					|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+				if (Double.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Float.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Integer.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return 0;
 				}
 			} catch (IllegalArgumentException ex) {
@@ -91,8 +91,8 @@ public class NumericalHelper {
 	public static boolean isDouble(Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
-				return Double.class.getField("TYPE").get(null).equals(instanceClass)
-					|| Float.class.getField("TYPE").get(null).equals(instanceClass);
+				return Double.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Float.class.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
 			} catch (IllegalArgumentException ex) {
 				Activator.logException(ex);
 			} catch (SecurityException ex) {
@@ -116,8 +116,8 @@ public class NumericalHelper {
 	public static boolean isInteger(Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
-				return Integer.class.getField("TYPE").get(null).equals(instanceClass)
-					|| Long.class.getField("TYPE").get(null).equals(instanceClass);
+				return Integer.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Long.class.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
 			} catch (IllegalArgumentException ex) {
 				Activator.logException(ex);
 			} catch (SecurityException ex) {
@@ -145,13 +145,13 @@ public class NumericalHelper {
 	public static Object numberToInstanceClass(Number number, Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
-				if (Double.class.getField("TYPE").get(null).equals(instanceClass)) {
+				if (Double.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.doubleValue();
-				} else if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+				} else if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.intValue();
-				} else if (Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+				} else if (Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.longValue();
-				} else if (Float.class.getField("TYPE").get(null).equals(instanceClass)) {
+				} else if (Float.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.floatValue();
 				}
 			} catch (IllegalArgumentException ex) {

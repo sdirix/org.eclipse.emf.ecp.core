@@ -9,6 +9,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -16,13 +17,13 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
-
+	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
 	public Control renderSWT(Node<Group> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) 
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) 
 					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		
+		Composite parent=getParentFromInitData(initData);
 		Group modelGroup = node.getRenderable();
-		org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(getParent(), SWT.TITLE);
+		org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
 		group.setText(modelGroup.getName());
 		
 		GridLayoutFactory.fillDefaults()

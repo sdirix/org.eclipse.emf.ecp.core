@@ -28,32 +28,28 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 
-public final class SWTRenderers implements SWTRenderer {
+public final class SWTRenderers  implements SWTRenderer{
 
 	public static final SWTRenderers INSTANCE = new SWTRenderers();
 
     @SuppressWarnings("rawtypes")
 	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer> renderers;
 
-	private Composite currentParent;
-	private boolean renderersInitialized;
 	
 	public SWTRenderers() {
-	}
 	
-	@SuppressWarnings({ "rawtypes", "serial" })
-	private void initRenderers() {
 		
 		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer>() {{
-			put(ColumnComposite.class, new SWTColumnCompositeRenderer());
-			put(Column.class, new SWTColumnRenderer());
-			put(Group.class, new SWTGroupRenderer());
-			put(TableControl.class, new SWTTableControlRenderer());
-			put(Control.class, new SWTControlRenderer());
-			put(CustomComposite.class, new SWTCustomCompositeRenderer());
-			put(Categorization.class, new SWTCategorizationRenderer());
-			put(View.class, new SWTViewRenderer());
-			put(Category.class, new SWTCategoryRenderer());
+			put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
+			put(Column.class,  SWTColumnRenderer.INSTANCE);
+			put(Group.class,  SWTGroupRenderer.INSTANCE);
+			put(TableControl.class,  SWTTableControlRenderer.INSTANCE);
+			put(Control.class,  SWTControlRenderer.INSTANCE);
+			put(Seperator.class,  SWTSeparatorRenderer.INSTANCE);
+			put(CustomComposite.class,  SWTCustomCompositeRenderer.INSTANCE);
+			put(Categorization.class,  SWTCategorizationRenderer.INSTANCE);
+			put(View.class,  SWTViewRenderer.INSTANCE);
+			put(Category.class,  SWTCategoryRenderer.INSTANCE);
 		}};
 		
 		for (CustomSWTRenderer customRenderer : getCustomRenderers()) {
@@ -63,7 +59,6 @@ public final class SWTRenderers implements SWTRenderer {
 			}
 		}
 		
-		renderersInitialized = true;
 	}
 	
 //	public SWTLifted render(
@@ -108,10 +103,7 @@ public final class SWTRenderers implements SWTRenderer {
 //		throw new NoRendererFoundException("No renderer found for renderable " + renderable);
 //    }
 
-	@Override
-	public void initialize(Object[] initData) {
-		currentParent = (Composite) initData[0];
-	}
+	
 
 	public Set<CustomSWTRenderer> getCustomRenderers() {
 		Set<CustomSWTRenderer> renderers = new LinkedHashSet<CustomSWTRenderer>();
@@ -130,14 +122,10 @@ public final class SWTRenderers implements SWTRenderer {
 		return renderers;
 	}
 	
-	@Override
 	public org.eclipse.swt.widgets.Control render(Node node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		if (!renderersInitialized) {
-			initRenderers();
-		}
 		
 		Class c = null;
 		for (Class cls : renderers.keySet()) {
@@ -153,8 +141,7 @@ public final class SWTRenderers implements SWTRenderer {
 		if (c != null) {
 			@SuppressWarnings("rawtypes") 
 			SWTRenderer swtRenderer = renderers.get(c);
-			swtRenderer.initialize(new Object[] {currentParent});
-			Object render = swtRenderer.render(node, adapterFactoryItemDelegator);
+			Object render = swtRenderer.render(node, adapterFactoryItemDelegator,initData);
 			return (org.eclipse.swt.widgets.Control) render;
 		}
 		
@@ -164,7 +151,6 @@ public final class SWTRenderers implements SWTRenderer {
 	public org.eclipse.swt.widgets.Control render(Composite parent, Node node,
 			AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		currentParent = parent;
-		return render(node, adapterFactoryItemDelegator);		
+		return render(node, adapterFactoryItemDelegator,parent);		
 	}
 }

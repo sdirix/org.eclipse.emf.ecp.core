@@ -16,7 +16,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * 			a subtype of {@link Composite} specifying the view model type to be rendered 
  * @param <C>
  */
-public interface ControlRenderer<R extends Renderable, C> extends InitializableRenderer {
+public interface ControlRenderer<R extends Renderable, C> {
 	
 	/**
 	 * Renders the given {@link Node}
@@ -27,11 +27,13 @@ public interface ControlRenderer<R extends Renderable, C> extends InitializableR
 	 * 			the control context containing the {@link EObject} to be rendered
 	 * @param adapterFactoryItemDelegator
 	 * 			an {@link AdapterFactoryItemDelegator} instance that may be used during rendering
-	 * 
+	 * @param initData
+	 * 			arbitrary data needed by the renderer to initialize itself, e.g. for SWT, 
+	 * 			you must pass in the parent {@link org.eclipse.swt.widgets.Composite} 
 	 * @return
 	 */
 	// TODO: JAVADOC
 	C render(Node<R> node,
-            AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
+            AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 
 }

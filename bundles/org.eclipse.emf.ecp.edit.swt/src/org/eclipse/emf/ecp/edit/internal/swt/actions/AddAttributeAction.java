@@ -38,8 +38,8 @@ public class AddAttributeAction extends ECPSWTAction {
 		EStructuralFeature feature) {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		// TODO remove PlatformUI
-		setImageDescriptor(Activator.getImageDescriptor("icons/add.png"));
-		setToolTipText("Add Entry"); //$NON-NLS-1$
+		setImageDescriptor(Activator.getImageDescriptor("icons/add.png")); //$NON-NLS-1$
+		setToolTipText(ActionMessages.AddAttributeAction_AddEntry);
 	}
 
 	@Override

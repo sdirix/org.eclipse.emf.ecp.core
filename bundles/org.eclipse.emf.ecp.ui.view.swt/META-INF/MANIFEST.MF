@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SWT Renderer
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.2.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ui.view.swt.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.core.runtime,
@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.view.model;bundle-version="1.0.0",
  org.eclipse.emf.ecp.edit.swt;bundle-version="1.0.0",
  org.eclipse.emf.ecp.edit;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.ui.view.swt
 Import-Package: org.eclipse.core.commands,

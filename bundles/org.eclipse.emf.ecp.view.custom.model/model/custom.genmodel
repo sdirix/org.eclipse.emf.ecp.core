@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.ecp.view.custom.model/src" editDirectory="/org.eclipse.emf.ecp.view.custom.model.edit/src"
+    editorDirectory="/org.eclipse.emf.ecp.view.custom.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.custom.model"
+    modelName="Custom" modelPluginClass="" editPluginClass="org.eclipse.emf.ecp.view.custom.model.provider.CustomEditPlugin"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    editPluginID="org.eclipse.emf.ecp.view.custom.model.edit" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
+  <foreignModel>custom.ecore</foreignModel>
+  <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.custom" disposableProviderFactory="true"
+      ecorePackage="custom.ecore#/">
+    <genClasses ecoreClass="custom.ecore#//CustomControl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/bundle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/className"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
