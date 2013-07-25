@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -86,113 +86,132 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected ViewSwitch<Adapter> modelSwitch =
-		new ViewSwitch<Adapter>() {
-			@Override
-			public Adapter caseView(View object) {
-				return createViewAdapter();
-			}
-			@Override
-			public Adapter caseAbstractCategorization(AbstractCategorization object) {
-				return createAbstractCategorizationAdapter();
-			}
-			@Override
-			public Adapter caseRule(Rule object) {
-				return createRuleAdapter();
-			}
-			@Override
-			public Adapter caseShowRule(ShowRule object) {
-				return createShowRuleAdapter();
-			}
-			@Override
-			public Adapter caseEnableRule(EnableRule object) {
-				return createEnableRuleAdapter();
-			}
-			@Override
-			public Adapter caseCondition(Condition object) {
-				return createConditionAdapter();
-			}
-			@Override
-			public Adapter caseLeafCondition(LeafCondition object) {
-				return createLeafConditionAdapter();
-			}
-			@Override
-			public Adapter caseOrCondition(OrCondition object) {
-				return createOrConditionAdapter();
-			}
-			@Override
-			public Adapter caseAndCondition(AndCondition object) {
-				return createAndConditionAdapter();
-			}
-			@Override
-			public Adapter caseCategorization(Categorization object) {
-				return createCategorizationAdapter();
-			}
-			@Override
-			public Adapter caseCategory(Category object) {
-				return createCategoryAdapter();
-			}
-			@Override
-			public Adapter caseComposite(Composite object) {
-				return createCompositeAdapter();
-			}
-			@Override
-			public Adapter caseControl(Control object) {
-				return createControlAdapter();
-			}
-			@Override
-			public Adapter caseTableControl(TableControl object) {
-				return createTableControlAdapter();
-			}
-			@Override
-			public Adapter caseTableColumn(TableColumn object) {
-				return createTableColumnAdapter();
-			}
-			@Override
-			public Adapter caseCustomComposite(CustomComposite object) {
-				return createCustomCompositeAdapter();
-			}
-			@Override
-			public Adapter caseSeperator(Seperator object) {
-				return createSeperatorAdapter();
-			}
-			@Override
-			public Adapter caseCompositeCollection(CompositeCollection object) {
-				return createCompositeCollectionAdapter();
-			}
-			@Override
-			public Adapter caseColumnComposite(ColumnComposite object) {
-				return createColumnCompositeAdapter();
-			}
-			@Override
-			public Adapter caseColumn(Column object) {
-				return createColumnAdapter();
-			}
-			@Override
-			public Adapter caseGroup(Group object) {
-				return createGroupAdapter();
-			}
-			@Override
-			public Adapter caseTreeCategory(TreeCategory object) {
-				return createTreeCategoryAdapter();
-			}
-			@Override
-			public Adapter caseRenderable(Renderable object) {
-				return createRenderableAdapter();
-			}
-			@Override
-			public Adapter caseAction(Action object) {
-				return createActionAdapter();
-			}
-			@Override
-			public Adapter caseAbstractControl(AbstractControl object) {
-				return createAbstractControlAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>() {
+		@Override
+		public Adapter caseView(View object) {
+			return createViewAdapter();
+		}
+
+		@Override
+		public Adapter caseAbstractCategorization(AbstractCategorization object) {
+			return createAbstractCategorizationAdapter();
+		}
+
+		@Override
+		public Adapter caseRule(Rule object) {
+			return createRuleAdapter();
+		}
+
+		@Override
+		public Adapter caseShowRule(ShowRule object) {
+			return createShowRuleAdapter();
+		}
+
+		@Override
+		public Adapter caseEnableRule(EnableRule object) {
+			return createEnableRuleAdapter();
+		}
+
+		@Override
+		public Adapter caseCondition(Condition object) {
+			return createConditionAdapter();
+		}
+
+		@Override
+		public Adapter caseLeafCondition(LeafCondition object) {
+			return createLeafConditionAdapter();
+		}
+
+		@Override
+		public Adapter caseOrCondition(OrCondition object) {
+			return createOrConditionAdapter();
+		}
+
+		@Override
+		public Adapter caseAndCondition(AndCondition object) {
+			return createAndConditionAdapter();
+		}
+
+		@Override
+		public Adapter caseCategorization(Categorization object) {
+			return createCategorizationAdapter();
+		}
+
+		@Override
+		public Adapter caseCategory(Category object) {
+			return createCategoryAdapter();
+		}
+
+		@Override
+		public Adapter caseComposite(Composite object) {
+			return createCompositeAdapter();
+		}
+
+		@Override
+		public Adapter caseControl(Control object) {
+			return createControlAdapter();
+		}
+
+		@Override
+		public Adapter caseTableControl(TableControl object) {
+			return createTableControlAdapter();
+		}
+
+		@Override
+		public Adapter caseTableColumn(TableColumn object) {
+			return createTableColumnAdapter();
+		}
+
+		@Override
+		public Adapter caseCustomComposite(CustomComposite object) {
+			return createCustomCompositeAdapter();
+		}
+
+		@Override
+		public Adapter caseCompositeCollection(CompositeCollection object) {
+			return createCompositeCollectionAdapter();
+		}
+
+		@Override
+		public Adapter caseColumnComposite(ColumnComposite object) {
+			return createColumnCompositeAdapter();
+		}
+
+		@Override
+		public Adapter caseColumn(Column object) {
+			return createColumnAdapter();
+		}
+
+		@Override
+		public Adapter caseGroup(Group object) {
+			return createGroupAdapter();
+		}
+
+		@Override
+		public Adapter caseTreeCategory(TreeCategory object) {
+			return createTreeCategoryAdapter();
+		}
+
+		@Override
+		public Adapter caseRenderable(Renderable object) {
+			return createRenderableAdapter();
+		}
+
+		@Override
+		public Adapter caseAction(Action object) {
+			return createActionAdapter();
+		}
+
+		@Override
+		public Adapter caseAbstractControl(AbstractControl object) {
+			return createAbstractControlAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>. <!-- begin-user-doc -->
@@ -209,8 +228,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'. <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -224,8 +242,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.AbstractCategorization
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.AbstractCategorization
 	 * <em>Abstract Categorization</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -240,8 +257,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Rule <em>Rule</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Rule <em>Rule</em>}'. <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -255,8 +271,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.ShowRule <em>Show Rule</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.ShowRule <em>Show Rule</em>}
+	 * '. <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -270,8 +286,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.EnableRule <em>Enable Rule</em>}'.
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.EnableRule
+	 * <em>Enable Rule</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that
 	 * we can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -285,8 +301,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Condition <em>Condition</em>}'.
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Condition
+	 * <em>Condition</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that
 	 * we can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -300,8 +316,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.LeafCondition
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.LeafCondition
 	 * <em>Leaf Condition</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -316,9 +331,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.OrCondition <em>Or Condition</em>}
-	 * '. <!-- begin-user-doc --> This default implementation returns null so
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.OrCondition
+	 * <em>Or Condition</em>} '. <!-- begin-user-doc --> This default implementation returns null so
 	 * that we can easily ignore cases; it's useful to ignore a case when
 	 * inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * 
@@ -331,8 +345,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.AndCondition
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.AndCondition
 	 * <em>And Condition</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -347,8 +360,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Categorization
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Categorization
 	 * <em>Categorization</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -363,8 +375,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Category <em>Category</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Category <em>Category</em>}
+	 * '. <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -378,8 +390,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Composite <em>Composite</em>}'.
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Composite
+	 * <em>Composite</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that
 	 * we can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -393,8 +405,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'.
+	 * <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -408,8 +420,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.TableControl
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.TableControl
 	 * <em>Table Control</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -424,9 +435,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.TableColumn <em>Table Column</em>}
-	 * '. <!-- begin-user-doc --> This default implementation returns null so
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.TableColumn
+	 * <em>Table Column</em>} '. <!-- begin-user-doc --> This default implementation returns null so
 	 * that we can easily ignore cases; it's useful to ignore a case when
 	 * inheritance will catch all the cases anyway. <!-- end-user-doc -->
 	 * 
@@ -439,8 +449,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.CustomComposite
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.CustomComposite
 	 * <em>Custom Composite</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -455,8 +464,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.CompositeCollection
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.CompositeCollection
 	 * <em>Composite Collection</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -471,8 +479,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.ColumnComposite
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.ColumnComposite
 	 * <em>Column Composite</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -487,8 +494,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Column <em>Column</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Column <em>Column</em>}'.
+	 * <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -502,8 +509,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Group <em>Group</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Group <em>Group</em>}'. <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -517,8 +523,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.TreeCategory
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.TreeCategory
 	 * <em>Tree Category</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
@@ -533,8 +538,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Renderable
+	 * <em>Renderable</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that
 	 * we can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -548,8 +553,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.Action <em>Action</em>}'. <!--
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Action <em>Action</em>}'.
+	 * <!--
 	 * begin-user-doc --> This default implementation returns null so that we
 	 * can easily ignore cases; it's useful to ignore a case when inheritance
 	 * will catch all the cases anyway. <!-- end-user-doc -->
@@ -563,11 +568,13 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractControl <em>Abstract Control</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractControl
+	 * <em>Abstract Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
 	 * @generated
@@ -581,6 +588,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @generated
 	 */

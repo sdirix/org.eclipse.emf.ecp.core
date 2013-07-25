@@ -22,16 +22,17 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.ui.view.RendererContext;
+import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.separator.Separator;
 import org.eclipse.emf.ecp.view.model.separator.SeparatorFactory;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -77,11 +78,18 @@ public class SWTSeparatorTest {
 
 		// test SWTRenderer
 		Node<View> node = NodeBuilders.INSTANCE.build(view, context);
-		ModelRenderer<Composite> renderer = ModelRenderer.INSTANCE
-				.getRenderer(new Object[] { parent });
-		RendererContext<Composite> rendererContext = renderer.render(node);
-		Composite c = rendererContext.getControl();
-		Control control = c.getChildren()[0];
+		// ModelRenderer<Composite> renderer = ModelRenderer.INSTANCE.
+		// .getRenderer(new Object[] { parent });
+		// RendererContext<Composite> rendererContext = renderer.render(node);
+		// Composite c = rendererContext.getControl();
+		// Control control = c.getChildren()[0];
+
+		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+				composedAdapterFactory);
+		Control control = SWTRenderers.INSTANCE.render(parent, node,
+				adapterFactoryItemDelegator);
 		assertEquals("org_eclipse_emf_ecp_ui_seperator",
 				control.getData("org.eclipse.rap.rwt.customVariant"));
 

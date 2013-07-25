@@ -13,17 +13,19 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * Renders an {@link Seperator} to a SWT {@link Label}.
+ * Renders an {@link Separator} to a SWT {@link Label}.
  * 
  */
-public class SWTSeparatorRenderer extends AbstractSWTRenderer<Seperator> { 
+public class SWTSeparatorRenderer extends AbstractSWTRenderer<Separator> {
 	public static final SWTSeparatorRenderer INSTANCE = new SWTSeparatorRenderer();
+
 	@Override
-	public Control renderSWT(Node<Seperator> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		Composite parent=getParentFromInitData(initData);
-		Seperator separator = node.getRenderable();
+	public Control renderSWT(Node<Separator> node,
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+			Object... initData) throws NoRendererFoundException,
+			NoPropertyDescriptorFoundExeption {
+		Composite parent = getParentFromInitData(initData);
+		Separator separator = node.getRenderable();
 		Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator");
