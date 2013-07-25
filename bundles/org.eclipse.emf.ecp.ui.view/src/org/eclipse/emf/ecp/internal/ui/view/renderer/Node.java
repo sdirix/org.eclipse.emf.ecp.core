@@ -325,6 +325,9 @@ public class Node<T extends Renderable> implements ValidationListener {
 		int max = Diagnostic.OK;
 		if (affectedObjects.containsKey(viewModelElement)) {
 			for (Diagnostic diagnostic : affectedObjects.get(viewModelElement)) {
+				if (viewModelElement != labelObject && !diagnostic.getData().get(0).equals(labelObject)) {
+					continue;
+				}
 				if (diagnostic.getSeverity() > max) {
 					max = diagnostic.getSeverity();
 				}
