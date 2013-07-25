@@ -7,7 +7,7 @@
     editPluginID="org.eclipse.emf.ecp.view.custom.model.edit" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
   <foreignModel>custom.ecore</foreignModel>
   <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.custom" disposableProviderFactory="true"
-      ecorePackage="custom.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="custom.ecore#/">
     <genClasses ecoreClass="custom.ecore#//CustomControl">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/bundle"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/className"/>
