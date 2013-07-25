@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.model.separator.Separator;
 import org.eclipse.emf.ecp.view.model.separator.SeparatorFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,6 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -47,9 +49,8 @@ import org.junit.runner.RunWith;
 public class SWTSeparatorTest {
 
 	@Test
-	public void testSeparator() throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption,
-			ECPProjectWithNameExistsException {
+	public void testSeparator() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		ECPProjectWithNameExistsException {
 
 		// setup model
 		View view = ViewFactory.eINSTANCE.createView();
@@ -68,30 +69,21 @@ public class SWTSeparatorTest {
 		parent.setLayout(new GridLayout());
 
 		// setup context
-		ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
-				EMFStoreProvider.NAME);
-		ECPProject project = ECPProjectManagerImpl.INSTANCE.createProject(
-				provider, "test");
+		ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
+		ECPProject project = ECPProjectManagerImpl.INSTANCE.createProject(provider, "test");
 		project.getContents().add(view);
-		ECPControlContextImpl context = new ECPControlContextImpl(view,
-				project, shell);
+		ECPControlContextImpl context = new ECPControlContextImpl(view, project, shell);
 
 		// test SWTRenderer
 		Node<View> node = NodeBuilders.INSTANCE.build(view, context);
-		// ModelRenderer<Composite> renderer = ModelRenderer.INSTANCE.
-		// .getRenderer(new Object[] { parent });
-		// RendererContext<Composite> rendererContext = renderer.render(node);
-		// Composite c = rendererContext.getControl();
-		// Control control = c.getChildren()[0];
-
+		Node childNode = node.getChildren().get(0);
+		Node sepNode = (Node) childNode.getChildren().get(0);
 		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-				composedAdapterFactory);
-		Control control = SWTRenderers.INSTANCE.render(parent, node,
-				adapterFactoryItemDelegator);
-		assertEquals("org_eclipse_emf_ecp_ui_seperator",
-				control.getData("org.eclipse.rap.rwt.customVariant"));
+			composedAdapterFactory);
+		Control control = SWTRenderers.INSTANCE.render(parent, sepNode, adapterFactoryItemDelegator);
+		assertEquals("org_eclipse_emf_ecp_ui_seperator", control.getData("org.eclipse.rap.rwt.customVariant"));
 
 	}
 }
