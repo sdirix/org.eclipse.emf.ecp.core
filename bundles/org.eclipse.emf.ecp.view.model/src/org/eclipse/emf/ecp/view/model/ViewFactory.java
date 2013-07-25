@@ -130,15 +130,6 @@ public interface ViewFactory extends EFactory {
 	CustomComposite createCustomComposite();
 
 	/**
-	 * Returns a new object of class '<em>Seperator</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Seperator</em>'.
-	 * @generated
-	 */
-	Seperator createSeperator();
-
-	/**
 	 * Returns a new object of class '<em>Column Composite</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

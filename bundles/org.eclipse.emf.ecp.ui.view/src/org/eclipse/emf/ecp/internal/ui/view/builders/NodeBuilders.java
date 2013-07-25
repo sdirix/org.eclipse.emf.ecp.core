@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
@@ -33,75 +32,87 @@ public class NodeBuilders {
 
 	public static final NodeBuilders INSTANCE = new NodeBuilders();
 
-    private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
-    private boolean buildersInitialized;
-	
+	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
+	private boolean buildersInitialized;
+
 	private NodeBuilders() {
 	}
-	
+
 	@SuppressWarnings({ "serial" })
 	private void initBuilders() {
-		
-		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>() {{
-			put(ColumnComposite.class, new CompositeCollectionNodeBuilder<ColumnComposite>());
-			put(Column.class, new CompositeCollectionNodeBuilder<Column>());
-			put(Group.class, new CompositeCollectionNodeBuilder<Group>());
-			put(TableControl.class, new RenderableNodeBuilder<TableControl>());
-			put(Control.class, new RenderableNodeBuilder<Control>());
-			put(Seperator.class, new RenderableNodeBuilder<Seperator>());
-			put(CustomComposite.class, new RenderableNodeBuilder<CustomComposite>());
-			put(View.class, new ViewNodeBuilder());
-			put(Category.class, new CategoryNodeBuilder());
-			put(Categorization.class, new CategorizationNodeBuilder());
-			put(TableControl.class, new ControlNodeBuilder<TableControl>());
-			put(Control.class, new ControlNodeBuilder<Control>());
-			put(TreeCategory.class, new TreeCategoryNodeBuilder());
-		}};
-		
+
+		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>() {
+			{
+				put(ColumnComposite.class,
+						new CompositeCollectionNodeBuilder<ColumnComposite>());
+				put(Column.class, new CompositeCollectionNodeBuilder<Column>());
+				put(Group.class, new CompositeCollectionNodeBuilder<Group>());
+				put(TableControl.class,
+						new RenderableNodeBuilder<TableControl>());
+				put(Control.class, new RenderableNodeBuilder<Control>());
+				put(CustomComposite.class,
+						new RenderableNodeBuilder<CustomComposite>());
+				put(View.class, new ViewNodeBuilder());
+				put(Category.class, new CategoryNodeBuilder());
+				put(Categorization.class, new CategorizationNodeBuilder());
+				put(TableControl.class, new ControlNodeBuilder<TableControl>());
+				put(Control.class, new ControlNodeBuilder<Control>());
+				put(TreeCategory.class, new TreeCategoryNodeBuilder());
+			}
+		};
+
 		for (CustomNodeBuilder customBuilder : getCustomNodeBuilders()) {
-			for (Map.Entry<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> entry :
-				customBuilder.getCustomNodeBuilders().entrySet()) {
+			for (Map.Entry<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> entry : customBuilder
+					.getCustomNodeBuilders().entrySet()) {
 				builders.put(entry.getKey(), entry.getValue());
 			}
 		}
-		
+
 		buildersInitialized = true;
 	}
-	
+
 	public Set<CustomNodeBuilder> getCustomNodeBuilders() {
 		Set<CustomNodeBuilder> builders = new LinkedHashSet<CustomNodeBuilder>();
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-				"org.eclipse.emf.ecp.ui.view.customNodeBuilders");
-		for (IExtension extension : extensionPoint.getExtensions()) { 
-			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+		IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
+				.getExtensionPoint(
+						"org.eclipse.emf.ecp.ui.view.customNodeBuilders");
+		for (IExtension extension : extensionPoint.getExtensions()) {
+			IConfigurationElement configurationElement = extension
+					.getConfigurationElements()[0];
 			try {
-				CustomNodeBuilder renderer = (CustomNodeBuilder) configurationElement.createExecutableExtension("class");
+				CustomNodeBuilder renderer = (CustomNodeBuilder) configurationElement
+						.createExecutableExtension("class");
 				builders.add(renderer);
 			} catch (CoreException ex) {
 				Activator.log(ex);
 			}
 		}
-		
+
 		return builders;
 	}
-	
-	public <R extends Renderable> Node<R> build(R renderable, ECPControlContext controlContext) {
-		
+
+	public <R extends Renderable> Node<R> build(R renderable,
+			ECPControlContext controlContext) {
+
 		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-    			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
-		
-		Node<R> build = build(renderable, controlContext, adapterFactoryItemDelegator);
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+				composedAdapterFactory);
+
+		Node<R> build = build(renderable, controlContext,
+				adapterFactoryItemDelegator);
 		composedAdapterFactory.dispose();
 		return build;
 	}
 
-	public <R extends Renderable> Node<R> build(R renderable, ECPControlContext controlContext, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		
+	public <R extends Renderable> Node<R> build(R renderable,
+			ECPControlContext controlContext,
+			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+
 		if (!buildersInitialized) {
 			initBuilders();
 		}
-		
+
 		Class<?> c = null;
 		for (Class<? extends Renderable> cls : builders.keySet()) {
 			Class<?>[] interfaces = renderable.getClass().getInterfaces();
@@ -115,9 +126,10 @@ public class NodeBuilders {
 		if (c != null) {
 			@SuppressWarnings("unchecked")
 			NodeBuilder<R> builder = (NodeBuilder<R>) builders.get(c);
-			return builder.build(renderable, controlContext, adapterFactoryItemDelegator);
+			return builder.build(renderable, controlContext,
+					adapterFactoryItemDelegator);
 		}
-		
+
 		return null;
 	}
 }

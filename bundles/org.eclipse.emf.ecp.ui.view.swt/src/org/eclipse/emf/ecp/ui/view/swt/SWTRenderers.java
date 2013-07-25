@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -51,7 +50,6 @@ public final class SWTRenderers implements SWTRenderer {
 			put(Group.class, new SWTGroupRenderer());
 			put(TableControl.class, new SWTTableControlRenderer());
 			put(Control.class, new SWTControlRenderer());
-			put(Seperator.class, new SWTSeparatorRenderer());
 			put(CustomComposite.class, new SWTCustomCompositeRenderer());
 			put(Categorization.class, new SWTCategorizationRenderer());
 			put(View.class, new SWTViewRenderer());

@@ -173,7 +173,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
-	int RENDERABLE = 22;
+	int RENDERABLE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -838,43 +838,6 @@ public interface ViewPackage extends EPackage {
 	int CUSTOM_COMPOSITE_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.SeperatorImpl <em>Seperator</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.model.impl.SeperatorImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getSeperator()
-	 * @generated
-	 */
-	int SEPERATOR = 16;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEPERATOR__RULE = COMPOSITE__RULE;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEPERATOR__NAME = COMPOSITE__NAME;
-
-	/**
-	 * The number of structural features of the '<em>Seperator</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEPERATOR_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl <em>Composite Collection</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -882,7 +845,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
 	 * @generated
 	 */
-	int COMPOSITE_COLLECTION = 17;
+	int COMPOSITE_COLLECTION = 16;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -928,7 +891,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
 	 * @generated
 	 */
-	int COLUMN_COMPOSITE = 18;
+	int COLUMN_COMPOSITE = 17;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -974,7 +937,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
 	 * @generated
 	 */
-	int COLUMN = 19;
+	int COLUMN = 18;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -1020,7 +983,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getGroup()
 	 * @generated
 	 */
-	int GROUP = 20;
+	int GROUP = 19;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -1066,7 +1029,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTreeCategory()
 	 * @generated
 	 */
-	int TREE_CATEGORY = 21;
+	int TREE_CATEGORY = 20;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -1140,7 +1103,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 23;
+	int ACTION = 22;
 
 	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
@@ -1604,16 +1567,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCustomComposite_ClassName();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Seperator <em>Seperator</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Seperator</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Seperator
-	 * @generated
-	 */
-	EClass getSeperator();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.CompositeCollection <em>Composite Collection</em>}'.
@@ -2143,16 +2096,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CUSTOM_COMPOSITE__CLASS_NAME = eINSTANCE.getCustomComposite_ClassName();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.SeperatorImpl <em>Seperator</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.ecp.view.model.impl.SeperatorImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getSeperator()
-		 * @generated
-		 */
-		EClass SEPERATOR = eINSTANCE.getSeperator();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl <em>Composite Collection</em>}' class.
