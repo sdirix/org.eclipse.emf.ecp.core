@@ -14,12 +14,11 @@ public class NodeBuilderCustom implements CustomNodeBuilder {
 	public NodeBuilderCustom() {
 	}
 
-	@Override
 	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
 
-		Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> builders = new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
+		final Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> builders = new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
 		builders.put(CustomControl.class,
-				new RenderableNodeBuilder<CustomControl>());
+			new RenderableNodeBuilder<CustomControl>());
 		return builders;
 	}
 

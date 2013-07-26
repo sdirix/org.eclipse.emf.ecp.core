@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gef;bundle-version="3.8.1";visibility:=reexport,
  org.eclipse.emf.transaction;bundle-version="1.4.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.core.commands.operations,
  org.eclipse.jface.action,
  org.eclipse.jface.dialogs,

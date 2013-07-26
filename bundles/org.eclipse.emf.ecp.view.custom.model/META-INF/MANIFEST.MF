@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.view.custom.model,
  org.eclipse.emf.ecp.view.custom.model.impl;x-internal:=true,
  org.eclipse.emf.ecp.view.custom.model.util;x-friends:="org.eclipse.emf.ecp.view.custom.model.edit"
