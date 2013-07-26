@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/org.eclipse.emf.ecp.view.group.model/src" modelPluginID="org.eclipse.emf.ecp.view.group.model"
+    modelName="Group" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
+  <foreignModel>group.ecore</foreignModel>
+  <genPackages prefix="Group" basePackage="org.eclipse.emf.ecp.view.group" disposableProviderFactory="true"
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="group.ecore#/">
+    <genClasses ecoreClass="group.ecore#//Group"/>
+  </genPackages>
+</genmodel:GenModel>
