@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.separator.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
@@ -19,7 +20,6 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.separator.model.Separator;
@@ -30,27 +30,20 @@ import org.junit.Test;
 public class SeparatorTest {
 
 	@Test
-	public void testSeparator() throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption,
-			ECPProjectWithNameExistsException {
+	public void testSeparator() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		ECPProjectWithNameExistsException {
 
 		// setup model
 		View view = ViewFactory.eINSTANCE.createView();
-		Category category = ViewFactory.eINSTANCE.createCategory();
 		Separator separator = SeparatorFactory.eINSTANCE.createSeparator();
 		separator.setName("separator");
-		category.setComposite(separator);
-		view.getCategorizations().add(category);
+		view.getChildren().add(separator);
 
 		// Test NodeBuidlers
 		Node<View> node = NodeBuilders.INSTANCE.build(view, null);
-		Category category1 = (Category) node.getRenderable()
-				.getCategorizations().get(0);
-		assertTrue(category1.getComposite() instanceof Separator);
-		Node childNode = node.getChildren().get(0);
-		assertTrue(childNode.getRenderable() instanceof Category);
-		Node sepNode = (Node) childNode.getChildren().get(0);
-		assertTrue(sepNode.getRenderable() instanceof Separator);
+		assertEquals("No Node has been instanciated", 1, node.getChildren().size());
+		Node<?> childNode = node.getChildren().get(0);
+		assertTrue(childNode.getRenderable() instanceof Separator);
 
 	}
 }

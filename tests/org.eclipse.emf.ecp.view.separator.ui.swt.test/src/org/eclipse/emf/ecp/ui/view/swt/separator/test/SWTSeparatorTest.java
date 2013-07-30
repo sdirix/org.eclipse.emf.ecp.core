@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.ui.view.swt.separator.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -26,20 +27,18 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
-import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.separator.model.Separator;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import org.junit.Test;
@@ -48,25 +47,29 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class SWTSeparatorTest {
 
+	/**
+	 * 
+	 */
+	private static final String SEPARATOR_NAME = "separator";
+
 	@Test
 	public void testSeparator() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		ECPProjectWithNameExistsException {
 
 		// setup model
 		View view = ViewFactory.eINSTANCE.createView();
-		Category category = ViewFactory.eINSTANCE.createCategory();
 		Separator separator = SeparatorFactory.eINSTANCE.createSeparator();
-		separator.setName("separator");
-		category.setComposite(separator);
-		view.getCategorizations().add(category);
+		separator.setName(SEPARATOR_NAME);
+		view.getChildren().add(separator);
 
 		// setup ui
 		Display display = Display.getDefault();
 		Shell shell = new Shell(display);
-		shell.setLayout(new GridLayout());
-		Composite parent = new Composite(shell, SWT.NONE);
-		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		parent.setLayout(new GridLayout());
+		shell.setLayout(new FillLayout());
+		// shell.setLayout(new GridLayout());
+		// Composite parent = new Composite(shell, SWT.NONE);
+		// parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		// parent.setLayout(new GridLayout());
 
 		// setup context
 		ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
@@ -76,14 +79,18 @@ public class SWTSeparatorTest {
 
 		// test SWTRenderer
 		Node<View> node = NodeBuilders.INSTANCE.build(view, context);
-		Node childNode = node.getChildren().get(0);
-		Node sepNode = (Node) childNode.getChildren().get(0);
+		Node<?> sepNode = node.getChildren().get(0);
 		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		Control control = SWTRenderers.INSTANCE.render(parent, sepNode, adapterFactoryItemDelegator);
-		assertEquals("org_eclipse_emf_ecp_ui_seperator", control.getData("org.eclipse.rap.rwt.customVariant"));
+		Control control = SWTRenderers.INSTANCE.render(shell, sepNode, adapterFactoryItemDelegator);
+		Control renderedControl = shell.getChildren()[0];
+		assertEquals("Rendered Control and control returned by renderer are not the same", control, renderedControl);
+		assertTrue(renderedControl instanceof Label);
+		Label label = (Label) renderedControl;
+		assertEquals("Rendered Separator does not have correct name", SEPARATOR_NAME, label.getText());
+		assertEquals("org_eclipse_emf_ecp_ui_seperator", renderedControl.getData("org.eclipse.rap.rwt.customVariant"));
 
 	}
 }
