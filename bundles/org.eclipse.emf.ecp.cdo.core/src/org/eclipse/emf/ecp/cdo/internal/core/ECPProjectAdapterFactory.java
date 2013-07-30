@@ -25,17 +25,32 @@ import org.eclipse.core.runtime.IAdapterFactory;
 public class ECPProjectAdapterFactory implements IAdapterFactory {
 	private static final Class[] CLASSES = { CDOWorkspace.class };
 
-	public ECPProjectAdapterFactory() {
-	}
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
+	 */
 	public Class[] getAdapterList() {
 		return CLASSES;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
+	 */
 	public Object getAdapter(Object adaptable, Class adapterType) {
 		return adapt(adaptable, adapterType);
 	}
 
+	/**
+	 * Adapt the given adaptable to the given type.
+	 * 
+	 * @param adaptable an adaptable
+	 * @param adapterType the target type
+	 * @param <T> the type of the adapter
+	 * @return an object of type <T> if supported or null
+	 */
 	public static <T> T adapt(Object adaptable, Class<T> adapterType) {
 		if (adapterType == CLASSES[0]) {
 			if (adaptable instanceof ECPProject) {

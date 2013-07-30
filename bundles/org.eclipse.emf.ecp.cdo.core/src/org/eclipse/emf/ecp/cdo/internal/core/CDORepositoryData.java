@@ -23,19 +23,36 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 /**
+ * Provider-specific wrapper for an ECO {@link InternalRepository}.
+ * 
  * @author Eike Stepper
  */
 public final class CDORepositoryData implements CDOSessionConfigurationFactory {
 	private final InternalRepository repository;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param repository the {@link InternalRepository}
+	 */
 	public CDORepositoryData(InternalRepository repository) {
 		this.repository = repository;
 	}
 
+	/**
+	 * Get the {@link InternalRepository}.
+	 * 
+	 * @return the {@link InternalRepository}
+	 */
 	public InternalRepository getRepository() {
 		return repository;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory#createSessionConfiguration()
+	 */
 	public CDONet4jSessionConfiguration createSessionConfiguration() {
 		ECPProperties properties = repository.getProperties();
 		String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);

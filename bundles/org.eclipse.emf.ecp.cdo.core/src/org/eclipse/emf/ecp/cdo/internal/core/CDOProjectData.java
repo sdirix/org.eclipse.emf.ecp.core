@@ -21,6 +21,8 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 /**
+ * Represents the data of an ECP project.
+ * 
  * @author Eike Stepper
  */
 public final class CDOProjectData {
@@ -32,14 +34,29 @@ public final class CDOProjectData {
 
 	private CDOResource rootResource;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param project the project
+	 */
 	public CDOProjectData(InternalProject project) {
 		this.project = project;
 	}
 
+	/**
+	 * Returns the project.
+	 * 
+	 * @return the project
+	 */
 	public InternalProject getProject() {
 		return project;
 	}
 
+	/**
+	 * Returns the {@link CDOWorkspace} of the project.
+	 * 
+	 * @return the {@link CDOWorkspace}
+	 */
 	public synchronized CDOWorkspace getWorkspace() {
 		if (workspace == null) {
 			CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
@@ -49,11 +66,22 @@ public final class CDOProjectData {
 		return workspace;
 	}
 
+	/**
+	 * Check out the {@link CDOWorkspace} of the project.
+	 * 
+	 * @return the {@link CDOWorkspace}
+	 */
 	public synchronized CDOWorkspace checkoutWorkspace() {
 		CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
-		return workspace = config.checkout();
+		workspace = config.checkout();
+		return workspace;
 	}
 
+	/**
+	 * Get the a transaction fot the project.
+	 * 
+	 * @return the {@link CDOTransaction}
+	 */
 	public synchronized CDOTransaction getTransaction() {
 		if (transaction == null) {
 			ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
@@ -63,6 +91,11 @@ public final class CDOProjectData {
 		return transaction;
 	}
 
+	/**
+	 * Get the root resource of the {@link CDOTransaction}, @see {@link CDOTransaction#getRootResource()}.
+	 * 
+	 * @return the {@link CDOResource}
+	 */
 	public synchronized CDOResource getRootResource() {
 		if (rootResource == null) {
 			rootResource = getTransaction().getRootResource();
@@ -71,6 +104,9 @@ public final class CDOProjectData {
 		return rootResource;
 	}
 
+	/**
+	 * Dispose all resources of the project data.
+	 */
 	public void dispose() {
 		if (rootResource != null) {
 			rootResource = null;
