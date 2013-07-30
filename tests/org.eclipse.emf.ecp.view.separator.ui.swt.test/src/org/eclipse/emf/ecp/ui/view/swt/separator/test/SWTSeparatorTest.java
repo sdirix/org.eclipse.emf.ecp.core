@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
-import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -67,7 +67,7 @@ public class SWTSeparatorTest {
 		// parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		// parent.setLayout(new GridLayout());
 
-		ECPControlContextImpl context = ViewTestHelper.createECPControlContext(view, shell);
+		ECPControlContext context = ViewTestHelper.createECPControlContext(view, shell);
 
 		// test SWTRenderer
 		Node<View> node = NodeBuilders.INSTANCE.build(view, context);

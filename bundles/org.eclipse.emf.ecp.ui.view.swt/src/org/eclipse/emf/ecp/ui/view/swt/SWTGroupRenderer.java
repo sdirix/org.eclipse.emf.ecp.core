@@ -14,35 +14,40 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * Renders a SWT group.
- *
+ * 
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
+
+	@Override
 	public Control renderSWT(Node<Group> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) 
-					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		Composite parent=getParentFromInitData(initData);
-		Group modelGroup = node.getRenderable();
-		org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
-		group.setText(modelGroup.getName());
-		
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Composite parent = getParentFromInitData(initData);
+		final Group modelGroup = node.getRenderable();
+		final org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
+		if (modelGroup.getName() != null) {
+			group.setText(modelGroup.getName());
+		}
+
 		GridLayoutFactory.fillDefaults()
 			.numColumns(2)
 			.equalWidth(false)
 			.applyTo(group);
-		
+
 		node.addRenderingResultDelegator(withSWT(group));
-		
-		for (Node<? extends Renderable> child : node.getChildren()) {// org.eclipse.emf.ecp.view.model.Composite modelComposite : modelGroup.getComposites()) {
-			
+
+		for (final Node<? extends Renderable> child : node.getChildren()) {// org.eclipse.emf.ecp.view.model.Composite
+																			// modelComposite :
+																			// modelGroup.getComposites()) {
+
 			Control control;
 			try {
-				control = SWTRenderers.INSTANCE.render(group,child, adapterFactoryItemDelegator);
-			} catch (NoPropertyDescriptorFoundExeption e) {
+				control = SWTRenderers.INSTANCE.render(group, child, adapterFactoryItemDelegator);
+			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
-			
-			
+
 			if (!child.isLeaf()) {
 				GridDataFactory.fillDefaults()
 					.align(SWT.FILL, SWT.BEGINNING)
@@ -51,7 +56,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 					.applyTo(control);
 			}
 		}
-		
+
 		return group;
 	}
 }

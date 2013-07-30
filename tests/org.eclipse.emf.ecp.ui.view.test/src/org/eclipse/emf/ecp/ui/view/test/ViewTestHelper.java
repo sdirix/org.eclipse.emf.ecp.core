@@ -19,6 +19,8 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
+import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.swt.widgets.Shell;
 
@@ -33,7 +35,7 @@ public class ViewTestHelper {
 	 * @param shell
 	 * @return an {@link ECPControlContext}
 	 */
-	public static ECPControlContextImpl createECPControlContext(View view, Shell shell) {
+	public static ECPControlContext createECPControlContext(View view, Shell shell) {
 		// setup context
 		@SuppressWarnings("restriction")
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
@@ -47,6 +49,29 @@ public class ViewTestHelper {
 			System.err.println("Project with name already exists, clean-up test environment");
 		}
 		return null;
+	}
+
+	/**
+	 * @param node
+	 * @return
+	 */
+	public static int countNodes(Node<?> node) {
+		int i = 0;
+		if (node != null) {
+			i++;
+		}
+		for (final Node<?> subNode : node.getChildren()) {
+			i = i + countNodes(subNode);
+		}
+		return i;
+	}
+
+	/**
+	 * @param view
+	 * @return
+	 */
+	public static Node<View> build(View view) {
+		return NodeBuilders.INSTANCE.build(view, null);
 	}
 
 }

@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.ui.view.test;
 
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
@@ -55,14 +54,7 @@ public class ViewTest {
 	 * @return
 	 */
 	private int countNodes(Node<?> node) {
-		int i = 0;
-		if (node != null) {
-			i++;
-		}
-		for (final Node<?> subNode : node.getChildren()) {
-			i = i + countNodes(subNode);
-		}
-		return i;
+		return ViewTestHelper.countNodes(node);
 	}
 
 	@Test
@@ -98,7 +90,7 @@ public class ViewTest {
 	 * @return
 	 */
 	private Node<View> build(View view) {
-		return NodeBuilders.INSTANCE.build(view, null);
+		return ViewTestHelper.build(view);
 	}
 
 }
