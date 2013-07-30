@@ -43,11 +43,7 @@
 							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.group.model.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
+						
 						
 						<dependency>
 							<type>eclipse-feature</type>
