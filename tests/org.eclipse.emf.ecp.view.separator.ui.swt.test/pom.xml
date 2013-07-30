@@ -31,7 +31,7 @@
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.model.feature</artifactId>
+							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>

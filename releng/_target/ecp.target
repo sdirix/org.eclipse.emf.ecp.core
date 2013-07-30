@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-
-<target name="ECP RCP" sequenceNumber="219">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="219">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.h2" version="1.1.117.v201105142352"/>
@@ -18,6 +16,9 @@
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130610-0406"/>
 <unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.7.0.201306111341"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.9.0.201305060205"/>
+<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.9.0.v20130610-0406"/>
+<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="2.1.0.20130610-1755"/>
+<unit id="org.eclipse.rap.feature.feature.group" version="2.1.0.20130611-2139"/>
 <repository location="http://download.eclipse.org/releases/kepler"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
@@ -34,6 +35,10 @@
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.0.v20130724-1332"/>
 <unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.0.v20130724-1332"/>
 <repository location="http://download.eclipse.org/emf-store/releases/100"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rap.fileupload.feature.feature.group" version="2.0.0.20130302-1418"/>
+<repository location="http://download.eclipse.org/rt/rap/incubator/2.1/fileupload/"/>
 </location>
 </locations>
 </target>

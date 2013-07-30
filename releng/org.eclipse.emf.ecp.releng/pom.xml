@@ -12,7 +12,7 @@
 		<tycho-version>0.18.0</tycho-version>
 		<tycho-extras-version>0.18.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
-		<javadoc-title>EMF Client Platform 1.0.1 API</javadoc-title>
+		<javadoc-title>EMF Client Platform 1.0.2 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
@@ -100,6 +100,14 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
 		
+		<!-- Separator Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.separator.feature</module>
+		
+		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
 		<!-- Graphiti 
@@ -108,11 +116,16 @@
 		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>-->
 
 		<!-- Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
+		
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
 		
 		<!-- Should run on a seperate integration job -->
 		<!-- Deactivated till monday <module>../../tests/ECPQ7Tests</module> -->
