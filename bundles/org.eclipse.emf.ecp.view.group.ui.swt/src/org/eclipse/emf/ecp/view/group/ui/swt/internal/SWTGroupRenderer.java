@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ */
 package org.eclipse.emf.ecp.view.group.ui.swt.internal;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
@@ -19,8 +30,16 @@ import org.eclipse.swt.widgets.Control;
  * 
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
+
+	/** The Constant INSTANCE. */
 	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
+	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 */
 	@Override
 	public Control renderSWT(Node<Group> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
