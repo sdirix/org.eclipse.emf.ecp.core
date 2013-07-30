@@ -1,5 +1,12 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -22,7 +29,6 @@ import org.eclipse.emf.ecp.view.model.impl.TableControlImpl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
-
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -46,13 +52,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	public static final SWTViewRenderer INSTANCE = new SWTViewRenderer();
 	private static ImageDescriptor ERROR_DESCRIPTOR = Activator.getImageDescriptor("icons/error_decorate.png");
@@ -62,7 +61,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 	// TODO: move somewhere and filter based on interface types
 	@SuppressWarnings("serial")
-	private Set<Class<?>> filteredClasses = new LinkedHashSet<Class<?>>() {
+	private final Set<Class<?>> filteredClasses = new LinkedHashSet<Class<?>>() {
 		{
 			add(ColumnCompositeImpl.class);
 			add(ColumnImpl.class);
@@ -75,18 +74,21 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	@Override
 	public Control renderSWT(final Node<View> viewNode, final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		Composite parent = getParentFromInitData(initData);
-		View view = viewNode.getRenderable();
-		EList<AbstractCategorization> categorizations = view.getCategorizations();
+		final Composite parent = getParentFromInitData(initData);
+		final View view = viewNode.getRenderable();
+		final EList<AbstractCategorization> categorizations = view.getCategorizations();
 
-		if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
-			Control control = SWTRenderers.INSTANCE.render(parent, viewNode.getChildren().get(0),
+		if (categorizations.size() == 0) {
+			return renderChildren(parent, viewNode, adapterFactoryItemDelegator);
+		}
+		else if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
+			final Control control = SWTRenderers.INSTANCE.render(parent, viewNode.getChildren().get(0),
 				adapterFactoryItemDelegator);
 			viewNode.addRenderingResultDelegator(withSWT(control));
 			return control;
 		} else {
-			Composite composite = createComposite(parent);
-			TreeViewer treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode);
+			final Composite composite = createComposite(parent);
+			final TreeViewer treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode);
 			createdEditorPane(composite);
 
 			viewNode.addRenderingResultDelegator(withSWT(composite));
@@ -95,6 +97,42 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 			return composite;
 		}
+	}
+
+	private Composite renderChildren(Composite parent, Node<View> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
+		final Composite columnComposite = new Composite(parent, SWT.NONE);
+		columnComposite.setBackground(parent.getBackground());
+
+		node.addRenderingResultDelegator(withSWT(columnComposite));
+
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
+
+		for (final Node<? extends Renderable> child : node.getChildren()) {
+
+			Control childControl;
+			try {
+				childControl = SWTRenderers.INSTANCE.render(
+					columnComposite, child, adapterFactoryItemDelegator);
+			} catch (final NoPropertyDescriptorFoundExeption e) {
+				continue;
+			}
+
+			// TOOD; when does this case apply?
+			if (childControl == null) {
+				continue;
+			}
+
+			// TODO Add check to handle differently if label is shown
+			if (!child.isLeaf()) {
+				GridDataFactory.fillDefaults()
+					.align(SWT.FILL, SWT.BEGINNING)
+					.grab(true, false)
+					.span(2, 1).applyTo(childControl);
+			}
+		}
+
+		return columnComposite;
 	}
 
 	protected void createdEditorPane(Composite composite) {
@@ -108,9 +146,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	}
 
 	protected List<Node<? extends Renderable>> filterVisibleNodes(TreeViewer treeViewer, Node<? extends Renderable> node) {
-		List<Node<?>> result = new ArrayList<Node<?>>();
-		List<Node<?>> children = node.getChildren();
-		for (Node<?> child : children) {
+		final List<Node<?>> result = new ArrayList<Node<?>>();
+		final List<Node<?>> children = node.getChildren();
+		for (final Node<?> child : children) {
 			if (child.isVisible()) {
 				if (filteredClasses.contains(child.getLabelObject().getClass())) {
 					result.addAll(filterVisibleNodes(treeViewer, child));
@@ -163,7 +201,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			}
 
 			public boolean hasChildren(Object element) {
-				Object[] children = getChildren(element);
+				final Object[] children = getChildren(element);
 
 				if (children == null) {
 					return false;
@@ -182,9 +220,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			}
 
 			public Object[] getChildren(Object parentElement) {
-				Node<?> node = (Node<?>) parentElement;
+				final Node<?> node = (Node<?>) parentElement;
 
-				List<Node<?>> visisbleNodes = filterVisibleNodes(treeViewer, node);
+				final List<Node<?>> visisbleNodes = filterVisibleNodes(treeViewer, node);
 
 				return visisbleNodes.toArray();
 			}
@@ -197,14 +235,14 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 			public void selectionChanged(SelectionChangedEvent event) {
 
-				ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+				final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-				AdapterFactoryItemDelegator newAdapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+				final AdapterFactoryItemDelegator newAdapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 					composedAdapterFactory);
 
 				try {
-					TreeSelection treeSelection = (TreeSelection) event.getSelection();
-					Object selection = treeSelection.getFirstElement();
+					final TreeSelection treeSelection = (TreeSelection) event.getSelection();
+					final Object selection = treeSelection.getFirstElement();
 					addButtons(treeViewer, treeSelection, viewNode.getControlContext().getModelElement());
 
 					if (selection == null) {
@@ -220,20 +258,20 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 					// TODO: REVIEW
 					if (Node.class.isInstance(selection)) {
-						Node<?> node = (Node<?>) selection;
+						final Node<?> node = (Node<?>) selection;
 						try {
 							SWTRenderers.INSTANCE.render(childComposite, node, newAdapterFactoryItemDelegator);
 							viewNode.fireSelectedChildNodeChanged(node);
-						} catch (NoRendererFoundException e) {
+						} catch (final NoRendererFoundException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						} catch (NoPropertyDescriptorFoundExeption e) {
+						} catch (final NoPropertyDescriptorFoundExeption e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
 						childComposite.layout();
-						Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+						final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 						editorComposite.setMinSize(point);
 					}
 				} finally {
@@ -265,7 +303,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @return
 	 */
 	private Composite createComposite(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
 
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
@@ -273,22 +311,22 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		return composite;
 	}
 
-	private List<TreeEditor> editors = new ArrayList<TreeEditor>();
+	private final List<TreeEditor> editors = new ArrayList<TreeEditor>();
 	private ScrolledComposite editorComposite;
 
 	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, View view) {
 		// The text column
 		final Tree tree = treeViewer.getTree();
-		TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
+		final TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
 		columnText.setWidth(300);
 		columnText.setAlignment(SWT.FILL);
 
 		int maxActions = 0;
-		Iterator<EObject> viewContents = view.eAllContents();
+		final Iterator<EObject> viewContents = view.eAllContents();
 		while (viewContents.hasNext()) {
-			EObject object = viewContents.next();
+			final EObject object = viewContents.next();
 			if (AbstractCategorization.class.isInstance(object)) {
-				AbstractCategorization abstractCategorization = (AbstractCategorization) object;
+				final AbstractCategorization abstractCategorization = (AbstractCategorization) object;
 				if (maxActions < abstractCategorization.getActions().size()) {
 					maxActions = abstractCategorization.getActions().size();
 				}
@@ -296,10 +334,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 		for (int i = 0; i < maxActions; i++) {
 			// The column
-			TreeColumn column = new TreeColumn(tree, SWT.NONE);
+			final TreeColumn column = new TreeColumn(tree, SWT.NONE);
 			column.setWidth(50);
 
-			TreeEditor editor = new TreeEditor(tree);
+			final TreeEditor editor = new TreeEditor(tree);
 			// The editor must have the same size as the cell and must
 			// not be any smaller than 50 pixels.
 			editor.horizontalAlignment = SWT.CENTER;
@@ -324,8 +362,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 	// Clean up any previous editor control
 	private void cleanUpTreeEditors() {
-		for (TreeEditor editor : editors) {
-			Control oldEditor = editor.getEditor();
+		for (final TreeEditor editor : editors) {
+			final Control oldEditor = editor.getEditor();
 			if (oldEditor != null) {
 				oldEditor.dispose();
 			}
@@ -341,7 +379,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 
 		// Identify the selected row
-		TreeItem item = treeViewer.getTree().getSelection()[0];
+		final TreeItem item = treeViewer.getTree().getSelection()[0];
 		if (item == null) {
 			return;
 		}
@@ -351,8 +389,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			return;
 		}
 		for (int i = 0; i < object.getActions().size(); i++) {
-			ECPTreeViewAction action = (ECPTreeViewAction) object.getActions().get(i);
-			TreeEditor editor = editors.get(i);
+			final ECPTreeViewAction action = (ECPTreeViewAction) object.getActions().get(i);
+			final TreeEditor editor = editors.get(i);
 			action.init(treeViewer, treeSelection, editor, modelElement);
 			action.execute();
 		}
@@ -377,7 +415,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 				return image;
 			}
 
-			Node<?> node = (Node<?>) object;
+			final Node<?> node = (Node<?>) object;
 			image = super.getImage(node.getLabelObject());
 			ImageDescriptor overlay = null;
 			switch (node.getSeverity()) {
@@ -395,9 +433,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			if (overlay == null) {
 				return image;
 			}
-			OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, overlay,
+			final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, overlay,
 				OverlayImageDescriptor.LOWER_RIGHT);
-			Image resultImage = imageDescriptor.createImage();
+			final Image resultImage = imageDescriptor.createImage();
 
 			return resultImage;
 		}
@@ -409,7 +447,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 				return "";
 			}
 
-			Node<?> node = (Node<?>) object;
+			final Node<?> node = (Node<?>) object;
 
 			return super.getText(node.getLabelObject());
 		}
