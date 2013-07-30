@@ -15,10 +15,10 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ShowRuleImpl extends RuleImpl implements ShowRule {
@@ -26,6 +26,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * The default value of the '{@link #isHide() <em>Hide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isHide()
 	 * @generated
 	 * @ordered
@@ -36,6 +37,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * The cached value of the '{@link #isHide() <em>Hide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isHide()
 	 * @generated
 	 * @ordered
@@ -45,6 +47,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ShowRuleImpl() {
@@ -54,6 +57,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -64,6 +68,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isHide() {
@@ -73,6 +78,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setHide(boolean newHide) {
@@ -85,13 +91,14 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.SHOW_RULE__HIDE:
-				return isHide();
+		case ViewPackage.SHOW_RULE__HIDE:
+			return isHide();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -99,14 +106,15 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.SHOW_RULE__HIDE:
-				setHide((Boolean)newValue);
-				return;
+		case ViewPackage.SHOW_RULE__HIDE:
+			setHide((Boolean) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -114,14 +122,15 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.SHOW_RULE__HIDE:
-				setHide(HIDE_EDEFAULT);
-				return;
+		case ViewPackage.SHOW_RULE__HIDE:
+			setHide(HIDE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -129,13 +138,14 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.SHOW_RULE__HIDE:
-				return hide != HIDE_EDEFAULT;
+		case ViewPackage.SHOW_RULE__HIDE:
+			return hide != HIDE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -143,11 +153,13 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hide: ");
@@ -156,4 +168,4 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 		return result.toString();
 	}
 
-} //ShowRuleImpl
+} // ShowRuleImpl

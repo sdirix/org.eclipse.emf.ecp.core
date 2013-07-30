@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -25,20 +24,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Categorization} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CategorizationItemProvider
 	extends AbstractCategorizationItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CategorizationItemProvider(AdapterFactory adapterFactory) {
@@ -49,6 +50,7 @@ public class CategorizationItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,22 +67,24 @@ public class CategorizationItemProvider
 	 * This adds a property descriptor for the Categorizations feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addCategorizationsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Categorization_categorizations_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Categorization_categorizations_feature", "_UI_Categorization_type"),
-				 ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Categorization_categorizations_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Categorization_categorizations_feature",
+					"_UI_Categorization_type"),
+				ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -89,6 +93,7 @@ public class CategorizationItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -103,6 +108,7 @@ public class CategorizationItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -117,6 +123,7 @@ public class CategorizationItemProvider
 	 * This returns Categorization.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -128,19 +135,21 @@ public class CategorizationItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
-	  public String getText(Object object) {
-        String label = ((Categorization) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_Categorization_type") : label;
-    }
+	public String getText(Object object) {
+		String label = ((Categorization) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_Categorization_type") : label;
+	}
 
 	/**
 	 * This handles model notifications by calling {@link #updateChildren} to update any cached
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -148,9 +157,9 @@ public class CategorizationItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Categorization.class)) {
-			case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -160,6 +169,7 @@ public class CategorizationItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -168,23 +178,23 @@ public class CategorizationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				 ViewFactory.eINSTANCE.createCategorization()));
+			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				ViewFactory.eINSTANCE.createCategorization()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				 ViewFactory.eINSTANCE.createView()));
+			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				ViewFactory.eINSTANCE.createView()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				 ViewFactory.eINSTANCE.createCategory()));
+			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				ViewFactory.eINSTANCE.createCategory()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				 ViewFactory.eINSTANCE.createTreeCategory()));
+			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				ViewFactory.eINSTANCE.createTreeCategory()));
 	}
 
 }

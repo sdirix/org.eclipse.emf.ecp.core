@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -24,20 +23,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.CompositeCollection} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CompositeCollectionItemProvider
 	extends CompositeItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CompositeCollectionItemProvider(AdapterFactory adapterFactory) {
@@ -48,6 +49,7 @@ public class CompositeCollectionItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,6 +67,7 @@ public class CompositeCollectionItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -79,6 +82,7 @@ public class CompositeCollectionItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -93,6 +97,7 @@ public class CompositeCollectionItemProvider
 	 * This returns CompositeCollection.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -104,20 +109,22 @@ public class CompositeCollectionItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-        String label = ((CompositeCollection) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_CompositeCollection_type")
-                : label;
-    }
+		String label = ((CompositeCollection) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_CompositeCollection_type")
+			: label;
+	}
 
 	/**
 	 * This handles model notifications by calling {@link #updateChildren} to update any cached
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -125,9 +132,9 @@ public class CompositeCollectionItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(CompositeCollection.class)) {
-			case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -137,6 +144,7 @@ public class CompositeCollectionItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -145,33 +153,33 @@ public class CompositeCollectionItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createControl()));
+			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+				ViewFactory.eINSTANCE.createControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createTableControl()));
+			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+				ViewFactory.eINSTANCE.createTableControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createCustomComposite()));
+			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createColumnComposite()));
+			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+				ViewFactory.eINSTANCE.createColumnComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createColumn()));
+			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+				ViewFactory.eINSTANCE.createColumn()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createGroup()));
+			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+				ViewFactory.eINSTANCE.createGroup()));
 	}
 
 }

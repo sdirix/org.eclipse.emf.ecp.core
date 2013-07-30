@@ -15,10 +15,10 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.EnableRuleImpl#isDisable <em>Disable</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.EnableRuleImpl#isDisable <em>Disable</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class EnableRuleImpl extends RuleImpl implements EnableRule {
@@ -26,6 +26,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * The default value of the '{@link #isDisable() <em>Disable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isDisable()
 	 * @generated
 	 * @ordered
@@ -36,6 +37,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * The cached value of the '{@link #isDisable() <em>Disable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isDisable()
 	 * @generated
 	 * @ordered
@@ -45,6 +47,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected EnableRuleImpl() {
@@ -54,6 +57,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -64,6 +68,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isDisable() {
@@ -73,6 +78,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setDisable(boolean newDisable) {
@@ -85,13 +91,14 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.ENABLE_RULE__DISABLE:
-				return isDisable();
+		case ViewPackage.ENABLE_RULE__DISABLE:
+			return isDisable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -99,14 +106,15 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.ENABLE_RULE__DISABLE:
-				setDisable((Boolean)newValue);
-				return;
+		case ViewPackage.ENABLE_RULE__DISABLE:
+			setDisable((Boolean) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -114,14 +122,15 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.ENABLE_RULE__DISABLE:
-				setDisable(DISABLE_EDEFAULT);
-				return;
+		case ViewPackage.ENABLE_RULE__DISABLE:
+			setDisable(DISABLE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -129,13 +138,14 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.ENABLE_RULE__DISABLE:
-				return disable != DISABLE_EDEFAULT;
+		case ViewPackage.ENABLE_RULE__DISABLE:
+			return disable != DISABLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -143,11 +153,13 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (disable: ");
@@ -156,4 +168,4 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 		return result.toString();
 	}
 
-} //EnableRuleImpl
+} // EnableRuleImpl

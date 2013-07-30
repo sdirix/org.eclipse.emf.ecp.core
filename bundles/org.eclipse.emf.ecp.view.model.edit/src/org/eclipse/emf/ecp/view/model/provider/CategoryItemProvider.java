@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -25,20 +24,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Category} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CategoryItemProvider
 	extends AbstractCategorizationItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CategoryItemProvider(AdapterFactory adapterFactory) {
@@ -49,6 +50,7 @@ public class CategoryItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,22 +67,23 @@ public class CategoryItemProvider
 	 * This adds a property descriptor for the Composite feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addCompositePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Category_composite_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Category_composite_feature", "_UI_Category_type"),
-				 ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Category_composite_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Category_composite_feature", "_UI_Category_type"),
+				ViewPackage.Literals.CATEGORY__COMPOSITE,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -89,6 +92,7 @@ public class CategoryItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -103,6 +107,7 @@ public class CategoryItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -117,6 +122,7 @@ public class CategoryItemProvider
 	 * This returns Category.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -128,12 +134,13 @@ public class CategoryItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		String label = ((Category) object).getName();
-        return label == null || label.length() == 0 ? getString("_UI_Category_type") : label;
+		return label == null || label.length() == 0 ? getString("_UI_Category_type") : label;
 	}
 
 	/**
@@ -141,6 +148,7 @@ public class CategoryItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -148,9 +156,9 @@ public class CategoryItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Category.class)) {
-			case ViewPackage.CATEGORY__COMPOSITE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		case ViewPackage.CATEGORY__COMPOSITE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -160,6 +168,7 @@ public class CategoryItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -168,33 +177,33 @@ public class CategoryItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 ViewFactory.eINSTANCE.createControl()));
+			(ViewPackage.Literals.CATEGORY__COMPOSITE,
+				ViewFactory.eINSTANCE.createControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 ViewFactory.eINSTANCE.createTableControl()));
+			(ViewPackage.Literals.CATEGORY__COMPOSITE,
+				ViewFactory.eINSTANCE.createTableControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 ViewFactory.eINSTANCE.createCustomComposite()));
+			(ViewPackage.Literals.CATEGORY__COMPOSITE,
+				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 ViewFactory.eINSTANCE.createColumnComposite()));
+			(ViewPackage.Literals.CATEGORY__COMPOSITE,
+				ViewFactory.eINSTANCE.createColumnComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 ViewFactory.eINSTANCE.createColumn()));
+			(ViewPackage.Literals.CATEGORY__COMPOSITE,
+				ViewFactory.eINSTANCE.createColumn()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				 ViewFactory.eINSTANCE.createGroup()));
+			(ViewPackage.Literals.CATEGORY__COMPOSITE,
+				ViewFactory.eINSTANCE.createGroup()));
 	}
 
 }

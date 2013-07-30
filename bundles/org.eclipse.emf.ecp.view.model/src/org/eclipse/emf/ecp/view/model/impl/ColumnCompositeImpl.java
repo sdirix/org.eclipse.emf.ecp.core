@@ -12,13 +12,14 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public class ColumnCompositeImpl extends CompositeCollectionImpl implements ColumnComposite {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ColumnCompositeImpl() {
@@ -28,6 +29,7 @@ public class ColumnCompositeImpl extends CompositeCollectionImpl implements Colu
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -35,4 +37,4 @@ public class ColumnCompositeImpl extends CompositeCollectionImpl implements Colu
 		return ViewPackage.Literals.COLUMN_COMPOSITE;
 	}
 
-} //ColumnCompositeImpl
+} // ColumnCompositeImpl

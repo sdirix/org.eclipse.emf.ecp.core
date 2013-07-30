@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -36,14 +35,16 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  */
 public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	/**
-	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	public static ViewFactory init() {
 		try {
-			ViewFactory theViewFactory = (ViewFactory)EPackage.Registry.INSTANCE.getEFactory("http://org/eclipse/emf/ecp/view/model"); 
+			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
+				.getEFactory("http://org/eclipse/emf/ecp/view/model");
 			if (theViewFactory != null) {
 				return theViewFactory;
 			}
@@ -54,7 +55,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
 	 * @generated
@@ -106,8 +108,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 		case ViewPackage.ACTION:
 			return createAction();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName()
-					+ "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 

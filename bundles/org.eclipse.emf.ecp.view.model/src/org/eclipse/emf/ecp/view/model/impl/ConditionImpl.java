@@ -13,13 +13,14 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public abstract class ConditionImpl extends EObjectImpl implements Condition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ConditionImpl() {
@@ -29,6 +30,7 @@ public abstract class ConditionImpl extends EObjectImpl implements Condition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -36,4 +38,4 @@ public abstract class ConditionImpl extends EObjectImpl implements Condition {
 		return ViewPackage.Literals.CONDITION;
 	}
 
-} //ConditionImpl
+} // ConditionImpl

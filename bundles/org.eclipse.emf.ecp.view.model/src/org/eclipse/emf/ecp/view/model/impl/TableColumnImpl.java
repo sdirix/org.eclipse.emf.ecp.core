@@ -18,11 +18,11 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl#isReadOnly <em>Read Only</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl#getAttribute <em>Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl#isReadOnly <em>Read Only</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class TableColumnImpl extends EObjectImpl implements TableColumn {
@@ -30,6 +30,7 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getAttribute()
 	 * @generated
 	 * @ordered
@@ -40,6 +41,7 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * The default value of the '{@link #isReadOnly() <em>Read Only</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isReadOnly()
 	 * @generated
 	 * @ordered
@@ -50,6 +52,7 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * The cached value of the '{@link #isReadOnly() <em>Read Only</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isReadOnly()
 	 * @generated
 	 * @ordered
@@ -59,6 +62,7 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected TableColumnImpl() {
@@ -68,6 +72,7 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -78,15 +83,17 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute getAttribute() {
 		if (attribute != null && attribute.eIsProxy()) {
-			InternalEObject oldAttribute = (InternalEObject)attribute;
-			attribute = (EAttribute)eResolveProxy(oldAttribute);
+			InternalEObject oldAttribute = (InternalEObject) attribute;
+			attribute = (EAttribute) eResolveProxy(oldAttribute);
 			if (attribute != oldAttribute) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.TABLE_COLUMN__ATTRIBUTE, oldAttribute, attribute));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.TABLE_COLUMN__ATTRIBUTE,
+						oldAttribute, attribute));
 			}
 		}
 		return attribute;
@@ -95,6 +102,7 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute basicGetAttribute() {
@@ -104,18 +112,21 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setAttribute(EAttribute newAttribute) {
 		EAttribute oldAttribute = attribute;
 		attribute = newAttribute;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__ATTRIBUTE, oldAttribute, attribute));
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__ATTRIBUTE, oldAttribute,
+				attribute));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isReadOnly() {
@@ -125,28 +136,32 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setReadOnly(boolean newReadOnly) {
 		boolean oldReadOnly = readOnly;
 		readOnly = newReadOnly;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__READ_ONLY, oldReadOnly, readOnly));
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__READ_ONLY, oldReadOnly,
+				readOnly));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
-				if (resolve) return getAttribute();
-				return basicGetAttribute();
-			case ViewPackage.TABLE_COLUMN__READ_ONLY:
-				return isReadOnly();
+		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
+			if (resolve)
+				return getAttribute();
+			return basicGetAttribute();
+		case ViewPackage.TABLE_COLUMN__READ_ONLY:
+			return isReadOnly();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -154,17 +169,18 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
-				setAttribute((EAttribute)newValue);
-				return;
-			case ViewPackage.TABLE_COLUMN__READ_ONLY:
-				setReadOnly((Boolean)newValue);
-				return;
+		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
+			setAttribute((EAttribute) newValue);
+			return;
+		case ViewPackage.TABLE_COLUMN__READ_ONLY:
+			setReadOnly((Boolean) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -172,17 +188,18 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
-				setAttribute((EAttribute)null);
-				return;
-			case ViewPackage.TABLE_COLUMN__READ_ONLY:
-				setReadOnly(READ_ONLY_EDEFAULT);
-				return;
+		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
+			setAttribute((EAttribute) null);
+			return;
+		case ViewPackage.TABLE_COLUMN__READ_ONLY:
+			setReadOnly(READ_ONLY_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -190,15 +207,16 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
-				return attribute != null;
-			case ViewPackage.TABLE_COLUMN__READ_ONLY:
-				return readOnly != READ_ONLY_EDEFAULT;
+		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
+			return attribute != null;
+		case ViewPackage.TABLE_COLUMN__READ_ONLY:
+			return readOnly != READ_ONLY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -206,11 +224,13 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (readOnly: ");
@@ -219,4 +239,4 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 		return result.toString();
 	}
 
-} //TableColumnImpl
+} // TableColumnImpl

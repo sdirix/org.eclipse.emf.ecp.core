@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -24,20 +23,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.LeafCondition} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class LeafConditionItemProvider
 	extends ConditionItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public LeafConditionItemProvider(AdapterFactory adapterFactory) {
@@ -48,6 +49,7 @@ public class LeafConditionItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,50 +67,55 @@ public class LeafConditionItemProvider
 	 * This adds a property descriptor for the Attribute feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addAttributePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_LeafCondition_attribute_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_attribute_feature", "_UI_LeafCondition_type"),
-				 ViewPackage.Literals.LEAF_CONDITION__ATTRIBUTE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_LeafCondition_attribute_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_attribute_feature",
+					"_UI_LeafCondition_type"),
+				ViewPackage.Literals.LEAF_CONDITION__ATTRIBUTE,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Expected Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addExpectedValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_LeafCondition_expectedValue_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature", "_UI_LeafCondition_type"),
-				 ViewPackage.Literals.LEAF_CONDITION__EXPECTED_VALUE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_LeafCondition_expectedValue_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature",
+					"_UI_LeafCondition_type"),
+				ViewPackage.Literals.LEAF_CONDITION__EXPECTED_VALUE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
 	 * This returns LeafCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -120,11 +127,12 @@ public class LeafConditionItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		Object labelValue = ((LeafCondition)object).getExpectedValue();
+		Object labelValue = ((LeafCondition) object).getExpectedValue();
 		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_LeafCondition_type") :
@@ -136,6 +144,7 @@ public class LeafConditionItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,9 +152,9 @@ public class LeafConditionItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(LeafCondition.class)) {
-			case ViewPackage.LEAF_CONDITION__EXPECTED_VALUE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
+		case ViewPackage.LEAF_CONDITION__EXPECTED_VALUE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -155,6 +164,7 @@ public class LeafConditionItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

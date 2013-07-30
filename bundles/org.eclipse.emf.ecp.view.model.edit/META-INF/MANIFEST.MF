@@ -8,7 +8,7 @@ Bundle-Activator: org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin$Impleme
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.view.model.provider
+Export-Package: org.eclipse.emf.ecp.view.model.provider;version="1.0.2"
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.view.model;visibility:=reexport,
  org.eclipse.emf.edit;visibility:=reexport,

@@ -21,10 +21,10 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl#getComposites <em>Composites</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl#getComposites <em>Composites</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public abstract class CompositeCollectionImpl extends CompositeImpl implements CompositeCollection {
@@ -32,6 +32,7 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	 * The cached value of the '{@link #getComposites() <em>Composites</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getComposites()
 	 * @generated
 	 * @ordered
@@ -41,6 +42,7 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CompositeCollectionImpl() {
@@ -50,6 +52,7 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -60,11 +63,13 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Composite> getComposites() {
 		if (composites == null) {
-			composites = new EObjectContainmentEList<Composite>(Composite.class, this, ViewPackage.COMPOSITE_COLLECTION__COMPOSITES);
+			composites = new EObjectContainmentEList<Composite>(Composite.class, this,
+				ViewPackage.COMPOSITE_COLLECTION__COMPOSITES);
 		}
 		return composites;
 	}
@@ -72,13 +77,14 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
-				return ((InternalEList<?>)getComposites()).basicRemove(otherEnd, msgs);
+		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
+			return ((InternalEList<?>) getComposites()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -86,13 +92,14 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
-				return getComposites();
+		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
+			return getComposites();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -100,16 +107,17 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
-				getComposites().clear();
-				getComposites().addAll((Collection<? extends Composite>)newValue);
-				return;
+		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
+			getComposites().clear();
+			getComposites().addAll((Collection<? extends Composite>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -117,14 +125,15 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
-				getComposites().clear();
-				return;
+		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
+			getComposites().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -132,15 +141,16 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
-				return composites != null && !composites.isEmpty();
+		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
+			return composites != null && !composites.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //CompositeCollectionImpl
+} // CompositeCollectionImpl

@@ -2,19 +2,18 @@
  */
 package org.eclipse.emf.ecp.view.model;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Composite</b></em>'.
  * <!-- end-user-doc -->
- *
+ * 
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.Composite#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Composite#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.ecp.view.model.ViewPackage#getComposite()
  * @model abstract="true"
  * @generated
@@ -24,10 +23,10 @@ public interface Composite extends Renderable {
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getComposite_Name()
@@ -40,6 +39,7 @@ public interface Composite extends Renderable {
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Composite#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated

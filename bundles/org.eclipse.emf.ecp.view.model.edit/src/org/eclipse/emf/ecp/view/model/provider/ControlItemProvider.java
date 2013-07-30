@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -24,20 +23,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Control} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class ControlItemProvider
 	extends AbstractControlItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ControlItemProvider(AdapterFactory adapterFactory) {
@@ -48,6 +49,7 @@ public class ControlItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -67,94 +69,100 @@ public class ControlItemProvider
 	 * This adds a property descriptor for the Target Feature feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addTargetFeaturePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Control_targetFeature_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Control_targetFeature_feature", "_UI_Control_type"),
-				 ViewPackage.Literals.CONTROL__TARGET_FEATURE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Control_targetFeature_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_targetFeature_feature", "_UI_Control_type"),
+				ViewPackage.Literals.CONTROL__TARGET_FEATURE,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Hint feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addHintPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Control_hint_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Control_hint_feature", "_UI_Control_type"),
-				 ViewPackage.Literals.CONTROL__HINT,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Control_hint_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_hint_feature", "_UI_Control_type"),
+				ViewPackage.Literals.CONTROL__HINT,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Readonly feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addReadonlyPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Control_readonly_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Control_readonly_feature", "_UI_Control_type"),
-				 ViewPackage.Literals.CONTROL__READONLY,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Control_readonly_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_readonly_feature", "_UI_Control_type"),
+				ViewPackage.Literals.CONTROL__READONLY,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Mandatory feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addMandatoryPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Control_mandatory_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Control_mandatory_feature", "_UI_Control_type"),
-				 ViewPackage.Literals.CONTROL__MANDATORY,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Control_mandatory_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_mandatory_feature", "_UI_Control_type"),
+				ViewPackage.Literals.CONTROL__MANDATORY,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
 	 * This returns Control.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -166,6 +174,7 @@ public class ControlItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated NOT
 	 */
 	@Override
@@ -179,6 +188,7 @@ public class ControlItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -186,11 +196,11 @@ public class ControlItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Control.class)) {
-			case ViewPackage.CONTROL__HINT:
-			case ViewPackage.CONTROL__READONLY:
-			case ViewPackage.CONTROL__MANDATORY:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
+		case ViewPackage.CONTROL__HINT:
+		case ViewPackage.CONTROL__READONLY:
+		case ViewPackage.CONTROL__MANDATORY:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -200,6 +210,7 @@ public class ControlItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

@@ -4,6 +4,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="View" eSuperTypes="#//Categorization">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rootEClass" lowerBound="1"
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//Composite" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractCategorization" abstract="true"
       eSuperTypes="#//Renderable">

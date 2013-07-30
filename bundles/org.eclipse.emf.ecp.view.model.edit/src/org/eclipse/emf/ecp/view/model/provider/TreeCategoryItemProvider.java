@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -25,20 +24,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.TreeCategory} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class TreeCategoryItemProvider
 	extends AbstractCategorizationItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public TreeCategoryItemProvider(AdapterFactory adapterFactory) {
@@ -49,6 +50,7 @@ public class TreeCategoryItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -66,44 +68,48 @@ public class TreeCategoryItemProvider
 	 * This adds a property descriptor for the Target Feature feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addTargetFeaturePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TreeCategory_targetFeature_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TreeCategory_targetFeature_feature", "_UI_TreeCategory_type"),
-				 ViewPackage.Literals.TREE_CATEGORY__TARGET_FEATURE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TreeCategory_targetFeature_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_TreeCategory_targetFeature_feature",
+					"_UI_TreeCategory_type"),
+				ViewPackage.Literals.TREE_CATEGORY__TARGET_FEATURE,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Path To Feature feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addPathToFeaturePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TreeCategory_pathToFeature_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TreeCategory_pathToFeature_feature", "_UI_TreeCategory_type"),
-				 ViewPackage.Literals.TREE_CATEGORY__PATH_TO_FEATURE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TreeCategory_pathToFeature_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_TreeCategory_pathToFeature_feature",
+					"_UI_TreeCategory_type"),
+				ViewPackage.Literals.TREE_CATEGORY__PATH_TO_FEATURE,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -112,6 +118,7 @@ public class TreeCategoryItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -126,6 +133,7 @@ public class TreeCategoryItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -140,6 +148,7 @@ public class TreeCategoryItemProvider
 	 * This returns TreeCategory.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -151,11 +160,12 @@ public class TreeCategoryItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((TreeCategory)object).getName();
+		String label = ((TreeCategory) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_TreeCategory_type") :
 			getString("_UI_TreeCategory_type") + " " + label;
@@ -166,6 +176,7 @@ public class TreeCategoryItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -173,9 +184,9 @@ public class TreeCategoryItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(TreeCategory.class)) {
-			case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -185,6 +196,7 @@ public class TreeCategoryItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -193,33 +205,33 @@ public class TreeCategoryItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createControl()));
+			(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
+				ViewFactory.eINSTANCE.createControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createTableControl()));
+			(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
+				ViewFactory.eINSTANCE.createTableControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createCustomComposite()));
+			(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
+				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createColumnComposite()));
+			(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
+				ViewFactory.eINSTANCE.createColumnComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createColumn()));
+			(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
+				ViewFactory.eINSTANCE.createColumn()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createGroup()));
+			(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
+				ViewFactory.eINSTANCE.createGroup()));
 	}
 
 }

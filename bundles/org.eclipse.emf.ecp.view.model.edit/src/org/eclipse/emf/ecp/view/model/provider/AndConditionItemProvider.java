@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -24,20 +23,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.AndCondition} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class AndConditionItemProvider
 	extends ConditionItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public AndConditionItemProvider(AdapterFactory adapterFactory) {
@@ -48,6 +49,7 @@ public class AndConditionItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,6 +67,7 @@ public class AndConditionItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -79,6 +82,7 @@ public class AndConditionItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -93,6 +97,7 @@ public class AndConditionItemProvider
 	 * This returns AndCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -104,6 +109,7 @@ public class AndConditionItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -116,6 +122,7 @@ public class AndConditionItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -123,9 +130,9 @@ public class AndConditionItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(AndCondition.class)) {
-			case ViewPackage.AND_CONDITION__CONDITIONS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		case ViewPackage.AND_CONDITION__CONDITIONS:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -135,6 +142,7 @@ public class AndConditionItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,18 +151,18 @@ public class AndConditionItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.AND_CONDITION__CONDITIONS,
-				 ViewFactory.eINSTANCE.createLeafCondition()));
+			(ViewPackage.Literals.AND_CONDITION__CONDITIONS,
+				ViewFactory.eINSTANCE.createLeafCondition()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.AND_CONDITION__CONDITIONS,
-				 ViewFactory.eINSTANCE.createOrCondition()));
+			(ViewPackage.Literals.AND_CONDITION__CONDITIONS,
+				ViewFactory.eINSTANCE.createOrCondition()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ViewPackage.Literals.AND_CONDITION__CONDITIONS,
-				 ViewFactory.eINSTANCE.createAndCondition()));
+			(ViewPackage.Literals.AND_CONDITION__CONDITIONS,
+				ViewFactory.eINSTANCE.createAndCondition()));
 	}
 
 }

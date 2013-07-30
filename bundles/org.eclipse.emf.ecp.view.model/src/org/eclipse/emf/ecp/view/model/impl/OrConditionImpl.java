@@ -21,10 +21,10 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.OrConditionImpl#getConditions <em>Conditions</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.OrConditionImpl#getConditions <em>Conditions</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class OrConditionImpl extends ConditionImpl implements OrCondition {
@@ -32,6 +32,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 * The cached value of the '{@link #getConditions() <em>Conditions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getConditions()
 	 * @generated
 	 * @ordered
@@ -41,6 +42,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected OrConditionImpl() {
@@ -50,6 +52,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -60,11 +63,13 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Condition> getConditions() {
 		if (conditions == null) {
-			conditions = new EObjectContainmentEList<Condition>(Condition.class, this, ViewPackage.OR_CONDITION__CONDITIONS);
+			conditions = new EObjectContainmentEList<Condition>(Condition.class, this,
+				ViewPackage.OR_CONDITION__CONDITIONS);
 		}
 		return conditions;
 	}
@@ -72,13 +77,14 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ViewPackage.OR_CONDITION__CONDITIONS:
-				return ((InternalEList<?>)getConditions()).basicRemove(otherEnd, msgs);
+		case ViewPackage.OR_CONDITION__CONDITIONS:
+			return ((InternalEList<?>) getConditions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -86,13 +92,14 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.OR_CONDITION__CONDITIONS:
-				return getConditions();
+		case ViewPackage.OR_CONDITION__CONDITIONS:
+			return getConditions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -100,16 +107,17 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.OR_CONDITION__CONDITIONS:
-				getConditions().clear();
-				getConditions().addAll((Collection<? extends Condition>)newValue);
-				return;
+		case ViewPackage.OR_CONDITION__CONDITIONS:
+			getConditions().clear();
+			getConditions().addAll((Collection<? extends Condition>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -117,14 +125,15 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.OR_CONDITION__CONDITIONS:
-				getConditions().clear();
-				return;
+		case ViewPackage.OR_CONDITION__CONDITIONS:
+			getConditions().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -132,15 +141,16 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.OR_CONDITION__CONDITIONS:
-				return conditions != null && !conditions.isEmpty();
+		case ViewPackage.OR_CONDITION__CONDITIONS:
+			return conditions != null && !conditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //OrConditionImpl
+} // OrConditionImpl

@@ -21,10 +21,10 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.CategorizationImpl#getCategorizations <em>Categorizations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.CategorizationImpl#getCategorizations <em>Categorizations</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CategorizationImpl extends AbstractCategorizationImpl implements Categorization {
@@ -32,6 +32,7 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getCategorizations()
 	 * @generated
 	 * @ordered
@@ -41,6 +42,7 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CategorizationImpl() {
@@ -50,6 +52,7 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -60,11 +63,13 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<AbstractCategorization> getCategorizations() {
 		if (categorizations == null) {
-			categorizations = new EObjectContainmentEList<AbstractCategorization>(AbstractCategorization.class, this, ViewPackage.CATEGORIZATION__CATEGORIZATIONS);
+			categorizations = new EObjectContainmentEList<AbstractCategorization>(AbstractCategorization.class, this,
+				ViewPackage.CATEGORIZATION__CATEGORIZATIONS);
 		}
 		return categorizations;
 	}
@@ -72,13 +77,14 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
-				return ((InternalEList<?>)getCategorizations()).basicRemove(otherEnd, msgs);
+		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+			return ((InternalEList<?>) getCategorizations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -86,13 +92,14 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
-				return getCategorizations();
+		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+			return getCategorizations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -100,16 +107,17 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
-				getCategorizations().clear();
-				getCategorizations().addAll((Collection<? extends AbstractCategorization>)newValue);
-				return;
+		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+			getCategorizations().clear();
+			getCategorizations().addAll((Collection<? extends AbstractCategorization>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -117,14 +125,15 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
-				getCategorizations().clear();
-				return;
+		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+			getCategorizations().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -132,15 +141,16 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
-				return categorizations != null && !categorizations.isEmpty();
+		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+			return categorizations != null && !categorizations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //CategorizationImpl
+} // CategorizationImpl

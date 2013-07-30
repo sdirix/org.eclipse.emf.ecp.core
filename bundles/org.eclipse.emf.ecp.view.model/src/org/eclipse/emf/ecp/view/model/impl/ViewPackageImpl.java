@@ -206,18 +206,18 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass abstractControlEClass = null;
 
 	/**
-	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the
+	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
+	 * EPackage.Registry} by the
 	 * package package URI value.
 	 * <p>
-	 * Note: the correct way to create the package is via the static factory
-	 * method {@link #init init()}, which also performs initialization of the
-	 * package, or returns the registered package, if one already exists. <!--
+	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
+	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
@@ -237,14 +237,12 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this model,
-	 * and for any others upon which it depends.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link ViewPackage#eINSTANCE} when that
-	 * field is accessed. Clients should not invoke it directly. Instead, they
-	 * should simply access that field to obtain the package. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * This method is used to initialize {@link ViewPackage#eINSTANCE} when that field is accessed. Clients should not
+	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
@@ -253,13 +251,12 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public static ViewPackage init() {
 		if (isInited)
-			return (ViewPackage) EPackage.Registry.INSTANCE
-					.getEPackage(ViewPackage.eNS_URI);
+			return (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ViewPackageImpl theViewPackage = (ViewPackageImpl) (EPackage.Registry.INSTANCE
-				.get(eNS_URI) instanceof ViewPackageImpl ? EPackage.Registry.INSTANCE
-				.get(eNS_URI) : new ViewPackageImpl());
+		ViewPackageImpl theViewPackage = (ViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ViewPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new ViewPackageImpl());
 
 		isInited = true;
 
@@ -299,6 +296,16 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getView_Children() {
+		return (EReference) viewEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -313,8 +320,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EAttribute getAbstractCategorization_Name() {
-		return (EAttribute) abstractCategorizationEClass
-				.getEStructuralFeatures().get(0);
+		return (EAttribute) abstractCategorizationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -323,8 +329,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EReference getAbstractCategorization_Actions() {
-		return (EReference) abstractCategorizationEClass
-				.getEStructuralFeatures().get(1);
+		return (EReference) abstractCategorizationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -477,8 +482,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EReference getCategorization_Categorizations() {
-		return (EReference) categorizationEClass.getEStructuralFeatures()
-				.get(0);
+		return (EReference) categorizationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -640,8 +644,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EAttribute getCustomComposite_Bundle() {
-		return (EAttribute) customCompositeEClass.getEStructuralFeatures().get(
-				0);
+		return (EAttribute) customCompositeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -650,8 +653,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EAttribute getCustomComposite_ClassName() {
-		return (EAttribute) customCompositeEClass.getEStructuralFeatures().get(
-				1);
+		return (EAttribute) customCompositeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -669,8 +671,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EReference getCompositeCollection_Composites() {
-		return (EReference) compositeCollectionEClass.getEStructuralFeatures()
-				.get(0);
+		return (EReference) compositeCollectionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -793,15 +794,17 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EReference getAbstractControl_TargetFeatures() {
-		return (EReference)abstractControlEClass.getEStructuralFeatures().get(0);
+		return (EReference) abstractControlEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ViewFactory getViewFactory() {
@@ -816,8 +819,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package. This method is guarded to
-	 * have no affect on any invocation but its first. <!-- begin-user-doc -->
+	 * Creates the meta-model objects for the package. This method is
+	 * guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -830,12 +834,11 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		// Create classes and their features
 		viewEClass = createEClass(VIEW);
 		createEReference(viewEClass, VIEW__ROOT_ECLASS);
+		createEReference(viewEClass, VIEW__CHILDREN);
 
 		abstractCategorizationEClass = createEClass(ABSTRACT_CATEGORIZATION);
-		createEAttribute(abstractCategorizationEClass,
-				ABSTRACT_CATEGORIZATION__NAME);
-		createEReference(abstractCategorizationEClass,
-				ABSTRACT_CATEGORIZATION__ACTIONS);
+		createEAttribute(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__NAME);
+		createEReference(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__ACTIONS);
 
 		ruleEClass = createEClass(RULE);
 		createEReference(ruleEClass, RULE__CONDITION);
@@ -888,8 +891,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEAttribute(customCompositeEClass, CUSTOM_COMPOSITE__CLASS_NAME);
 
 		compositeCollectionEClass = createEClass(COMPOSITE_COLLECTION);
-		createEReference(compositeCollectionEClass,
-				COMPOSITE_COLLECTION__COMPOSITES);
+		createEReference(compositeCollectionEClass, COMPOSITE_COLLECTION__COMPOSITES);
 
 		columnCompositeEClass = createEClass(COLUMN_COMPOSITE);
 
@@ -938,8 +940,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-				.getEPackage(EcorePackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -953,241 +954,178 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		leafConditionEClass.getESuperTypes().add(this.getCondition());
 		orConditionEClass.getESuperTypes().add(this.getCondition());
 		andConditionEClass.getESuperTypes().add(this.getCondition());
-		categorizationEClass.getESuperTypes().add(
-				this.getAbstractCategorization());
+		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		compositeEClass.getESuperTypes().add(this.getRenderable());
 		controlEClass.getESuperTypes().add(this.getAbstractControl());
 		tableControlEClass.getESuperTypes().add(this.getControl());
 		customCompositeEClass.getESuperTypes().add(this.getComposite());
 		compositeCollectionEClass.getESuperTypes().add(this.getComposite());
-		columnCompositeEClass.getESuperTypes().add(
-				this.getCompositeCollection());
+		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
 		columnEClass.getESuperTypes().add(this.getCompositeCollection());
 		groupEClass.getESuperTypes().add(this.getCompositeCollection());
 		treeCategoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		abstractControlEClass.getESuperTypes().add(this.getComposite());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(viewEClass, View.class, "View", !IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null,
-				"rootEClass", null, 1, 1, View.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(viewEClass, View.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", null, 1, 1, View.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getView_Children(), this.getComposite(), null, "children", null, 0, -1, View.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(abstractCategorizationEClass, AbstractCategorization.class,
-				"AbstractCategorization", IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAbstractCategorization_Name(),
-				theEcorePackage.getEString(), "name", null, 1, 1,
-				AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
-		initEReference(getAbstractCategorization_Actions(), this.getAction(),
-				null, "actions", null, 0, -1, AbstractCategorization.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+		initEClass(abstractCategorizationEClass, AbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT,
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAbstractCategorization_Name(), theEcorePackage.getEString(), "name", null, 1, 1,
+			AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAbstractCategorization_Actions(), this.getAction(), null, "actions", null, 0, -1,
+			AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRule_Condition(), this.getCondition(), null,
-				"condition", null, 1, 1, Rule.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRule_Condition(), this.getCondition(), null, "condition", null, 1, 1, Rule.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(showRuleEClass, ShowRule.class, "ShowRule", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getShowRule_Hide(), theEcorePackage.getEBoolean(),
-				"hide", null, 0, 1, ShowRule.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+		initEClass(showRuleEClass, ShowRule.class, "ShowRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getShowRule_Hide(), theEcorePackage.getEBoolean(), "hide", null, 0, 1, ShowRule.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(enableRuleEClass, EnableRule.class, "EnableRule",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnableRule_Disable(), ecorePackage.getEBoolean(),
-				"disable", null, 0, 1, EnableRule.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+		initEClass(enableRuleEClass, EnableRule.class, "EnableRule", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getEnableRule_Disable(), ecorePackage.getEBoolean(), "disable", null, 0, 1, EnableRule.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(conditionEClass, Condition.class, "Condition", IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(conditionEClass, Condition.class, "Condition", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(leafConditionEClass, LeafCondition.class, "LeafCondition",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getLeafCondition_Attribute(),
-				theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
-				LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLeafCondition_ExpectedValue(),
-				ecorePackage.getEJavaObject(), "expectedValue", null, 1, 1,
-				LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
-		initEReference(getLeafCondition_PathToAttribute(),
-				theEcorePackage.getEReference(), null, "pathToAttribute", null,
-				0, -1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(leafConditionEClass, LeafCondition.class, "LeafCondition", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getLeafCondition_Attribute(), theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
+			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLeafCondition_ExpectedValue(), ecorePackage.getEJavaObject(), "expectedValue", null, 1, 1,
+			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getLeafCondition_PathToAttribute(), theEcorePackage.getEReference(), null, "pathToAttribute",
+			null, 0, -1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(orConditionEClass, OrCondition.class, "OrCondition",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrCondition_Conditions(), this.getCondition(), null,
-				"conditions", null, 2, -1, OrCondition.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(orConditionEClass, OrCondition.class, "OrCondition", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getOrCondition_Conditions(), this.getCondition(), null, "conditions", null, 2, -1,
+			OrCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(andConditionEClass, AndCondition.class, "AndCondition",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAndCondition_Conditions(), this.getCondition(), null,
-				"conditions", null, 2, -1, AndCondition.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(andConditionEClass, AndCondition.class, "AndCondition", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAndCondition_Conditions(), this.getCondition(), null, "conditions", null, 2, -1,
+			AndCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(categorizationEClass, Categorization.class,
-				"Categorization", !IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCategorization_Categorizations(),
-				this.getAbstractCategorization(), null, "categorizations",
-				null, 0, -1, Categorization.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(categorizationEClass, Categorization.class, "Categorization", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategorization_Categorizations(), this.getAbstractCategorization(), null, "categorizations",
+			null, 0, -1, Categorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCategory_Composite(), this.getComposite(), null,
-				"composite", null, 0, 1, Category.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategory_Composite(), this.getComposite(), null, "composite", null, 0, 1, Category.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getComposite_Name(), theEcorePackage.getEString(),
-				"name", null, 1, 1, Composite.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getComposite_Name(), theEcorePackage.getEString(), "name", null, 1, 1, Composite.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getControl_TargetFeature(),
-				theEcorePackage.getEStructuralFeature(), null, "targetFeature",
-				null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControl_Hint(), ecorePackage.getEString(), "hint",
-				null, 0, -1, Control.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
-		initEAttribute(getControl_Readonly(), theEcorePackage.getEBoolean(),
-				"readonly", "false", 0, 1, Control.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControl_Mandatory(), theEcorePackage.getEBoolean(),
-				"mandatory", "false", 0, 1, Control.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
-		initEReference(getControl_PathToFeature(),
-				theEcorePackage.getEReference(), null, "pathToFeature", null,
-				0, -1, Control.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getControl_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature",
+			null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControl_Hint(), ecorePackage.getEString(), "hint", null, 0, -1, Control.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControl_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1, Control.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControl_Mandatory(), theEcorePackage.getEBoolean(), "mandatory", "false", 0, 1,
+			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+		initEReference(getControl_PathToFeature(), theEcorePackage.getEReference(), null, "pathToFeature", null, 0, -1,
+			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(tableControlEClass, TableControl.class, "TableControl",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableControl_Columns(), this.getTableColumn(), null,
-				"columns", null, 1, -1, TableControl.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableControl_AddRemoveDisabled(),
-				theEcorePackage.getEBoolean(), "addRemoveDisabled", "false", 1,
-				1, TableControl.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+		initEClass(tableControlEClass, TableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTableControl_Columns(), this.getTableColumn(), null, "columns", null, 1, -1,
+			TableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableControl_AddRemoveDisabled(), theEcorePackage.getEBoolean(), "addRemoveDisabled",
+			"false", 1, 1, TableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(tableColumnEClass, TableColumn.class, "TableColumn",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableColumn_Attribute(),
-				theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
-				TableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-				!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableColumn_ReadOnly(), ecorePackage.getEBoolean(),
-				"readOnly", "false", 1, 1, TableColumn.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+		initEClass(tableColumnEClass, TableColumn.class, "TableColumn", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTableColumn_Attribute(), theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
+			TableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableColumn_ReadOnly(), ecorePackage.getEBoolean(), "readOnly", "false", 1, 1,
+			TableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(customCompositeEClass, CustomComposite.class,
-				"CustomComposite", !IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCustomComposite_Bundle(), ecorePackage.getEString(),
-				"bundle", null, 1, 1, CustomComposite.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCustomComposite_ClassName(),
-				ecorePackage.getEString(), "className", null, 1, 1,
-				CustomComposite.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+		initEClass(customCompositeEClass, CustomComposite.class, "CustomComposite", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCustomComposite_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1,
+			CustomComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCustomComposite_ClassName(), ecorePackage.getEString(), "className", null, 1, 1,
+			CustomComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(compositeCollectionEClass, CompositeCollection.class,
-				"CompositeCollection", IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCompositeCollection_Composites(),
-				this.getComposite(), null, "composites", null, 0, -1,
-				CompositeCollection.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(compositeCollectionEClass, CompositeCollection.class, "CompositeCollection", IS_ABSTRACT,
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCompositeCollection_Composites(), this.getComposite(), null, "composites", null, 0, -1,
+			CompositeCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(columnCompositeEClass, ColumnComposite.class,
-				"ColumnComposite", !IS_ABSTRACT, !IS_INTERFACE,
-				IS_GENERATED_INSTANCE_CLASS);
+		initEClass(columnCompositeEClass, ColumnComposite.class, "ColumnComposite", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(treeCategoryEClass, TreeCategory.class, "TreeCategory",
-				!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTreeCategory_ChildComposite(), this.getComposite(),
-				null, "childComposite", null, 0, 1, TreeCategory.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
-		initEReference(getTreeCategory_TargetFeature(),
-				theEcorePackage.getEStructuralFeature(), null, "targetFeature",
-				null, 1, 1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTreeCategory_PathToFeature(),
-				theEcorePackage.getEReference(), null, "pathToFeature", null,
-				0, -1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(treeCategoryEClass, TreeCategory.class, "TreeCategory", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTreeCategory_ChildComposite(), this.getComposite(), null, "childComposite", null, 0, 1,
+			TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTreeCategory_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature",
+			null, 1, 1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTreeCategory_PathToFeature(), theEcorePackage.getEReference(), null, "pathToFeature", null,
+			0, -1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(renderableEClass, Renderable.class, "Renderable",
-				IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRenderable_Rule(), this.getRule(), null, "rule",
-				null, 0, 1, Renderable.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRenderable_Rule(), this.getRule(), null, "rule", null, 0, 1, Renderable.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 
-		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT,
-				!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle",
-				null, 1, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE,
-				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
-		initEAttribute(getAction_ClassName(), ecorePackage.getEString(),
-				"className", null, 1, 1, Action.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-				!IS_DERIVED, IS_ORDERED);
+		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, Action.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAction_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, Action.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(abstractControlEClass, AbstractControl.class, "AbstractControl", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAbstractControl_TargetFeatures(), theEcorePackage.getEStructuralFeature(), null, "targetFeatures", null, 0, -1, AbstractControl.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEClass(abstractControlEClass, AbstractControl.class, "AbstractControl", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAbstractControl_TargetFeatures(), theEcorePackage.getEStructuralFeature(), null,
+			"targetFeatures", null, 0, -1, AbstractControl.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+			!IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

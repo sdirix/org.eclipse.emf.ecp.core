@@ -12,13 +12,14 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public class GroupImpl extends CompositeCollectionImpl implements Group {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected GroupImpl() {
@@ -28,6 +29,7 @@ public class GroupImpl extends CompositeCollectionImpl implements Group {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -35,4 +37,4 @@ public class GroupImpl extends CompositeCollectionImpl implements Group {
 		return ViewPackage.Literals.GROUP;
 	}
 
-} //GroupImpl
+} // GroupImpl

@@ -2,6 +2,8 @@
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -15,8 +17,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
-import java.util.Collection;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Control</b></em>'.
@@ -24,14 +24,14 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getTargetFeature <em>Target Feature</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getHint <em>Hint</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isReadonly <em>Readonly</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getPathToFeature <em>Path To Feature</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getTargetFeature <em>Target Feature</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getHint <em>Hint</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isReadonly <em>Readonly</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getPathToFeature <em>Path To Feature</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ControlImpl extends AbstractControlImpl implements Control {
@@ -39,6 +39,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The cached value of the '{@link #getTargetFeature() <em>Target Feature</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getTargetFeature()
 	 * @generated
 	 * @ordered
@@ -49,6 +50,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The cached value of the '{@link #getHint() <em>Hint</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getHint()
 	 * @generated
 	 * @ordered
@@ -59,6 +61,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The default value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isReadonly()
 	 * @generated
 	 * @ordered
@@ -69,6 +72,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The cached value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isReadonly()
 	 * @generated
 	 * @ordered
@@ -79,6 +83,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isMandatory()
 	 * @generated
 	 * @ordered
@@ -89,6 +94,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isMandatory()
 	 * @generated
 	 * @ordered
@@ -99,6 +105,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * The cached value of the '{@link #getPathToFeature() <em>Path To Feature</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getPathToFeature()
 	 * @generated
 	 * @ordered
@@ -108,6 +115,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ControlImpl() {
@@ -117,6 +125,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -127,15 +136,17 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EStructuralFeature getTargetFeature() {
 		if (targetFeature != null && targetFeature.eIsProxy()) {
-			InternalEObject oldTargetFeature = (InternalEObject)targetFeature;
-			targetFeature = (EStructuralFeature)eResolveProxy(oldTargetFeature);
+			InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
+			targetFeature = (EStructuralFeature) eResolveProxy(oldTargetFeature);
 			if (targetFeature != oldTargetFeature) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.CONTROL__TARGET_FEATURE, oldTargetFeature, targetFeature));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.CONTROL__TARGET_FEATURE,
+						oldTargetFeature, targetFeature));
 			}
 		}
 		return targetFeature;
@@ -144,6 +155,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EStructuralFeature basicGetTargetFeature() {
@@ -153,18 +165,21 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setTargetFeature(EStructuralFeature newTargetFeature) {
 		EStructuralFeature oldTargetFeature = targetFeature;
 		targetFeature = newTargetFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__TARGET_FEATURE, oldTargetFeature, targetFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__TARGET_FEATURE,
+				oldTargetFeature, targetFeature));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<String> getHint() {
@@ -177,6 +192,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isReadonly() {
@@ -186,6 +202,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setReadonly(boolean newReadonly) {
@@ -198,6 +215,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isMandatory() {
@@ -207,23 +225,27 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setMandatory(boolean newMandatory) {
 		boolean oldMandatory = mandatory;
 		mandatory = newMandatory;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory, mandatory));
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
+				mandatory));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<EReference> getPathToFeature() {
 		if (pathToFeature == null) {
-			pathToFeature = new EObjectResolvingEList<EReference>(EReference.class, this, ViewPackage.CONTROL__PATH_TO_FEATURE);
+			pathToFeature = new EObjectResolvingEList<EReference>(EReference.class, this,
+				ViewPackage.CONTROL__PATH_TO_FEATURE);
 		}
 		return pathToFeature;
 	}
@@ -231,22 +253,24 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ViewPackage.CONTROL__TARGET_FEATURE:
-				if (resolve) return getTargetFeature();
-				return basicGetTargetFeature();
-			case ViewPackage.CONTROL__HINT:
-				return getHint();
-			case ViewPackage.CONTROL__READONLY:
-				return isReadonly();
-			case ViewPackage.CONTROL__MANDATORY:
-				return isMandatory();
-			case ViewPackage.CONTROL__PATH_TO_FEATURE:
-				return getPathToFeature();
+		case ViewPackage.CONTROL__TARGET_FEATURE:
+			if (resolve)
+				return getTargetFeature();
+			return basicGetTargetFeature();
+		case ViewPackage.CONTROL__HINT:
+			return getHint();
+		case ViewPackage.CONTROL__READONLY:
+			return isReadonly();
+		case ViewPackage.CONTROL__MANDATORY:
+			return isMandatory();
+		case ViewPackage.CONTROL__PATH_TO_FEATURE:
+			return getPathToFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -254,29 +278,30 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ViewPackage.CONTROL__TARGET_FEATURE:
-				setTargetFeature((EStructuralFeature)newValue);
-				return;
-			case ViewPackage.CONTROL__HINT:
-				getHint().clear();
-				getHint().addAll((Collection<? extends String>)newValue);
-				return;
-			case ViewPackage.CONTROL__READONLY:
-				setReadonly((Boolean)newValue);
-				return;
-			case ViewPackage.CONTROL__MANDATORY:
-				setMandatory((Boolean)newValue);
-				return;
-			case ViewPackage.CONTROL__PATH_TO_FEATURE:
-				getPathToFeature().clear();
-				getPathToFeature().addAll((Collection<? extends EReference>)newValue);
-				return;
+		case ViewPackage.CONTROL__TARGET_FEATURE:
+			setTargetFeature((EStructuralFeature) newValue);
+			return;
+		case ViewPackage.CONTROL__HINT:
+			getHint().clear();
+			getHint().addAll((Collection<? extends String>) newValue);
+			return;
+		case ViewPackage.CONTROL__READONLY:
+			setReadonly((Boolean) newValue);
+			return;
+		case ViewPackage.CONTROL__MANDATORY:
+			setMandatory((Boolean) newValue);
+			return;
+		case ViewPackage.CONTROL__PATH_TO_FEATURE:
+			getPathToFeature().clear();
+			getPathToFeature().addAll((Collection<? extends EReference>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -284,26 +309,27 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ViewPackage.CONTROL__TARGET_FEATURE:
-				setTargetFeature((EStructuralFeature)null);
-				return;
-			case ViewPackage.CONTROL__HINT:
-				getHint().clear();
-				return;
-			case ViewPackage.CONTROL__READONLY:
-				setReadonly(READONLY_EDEFAULT);
-				return;
-			case ViewPackage.CONTROL__MANDATORY:
-				setMandatory(MANDATORY_EDEFAULT);
-				return;
-			case ViewPackage.CONTROL__PATH_TO_FEATURE:
-				getPathToFeature().clear();
-				return;
+		case ViewPackage.CONTROL__TARGET_FEATURE:
+			setTargetFeature((EStructuralFeature) null);
+			return;
+		case ViewPackage.CONTROL__HINT:
+			getHint().clear();
+			return;
+		case ViewPackage.CONTROL__READONLY:
+			setReadonly(READONLY_EDEFAULT);
+			return;
+		case ViewPackage.CONTROL__MANDATORY:
+			setMandatory(MANDATORY_EDEFAULT);
+			return;
+		case ViewPackage.CONTROL__PATH_TO_FEATURE:
+			getPathToFeature().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -311,21 +337,22 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ViewPackage.CONTROL__TARGET_FEATURE:
-				return targetFeature != null;
-			case ViewPackage.CONTROL__HINT:
-				return hint != null && !hint.isEmpty();
-			case ViewPackage.CONTROL__READONLY:
-				return readonly != READONLY_EDEFAULT;
-			case ViewPackage.CONTROL__MANDATORY:
-				return mandatory != MANDATORY_EDEFAULT;
-			case ViewPackage.CONTROL__PATH_TO_FEATURE:
-				return pathToFeature != null && !pathToFeature.isEmpty();
+		case ViewPackage.CONTROL__TARGET_FEATURE:
+			return targetFeature != null;
+		case ViewPackage.CONTROL__HINT:
+			return hint != null && !hint.isEmpty();
+		case ViewPackage.CONTROL__READONLY:
+			return readonly != READONLY_EDEFAULT;
+		case ViewPackage.CONTROL__MANDATORY:
+			return mandatory != MANDATORY_EDEFAULT;
+		case ViewPackage.CONTROL__PATH_TO_FEATURE:
+			return pathToFeature != null && !pathToFeature.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -333,11 +360,13 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hint: ");
