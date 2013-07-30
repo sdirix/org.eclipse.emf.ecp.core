@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.ui.view.separator.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -30,8 +29,7 @@ import org.junit.Test;
 public class SeparatorTest {
 
 	@Test
-	public void testSeparator() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		ECPProjectWithNameExistsException {
+	public void testSeparator() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		// setup model
 		View view = ViewFactory.eINSTANCE.createView();

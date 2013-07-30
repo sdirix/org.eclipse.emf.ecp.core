@@ -10,8 +10,11 @@ public class CategoryNodeBuilder implements NodeBuilder<Category> {
 
 	public Node<Category> build(Category category, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		Node<Category> node = new Node<Category>(category, context);
-		Node<Composite> child = NodeBuilders.INSTANCE.build(category.getComposite(), context,
+		final Node<Category> node = new Node<Category>(category, context);
+		if (category.getComposite() == null) {
+			return node;
+		}
+		final Node<Composite> child = NodeBuilders.INSTANCE.build(category.getComposite(), context,
 			adapterFactoryItemDelegator);
 		node.addChild(child);
 		return node;
