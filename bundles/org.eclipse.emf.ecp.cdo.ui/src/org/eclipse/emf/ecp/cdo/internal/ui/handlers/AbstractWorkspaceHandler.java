@@ -35,20 +35,36 @@ import org.eclipse.ui.services.IEvaluationService;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * Abstract Handler for executing commands.
+ * 
  * @author Eike Stepper
  */
 public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 	private final String jobName;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param jobName display job name
+	 */
 	public AbstractWorkspaceHandler(String jobName) {
 		this.jobName = jobName;
 	}
 
+	/**
+	 * Get the display name of the current job.
+	 * 
+	 * @return the name
+	 */
 	public final String getJobName() {
 		return jobName;
 	}
 
-	/** {@inheritDoc} */
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public final Object execute(final ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
 		if (selection instanceof IStructuredSelection) {
@@ -63,7 +79,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 								InterruptedException {
 								try {
 									execute(event, workspace, monitor);
-								} catch (Exception ex) {
+								} catch (ExecutionException ex) {
 									Activator.log(ex);
 								}
 							}
@@ -75,13 +91,15 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 								try {
 									execute(event, workspace, monitor);
 									return Status.OK_STATUS;
-								} catch (Exception ex) {
+								} catch (ExecutionException ex) {
 									return new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex);
 								}
 							}
 						}.schedule();
 					}
-				} catch (Exception ex) {
+				} catch (InvocationTargetException ex) {
+					throw new ExecutionException("Problem while handling " + element, ex);
+				} catch (InterruptedException ex) {
 					throw new ExecutionException("Problem while handling " + element, ex);
 				}
 			}
@@ -90,10 +108,24 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 		return null;
 	}
 
+	/**
+	 * Execute the given event.
+	 * 
+	 * @param event the event
+	 * @param workspace the {@link CDOWorkspace}
+	 * @param monitor a progress monitor
+	 * @throws ExecutionException if execution fails
+	 */
 	protected abstract void execute(ExecutionEvent event, CDOWorkspace workspace, IProgressMonitor monitor)
-		throws Exception;
+		throws ExecutionException;
 
-	public static void refreshDirtyState(ExecutionEvent event) throws ExecutionException {
+	/**
+	 * Refresh the dirty state of the {@link CDOWorkspace}.
+	 * 
+	 * @param event the event
+	 * @throws ExecutionException if refresh fails
+	 */
+	protected static void refreshDirtyState(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		IEvaluationService service = (IEvaluationService) ww.getService(IEvaluationService.class);
 		if (service != null) {

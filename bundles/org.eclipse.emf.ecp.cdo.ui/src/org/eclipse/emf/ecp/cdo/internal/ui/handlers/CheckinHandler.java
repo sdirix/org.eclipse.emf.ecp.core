@@ -12,24 +12,38 @@
 package org.eclipse.emf.ecp.cdo.internal.ui.handlers;
 
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
+ * Handles Checkins.
+ * 
  * @author Eike Stepper
  */
 public class CheckinHandler extends AbstractWorkspaceHandler {
+
+	/**
+	 * Default constructor.
+	 */
 	public CheckinHandler() {
 		super("Updating...");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void execute(ExecutionEvent event, CDOWorkspace workspace, IProgressMonitor monitor) throws Exception {
+	protected void execute(ExecutionEvent event, CDOWorkspace workspace, IProgressMonitor monitor)
+		throws ExecutionException {
 		// TODO remove
 		CDOUtil.setLegacyModeDefault(true);
-		workspace.checkin("Workspace checkin");
+		try {
+			workspace.checkin("Workspace checkin");
+		} catch (CommitException ex) {
+			throw new ExecutionException("Commit failed!", ex);
+		}
 		refreshDirtyState(event);
 	}
 }

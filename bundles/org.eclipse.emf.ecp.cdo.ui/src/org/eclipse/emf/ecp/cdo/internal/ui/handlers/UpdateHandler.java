@@ -13,27 +13,44 @@ package org.eclipse.emf.ecp.cdo.internal.ui.handlers;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
+ * Handles Updates.
+ * 
  * @author Eike Stepper
  */
 public class UpdateHandler extends AbstractWorkspaceHandler {
+
+	/**
+	 * Default Constructor.
+	 */
 	public UpdateHandler() {
 		super("Checking in...");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void execute(ExecutionEvent event, CDOWorkspace workspace, IProgressMonitor monitor) throws Exception {
+	protected void execute(ExecutionEvent event, CDOWorkspace workspace, IProgressMonitor monitor)
+		throws ExecutionException {
 		CDOUtil.setLegacyModeDefault(true);
 		CDOTransaction transaction = workspace.update(new DefaultCDOMerger.PerFeature.ManyValued());
 		transaction.setCommitComment("Updated from remote");
-		transaction.commit();
+		try {
+			transaction.commit();
+		} catch (ConcurrentAccessException ex) {
+			throw new ExecutionException("Commit failed!", ex);
+		} catch (CommitException ex) {
+			throw new ExecutionException("Commit failed!", ex);
+		}
 		refreshDirtyState(event);
 	}
 }
