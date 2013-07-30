@@ -15,18 +15,14 @@ package org.eclipse.emf.ecp.ui.view.swt.separator.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
-import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.separator.model.Separator;
@@ -71,11 +67,7 @@ public class SWTSeparatorTest {
 		// parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		// parent.setLayout(new GridLayout());
 
-		// setup context
-		ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
-		ECPProject project = ECPProjectManagerImpl.INSTANCE.createProject(provider, "test");
-		project.getContents().add(view);
-		ECPControlContextImpl context = new ECPControlContextImpl(view, project, shell);
+		ECPControlContextImpl context = ViewTestHelper.createECPControlContext(view, shell);
 
 		// test SWTRenderer
 		Node<View> node = NodeBuilders.INSTANCE.build(view, context);
