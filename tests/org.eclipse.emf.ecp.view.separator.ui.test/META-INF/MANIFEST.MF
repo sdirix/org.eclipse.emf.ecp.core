@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.separator.ui.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.eclipse.emf.ecp.view.separator.ui;bundle-version="1.0.0.qualifier"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.junit,
+ org.eclipse.emf.ecp.core,
+ org.eclipse.emf.ecp.ui.view,
+ org.eclipse.emf.ecp.edit

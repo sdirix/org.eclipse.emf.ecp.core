@@ -161,11 +161,6 @@ public class CompositeCollectionItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				 ViewFactory.eINSTANCE.createSeperator()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
 				 ViewFactory.eINSTANCE.createColumnComposite()));
 
 		newChildDescriptors.add

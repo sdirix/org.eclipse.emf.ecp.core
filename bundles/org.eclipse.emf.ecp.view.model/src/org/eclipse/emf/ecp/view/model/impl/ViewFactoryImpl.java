@@ -20,7 +20,6 @@ import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.OrCondition;
-import org.eclipse.emf.ecp.view.model.Seperator;
 import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
@@ -30,16 +29,16 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
+ * 
  * @generated
  */
 public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static ViewFactory init() {
@@ -48,17 +47,16 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			if (theViewFactory != null) {
 				return theViewFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new ViewFactoryImpl();
 	}
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ViewFactoryImpl() {
@@ -66,39 +64,56 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ViewPackage.VIEW: return createView();
-			case ViewPackage.SHOW_RULE: return createShowRule();
-			case ViewPackage.ENABLE_RULE: return createEnableRule();
-			case ViewPackage.LEAF_CONDITION: return createLeafCondition();
-			case ViewPackage.OR_CONDITION: return createOrCondition();
-			case ViewPackage.AND_CONDITION: return createAndCondition();
-			case ViewPackage.CATEGORIZATION: return createCategorization();
-			case ViewPackage.CATEGORY: return createCategory();
-			case ViewPackage.CONTROL: return createControl();
-			case ViewPackage.TABLE_CONTROL: return createTableControl();
-			case ViewPackage.TABLE_COLUMN: return createTableColumn();
-			case ViewPackage.CUSTOM_COMPOSITE: return createCustomComposite();
-			case ViewPackage.SEPERATOR: return createSeperator();
-			case ViewPackage.COLUMN_COMPOSITE: return createColumnComposite();
-			case ViewPackage.COLUMN: return createColumn();
-			case ViewPackage.GROUP: return createGroup();
-			case ViewPackage.TREE_CATEGORY: return createTreeCategory();
-			case ViewPackage.ACTION: return createAction();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case ViewPackage.VIEW:
+			return createView();
+		case ViewPackage.SHOW_RULE:
+			return createShowRule();
+		case ViewPackage.ENABLE_RULE:
+			return createEnableRule();
+		case ViewPackage.LEAF_CONDITION:
+			return createLeafCondition();
+		case ViewPackage.OR_CONDITION:
+			return createOrCondition();
+		case ViewPackage.AND_CONDITION:
+			return createAndCondition();
+		case ViewPackage.CATEGORIZATION:
+			return createCategorization();
+		case ViewPackage.CATEGORY:
+			return createCategory();
+		case ViewPackage.CONTROL:
+			return createControl();
+		case ViewPackage.TABLE_CONTROL:
+			return createTableControl();
+		case ViewPackage.TABLE_COLUMN:
+			return createTableColumn();
+		case ViewPackage.CUSTOM_COMPOSITE:
+			return createCustomComposite();
+		case ViewPackage.COLUMN_COMPOSITE:
+			return createColumnComposite();
+		case ViewPackage.COLUMN:
+			return createColumn();
+		case ViewPackage.GROUP:
+			return createGroup();
+		case ViewPackage.TREE_CATEGORY:
+			return createTreeCategory();
+		case ViewPackage.ACTION:
+			return createAction();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName()
+					+ "' is not a valid classifier");
 		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public View createView() {
@@ -107,8 +122,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ShowRule createShowRule() {
@@ -117,8 +132,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EnableRule createEnableRule() {
@@ -127,8 +142,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public LeafCondition createLeafCondition() {
@@ -137,8 +152,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public OrCondition createOrCondition() {
@@ -147,8 +162,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public AndCondition createAndCondition() {
@@ -157,8 +172,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Categorization createCategorization() {
@@ -167,8 +182,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Category createCategory() {
@@ -177,8 +192,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Control createControl() {
@@ -187,8 +202,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public TableControl createTableControl() {
@@ -197,8 +212,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public TableColumn createTableColumn() {
@@ -207,8 +222,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CustomComposite createCustomComposite() {
@@ -217,18 +232,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Seperator createSeperator() {
-		SeperatorImpl seperator = new SeperatorImpl();
-		return seperator;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ColumnComposite createColumnComposite() {
@@ -237,8 +242,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Column createColumn() {
@@ -247,8 +252,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Group createGroup() {
@@ -257,8 +262,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public TreeCategory createTreeCategory() {
@@ -267,8 +272,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Action createAction() {
@@ -277,17 +282,17 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ViewPackage getViewPackage() {
-		return (ViewPackage)getEPackage();
+		return (ViewPackage) getEPackage();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -296,4 +301,4 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 		return ViewPackage.eINSTANCE;
 	}
 
-} //ViewFactoryImpl
+} // ViewFactoryImpl

@@ -209,11 +209,6 @@ public class TreeCategoryItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
-				 ViewFactory.eINSTANCE.createSeperator()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
 				 ViewFactory.eINSTANCE.createColumnComposite()));
 
 		newChildDescriptors.add

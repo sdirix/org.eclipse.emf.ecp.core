@@ -360,29 +360,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Seperator} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected SeperatorItemProvider seperatorItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.Seperator}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createSeperatorAdapter() {
-		if (seperatorItemProvider == null) {
-			seperatorItemProvider = new SeperatorItemProvider(this);
-		}
-
-		return seperatorItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.ColumnComposite} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -635,7 +612,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		if (tableControlItemProvider != null) tableControlItemProvider.dispose();
 		if (tableColumnItemProvider != null) tableColumnItemProvider.dispose();
 		if (customCompositeItemProvider != null) customCompositeItemProvider.dispose();
-		if (seperatorItemProvider != null) seperatorItemProvider.dispose();
 		if (columnCompositeItemProvider != null) columnCompositeItemProvider.dispose();
 		if (columnItemProvider != null) columnItemProvider.dispose();
 		if (groupItemProvider != null) groupItemProvider.dispose();
