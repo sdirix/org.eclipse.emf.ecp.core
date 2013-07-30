@@ -101,8 +101,8 @@ public class Activator extends Plugin {
 		serverBrowser.deactivate();
 		serverBrowser = null;
 
-		if (CDOProvider.INSTANCE != null) {
-			CDOProvider.INSTANCE.dispose();
+		if (CDOProvider.getInstance() != null) {
+			CDOProvider.getInstance().dispose();
 		}
 
 		instance = null;

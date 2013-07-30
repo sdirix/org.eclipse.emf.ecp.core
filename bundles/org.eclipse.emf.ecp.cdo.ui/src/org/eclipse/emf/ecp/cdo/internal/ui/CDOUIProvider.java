@@ -42,9 +42,15 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
 /**
+ * Provides UI for the CDO Provider for ECP.
+ * 
  * @author Eike Stepper
  */
 public class CDOUIProvider extends DefaultUIProvider {
+
+	/**
+	 * Default Constructor.
+	 */
 	public CDOUIProvider() {
 		super(CDOProvider.NAME);
 	}
@@ -80,7 +86,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		if (adapterType == IPropertySourceProvider.class && adaptable instanceof InternalProject) {
-			final CDOWorkspace workspace = CDOProvider.INSTANCE.getAdapter(adaptable, CDOWorkspace.class);
+			final CDOWorkspace workspace = CDOProvider.getInstance().getAdapter(adaptable, CDOWorkspace.class);
 			if (workspace != null) {
 				return (T) new IPropertySourceProvider() {
 					public IPropertySource getPropertySource(Object object) {

@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.h2.jdbcx.JdbcDataSource;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Collection;
 
@@ -51,31 +52,69 @@ import java.util.Collection;
  * @author Eike Stepper
  */
 public class CDOProvider extends DefaultProvider {
+	/**
+	 * The unique provider name.
+	 */
 	public static final String NAME = "org.eclipse.emf.ecp.cdo.provider";
 
+	/**
+	 * The key for the connector type ECP project property.
+	 */
 	public static final String PROP_CONNECTOR_TYPE = "connectorType";
 
+	/**
+	 * The key for the connector description ECP project property.
+	 */
 	public static final String PROP_CONNECTOR_DESCRIPTION = "connectorDescription";
 
+	/**
+	 * The key for the repository name ECP project property.
+	 */
 	public static final String PROP_REPOSITORY_NAME = "repositoryName";
 
+	/**
+	 * The key for the branch path ECP project property.
+	 */
 	public static final String PROP_BRANCH_PATH = "branchPath";
 
+	/**
+	 * The key for the time stamp ECP project property.
+	 */
 	public static final String PROP_TIME_STAMP = "timeStamp";
 
+	/**
+	 * The key for the workspace ID ECP project property.
+	 */
 	public static final String PROP_WORKSPACE_ID = "workspaceID";
 
-	public static CDOProvider INSTANCE;
+	/**
+	 * Contains the singleton instance of this provider.
+	 */
+	private static CDOProvider instance;
 
+	/**
+	 * Default constructor.
+	 */
+	@SuppressWarnings("deprecation")
 	public CDOProvider() {
 		super(NAME);
-		INSTANCE = this;
+		instance = this;
 		CDOUtil.setLegacyModeDefault(true);
+	}
+
+	/**
+	 * Get the CDO Provider singleton.
+	 * 
+	 * @return the singleton instance or null
+	 */
+	public static CDOProvider getInstance() {
+		// TODO: what if instance is still null because constructor was never called?
+		return instance;
 	}
 
 	@Override
 	protected void doDispose() {
-		INSTANCE = null;
+		instance = null;
 		super.doDispose();
 	}
 
@@ -138,6 +177,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
 	public EList<Object> getElements(InternalProject project) {
 		CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		return (EList<Object>) (EList<?>) data.getTransaction().getResourceSet().getResources();
@@ -174,26 +214,38 @@ public class CDOProvider extends DefaultProvider {
 		}
 	}
 
+	/**
+	 * Creates a provider specific project for the given internal project.
+	 * 
+	 * @param project the internal project
+	 */
 	protected void createProject(InternalProject project) {
 		String workspaceID = UUIDGenerator.DEFAULT.generate();
 		project.getProperties().addProperty(PROP_WORKSPACE_ID, workspaceID);
 
 		CDOProjectData projectData = getProjectData(project);
 		projectData.checkoutWorkspace();
-		project.saveProperties();
 		File folder = getProjectFolder(project);
 		PrintStream stream = null;
 
 		try {
 			stream = new PrintStream(new File(folder, "ecp.properties"));
 			stream.println("project.name = " + project.getName());
-		} catch (Exception ex) {
+
+		} catch (FileNotFoundException ex) {
 			Activator.log(ex);
+			throw new IllegalStateException("Retrieving project folder failed!", ex);
 		} finally {
 			IOUtil.close(stream);
 		}
 	}
 
+	/**
+	 * Create and store a {@link CDOWorkspaceConfiguration} for the given internal project.
+	 * 
+	 * @param project the internal project.
+	 * @return the {@link CDOWorkspaceConfiguration}
+	 */
 	protected CDOWorkspaceConfiguration createWorkspaceConfiguration(InternalProject project) {
 		File folder = getProjectFolder(project);
 		folder.mkdirs();
@@ -217,6 +269,13 @@ public class CDOProvider extends DefaultProvider {
 		return config;
 	}
 
+	/**
+	 * Create and store a {@link CDOWorkspaceBase}.
+	 * 
+	 * @param project the internal project.
+	 * @param folder the folder to put the {@link CDOWorkspaceBase} into
+	 * @return the {@link CDOWorkspaceBase}
+	 */
 	protected CDOWorkspaceBase createWorkspaceBase(InternalProject project, File folder) {
 		File base = new File(folder, "base");
 		base.mkdirs();
@@ -224,6 +283,13 @@ public class CDOProvider extends DefaultProvider {
 		return CDOWorkspaceUtil.createFolderWorkspaceBase(base);
 	}
 
+	/**
+	 * Create a local {@link IDBStore}.
+	 * 
+	 * @param project the internal project
+	 * @param folder the folder to store the data in
+	 * @return the {@link IDBStore}
+	 */
 	protected IDBStore createLocalStore(InternalProject project, File folder) {
 		File local = new File(folder, "local");
 		local.mkdirs();
@@ -238,11 +304,21 @@ public class CDOProvider extends DefaultProvider {
 		return CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 	}
 
+	/**
+	 * Dispose the given project and its data.
+	 * 
+	 * @param project the internal project
+	 */
 	protected void disposeProject(InternalProject project) {
 		CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		data.dispose();
 	}
 
+	/**
+	 * Remove the internal project and its configuration data.
+	 * 
+	 * @param project the internal project
+	 */
 	protected void removeProject(InternalProject project) {
 		File folder = getProjectFolder(project);
 		if (folder.exists()) {
@@ -252,6 +328,12 @@ public class CDOProvider extends DefaultProvider {
 		}
 	}
 
+	/**
+	 * Retrieve {@link CDORepositoryData} for a given {@link InternalRepository}.
+	 * 
+	 * @param repository the internal repositorz
+	 * @return the {@link CDORepositoryData}
+	 */
 	public static CDORepositoryData getRepositoryData(InternalRepository repository) {
 		synchronized (repository) {
 			CDORepositoryData data = (CDORepositoryData) repository.getProviderSpecificData();
@@ -264,6 +346,12 @@ public class CDOProvider extends DefaultProvider {
 		}
 	}
 
+	/**
+	 * Get {@link CDOProjectData} for the given internal project.
+	 * 
+	 * @param project the internal project
+	 * @return the {@link CDOProjectData}
+	 */
 	public static CDOProjectData getProjectData(InternalProject project) {
 		synchronized (project) {
 			CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
@@ -276,6 +364,12 @@ public class CDOProvider extends DefaultProvider {
 		}
 	}
 
+	/**
+	 * Get the folder for the configuration data of the internal project.
+	 * 
+	 * @param project the internal project.
+	 * @return the {@link File}
+	 */
 	public static File getProjectFolder(InternalProject project) {
 		String workspaceID = project.getProperties().getValue(PROP_WORKSPACE_ID);
 		return new File(Activator.getInstance().getStateLocation().toFile(), workspaceID);
