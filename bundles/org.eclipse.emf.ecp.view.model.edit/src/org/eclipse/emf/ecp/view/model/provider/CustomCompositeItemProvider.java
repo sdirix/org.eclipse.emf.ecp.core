@@ -54,7 +54,8 @@ public class CustomCompositeItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addBundlePropertyDescriptor(object);
@@ -148,7 +149,8 @@ public class CustomCompositeItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(CustomComposite.class)) {
+		switch (notification.getFeatureID(CustomComposite.class))
+		{
 		case ViewPackage.CUSTOM_COMPOSITE__BUNDLE:
 		case ViewPackage.CUSTOM_COMPOSITE__CLASS_NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

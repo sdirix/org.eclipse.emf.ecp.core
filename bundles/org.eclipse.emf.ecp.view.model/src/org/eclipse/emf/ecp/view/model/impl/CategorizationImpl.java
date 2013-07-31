@@ -67,7 +67,8 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	 * @generated
 	 */
 	public EList<AbstractCategorization> getCategorizations() {
-		if (categorizations == null) {
+		if (categorizations == null)
+		{
 			categorizations = new EObjectContainmentEList<AbstractCategorization>(AbstractCategorization.class, this,
 				ViewPackage.CATEGORIZATION__CATEGORIZATIONS);
 		}
@@ -82,7 +83,8 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
 			return ((InternalEList<?>) getCategorizations()).basicRemove(otherEnd, msgs);
 		}
@@ -97,7 +99,8 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
 			return getCategorizations();
 		}
@@ -113,7 +116,8 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
 			getCategorizations().clear();
 			getCategorizations().addAll((Collection<? extends AbstractCategorization>) newValue);
@@ -130,7 +134,8 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
 			getCategorizations().clear();
 			return;
@@ -146,7 +151,8 @@ public class CategorizationImpl extends AbstractCategorizationImpl implements Ca
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
 			return categorizations != null && !categorizations.isEmpty();
 		}

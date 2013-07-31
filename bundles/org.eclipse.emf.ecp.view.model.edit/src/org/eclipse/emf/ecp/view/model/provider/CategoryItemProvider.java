@@ -55,7 +55,8 @@ public class CategoryItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addCompositePropertyDescriptor(object);
@@ -97,7 +98,8 @@ public class CategoryItemProvider
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ViewPackage.Literals.CATEGORY__COMPOSITE);
 		}
@@ -155,7 +157,8 @@ public class CategoryItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Category.class)) {
+		switch (notification.getFeatureID(Category.class))
+		{
 		case ViewPackage.CATEGORY__COMPOSITE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;

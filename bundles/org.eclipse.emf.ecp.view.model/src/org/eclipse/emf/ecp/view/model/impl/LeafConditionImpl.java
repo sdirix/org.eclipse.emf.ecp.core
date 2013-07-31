@@ -103,10 +103,12 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	public EAttribute getAttribute() {
-		if (attribute != null && attribute.eIsProxy()) {
+		if (attribute != null && attribute.eIsProxy())
+		{
 			InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
-			if (attribute != oldAttribute) {
+			if (attribute != oldAttribute)
+			{
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.LEAF_CONDITION__ATTRIBUTE,
 						oldAttribute, attribute));
@@ -170,7 +172,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	public EList<EReference> getPathToAttribute() {
-		if (pathToAttribute == null) {
+		if (pathToAttribute == null)
+		{
 			pathToAttribute = new EObjectResolvingEList<EReference>(EReference.class, this,
 				ViewPackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE);
 		}
@@ -185,7 +188,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.LEAF_CONDITION__ATTRIBUTE:
 			if (resolve)
 				return getAttribute();
@@ -207,7 +211,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.LEAF_CONDITION__ATTRIBUTE:
 			setAttribute((EAttribute) newValue);
 			return;
@@ -230,7 +235,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.LEAF_CONDITION__ATTRIBUTE:
 			setAttribute((EAttribute) null);
 			return;
@@ -252,7 +258,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.LEAF_CONDITION__ATTRIBUTE:
 			return attribute != null;
 		case ViewPackage.LEAF_CONDITION__EXPECTED_VALUE:

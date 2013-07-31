@@ -4,6 +4,7 @@ package org.eclipse.emf.ecp.view.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -630,6 +631,16 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE__NAME = RENDERABLE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__ATTACHMENTS = RENDERABLE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Composite</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -637,7 +648,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSITE_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 1;
+	int COMPOSITE_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl <em>Control</em>}' class.
@@ -788,6 +799,16 @@ public interface ViewPackage extends EPackage {
 	int ABSTRACT_CONTROL__NAME = COMPOSITE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -826,6 +847,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__ATTACHMENTS = ABSTRACT_CONTROL__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
@@ -888,6 +919,16 @@ public interface ViewPackage extends EPackage {
 	int CONTROL__PATH_TO_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -895,7 +936,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
+	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -916,6 +957,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__NAME = CONTROL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__ATTACHMENTS = CONTROL__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
@@ -976,6 +1027,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__PATH_TO_FEATURE = CONTROL__PATH_TO_FEATURE;
+
+	/**
+	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__LABEL_ALIGNMENT = CONTROL__LABEL_ALIGNMENT;
 
 	/**
 	 * The feature id for the '<em><b>Columns</b></em>' containment reference list.
@@ -1058,6 +1119,16 @@ public interface ViewPackage extends EPackage {
 	int CUSTOM_COMPOSITE__NAME = COMPOSITE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_COMPOSITE__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1108,6 +1179,16 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_COLLECTION__NAME = COMPOSITE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_COLLECTION__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1146,6 +1227,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLUMN_COMPOSITE__NAME = COMPOSITE_COLLECTION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN_COMPOSITE__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -1188,6 +1279,16 @@ public interface ViewPackage extends EPackage {
 	int COLUMN__NAME = COMPOSITE_COLLECTION__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1226,6 +1327,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUP__NAME = COMPOSITE_COLLECTION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -1346,6 +1457,39 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ACTION_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AttachmentImpl <em>Attachment</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.AttachmentImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
+	 * @generated
+	 */
+	int ATTACHMENT = 24;
+
+	/**
+	 * The number of structural features of the '<em>Attachment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHMENT_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.Alignment
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
+	 * @generated
+	 */
+	int ALIGNMENT = 25;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1676,6 +1820,19 @@ public interface ViewPackage extends EPackage {
 	EAttribute getComposite_Name();
 
 	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.model.Composite#getAttachments <em>Attachments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference list '<em>Attachments</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Composite#getAttachments()
+	 * @see #getComposite()
+	 * @generated
+	 */
+	EReference getComposite_Attachments();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1750,6 +1907,19 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getControl_PathToFeature();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment
+	 * <em>Label Alignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Label Alignment</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Control#getLabelAlignment()
+	 * @see #getControl()
+	 * @generated
+	 */
+	EAttribute getControl_LabelAlignment();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.TableControl <em>Table Control</em>}'.
@@ -2059,6 +2229,28 @@ public interface ViewPackage extends EPackage {
 	EReference getAbstractControl_TargetFeatures();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Attachment <em>Attachment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Attachment</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Attachment
+	 * @generated
+	 */
+	EClass getAttachment();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for enum '<em>Alignment</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Alignment
+	 * @generated
+	 */
+	EEnum getAlignment();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2360,6 +2552,15 @@ public interface ViewPackage extends EPackage {
 		EAttribute COMPOSITE__NAME = eINSTANCE.getComposite_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Attachments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference COMPOSITE__ATTACHMENTS = eINSTANCE.getComposite_Attachments();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl <em>Control</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
@@ -2415,6 +2616,15 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONTROL__PATH_TO_FEATURE = eINSTANCE.getControl_PathToFeature();
+
+		/**
+		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl
@@ -2672,6 +2882,29 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ABSTRACT_CONTROL__TARGET_FEATURES = eINSTANCE.getAbstractControl_TargetFeatures();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.AttachmentImpl
+		 * <em>Attachment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.impl.AttachmentImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
+		 * @generated
+		 */
+		EClass ATTACHMENT = eINSTANCE.getAttachment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.Alignment
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
+		 * @generated
+		 */
+		EEnum ALIGNMENT = eINSTANCE.getAlignment();
 
 	}
 

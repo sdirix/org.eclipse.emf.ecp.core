@@ -92,7 +92,8 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 * @generated
 	 */
 	public EList<TableColumn> getColumns() {
-		if (columns == null) {
+		if (columns == null)
+		{
 			columns = new EObjectContainmentEList<TableColumn>(TableColumn.class, this,
 				ViewPackage.TABLE_CONTROL__COLUMNS);
 		}
@@ -131,7 +132,8 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_CONTROL__COLUMNS:
 			return ((InternalEList<?>) getColumns()).basicRemove(otherEnd, msgs);
 		}
@@ -146,7 +148,8 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_CONTROL__COLUMNS:
 			return getColumns();
 		case ViewPackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
@@ -164,7 +167,8 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_CONTROL__COLUMNS:
 			getColumns().clear();
 			getColumns().addAll((Collection<? extends TableColumn>) newValue);
@@ -184,7 +188,8 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_CONTROL__COLUMNS:
 			getColumns().clear();
 			return;
@@ -203,7 +208,8 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_CONTROL__COLUMNS:
 			return columns != null && !columns.isEmpty();
 		case ViewPackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:

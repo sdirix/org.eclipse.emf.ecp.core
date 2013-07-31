@@ -87,10 +87,12 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * @generated
 	 */
 	public EAttribute getAttribute() {
-		if (attribute != null && attribute.eIsProxy()) {
+		if (attribute != null && attribute.eIsProxy())
+		{
 			InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
-			if (attribute != oldAttribute) {
+			if (attribute != oldAttribute)
+			{
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.TABLE_COLUMN__ATTRIBUTE,
 						oldAttribute, attribute));
@@ -155,7 +157,8 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
 			if (resolve)
 				return getAttribute();
@@ -174,7 +177,8 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
 			setAttribute((EAttribute) newValue);
 			return;
@@ -193,7 +197,8 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
 			setAttribute((EAttribute) null);
 			return;
@@ -212,7 +217,8 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
 			return attribute != null;
 		case ViewPackage.TABLE_COLUMN__READ_ONLY:

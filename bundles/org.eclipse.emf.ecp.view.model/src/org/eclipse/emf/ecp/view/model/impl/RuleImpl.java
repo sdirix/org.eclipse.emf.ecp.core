@@ -77,7 +77,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	public NotificationChain basicSetCondition(Condition newCondition, NotificationChain msgs) {
 		Condition oldCondition = condition;
 		condition = newCondition;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
+		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ViewPackage.RULE__CONDITION,
 				oldCondition, newCondition);
 			if (msgs == null)
@@ -95,7 +96,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	 * @generated
 	 */
 	public void setCondition(Condition newCondition) {
-		if (newCondition != condition) {
+		if (newCondition != condition)
+		{
 			NotificationChain msgs = null;
 			if (condition != null)
 				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -120,7 +122,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.RULE__CONDITION:
 			return basicSetCondition(null, msgs);
 		}
@@ -135,7 +138,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.RULE__CONDITION:
 			return getCondition();
 		}
@@ -150,7 +154,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.RULE__CONDITION:
 			setCondition((Condition) newValue);
 			return;
@@ -166,7 +171,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.RULE__CONDITION:
 			setCondition((Condition) null);
 			return;
@@ -182,7 +188,8 @@ public abstract class RuleImpl extends EObjectImpl implements Rule {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.RULE__CONDITION:
 			return condition != null;
 		}

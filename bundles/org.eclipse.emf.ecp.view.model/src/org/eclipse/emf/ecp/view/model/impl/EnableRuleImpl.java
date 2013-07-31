@@ -96,7 +96,8 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ENABLE_RULE__DISABLE:
 			return isDisable();
 		}
@@ -111,7 +112,8 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ENABLE_RULE__DISABLE:
 			setDisable((Boolean) newValue);
 			return;
@@ -127,7 +129,8 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ENABLE_RULE__DISABLE:
 			setDisable(DISABLE_EDEFAULT);
 			return;
@@ -143,7 +146,8 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ENABLE_RULE__DISABLE:
 			return disable != DISABLE_EDEFAULT;
 		}

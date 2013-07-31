@@ -55,7 +55,8 @@ public class ViewItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addRootEClassPropertyDescriptor(object);
@@ -97,7 +98,8 @@ public class ViewItemProvider
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ViewPackage.Literals.VIEW__CHILDREN);
 		}
@@ -155,7 +157,8 @@ public class ViewItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(View.class)) {
+		switch (notification.getFeatureID(View.class))
+		{
 		case ViewPackage.VIEW__CHILDREN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;

@@ -67,7 +67,8 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	 * @generated
 	 */
 	public EList<Composite> getComposites() {
-		if (composites == null) {
+		if (composites == null)
+		{
 			composites = new EObjectContainmentEList<Composite>(Composite.class, this,
 				ViewPackage.COMPOSITE_COLLECTION__COMPOSITES);
 		}
@@ -82,7 +83,8 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
 			return ((InternalEList<?>) getComposites()).basicRemove(otherEnd, msgs);
 		}
@@ -97,7 +99,8 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
 			return getComposites();
 		}
@@ -113,7 +116,8 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
 			getComposites().clear();
 			getComposites().addAll((Collection<? extends Composite>) newValue);
@@ -130,7 +134,8 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
 			getComposites().clear();
 			return;
@@ -146,7 +151,8 @@ public abstract class CompositeCollectionImpl extends CompositeImpl implements C
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.COMPOSITE_COLLECTION__COMPOSITES:
 			return composites != null && !composites.isEmpty();
 		}

@@ -106,7 +106,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	public NotificationChain basicSetChildComposite(Composite newChildComposite, NotificationChain msgs) {
 		Composite oldChildComposite = childComposite;
 		childComposite = newChildComposite;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
+		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE, oldChildComposite, newChildComposite);
 			if (msgs == null)
@@ -124,7 +125,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 * @generated
 	 */
 	public void setChildComposite(Composite newChildComposite) {
-		if (newChildComposite != childComposite) {
+		if (newChildComposite != childComposite)
+		{
 			NotificationChain msgs = null;
 			if (childComposite != null)
 				msgs = ((InternalEObject) childComposite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -148,10 +150,12 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 * @generated
 	 */
 	public EStructuralFeature getTargetFeature() {
-		if (targetFeature != null && targetFeature.eIsProxy()) {
+		if (targetFeature != null && targetFeature.eIsProxy())
+		{
 			InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
 			targetFeature = (EStructuralFeature) eResolveProxy(oldTargetFeature);
-			if (targetFeature != oldTargetFeature) {
+			if (targetFeature != oldTargetFeature)
+			{
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.TREE_CATEGORY__TARGET_FEATURE, oldTargetFeature, targetFeature));
@@ -191,7 +195,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 * @generated
 	 */
 	public EList<EReference> getPathToFeature() {
-		if (pathToFeature == null) {
+		if (pathToFeature == null)
+		{
 			pathToFeature = new EObjectResolvingEList<EReference>(EReference.class, this,
 				ViewPackage.TREE_CATEGORY__PATH_TO_FEATURE);
 		}
@@ -206,7 +211,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
 			return basicSetChildComposite(null, msgs);
 		}
@@ -221,7 +227,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
 			return getChildComposite();
 		case ViewPackage.TREE_CATEGORY__TARGET_FEATURE:
@@ -243,7 +250,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
 			setChildComposite((Composite) newValue);
 			return;
@@ -266,7 +274,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
 			setChildComposite((Composite) null);
 			return;
@@ -288,7 +297,8 @@ public class TreeCategoryImpl extends AbstractCategorizationImpl implements Tree
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
 			return childComposite != null;
 		case ViewPackage.TREE_CATEGORY__TARGET_FEATURE:

@@ -56,7 +56,8 @@ public class TableControlItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addAddRemoveDisabledPropertyDescriptor(object);
@@ -99,7 +100,8 @@ public class TableControlItemProvider
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ViewPackage.Literals.TABLE_CONTROL__COLUMNS);
 		}
@@ -159,7 +161,8 @@ public class TableControlItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(TableControl.class)) {
+		switch (notification.getFeatureID(TableControl.class))
+		{
 		case ViewPackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

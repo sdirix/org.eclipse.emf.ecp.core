@@ -76,7 +76,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	public NotificationChain basicSetComposite(Composite newComposite, NotificationChain msgs) {
 		Composite oldComposite = composite;
 		composite = newComposite;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
+		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.CATEGORY__COMPOSITE, oldComposite, newComposite);
 			if (msgs == null)
@@ -94,7 +95,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 * @generated
 	 */
 	public void setComposite(Composite newComposite) {
-		if (newComposite != composite) {
+		if (newComposite != composite)
+		{
 			NotificationChain msgs = null;
 			if (composite != null)
 				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -119,7 +121,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORY__COMPOSITE:
 			return basicSetComposite(null, msgs);
 		}
@@ -134,7 +137,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORY__COMPOSITE:
 			return getComposite();
 		}
@@ -149,7 +153,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORY__COMPOSITE:
 			setComposite((Composite) newValue);
 			return;
@@ -165,7 +170,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORY__COMPOSITE:
 			setComposite((Composite) null);
 			return;
@@ -181,7 +187,8 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CATEGORY__COMPOSITE:
 			return composite != null;
 		}

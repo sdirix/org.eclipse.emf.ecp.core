@@ -144,7 +144,8 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CUSTOM_COMPOSITE__BUNDLE:
 			return getBundle();
 		case ViewPackage.CUSTOM_COMPOSITE__CLASS_NAME:
@@ -161,7 +162,8 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CUSTOM_COMPOSITE__BUNDLE:
 			setBundle((String) newValue);
 			return;
@@ -180,7 +182,8 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CUSTOM_COMPOSITE__BUNDLE:
 			setBundle(BUNDLE_EDEFAULT);
 			return;
@@ -199,7 +202,8 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CUSTOM_COMPOSITE__BUNDLE:
 			return BUNDLE_EDEFAULT == null ? bundle != null : !BUNDLE_EDEFAULT.equals(bundle);
 		case ViewPackage.CUSTOM_COMPOSITE__CLASS_NAME:

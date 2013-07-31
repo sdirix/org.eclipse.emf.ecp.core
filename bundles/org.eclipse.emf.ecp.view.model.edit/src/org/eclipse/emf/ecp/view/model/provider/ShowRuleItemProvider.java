@@ -54,7 +54,8 @@ public class ShowRuleItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addHidePropertyDescriptor(object);
@@ -122,7 +123,8 @@ public class ShowRuleItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ShowRule.class)) {
+		switch (notification.getFeatureID(ShowRule.class))
+		{
 		case ViewPackage.SHOW_RULE__HIDE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

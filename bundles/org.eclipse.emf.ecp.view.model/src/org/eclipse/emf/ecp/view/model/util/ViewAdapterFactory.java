@@ -6,10 +6,12 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
@@ -57,7 +59,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public ViewAdapterFactory() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = ViewPackage.eINSTANCE;
 		}
 	}
@@ -73,10 +76,12 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
+		if (object == modelPackage)
+		{
 			return true;
 		}
-		if (object instanceof EObject) {
+		if (object instanceof EObject)
+		{
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -88,129 +93,161 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>() {
+	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>()
+	{
 		@Override
-		public Adapter caseView(View object) {
+		public Adapter caseView(View object)
+		{
 			return createViewAdapter();
 		}
 
 		@Override
-		public Adapter caseAbstractCategorization(AbstractCategorization object) {
+		public Adapter caseAbstractCategorization(AbstractCategorization object)
+		{
 			return createAbstractCategorizationAdapter();
 		}
 
 		@Override
-		public Adapter caseRule(Rule object) {
+		public Adapter caseRule(Rule object)
+		{
 			return createRuleAdapter();
 		}
 
 		@Override
-		public Adapter caseShowRule(ShowRule object) {
+		public Adapter caseShowRule(ShowRule object)
+		{
 			return createShowRuleAdapter();
 		}
 
 		@Override
-		public Adapter caseEnableRule(EnableRule object) {
+		public Adapter caseEnableRule(EnableRule object)
+		{
 			return createEnableRuleAdapter();
 		}
 
 		@Override
-		public Adapter caseCondition(Condition object) {
+		public Adapter caseCondition(Condition object)
+		{
 			return createConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseLeafCondition(LeafCondition object) {
+		public Adapter caseLeafCondition(LeafCondition object)
+		{
 			return createLeafConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseOrCondition(OrCondition object) {
+		public Adapter caseOrCondition(OrCondition object)
+		{
 			return createOrConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseAndCondition(AndCondition object) {
+		public Adapter caseAndCondition(AndCondition object)
+		{
 			return createAndConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseCategorization(Categorization object) {
+		public Adapter caseCategorization(Categorization object)
+		{
 			return createCategorizationAdapter();
 		}
 
 		@Override
-		public Adapter caseCategory(Category object) {
+		public Adapter caseCategory(Category object)
+		{
 			return createCategoryAdapter();
 		}
 
 		@Override
-		public Adapter caseComposite(Composite object) {
+		public Adapter caseComposite(Composite object)
+		{
 			return createCompositeAdapter();
 		}
 
 		@Override
-		public Adapter caseControl(Control object) {
+		public Adapter caseControl(Control object)
+		{
 			return createControlAdapter();
 		}
 
 		@Override
-		public Adapter caseTableControl(TableControl object) {
+		public Adapter caseTableControl(TableControl object)
+		{
 			return createTableControlAdapter();
 		}
 
 		@Override
-		public Adapter caseTableColumn(TableColumn object) {
+		public Adapter caseTableColumn(TableColumn object)
+		{
 			return createTableColumnAdapter();
 		}
 
 		@Override
-		public Adapter caseCustomComposite(CustomComposite object) {
+		public Adapter caseCustomComposite(CustomComposite object)
+		{
 			return createCustomCompositeAdapter();
 		}
 
 		@Override
-		public Adapter caseCompositeCollection(CompositeCollection object) {
+		public Adapter caseCompositeCollection(CompositeCollection object)
+		{
 			return createCompositeCollectionAdapter();
 		}
 
 		@Override
-		public Adapter caseColumnComposite(ColumnComposite object) {
+		public Adapter caseColumnComposite(ColumnComposite object)
+		{
 			return createColumnCompositeAdapter();
 		}
 
 		@Override
-		public Adapter caseColumn(Column object) {
+		public Adapter caseColumn(Column object)
+		{
 			return createColumnAdapter();
 		}
 
 		@Override
-		public Adapter caseGroup(Group object) {
+		public Adapter caseGroup(Group object)
+		{
 			return createGroupAdapter();
 		}
 
 		@Override
-		public Adapter caseTreeCategory(TreeCategory object) {
+		public Adapter caseTreeCategory(TreeCategory object)
+		{
 			return createTreeCategoryAdapter();
 		}
 
 		@Override
-		public Adapter caseRenderable(Renderable object) {
+		public Adapter caseRenderable(Renderable object)
+		{
 			return createRenderableAdapter();
 		}
 
 		@Override
-		public Adapter caseAction(Action object) {
+		public Adapter caseAction(Action object)
+		{
 			return createActionAdapter();
 		}
 
 		@Override
-		public Adapter caseAbstractControl(AbstractControl object) {
+		public Adapter caseAbstractControl(AbstractControl object)
+		{
 			return createAbstractControlAdapter();
 		}
 
 		@Override
-		public Adapter defaultCase(EObject object) {
+		public Adapter caseAttachment(Attachment object)
+		{
+			return createAttachmentAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object)
+		{
 			return createEObjectAdapter();
 		}
 	};
@@ -593,6 +630,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractControlAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Attachment
+	 * <em>Attachment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.Attachment
+	 * @generated
+	 */
+	public Adapter createAttachmentAdapter()
+	{
 		return null;
 	}
 

@@ -54,13 +54,15 @@ public class ControlItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addTargetFeaturePropertyDescriptor(object);
 			addHintPropertyDescriptor(object);
 			addReadonlyPropertyDescriptor(object);
 			addMandatoryPropertyDescriptor(object);
+			addLabelAlignmentPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -159,6 +161,31 @@ public class ControlItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Label Alignment feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addLabelAlignmentPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Control_labelAlignment_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_labelAlignment_feature",
+					"_UI_Control_type"),
+				ViewPackage.Literals.CONTROL__LABEL_ALIGNMENT,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This returns Control.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -195,10 +222,12 @@ public class ControlItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Control.class)) {
+		switch (notification.getFeatureID(Control.class))
+		{
 		case ViewPackage.CONTROL__HINT:
 		case ViewPackage.CONTROL__READONLY:
 		case ViewPackage.CONTROL__MANDATORY:
+		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

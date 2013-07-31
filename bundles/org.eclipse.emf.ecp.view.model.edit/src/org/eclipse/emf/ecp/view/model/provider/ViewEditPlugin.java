@@ -40,7 +40,8 @@ public final class ViewEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public ViewEditPlugin() {
-		super(new ResourceLocator[] {
+		super(new ResourceLocator[]
+		{
 			EcoreEditPlugin.INSTANCE,
 		});
 	}

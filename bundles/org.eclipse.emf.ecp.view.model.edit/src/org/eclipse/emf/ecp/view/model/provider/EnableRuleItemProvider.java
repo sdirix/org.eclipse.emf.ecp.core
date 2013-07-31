@@ -54,7 +54,8 @@ public class EnableRuleItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addDisablePropertyDescriptor(object);
@@ -123,7 +124,8 @@ public class EnableRuleItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(EnableRule.class)) {
+		switch (notification.getFeatureID(EnableRule.class))
+		{
 		case ViewPackage.ENABLE_RULE__DISABLE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

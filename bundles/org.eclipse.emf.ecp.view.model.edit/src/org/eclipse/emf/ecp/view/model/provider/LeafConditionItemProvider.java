@@ -54,7 +54,8 @@ public class LeafConditionItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addAttributePropertyDescriptor(object);
@@ -151,7 +152,8 @@ public class LeafConditionItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(LeafCondition.class)) {
+		switch (notification.getFeatureID(LeafCondition.class))
+		{
 		case ViewPackage.LEAF_CONDITION__EXPECTED_VALUE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

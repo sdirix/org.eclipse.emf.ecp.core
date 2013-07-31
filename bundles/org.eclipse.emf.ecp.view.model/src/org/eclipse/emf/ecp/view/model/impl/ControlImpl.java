@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isReadonly <em>Readonly</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getPathToFeature <em>Path To Feature</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
  * </ul>
  * </p>
  * 
@@ -113,6 +115,28 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	protected EList<EReference> pathToFeature;
 
 	/**
+	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getLabelAlignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Alignment LABEL_ALIGNMENT_EDEFAULT = Alignment.LEFT;
+
+	/**
+	 * The cached value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getLabelAlignment()
+	 * @generated
+	 * @ordered
+	 */
+	protected Alignment labelAlignment = LABEL_ALIGNMENT_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -140,10 +164,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public EStructuralFeature getTargetFeature() {
-		if (targetFeature != null && targetFeature.eIsProxy()) {
+		if (targetFeature != null && targetFeature.eIsProxy())
+		{
 			InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
 			targetFeature = (EStructuralFeature) eResolveProxy(oldTargetFeature);
-			if (targetFeature != oldTargetFeature) {
+			if (targetFeature != oldTargetFeature)
+			{
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.CONTROL__TARGET_FEATURE,
 						oldTargetFeature, targetFeature));
@@ -183,7 +209,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public EList<String> getHint() {
-		if (hint == null) {
+		if (hint == null)
+		{
 			hint = new EDataTypeUniqueEList<String>(String.class, this, ViewPackage.CONTROL__HINT);
 		}
 		return hint;
@@ -243,7 +270,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public EList<EReference> getPathToFeature() {
-		if (pathToFeature == null) {
+		if (pathToFeature == null)
+		{
 			pathToFeature = new EObjectResolvingEList<EReference>(EReference.class, this,
 				ViewPackage.CONTROL__PATH_TO_FEATURE);
 		}
@@ -256,9 +284,36 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
+	public Alignment getLabelAlignment()
+	{
+		return labelAlignment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setLabelAlignment(Alignment newLabelAlignment)
+	{
+		Alignment oldLabelAlignment = labelAlignment;
+		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__LABEL_ALIGNMENT,
+				oldLabelAlignment, labelAlignment));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CONTROL__TARGET_FEATURE:
 			if (resolve)
 				return getTargetFeature();
@@ -271,6 +326,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			return isMandatory();
 		case ViewPackage.CONTROL__PATH_TO_FEATURE:
 			return getPathToFeature();
+		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
+			return getLabelAlignment();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -284,7 +341,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CONTROL__TARGET_FEATURE:
 			setTargetFeature((EStructuralFeature) newValue);
 			return;
@@ -302,6 +360,9 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			getPathToFeature().clear();
 			getPathToFeature().addAll((Collection<? extends EReference>) newValue);
 			return;
+		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
+			setLabelAlignment((Alignment) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -314,7 +375,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CONTROL__TARGET_FEATURE:
 			setTargetFeature((EStructuralFeature) null);
 			return;
@@ -330,6 +392,9 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		case ViewPackage.CONTROL__PATH_TO_FEATURE:
 			getPathToFeature().clear();
 			return;
+		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
+			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -342,7 +407,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.CONTROL__TARGET_FEATURE:
 			return targetFeature != null;
 		case ViewPackage.CONTROL__HINT:
@@ -353,6 +419,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			return mandatory != MANDATORY_EDEFAULT;
 		case ViewPackage.CONTROL__PATH_TO_FEATURE:
 			return pathToFeature != null && !pathToFeature.isEmpty();
+		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
+			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -375,6 +443,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		result.append(readonly);
 		result.append(", mandatory: ");
 		result.append(mandatory);
+		result.append(", labelAlignment: ");
+		result.append(labelAlignment);
 		result.append(')');
 		return result.toString();
 	}

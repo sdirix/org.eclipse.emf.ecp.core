@@ -57,7 +57,8 @@ public class ActionItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addBundlePropertyDescriptor(object);
@@ -151,7 +152,8 @@ public class ActionItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Action.class)) {
+		switch (notification.getFeatureID(Action.class))
+		{
 		case ViewPackage.ACTION__BUNDLE:
 		case ViewPackage.ACTION__CLASS_NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

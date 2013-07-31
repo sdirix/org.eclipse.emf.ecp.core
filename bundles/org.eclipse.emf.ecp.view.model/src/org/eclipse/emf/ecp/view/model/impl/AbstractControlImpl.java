@@ -59,7 +59,8 @@ public abstract class AbstractControlImpl extends CompositeImpl implements Abstr
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CONTROL__TARGET_FEATURES:
 			return getTargetFeatures();
 		}
@@ -74,7 +75,8 @@ public abstract class AbstractControlImpl extends CompositeImpl implements Abstr
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CONTROL__TARGET_FEATURES:
 			return !getTargetFeatures().isEmpty();
 		}

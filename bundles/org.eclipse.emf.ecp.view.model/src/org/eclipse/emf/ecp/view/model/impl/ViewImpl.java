@@ -81,10 +81,12 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 * @generated
 	 */
 	public EClass getRootEClass() {
-		if (rootEClass != null && rootEClass.eIsProxy()) {
+		if (rootEClass != null && rootEClass.eIsProxy())
+		{
 			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
-			if (rootEClass != oldRootEClass) {
+			if (rootEClass != oldRootEClass)
+			{
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
@@ -124,7 +126,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 * @generated
 	 */
 	public EList<Composite> getChildren() {
-		if (children == null) {
+		if (children == null)
+		{
 			children = new EObjectContainmentEList<Composite>(Composite.class, this, ViewPackage.VIEW__CHILDREN);
 		}
 		return children;
@@ -138,7 +141,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.VIEW__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
 		}
@@ -153,7 +157,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
 			if (resolve)
 				return getRootEClass();
@@ -173,7 +178,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
 			setRootEClass((EClass) newValue);
 			return;
@@ -193,7 +199,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
 			setRootEClass((EClass) null);
 			return;
@@ -212,7 +219,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
 			return rootEClass != null;
 		case ViewPackage.VIEW__CHILDREN:

@@ -55,7 +55,8 @@ public class TreeCategoryItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addTargetFeaturePropertyDescriptor(object);
@@ -123,7 +124,8 @@ public class TreeCategoryItemProvider
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE);
 		}
@@ -183,7 +185,8 @@ public class TreeCategoryItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(TreeCategory.class)) {
+		switch (notification.getFeatureID(TreeCategory.class))
+		{
 		case ViewPackage.TREE_CATEGORY__CHILD_COMPOSITE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;

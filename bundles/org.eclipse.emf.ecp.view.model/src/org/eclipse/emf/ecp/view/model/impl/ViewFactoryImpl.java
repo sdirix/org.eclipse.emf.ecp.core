@@ -3,10 +3,12 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -42,13 +44,16 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public static ViewFactory init() {
-		try {
+		try
+		{
 			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
 				.getEFactory("http://org/eclipse/emf/ecp/view/model");
-			if (theViewFactory != null) {
+			if (theViewFactory != null)
+			{
 				return theViewFactory;
 			}
-		} catch (Exception exception) {
+		} catch (Exception exception)
+		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new ViewFactoryImpl();
@@ -72,7 +77,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
+		switch (eClass.getClassifierID())
+		{
 		case ViewPackage.VIEW:
 			return createView();
 		case ViewPackage.SHOW_RULE:
@@ -109,6 +115,42 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createAction();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue)
+	{
+		switch (eDataType.getClassifierID())
+		{
+		case ViewPackage.ALIGNMENT:
+			return createAlignmentFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue)
+	{
+		switch (eDataType.getClassifierID())
+		{
+		case ViewPackage.ALIGNMENT:
+			return convertAlignmentToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -280,6 +322,32 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Action createAction() {
 		ActionImpl action = new ActionImpl();
 		return action;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public Alignment createAlignmentFromString(EDataType eDataType, String initialValue)
+	{
+		Alignment result = Alignment.get(initialValue);
+		if (result == null)
+			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
+				+ eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String convertAlignmentToString(EDataType eDataType, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

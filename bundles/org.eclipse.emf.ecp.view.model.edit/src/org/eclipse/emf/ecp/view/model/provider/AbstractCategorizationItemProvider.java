@@ -59,7 +59,8 @@ public class AbstractCategorizationItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
@@ -102,7 +103,8 @@ public class AbstractCategorizationItemProvider
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__RULE);
 			childrenFeatures.add(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS);
@@ -163,7 +165,8 @@ public class AbstractCategorizationItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(AbstractCategorization.class)) {
+		switch (notification.getFeatureID(AbstractCategorization.class))
+		{
 		case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

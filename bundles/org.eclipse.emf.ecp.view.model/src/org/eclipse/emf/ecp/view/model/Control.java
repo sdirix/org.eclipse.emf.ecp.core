@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#isReadonly <em>Readonly</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getPathToFeature <em>Path To Feature</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
  * </ul>
  * </p>
  * 
@@ -147,5 +148,38 @@ public interface Control extends AbstractControl {
 	 * @generated
 	 */
 	EList<EReference> getPathToFeature();
+
+	/**
+	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.
+	 * The default value is <code>"Left"</code>.
+	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.model.Alignment}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Label Alignment</em>' attribute isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Label Alignment</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.model.Alignment
+	 * @see #setLabelAlignment(Alignment)
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_LabelAlignment()
+	 * @model default="Left"
+	 * @generated
+	 */
+	Alignment getLabelAlignment();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Label Alignment</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.model.Alignment
+	 * @see #getLabelAlignment()
+	 * @generated
+	 */
+	void setLabelAlignment(Alignment value);
 
 } // Control

@@ -67,7 +67,8 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 * @generated
 	 */
 	public EList<Condition> getConditions() {
-		if (conditions == null) {
+		if (conditions == null)
+		{
 			conditions = new EObjectContainmentEList<Condition>(Condition.class, this,
 				ViewPackage.OR_CONDITION__CONDITIONS);
 		}
@@ -82,7 +83,8 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.OR_CONDITION__CONDITIONS:
 			return ((InternalEList<?>) getConditions()).basicRemove(otherEnd, msgs);
 		}
@@ -97,7 +99,8 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.OR_CONDITION__CONDITIONS:
 			return getConditions();
 		}
@@ -113,7 +116,8 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.OR_CONDITION__CONDITIONS:
 			getConditions().clear();
 			getConditions().addAll((Collection<? extends Condition>) newValue);
@@ -130,7 +134,8 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.OR_CONDITION__CONDITIONS:
 			getConditions().clear();
 			return;
@@ -146,7 +151,8 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.OR_CONDITION__CONDITIONS:
 			return conditions != null && !conditions.isEmpty();
 		}

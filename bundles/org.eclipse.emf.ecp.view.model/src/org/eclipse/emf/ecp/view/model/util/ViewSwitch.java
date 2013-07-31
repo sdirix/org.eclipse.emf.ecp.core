@@ -5,10 +5,12 @@ package org.eclipse.emf.ecp.view.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
@@ -59,7 +61,8 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public ViewSwitch() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = ViewPackage.eINSTANCE;
 		}
 	}
@@ -88,7 +91,8 @@ public class ViewSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID) {
+		switch (classifierID)
+		{
 		case ViewPackage.VIEW: {
 			View view = (View) theEObject;
 			T result = caseView(view);
@@ -329,6 +333,13 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = caseComposite(abstractControl);
 			if (result == null)
 				result = caseRenderable(abstractControl);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case ViewPackage.ATTACHMENT: {
+			Attachment attachment = (Attachment) theEObject;
+			T result = caseAttachment(attachment);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -719,6 +730,23 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAbstractControl(AbstractControl object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Attachment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Attachment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAttachment(Attachment object)
+	{
 		return null;
 	}
 

@@ -110,7 +110,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createViewAdapter() {
-		if (viewItemProvider == null) {
+		if (viewItemProvider == null)
+		{
 			viewItemProvider = new ViewItemProvider(this);
 		}
 
@@ -135,7 +136,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createShowRuleAdapter() {
-		if (showRuleItemProvider == null) {
+		if (showRuleItemProvider == null)
+		{
 			showRuleItemProvider = new ShowRuleItemProvider(this);
 		}
 
@@ -160,7 +162,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createEnableRuleAdapter() {
-		if (enableRuleItemProvider == null) {
+		if (enableRuleItemProvider == null)
+		{
 			enableRuleItemProvider = new EnableRuleItemProvider(this);
 		}
 
@@ -185,7 +188,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createLeafConditionAdapter() {
-		if (leafConditionItemProvider == null) {
+		if (leafConditionItemProvider == null)
+		{
 			leafConditionItemProvider = new LeafConditionItemProvider(this);
 		}
 
@@ -210,7 +214,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createOrConditionAdapter() {
-		if (orConditionItemProvider == null) {
+		if (orConditionItemProvider == null)
+		{
 			orConditionItemProvider = new OrConditionItemProvider(this);
 		}
 
@@ -235,7 +240,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createAndConditionAdapter() {
-		if (andConditionItemProvider == null) {
+		if (andConditionItemProvider == null)
+		{
 			andConditionItemProvider = new AndConditionItemProvider(this);
 		}
 
@@ -260,7 +266,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createCategorizationAdapter() {
-		if (categorizationItemProvider == null) {
+		if (categorizationItemProvider == null)
+		{
 			categorizationItemProvider = new CategorizationItemProvider(this);
 		}
 
@@ -285,7 +292,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createCategoryAdapter() {
-		if (categoryItemProvider == null) {
+		if (categoryItemProvider == null)
+		{
 			categoryItemProvider = new CategoryItemProvider(this);
 		}
 
@@ -310,7 +318,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createControlAdapter() {
-		if (controlItemProvider == null) {
+		if (controlItemProvider == null)
+		{
 			controlItemProvider = new ControlItemProvider(this);
 		}
 
@@ -335,7 +344,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createTableControlAdapter() {
-		if (tableControlItemProvider == null) {
+		if (tableControlItemProvider == null)
+		{
 			tableControlItemProvider = new TableControlItemProvider(this);
 		}
 
@@ -360,7 +370,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createTableColumnAdapter() {
-		if (tableColumnItemProvider == null) {
+		if (tableColumnItemProvider == null)
+		{
 			tableColumnItemProvider = new TableColumnItemProvider(this);
 		}
 
@@ -386,7 +397,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createCustomCompositeAdapter() {
-		if (customCompositeItemProvider == null) {
+		if (customCompositeItemProvider == null)
+		{
 			customCompositeItemProvider = new CustomCompositeItemProvider(this);
 		}
 
@@ -412,7 +424,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createColumnCompositeAdapter() {
-		if (columnCompositeItemProvider == null) {
+		if (columnCompositeItemProvider == null)
+		{
 			columnCompositeItemProvider = new ColumnCompositeItemProvider(this);
 		}
 
@@ -437,7 +450,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createColumnAdapter() {
-		if (columnItemProvider == null) {
+		if (columnItemProvider == null)
+		{
 			columnItemProvider = new ColumnItemProvider(this);
 		}
 
@@ -462,7 +476,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createGroupAdapter() {
-		if (groupItemProvider == null) {
+		if (groupItemProvider == null)
+		{
 			groupItemProvider = new GroupItemProvider(this);
 		}
 
@@ -487,7 +502,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createTreeCategoryAdapter() {
-		if (treeCategoryItemProvider == null) {
+		if (treeCategoryItemProvider == null)
+		{
 			treeCategoryItemProvider = new TreeCategoryItemProvider(this);
 		}
 
@@ -512,7 +528,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createActionAdapter() {
-		if (actionItemProvider == null) {
+		if (actionItemProvider == null)
+		{
 			actionItemProvider = new ActionItemProvider(this);
 		}
 
@@ -572,9 +589,11 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
+		if (isFactoryForType(type))
+		{
 			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			{
 				return adapter;
 			}
 		}
@@ -644,7 +663,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
+		if (parentAdapterFactory != null)
+		{
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}

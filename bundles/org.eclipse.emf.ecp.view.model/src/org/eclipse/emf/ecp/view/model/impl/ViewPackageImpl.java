@@ -4,6 +4,7 @@ package org.eclipse.emf.ecp.view.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -11,7 +12,9 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
+import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
@@ -212,6 +215,22 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	private EClass abstractControlEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass attachmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EEnum alignmentEEnum = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the
 	 * package package URI value.
@@ -255,8 +274,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		// Obtain or create and register package
 		ViewPackageImpl theViewPackage = (ViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ViewPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new ViewPackageImpl());
+			.get(eNS_URI) : new ViewPackageImpl());
 
 		isInited = true;
 
@@ -522,6 +540,17 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getComposite_Attachments()
+	{
+		return (EReference) compositeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -573,6 +602,17 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EReference getControl_PathToFeature() {
 		return (EReference) controlEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getControl_LabelAlignment()
+	{
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -807,6 +847,28 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
+	public EClass getAttachment()
+	{
+		return attachmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EEnum getAlignment()
+	{
+		return alignmentEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public ViewFactory getViewFactory() {
 		return (ViewFactory) getEFactoryInstance();
 	}
@@ -870,6 +932,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		compositeEClass = createEClass(COMPOSITE);
 		createEAttribute(compositeEClass, COMPOSITE__NAME);
+		createEReference(compositeEClass, COMPOSITE__ATTACHMENTS);
 
 		controlEClass = createEClass(CONTROL);
 		createEReference(controlEClass, CONTROL__TARGET_FEATURE);
@@ -877,6 +940,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEAttribute(controlEClass, CONTROL__READONLY);
 		createEAttribute(controlEClass, CONTROL__MANDATORY);
 		createEReference(controlEClass, CONTROL__PATH_TO_FEATURE);
+		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
 
 		tableControlEClass = createEClass(TABLE_CONTROL);
 		createEReference(tableControlEClass, TABLE_CONTROL__COLUMNS);
@@ -913,6 +977,11 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		abstractControlEClass = createEClass(ABSTRACT_CONTROL);
 		createEReference(abstractControlEClass, ABSTRACT_CONTROL__TARGET_FEATURES);
+
+		attachmentEClass = createEClass(ATTACHMENT);
+
+		// Create enums
+		alignmentEEnum = createEEnum(ALIGNMENT);
 	}
 
 	/**
@@ -1041,6 +1110,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComposite_Name(), theEcorePackage.getEString(), "name", null, 1, 1, Composite.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComposite_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
+			Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getControl_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature",
@@ -1056,6 +1128,8 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEReference(getControl_PathToFeature(), theEcorePackage.getEReference(), null, "pathToFeature", null, 0, -1,
 			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControl_LabelAlignment(), this.getAlignment(), "labelAlignment", "Left", 0, 1, Control.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tableControlEClass, TableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
@@ -1126,6 +1200,15 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEReference(getAbstractControl_TargetFeatures(), theEcorePackage.getEStructuralFeature(), null,
 			"targetFeatures", null, 0, -1, AbstractControl.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
 			!IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+		initEClass(attachmentEClass, Attachment.class, "Attachment", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+
+		// Initialize enums and add enum literals
+		initEEnum(alignmentEEnum, Alignment.class, "Alignment");
+		addEEnumLiteral(alignmentEEnum, Alignment.LEFT);
+		addEEnumLiteral(alignmentEEnum, Alignment.TOP);
+		addEEnumLiteral(alignmentEEnum, Alignment.NONE);
 
 		// Create resource
 		createResource(eNS_URI);

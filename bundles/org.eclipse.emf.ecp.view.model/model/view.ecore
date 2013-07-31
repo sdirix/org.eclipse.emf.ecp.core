@@ -50,6 +50,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Composite" abstract="true" eSuperTypes="#//Renderable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachments" upperBound="-1"
+        eType="#//Attachment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//AbstractControl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetFeature" lowerBound="1"
@@ -61,6 +63,8 @@
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pathToFeature" upperBound="-1"
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" eType="#//Alignment"
+        defaultValueLiteral="Left"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TableControl" eSuperTypes="#//Control">
     <eStructuralFeatures xsi:type="ecore:EReference" name="columns" lowerBound="1"
@@ -110,5 +114,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetFeatures" upperBound="-1"
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attachment" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="Alignment">
+    <eLiterals name="Left"/>
+    <eLiterals name="Top" value="1"/>
+    <eLiterals name="None" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

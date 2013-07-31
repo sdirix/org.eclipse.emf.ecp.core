@@ -118,7 +118,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	public NotificationChain basicSetRule(Rule newRule, NotificationChain msgs) {
 		Rule oldRule = rule;
 		rule = newRule;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
+		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.ABSTRACT_CATEGORIZATION__RULE, oldRule, newRule);
 			if (msgs == null)
@@ -136,7 +137,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 * @generated
 	 */
 	public void setRule(Rule newRule) {
-		if (newRule != rule) {
+		if (newRule != rule)
+		{
 			NotificationChain msgs = null;
 			if (rule != null)
 				msgs = ((InternalEObject) rule).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -184,7 +186,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 * @generated
 	 */
 	public EList<Action> getActions() {
-		if (actions == null) {
+		if (actions == null)
+		{
 			actions = new EObjectContainmentEList<Action>(Action.class, this,
 				ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS);
 		}
@@ -199,7 +202,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 			return basicSetRule(null, msgs);
 		case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
@@ -216,7 +220,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 			return getRule();
 		case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
@@ -236,7 +241,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 			setRule((Rule) newValue);
 			return;
@@ -259,7 +265,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 			setRule((Rule) null);
 			return;
@@ -281,7 +288,8 @@ public abstract class AbstractCategorizationImpl extends EObjectImpl implements 
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 			return rule != null;
 		case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
