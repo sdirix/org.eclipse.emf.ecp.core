@@ -17,18 +17,13 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
-
-	// private SWTControl control;
-	//
-	// @Override
-	// protected SWTControl getControl() {
-	// return control;
-	// }
+	private static final int IDENT = 10;
 
 	@Override
 	public org.eclipse.swt.widgets.Control renderSWT(Node<Control> node,
@@ -84,6 +79,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 					+ extra);
 				label.setToolTipText(itemPropertyDescriptor.getDescription(subContext.getModelElement()));
 				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
+
+				GridDataFactory.createFrom((GridData) label.getLayoutData()).indent(IDENT, 0).applyTo(label);
 			}
 
 			final Composite controlComposite = control.createControl(parent);
@@ -114,5 +111,4 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 
 		return null;
 	}
-
 }

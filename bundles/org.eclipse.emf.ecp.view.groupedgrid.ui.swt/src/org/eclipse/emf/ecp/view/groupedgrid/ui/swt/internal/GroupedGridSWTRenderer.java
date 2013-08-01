@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -84,12 +85,17 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 					final int hSpan = getHSpanOfComposite(child);
 					final Control childRender = SWTRenderers.INSTANCE.render(columnComposite,
 						childNode, adapterFactoryItemDelegator);
+
 					// TOOD; when does this case apply?
 					if (childRender == null) {
 						continue;
 					}
-					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).indent(50, 0)
+
+					childRender.setBackground(parent.getBackground());
+					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).indent(0, 0)
 						.span(hSpan, 1).applyTo(childRender);
+					GridDataFactory.createFrom((GridData) childRender.getLayoutData()).indent(10, 0)
+						.applyTo(childRender);
 					spanned += hSpan;
 					if (childNode.isLeaf()
 						&& org.eclipse.emf.ecp.view.model.Control.class.isInstance(childNode.getRenderable())) {
@@ -99,6 +105,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 							spanned++;
 						}
 					}
+
 				}
 				final int spanDif = maxNumColumns - spanned;
 				if (spanDif != 0) {
