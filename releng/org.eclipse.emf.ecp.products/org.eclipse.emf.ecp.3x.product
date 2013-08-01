@@ -19,7 +19,6 @@
 
    <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
 
-
    <launcher name="ecp">
       <solaris/>
       <win useIco="false">
@@ -27,10 +26,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>
@@ -42,6 +39,7 @@
       <feature id="org.eclipse.emf.ecp.e3.feature"/>
       <feature id="org.eclipse.emf.ecp.emfstore.feature"/>
       <feature id="org.eclipse.emf.ecp.feature"/>
+      <feature id="org.eclipse.emf.ecp.viewmodel.feature"/>
       <feature id="org.eclipse.emf.ecp.license.feature"/>
       <feature id="org.eclipse.emf.ecp.workspace.feature"/>
       <feature id="org.eclipse.emf.ecp.target.feature"/>
