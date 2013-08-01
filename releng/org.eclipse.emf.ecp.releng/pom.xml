@@ -127,6 +127,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
 		
+		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		
 		<!-- Should run on a seperate integration job -->
