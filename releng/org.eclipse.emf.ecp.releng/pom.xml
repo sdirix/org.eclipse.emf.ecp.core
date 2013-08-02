@@ -137,6 +137,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		
 		<!-- Should run on a seperate integration job -->
 		<!-- Deactivated till monday <module>../../tests/ECPQ7Tests</module> -->

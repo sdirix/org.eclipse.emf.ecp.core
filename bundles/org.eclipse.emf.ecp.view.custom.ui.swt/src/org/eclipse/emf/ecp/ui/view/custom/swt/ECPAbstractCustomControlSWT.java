@@ -132,7 +132,9 @@ public abstract class ECPAbstractCustomControlSWT extends
 		EStructuralFeature feature);
 
 	public final void resetValidation() {
-		validationLabel.setImage(null);
+		if (validationLabel != null) {
+			validationLabel.setImage(null);
+		}
 		resetContentValidation();
 	}
 

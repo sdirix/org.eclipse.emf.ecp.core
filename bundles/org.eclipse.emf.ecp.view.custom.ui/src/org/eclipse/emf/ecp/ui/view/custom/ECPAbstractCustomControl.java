@@ -128,7 +128,9 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	 */
 	public final void dispose() {
 		Activator.ungetECPControlFactory();
-		composedAdapterFactory.dispose();
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
+		}
 		for (final ECPCustomControlFeature feature : editableFeatures) {
 			feature.dispose();
 		}
