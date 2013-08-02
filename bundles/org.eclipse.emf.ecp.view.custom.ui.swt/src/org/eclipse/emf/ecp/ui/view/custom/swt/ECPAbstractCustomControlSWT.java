@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -33,40 +34,40 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public abstract class ECPAbstractCustomControlSWT extends
-		ECPAbstractCustomControl {
+	ECPAbstractCustomControl {
 	public final static int VALIDATION_ERROR_IMAGE = 0;
 	public final static int ADD_IMAGE = 1;
 	public final static int DELETE_IMAGE = 2;
 	public final static int HELP_IMAGE = 3;
-	
+
 	/**
 	 * @param editableFeatures
 	 * @param referencedFeatures
 	 */
 	public ECPAbstractCustomControlSWT(
-			Set<ECPCustomControlFeature> editableFeatures,
-			Set<ECPCustomControlFeature> referencedFeatures) {
+		Set<ECPCustomControlFeature> editableFeatures,
+		Set<ECPCustomControlFeature> referencedFeatures) {
 		super(editableFeatures, referencedFeatures);
 	}
 
-	private SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
+	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
 	private Label validationLabel;
 	private Composite composite;
 
 	public final Composite createControl(Composite parent) {
 		composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
-		int numColumns = 1;
+		final int numColumns = 1;
 
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0)
-				.applyTo(composite);
+			.applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, false)
-				.align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
+			.align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 
-		Composite innerComposite = new Composite(composite, SWT.NONE);
+		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false)
-				.align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+			.align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
 
@@ -78,7 +79,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 		validationLabel.setBackground(parent.getBackground());
 		// set the size of the label to the size of the image
 		GridDataFactory.fillDefaults().hint(16, 17)
-				.align(SWT.BEGINNING, SWT.CENTER).applyTo(validationLabel);
+			.align(SWT.BEGINNING, SWT.CENTER).applyTo(validationLabel);
 
 	}
 
@@ -89,18 +90,19 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final void showInfo(String title, String message) {
 		showMessageDialog(MessageDialog.INFORMATION, title, message);
 	}
-	//Not yet API
+
+	// Not yet API
 	@SuppressWarnings("restriction")
 	private void showMessageDialog(int type, String title, String message) {
-		MessageDialog dialog = new MessageDialog(composite.getShell(), title,
-				null, message, type,
-				new String[] { JFaceResources
-						.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+		final MessageDialog dialog = new MessageDialog(composite.getShell(), title,
+			null, message, type,
+			new String[] { JFaceResources
+				.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 		new ECPDialogExecutor(dialog) {
 
 			@Override
 			public void handleResult(int codeResult) {
-				//Nothing to do
+				// Nothing to do
 			}
 		}.execute();
 	}
@@ -109,25 +111,25 @@ public abstract class ECPAbstractCustomControlSWT extends
 
 	public final void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR
-				|| diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = getImage(VALIDATION_ERROR_IMAGE);
+			|| diagnostic.getSeverity() == Diagnostic.WARNING) {
+			final Image image = getImage(VALIDATION_ERROR_IMAGE);
 			validationLabel.setImage(image);
 			Diagnostic reason = diagnostic;
 			if (diagnostic.getChildren() != null
-					&& diagnostic.getChildren().size() != 0) {
+				&& diagnostic.getChildren().size() != 0) {
 				reason = diagnostic.getChildren().get(0);
 			}
 			validationLabel.setToolTipText(reason.getMessage());
-			List<?> data = diagnostic.getData();
+			final List<?> data = diagnostic.getData();
 			handleContentValidation(diagnostic.getSeverity(),
-					(EStructuralFeature) (data.size() > 1 ? data.get(1) : null));
+				(EStructuralFeature) (data.size() > 1 ? data.get(1) : null));
 		} else {
 			resetValidation();
 		}
 	}
 
 	protected abstract void handleContentValidation(int severity,
-			EStructuralFeature feature);
+		EStructuralFeature feature);
 
 	public final void resetValidation() {
 		validationLabel.setImage(null);
@@ -144,7 +146,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 		return swtHelper;
 	}
 
-	private final Image getImage(int imageType){
+	private final Image getImage(int imageType) {
 		switch (imageType) {
 		case VALIDATION_ERROR_IMAGE:
 			return Activator.getImage("icons/validation_error.png");
@@ -158,9 +160,12 @@ public abstract class ECPAbstractCustomControlSWT extends
 			return null;
 		}
 	}
-	
+
+	public Composite createControl(ECPCustomControlFeature feature, Composite parent) {
+		return getControl(SWTControl.class, feature).createControl(parent);
+	}
+
 	public final class SWTCustomControlHelper {
-		
 
 		public final Image getImage(int imageType) {
 			return ECPAbstractCustomControlSWT.this.getImage(imageType);

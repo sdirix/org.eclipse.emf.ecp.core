@@ -1,7 +1,9 @@
 package org.eclipse.emf.ecp.ui.view.custom;
 
+import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 public class Activator implements BundleActivator {
 
@@ -27,4 +29,21 @@ public class Activator implements BundleActivator {
 		Activator.context = null;
 	}
 
+	private static ServiceReference<ECPControlFactory> controlFactoryReference;
+
+	public static ECPControlFactory getECPControlFactory() {
+		if (controlFactoryReference == null) {
+			controlFactoryReference = context
+				.getServiceReference(ECPControlFactory.class);
+		}
+		return context.getService(controlFactoryReference);
+	}
+
+	public static void ungetECPControlFactory() {
+		if (controlFactoryReference == null) {
+			return;
+		}
+		context.ungetService(controlFactoryReference);
+		controlFactoryReference = null;
+	}
 }
