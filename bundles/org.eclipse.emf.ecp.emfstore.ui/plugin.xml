@@ -1044,10 +1044,4 @@
                          enabled="true">
                    </disableControls>
                 </extension>
-                <extension
-                      point="org.eclipse.emf.emfstore.client.runnableChangeContext">
-                   <context
-                         class="org.eclipse.emf.emfstore.internal.client.ui.common.UIRunnableContext">
-                   </context>
-                </extension>
 </plugin>
