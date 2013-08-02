@@ -12,16 +12,16 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
 import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Cached tree implementation for dirty decorators of model elements managed by EMFStore.
@@ -89,7 +89,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 		@Override
 		public void update() {
 			setChildValue(getDefaultValue());
-			for (Integer value : values()) {
+			for (final Integer value : values()) {
 				if (value > getChildValue()) {
 					setChildValue(value);
 					break;
@@ -131,7 +131,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	 */
 	public Set<EObject> addOperation(EObject eObject) {
 		int value = 0;
-		CachedTreeNode<Integer> node = nodes.get(eObject);
+		final CachedTreeNode<Integer> node = getNodes().get(eObject);
 		if (node != null) {
 			value = node.getOwnValue();
 		}
@@ -146,7 +146,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	 */
 	public Set<EObject> removeOperation(EObject eObject) {
 		int value = 0;
-		CachedTreeNode<Integer> node = nodes.get(eObject);
+		final CachedTreeNode<Integer> node = getNodes().get(eObject);
 		if (node != null) {
 			value = node.getOwnValue();
 		}
@@ -173,7 +173,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 	 */
 	public int getOwnValue(EObject eObject) {
 		int value = 0;
-		CachedTreeNode<Integer> node = nodes.get(eObject);
+		final CachedTreeNode<Integer> node = getNodes().get(eObject);
 		if (node != null) {
 			value = node.getOwnValue();
 		}

@@ -35,10 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public abstract class AbstractCachedTree<T> {
 
-	/**
-	 * Nodes of the cached tree containing necessary information.
-	 */
-	protected Map<Object, CachedTreeNode<T>> nodes;
+	private final Map<Object, CachedTreeNode<T>> nodes;
 	private CachedTreeNode<T> rootValue;
 	private final IExcludedObjectsCallback excludedCallback;
 
@@ -51,6 +48,15 @@ public abstract class AbstractCachedTree<T> {
 		nodes = new LinkedHashMap<Object, CachedTreeNode<T>>();
 		rootValue = createdCachedTreeNode(getDefaultValue());
 		this.excludedCallback = callback;
+	}
+
+	/**
+	 * Gets the Nodes of the cached tree containing necessary information.
+	 * 
+	 * @return the nodes
+	 */
+	protected Map<Object, CachedTreeNode<T>> getNodes() {
+		return nodes;
 	}
 
 	/**
