@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
+ */
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
@@ -18,42 +29,42 @@ public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
 
 	@Override
 	public Control renderSWT(Node<Column> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) 
-					throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		
-		Composite parent=getParentFromInitData(initData);
-		Composite columnComposite = new Composite(parent, SWT.NONE);
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		final Composite parent = getParentFromInitData(initData);
+		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN);
 		columnComposite.setBackground(parent.getBackground());
-				
+
 		node.addRenderingResultDelegator(withSWT(columnComposite));
-		
+
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
-		
-		for (Node<? extends Renderable> child : node.getChildren()) {
-			
+
+		for (final Node<? extends Renderable> child : node.getChildren()) {
+
 			Control childControl;
 			try {
 				childControl = SWTRenderers.INSTANCE.render(
 					columnComposite, child, adapterFactoryItemDelegator);
-			} catch (NoPropertyDescriptorFoundExeption e) {
+			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
-			
+
 			// TOOD; when does this case apply?
-			if (childControl  == null) {
+			if (childControl == null) {
 				continue;
 			}
-			
-			//TODO Add check to handle differently if label is shown 
-			if (!child.isLeaf() ) {
+
+			// TODO Add check to handle differently if label is shown
+			if (!child.isLeaf()) {
 				GridDataFactory.fillDefaults()
 					.align(SWT.FILL, SWT.BEGINNING)
 					.grab(true, false)
 					.span(2, 1).applyTo(childControl);
 			}
 		}
-		
+
 		return columnComposite;
 	}
 }

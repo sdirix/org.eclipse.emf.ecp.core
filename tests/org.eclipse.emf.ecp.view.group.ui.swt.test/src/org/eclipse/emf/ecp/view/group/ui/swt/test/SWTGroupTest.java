@@ -1,5 +1,3 @@
-package org.eclipse.emf.ecp.view.group.ui.swt.test;
-
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
@@ -12,6 +10,7 @@ package org.eclipse.emf.ecp.view.group.ui.swt.test;
  * Johannes Faltermeier
  * 
  *******************************************************************************/
+package org.eclipse.emf.ecp.view.group.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -62,7 +61,7 @@ public class SWTGroupTest {
 		final Group groupControl = (Group) renderedControl;
 		assertEquals("Rendered Group does not have correct name",
 			GROUP_NAME, groupControl.getText());
-		assertEquals("org_eclipse_emf_ecp_ui_group",
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl.getData("org.eclipse.rap.rwt.customVariant"));
 	}
 
@@ -93,7 +92,7 @@ public class SWTGroupTest {
 		final Group groupControl1 = (Group) renderedControl1;
 		assertEquals("Rendered Group does not have correct name",
 			GROUP_NAME, groupControl1.getText());
-		assertEquals("org_eclipse_emf_ecp_ui_group",
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl1.getData("org.eclipse.rap.rwt.customVariant"));
 
 		assertTrue("Rendered Control is not a Group", renderedControl2 instanceof org.eclipse.swt.widgets.Group);
@@ -101,7 +100,7 @@ public class SWTGroupTest {
 		final Group groupControl2 = (Group) renderedControl2;
 		assertEquals("Rendered Group does not have correct name",
 			GROUP_NAME2, groupControl2.getText());
-		assertEquals("org_eclipse_emf_ecp_ui_group",
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl2.getData("org.eclipse.rap.rwt.customVariant"));
 	}
 
@@ -131,7 +130,7 @@ public class SWTGroupTest {
 		final Group groupControl1 = (Group) renderedControl1;
 		assertEquals("Rendered Group does not have correct name",
 			GROUP_NAME, groupControl1.getText());
-		assertEquals("org_eclipse_emf_ecp_ui_group",
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl1.getData("org.eclipse.rap.rwt.customVariant"));
 
 		assertTrue("Rendered Control is not a Group", renderedControl2 instanceof org.eclipse.swt.widgets.Group);
@@ -139,7 +138,7 @@ public class SWTGroupTest {
 		final Group groupControl2 = (Group) renderedControl2;
 		assertEquals("Rendered Group does not have correct name",
 			GROUP_NAME2, groupControl2.getText());
-		assertEquals("org_eclipse_emf_ecp_ui_group",
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl2.getData("org.eclipse.rap.rwt.customVariant"));
 	}
 
