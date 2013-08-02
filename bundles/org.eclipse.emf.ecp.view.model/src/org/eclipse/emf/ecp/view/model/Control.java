@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getTargetFeature <em>Target Feature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getHint <em>Hint</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#isReadonly <em>Readonly</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getPathToFeature <em>Path To Feature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
@@ -73,35 +72,6 @@ public interface Control extends AbstractControl {
 	 * @generated
 	 */
 	EList<String> getHint();
-
-	/**
-	 * Returns the value of the '<em><b>Readonly</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Readonly</em>' attribute isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Readonly</em>' attribute.
-	 * @see #setReadonly(boolean)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_Readonly()
-	 * @model default="false"
-	 * @generated
-	 */
-	boolean isReadonly();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#isReadonly <em>Readonly</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param value the new value of the '<em>Readonly</em>' attribute.
-	 * @see #isReadonly()
-	 * @generated
-	 */
-	void setReadonly(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Mandatory</b></em>' attribute.

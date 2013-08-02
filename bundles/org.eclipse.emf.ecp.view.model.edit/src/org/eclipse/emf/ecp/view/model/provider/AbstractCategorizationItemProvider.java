@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class AbstractCategorizationItemProvider
-	extends ItemProviderAdapter
+	extends RenderableItemProvider
 	implements
 	IEditingDomainItemProvider,
 	IStructuredItemContentProvider,
@@ -106,7 +106,6 @@ public class AbstractCategorizationItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__RULE);
 			childrenFeatures.add(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS);
 		}
 		return childrenFeatures;
@@ -170,7 +169,6 @@ public class AbstractCategorizationItemProvider
 		case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case ViewPackage.ABSTRACT_CATEGORIZATION__RULE:
 		case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -192,30 +190,8 @@ public class AbstractCategorizationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.RENDERABLE__RULE,
-				ViewFactory.eINSTANCE.createShowRule()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.RENDERABLE__RULE,
-				ViewFactory.eINSTANCE.createEnableRule()));
-
-		newChildDescriptors.add
-			(createChildParameter
 			(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS,
 				ViewFactory.eINSTANCE.createAction()));
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 
 }

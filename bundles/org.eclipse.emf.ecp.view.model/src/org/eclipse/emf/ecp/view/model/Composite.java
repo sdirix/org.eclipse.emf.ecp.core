@@ -13,7 +13,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.model.Composite#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Composite#getAttachments <em>Attachments</em>}</li>
  * </ul>
  * </p>
  * 
@@ -48,22 +47,5 @@ public interface Composite extends Renderable {
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Attachments</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.Attachment}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attachments</em>' containment reference list isn't clear, there really should be more
-	 * of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Attachments</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getComposite_Attachments()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Attachment> getAttachments();
 
 } // Composite

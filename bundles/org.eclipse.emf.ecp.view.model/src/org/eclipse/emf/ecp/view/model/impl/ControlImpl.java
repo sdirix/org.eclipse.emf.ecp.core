@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getTargetFeature <em>Target Feature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getHint <em>Hint</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isReadonly <em>Readonly</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getPathToFeature <em>Path To Feature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
@@ -58,28 +57,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @ordered
 	 */
 	protected EList<String> hint;
-
-	/**
-	 * The default value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isReadonly()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean READONLY_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isReadonly()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean readonly = READONLY_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
@@ -222,29 +199,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public boolean isReadonly() {
-		return readonly;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setReadonly(boolean newReadonly) {
-		boolean oldReadonly = readonly;
-		readonly = newReadonly;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__READONLY, oldReadonly, readonly));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public boolean isMandatory() {
 		return mandatory;
 	}
@@ -320,8 +274,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			return basicGetTargetFeature();
 		case ViewPackage.CONTROL__HINT:
 			return getHint();
-		case ViewPackage.CONTROL__READONLY:
-			return isReadonly();
 		case ViewPackage.CONTROL__MANDATORY:
 			return isMandatory();
 		case ViewPackage.CONTROL__PATH_TO_FEATURE:
@@ -349,9 +301,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		case ViewPackage.CONTROL__HINT:
 			getHint().clear();
 			getHint().addAll((Collection<? extends String>) newValue);
-			return;
-		case ViewPackage.CONTROL__READONLY:
-			setReadonly((Boolean) newValue);
 			return;
 		case ViewPackage.CONTROL__MANDATORY:
 			setMandatory((Boolean) newValue);
@@ -383,9 +332,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		case ViewPackage.CONTROL__HINT:
 			getHint().clear();
 			return;
-		case ViewPackage.CONTROL__READONLY:
-			setReadonly(READONLY_EDEFAULT);
-			return;
 		case ViewPackage.CONTROL__MANDATORY:
 			setMandatory(MANDATORY_EDEFAULT);
 			return;
@@ -413,8 +359,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			return targetFeature != null;
 		case ViewPackage.CONTROL__HINT:
 			return hint != null && !hint.isEmpty();
-		case ViewPackage.CONTROL__READONLY:
-			return readonly != READONLY_EDEFAULT;
 		case ViewPackage.CONTROL__MANDATORY:
 			return mandatory != MANDATORY_EDEFAULT;
 		case ViewPackage.CONTROL__PATH_TO_FEATURE:
@@ -439,8 +383,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hint: ");
 		result.append(hint);
-		result.append(", readonly: ");
-		result.append(readonly);
 		result.append(", mandatory: ");
 		result.append(mandatory);
 		result.append(", labelAlignment: ");

@@ -60,7 +60,6 @@ public class ControlItemProvider
 
 			addTargetFeaturePropertyDescriptor(object);
 			addHintPropertyDescriptor(object);
-			addReadonlyPropertyDescriptor(object);
 			addMandatoryPropertyDescriptor(object);
 			addLabelAlignmentPropertyDescriptor(object);
 		}
@@ -110,29 +109,6 @@ public class ControlItemProvider
 				false,
 				false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Readonly feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addReadonlyPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Control_readonly_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Control_readonly_feature", "_UI_Control_type"),
-				ViewPackage.Literals.CONTROL__READONLY,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				null,
 				null));
 	}
@@ -206,7 +182,7 @@ public class ControlItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Control) object).getName();
+		final String label = ((Control) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_Control_type") : label;
 	}
 
@@ -225,7 +201,6 @@ public class ControlItemProvider
 		switch (notification.getFeatureID(Control.class))
 		{
 		case ViewPackage.CONTROL__HINT:
-		case ViewPackage.CONTROL__READONLY:
 		case ViewPackage.CONTROL__MANDATORY:
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

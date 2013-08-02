@@ -189,11 +189,12 @@ public interface ViewPackage extends EPackage {
 	int CATEGORY = 10;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl <em>Renderable</em>}'
+	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.Renderable
+	 * @see org.eclipse.emf.ecp.view.model.impl.RenderableImpl
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
@@ -210,6 +211,46 @@ public interface ViewPackage extends EPackage {
 	int RENDERABLE__RULE = 0;
 
 	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int RENDERABLE__VISIBLE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int RENDERABLE__ENABLED = 2;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int RENDERABLE__READONLY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int RENDERABLE__ATTACHMENTS = 4;
+
+	/**
 	 * The number of structural features of the '<em>Renderable</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -217,7 +258,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE_FEATURE_COUNT = 1;
+	int RENDERABLE_FEATURE_COUNT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -228,6 +269,46 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_CATEGORIZATION__RULE = RENDERABLE__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__VISIBLE = RENDERABLE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__ENABLED = RENDERABLE__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__READONLY = RENDERABLE__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = RENDERABLE__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -268,6 +349,46 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORIZATION__RULE = ABSTRACT_CATEGORIZATION__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__VISIBLE = ABSTRACT_CATEGORIZATION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__ENABLED = ABSTRACT_CATEGORIZATION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -318,6 +439,46 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIEW__RULE = CATEGORIZATION__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__VISIBLE = CATEGORIZATION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ENABLED = CATEGORIZATION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__READONLY = CATEGORIZATION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ATTACHMENTS = CATEGORIZATION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -560,6 +721,46 @@ public interface ViewPackage extends EPackage {
 	int CATEGORY__RULE = ABSTRACT_CATEGORIZATION__RULE;
 
 	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__VISIBLE = ABSTRACT_CATEGORIZATION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__ENABLED = ABSTRACT_CATEGORIZATION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -621,6 +822,46 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE__RULE = RENDERABLE__RULE;
 
 	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__VISIBLE = RENDERABLE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__ENABLED = RENDERABLE__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__READONLY = RENDERABLE__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__ATTACHMENTS = RENDERABLE__ATTACHMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -631,16 +872,6 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE__NAME = RENDERABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE__ATTACHMENTS = RENDERABLE_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Composite</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -648,7 +879,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSITE_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 2;
+	int COMPOSITE_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl <em>Control</em>}' class.
@@ -789,14 +1020,34 @@ public interface ViewPackage extends EPackage {
 	int ABSTRACT_CONTROL__RULE = COMPOSITE__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CONTROL__NAME = COMPOSITE__NAME;
+	int ABSTRACT_CONTROL__VISIBLE = COMPOSITE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__ENABLED = COMPOSITE__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__READONLY = COMPOSITE__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -807,6 +1058,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_CONTROL__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
@@ -839,14 +1100,34 @@ public interface ViewPackage extends EPackage {
 	int CONTROL__RULE = ABSTRACT_CONTROL__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
+	int CONTROL__VISIBLE = ABSTRACT_CONTROL__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__ENABLED = ABSTRACT_CONTROL__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__READONLY = ABSTRACT_CONTROL__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -857,6 +1138,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTROL__ATTACHMENTS = ABSTRACT_CONTROL__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
@@ -889,16 +1180,6 @@ public interface ViewPackage extends EPackage {
 	int CONTROL__HINT = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__READONLY = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
-
-	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -906,7 +1187,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
+	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Path To Feature</b></em>' reference list.
@@ -916,7 +1197,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__PATH_TO_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
+	int CONTROL__PATH_TO_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -926,7 +1207,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
+	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -936,7 +1217,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 6;
+	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -949,14 +1230,34 @@ public interface ViewPackage extends EPackage {
 	int TABLE_CONTROL__RULE = CONTROL__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__NAME = CONTROL__NAME;
+	int TABLE_CONTROL__VISIBLE = CONTROL__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__ENABLED = CONTROL__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__READONLY = CONTROL__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -967,6 +1268,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__ATTACHMENTS = CONTROL__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__NAME = CONTROL__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
@@ -997,16 +1308,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__HINT = CONTROL__HINT;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__READONLY = CONTROL__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
@@ -1109,14 +1410,34 @@ public interface ViewPackage extends EPackage {
 	int CUSTOM_COMPOSITE__RULE = COMPOSITE__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_COMPOSITE__NAME = COMPOSITE__NAME;
+	int CUSTOM_COMPOSITE__VISIBLE = COMPOSITE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_COMPOSITE__ENABLED = COMPOSITE__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_COMPOSITE__READONLY = COMPOSITE__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1127,6 +1448,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUSTOM_COMPOSITE__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_COMPOSITE__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
@@ -1169,14 +1500,34 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_COLLECTION__RULE = COMPOSITE__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSITE_COLLECTION__NAME = COMPOSITE__NAME;
+	int COMPOSITE_COLLECTION__VISIBLE = COMPOSITE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_COLLECTION__ENABLED = COMPOSITE__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_COLLECTION__READONLY = COMPOSITE__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1187,6 +1538,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE_COLLECTION__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_COLLECTION__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -1219,14 +1580,34 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_COMPOSITE__RULE = COMPOSITE_COLLECTION__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int COLUMN_COMPOSITE__NAME = COMPOSITE_COLLECTION__NAME;
+	int COLUMN_COMPOSITE__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN_COMPOSITE__ENABLED = COMPOSITE_COLLECTION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN_COMPOSITE__READONLY = COMPOSITE_COLLECTION__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1237,6 +1618,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLUMN_COMPOSITE__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN_COMPOSITE__NAME = COMPOSITE_COLLECTION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -1269,14 +1660,34 @@ public interface ViewPackage extends EPackage {
 	int COLUMN__RULE = COMPOSITE_COLLECTION__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int COLUMN__NAME = COMPOSITE_COLLECTION__NAME;
+	int COLUMN__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN__ENABLED = COMPOSITE_COLLECTION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN__READONLY = COMPOSITE_COLLECTION__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1287,6 +1698,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLUMN__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN__NAME = COMPOSITE_COLLECTION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -1319,14 +1740,34 @@ public interface ViewPackage extends EPackage {
 	int GROUP__RULE = COMPOSITE_COLLECTION__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__NAME = COMPOSITE_COLLECTION__NAME;
+	int GROUP__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__ENABLED = COMPOSITE_COLLECTION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__READONLY = COMPOSITE_COLLECTION__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1337,6 +1778,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUP__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__NAME = COMPOSITE_COLLECTION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -1367,6 +1818,46 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TREE_CATEGORY__RULE = ABSTRACT_CATEGORIZATION__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TREE_CATEGORY__VISIBLE = ABSTRACT_CATEGORIZATION__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TREE_CATEGORY__ENABLED = ABSTRACT_CATEGORIZATION__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TREE_CATEGORY__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TREE_CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1820,19 +2311,6 @@ public interface ViewPackage extends EPackage {
 	EAttribute getComposite_Name();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.Composite#getAttachments <em>Attachments</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Attachments</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Composite#getAttachments()
-	 * @see #getComposite()
-	 * @generated
-	 */
-	EReference getComposite_Attachments();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1868,19 +2346,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getControl_Hint();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#isReadonly
-	 * <em>Readonly</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Readonly</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#isReadonly()
-	 * @see #getControl()
-	 * @generated
-	 */
-	EAttribute getControl_Readonly();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#isMandatory
@@ -2165,6 +2630,58 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getRenderable_Rule();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Renderable#isVisible
+	 * <em>Visible</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Visible</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Renderable#isVisible()
+	 * @see #getRenderable()
+	 * @generated
+	 */
+	EAttribute getRenderable_Visible();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Renderable#isEnabled
+	 * <em>Enabled</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Enabled</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Renderable#isEnabled()
+	 * @see #getRenderable()
+	 * @generated
+	 */
+	EAttribute getRenderable_Enabled();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Renderable#isReadonly
+	 * <em>Readonly</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Readonly</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Renderable#isReadonly()
+	 * @see #getRenderable()
+	 * @generated
+	 */
+	EAttribute getRenderable_Readonly();
+
+	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.model.Renderable#getAttachments <em>Attachments</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference list '<em>Attachments</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Renderable#getAttachments()
+	 * @see #getRenderable()
+	 * @generated
+	 */
+	EReference getRenderable_Attachments();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Action <em>Action</em>}'.
@@ -2552,15 +3069,6 @@ public interface ViewPackage extends EPackage {
 		EAttribute COMPOSITE__NAME = eINSTANCE.getComposite_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Attachments</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference COMPOSITE__ATTACHMENTS = eINSTANCE.getComposite_Attachments();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl <em>Control</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
@@ -2589,15 +3097,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTROL__HINT = eINSTANCE.getControl_Hint();
-
-		/**
-		 * The meta object literal for the '<em><b>Readonly</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CONTROL__READONLY = eINSTANCE.getControl_Readonly();
 
 		/**
 		 * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
@@ -2812,12 +3311,12 @@ public interface ViewPackage extends EPackage {
 		EReference TREE_CATEGORY__PATH_TO_FEATURE = eINSTANCE.getTreeCategory_PathToFeature();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'
-		 * class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl
+		 * <em>Renderable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.model.Renderable
+		 * @see org.eclipse.emf.ecp.view.model.impl.RenderableImpl
 		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 		 * @generated
 		 */
@@ -2831,6 +3330,42 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RENDERABLE__RULE = eINSTANCE.getRenderable_Rule();
+
+		/**
+		 * The meta object literal for the '<em><b>Visible</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute RENDERABLE__VISIBLE = eINSTANCE.getRenderable_Visible();
+
+		/**
+		 * The meta object literal for the '<em><b>Enabled</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute RENDERABLE__ENABLED = eINSTANCE.getRenderable_Enabled();
+
+		/**
+		 * The meta object literal for the '<em><b>Readonly</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute RENDERABLE__READONLY = eINSTANCE.getRenderable_Readonly();
+
+		/**
+		 * The meta object literal for the '<em><b>Attachments</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference RENDERABLE__ATTACHMENTS = eINSTANCE.getRenderable_Attachments();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}'

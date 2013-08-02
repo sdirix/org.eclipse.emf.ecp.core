@@ -274,8 +274,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -360,14 +360,18 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * @generated
 	 */
 	public void dispose() {
-		if (groupedGridItemProvider != null)
+		if (groupedGridItemProvider != null) {
 			groupedGridItemProvider.dispose();
-		if (groupItemProvider != null)
+		}
+		if (groupItemProvider != null) {
 			groupItemProvider.dispose();
-		if (rowItemProvider != null)
+		}
+		if (rowItemProvider != null) {
 			rowItemProvider.dispose();
-		if (spanItemProvider != null)
+		}
+		if (spanItemProvider != null) {
 			spanItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -457,10 +461,6 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			@Override
 			public Object caseComposite(Composite object)
 			{
-				newChildDescriptors.add
-					(createChildParameter
-					(ViewPackage.Literals.COMPOSITE__ATTACHMENTS,
-						GroupedGridFactory.eINSTANCE.createSpan()));
 
 				return null;
 			}
@@ -516,7 +516,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 		 * @generated
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

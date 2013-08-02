@@ -540,17 +540,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getComposite_Attachments()
-	{
-		return (EReference) compositeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -582,7 +571,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControl_Readonly() {
+	public EAttribute getControl_Mandatory() {
 		return (EAttribute) controlEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -591,17 +580,8 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControl_Mandatory() {
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EReference getControl_PathToFeature() {
-		return (EReference) controlEClass.getEStructuralFeatures().get(4);
+		return (EReference) controlEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -612,7 +592,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getControl_LabelAlignment()
 	{
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(5);
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -796,6 +776,50 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getRenderable_Visible()
+	{
+		return (EAttribute) renderableEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getRenderable_Enabled()
+	{
+		return (EAttribute) renderableEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getRenderable_Readonly()
+	{
+		return (EAttribute) renderableEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getRenderable_Attachments()
+	{
+		return (EReference) renderableEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -932,12 +956,10 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		compositeEClass = createEClass(COMPOSITE);
 		createEAttribute(compositeEClass, COMPOSITE__NAME);
-		createEReference(compositeEClass, COMPOSITE__ATTACHMENTS);
 
 		controlEClass = createEClass(CONTROL);
 		createEReference(controlEClass, CONTROL__TARGET_FEATURE);
 		createEAttribute(controlEClass, CONTROL__HINT);
-		createEAttribute(controlEClass, CONTROL__READONLY);
 		createEAttribute(controlEClass, CONTROL__MANDATORY);
 		createEReference(controlEClass, CONTROL__PATH_TO_FEATURE);
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
@@ -970,6 +992,10 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		renderableEClass = createEClass(RENDERABLE);
 		createEReference(renderableEClass, RENDERABLE__RULE);
+		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
+		createEAttribute(renderableEClass, RENDERABLE__ENABLED);
+		createEAttribute(renderableEClass, RENDERABLE__READONLY);
+		createEReference(renderableEClass, RENDERABLE__ATTACHMENTS);
 
 		actionEClass = createEClass(ACTION);
 		createEAttribute(actionEClass, ACTION__BUNDLE);
@@ -1110,9 +1136,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComposite_Name(), theEcorePackage.getEString(), "name", null, 1, 1, Composite.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComposite_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
-			Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getControl_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature",
@@ -1120,8 +1143,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControl_Hint(), ecorePackage.getEString(), "hint", null, 0, -1, Control.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControl_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1, Control.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControl_Mandatory(), theEcorePackage.getEBoolean(), "mandatory", "false", 0, 1,
 			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
@@ -1183,11 +1204,21 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			0, -1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, IS_INTERFACE,
+		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRenderable_Rule(), this.getRule(), null, "rule", null, 0, 1, Renderable.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
+		initEAttribute(getRenderable_Visible(), ecorePackage.getEBoolean(), "visible", "true", 0, 1, Renderable.class,
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRenderable_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, Renderable.class,
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRenderable_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1,
+			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getRenderable_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
+			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, Action.class,
