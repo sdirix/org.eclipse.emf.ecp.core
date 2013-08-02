@@ -12,13 +12,13 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.common.cachetree;
 
-import org.eclipse.emf.ecore.EObject;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * A cached tree resembles a tree structure where each node is associated with a specific value.
@@ -35,9 +35,12 @@ import java.util.Set;
  */
 public abstract class AbstractCachedTree<T> {
 
+	/**
+	 * Nodes of the cached tree containing necessary information.
+	 */
 	protected Map<Object, CachedTreeNode<T>> nodes;
 	private CachedTreeNode<T> rootValue;
-	private IExcludedObjectsCallback excludedCallback;
+	private final IExcludedObjectsCallback excludedCallback;
 
 	/**
 	 * Private constructor.
@@ -86,7 +89,7 @@ public abstract class AbstractCachedTree<T> {
 		updateNode(eObject, value);
 		rootValue.putIntoCache(eObject, value);
 
-		Set<EObject> affectedElements = removeOutdatedParentCacheIfNeeded(eObject);
+		final Set<EObject> affectedElements = removeOutdatedParentCacheIfNeeded(eObject);
 		// propagate upwards
 		EObject parent = eObject.eContainer();
 
@@ -103,7 +106,7 @@ public abstract class AbstractCachedTree<T> {
 	// If an object has been moved the cached entries must be removed from old parents.
 	private Set<EObject> removeOutdatedParentCacheIfNeeded(EObject eObject) {
 
-		Set<EObject> affectedElements = new HashSet<EObject>();
+		final Set<EObject> affectedElements = new HashSet<EObject>();
 		CachedTreeNode<T> node = nodes.get(eObject);
 
 		if (node.getParent() != null && node.getParent() != eObject.eContainer()) {
@@ -139,7 +142,7 @@ public abstract class AbstractCachedTree<T> {
 	 *         the default value which is returned via {@link #getDefaultValue()}
 	 */
 	public T getCachedValue(Object eObject) {
-		CachedTreeNode<T> nodeEntry = nodes.get(eObject);
+		final CachedTreeNode<T> nodeEntry = nodes.get(eObject);
 
 		if (nodeEntry != null) {
 			return nodes.get(eObject).getDisplayValue();
@@ -157,7 +160,7 @@ public abstract class AbstractCachedTree<T> {
 	public void remove(EObject eObject) {
 
 		CachedTreeNode<T> node = nodes.get(eObject);
-		CachedTreeNode<T> parentNode = nodes.get(node.getParent());
+		final CachedTreeNode<T> parentNode = nodes.get(node.getParent());
 
 		nodes.remove(eObject);
 		rootValue.removeFromCache(eObject);
@@ -191,7 +194,7 @@ public abstract class AbstractCachedTree<T> {
 	}
 
 	private CachedTreeNode<T> createNodeEntry(Object object, T t) {
-		CachedTreeNode<T> node = createdCachedTreeNode(t);
+		final CachedTreeNode<T> node = createdCachedTreeNode(t);
 		nodes.put(object, node);
 		return node;
 	}
@@ -204,7 +207,7 @@ public abstract class AbstractCachedTree<T> {
 	 * @param value the the cached value for the object
 	 */
 	protected void updateParentNode(Object parent, Object object, T value) {
-		CachedTreeNode<T> node = nodes.get(object);
+		final CachedTreeNode<T> node = nodes.get(object);
 		CachedTreeNode<T> parentNode = nodes.get(parent);
 		node.setParent(parent);
 
