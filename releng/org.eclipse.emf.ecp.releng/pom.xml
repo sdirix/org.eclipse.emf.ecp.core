@@ -251,7 +251,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.9.1</version>
 				<configuration>
-					<configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation>
+					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
 					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
@@ -288,7 +288,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.9.1</version>
 				<configuration>
-					<configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation>
+					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
 				</configuration>
 			</plugin>
 		</plugins>
