@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _IDNr4LZhEeKIbujrltRAUA
-Save-Time: 6/27/13 12:09 PM
+Save-Time: 8/2/13 3:21 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -179,7 +179,7 @@ with [get-editor Fan] {
     get-date-time -after [get-label "Date Of Birth"] -index 1 | get-property time | equals "17:9:46" | verify-true
     get-button "Unset Date" | get-property caption | equals "" | verify-true
     get-button Unset | get-property tooltip | equals Unset | verify-true
-    with [get-control Any -index 59] {
+    with [get-control Any -index 45] {
         get-property enablement | equals true | verify-true
         get-property containMenu | equals false | verify-true
         get-property borderWith | equals 0 | verify-true
