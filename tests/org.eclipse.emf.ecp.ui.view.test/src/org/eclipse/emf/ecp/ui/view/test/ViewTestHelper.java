@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.test;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
@@ -39,6 +41,10 @@ public class ViewTestHelper {
 		// setup context
 		@SuppressWarnings("restriction")
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
+		final Collection<ECPProject> projects = ECPUtil.getECPProjectManager().getProjects();
+		for (final ECPProject ecpProject : projects) {
+			ecpProject.delete();
+		}
 		ECPProject project;
 		try {
 			project = ECPProjectManagerImpl.INSTANCE.createProject(provider, "test");
