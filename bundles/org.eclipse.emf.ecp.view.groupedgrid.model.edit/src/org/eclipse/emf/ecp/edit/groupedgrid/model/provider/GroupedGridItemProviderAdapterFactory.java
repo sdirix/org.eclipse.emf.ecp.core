@@ -26,7 +26,6 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.util.GroupedGridAdapterFactory
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
@@ -476,22 +475,6 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						GroupedGridFactory.eINSTANCE.createGroupedGrid()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseTreeCategory(TreeCategory object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(ViewPackage.Literals.TREE_CATEGORY__CHILD_COMPOSITE,
 						GroupedGridFactory.eINSTANCE.createGroupedGrid()));
 
 				return null;

@@ -109,8 +109,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createColumn();
 		case ViewPackage.GROUP:
 			return createGroup();
-		case ViewPackage.TREE_CATEGORY:
-			return createTreeCategory();
 		case ViewPackage.ACTION:
 			return createAction();
 		default:
@@ -302,16 +300,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Group createGroup() {
 		GroupImpl group = new GroupImpl();
 		return group;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public TreeCategory createTreeCategory() {
-		TreeCategoryImpl treeCategory = new TreeCategoryImpl();
-		return treeCategory;
 	}
 
 	/**

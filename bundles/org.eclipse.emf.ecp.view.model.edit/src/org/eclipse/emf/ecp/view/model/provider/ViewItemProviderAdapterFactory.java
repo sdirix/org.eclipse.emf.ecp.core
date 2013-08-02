@@ -485,32 +485,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.TreeCategory} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected TreeCategoryItemProvider treeCategoryItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.TreeCategory}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createTreeCategoryAdapter() {
-		if (treeCategoryItemProvider == null)
-		{
-			treeCategoryItemProvider = new TreeCategoryItemProvider(this);
-		}
-
-		return treeCategoryItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Action} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -707,8 +681,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			columnItemProvider.dispose();
 		if (groupItemProvider != null)
 			groupItemProvider.dispose();
-		if (treeCategoryItemProvider != null)
-			treeCategoryItemProvider.dispose();
 		if (actionItemProvider != null)
 			actionItemProvider.dispose();
 	}

@@ -301,17 +301,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.TREE_CATEGORY: {
-			TreeCategory treeCategory = (TreeCategory) theEObject;
-			T result = caseTreeCategory(treeCategory);
-			if (result == null)
-				result = caseAbstractCategorization(treeCategory);
-			if (result == null)
-				result = caseRenderable(treeCategory);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		case ViewPackage.RENDERABLE: {
 			Renderable renderable = (Renderable) theEObject;
 			T result = caseRenderable(renderable);
@@ -666,22 +655,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGroup(Group object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Tree Category</em>'.
-	 * <!-- begin-user-doc
-	 * --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Tree Category</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTreeCategory(TreeCategory object) {
 		return null;
 	}
 

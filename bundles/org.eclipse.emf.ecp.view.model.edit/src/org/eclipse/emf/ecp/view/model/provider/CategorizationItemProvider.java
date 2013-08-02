@@ -193,11 +193,6 @@ public class CategorizationItemProvider
 			(createChildParameter
 			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
 				ViewFactory.eINSTANCE.createCategory()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				ViewFactory.eINSTANCE.createTreeCategory()));
 	}
 
 }

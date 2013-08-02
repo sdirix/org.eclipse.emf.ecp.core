@@ -190,13 +190,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	private EClass treeCategoryEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	private EClass renderableEClass = null;
 
 	/**
@@ -726,42 +719,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EClass getTreeCategory() {
-		return treeCategoryEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getTreeCategory_ChildComposite() {
-		return (EReference) treeCategoryEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getTreeCategory_TargetFeature() {
-		return (EReference) treeCategoryEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getTreeCategory_PathToFeature() {
-		return (EReference) treeCategoryEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EClass getRenderable() {
 		return renderableEClass;
 	}
@@ -985,11 +942,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		groupEClass = createEClass(GROUP);
 
-		treeCategoryEClass = createEClass(TREE_CATEGORY);
-		createEReference(treeCategoryEClass, TREE_CATEGORY__CHILD_COMPOSITE);
-		createEReference(treeCategoryEClass, TREE_CATEGORY__TARGET_FEATURE);
-		createEReference(treeCategoryEClass, TREE_CATEGORY__PATH_TO_FEATURE);
-
 		renderableEClass = createEClass(RENDERABLE);
 		createEReference(renderableEClass, RENDERABLE__RULE);
 		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
@@ -1059,7 +1011,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
 		columnEClass.getESuperTypes().add(this.getCompositeCollection());
 		groupEClass.getESuperTypes().add(this.getCompositeCollection());
-		treeCategoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		abstractControlEClass.getESuperTypes().add(this.getComposite());
 
 		// Initialize classes and features; add operations and parameters
@@ -1191,18 +1142,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(treeCategoryEClass, TreeCategory.class, "TreeCategory", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTreeCategory_ChildComposite(), this.getComposite(), null, "childComposite", null, 0, 1,
-			TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTreeCategory_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature",
-			null, 1, 1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTreeCategory_PathToFeature(), theEcorePackage.getEReference(), null, "pathToFeature", null,
-			0, -1, TreeCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);

@@ -33,7 +33,6 @@ public class ChildrenDescriptorTest {
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 8;
 	private static final int COLUMN_CHILD_COUNT = 8;
 	private static final int GROUP_CHILD_COUNT = 8;
-	private static final int TREECATEGORY_CHILD_COUNT = 9;
 	private static final int ACTION_CHILD_COUNT = 0;
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
 		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
@@ -166,12 +165,6 @@ public class ChildrenDescriptorTest {
 	public void testGroupDescriptors() {
 		final int size = getChildrenSize(ViewPackage.eINSTANCE.getGroup());
 		assertEquals(GROUP_CHILD_COUNT, size);
-	}
-
-	@Test
-	public void testTreeCategoryDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getTreeCategory());
-		assertEquals(TREECATEGORY_CHILD_COUNT, size);
 	}
 
 	/**

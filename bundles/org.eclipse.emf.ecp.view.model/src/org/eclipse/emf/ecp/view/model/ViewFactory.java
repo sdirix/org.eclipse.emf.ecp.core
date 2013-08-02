@@ -174,16 +174,6 @@ public interface ViewFactory extends EFactory {
 	Group createGroup();
 
 	/**
-	 * Returns a new object of class '<em>Tree Category</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Tree Category</em>'.
-	 * @generated
-	 */
-	TreeCategory createTreeCategory();
-
-	/**
 	 * Returns a new object of class '<em>Action</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

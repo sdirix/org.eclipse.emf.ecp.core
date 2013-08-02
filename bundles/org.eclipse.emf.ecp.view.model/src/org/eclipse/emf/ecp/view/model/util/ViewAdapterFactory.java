@@ -216,12 +216,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseTreeCategory(TreeCategory object)
-		{
-			return createTreeCategoryAdapter();
-		}
-
-		@Override
 		public Adapter caseRenderable(Renderable object)
 		{
 			return createRenderableAdapter();
@@ -568,22 +562,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGroupAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.TreeCategory
-	 * <em>Tree Category</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.TreeCategory
-	 * @generated
-	 */
-	public Adapter createTreeCategoryAdapter() {
 		return null;
 	}
 

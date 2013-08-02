@@ -198,7 +198,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
-	int RENDERABLE = 21;
+	int RENDERABLE = 20;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -975,18 +975,6 @@ public interface ViewPackage extends EPackage {
 	int GROUP = 19;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl <em>Tree Category</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTreeCategory()
-	 * @generated
-	 */
-	int TREE_CATEGORY = 20;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -995,7 +983,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 22;
+	int ACTION = 21;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
@@ -1007,7 +995,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
 	 * @generated
 	 */
-	int ABSTRACT_CONTROL = 23;
+	int ABSTRACT_CONTROL = 22;
 
 	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
@@ -1810,116 +1798,6 @@ public interface ViewPackage extends EPackage {
 	int GROUP_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__RULE = ABSTRACT_CATEGORIZATION__RULE;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__VISIBLE = ABSTRACT_CATEGORIZATION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__ENABLED = ABSTRACT_CATEGORIZATION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__ACTIONS = ABSTRACT_CATEGORIZATION__ACTIONS;
-
-	/**
-	 * The feature id for the '<em><b>Child Composite</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__CHILD_COMPOSITE = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Target Feature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__TARGET_FEATURE = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Path To Feature</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY__PATH_TO_FEATURE = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Tree Category</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TREE_CATEGORY_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 3;
-
-	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1959,7 +1837,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
 	 * @generated
 	 */
-	int ATTACHMENT = 24;
+	int ATTACHMENT = 23;
 
 	/**
 	 * The number of structural features of the '<em>Attachment</em>' class.
@@ -1980,7 +1858,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 25;
+	int ALIGNMENT = 24;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -2556,56 +2434,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getGroup();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.TreeCategory <em>Tree Category</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Tree Category</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TreeCategory
-	 * @generated
-	 */
-	EClass getTreeCategory();
-
-	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.model.TreeCategory#getChildComposite <em>Child Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference '<em>Child Composite</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TreeCategory#getChildComposite()
-	 * @see #getTreeCategory()
-	 * @generated
-	 */
-	EReference getTreeCategory_ChildComposite();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.model.TreeCategory#getTargetFeature
-	 * <em>Target Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference '<em>Target Feature</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TreeCategory#getTargetFeature()
-	 * @see #getTreeCategory()
-	 * @generated
-	 */
-	EReference getTreeCategory_TargetFeature();
-
-	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.TreeCategory#getPathToFeature <em>Path To Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference list '<em>Path To Feature</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TreeCategory#getPathToFeature()
-	 * @see #getTreeCategory()
-	 * @generated
-	 */
-	EReference getTreeCategory_PathToFeature();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
@@ -3270,45 +3098,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass GROUP = eINSTANCE.getGroup();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl
-		 * <em>Tree Category</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.TreeCategoryImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTreeCategory()
-		 * @generated
-		 */
-		EClass TREE_CATEGORY = eINSTANCE.getTreeCategory();
-
-		/**
-		 * The meta object literal for the '<em><b>Child Composite</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference TREE_CATEGORY__CHILD_COMPOSITE = eINSTANCE.getTreeCategory_ChildComposite();
-
-		/**
-		 * The meta object literal for the '<em><b>Target Feature</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference TREE_CATEGORY__TARGET_FEATURE = eINSTANCE.getTreeCategory_TargetFeature();
-
-		/**
-		 * The meta object literal for the '<em><b>Path To Feature</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference TREE_CATEGORY__PATH_TO_FEATURE = eINSTANCE.getTreeCategory_PathToFeature();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl
