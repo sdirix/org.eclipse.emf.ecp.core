@@ -17,6 +17,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.EnableRule;
@@ -131,7 +135,51 @@ public class RuleServiceTest {
 	 * @return the rule service
 	 */
 	private RuleService instantiateRuleService() {
-		return new RuleService(view, league);
+		final RuleService ruleService = new RuleService();
+		ruleService.instantiate(new ViewModelContext() {
+
+			private EContentAdapter viewContentAdapter;
+			private EContentAdapter domainContentAdapter;
+
+			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+				view.eAdapters().remove(viewContentAdapter);
+			}
+
+			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+				league.eAdapters().remove(domainContentAdapter);
+			}
+
+			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+				viewContentAdapter = new EContentAdapter() {
+					@Override
+					public void notifyChanged(Notification notification) {
+						super.notifyChanged(notification);
+						// TODO notify
+					}
+				};
+				view.eAdapters().add(viewContentAdapter);
+			}
+
+			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+				domainContentAdapter = new EContentAdapter() {
+					@Override
+					public void notifyChanged(Notification notification) {
+						super.notifyChanged(notification);
+						// TODO notify
+					}
+				};
+				league.eAdapters().add(domainContentAdapter);
+			}
+
+			public View getViewModel() {
+				return view;
+			}
+
+			public EObject getDomainModel() {
+				return league;
+			}
+		});
+		return ruleService;
 	}
 
 	/**
@@ -178,6 +226,76 @@ public class RuleServiceTest {
 		condition.setAttribute(BowlingPackage.eINSTANCE.getLeague_Name());
 		condition.setExpectedValue("League");
 		control.setRule(rule);
+	}
+
+	private boolean registeredViewListener = false;
+	private boolean registeredDomainListener = false;
+
+	@Test
+	public void testInitialization() {
+		final RuleService ruleService = new RuleService();
+
+		ruleService.instantiate(new ViewModelContext() {
+
+			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+			}
+
+			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+			}
+
+			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+				registeredViewListener = true;
+			}
+
+			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+				registeredDomainListener = true;
+			}
+
+			public View getViewModel() {
+				return null;
+			}
+
+			public EObject getDomainModel() {
+				return null;
+			}
+		});
+		assertTrue(registeredDomainListener);
+		assertTrue(registeredViewListener);
+	}
+
+	@Test
+	public void testUnregisterOnViewModelContext() {
+		final RuleService ruleService = new RuleService();
+
+		ruleService.instantiate(new ViewModelContext() {
+
+			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+				registeredViewListener = false;
+			}
+
+			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+				registeredDomainListener = false;
+			}
+
+			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+				registeredViewListener = true;
+			}
+
+			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+				registeredDomainListener = true;
+			}
+
+			public View getViewModel() {
+				return null;
+			}
+
+			public EObject getDomainModel() {
+				return null;
+			}
+		});
+		ruleService.dispose();
+		assertFalse(registeredDomainListener);
+		assertFalse(registeredViewListener);
 	}
 
 	/**

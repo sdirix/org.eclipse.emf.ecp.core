@@ -83,13 +83,13 @@
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
 		
 		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.provider.xmi</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
-		
+		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
 
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
 		
@@ -136,6 +136,7 @@
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
 		
 		<!-- Should run on a seperate integration job -->
 		<!-- Deactivated till monday <module>../../tests/ECPQ7Tests</module> -->

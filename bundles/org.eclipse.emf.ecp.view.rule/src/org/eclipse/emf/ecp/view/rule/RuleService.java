@@ -14,32 +14,58 @@ package org.eclipse.emf.ecp.view.rule;
 import java.util.Collections;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.context.AbstractViewService;
+import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class RuleService.
  * 
  * @author Eugen Neufeld
  */
-public class RuleService {
+public class RuleService extends AbstractViewService {
+
+	private ViewModelContext context;
+	private ModelChangeListener domainChangeListener;
+	private ModelChangeListener viewChangeListener;
 
 	/**
 	 * Instantiates a new rule service.
-	 * 
-	 * @param view the view
-	 * @param domainModel the domain model
 	 */
-	public RuleService(View view, EObject domainModel) {
-		// FIXME
-		// register content adapters, do stuff
+	public RuleService() {
 	}
 
 	/**
-	 * Gets the involved {@link EObject EObjects}.
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
+	@Override
+	public void instantiate(ViewModelContext context) {
+		this.context = context;
+		domainChangeListener = new ModelChangeListener() {
+
+			public void notifyChange(ModelChangeNotification notification) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+		context.registerDomainChangeListener(domainChangeListener);
+		viewChangeListener = new ModelChangeListener() {
+
+			public void notifyChange(ModelChangeNotification notification) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+		context.registerViewChangeListener(viewChangeListener);
+	}
+
+	/**
+	 * Gets the involved {@link org.eclipse.emf.ecore.EObject EObjects}.
 	 * 
 	 * @param setting the setting
 	 * @param newValue the new value
@@ -53,7 +79,21 @@ public class RuleService {
 	/**
 	 * Dispose.
 	 */
+	@Override
 	public void dispose() {
 		// dispose stuff
+		context.unregisterDomainChangeListener(domainChangeListener);
+		context.unregisterViewChangeListener(viewChangeListener);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.context.ModelChangeNotification)
+	 */
+	public void notifyChange(ModelChangeNotification notification) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
