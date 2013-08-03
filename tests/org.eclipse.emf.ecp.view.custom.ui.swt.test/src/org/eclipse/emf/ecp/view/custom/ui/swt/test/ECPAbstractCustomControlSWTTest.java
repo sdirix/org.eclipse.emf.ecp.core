@@ -16,11 +16,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -245,8 +245,12 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testHandleValidation() {
-		fail("Expectation unclear");
-		customControl.handleValidation(new Diagnostician().validate(CustomFactory.eINSTANCE.createCustomControl()));
+		final Diagnostic validate = new Diagnostician().validate(CustomFactory.eINSTANCE.createCustomControl());
+		customControl.handleValidation(validate);
+
+		// Check Label, Check Image
+		assertEquals(Diagnostic.ERROR, customControl.lastValidationSeverity);
+		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.lastValidationFeature);
 
 	}
 

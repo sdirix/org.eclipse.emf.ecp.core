@@ -9,7 +9,7 @@
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.rule;
+package org.eclipse.emf.ecp.view.rule.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
