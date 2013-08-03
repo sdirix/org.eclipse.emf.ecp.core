@@ -114,6 +114,13 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		
+		<!-- Rule Feature -->
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
+		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
+		
+		
+		
 		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
