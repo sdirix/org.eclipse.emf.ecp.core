@@ -13,18 +13,23 @@ package org.eclipse.emf.ecp.view.group.ui.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Jonas
  * 
  */
+@RunWith(DatabindingClassRunner.class)
 public class GroupTest {
 
 	@Test
@@ -33,12 +38,17 @@ public class GroupTest {
 		final View view = createViewWithOneGroup();
 		final Group group = (Group) view.getChildren().get(0);
 		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(view, null);
+		final Node<Renderable> node = buildNode(view);
 		assertEquals(2, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
 		final Node<?> childNode = node.getChildren().get(0);
 		assertEquals(group, childNode.getRenderable());
+	}
+
+	private Node<Renderable> buildNode(final View view) {
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		return ViewTestHelper.build(view, eClass);
 	}
 
 	/**
@@ -59,7 +69,7 @@ public class GroupTest {
 		final Group group2 = (Group) view.getChildren().get(1);
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(view, null);
+		final Node<Renderable> node = buildNode(view);
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 2, node.getChildren().size());
@@ -89,7 +99,7 @@ public class GroupTest {
 		final Group subGroup = (Group) group.getComposites().get(0);
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(view, null);
+		final Node<Renderable> node = buildNode(view);
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
