@@ -1,5 +1,3 @@
-package org.eclipse.emf.ecp.view.custom.ui.swt.test;
-
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
@@ -12,6 +10,7 @@ package org.eclipse.emf.ecp.view.custom.ui.swt.test;
  * Johannes Faltermeier
  * 
  *******************************************************************************/
+package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
@@ -38,8 +37,8 @@ public class SWTCustomControlTest {
 	 */
 	public class TestHandel {
 
-		public final View view;
-		public final CustomControl customControl;
+		private final View view;
+		private final CustomControl customControl;
 
 		/**
 		 * @param view
@@ -83,7 +82,7 @@ public class SWTCustomControlTest {
 	 * @param composite
 	 * @return the parent composite for the custom control
 	 */
-	public static Composite getParentCompositeFromView(Composite composite) {
+	private static Composite getParentCompositeFromView(Composite composite) {
 		Composite child = (Composite) composite.getChildren()[0];
 		child = getParentCompositeforInnerContentFromOuterComposite(child);
 		return child;
@@ -93,6 +92,7 @@ public class SWTCustomControlTest {
 	 * @param child
 	 * @return the inner composite from the outer one
 	 */
+	// TODO move to SWTTestHelper?
 	public static Composite getParentCompositeforInnerContentFromOuterComposite(Composite child) {
 		return (Composite) child.getChildren()[0];
 	}
