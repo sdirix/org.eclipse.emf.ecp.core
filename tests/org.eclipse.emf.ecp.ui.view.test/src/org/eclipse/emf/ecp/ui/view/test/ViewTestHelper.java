@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ui.view.test;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
@@ -23,7 +24,7 @@ import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -37,7 +38,7 @@ public class ViewTestHelper {
 	 * @param shell
 	 * @return an {@link ECPControlContext}
 	 */
-	public static ECPControlContext createECPControlContext(View view, Shell shell) {
+	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell) {
 		// setup context
 		@SuppressWarnings("restriction")
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
@@ -48,8 +49,8 @@ public class ViewTestHelper {
 		ECPProject project;
 		try {
 			project = ECPProjectManagerImpl.INSTANCE.createProject(provider, "test");
-			project.getContents().add(view);
-			return new ECPControlContextImpl(view, project, shell);
+			project.getContents().add(domainObject);
+			return new ECPControlContextImpl(domainObject, project, shell);
 		} catch (final ECPProjectWithNameExistsException ex) {
 			// Should no happen during tests
 			System.err.println("Project with name already exists, clean-up test environment");
@@ -74,10 +75,12 @@ public class ViewTestHelper {
 
 	/**
 	 * @param view
+	 * @param domainObject
 	 * @return
 	 */
-	public static Node<View> build(View view) {
-		return NodeBuilders.INSTANCE.build(view, null);
+	public static Node<Renderable> build(Renderable view, EObject domainObject) {
+		final Shell shell = new Shell();
+		return NodeBuilders.INSTANCE.build(view, createECPControlContext(domainObject, shell));
 	}
 
 }

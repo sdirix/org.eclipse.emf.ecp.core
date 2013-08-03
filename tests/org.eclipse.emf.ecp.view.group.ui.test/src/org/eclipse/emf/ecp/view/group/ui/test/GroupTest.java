@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class GroupTest {
 		final View view = createViewWithOneGroup();
 		final Group group = (Group) view.getChildren().get(0);
 		// Test NodeBuidlers
-		final Node<View> node = ViewTestHelper.build(view);
+		final Node<Renderable> node = ViewTestHelper.build(view, null);
 		assertEquals(2, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
@@ -58,7 +59,7 @@ public class GroupTest {
 		final Group group2 = (Group) view.getChildren().get(1);
 
 		// Test NodeBuidlers
-		final Node<View> node = ViewTestHelper.build(view);
+		final Node<Renderable> node = ViewTestHelper.build(view, null);
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 2, node.getChildren().size());
@@ -88,7 +89,7 @@ public class GroupTest {
 		final Group subGroup = (Group) group.getComposites().get(0);
 
 		// Test NodeBuidlers
-		final Node<View> node = ViewTestHelper.build(view);
+		final Node<Renderable> node = ViewTestHelper.build(view, null);
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
