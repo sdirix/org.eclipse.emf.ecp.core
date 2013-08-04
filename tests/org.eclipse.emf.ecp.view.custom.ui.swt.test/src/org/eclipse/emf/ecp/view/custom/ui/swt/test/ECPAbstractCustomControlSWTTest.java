@@ -349,6 +349,7 @@ public class ECPAbstractCustomControlSWTTest {
 		final Composite composite = customControl.createControl(testComposite);
 		customControl.setEditable(false);
 		assertEquals(false, composite.getEnabled());
+		// TODO: shouldn't the inner controls also be disabled?
 		// final Composite innerComposite = SWTCustomControlTest
 		// .getParentCompositeforInnerContentFromOuterComposite(composite);
 		// assertEquals(false, innerComposite.getEnabled());
