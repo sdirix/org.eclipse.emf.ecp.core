@@ -6,6 +6,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -18,25 +19,54 @@ public class ChildrenDescriptorExtensionTest {
 	 * Needs to be adapted after refactoring
 	 * These are the counts for a fully integrated model with all elements
 	 */
-	private static final int VIEW_CHILD_COUNT = 14;
+	private static final int VIEW_CHILD_COUNT = 15;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = 6;
-	private static final int CATEGORY_CHILD_COUNT = 11;
+	private static final int CATEGORY_CHILD_COUNT = 12;
 	private static final int CONTROL_CHILD_COUNT = 2;
 	private static final int TABLECONTROL_CHILD_COUNT = 3;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = 2;
 	private static final int SEPARATOR_CHILD_COUNT = 2;
-	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 10;
-	private static final int COLUMN_CHILD_COUNT = 10;
-	private static final int GROUP_CHILD_COUNT = 10;
+	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 11;
+	private static final int COLUMN_CHILD_COUNT = 11;
+	private static final int GROUP_CHILD_COUNT = 11;
 	private static final int ACTION_CHILD_COUNT = 0;
+	private static final int GROUPEDGRID_CHILD_COUNT = 3;
+	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = 7;
+	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
+
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
 		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
+
+	@Test
+	public void testGroupedGridChildDescriptors() {
+		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getGroupedGrid());
+		assertEquals(GROUPEDGRID_CHILD_COUNT, size);
+	}
+
+	@Test
+	public void testGridedGroupChildDescriptors() {
+		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getGroup());
+		assertEquals(GRIDEDGROUP_CHILD_COUNT, size);
+	}
+
+	@Test
+	public void testGridedGroupRowChildDescriptors() {
+		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getRow());
+		assertEquals(GRIDEDGROUPROW_CHILD_COUNT, size);
+	}
+
+	@Test
+	public void testGridedSpanChildDescriptors() {
+		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getSpan());
+		assertEquals(GRIDEDGROUPSPAN_CHILD_COUNT, size);
+	}
 
 	@Test
 	public void testViewChildDescriptors() {
