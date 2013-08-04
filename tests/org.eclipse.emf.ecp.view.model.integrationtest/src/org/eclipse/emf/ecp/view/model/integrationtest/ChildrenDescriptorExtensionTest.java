@@ -24,7 +24,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
-	private static final int CATEGORIZATION_CHILD_COUNT = 7;
+	private static final int CATEGORIZATION_CHILD_COUNT = 6;
 	private static final int CATEGORY_CHILD_COUNT = 11;
 	private static final int CONTROL_CHILD_COUNT = 2;
 	private static final int TABLECONTROL_CHILD_COUNT = 3;
