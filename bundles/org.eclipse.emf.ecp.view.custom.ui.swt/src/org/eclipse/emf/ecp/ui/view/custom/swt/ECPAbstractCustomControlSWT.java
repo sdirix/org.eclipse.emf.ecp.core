@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
@@ -113,14 +114,19 @@ public abstract class ECPAbstractCustomControlSWT extends
 		if (diagnostic.getSeverity() == Diagnostic.ERROR
 			|| diagnostic.getSeverity() == Diagnostic.WARNING) {
 			final Image image = getImage(VALIDATION_ERROR_IMAGE);
-			validationLabel.setImage(image);
 			Diagnostic reason = diagnostic;
 			if (diagnostic.getChildren() != null
 				&& diagnostic.getChildren().size() != 0) {
 				reason = diagnostic.getChildren().get(0);
 			}
-			validationLabel.setToolTipText(reason.getMessage());
+			if (validationLabel != null) {
+				validationLabel.setImage(image);
+				validationLabel.setToolTipText(reason.getMessage());
+			}
 			final List<?> data = diagnostic.getData();
+
+			handleCreatedControls(diagnostic);
+
 			handleContentValidation(diagnostic.getSeverity(),
 				(EStructuralFeature) (data.size() > 1 ? data.get(1) : null));
 		} else {
@@ -128,10 +134,41 @@ public abstract class ECPAbstractCustomControlSWT extends
 		}
 	}
 
+	/**
+	 * @param diagnostic
+	 */
+	private void resetControlValidation() {
+		final Set<EStructuralFeature> keySet = controlMap.keySet();
+
+		for (final EStructuralFeature eStructuralFeature : keySet) {
+			final ECPControl ecpControl = controlMap.get(eStructuralFeature);
+			ecpControl.resetValidation();
+		}
+	}
+
+	/**
+	 * @param diagnostic
+	 */
+	private void handleCreatedControls(Diagnostic diagnostic) {
+		if (diagnostic.getData().size() < 1) {
+			return;
+		}
+		if (!(diagnostic.getData().get(1) instanceof EStructuralFeature)) {
+			return;
+		}
+		final EStructuralFeature feature = (EStructuralFeature) diagnostic.getData().get(1);
+		final ECPControl ecpControl = controlMap.get(feature);
+		if (ecpControl == null) {
+			return;
+		}
+		ecpControl.handleValidation(diagnostic);
+	}
+
 	protected abstract void handleContentValidation(int severity,
 		EStructuralFeature feature);
 
 	public final void resetValidation() {
+		resetControlValidation();
 		if (validationLabel != null) {
 			validationLabel.setImage(null);
 		}

@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecp.ui.view.custom;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
@@ -27,6 +28,8 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	private final ECPControlFactory controlFactory;
+
+	protected final HashMap<EStructuralFeature, ECPControl> controlMap = new HashMap<EStructuralFeature, ECPControl>();
 
 	public ECPAbstractCustomControl(Set<ECPCustomControlFeature> editableFeatures,
 		Set<ECPCustomControlFeature> referencedFeatures) {
@@ -147,7 +150,10 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	}
 
 	protected final <T extends ECPControl> T getControl(Class<T> clazz, ECPCustomControlFeature feature) {
-		return controlFactory.createControl(clazz, getItemPropertyDescriptor(feature), getModelElementContext());
+		final T createControl = controlFactory.createControl(clazz, getItemPropertyDescriptor(feature),
+			getModelElementContext());
+		controlMap.put(feature.getTargetFeature(), createControl);
+		return createControl;
 	}
 
 	public final class CustomControlHelper {

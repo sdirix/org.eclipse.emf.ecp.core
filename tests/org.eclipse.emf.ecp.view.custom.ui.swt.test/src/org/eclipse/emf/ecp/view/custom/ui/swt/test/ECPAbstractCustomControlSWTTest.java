@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -27,10 +28,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
+import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
+import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -38,11 +42,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Jonas
  * 
  */
+@RunWith(DatabindingClassRunner.class)
 public class ECPAbstractCustomControlSWTTest {
 
 	private static final String LABELTEXT = "Some Text";
@@ -50,6 +56,7 @@ public class ECPAbstractCustomControlSWTTest {
 	private static Set<ECPCustomControlFeature> editableFeaturess;
 	private ECPAbstractCustomControlSWTStub customControl;
 	private Composite testComposite;
+	private CustomControl domainObject;
 
 	/**
 	 * @author Jonas
@@ -63,9 +70,17 @@ public class ECPAbstractCustomControlSWTTest {
 		public int lastValidationSeverity;
 		public EStructuralFeature lastValidationFeature;
 		public boolean disposed = false;
+		public Composite textControl;
+		private final boolean withControl;
+		public boolean validationReseted = false;
 
 		public ECPAbstractCustomControlSWTStub() {
+			this(false);
+		}
+
+		public ECPAbstractCustomControlSWTStub(boolean withControl) {
 			super(createEditableFeatures(), createReferencedFeatures());
+			this.withControl = withControl;
 		}
 
 		/**
@@ -78,6 +93,14 @@ public class ECPAbstractCustomControlSWTTest {
 			final Label label = new Label(composite, SWT.NONE);
 			label.setText(LABELTEXT);
 			rendered = true;
+			if (!withControl) {
+				return;
+			}
+			for (final ECPCustomControlFeature controlFeature : editableFeaturess) {
+				if (controlFeature.getTargetFeature() == CustomPackage.eINSTANCE.getCustomControl_Bundle()) {
+					textControl = createControl(controlFeature, composite);
+				}
+			}
 
 		}
 
@@ -90,7 +113,6 @@ public class ECPAbstractCustomControlSWTTest {
 		@Override
 		protected void handleContentValidation(int severity, EStructuralFeature feature) {
 			lastValidationSeverity = severity;
-			// TODO Auto-generated method stub
 			lastValidationFeature = feature;
 
 		}
@@ -102,7 +124,7 @@ public class ECPAbstractCustomControlSWTTest {
 		 */
 		@Override
 		protected void resetContentValidation() {
-			// TODO Auto-generated method stub
+			validationReseted = true;
 
 		}
 
@@ -149,10 +171,13 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Before
 	public void init() {
-		customControl = new ECPAbstractCustomControlSWTStub();
-		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 		referencedFeatures = null;
 		editableFeaturess = null;
+		customControl = new ECPAbstractCustomControlSWTStub();
+		domainObject = CustomFactory.eINSTANCE.createCustomControl();
+		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
+			SWTViewTestHelper.createShell()));
+		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 	}
 
 	/**
@@ -245,13 +270,46 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testHandleValidation() {
-		final Diagnostic validate = new Diagnostician().validate(CustomFactory.eINSTANCE.createCustomControl());
-		customControl.handleValidation(validate);
-
+		final Diagnostic validate = new Diagnostician().validate(domainObject);
+		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.lastValidationSeverity);
 		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.lastValidationFeature);
+		customControl.validationReseted = false;
+		customControl.resetValidation();
+		assertTrue(customControl.validationReseted);
+	}
 
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
+	 * .
+	 */
+	@Test
+	public void testHandleValidationOfControl() {
+		customControl = new ECPAbstractCustomControlSWTStub(true);
+		domainObject = CustomFactory.eINSTANCE.createCustomControl();
+		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
+			SWTViewTestHelper.createShell()));
+		Diagnostic validate = new Diagnostician().validate(domainObject);
+		customControl.handleValidation(validate.getChildren().get(1));
+		// Check Label, Check Image
+		assertEquals(Diagnostic.ERROR, customControl.lastValidationSeverity);
+		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.lastValidationFeature);
+		customControl.createControl(testComposite);
+		customControl.handleValidation(validate.getChildren().get(1));
+		final Composite textControl = customControl.textControl;
+		final Control control = textControl.getChildren()[0];
+		assertTrue(control instanceof Label);
+		final Label label = (Label) control;
+		assertNotNull(label.getImage());
+		domainObject.setBundle("not empty");
+		customControl.validationReseted = false;
+		customControl.resetValidation();
+		assertTrue(customControl.validationReseted);
+		validate = new Diagnostician().validate(domainObject);
+		customControl.handleValidation(validate.getChildren().get(1));
+		assertNull(label.getImage());
 	}
 
 	/**
