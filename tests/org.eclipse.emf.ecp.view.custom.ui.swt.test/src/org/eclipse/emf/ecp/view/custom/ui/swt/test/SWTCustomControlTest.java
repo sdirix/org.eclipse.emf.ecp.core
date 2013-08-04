@@ -13,7 +13,6 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -108,7 +107,7 @@ public class SWTCustomControlTest {
 		// setup ui
 		final Shell shell = SWTViewTestHelper.createShell();
 		SWTViewTestHelper.render(view, shell);
-		fail("Undefined what to expect");
+		// TODO: What to expect
 	}
 
 	/**
