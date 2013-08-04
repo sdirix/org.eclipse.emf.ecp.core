@@ -18,7 +18,7 @@ public class ChildrenDescriptorExtensionTest {
 	 * Needs to be adapted after refactoring
 	 * These are the counts for a fully integrated model with all elements
 	 */
-	private static final int VIEW_CHILD_COUNT = 13;
+	private static final int VIEW_CHILD_COUNT = 14;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 0;
