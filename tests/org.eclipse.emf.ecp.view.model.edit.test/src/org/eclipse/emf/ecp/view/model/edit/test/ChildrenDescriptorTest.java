@@ -18,13 +18,13 @@ public class ChildrenDescriptorTest {
 	 * These are the counts for the core model only
 	 * If a model elements is moved out, the respective test can be removed here
 	 */
-	private static final int VIEW_CHILD_COUNT = 13;
+	private static final int VIEW_CHILD_COUNT = 12;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
-	private static final int CATEGORIZATION_CHILD_COUNT = 7;
+	private static final int CATEGORIZATION_CHILD_COUNT = 6;
 	private static final int CATEGORY_CHILD_COUNT = 9;
 	private static final int CONTROL_CHILD_COUNT = 2;
 	private static final int TABLECONTROL_CHILD_COUNT = 3;
