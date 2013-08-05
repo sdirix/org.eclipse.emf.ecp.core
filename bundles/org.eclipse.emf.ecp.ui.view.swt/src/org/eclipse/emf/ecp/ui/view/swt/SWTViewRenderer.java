@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import java.util.ArrayList;
@@ -52,14 +64,25 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SWTViewRenderer.
+ */
 public class SWTViewRenderer extends AbstractSWTRenderer<View> {
+
+	/** The Constant INSTANCE. */
 	public static final SWTViewRenderer INSTANCE = new SWTViewRenderer();
+
+	/** The error descriptor. */
 	private static ImageDescriptor ERROR_DESCRIPTOR = Activator.getImageDescriptor("icons/error_decorate.png");
+
+	/** The warning descriptor. */
 	private static ImageDescriptor WARNING_DESCRIPTOR = Activator.getImageDescriptor("icons/warning_decorate.png");
 
 	// protected TreeViewer treeViewer;
 
 	// TODO: move somewhere and filter based on interface types
+	/** The filtered classes. */
 	@SuppressWarnings("serial")
 	private final Set<Class<?>> filteredClasses = new LinkedHashSet<Class<?>>() {
 		{
@@ -71,6 +94,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 	};
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
+	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 */
 	@Override
 	public Control renderSWT(final Node<View> viewNode, final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -99,6 +128,15 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 	}
 
+	/**
+	 * Render children.
+	 * 
+	 * @param parent the parent
+	 * @param node the node
+	 * @param adapterFactoryItemDelegator the adapter factory item delegator
+	 * @return the composite
+	 * @throws NoRendererFoundException the no renderer found exception
+	 */
 	private Composite renderChildren(Composite parent, Node<View> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
@@ -135,6 +173,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		return columnComposite;
 	}
 
+	/**
+	 * Created editor pane.
+	 * 
+	 * @param composite the composite
+	 */
 	protected void createdEditorPane(Composite composite) {
 		editorComposite = createScrolledComposite(composite);
 		editorComposite.setExpandHorizontal(true);
@@ -145,6 +188,13 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 	}
 
+	/**
+	 * Filter visible nodes.
+	 * 
+	 * @param treeViewer the tree viewer
+	 * @param node the node
+	 * @return the list< node<? extends renderable>>
+	 */
 	protected List<Node<? extends Renderable>> filterVisibleNodes(TreeViewer treeViewer, Node<? extends Renderable> node) {
 		final List<Node<?>> result = new ArrayList<Node<?>>();
 		final List<Node<?>> children = node.getChildren();
@@ -161,7 +211,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	}
 
 	/**
-	 * @return
+	 * Creates the scrolled composite.
+	 * 
+	 * @param parent the parent
+	 * @return the scrolled composite
 	 */
 	private ScrolledComposite createScrolledComposite(Composite parent) {
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL
@@ -178,10 +231,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	}
 
 	/**
-	 * @param composite
-	 * @param adapterFactoryItemDelegator
-	 * @param viewNode
-	 * @return
+	 * Creates the tree viewer.
+	 * 
+	 * @param composite the composite
+	 * @param adapterFactoryItemDelegator the adapter factory item delegator
+	 * @param viewNode the view node
+	 * @return the tree viewer
 	 */
 	protected TreeViewer createTreeViewer(final Composite composite,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode) {
@@ -250,8 +305,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 					}
 					if (lastSelection != null) {
 						lastSelection.dispose();
-						lastSelection = (Node<?>) selection;
 					}
+					lastSelection = (Node<?>) selection;
 					final Composite childComposite = createComposite(editorComposite);
 					childComposite.setBackground(composite.getBackground());
 					editorComposite.setContent(childComposite);
@@ -286,6 +341,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 	}
 
+	/**
+	 * Inits the tree viewer.
+	 * 
+	 * @param treeViewer the tree viewer
+	 * @param viewNode the view node
+	 */
 	protected void initTreeViewer(final TreeViewer treeViewer, Node<View> viewNode) {
 		viewNode.addRenderingResultDelegator(new RenderingResultDelegatorAdapter() {
 			@Override
@@ -300,7 +361,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	}
 
 	/**
-	 * @return
+	 * Creates the composite.
+	 * 
+	 * @param parent the parent
+	 * @return the composite
 	 */
 	private Composite createComposite(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -311,9 +375,19 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		return composite;
 	}
 
+	/** The editors. */
 	private final List<TreeEditor> editors = new ArrayList<TreeEditor>();
+
+	/** The editor composite. */
 	private ScrolledComposite editorComposite;
 
+	/**
+	 * Adds the tree editor.
+	 * 
+	 * @param treeViewer the tree viewer
+	 * @param modelElement the model element
+	 * @param view the view
+	 */
 	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, View view) {
 		// The text column
 		final Tree tree = treeViewer.getTree();
@@ -361,6 +435,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	}
 
 	// Clean up any previous editor control
+	/**
+	 * Clean up tree editors.
+	 */
 	private void cleanUpTreeEditors() {
 		for (final TreeEditor editor : editors) {
 			final Control oldEditor = editor.getEditor();
@@ -370,6 +447,13 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 	}
 
+	/**
+	 * Adds the buttons.
+	 * 
+	 * @param treeViewer the tree viewer
+	 * @param treeSelection the tree selection
+	 * @param modelElement the model element
+	 */
 	protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection, EObject modelElement) {
 
 		cleanUpTreeEditors();
@@ -396,12 +480,26 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 	}
 
+	/**
+	 * The Class TreeTableLabelProvider.
+	 */
 	protected class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements ITableItemLabelProvider {
 
+		/**
+		 * Instantiates a new tree table label provider.
+		 * 
+		 * @param adapterFactory the adapter factory
+		 */
 		public TreeTableLabelProvider(AdapterFactory adapterFactory) {
 			super(adapterFactory);
 		}
 
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnImage(java.lang.Object,
+		 *      int)
+		 */
 		@Override
 		public Image getColumnImage(Object object, int columnIndex) {
 
@@ -440,6 +538,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			return resultImage;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnText(java.lang.Object,
+		 *      int)
+		 */
 		@Override
 		public String getColumnText(Object object, int columnIndex) {
 
