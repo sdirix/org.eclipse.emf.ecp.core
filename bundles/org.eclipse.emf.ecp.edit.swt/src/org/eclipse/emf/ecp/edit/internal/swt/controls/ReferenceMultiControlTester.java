@@ -75,9 +75,9 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 		if (EAttribute.class.isInstance(feature)) {
 			return NOT_APPLICABLE;
 		} else if (EReference.class.isInstance(feature)) {
-			if (((EReference) feature).isContainment()) {
-				return NOT_APPLICABLE;
-			}
+			// if (((EReference) feature).isContainment()) {
+			// return NOT_APPLICABLE;
+			// }
 			final Class<?> instanceClass = feature.getEType().getInstanceClass();
 			if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
