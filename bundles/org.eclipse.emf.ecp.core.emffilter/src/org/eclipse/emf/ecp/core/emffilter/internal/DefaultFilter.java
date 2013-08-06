@@ -38,7 +38,7 @@ public class DefaultFilter implements ECPFilterProvider {
 	 * @return a {@link Set} of {@link String Strings} of the default packages in the modeling edition of eclipse
 	 */
 	public Set<String> getHiddenPackages() {
-		Set<String> packages = new HashSet<String>();
+		final Set<String> packages = new HashSet<String>();
 		addE4Models(packages);
 		addEMFStoreModels(packages);
 		addEMFModels(packages);
@@ -50,6 +50,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		addGraphitiModels(packages);
 		addQ7Models(packages);
 		addNet4jModels(packages);
+		addViewModels(packages);
 
 		// xml
 		packages.add("http://www.eclipse.org/xsd/2002/XSD"); //$NON-NLS-1$
@@ -59,8 +60,18 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/acceleo/profiler/3.0"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/acceleo/mtl/3.0"); //$NON-NLS-1$
 
-
 		return packages;
+	}
+
+	/**
+	 * @param packages
+	 */
+	private void addViewModels(Set<String> packages) {
+		packages.add("http://org/eclipse/emf/ecp/view/model");
+		packages.add("http://org/eclipse/emf/ecp/view/separator/model");
+		packages.add("http://org/eclipse/emf/ecp/view/custom/model");
+		packages.add("http://org/eclipse/emf/ecp/view/groupedgrid/model");
+
 	}
 
 	private void addQ7Models(Set<String> packages) {
@@ -220,7 +231,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/commands"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic"); //$NON-NLS-1$
 	}
-	
+
 	/**
 	 * @param packages
 	 */
