@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPAbstractControl;
@@ -19,10 +22,6 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -95,7 +94,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 			numColumns++;
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
+
 		if (!isEmbedded()) {
 			validationLabel = new Label(composite, SWT.NONE);
 			validationLabel.setBackground(parent.getBackground());
@@ -103,7 +102,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 		}
 
-		Composite innerComposite = new Composite(composite, SWT.NONE);
+		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
@@ -122,14 +121,15 @@ public abstract class SWTControl extends ECPAbstractControl {
 
 		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null
 			&& getHelpText().length() != 0) {
-			Label l = new Label(composite, SWT.PUSH);
+			final Label l = new Label(composite, SWT.PUSH);
 			l.setImage(Activator.getImage("icons/help.png")); //$NON-NLS-1$
 			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help"); //$NON-NLS-1$
 			l.setBackground(parent.getBackground());
 			l.addMouseListener(new MouseListener() {
 
 				public void mouseUp(MouseEvent e) {
-					MessageDialog dialog = new MessageDialog(parent.getShell(), UtilMessages.SWTControl_Help, null, getHelpText(),
+					final MessageDialog dialog = new MessageDialog(parent.getShell(), UtilMessages.SWTControl_Help,
+						null, getHelpText(),
 						MessageDialog.INFORMATION, new String[] { JFaceResources
 							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 					new ECPDialogExecutor(dialog) {
@@ -174,9 +174,9 @@ public abstract class SWTControl extends ECPAbstractControl {
 			// System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
 			// composite.setTabList(tabList);
 		} else {
-			Control[] controls = getControlsForTooltip();
+			final Control[] controls = getControlsForTooltip();
 			if (controls != null) {
-				for (Control control : controls) {
+				for (final Control control : controls) {
 					control.setToolTipText(getHelpText());
 				}
 			}
@@ -219,7 +219,8 @@ public abstract class SWTControl extends ECPAbstractControl {
 				if (binding != null) {
 					binding.updateTargetToModel();
 				} else {
-					Object currentUnsetValue = getModelElementContext().getModelElement().eGet(getStructuralFeature());
+					final Object currentUnsetValue = getModelElementContext().getModelElement().eGet(
+						getStructuralFeature());
 					getModelElementContext().getModelElement().eSet(getStructuralFeature(), currentUnsetValue);
 				}
 			}
@@ -334,7 +335,7 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 * @return the created button
 	 */
 	protected Button createButtonForAction(final Action action, final Composite composite) {
-		Button selectButton = new Button(composite, SWT.PUSH);
+		final Button selectButton = new Button(composite, SWT.PUSH);
 		selectButton.setImage(action.getImageDescriptor().createImage());
 		selectButton.setToolTipText(action.getToolTipText());
 		selectButton.addSelectionListener(new SelectionAdapter() {
