@@ -8,18 +8,19 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderingResultDelegator;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 
 public class SWTRenderingResultCustomControl extends SWTRenderingResultDelegator {
 
-	private ECPAbstractCustomControlSWT control;
-	private CustomControl model;
+	private final ECPAbstractCustomControlSWT control;
+	private final CustomControl model;
 
-	public SWTRenderingResultCustomControl( ECPAbstractCustomControlSWT control,CustomControl model,Control... results) {
+	public SWTRenderingResultCustomControl(ECPAbstractCustomControlSWT control, CustomControl model, Control... results) {
 		super(results);
 		this.control = control;
 		this.model = model;
 	}
-	
+
 	@Override
 	public void cleanup() {
 		super.cleanup();
@@ -30,17 +31,22 @@ public class SWTRenderingResultCustomControl extends SWTRenderingResultDelegator
 		return getControls() != null;
 	}
 
-	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+	@Override
+	public void validationChanged(final Map<EObject, Set<Diagnostic>> affectedObjects) {
 
 		if (!canValidate()) {
 			return;
 		}
+		Display.getDefault().syncExec(new Runnable() {
 
-		control.resetValidation();
-		if (affectedObjects.containsKey(model)) { 
-			for (Diagnostic diagnostic : affectedObjects.get(model)) {
-				control.handleValidation(diagnostic);
+			public void run() {
+				control.resetValidation();
+				if (affectedObjects.containsKey(model)) {
+					for (final Diagnostic diagnostic : affectedObjects.get(model)) {
+						control.handleValidation(diagnostic);
+					}
+				}
 			}
-		}
+		});
 	}
 }

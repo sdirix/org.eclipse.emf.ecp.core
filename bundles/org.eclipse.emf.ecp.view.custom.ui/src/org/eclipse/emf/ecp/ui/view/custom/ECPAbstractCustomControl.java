@@ -44,6 +44,17 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+
+		// move to some cleanup service
+		createNecessaryObjects();
+	}
+
+	/**
+	 * 
+	 */
+	private void createNecessaryObjects() {
+		// TODO Auto-generated method stub
+
 	}
 
 	public final Set<ECPCustomControlFeature> getEditableFeatures() {
@@ -129,7 +140,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void dispose() {
+	public void dispose() {
 		Activator.ungetECPControlFactory();
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();

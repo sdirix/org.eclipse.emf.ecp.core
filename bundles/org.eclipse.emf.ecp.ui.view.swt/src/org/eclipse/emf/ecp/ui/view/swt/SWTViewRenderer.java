@@ -304,10 +304,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 						return;
 					}
 					if (lastSelection != null) {
-						lastSelection.dispose();
+						lastSelection.cleanup();
 					}
 					lastSelection = (Node<?>) selection;
 					final Composite childComposite = createComposite(editorComposite);
+
 					childComposite.setBackground(composite.getBackground());
 					editorComposite.setContent(childComposite);
 
@@ -315,7 +316,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 					if (Node.class.isInstance(selection)) {
 						final Node<?> node = (Node<?>) selection;
 						try {
-							SWTRenderers.INSTANCE.render(childComposite, node, newAdapterFactoryItemDelegator);
+							final Control render = SWTRenderers.INSTANCE.render(childComposite, node,
+								newAdapterFactoryItemDelegator);
+							GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(render);
 							viewNode.fireSelectedChildNodeChanged(node);
 						} catch (final NoRendererFoundException e) {
 							// TODO Auto-generated catch block
