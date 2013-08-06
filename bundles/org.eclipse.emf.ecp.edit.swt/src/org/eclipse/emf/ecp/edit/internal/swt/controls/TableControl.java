@@ -12,6 +12,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFProperties;
@@ -36,12 +47,6 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -73,17 +78,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The class describing a table control.
@@ -100,7 +100,7 @@ public class TableControl extends SWTControl {
 	private EClass clazz;
 	private TableControlConfiguration tableControlConfiguration;
 
-	private Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
+	private final Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
 
 	/**
 	 * Constructor for a String control.
@@ -147,13 +147,17 @@ public class TableControl extends SWTControl {
 
 		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
 
-		Composite titleComposite = new Composite(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new GridLayout(1, false));
+		composite.setBackground(parent.getBackground());
+
+		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackground(parent.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).span(2, 1).align(SWT.FILL, SWT.BEGINNING)
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
 			.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
-		Label label = new Label(titleComposite, SWT.NONE);
+		final Label label = new Label(titleComposite, SWT.NONE);
 		label.setBackground(parent.getBackground());
 		label.setText(getItemPropertyDescriptor().getDisplayName(null));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
@@ -170,7 +174,7 @@ public class TableControl extends SWTControl {
 		}
 		if (createButtons) {
 			// addButtons
-			Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
+			final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
 			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
 			int numButtons = 2;
 
@@ -184,14 +188,15 @@ public class TableControl extends SWTControl {
 			}
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
 		}
-		Composite controlComposite = new Composite(parent, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).span(2, 1).align(SWT.FILL, SWT.FILL).applyTo(controlComposite);
+		final Composite controlComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL,
+			SWT.FILL).applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 
 		// delegate to super class
 		createContentControl(controlComposite);
 
-		return parent;
+		return composite;
 	}
 
 	/*
@@ -212,9 +217,9 @@ public class TableControl extends SWTControl {
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
-		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
+		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
 			new FocusCellOwnerDrawHighlighter(tableViewer));
-		ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
+		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
 			@Override
 			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
 				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
@@ -229,10 +234,10 @@ public class TableControl extends SWTControl {
 			| ColumnViewerEditor.KEYBOARD_ACTIVATION);
 
 		// create a content provider
-		ObservableListContentProvider cp = new ObservableListContentProvider();
+		final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-		EObject tempInstance = clazz.getEPackage().getEFactoryInstance().create(clazz);
-		ECPTableViewerComparator comparator = new ECPTableViewerComparator();
+		final EObject tempInstance = clazz.getEPackage().getEFactoryInstance().create(clazz);
+		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;
 		List<EStructuralFeature> structuralFeatures = clazz.getEAllStructuralFeatures();
@@ -240,14 +245,14 @@ public class TableControl extends SWTControl {
 		if (tableControlConfiguration != null) {
 			structuralFeatures = new ArrayList<EStructuralFeature>();
 			readOnlyColumn = new HashMap<EStructuralFeature, Boolean>();
-			for (TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
+			for (final TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
 				structuralFeatures.add(tcc.getColumnAttribute());
 				readOnlyColumn.put(tcc.getColumnAttribute(), tcc.isReadOnly());
 			}
 		}
 
 		for (final EStructuralFeature feature : structuralFeatures) {
-			IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
+			final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 				tempInstance, feature);
 			if (itemPropertyDescriptor == null) {
 				// if we can't render because no edit information is available, do nothing
@@ -275,12 +280,12 @@ public class TableControl extends SWTControl {
 			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
 				@Override
 				public void update(ViewerCell cell) {
-					EObject element = (EObject) cell.getElement();
-					Object value = attributeMaps[0].get(element);
+					final EObject element = (EObject) cell.getElement();
+					final Object value = attributeMaps[0].get(element);
 
 					if (ECPCellEditor.class.isInstance(cellEditor)) {
-						ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
-						String text = ecpCellEditor.getFormatedString(value);
+						final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+						final String text = ecpCellEditor.getFormatedString(value);
 						cell.setText(text == null ? "" : text); //$NON-NLS-1$
 
 					} else {
@@ -310,7 +315,7 @@ public class TableControl extends SWTControl {
 			}
 			if (addEditingSupport) {
 				// remove if no editing needed
-				EditingSupport observableSupport = new EditingSupport(tableViewer) {
+				final EditingSupport observableSupport = new EditingSupport(tableViewer) {
 					private EditingState editingState;
 
 					private final ColumnViewerEditorActivationListenerHelper activationListener = new ColumnViewerEditorActivationListenerHelper();
@@ -357,13 +362,13 @@ public class TableControl extends SWTControl {
 					 */
 					@Override
 					protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
-						IObservableValue target = doCreateCellEditorObservable(cellEditor);
+						final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 						Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
 
-						IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
+						final IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
 						Assert.isNotNull(model, "doCreateElementObservable(...) did not return an observable"); //$NON-NLS-1$
 
-						Binding binding = createBinding(target, model);
+						final Binding binding = createBinding(target, model);
 
 						Assert.isNotNull(binding, "createBinding(...) did not return a binding"); //$NON-NLS-1$
 
@@ -458,7 +463,7 @@ public class TableControl extends SWTControl {
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-		IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
+		final IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
 			getModelElementContext().getModelElement(), getStructuralFeature());
 		tableViewer.setInput(list);
 
@@ -466,10 +471,10 @@ public class TableControl extends SWTControl {
 		// - the minimumWidth and (non)resizable settings of the ColumnWeightData are not supported properly
 		// - the layout stops resizing columns that have been resized manually by the user (this could be considered a
 		// feature though)
-		TableColumnLayout layout = new TableColumnLayout();
+		final TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
 		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
-			Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width"); //$NON-NLS-1$
+			final Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width"); //$NON-NLS-1$
 			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
 				: storedValue));
 		}
@@ -482,11 +487,11 @@ public class TableControl extends SWTControl {
 
 	private SelectionAdapter getSelectionAdapter(final ECPTableViewerComparator comparator, final TableColumn column,
 		final int index) {
-		SelectionAdapter selectionAdapter = new SelectionAdapter() {
+		final SelectionAdapter selectionAdapter = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				comparator.setColumn(index);
-				int dir = comparator.getDirection();
+				final int dir = comparator.getDirection();
 				tableViewer.getTable().setSortDirection(dir);
 				tableViewer.getTable().setSortColumn(column);
 				tableViewer.refresh();
@@ -499,9 +504,10 @@ public class TableControl extends SWTControl {
 
 	private void createRemoveRowButton(EClass clazz, final Composite buttonComposite) {
 		removeButton = new Button(buttonComposite, SWT.None);
-		Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
+		final Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
 		removeButton.setImage(image);
-		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected + clazz.getInstanceClass().getSimpleName());
+		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected
+			+ clazz.getInstanceClass().getSimpleName());
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			/*
 			 * (non-Javadoc)
@@ -509,20 +515,21 @@ public class TableControl extends SWTControl {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+				final IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 
 				if (selection == null || selection.getFirstElement() == null) {
 					return;
 				}
 
 				final List<EObject> deletionList = new ArrayList<EObject>();
-				Iterator<?> iterator = selection.iterator();
+				final Iterator<?> iterator = selection.iterator();
 
 				while (iterator.hasNext()) {
 					deletionList.add((EObject) iterator.next());
 				}
 
-				MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(), ControlMessages.TableControl_Delete, null,
+				final MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(),
+					ControlMessages.TableControl_Delete, null,
 					ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
 						JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 						JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
@@ -537,13 +544,13 @@ public class TableControl extends SWTControl {
 							return;
 						}
 
-						EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+						final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
 						editingDomain.getCommandStack().execute(
 							RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
 					}
 				}.execute();
 
-				List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
 				if (containments.size() < getStructuralFeature().getUpperBound()) {
 					addButton.setEnabled(true);
 				}
@@ -552,8 +559,8 @@ public class TableControl extends SWTControl {
 				}
 			}
 		});
-		EObject modelElement = getModelElementContext().getModelElement();
-		List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+		final EObject modelElement = getModelElementContext().getModelElement();
+		final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
 		if (containments.size() <= getStructuralFeature().getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
@@ -563,7 +570,7 @@ public class TableControl extends SWTControl {
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
-		Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
+		final Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		addButton.setImage(image);
 		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
@@ -574,8 +581,8 @@ public class TableControl extends SWTControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				addRow(clazz);
-				EObject modelElement = getModelElementContext().getModelElement();
-				List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+				final EObject modelElement = getModelElementContext().getModelElement();
+				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
 				if (getStructuralFeature().getUpperBound() != -1
 					&& containments.size() == getStructuralFeature().getUpperBound()) {
 					addButton.setEnabled(false);
@@ -586,8 +593,8 @@ public class TableControl extends SWTControl {
 			}
 		});
 
-		EObject modelElement = getModelElementContext().getModelElement();
-		List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+		final EObject modelElement = getModelElementContext().getModelElement();
+		final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
 		if (getStructuralFeature().getUpperBound() != -1
 			&& containments.size() >= getStructuralFeature().getUpperBound()) {
 			addButton.setEnabled(false);
@@ -606,10 +613,10 @@ public class TableControl extends SWTControl {
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImage(VALIDATION_ERROR_ICON);
+			final Image image = Activator.getImage(VALIDATION_ERROR_ICON);
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
-			EObject object = (EObject) diagnostic.getData().get(0);
+			final EObject object = (EObject) diagnostic.getData().get(0);
 			if (!featureErrorMap.containsKey(object)) {
 				featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
 			}
@@ -642,10 +649,10 @@ public class TableControl extends SWTControl {
 	}
 
 	private void addRow(EClass clazz) {
-		EObject modelElement = getModelElementContext().getModelElement();
-		EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
+		final EObject modelElement = getModelElementContext().getModelElement();
+		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
-		EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
 
@@ -692,13 +699,13 @@ public class TableControl extends SWTControl {
 				return 0;
 			}
 			int rc = 0;
-			EObject object1 = (EObject) e1;
-			EObject object2 = (EObject) e2;
-			EStructuralFeature feat1 = object1.eClass().getEAllStructuralFeatures().get(propertyIndex);
-			EStructuralFeature feat2 = object2.eClass().getEAllStructuralFeatures().get(propertyIndex);
+			final EObject object1 = (EObject) e1;
+			final EObject object2 = (EObject) e2;
+			final EStructuralFeature feat1 = object1.eClass().getEAllStructuralFeatures().get(propertyIndex);
+			final EStructuralFeature feat2 = object2.eClass().getEAllStructuralFeatures().get(propertyIndex);
 
-			Object value1 = object1.eGet(feat1);
-			Object value2 = object2.eGet(feat2);
+			final Object value1 = object1.eGet(feat1);
+			final Object value2 = object2.eGet(feat2);
 
 			if (value1 == null) {
 				rc = 1;
