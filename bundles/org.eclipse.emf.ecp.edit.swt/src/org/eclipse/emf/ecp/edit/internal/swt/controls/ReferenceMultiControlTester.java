@@ -35,16 +35,16 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	/** {@inheritDoc} **/
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		int bestPriority = NOT_APPLICABLE;
-		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
 			Activator.getDefault().ungetECPControlFactory();
 			return bestPriority;
 		}
-		for (ECPControlDescription description : controlFactory.getControlDescriptors()) {
-			for (ECPApplicableTester tester : description.getTester()) {
+		for (final ECPControlDescription description : controlFactory.getControlDescriptors()) {
+			for (final ECPApplicableTester tester : description.getTester()) {
 				if (ECPStaticApplicableTester.class.isInstance(tester)) {
-					ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
-					int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
+					final ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
+					final int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
 					if (bestPriority < priority) {
 						bestPriority = priority;
 					}
@@ -71,14 +71,14 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 		if (!itemPropertyDescriptor.isMany(eObject)) {
 			return NOT_APPLICABLE;
 		}
-		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
+		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
 		if (EAttribute.class.isInstance(feature)) {
 			return NOT_APPLICABLE;
 		} else if (EReference.class.isInstance(feature)) {
-			// if (((EReference) feature).isContainment()) {
-			// return NOT_APPLICABLE;
-			// }
-			Class<?> instanceClass = feature.getEType().getInstanceClass();
+			if (((EReference) feature).isContainment()) {
+				return NOT_APPLICABLE;
+			}
+			final Class<?> instanceClass = feature.getEType().getInstanceClass();
 			if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
 			}
