@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ SWTCustomControlTest.class, SWTCustomControlTest.class, ECPAbstractCustomControlSWTTest.class })
+@SuiteClasses({ SWTCustomControlTest.class, ECPAbstractCustomControlSWTTest.class })
 public class AllTests {
 
 }

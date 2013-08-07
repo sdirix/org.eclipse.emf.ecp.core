@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -55,23 +56,21 @@ public abstract class ECPAbstractCustomControlSWT extends
 	private Composite composite;
 
 	public final Composite createControl(Composite parent) {
-		// composite = new Composite(parent, SWT.NONE);
-		// composite.setBackground(parent.getBackground());
-		// final int numColumns = 1;
-		//
-		// GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0)
-		// .applyTo(composite);
-		// GridDataFactory.fillDefaults().grab(true, false)
-		// .align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
-		//
-		// final Composite innerComposite = new Composite(composite, SWT.NONE);
-		// innerComposite.setBackground(parent.getBackground());
-		// GridDataFactory.fillDefaults().grab(true, false)
-		// .align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
-		// GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
-		createContentControl(parent);
+		composite = new Composite(parent, SWT.NONE);
+		composite.setBackground(parent.getBackground());
+		final int numColumns = 1;
 
-		return parent;
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0)
+			.applyTo(composite);
+
+		final Composite innerComposite = new Composite(composite, SWT.NONE);
+		innerComposite.setBackground(parent.getBackground());
+		GridDataFactory.fillDefaults().grab(true, false)
+			.align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
+		createContentControl(innerComposite);
+
+		return composite;
 	}
 
 	protected final void createValidationLabel(Composite parent) {
