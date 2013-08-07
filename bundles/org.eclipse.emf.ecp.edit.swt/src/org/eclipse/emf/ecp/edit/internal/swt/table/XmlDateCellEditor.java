@@ -11,14 +11,24 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
-import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
@@ -34,18 +44,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	private DateTime dateWidget;
-	private DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
+	private final DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
 
 	public XmlDateCellEditor() {
 		// TODO Auto-generated constructor stub
@@ -128,11 +130,25 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected Object doGetValue() {
-		Calendar selectedCalendarDate = Calendar.getInstance();
+
+		try {
+			final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+			cal.setYear(dateWidget.getYear());
+			cal.setMonth(dateWidget.getMonth() + 1);
+			cal.setDay(dateWidget.getDay());
+
+			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+
+			return cal;
+		} catch (final DatatypeConfigurationException ex) {
+			// Activator.logException(ex);
+		}
+		final Calendar selectedCalendarDate = Calendar.getInstance();
 		selectedCalendarDate.set(Calendar.YEAR, dateWidget.getYear());
 		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth());
 		selectedCalendarDate.set(Calendar.DAY_OF_MONTH, dateWidget.getDay());
 		return new XMLCalendar(selectedCalendarDate.getTime(), XMLCalendar.DATE);
+
 	}
 
 	@Override
@@ -142,8 +158,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected void doSetValue(Object value) {
-		XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
-		GregorianCalendar gregCal = cal.toGregorianCalendar();
+		final XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
+		final GregorianCalendar gregCal = cal.toGregorianCalendar();
 		dateWidget.setDate(gregCal.get(Calendar.YEAR), gregCal.get(Calendar.MONTH), gregCal.get(Calendar.DAY_OF_MONTH));
 	}
 
@@ -178,9 +194,9 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	void applyEditorValueAndDeactivate() {
 		// must set the selection before getting value
 
-		Object newValue = doGetValue();
+		final Object newValue = doGetValue();
 		markDirty();
-		boolean isValid = isCorrect(newValue);
+		final boolean isValid = isCorrect(newValue);
 		setValueValid(isValid);
 
 		if (!isValid) {
@@ -196,7 +212,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	public String getFormatedString(Object value) {
-		XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
+		final XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
 		if (value == null) {
 			return ""; //$NON-NLS-1$
 		}
