@@ -26,11 +26,11 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  * @author Eugen Neufeld
  */
 public interface ECPControlContext {
-	
+
 	/**
-	 * Initializes a context for a given {@link EObject} that is based on the current context
+	 * Initializes a context for a given {@link EObject} that is based on the current context.
 	 * 
-	 * @param eObject the {@link EObject} for which to initialize a sub context 
+	 * @param eObject the {@link EObject} for which to initialize a sub context
 	 * @return the initalized sub context
 	 */
 	ECPControlContext createSubContext(EObject eObject);
@@ -56,17 +56,17 @@ public interface ECPControlContext {
 	 */
 	EObject getModelElement();
 
-
 	/**
 	 * Adds a model element to the {@link EReference}.
 	 * 
 	 * @param eObject the {@link EObject} to add
 	 * @param eReference the {@link EReference} to add the {@link EObject} to
 	 */
-	void addModelElement(EObject eObject,EReference eReference);
+	void addModelElement(EObject eObject, EReference eReference);
 
 	/**
 	 * Returns a new {@link EObject} that is suitable for the passed {@link EReference}.
+	 * 
 	 * @param eReference
 	 *            the reference to create the element for
 	 * @return the created EObject, this EObject is not contained in the tree
@@ -75,26 +75,29 @@ public interface ECPControlContext {
 
 	/**
 	 * Returns an existing {@link EObject} that is suitable for the passed {@link EReference}.
+	 * 
 	 * @param eReference the {@link EReference} to find an existing Element for
-	 * @return an existing {@link EObject} that can be used in this {@link EReference}, the returned EObject must already be in the containment tree
+	 * @return an existing {@link EObject} that can be used in this {@link EReference}, the returned EObject must
+	 *         already be in the containment tree
 	 */
 	EObject getExistingElementFor(EReference eReference);
-	
+
 	/**
 	 * Opens an {@link EObject} in a new context.
 	 * 
 	 * @param eObject the {@link EObject} to open in a new context
 	 */
 	void openInNewContext(EObject eObject);
-	
+
 	/**
 	 * Whether the current environment is a web environment (e.g. RAP) or not.
+	 * 
 	 * @return true if the current environment is a web environment
 	 */
 	boolean isRunningAsWebApplication();
-	
+
 	/**
-	 * Returns the locale for this context. 
+	 * Returns the locale for this context.
 	 * 
 	 * @return the locale for this context
 	 */

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -33,13 +33,13 @@ import org.osgi.framework.Bundle;
 
 /**
  * The ControlFactoryImpl is a Singleton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides
- * a method ({@link #createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
+ * a method ({@link #createControl(Class, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
  * control for with the known widgets.
- *
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
-public final class ControlFactoryImpl implements ECPControlFactory{
+public final class ControlFactoryImpl implements ECPControlFactory {
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
 
@@ -57,57 +57,64 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 	private static final String TESTER_FEATURE = "supportedFeature";//$NON-NLS-1$
 	private static final String TESTER_SINGLEVALUE = "singleValue";//$NON-NLS-1$
 
-	private Set<ECPControlDescription> controlDescriptors = new HashSet<ECPControlDescription>();
+	private final Set<ECPControlDescription> controlDescriptors = new HashSet<ECPControlDescription>();
 
 	/**
 	 * The Singleton for accessing the ControlFactoryImpl.
 	 */
 	public static final ControlFactoryImpl INSTANCE = new ControlFactoryImpl();
 
+	/**
+	 * Constructor which reads the extension points. Thus new controls can't be added during runtime.
+	 */
 	public ControlFactoryImpl() {
 		readExtensionPoint();
 	}
 
 	private void readExtensionPoint() {
-		IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			CONTROL_EXTENSION);
-		for (IConfigurationElement e : controls) {
+		for (final IConfigurationElement e : controls) {
 			try {
-				String id=e.getAttribute(CONTROL_ID);
-				String clazz = e.getAttribute(CLASS_ATTRIBUTE);
-				Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(), clazz);
-				boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
+				final String id = e.getAttribute(CONTROL_ID);
+				final String clazz = e.getAttribute(CLASS_ATTRIBUTE);
+				final Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(), clazz);
+				final boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
 
-//				ECPApplicableTester tester=null;
-				Set<ECPApplicableTester> tester=new HashSet<ECPApplicableTester>();
-				for(IConfigurationElement testerExtension: e.getChildren()){
-					if(TEST_DYNAMIC.equals(testerExtension.getName())){
+				// ECPApplicableTester tester=null;
+				final Set<ECPApplicableTester> tester = new HashSet<ECPApplicableTester>();
+				for (final IConfigurationElement testerExtension : e.getChildren()) {
+					if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 						tester.add((ECPApplicableTester) testerExtension.createExecutableExtension(CONTROL_TESTER));
 					}
-					else if(TEST_STATIC.equals(testerExtension.getName())){
-						boolean singleValue = Boolean.parseBoolean(testerExtension.getAttribute(TESTER_SINGLEVALUE));
-						int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
+					else if (TEST_STATIC.equals(testerExtension.getName())) {
+						final boolean singleValue = Boolean.parseBoolean(testerExtension
+							.getAttribute(TESTER_SINGLEVALUE));
+						final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
 
-						String type = testerExtension.getAttribute(TESTER_CLASSTYPE);
-						Class<?> supportedClassType = loadClass(testerExtension.getContributor().getName(), type);
-						//Class.forName(type);
+						final String type = testerExtension.getAttribute(TESTER_CLASSTYPE);
+						final Class<?> supportedClassType = loadClass(testerExtension.getContributor().getName(), type);
+						// Class.forName(type);
 
 						String eObject = testerExtension.getAttribute(TESTER_EOBJECT);
 						if (eObject == null) {
 							eObject = "org.eclipse.emf.ecore.EObject";//$NON-NLS-1$
 						}
-						Class<? extends EObject> supportedEObject = loadClass(testerExtension.getContributor().getName(), eObject);
+						final Class<? extends EObject> supportedEObject = loadClass(testerExtension.getContributor()
+							.getName(), eObject);
 
-						String supportedFeature = testerExtension.getAttribute(TESTER_FEATURE);
+						final String supportedFeature = testerExtension.getAttribute(TESTER_FEATURE);
 
-						tester.add(new ECPStaticApplicableTester(singleValue, priority, supportedClassType, supportedEObject, supportedFeature));
+						tester.add(new ECPStaticApplicableTester(singleValue, priority, supportedClassType,
+							supportedEObject, supportedFeature));
 					}
 				}
-				ECPControlDescription controlDescription = new ECPControlDescription(id,resolvedClass,showLabel,tester);
+				final ECPControlDescription controlDescription = new ECPControlDescription(id, resolvedClass,
+					showLabel, tester);
 				controlDescriptors.add(controlDescription);
-			} catch (ClassNotFoundException e1) {
+			} catch (final ClassNotFoundException e1) {
 				Activator.logException(e1);
-			} catch (CoreException e1) {
+			} catch (final CoreException e1) {
 				Activator.logException(e1);
 			}
 		}
@@ -115,9 +122,10 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 
 	@SuppressWarnings("unchecked")
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
-		Bundle bundle = Platform.getBundle(bundleName);
+		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + EditMessages.ControlFactoryImpl_CannotBeLoadedBecauseBundle + bundleName
+			throw new ClassNotFoundException(clazz + EditMessages.ControlFactoryImpl_CannotBeLoadedBecauseBundle
+				+ bundleName
 				+ EditMessages.ControlFactoryImpl_CannotBeResolved);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
@@ -130,33 +138,36 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 	public <T extends ECPControl> T createControl(Class<T> controlType, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context) {
 
-		ECPControlDescription controlDescription = getControlCandidate(controlType,itemPropertyDescriptor, context.getModelElement());
-		if(controlDescription==null){
+		final ECPControlDescription controlDescription = getControlCandidate(controlType, itemPropertyDescriptor,
+			context.getModelElement());
+		if (controlDescription == null) {
 			return null;
 		}
-		T control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
+		final T control = getControlInstance(controlDescription, itemPropertyDescriptor, context);
 
 		return control;
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	public <T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId) {
 
 		ECPControlDescription controlDescription = null;
-		for(ECPControlDescription desc:controlDescriptors){
-			if(desc.getId().equals(controlId)){
-				controlDescription=desc;
+		for (final ECPControlDescription desc : controlDescriptors) {
+			if (desc.getId().equals(controlId)) {
+				controlDescription = desc;
 				break;
 			}
 		}
-		if(controlDescription==null){
+		if (controlDescription == null) {
 			return null;
 		}
-		T control = getControlInstance(controlDescription,itemPropertyDescriptor,context);
-
+		final T control = getControlInstance(controlDescription, itemPropertyDescriptor, context);
 
 		return control;
 	}
@@ -170,50 +181,54 @@ public final class ControlFactoryImpl implements ECPControlFactory{
 
 	@SuppressWarnings("unchecked")
 	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription,
-		IItemPropertyDescriptor itemPropertyDescriptor,  ECPControlContext modelElementContext) {
-		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext.getModelElement());
+		IItemPropertyDescriptor itemPropertyDescriptor, ECPControlContext modelElementContext) {
+		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext
+			.getModelElement());
 		try {
-			Constructor<? extends ECPAbstractControl> controlConstructor = controlDescription.getControlClass().getConstructor(boolean.class,
-				IItemPropertyDescriptor.class, EStructuralFeature.class, ECPControlContext.class,boolean.class);
-			return (T) controlConstructor.newInstance(controlDescription.isShowLabel(),itemPropertyDescriptor, feature, modelElementContext,false);
-		} catch (IllegalArgumentException ex) {
+			final Constructor<? extends ECPAbstractControl> controlConstructor = controlDescription.getControlClass()
+				.getConstructor(boolean.class,
+					IItemPropertyDescriptor.class, EStructuralFeature.class, ECPControlContext.class, boolean.class);
+			return (T) controlConstructor.newInstance(controlDescription.isShowLabel(), itemPropertyDescriptor,
+				feature, modelElementContext, false);
+		} catch (final IllegalArgumentException ex) {
 			Activator.logException(ex);
-		} catch (InstantiationException ex) {
+		} catch (final InstantiationException ex) {
 			Activator.logException(ex);
-		} catch (IllegalAccessException ex) {
+		} catch (final IllegalAccessException ex) {
 			Activator.logException(ex);
-		} catch (InvocationTargetException ex) {
+		} catch (final InvocationTargetException ex) {
 			Activator.logException(ex);
-		} catch (SecurityException ex) {
+		} catch (final SecurityException ex) {
 			Activator.logException(ex);
-		} catch (NoSuchMethodException ex) {
+		} catch (final NoSuchMethodException ex) {
 			Activator.logException(ex);
 		}
 		return null;
 	}
 
-	private ECPControlDescription getControlCandidate(Class<?> controlClass,IItemPropertyDescriptor itemPropertyDescriptor,
+	private ECPControlDescription getControlCandidate(Class<?> controlClass,
+		IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject modelElement) {
 		int highestPriority = -1;
 		ECPControlDescription bestCandidate = null;
-		for (ECPControlDescription description : controlDescriptors) {
+		for (final ECPControlDescription description : controlDescriptors) {
 
-			if(!controlClass.isAssignableFrom(description.getControlClass())){
+			if (!controlClass.isAssignableFrom(description.getControlClass())) {
 				continue;
 			}
-			int currentPriority=-1;
+			int currentPriority = -1;
 
-			for(ECPApplicableTester tester:description.getTester()){
-				int testerPriority=tester.isApplicable(itemPropertyDescriptor, modelElement);
-				if(testerPriority>currentPriority){
-					currentPriority=testerPriority;
+			for (final ECPApplicableTester tester : description.getTester()) {
+				final int testerPriority = tester.isApplicable(itemPropertyDescriptor, modelElement);
+				if (testerPriority > currentPriority) {
+					currentPriority = testerPriority;
 				}
 
 			}
 
-			if(currentPriority>highestPriority){
-				highestPriority=currentPriority;
-				bestCandidate=description;
+			if (currentPriority > highestPriority) {
+				highestPriority = currentPriority;
+				bestCandidate = description;
 			}
 		}
 		return bestCandidate;

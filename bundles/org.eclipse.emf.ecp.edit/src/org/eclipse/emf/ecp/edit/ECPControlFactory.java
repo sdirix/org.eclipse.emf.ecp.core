@@ -15,9 +15,11 @@ package org.eclipse.emf.ecp.edit;
 import java.util.Set;
 
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 /**
  * The ControlFactory provides a
- * method ({@link ECPControlFactory#createControl(T, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
+ * method ({@link ECPControlFactory#createControl(Class, IItemPropertyDescriptor, ECPControlContext)}) for creating a
+ * suitable
  * control with the known widgets.
  * 
  * @author Eugen Neufeld
@@ -36,6 +38,7 @@ public interface ECPControlFactory {
 	 */
 	<T extends ECPControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context);
+
 	/**
 	 * Creates an {@link ECPAbstractControl} based on a provided id.
 	 * 
@@ -47,11 +50,14 @@ public interface ECPControlFactory {
 	 * 
 	 * @deprecated
 	 */
-	
+
+	@Deprecated
 	<T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context,String controlId);
+		ECPControlContext context, String controlId);
+
 	/**
 	 * A copy of all known {@link ECPControlDescription}.
+	 * 
 	 * @return a copy of the set of all known controlDescriptions
 	 */
 	Set<ECPControlDescription> getControlDescriptors();

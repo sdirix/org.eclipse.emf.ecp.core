@@ -58,33 +58,10 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 		if (isSingleValue() == itemPropertyDescriptor.isMany(eObject)) {
 			return NOT_APPLICABLE;
 		}
-		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
+		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
 		// if we have an attribute
 		if (EAttribute.class.isInstance(feature)) {
-			Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
-			if (instanceClass == null) {
-				return NOT_APPLICABLE;
-			}
-			// if the attribute class is an primitive test the primitive types
-			if (instanceClass.isPrimitive()) {
-				try {
-					Class<?> primitive = (Class<?>) getSupportedClassType().getField("TYPE").get(null); //$NON-NLS-1$
-					if (!primitive.equals(instanceClass)) {
-						return NOT_APPLICABLE;
-					}
-
-				} catch (IllegalArgumentException e) {
-					return NOT_APPLICABLE;
-				} catch (SecurityException e) {
-					return NOT_APPLICABLE;
-				} catch (IllegalAccessException e) {
-					return NOT_APPLICABLE;
-				} catch (NoSuchFieldException e) {
-					return NOT_APPLICABLE;
-				}
-			}
-			// otherwise test the classes itself
-			else if (!getSupportedClassType().isAssignableFrom(instanceClass)) {
+			if (checkAttributeInvalid((EAttribute) feature)) {
 				return NOT_APPLICABLE;
 			}
 		}
@@ -101,41 +78,87 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 		// if the supported eobject is assignable from the current eobject and the supported feature is eitehr null or
 		// equals the current one
 		if (getSupportedEObject().isInstance(eObject)
-			&& (getSupportedFeature() == null || feature.equals(eObject.eClass().getEStructuralFeature(getSupportedFeature())))) {
+			&& (getSupportedFeature() == null || feature.equals(eObject.eClass().getEStructuralFeature(
+				getSupportedFeature())))) {
 			return getPriority();
 		}
 		return NOT_APPLICABLE;
 	}
+
+	/**
+	 * @return
+	 * 
+	 */
+	private boolean checkAttributeInvalid(EAttribute attribute) {
+		final Class<?> instanceClass = attribute.getEAttributeType().getInstanceClass();
+		if (instanceClass == null) {
+			return true;
+		}
+		// if the attribute class is an primitive test the primitive types
+		if (instanceClass.isPrimitive()) {
+			try {
+				final Class<?> primitive = (Class<?>) getSupportedClassType().getField("TYPE").get(null); //$NON-NLS-1$
+				if (!primitive.equals(instanceClass)) {
+					return true;
+				}
+
+			} catch (final IllegalArgumentException e) {
+				return true;
+			} catch (final SecurityException e) {
+				return true;
+			} catch (final IllegalAccessException e) {
+				return true;
+			} catch (final NoSuchFieldException e) {
+				return true;
+			}
+		}
+		// otherwise test the classes itself
+		else if (!getSupportedClassType().isAssignableFrom(instanceClass)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Whether the corresponding control is allowed only for single values.
+	 * 
 	 * @return true if only a single value is allows
 	 */
 	public boolean isSingleValue() {
 		return singleValue;
 	}
+
 	/**
-	 * The static priority of the corresponding control. 
+	 * The static priority of the corresponding control.
+	 * 
 	 * @return the priority
 	 */
 	public int getPriority() {
 		return priority;
 	}
+
 	/**
 	 * The eobejct which is supported by the corresponding control.
+	 * 
 	 * @return the class of the supported eobejct
 	 */
 	public Class<? extends EObject> getSupportedEObject() {
 		return supportedEObject;
 	}
+
 	/**
-	 * The name of the feature the corresponding control supports. 
+	 * The name of the feature the corresponding control supports.
+	 * 
 	 * @return the name of the supported feature
 	 */
 	public String getSupportedFeature() {
 		return supportedFeature;
 	}
+
 	/**
 	 * The class of the type the corresponding control supports.
+	 * 
 	 * @return the class of the supported type
 	 */
 	public Class<?> getSupportedClassType() {
