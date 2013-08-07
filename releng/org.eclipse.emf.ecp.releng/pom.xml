@@ -114,6 +114,13 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		
+		<!-- Label Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
+		
 		<!-- Rule Feature -->
 		
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
