@@ -15,12 +15,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
+import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.OrCondition;
@@ -28,6 +27,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.Rule;
 import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,30 +38,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(DatabindingClassRunner.class)
 public class RuleTest {
-
-	/**
-	 * @author Jonas
-	 * 
-	 */
-	public class RuleHandel {
-
-		public final Rule rule;
-		private final Renderable parent;
-		public final EObject domainObject;
-
-		/**
-		 * @param rule
-		 * @param renderable
-		 * @param domainObject
-		 */
-		public RuleHandel(Rule rule, Renderable renderable, EObject domainObject) {
-			this.rule = rule;
-			// TODO Auto-generated constructor stub
-			parent = renderable;
-			this.domainObject = domainObject;
-		}
-
-	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithDisableRule() {
@@ -260,20 +236,20 @@ public class RuleTest {
 	/**
 	 * @param rule
 	 */
-	private void addFalseLeafCondition(Rule rule) {
+	public static void addFalseLeafCondition(Rule rule) {
 		final LeafCondition leafCondition = createFalseLeafCondition();
 		rule.setCondition(leafCondition);
 	}
 
-	private LeafCondition createFalseLeafCondition() {
+	private static LeafCondition createFalseLeafCondition() {
 		final LeafCondition leafCondition = createLeafCondition();
-		leafCondition.setExpectedValue(true);
+		leafCondition.setExpectedValue(Alignment.NONE);
 		return leafCondition;
 	}
 
-	private LeafCondition createTrueLeafCondition() {
+	private static LeafCondition createTrueLeafCondition() {
 		final LeafCondition leafCondition = createLeafCondition();
-		leafCondition.setExpectedValue(false);
+		leafCondition.setExpectedValue(Alignment.LEFT);
 		return leafCondition;
 	}
 
@@ -374,15 +350,14 @@ public class RuleTest {
 	/**
 	 * @param rule
 	 */
-	private void addTrueLeafCondition(Rule rule) {
+	public static void addTrueLeafCondition(Rule rule) {
 		final LeafCondition leafCondition = createTrueLeafCondition();
-		leafCondition.setExpectedValue(false);
 		rule.setCondition(leafCondition);
 	}
 
-	private LeafCondition createLeafCondition() {
+	private static LeafCondition createLeafCondition() {
 		final LeafCondition leafCondition = ViewFactory.eINSTANCE.createLeafCondition();
-		leafCondition.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
+		leafCondition.setAttribute(ViewPackage.eINSTANCE.getControl_LabelAlignment());
 		return leafCondition;
 	}
 
@@ -397,19 +372,13 @@ public class RuleTest {
 
 	}
 
-	/**
-	 * @return
-	 */
-	private RuleHandel createDisabledEnableRule() {
+	public static RuleHandel createDisabledEnableRule() {
 		final EnableRule enableRule = createEnableRule();
 		enableRule.setDisable(true);
 		return createRuleHandel(enableRule);
 	}
 
-	/**
-	 * @return
-	 */
-	private RuleHandel createEnabledEnableRule() {
+	public static RuleHandel createEnabledEnableRule() {
 		final EnableRule enableRule = createEnableRule();
 		enableRule.setDisable(false);
 		return createRuleHandel(enableRule);
@@ -419,35 +388,30 @@ public class RuleTest {
 	 * @param enableRule
 	 * @return
 	 */
-	private RuleHandel createRuleHandel(Rule enableRule) {
+	private static RuleHandel createRuleHandel(Rule enableRule) {
 		final Renderable renderable = createRuleContainerAndAddRule(enableRule);
-		final EObject domainObject = EcoreFactory.eINSTANCE.createEClass();
+		final Control domainObject = ViewFactory.eINSTANCE.createControl();
+		domainObject.setLabelAlignment(Alignment.LEFT);
 		return new RuleHandel(enableRule, renderable, domainObject);
 	}
 
-	private Renderable createRuleContainerAndAddRule(Rule rule) {
+	private static Renderable createRuleContainerAndAddRule(Rule rule) {
 		final Renderable renderable = ViewFactory.eINSTANCE.createView();
 		renderable.setRule(rule);
 		return renderable;
 	}
 
-	private EnableRule createEnableRule() {
+	private static EnableRule createEnableRule() {
 		return ViewFactory.eINSTANCE.createEnableRule();
 	}
 
-	/**
-	 * @return
-	 */
-	private RuleHandel createVisibleShowRule() {
+	public static RuleHandel createVisibleShowRule() {
 		final ShowRule showRule = ViewFactory.eINSTANCE.createShowRule();
 		showRule.setHide(false);
 		return createRuleHandel(showRule);
 	}
 
-	/**
-	 * @return
-	 */
-	private RuleHandel createInvisibleShowRule() {
+	public static RuleHandel createInvisibleShowRule() {
 		final ShowRule showRule = ViewFactory.eINSTANCE.createShowRule();
 		showRule.setHide(true);
 		return createRuleHandel(showRule);
