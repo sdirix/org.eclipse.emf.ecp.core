@@ -1,13 +1,26 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edagr Mueller - initial API and implementation
+ * Eugen Neufeld - Refactoring
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
+
+import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -17,47 +30,25 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 	public static final SWTCategoryRenderer INSTANCE = new SWTCategoryRenderer();
 
 	@Override
-	public Control renderSWT(Node<Category> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public List<RenderingResultRow<Control>> renderSWT(Node<Category> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		Composite parent=getParentFromInitData(initData);
-		Composite categoryComposite = new Composite(parent, SWT.NONE);
+		final Composite parent = getParentFromInitData(initData);
+		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
-		
-		GridLayoutFactory.fillDefaults()
-			.numColumns(1)
-			.applyTo(categoryComposite);
-		GridDataFactory.fillDefaults()
-			.align(SWT.FILL, SWT.FILL)
-			.grab(true, true)
-			.applyTo(categoryComposite);
-		
-		
+
+		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
+
 		node.addRenderingResultDelegator(withSWT(categoryComposite));
-//		
-//		Composite composite = new Composite(categoryComposite, SWT.NONE);
-//		composite.setBackground(getParent().getBackground());
-//			
-//		GridDataFactory.fillDefaults()
-//			.align(SWT.FILL, SWT.FILL)
-//			.grab(true, true)
-//			.applyTo(composite);
-//			
-//		GridLayoutFactory.fillDefaults()
-//			.applyTo(composite);
-			
-		Node<? extends Renderable> childNode = node.getChildren().get(0);
-		
-		Control control = SWTRenderers.INSTANCE.render(categoryComposite, childNode, adapterFactoryItemDelegator);
-			
-		if (!childNode.isLeaf()) {
-			GridDataFactory.fillDefaults()
-			.align(SWT.FILL, SWT.FILL)
-			.grab(true, true)
-			.span(2, 1)
-			.applyTo(control);
-		} 
-		
-		return categoryComposite;
+
+		final Node<? extends Renderable> childNode = node.getChildren().get(0);
+
+		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(categoryComposite, childNode,
+			adapterFactoryItemDelegator);
+
+		setLayoutDataForResultRows(resultRows);
+
+		return createResult(categoryComposite);
 	}
 }

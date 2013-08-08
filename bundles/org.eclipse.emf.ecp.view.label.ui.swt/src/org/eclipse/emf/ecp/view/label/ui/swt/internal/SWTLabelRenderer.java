@@ -11,9 +11,12 @@
  */
 package org.eclipse.emf.ecp.view.label.ui.swt.internal;
 
+import java.util.List;
+
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -33,7 +36,7 @@ public class SWTLabelRenderer extends AbstractSWTRenderer<org.eclipse.emf.ecp.vi
 	public static final SWTLabelRenderer INSTANCE = new SWTLabelRenderer();
 
 	@Override
-	public Control renderSWT(Node<org.eclipse.emf.ecp.view.label.model.Label> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<org.eclipse.emf.ecp.view.label.model.Label> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
@@ -48,7 +51,7 @@ public class SWTLabelRenderer extends AbstractSWTRenderer<org.eclipse.emf.ecp.vi
 
 		node.addRenderingResultDelegator(withSWT(label));
 
-		return label;
+		return createResult(label);
 	}
 
 }

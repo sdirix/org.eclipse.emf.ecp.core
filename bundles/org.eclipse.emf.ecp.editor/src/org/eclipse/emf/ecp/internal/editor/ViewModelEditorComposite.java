@@ -23,14 +23,13 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.View;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
 public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
-	private ECPControlContext modelElementContext;
+	private final ECPControlContext modelElementContext;
 	private RendererContext rendererContext;
 
 	/**
@@ -43,23 +42,23 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 	}
 
 	public Composite createUI(Composite parent) {
-		View view = getView();
-		ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer();
+		final View view = getView();
+		final ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer();
 
 		Node node = null;
 		try {
 			node = NodeBuilders.INSTANCE.build(view, modelElementContext);
 			rendererContext = renderer.render(node, parent);
-		} catch (NoRendererFoundException ex) {
+		} catch (final NoRendererFoundException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
-		} catch (NoPropertyDescriptorFoundExeption ex) {
+		} catch (final NoPropertyDescriptorFoundExeption ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
 		// TODO: remove cast via type parameterization
-		Composite tabContent = (Composite) rendererContext.getControl();
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		final Composite tabContent = (Composite) rendererContext.getControl();
+		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		tabContent.setLayoutData(gridData);
 		// TODO: strange api
 		rendererContext.addListener(node);
@@ -90,8 +89,8 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 		// return view;
 		int highestPrio = IViewProvider.NOT_APPLICABLE;
 		IViewProvider selectedProvider = null;
-		for (IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
-			int prio = viewProvider.canRender(modelElementContext.getModelElement());
+		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
+			final int prio = viewProvider.canRender(modelElementContext.getModelElement());
 			if (prio > highestPrio) {
 				highestPrio = prio;
 				selectedProvider = viewProvider;

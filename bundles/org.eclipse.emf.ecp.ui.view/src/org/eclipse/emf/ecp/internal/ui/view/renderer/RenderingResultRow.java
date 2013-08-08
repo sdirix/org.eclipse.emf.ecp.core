@@ -7,16 +7,25 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar Mueller - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.view.renderer;
 
-public class NoRendererFoundException extends Exception {
+/**
+ * This class is used to mark an result row of an renderer. Thus all controls should be displayed in one row.
+ * 
+ * @param <T> the type this {@link RenderingResultRow} works on
+ * @author Eugen Neufeld
+ * 
+ */
+public interface RenderingResultRow<T> {
 
-	private static final long serialVersionUID = -8540544811118107575L;
-
-	public NoRendererFoundException(String string) {
-		super(string);
-	}
-
+	/**
+	 * The main control of the result row. This method is here for legacy.
+	 * 
+	 * @return the Control that is most important in this row
+	 * 
+	 */
+	@Deprecated
+	T getMainControl();
 }

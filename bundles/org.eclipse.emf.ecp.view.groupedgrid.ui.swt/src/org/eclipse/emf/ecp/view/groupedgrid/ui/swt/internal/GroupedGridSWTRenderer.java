@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
 import org.eclipse.emf.ecp.view.model.Alignment;
@@ -43,8 +44,9 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 	public static final GroupedGridSWTRenderer INSTANCE = new GroupedGridSWTRenderer();
 
 	@Override
-	public Control renderSWT(Node<GroupedGrid> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+	public List<RenderingResultRow<Control>> renderSWT(Node<GroupedGrid> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Composite parent = getParentFromInitData(initData);
@@ -83,14 +85,15 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 					final Node<? extends Renderable> childNode = children.get(currentControl++);
 
 					final int hSpan = getHSpanOfComposite(child);
-					final Control childRender = SWTRenderers.INSTANCE.render(columnComposite,
+					final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(columnComposite,
 						childNode, adapterFactoryItemDelegator);
 
 					// TOOD; when does this case apply?
-					if (childRender == null) {
+					if (resultRows == null) {
 						continue;
 					}
-
+					// TODO refactor
+					final Control childRender = resultRows.get(0).getMainControl();
 					childRender.setBackground(parent.getBackground());
 					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).indent(0, 0)
 						.span(hSpan, 1).applyTo(childRender);
@@ -116,7 +119,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 				}
 			}
 		}
-		return columnComposite;
+		return createResult(columnComposite);
 	}
 
 	/**

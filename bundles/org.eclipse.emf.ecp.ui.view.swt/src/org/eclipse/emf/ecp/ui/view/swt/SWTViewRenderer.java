@@ -7,9 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen Neufeld - initial API and implementation
- * 
- *******************************************************************************/
+ * Edagr Mueller - initial API and implementation
+ * Eugen Neufeld - Refactoring
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -101,7 +102,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
 	 */
 	@Override
-	public Control renderSWT(final Node<View> viewNode, final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+	public List<RenderingResultRow<Control>> renderSWT(final Node<View> viewNode,
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 		final View view = viewNode.getRenderable();
@@ -111,10 +114,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			return renderChildren(parent, viewNode, adapterFactoryItemDelegator);
 		}
 		else if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
-			final Control control = SWTRenderers.INSTANCE.render(parent, viewNode.getChildren().get(0),
+			final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(parent, viewNode
+				.getChildren().get(0),
 				adapterFactoryItemDelegator);
-			viewNode.addRenderingResultDelegator(withSWT(control));
-			return control;
+			viewNode.addRenderingResultDelegator(withSWT(resultRows.get(0).getMainControl()));
+			return resultRows;
 		} else {
 			final Composite composite = createComposite(parent);
 			final TreeViewer treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode);
@@ -124,7 +128,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 			initTreeViewer(treeViewer, viewNode);
 
-			return composite;
+			return createResult(composite);
 		}
 	}
 
@@ -137,40 +141,35 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @return the composite
 	 * @throws NoRendererFoundException the no renderer found exception
 	 */
-	private Composite renderChildren(Composite parent, Node<View> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException {
+	private List<RenderingResultRow<Control>> renderChildren(Composite parent, Node<View> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+		throws NoRendererFoundException {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 
-		node.addRenderingResultDelegator(withSWT(columnComposite));
+		columnComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
+		node.addRenderingResultDelegator(withSWT(columnComposite));
 
 		for (final Node<? extends Renderable> child : node.getChildren()) {
 
-			Control childControl;
+			List<RenderingResultRow<Control>> resultRows;
 			try {
-				childControl = SWTRenderers.INSTANCE.render(
+				resultRows = SWTRenderers.INSTANCE.render(
 					columnComposite, child, adapterFactoryItemDelegator);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
 
 			// TOOD; when does this case apply?
-			if (childControl == null) {
+			if (resultRows == null) {
 				continue;
 			}
 
-			// TODO Add check to handle differently if label is shown
-			if (!child.isLeaf()) {
-				GridDataFactory.fillDefaults()
-					.align(SWT.FILL, SWT.BEGINNING)
-					.grab(true, false)
-					.span(2, 1).applyTo(childControl);
-			}
+			setLayoutDataForResultRows(resultRows);
 		}
 
-		return columnComposite;
+		return createResult(columnComposite);
 	}
 
 	/**
@@ -239,7 +238,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @return the tree viewer
 	 */
 	protected TreeViewer createTreeViewer(final Composite composite,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode) {
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode
+		) {
 		final TreeViewer treeViewer = new TreeViewer(composite);
 
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
@@ -316,9 +316,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 					if (Node.class.isInstance(selection)) {
 						final Node<?> node = (Node<?>) selection;
 						try {
-							final Control render = SWTRenderers.INSTANCE.render(childComposite, node,
+							final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(
+								childComposite, node,
 								newAdapterFactoryItemDelegator);
-							GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(render);
+							GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+								.applyTo(resultRows.get(0).getMainControl());
 							viewNode.fireSelectedChildNodeChanged(node);
 						} catch (final NoRendererFoundException e) {
 							// TODO Auto-generated catch block

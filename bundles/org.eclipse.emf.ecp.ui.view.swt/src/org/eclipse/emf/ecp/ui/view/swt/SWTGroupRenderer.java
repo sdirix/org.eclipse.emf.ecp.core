@@ -11,14 +11,15 @@
  */
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.List;
+
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -32,8 +33,9 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group";
 
 	@Override
-	public Control renderSWT(Node<Group> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+	public List<RenderingResultRow<Control>> renderSWT(Node<Group> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 		final Group modelGroup = node.getRenderable();
@@ -43,33 +45,26 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 			group.setText(modelGroup.getName());
 		}
 
-		GridLayoutFactory.fillDefaults()
-			.numColumns(2)
-			.equalWidth(false)
-			.applyTo(group);
+		group.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
 		node.addRenderingResultDelegator(withSWT(group));
 
-		for (final Node<? extends Renderable> child : node.getChildren()) {// org.eclipse.emf.ecp.view.model.Composite
-																			// modelComposite :
-																			// modelGroup.getComposites()) {
+		for (final Node<? extends Renderable> child : node.getChildren()) {
 
-			Control control;
+			List<RenderingResultRow<Control>> resultRows;
 			try {
-				control = SWTRenderers.INSTANCE.render(group, child, adapterFactoryItemDelegator);
+				resultRows = SWTRenderers.INSTANCE.render(group, child, adapterFactoryItemDelegator);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
-
-			if (!child.isLeaf()) {
-				GridDataFactory.fillDefaults()
-					.align(SWT.FILL, SWT.BEGINNING)
-					.grab(true, false)
-					.span(2, 1)
-					.applyTo(control);
+			// TODO when does this case apply?
+			if (resultRows == null) {
+				continue;
 			}
+
+			setLayoutDataForResultRows(resultRows);
 		}
 
-		return group;
+		return createResult(group);
 	}
 }

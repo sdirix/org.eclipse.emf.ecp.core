@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultRenderingResultFactory;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
@@ -84,7 +85,8 @@ public class RendererNodeTest {
 								"@ViewModel annotation missing or view model does not exist.");
 						}
 
-						final ModelRenderer<Composite> renderer = ModelRenderer.INSTANCE.getRenderer();
+						final ModelRenderer<org.eclipse.swt.widgets.Control> renderer = ModelRenderer.INSTANCE
+							.getRenderer();
 						final ECPProvider provider = ECPUtil.getECPProviderRegistry()
 							.getProvider(EMFStoreProvider.NAME);
 
@@ -98,11 +100,11 @@ public class RendererNodeTest {
 							shell);
 						root = NodeBuilders.INSTANCE.build(view, context);
 
-						rendererContext = renderer.render(root, parent);
+						rendererContext = renderer.render(root, new DefaultRenderingResultFactory(), parent);
 						rendererContext.addListener(root);
 						rendererContext.triggerValidation();
 
-						final Composite c = rendererContext.getControl();
+						final org.eclipse.swt.widgets.Control c = rendererContext.getControl();
 						c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 						base.evaluate();
 
@@ -115,7 +117,7 @@ public class RendererNodeTest {
 	};
 
 	private static Player player;
-	private RendererContext<Composite> rendererContext;
+	private RendererContext<org.eclipse.swt.widgets.Control> rendererContext;
 	private Node<View> root;
 	private Shell shell;
 

@@ -1,5 +1,8 @@
 package org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
@@ -9,6 +12,7 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -26,7 +30,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 	private static final int IDENT = 10;
 
 	@Override
-	public org.eclipse.swt.widgets.Control renderSWT(Node<Control> node,
+	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<Control> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
@@ -101,10 +105,15 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 				.align(SWT.FILL, SWT.CENTER).span(numControl, 1)
 				.applyTo(controlComposite);
 
+			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
+
 			if (modelControl.getLabelAlignment() == Alignment.TOP) {
-				return parent;
+				return createResult(parent);
 			}
-			return controlComposite;
+			else if (label == null) {
+				return createResult(controlComposite);
+			}
+			return createResult(label, controlComposite);
 		}
 
 		Activator.getDefault().ungetECPControlFactory();

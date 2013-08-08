@@ -1,9 +1,34 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edagr Mueller - initial API and implementation
+ * Eugen Neufeld - Refactoring
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
@@ -15,26 +40,14 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.widgets.Composite;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-
-public final class SWTRenderers implements SWTRenderer {
+public final class SWTRenderers implements SWTRenderer<Renderable> {
 
 	public static final SWTRenderers INSTANCE = new SWTRenderers();
 
 	@SuppressWarnings("rawtypes")
-	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer> renderers;
+	private final Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer> renderers;
 
 	public SWTRenderers() {
 
@@ -52,8 +65,8 @@ public final class SWTRenderers implements SWTRenderer {
 			}
 		};
 
-		for (CustomSWTRenderer customRenderer : getCustomRenderers()) {
-			for (Map.Entry<Class<? extends Renderable>, SWTRenderer<?>> renderEntry : customRenderer
+		for (final CustomSWTRenderer customRenderer : getCustomRenderers()) {
+			for (final Map.Entry<Class<? extends Renderable>, SWTRenderer<?>> renderEntry : customRenderer
 				.getCustomRenderers().entrySet()) {
 				renderers.put(renderEntry.getKey(), renderEntry.getValue());
 			}
@@ -106,16 +119,16 @@ public final class SWTRenderers implements SWTRenderer {
 	// }
 
 	public Set<CustomSWTRenderer> getCustomRenderers() {
-		Set<CustomSWTRenderer> renderers = new LinkedHashSet<CustomSWTRenderer>();
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+		final Set<CustomSWTRenderer> renderers = new LinkedHashSet<CustomSWTRenderer>();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers");
-		for (IExtension extension : extensionPoint.getExtensions()) {
-			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+		for (final IExtension extension : extensionPoint.getExtensions()) {
+			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				CustomSWTRenderer renderer = (CustomSWTRenderer) configurationElement
+				final CustomSWTRenderer renderer = (CustomSWTRenderer) configurationElement
 					.createExecutableExtension("class");
 				renderers.add(renderer);
-			} catch (CoreException ex) {
+			} catch (final CoreException ex) {
 				Activator.log(ex);
 			}
 		}
@@ -123,13 +136,15 @@ public final class SWTRenderers implements SWTRenderer {
 		return renderers;
 	}
 
-	public org.eclipse.swt.widgets.Control render(Node node, AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> render(Node<Renderable> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		Class c = null;
-		for (Class cls : renderers.keySet()) {
-			Class<?>[] interfaces = node.getRenderable().getClass().getInterfaces();
-			int indexOf = Arrays.asList(interfaces).indexOf(cls);
+		for (final Class cls : renderers.keySet()) {
+			final Class<?>[] interfaces = node.getRenderable().getClass().getInterfaces();
+			final int indexOf = Arrays.asList(interfaces).indexOf(cls);
 			if (indexOf != -1) {
 				c = interfaces[indexOf];
 				break;
@@ -139,16 +154,16 @@ public final class SWTRenderers implements SWTRenderer {
 
 		if (c != null) {
 			@SuppressWarnings("rawtypes")
-			SWTRenderer swtRenderer = renderers.get(c);
-			Object render = swtRenderer.render(node, adapterFactoryItemDelegator, initData);
-			return (org.eclipse.swt.widgets.Control) render;
+			final SWTRenderer swtRenderer = renderers.get(c);
+			return swtRenderer.render(node, adapterFactoryItemDelegator, initData);
 		}
 
 		throw new NoRendererFoundException("No renderer found for renderable " + node.getRenderable());
 	}
 
-	public org.eclipse.swt.widgets.Control render(Composite parent, Node node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator) throws NoRendererFoundException,
+	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> render(Composite parent, Node node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator)
+		throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		return render(node, adapterFactoryItemDelegator, parent);
 	}

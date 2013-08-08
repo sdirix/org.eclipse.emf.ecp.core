@@ -1,4 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edagr Mueller - initial API and implementation
+ * Eugen Neufeld - Refactoring
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
+
+import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -9,11 +23,11 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -23,8 +37,9 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 	public static final SWTTableControlRenderer INSTANCE = new SWTTableControlRenderer();
 
 	@Override
-	public Control renderSWT(Node<TableControl> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+	public List<RenderingResultRow<Control>> renderSWT(Node<TableControl> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final TableControl modelTableControl = node.getRenderable();
@@ -61,10 +76,8 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 
 		if (control != null) {
 			final Composite parent = getParentFromInitData(initData);
-			int numControl = 2;
 			Label label = null;
 			if (control.showLabel()) {
-				numControl = 1;
 				label = new Label(parent, SWT.NONE);
 				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
 				label.setBackground(parent.getBackground());
@@ -78,7 +91,6 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 					+ extra);
 				label.setToolTipText(itemPropertyDescriptor.getDescription(subContext
 					.getModelElement()));
-				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
 			}
 
 			final Composite controlComposite = control.createControl(parent);
@@ -86,16 +98,16 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 
 			controlComposite.setEnabled(!modelTableControl.isReadonly());
 
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
-				.span(numControl, 1).applyTo(controlComposite);
-
 			if (label == null) {
 				node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite));
 			} else {
 				node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite, label));
 			}
 
-			return controlComposite;
+			if (label == null) {
+				return createResult(controlComposite);
+			}
+			return createResult(label, controlComposite);
 		}
 
 		Activator.getDefault().ungetECPControlFactory();

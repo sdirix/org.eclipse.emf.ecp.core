@@ -1,62 +1,72 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.custom.swt;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.osgi.framework.Bundle;
 
 public class CustomControlSWTRenderer extends
-		AbstractSWTRenderer<CustomControl> {
+	AbstractSWTRenderer<CustomControl> {
 
 	@Override
-	protected Control renderSWT(Node<CustomControl> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		CustomControl customControl = node.getRenderable();
+	protected List<RenderingResultRow<Control>> renderSWT(Node<CustomControl> node,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+		Object... initData)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final CustomControl customControl = node.getRenderable();
 
 		// TODO: handle exceptions
 		try {
-			Class<?> clazz = getClass(customControl.getBundle(),
-					customControl.getClassName());
-			Constructor<?> constructor = clazz.getConstructor();
-			Object obj = constructor.newInstance();
-			ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) obj;
+			final Class<?> clazz = getClass(customControl.getBundle(),
+				customControl.getClassName());
+			final Constructor<?> constructor = clazz.getConstructor();
+			final Object obj = constructor.newInstance();
+			final ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) obj;
 			categoryComposite.init(node.getControlContext());
-			
-			Composite composite = categoryComposite.createControl(getParentFromInitData(initData));
-			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(categoryComposite,customControl,composite));
 
-			GridDataFactory.fillDefaults().grab(true, true)
-					.align(SWT.FILL, SWT.FILL).applyTo(composite);
+			final Composite composite = categoryComposite.createControl(getParentFromInitData(initData));
+			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(categoryComposite, customControl,
+				composite));
 
-			return composite;
-		} catch (NoSuchMethodException e) {
+			return createResult(composite);
+		} catch (final NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (final ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -65,12 +75,12 @@ public class CustomControlSWTRenderer extends
 	}
 
 	private Class<?> getClass(String pluginID, String className)
-			throws ClassNotFoundException {
-		Bundle bundle = Platform.getBundle(pluginID);
+		throws ClassNotFoundException {
+		final Bundle bundle = Platform.getBundle(pluginID);
 		if (bundle == null) {
 			throw new ClassNotFoundException(className
-					+ " cannot be loaded because because bundle " + pluginID
-					+ " cannot be resolved");
+				+ " cannot be loaded because because bundle " + pluginID
+				+ " cannot be resolved");
 		} else {
 			return bundle.loadClass(className);
 		}
