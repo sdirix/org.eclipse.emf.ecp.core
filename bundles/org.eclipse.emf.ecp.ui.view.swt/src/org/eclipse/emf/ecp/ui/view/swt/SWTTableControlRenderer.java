@@ -5,7 +5,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -23,81 +22,83 @@ import org.eclipse.swt.widgets.Label;
 public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 	public static final SWTTableControlRenderer INSTANCE = new SWTTableControlRenderer();
 
-
 	@Override
 	public Control renderSWT(Node<TableControl> node,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator,Object...initData)
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		
-		TableControl modelTableControl = node.getRenderable();
-		ECPControlContext subContext = node.getControlContext();
-        EClass dataClass = modelTableControl.getTargetFeature().getEContainingClass();
-        
-        if (dataClass == null) {
-            return null;
-        }
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-        IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
-                .getPropertyDescriptor(subContext.getModelElement(),
-        
-                		modelTableControl.getTargetFeature());
-        if (itemPropertyDescriptor == null) {
-            return null;
-        }
+		final TableControl modelTableControl = node.getRenderable();
+		final ECPControlContext subContext = node.getControlContext();
+		if (modelTableControl.getTargetFeature() == null) {
+			return null;
+		}
+		final EClass dataClass = modelTableControl.getTargetFeature().getEContainingClass();
 
-        TableControlConfiguration tcc = new TableControlConfiguration();
-        tcc.setAddRemoveDisabled(modelTableControl.isAddRemoveDisabled());
-        
-        for (TableColumn column : modelTableControl.getColumns()) {
-            tcc.getColumns().add(
-                    new TableColumnConfiguration(column.isReadOnly(), column.getAttribute()));
-        }
+		if (dataClass == null) {
+			return null;
+		}
 
-        org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl(
-                false, itemPropertyDescriptor,
-                (EStructuralFeature) itemPropertyDescriptor.getFeature(subContext
-                        .getModelElement()), subContext, false, tcc);
+		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
+			.getPropertyDescriptor(subContext.getModelElement(),
 
-        if (control != null) {
-        	Composite parent=getParentFromInitData(initData);
-            int numControl = 2;
-            Label label = null;
-            if (control.showLabel()) {
-                numControl = 1;
-                label = new Label(parent, SWT.NONE);
-                label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
-                label.setBackground(parent.getBackground());
-                String extra = "";
-                
-                if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
-                    extra = "*";
-                }
-                
-                label.setText(itemPropertyDescriptor.getDisplayName(subContext.getModelElement())
-                        + extra);
-                label.setToolTipText(itemPropertyDescriptor.getDescription(subContext
-                        .getModelElement()));
-                GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
-            }
-            
-            Composite controlComposite = control.createControl(parent);
-            controlComposite.setBackground(parent.getBackground());
+				modelTableControl.getTargetFeature());
+		if (itemPropertyDescriptor == null) {
+			return null;
+		}
 
-            controlComposite.setEnabled(!modelTableControl.isReadonly());
-            
-            GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
-                    .span(numControl, 1).applyTo(controlComposite);
-            
-            if (label == null) {
-            	node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite));
-            } else {
-            	node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite, label));
-            }
-            
-            return controlComposite;
-        }
-        
-        Activator.getDefault().ungetECPControlFactory();
-        return null;
+		final TableControlConfiguration tcc = new TableControlConfiguration();
+		tcc.setAddRemoveDisabled(modelTableControl.isAddRemoveDisabled());
+
+		for (final TableColumn column : modelTableControl.getColumns()) {
+			tcc.getColumns().add(
+				new TableColumnConfiguration(column.isReadOnly(), column.getAttribute()));
+		}
+
+		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl(
+			false, itemPropertyDescriptor,
+			(EStructuralFeature) itemPropertyDescriptor.getFeature(subContext
+				.getModelElement()), subContext, false, tcc);
+
+		if (control != null) {
+			final Composite parent = getParentFromInitData(initData);
+			int numControl = 2;
+			Label label = null;
+			if (control.showLabel()) {
+				numControl = 1;
+				label = new Label(parent, SWT.NONE);
+				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
+				label.setBackground(parent.getBackground());
+				String extra = "";
+
+				if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
+					extra = "*";
+				}
+
+				label.setText(itemPropertyDescriptor.getDisplayName(subContext.getModelElement())
+					+ extra);
+				label.setToolTipText(itemPropertyDescriptor.getDescription(subContext
+					.getModelElement()));
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).applyTo(label);
+			}
+
+			final Composite controlComposite = control.createControl(parent);
+			controlComposite.setBackground(parent.getBackground());
+
+			controlComposite.setEnabled(!modelTableControl.isReadonly());
+
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+				.span(numControl, 1).applyTo(controlComposite);
+
+			if (label == null) {
+				node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite));
+			} else {
+				node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite, label));
+			}
+
+			return controlComposite;
+		}
+
+		Activator.getDefault().ungetECPControlFactory();
+		return null;
 	}
 }

@@ -29,7 +29,7 @@ public class SWTViewTestHelper {
 	public static Control render(Renderable renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(
-			renderable, shell);
+			input, shell);
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(renderable, context);
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
@@ -50,7 +50,6 @@ public class SWTViewTestHelper {
 	 */
 	public static Control render(Renderable renderable, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		// TODO Auto-generated method stub
 		return render(renderable, ViewFactory.eINSTANCE.createView(), shell);
 	}
 
