@@ -34,209 +34,202 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Jonas
+ * Tests Rule Evaluation and its impact on node with conditions.
  * 
+ * @author jonas
  */
 @RunWith(DatabindingClassRunner.class)
 public class RuleTest {
 
 	@Test
 	public void testEnableRuleNodeRendererWithDisableRule() {
-		// setup model
-		final RuleHandel ruleHandel = createDisabledEnableRule();
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createDisabledEnableRule();
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isEnabled());
 	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithEnableRule() {
-		// setup model
-		final RuleHandel ruleHandel = createEnabledEnableRule();
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createEnabledEnableRule();
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isEnabled());
 	}
 
 	@Test
 	public void testShowRuleNodeRendererWithVisibleRule() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createVisibleShowRule();
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
 
 	@Test
 	public void testShowRuleNodeRendererWithInvisibleRule() {
-		// setup model
-		final RuleHandel ruleHandel = createInvisibleShowRule();
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createInvisibleShowRule();
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithDisableRuleAndTrueLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createDisabledEnableRule();
-		addTrueLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createDisabledEnableRule();
+		addTrueLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isEnabled());
 	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithDisableRuleAndFalseLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createDisabledEnableRule();
-		addFalseLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createDisabledEnableRule();
+		addFalseLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isEnabled());
 	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithEnabledRuleAndTrueLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createEnabledEnableRule();
-		addTrueLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createEnabledEnableRule();
+		addTrueLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isEnabled());
 	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithEnabledRuleAndFalseLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createEnabledEnableRule();
-		addFalseLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createEnabledEnableRule();
+		addFalseLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isEnabled());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithInvisibleRuleAndTrueLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createInvisibleShowRule();
-		addTrueLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createInvisibleShowRule();
+		addTrueLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithInvisibleRuleAndFalseLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createInvisibleShowRule();
-		addFalseLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createInvisibleShowRule();
+		addFalseLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addTrueLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addTrueLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndFalseLeafCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addFalseLeafCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addFalseLeafCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueAndCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addTrueAndCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addTrueAndCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndFalseAndCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addFalseAndCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addFalseAndCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueOrCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addTrueOrCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addTrueOrCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndFalseOrCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addFalseOrCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addFalseOrCondition(ruleHandle.getRule());
+
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueComplexOrCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addComplexTrueOrCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addComplexTrueOrCondition(ruleHandle.getRule());
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
 
 	@Test
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueComplexAndCondition() {
-		// setup model
-		final RuleHandel ruleHandel = createVisibleShowRule();
-		addComplexTrueAndCondition(ruleHandel.rule);
-		// Test NodeBuidlers
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandel.parent, ruleHandel.domainObject);
-		checkNodes(node, ruleHandel);
+		final RuleHandle ruleHandle = createVisibleShowRule();
+		addComplexTrueAndCondition(ruleHandle.getRule());
+		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
 
-	/**
-	 * @param rule
-	 */
 	public static void addFalseLeafCondition(Rule rule) {
 		final LeafCondition leafCondition = createFalseLeafCondition();
 		rule.setCondition(leafCondition);
@@ -254,9 +247,6 @@ public class RuleTest {
 		return leafCondition;
 	}
 
-	/**
-	 * @param rule
-	 */
 	private void addTrueAndCondition(Rule rule) {
 		final AndCondition andCondition = createAndCondition();
 		andCondition.getConditions().add(createTrueLeafCondition());
@@ -265,9 +255,6 @@ public class RuleTest {
 		rule.setCondition(andCondition);
 	}
 
-	/**
-	 * @param rule
-	 */
 	private void addFalseAndCondition(Rule rule) {
 		final AndCondition andCondition = createAndCondition();
 		andCondition.getConditions().add(createFalseLeafCondition());
@@ -276,9 +263,6 @@ public class RuleTest {
 		rule.setCondition(andCondition);
 	}
 
-	/**
-	 * @param rule
-	 */
 	private void addTrueOrCondition(Rule rule) {
 		final OrCondition orCondition = createOrCondition();
 		orCondition.getConditions().add(createTrueLeafCondition());
@@ -288,9 +272,6 @@ public class RuleTest {
 		rule.setCondition(orCondition);
 	}
 
-	/**
-	 * @param rule
-	 */
 	private void addFalseOrCondition(Rule rule) {
 		final OrCondition orCondition = createOrCondition();
 		orCondition.getConditions().add(createFalseLeafCondition());
@@ -299,9 +280,6 @@ public class RuleTest {
 		rule.setCondition(orCondition);
 	}
 
-	/**
-	 * @param rule
-	 */
 	private void addComplexTrueAndCondition(Rule rule) {
 		final OrCondition subTrueOrCondition = createOrCondition();
 		subTrueOrCondition.getConditions().add(createTrueLeafCondition());
@@ -319,9 +297,6 @@ public class RuleTest {
 
 	}
 
-	/**
-	 * @param rule
-	 */
 	private void addComplexTrueOrCondition(Rule rule) {
 		final AndCondition subFalseAndCondition = createAndCondition();
 		subFalseAndCondition.getConditions().add(createTrueLeafCondition());
@@ -348,9 +323,6 @@ public class RuleTest {
 		return andCondition;
 	}
 
-	/**
-	 * @param rule
-	 */
 	public static void addTrueLeafCondition(Rule rule) {
 		final LeafCondition leafCondition = createTrueLeafCondition();
 		rule.setCondition(leafCondition);
@@ -362,38 +334,30 @@ public class RuleTest {
 		return leafCondition;
 	}
 
-	/**
-	 * @param node
-	 * @param ruleHandel
-	 */
-	private void checkNodes(Node<Renderable> node, RuleHandel ruleHandel) {
+	private void checkNodes(Node<Renderable> node, RuleHandle ruleHandle) {
 		assertEquals(1, ViewTestHelper.countNodes(node));
-		assertEquals(ruleHandel.parent, node.getRenderable());
+		assertEquals(ruleHandle.getParent(), node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 0, node.getChildren().size());
 
 	}
 
-	public static RuleHandel createDisabledEnableRule() {
+	public static RuleHandle createDisabledEnableRule() {
 		final EnableRule enableRule = createEnableRule();
 		enableRule.setDisable(true);
-		return createRuleHandel(enableRule);
+		return createruleHandle(enableRule);
 	}
 
-	public static RuleHandel createEnabledEnableRule() {
+	public static RuleHandle createEnabledEnableRule() {
 		final EnableRule enableRule = createEnableRule();
 		enableRule.setDisable(false);
-		return createRuleHandel(enableRule);
+		return createruleHandle(enableRule);
 	}
 
-	/**
-	 * @param enableRule
-	 * @return
-	 */
-	private static RuleHandel createRuleHandel(Rule enableRule) {
+	private static RuleHandle createruleHandle(Rule enableRule) {
 		final Renderable renderable = createRuleContainerAndAddRule(enableRule);
 		final Control domainObject = ViewFactory.eINSTANCE.createControl();
 		domainObject.setLabelAlignment(Alignment.LEFT);
-		return new RuleHandel(enableRule, renderable, domainObject);
+		return new RuleHandle(enableRule, renderable, domainObject);
 	}
 
 	private static Renderable createRuleContainerAndAddRule(Rule rule) {
@@ -406,16 +370,16 @@ public class RuleTest {
 		return RuleFactory.eINSTANCE.createEnableRule();
 	}
 
-	public static RuleHandel createVisibleShowRule() {
+	public static RuleHandle createVisibleShowRule() {
 		final ShowRule showRule = RuleFactory.eINSTANCE.createShowRule();
 		showRule.setHide(false);
-		return createRuleHandel(showRule);
+		return createruleHandle(showRule);
 	}
 
-	public static RuleHandel createInvisibleShowRule() {
+	public static RuleHandle createInvisibleShowRule() {
 		final ShowRule showRule = RuleFactory.eINSTANCE.createShowRule();
 		showRule.setHide(true);
-		return createRuleHandel(showRule);
+		return createruleHandle(showRule);
 	}
 
 }

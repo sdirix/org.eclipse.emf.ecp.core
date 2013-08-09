@@ -19,22 +19,44 @@ import org.eclipse.emf.ecp.view.rule.model.Rule;
  * @author Jonas
  * 
  */
-public class RuleHandel {
+public class RuleHandle {
 
-	public final Rule rule;
-	public final Renderable parent;
-	public final EObject domainObject;
+	private final Rule rule;
+	private final Renderable parent;
+	private final EObject domainObject;
 
 	/**
-	 * @param rule
-	 * @param renderable
-	 * @param domainObject
+	 * Constructor.
+	 * 
+	 * @param rule rule
+	 * @param renderable renderable
+	 * @param domainObject domainObject.
 	 */
-	public RuleHandel(Rule rule, Renderable renderable, EObject domainObject) {
+	public RuleHandle(Rule rule, Renderable renderable, EObject domainObject) {
 		this.rule = rule;
-		// TODO Auto-generated constructor stub
 		parent = renderable;
 		this.domainObject = domainObject;
+	}
+
+	/**
+	 * @return the rule
+	 */
+	public Rule getRule() {
+		return rule;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public Renderable getParent() {
+		return parent;
+	}
+
+	/**
+	 * @return the domainObject
+	 */
+	public EObject getDomainObject() {
+		return domainObject;
 	}
 
 }
