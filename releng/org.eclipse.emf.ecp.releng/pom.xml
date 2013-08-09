@@ -92,6 +92,12 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
 
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
+
+		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
+
+
 		
 		<!-- Custom Control Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
