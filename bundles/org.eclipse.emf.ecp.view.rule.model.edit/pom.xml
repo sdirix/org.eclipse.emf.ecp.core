@@ -11,7 +11,7 @@
     <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
   </parent>
 
-  <artifactId>org.eclipse.emf.ecp.view.rule.model</artifactId>
+  <artifactId>org.eclipse.emf.ecp.view.rule.model.edit</artifactId>
   <packaging>eclipse-plugin</packaging>
   <version>1.0.2-SNAPSHOT</version>
 
