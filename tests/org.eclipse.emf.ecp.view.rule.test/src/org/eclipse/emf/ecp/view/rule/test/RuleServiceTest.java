@@ -205,6 +205,11 @@ public class RuleServiceTest {
 			public EObject getDomainModel() {
 				return domainModel;
 			}
+
+			public void dispose() {
+				domainModel.eAdapters().remove(domainContentAdapter);
+				domainModel.eAdapters().remove(viewContentAdapter);
+			}
 		});
 		return ruleService;
 	}
@@ -227,19 +232,19 @@ public class RuleServiceTest {
 	 * Adds the league show rule.
 	 * 
 	 * @param control the control
-	 * @param visibleOnRightValue the visible on right value
+	 * @param hideOnRightValue the visible on right value
 	 */
-	private void addLeagueShowRule(Renderable control, boolean visibleOnRightValue) {
+	private void addLeagueShowRule(Renderable control, boolean hideOnRightValue) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(visibleOnRightValue);
+		rule.setHide(!hideOnRightValue);
 		rule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"));
 		control.getAttachments().add(rule);
 	}
 
-	private void addShowRule(Renderable control, boolean visibleOnRightValue, EAttribute attribute,
+	private void addShowRule(Renderable control, boolean hideOnRightValue, EAttribute attribute,
 		Object expectedValue) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(visibleOnRightValue);
+		rule.setHide(!hideOnRightValue);
 		rule.setCondition(createLeafCondition(attribute, expectedValue));
 		control.getAttachments().add(rule);
 	}
@@ -251,10 +256,10 @@ public class RuleServiceTest {
 		return condition;
 	}
 
-	private void addLeagueShowRuleWithOrCondition(Renderable control, boolean visibleOnRightValue,
+	private void addLeagueShowRuleWithOrCondition(Renderable control, boolean hideOnRightValue,
 		Condition... childConditions) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(visibleOnRightValue);
+		rule.setHide(!hideOnRightValue);
 		final OrCondition condition = RuleFactory.eINSTANCE.createOrCondition();
 		for (final Condition childCondition : childConditions) {
 			condition.getConditions().add(childCondition);
@@ -263,10 +268,10 @@ public class RuleServiceTest {
 		control.getAttachments().add(rule);
 	}
 
-	private void addLeagueShowRuleWithAndCondition(Renderable control, boolean visibleOnRightValue,
+	private void addLeagueShowRuleWithAndCondition(Renderable control, boolean hideOnRightValue,
 		Condition... childConditions) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(visibleOnRightValue);
+		rule.setHide(!hideOnRightValue);
 		final AndCondition condition = RuleFactory.eINSTANCE.createAndCondition();
 		for (final Condition childCondition : childConditions) {
 			condition.getConditions().add(childCondition);
@@ -279,11 +284,11 @@ public class RuleServiceTest {
 	 * Adds the league enable rule.
 	 * 
 	 * @param control the control
-	 * @param enableOnRightValue the enable on right value
+	 * @param disableOnRightValue the enable on right value
 	 */
-	private void addLeagueEnableRule(Renderable control, boolean enableOnRightValue) {
+	private void addLeagueEnableRule(Renderable control, boolean disableOnRightValue) {
 		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
-		rule.setDisable(enableOnRightValue);
+		rule.setDisable(!disableOnRightValue);
 		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
 		rule.setCondition(condition);
 		condition.setAttribute(BowlingPackage.eINSTANCE.getLeague_Name());
@@ -321,6 +326,10 @@ public class RuleServiceTest {
 			public EObject getDomainModel() {
 				return league;
 			}
+
+			public void dispose() {
+
+			}
 		});
 		assertTrue(registeredDomainListener);
 		assertTrue(registeredViewListener);
@@ -353,6 +362,10 @@ public class RuleServiceTest {
 			public EObject getDomainModel() {
 				return null;
 			}
+
+			public void dispose() {
+
+			}
 		});
 	}
 
@@ -382,6 +395,10 @@ public class RuleServiceTest {
 
 			public EObject getDomainModel() {
 				return league;
+			}
+
+			public void dispose() {
+
 			}
 		});
 	}
@@ -414,6 +431,10 @@ public class RuleServiceTest {
 
 			public EObject getDomainModel() {
 				return league;
+			}
+
+			public void dispose() {
+
 			}
 		});
 		ruleService.dispose();
