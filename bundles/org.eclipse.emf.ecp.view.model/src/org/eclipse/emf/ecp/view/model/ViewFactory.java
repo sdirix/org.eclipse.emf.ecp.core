@@ -34,56 +34,6 @@ public interface ViewFactory extends EFactory {
 	View createView();
 
 	/**
-	 * Returns a new object of class '<em>Show Rule</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Show Rule</em>'.
-	 * @generated
-	 */
-	ShowRule createShowRule();
-
-	/**
-	 * Returns a new object of class '<em>Enable Rule</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Enable Rule</em>'.
-	 * @generated
-	 */
-	EnableRule createEnableRule();
-
-	/**
-	 * Returns a new object of class '<em>Leaf Condition</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Leaf Condition</em>'.
-	 * @generated
-	 */
-	LeafCondition createLeafCondition();
-
-	/**
-	 * Returns a new object of class '<em>Or Condition</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Or Condition</em>'.
-	 * @generated
-	 */
-	OrCondition createOrCondition();
-
-	/**
-	 * Returns a new object of class '<em>And Condition</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>And Condition</em>'.
-	 * @generated
-	 */
-	AndCondition createAndCondition();
-
-	/**
 	 * Returns a new object of class '<em>Categorization</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

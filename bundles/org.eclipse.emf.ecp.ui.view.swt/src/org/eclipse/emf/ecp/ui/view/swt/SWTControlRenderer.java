@@ -100,9 +100,9 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 				node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite, label));
 			}
 
-			if (!node.isVisible()) {
-				node.show(false);
-			}
+			// if (!node.isVisible()) {
+			// node.show(false);
+			// }
 
 			if (label == null) {
 				return createResult(controlComposite);

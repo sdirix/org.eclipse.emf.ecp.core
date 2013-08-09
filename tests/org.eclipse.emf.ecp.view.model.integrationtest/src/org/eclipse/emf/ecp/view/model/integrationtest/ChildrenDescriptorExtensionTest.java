@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -88,18 +89,18 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testRuleChildDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getRule());
+		getChildrenSize(RulePackage.eINSTANCE.getRule());
 	}
 
 	@Test
 	public void testShowRuleChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getShowRule());
+		final int size = getChildrenSize(RulePackage.eINSTANCE.getShowRule());
 		assertEquals(SHOWRULE_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testEnableRuleChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getEnableRule());
+		final int size = getChildrenSize(RulePackage.eINSTANCE.getEnableRule());
 		assertEquals(ENABLERULE_CHILD_COUNT, size);
 	}
 
@@ -108,24 +109,24 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConditionChildDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getCondition());
+		getChildrenSize(RulePackage.eINSTANCE.getCondition());
 	}
 
 	@Test
 	public void testLeafConditionChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getLeafCondition());
+		final int size = getChildrenSize(RulePackage.eINSTANCE.getLeafCondition());
 		assertEquals(LEAFCONDITION_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testOrConditionChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getOrCondition());
+		final int size = getChildrenSize(RulePackage.eINSTANCE.getOrCondition());
 		assertEquals(ORCONDITION_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testAndConditionChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getAndCondition());
+		final int size = getChildrenSize(RulePackage.eINSTANCE.getAndCondition());
 		assertEquals(ANDCONDITION_CHILD_COUNT, size);
 	}
 

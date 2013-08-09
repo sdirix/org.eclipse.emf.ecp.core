@@ -8,23 +8,17 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.Action;
-import org.eclipse.emf.ecp.view.model.AndCondition;
+import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
-import org.eclipse.emf.ecp.view.model.LeafCondition;
-import org.eclipse.emf.ecp.view.model.OrCondition;
-import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
-import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -81,16 +75,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 		{
 		case ViewPackage.VIEW:
 			return createView();
-		case ViewPackage.SHOW_RULE:
-			return createShowRule();
-		case ViewPackage.ENABLE_RULE:
-			return createEnableRule();
-		case ViewPackage.LEAF_CONDITION:
-			return createLeafCondition();
-		case ViewPackage.OR_CONDITION:
-			return createOrCondition();
-		case ViewPackage.AND_CONDITION:
-			return createAndCondition();
 		case ViewPackage.CATEGORIZATION:
 			return createCategorization();
 		case ViewPackage.CATEGORY:
@@ -160,56 +144,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public View createView() {
 		ViewImpl view = new ViewImpl();
 		return view;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public ShowRule createShowRule() {
-		ShowRuleImpl showRule = new ShowRuleImpl();
-		return showRule;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EnableRule createEnableRule() {
-		EnableRuleImpl enableRule = new EnableRuleImpl();
-		return enableRule;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public LeafCondition createLeafCondition() {
-		LeafConditionImpl leafCondition = new LeafConditionImpl();
-		return leafCondition;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public OrCondition createOrCondition() {
-		OrConditionImpl orCondition = new OrConditionImpl();
-		return orCondition;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public AndCondition createAndCondition() {
-		AndConditionImpl andCondition = new AndConditionImpl();
-		return andCondition;
 	}
 
 	/**

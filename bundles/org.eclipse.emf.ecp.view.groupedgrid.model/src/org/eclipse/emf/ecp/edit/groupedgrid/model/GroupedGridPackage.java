@@ -83,16 +83,6 @@ public interface GroupedGridPackage extends EPackage {
 	int GROUPED_GRID = 0;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUPED_GRID__RULE = ViewPackage.COMPOSITE__RULE;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

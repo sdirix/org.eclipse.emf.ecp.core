@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->

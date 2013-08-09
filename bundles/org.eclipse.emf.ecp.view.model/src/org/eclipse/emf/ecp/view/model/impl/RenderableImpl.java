@@ -12,21 +12,18 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Rule;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -36,7 +33,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#getRule <em>Rule</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#isVisible <em>Visible</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#isEnabled <em>Enabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#isReadonly <em>Readonly</em>}</li>
@@ -48,17 +44,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  */
 public abstract class RenderableImpl extends EObjectImpl implements Renderable
 {
-	/**
-	 * The cached value of the '{@link #getRule() <em>Rule</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getRule()
-	 * @generated
-	 * @ordered
-	 */
-	protected Rule rule;
-
 	/**
 	 * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -165,64 +150,6 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	 * 
 	 * @generated
 	 */
-	public Rule getRule()
-	{
-		return rule;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public NotificationChain basicSetRule(Rule newRule, NotificationChain msgs)
-	{
-		Rule oldRule = rule;
-		rule = newRule;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				ViewPackage.RENDERABLE__RULE, oldRule, newRule);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setRule(Rule newRule)
-	{
-		if (newRule != rule)
-		{
-			NotificationChain msgs = null;
-			if (rule != null)
-				msgs = ((InternalEObject) rule).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- ViewPackage.RENDERABLE__RULE, null, msgs);
-			if (newRule != null)
-				msgs = ((InternalEObject) newRule).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- ViewPackage.RENDERABLE__RULE, null, msgs);
-			msgs = basicSetRule(newRule, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.RENDERABLE__RULE, newRule, newRule));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public boolean isVisible()
 	{
 		return visible;
@@ -320,8 +247,6 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	{
 		switch (featureID)
 		{
-		case ViewPackage.RENDERABLE__RULE:
-			return basicSetRule(null, msgs);
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			return ((InternalEList<?>) getAttachments()).basicRemove(otherEnd, msgs);
 		}
@@ -339,8 +264,6 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	{
 		switch (featureID)
 		{
-		case ViewPackage.RENDERABLE__RULE:
-			return getRule();
 		case ViewPackage.RENDERABLE__VISIBLE:
 			return isVisible();
 		case ViewPackage.RENDERABLE__ENABLED:
@@ -365,9 +288,6 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	{
 		switch (featureID)
 		{
-		case ViewPackage.RENDERABLE__RULE:
-			setRule((Rule) newValue);
-			return;
 		case ViewPackage.RENDERABLE__VISIBLE:
 			setVisible((Boolean) newValue);
 			return;
@@ -396,9 +316,6 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	{
 		switch (featureID)
 		{
-		case ViewPackage.RENDERABLE__RULE:
-			setRule((Rule) null);
-			return;
 		case ViewPackage.RENDERABLE__VISIBLE:
 			setVisible(VISIBLE_EDEFAULT);
 			return;
@@ -426,8 +343,6 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	{
 		switch (featureID)
 		{
-		case ViewPackage.RENDERABLE__RULE:
-			return rule != null;
 		case ViewPackage.RENDERABLE__VISIBLE:
 			return visible != VISIBLE_EDEFAULT;
 		case ViewPackage.RENDERABLE__ENABLED:

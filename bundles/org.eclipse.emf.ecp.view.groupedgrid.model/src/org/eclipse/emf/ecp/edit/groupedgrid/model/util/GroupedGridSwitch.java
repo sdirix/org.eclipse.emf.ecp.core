@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.edit.groupedgrid.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.*;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;

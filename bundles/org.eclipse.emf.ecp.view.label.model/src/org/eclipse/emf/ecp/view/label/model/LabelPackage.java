@@ -83,16 +83,6 @@ public interface LabelPackage extends EPackage
 	int LABEL = 0;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LABEL__RULE = ViewPackage.COMPOSITE__RULE;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

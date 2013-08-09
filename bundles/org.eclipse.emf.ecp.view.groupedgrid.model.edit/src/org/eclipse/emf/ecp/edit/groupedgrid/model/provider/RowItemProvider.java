@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;

@@ -3,9 +3,7 @@
 package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
-
 import org.eclipse.emf.ecp.view.separator.model.Separator;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
 

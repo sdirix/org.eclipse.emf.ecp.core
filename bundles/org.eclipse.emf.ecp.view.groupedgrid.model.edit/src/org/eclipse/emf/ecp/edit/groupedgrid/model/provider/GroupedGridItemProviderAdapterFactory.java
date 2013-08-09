@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.util.GroupedGridAdapterFactory;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;

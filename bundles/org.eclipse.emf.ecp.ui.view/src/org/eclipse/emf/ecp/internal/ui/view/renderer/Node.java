@@ -20,22 +20,16 @@ import java.util.Set;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.ConditionEvaluator;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
-import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
-import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ShowRule;
 
 /**
  * 
@@ -67,8 +61,8 @@ public class Node<T extends Renderable> implements ValidationListener {
 		this.children = new ArrayList<Node<?>>();
 		this.delegators = new ArrayList<RenderingResultDelegator>();
 		this.selectedChildNodeListeners = new ArrayList<SelectedChildNodeListener>();
-		isVisible = evalShowCondition();
-		isEnabled = evalEnableCondition();
+		// isVisible = evalShowCondition();
+		// isEnabled = evalEnableCondition();
 	}
 
 	public Node(T model, ECPControlContext context, boolean isVisible) {
@@ -88,114 +82,114 @@ public class Node<T extends Renderable> implements ValidationListener {
 		return children;
 	}
 
-	// FIXME: change type of notification to attribute
-	public void checkShow(Notification notification) {
+	// // FIXME: change type of notification to attribute
+	// public void checkShow(Notification notification) {
+	//
+	// if (isLeafCondition()) {
+	// final Condition condition = viewModelElement.getRule().getCondition();
+	// if (isShowRule()) {
+	// final LeafCondition leaf = (LeafCondition) condition;
+	// EAttribute attr = null;
+	//
+	// if (isEAttributeNotification(notification)) {
+	// attr = (EAttribute) notification.getFeature();
+	// if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
+	//
+	// final boolean isVisible = evalShowCondition();
+	//
+	// if (!isVisible) {
+	// show(false);
+	// final TreeIterator<EObject> eAllContents = viewModelElement.eAllContents();
+	// while (eAllContents.hasNext()) {
+	// final EObject o = eAllContents.next();
+	// unset(controlContext, o);
+	// }
+	// unset(controlContext, viewModelElement);
+	// } else {
+	// show(true);
+	// }
+	//
+	// layout();
+	// }
+	// }
+	// }
+	//
+	// }
+	// for (final Node<?> child : getChildren()) {
+	// child.checkShow(notification);
+	// }
+	// }
+	//
+	// public boolean hasRule() {
+	// return viewModelElement.getRule() != null;
+	// }
+	//
+	// public boolean evalShowCondition() {
+	//
+	// if (!hasRule()) {
+	// return true;
+	// }
+	//
+	// final Condition condition = viewModelElement.getRule().getCondition();
+	//
+	// if (!isShowRule()) {
+	// return true;
+	// }
+	//
+	// final boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
+	//
+	// if (((ShowRule) viewModelElement.getRule()).isHide()) {
+	// if (v) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// } else {
+	// if (v) {
+	// return true;
+	// } else {
+	// return false;
+	// }
+	// }
+	// }
+	//
+	// /**
+	// * @return
+	// */
+	// private boolean isShowRule() {
+	// return ShowRule.class.isInstance(viewModelElement.getRule());
+	// }
+	//
+	// public boolean evalEnableCondition() {
+	//
+	// if (viewModelElement.getRule() == null) {
+	// return true;
+	// }
+	//
+	// final Condition condition = viewModelElement.getRule().getCondition();
+	//
+	// if (!EnableRule.class.isInstance(viewModelElement.getRule())) {
+	// return true;
+	// }
+	//
+	// final boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
+	//
+	// if (((EnableRule) viewModelElement.getRule()).isDisable()) {
+	// if (v) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// } else {
+	// if (v) {
+	// return true;
+	// } else {
+	// return false;
+	// }
+	// }
+	// }
 
-		if (isLeafCondition()) {
-			final Condition condition = viewModelElement.getRule().getCondition();
-			if (isShowRule()) {
-				final LeafCondition leaf = (LeafCondition) condition;
-				EAttribute attr = null;
-
-				if (isEAttributeNotification(notification)) {
-					attr = (EAttribute) notification.getFeature();
-					if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
-
-						final boolean isVisible = evalShowCondition();
-
-						if (!isVisible) {
-							show(false);
-							final TreeIterator<EObject> eAllContents = viewModelElement.eAllContents();
-							while (eAllContents.hasNext()) {
-								final EObject o = eAllContents.next();
-								unset(controlContext, o);
-							}
-							unset(controlContext, viewModelElement);
-						} else {
-							show(true);
-						}
-
-						layout();
-					}
-				}
-			}
-
-		}
-		for (final Node<?> child : getChildren()) {
-			child.checkShow(notification);
-		}
-	}
-
-	public boolean hasRule() {
-		return viewModelElement.getRule() != null;
-	}
-
-	public boolean evalShowCondition() {
-
-		if (!hasRule()) {
-			return true;
-		}
-
-		final Condition condition = viewModelElement.getRule().getCondition();
-
-		if (!isShowRule()) {
-			return true;
-		}
-
-		final boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
-
-		if (((ShowRule) viewModelElement.getRule()).isHide()) {
-			if (v) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			if (v) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	private boolean isShowRule() {
-		return ShowRule.class.isInstance(viewModelElement.getRule());
-	}
-
-	public boolean evalEnableCondition() {
-
-		if (viewModelElement.getRule() == null) {
-			return true;
-		}
-
-		final Condition condition = viewModelElement.getRule().getCondition();
-
-		if (!EnableRule.class.isInstance(viewModelElement.getRule())) {
-			return true;
-		}
-
-		final boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
-
-		if (((EnableRule) viewModelElement.getRule()).isDisable()) {
-			if (v) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			if (v) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
-	private void unset(ECPControlContext context, EObject eObject) {
+	public void unset(ECPControlContext context, EObject eObject) {
 		// TODO: missing unset for custom controls
 		if (eObject instanceof Control) {
 			final Control control = (Control) eObject;
@@ -231,45 +225,45 @@ public class Node<T extends Renderable> implements ValidationListener {
 		}
 	}
 
-	// FIXME: change type of notification to attribute
-	public void checkEnable(Notification notification) {
-
-		if (isLeafCondition()) {
-			// FIXME: MKVMR
-			final Condition condition = viewModelElement.getRule().getCondition();
-			if (EnableRule.class.isInstance(viewModelElement.getRule())) {
-
-				final LeafCondition leaf = (LeafCondition) condition;
-				EAttribute attr = null;
-
-				if (isEAttributeNotification(notification)) {
-					attr = (EAttribute) notification.getFeature();
-					if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
-
-						final boolean isEnabled = evalEnableCondition();
-
-						if (!isEnabled) {
-							enable(false);
-						} else {
-							enable(true);
-						}
-					}
-				}
-			}
-		}
-		for (final Node<?> child : getChildren()) {
-			child.checkEnable(notification);
-		}
-
-	}
-
-	private boolean isLeafCondition() {
-		if (viewModelElement.getRule() == null) {
-			return false;
-		}
-
-		return viewModelElement.getRule().getCondition() instanceof LeafCondition;
-	}
+	// // FIXME: change type of notification to attribute
+	// public void checkEnable(Notification notification) {
+	//
+	// if (isLeafCondition()) {
+	// // FIXME: MKVMR
+	// final Condition condition = viewModelElement.getRule().getCondition();
+	// if (EnableRule.class.isInstance(viewModelElement.getRule())) {
+	//
+	// final LeafCondition leaf = (LeafCondition) condition;
+	// EAttribute attr = null;
+	//
+	// if (isEAttributeNotification(notification)) {
+	// attr = (EAttribute) notification.getFeature();
+	// if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
+	//
+	// final boolean isEnabled = evalEnableCondition();
+	//
+	// if (!isEnabled) {
+	// enable(false);
+	// } else {
+	// enable(true);
+	// }
+	// }
+	// }
+	// }
+	// }
+	// for (final Node<?> child : getChildren()) {
+	// child.checkEnable(notification);
+	// }
+	//
+	// }
+	//
+	// private boolean isLeafCondition() {
+	// if (viewModelElement.getRule() == null) {
+	// return false;
+	// }
+	//
+	// return viewModelElement.getRule().getCondition() instanceof LeafCondition;
+	// }
 
 	private boolean isEAttributeNotification(Notification notification) {
 		if (notification.getFeature() instanceof EAttribute) {
@@ -279,25 +273,25 @@ public class Node<T extends Renderable> implements ValidationListener {
 		return false;
 	}
 
-	public void enable(final boolean shouldBeEnabled) {
-		isEnabled = shouldBeEnabled & evalEnableCondition();
-		for (final Node<? extends Renderable> child : getChildren()) {
-			child.enable(shouldBeEnabled);
-		}
-		for (final RenderingResultDelegator delegator : delegators) {
-			delegator.enable(shouldBeEnabled);
-		}
-	}
-
-	public void show(final boolean isVisible) {
-		this.isVisible = isVisible & evalShowCondition();
-		for (final Node<? extends Renderable> child : getChildren()) {
-			child.show(isVisible);
-		}
-		for (final RenderingResultDelegator delegator : delegators) {
-			delegator.show(isVisible);
-		}
-	}
+	// public void enable(final boolean shouldBeEnabled) {
+	// isEnabled = shouldBeEnabled & evalEnableCondition();
+	// for (final Node<? extends Renderable> child : getChildren()) {
+	// child.enable(shouldBeEnabled);
+	// }
+	// for (final RenderingResultDelegator delegator : delegators) {
+	// delegator.enable(shouldBeEnabled);
+	// }
+	// }
+	//
+	// public void show(final boolean isVisible) {
+	// this.isVisible = isVisible & evalShowCondition();
+	// for (final Node<? extends Renderable> child : getChildren()) {
+	// child.show(isVisible);
+	// }
+	// for (final RenderingResultDelegator delegator : delegators) {
+	// delegator.show(isVisible);
+	// }
+	// }
 
 	public void layout() {
 		for (final RenderingResultDelegator delegator : delegators) {

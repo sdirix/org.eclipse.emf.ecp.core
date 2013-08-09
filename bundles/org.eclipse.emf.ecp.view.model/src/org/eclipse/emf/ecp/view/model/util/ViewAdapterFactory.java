@@ -6,11 +6,9 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.*;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
-import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
@@ -18,19 +16,12 @@ import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
-import org.eclipse.emf.ecp.view.model.LeafCondition;
-import org.eclipse.emf.ecp.view.model.OrCondition;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Rule;
-import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
-import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -105,48 +96,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseAbstractCategorization(AbstractCategorization object)
 		{
 			return createAbstractCategorizationAdapter();
-		}
-
-		@Override
-		public Adapter caseRule(Rule object)
-		{
-			return createRuleAdapter();
-		}
-
-		@Override
-		public Adapter caseShowRule(ShowRule object)
-		{
-			return createShowRuleAdapter();
-		}
-
-		@Override
-		public Adapter caseEnableRule(EnableRule object)
-		{
-			return createEnableRuleAdapter();
-		}
-
-		@Override
-		public Adapter caseCondition(Condition object)
-		{
-			return createConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseLeafCondition(LeafCondition object)
-		{
-			return createLeafConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseOrCondition(OrCondition object)
-		{
-			return createOrConditionAdapter();
-		}
-
-		@Override
-		public Adapter caseAndCondition(AndCondition object)
-		{
-			return createAndConditionAdapter();
 		}
 
 		@Override
@@ -287,112 +236,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractCategorizationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Rule <em>Rule</em>}'. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Rule
-	 * @generated
-	 */
-	public Adapter createRuleAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.ShowRule <em>Show Rule</em>}
-	 * '. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.ShowRule
-	 * @generated
-	 */
-	public Adapter createShowRuleAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.EnableRule
-	 * <em>Enable Rule</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so that
-	 * we can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.EnableRule
-	 * @generated
-	 */
-	public Adapter createEnableRuleAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Condition <em>Condition</em>}
-	 * '.
-	 * <!-- begin-user-doc --> This default implementation returns null so that
-	 * we can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Condition
-	 * @generated
-	 */
-	public Adapter createConditionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.LeafCondition
-	 * <em>Leaf Condition</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.LeafCondition
-	 * @generated
-	 */
-	public Adapter createLeafConditionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.OrCondition
-	 * <em>Or Condition</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so
-	 * that we can easily ignore cases; it's useful to ignore a case when
-	 * inheritance will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.OrCondition
-	 * @generated
-	 */
-	public Adapter createOrConditionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AndCondition
-	 * <em>And Condition</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.AndCondition
-	 * @generated
-	 */
-	public Adapter createAndConditionAdapter() {
 		return null;
 	}
 

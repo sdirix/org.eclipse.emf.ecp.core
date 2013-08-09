@@ -97,9 +97,9 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 				node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite, label));
 			}
 
-			if (!node.isVisible()) {
-				node.show(false);
-			}
+			// if (!node.isVisible()) {
+			// node.show(false);
+			// }
 
 			GridDataFactory.fillDefaults().grab(true, false)
 				.align(SWT.FILL, SWT.CENTER).span(numControl, 1)

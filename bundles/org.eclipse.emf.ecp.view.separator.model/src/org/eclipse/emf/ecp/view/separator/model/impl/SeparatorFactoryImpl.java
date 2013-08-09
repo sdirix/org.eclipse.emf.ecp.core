@@ -5,12 +5,11 @@ package org.eclipse.emf.ecp.view.separator.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.emf.ecp.view.separator.model.*;
+import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
+import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->

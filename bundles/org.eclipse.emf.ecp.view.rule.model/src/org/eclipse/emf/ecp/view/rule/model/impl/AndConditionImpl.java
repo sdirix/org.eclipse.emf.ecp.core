@@ -21,10 +21,10 @@ import org.eclipse.emf.ecp.view.rule.model.RulePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.AndConditionImpl#getConditions <em>Conditions</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.AndConditionImpl#getConditions <em>Conditions</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class AndConditionImpl extends ConditionImpl implements AndCondition {
@@ -32,6 +32,7 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	 * The cached value of the '{@link #getConditions() <em>Conditions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getConditions()
 	 * @generated
 	 * @ordered
@@ -41,6 +42,7 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected AndConditionImpl() {
@@ -50,6 +52,7 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -60,13 +63,14 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Condition> getConditions() {
-		if (conditions == null) {
-			conditions = new EObjectContainmentEList<Condition>(
-					Condition.class, this,
-					RulePackage.AND_CONDITION__CONDITIONS);
+		if (conditions == null)
+		{
+			conditions = new EObjectContainmentEList<Condition>(Condition.class, this,
+				RulePackage.AND_CONDITION__CONDITIONS);
 		}
 		return conditions;
 	}
@@ -74,15 +78,16 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
-			int featureID, NotificationChain msgs) {
-		switch (featureID) {
+		int featureID, NotificationChain msgs) {
+		switch (featureID)
+		{
 		case RulePackage.AND_CONDITION__CONDITIONS:
-			return ((InternalEList<?>) getConditions()).basicRemove(otherEnd,
-					msgs);
+			return ((InternalEList<?>) getConditions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -90,11 +95,13 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.AND_CONDITION__CONDITIONS:
 			return getConditions();
 		}
@@ -104,12 +111,14 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.AND_CONDITION__CONDITIONS:
 			getConditions().clear();
 			getConditions().addAll((Collection<? extends Condition>) newValue);
@@ -121,11 +130,13 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.AND_CONDITION__CONDITIONS:
 			getConditions().clear();
 			return;
@@ -136,15 +147,17 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.AND_CONDITION__CONDITIONS:
 			return conditions != null && !conditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //AndConditionImpl
+} // AndConditionImpl

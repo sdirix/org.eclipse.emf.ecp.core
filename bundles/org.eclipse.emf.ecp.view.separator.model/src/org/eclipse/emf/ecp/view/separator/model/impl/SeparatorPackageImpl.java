@@ -4,11 +4,8 @@ package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.ecp.view.model.ViewPackage;
-
 import org.eclipse.emf.ecp.view.separator.model.Separator;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;

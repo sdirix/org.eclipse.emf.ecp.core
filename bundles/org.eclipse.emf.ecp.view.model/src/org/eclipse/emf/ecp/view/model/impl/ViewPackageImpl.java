@@ -13,7 +13,6 @@ import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Alignment;
-import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
@@ -21,19 +20,12 @@ import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Condition;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.EnableRule;
 import org.eclipse.emf.ecp.view.model.Group;
-import org.eclipse.emf.ecp.view.model.LeafCondition;
-import org.eclipse.emf.ecp.view.model.OrCondition;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Rule;
-import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
-import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -58,55 +50,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass abstractCategorizationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass ruleEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass showRuleEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass enableRuleEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass conditionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass leafConditionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass orConditionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass andConditionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -341,141 +284,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EReference getAbstractCategorization_Actions() {
 		return (EReference) abstractCategorizationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getRule() {
-		return ruleEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getRule_Condition() {
-		return (EReference) ruleEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getShowRule() {
-		return showRuleEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getShowRule_Hide() {
-		return (EAttribute) showRuleEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getEnableRule() {
-		return enableRuleEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getEnableRule_Disable() {
-		return (EAttribute) enableRuleEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getCondition() {
-		return conditionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getLeafCondition() {
-		return leafConditionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getLeafCondition_Attribute() {
-		return (EReference) leafConditionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getLeafCondition_ExpectedValue() {
-		return (EAttribute) leafConditionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getLeafCondition_PathToAttribute() {
-		return (EReference) leafConditionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getOrCondition() {
-		return orConditionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getOrCondition_Conditions() {
-		return (EReference) orConditionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getAndCondition() {
-		return andConditionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getAndCondition_Conditions() {
-		return (EReference) andConditionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -724,15 +532,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getRenderable_Rule() {
-		return (EReference) renderableEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -740,7 +539,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getRenderable_Visible()
 	{
-		return (EAttribute) renderableEClass.getEStructuralFeatures().get(1);
+		return (EAttribute) renderableEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -751,7 +550,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getRenderable_Enabled()
 	{
-		return (EAttribute) renderableEClass.getEStructuralFeatures().get(2);
+		return (EAttribute) renderableEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -762,7 +561,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getRenderable_Readonly()
 	{
-		return (EAttribute) renderableEClass.getEStructuralFeatures().get(3);
+		return (EAttribute) renderableEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -773,7 +572,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EReference getRenderable_Attachments()
 	{
-		return (EReference) renderableEClass.getEStructuralFeatures().get(4);
+		return (EReference) renderableEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -883,28 +682,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEAttribute(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__NAME);
 		createEReference(abstractCategorizationEClass, ABSTRACT_CATEGORIZATION__ACTIONS);
 
-		ruleEClass = createEClass(RULE);
-		createEReference(ruleEClass, RULE__CONDITION);
-
-		showRuleEClass = createEClass(SHOW_RULE);
-		createEAttribute(showRuleEClass, SHOW_RULE__HIDE);
-
-		enableRuleEClass = createEClass(ENABLE_RULE);
-		createEAttribute(enableRuleEClass, ENABLE_RULE__DISABLE);
-
-		conditionEClass = createEClass(CONDITION);
-
-		leafConditionEClass = createEClass(LEAF_CONDITION);
-		createEReference(leafConditionEClass, LEAF_CONDITION__ATTRIBUTE);
-		createEAttribute(leafConditionEClass, LEAF_CONDITION__EXPECTED_VALUE);
-		createEReference(leafConditionEClass, LEAF_CONDITION__PATH_TO_ATTRIBUTE);
-
-		orConditionEClass = createEClass(OR_CONDITION);
-		createEReference(orConditionEClass, OR_CONDITION__CONDITIONS);
-
-		andConditionEClass = createEClass(AND_CONDITION);
-		createEReference(andConditionEClass, AND_CONDITION__CONDITIONS);
-
 		categorizationEClass = createEClass(CATEGORIZATION);
 		createEReference(categorizationEClass, CATEGORIZATION__CATEGORIZATIONS);
 
@@ -943,7 +720,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		groupEClass = createEClass(GROUP);
 
 		renderableEClass = createEClass(RENDERABLE);
-		createEReference(renderableEClass, RENDERABLE__RULE);
 		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
 		createEAttribute(renderableEClass, RENDERABLE__ENABLED);
 		createEAttribute(renderableEClass, RENDERABLE__READONLY);
@@ -996,11 +772,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		// Add supertypes to classes
 		viewEClass.getESuperTypes().add(this.getCategorization());
 		abstractCategorizationEClass.getESuperTypes().add(this.getRenderable());
-		showRuleEClass.getESuperTypes().add(this.getRule());
-		enableRuleEClass.getESuperTypes().add(this.getRule());
-		leafConditionEClass.getESuperTypes().add(this.getCondition());
-		orConditionEClass.getESuperTypes().add(this.getCondition());
-		andConditionEClass.getESuperTypes().add(this.getCondition());
 		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		compositeEClass.getESuperTypes().add(this.getRenderable());
@@ -1030,47 +801,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEReference(getAbstractCategorization_Actions(), this.getAction(), null, "actions", null, 0, -1,
 			AbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRule_Condition(), this.getCondition(), null, "condition", null, 1, 1, Rule.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-
-		initEClass(showRuleEClass, ShowRule.class, "ShowRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getShowRule_Hide(), theEcorePackage.getEBoolean(), "hide", null, 0, 1, ShowRule.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(enableRuleEClass, EnableRule.class, "EnableRule", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getEnableRule_Disable(), ecorePackage.getEBoolean(), "disable", null, 0, 1, EnableRule.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(conditionEClass, Condition.class, "Condition", IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(leafConditionEClass, LeafCondition.class, "LeafCondition", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getLeafCondition_Attribute(), theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
-			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getLeafCondition_ExpectedValue(), ecorePackage.getEJavaObject(), "expectedValue", null, 1, 1,
-			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEReference(getLeafCondition_PathToAttribute(), theEcorePackage.getEReference(), null, "pathToAttribute",
-			null, 0, -1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(orConditionEClass, OrCondition.class, "OrCondition", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrCondition_Conditions(), this.getCondition(), null, "conditions", null, 2, -1,
-			OrCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(andConditionEClass, AndCondition.class, "AndCondition", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAndCondition_Conditions(), this.getCondition(), null, "conditions", null, 2, -1,
-			AndCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(categorizationEClass, Categorization.class, "Categorization", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
@@ -1145,9 +875,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRenderable_Rule(), this.getRule(), null, "rule", null, 0, 1, Renderable.class, !IS_TRANSIENT,
-			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-			IS_ORDERED);
 		initEAttribute(getRenderable_Visible(), ecorePackage.getEBoolean(), "visible", "true", 0, 1, Renderable.class,
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRenderable_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, Renderable.class,

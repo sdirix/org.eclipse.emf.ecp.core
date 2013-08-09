@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.rule.model.*;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -20,6 +19,7 @@ import org.eclipse.emf.ecp.view.rule.model.ShowRule;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
@@ -27,16 +27,20 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static RuleFactory init() {
-		try {
+		try
+		{
 			RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE
-					.getEFactory("http://org/eclipse/emf/ecp/view/rule/model");
-			if (theRuleFactory != null) {
+				.getEFactory("http://org/eclipse/emf/ecp/view/rule/model");
+			if (theRuleFactory != null)
+			{
 				return theRuleFactory;
 			}
-		} catch (Exception exception) {
+		} catch (Exception exception)
+		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new RuleFactoryImpl();
@@ -46,6 +50,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public RuleFactoryImpl() {
@@ -55,11 +60,13 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
+		switch (eClass.getClassifierID())
+		{
 		case RulePackage.LEAF_CONDITION:
 			return createLeafCondition();
 		case RulePackage.OR_CONDITION:
@@ -71,14 +78,14 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 		case RulePackage.ENABLE_RULE:
 			return createEnableRule();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName()
-					+ "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public LeafCondition createLeafCondition() {
@@ -89,6 +96,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public OrCondition createOrCondition() {
@@ -99,6 +107,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public AndCondition createAndCondition() {
@@ -109,6 +118,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public ShowRule createShowRule() {
@@ -119,6 +129,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EnableRule createEnableRule() {
@@ -129,6 +140,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public RulePackage getRulePackage() {
@@ -138,6 +150,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -146,4 +159,4 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 		return RulePackage.eINSTANCE;
 	}
 
-} //RuleFactoryImpl
+} // RuleFactoryImpl

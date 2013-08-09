@@ -5,13 +5,10 @@ package org.eclipse.emf.ecp.view.custom.model.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
-
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**

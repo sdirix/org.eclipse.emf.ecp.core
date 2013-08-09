@@ -4,15 +4,12 @@ package org.eclipse.emf.ecp.view.separator.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-
-import org.eclipse.emf.ecp.view.separator.model.*;
+import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->

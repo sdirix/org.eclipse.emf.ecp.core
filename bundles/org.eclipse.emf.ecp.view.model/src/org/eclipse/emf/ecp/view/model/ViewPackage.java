@@ -83,7 +83,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCategorization()
 	 * @generated
 	 */
-	int CATEGORIZATION = 9;
+	int CATEGORIZATION = 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ViewImpl <em>View</em>}' class.
@@ -97,87 +97,6 @@ public interface ViewPackage extends EPackage {
 	int VIEW = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.RuleImpl <em>Rule</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.RuleImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRule()
-	 * @generated
-	 */
-	int RULE = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ShowRuleImpl <em>Show Rule</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ShowRuleImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getShowRule()
-	 * @generated
-	 */
-	int SHOW_RULE = 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.EnableRuleImpl <em>Enable Rule</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.EnableRuleImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getEnableRule()
-	 * @generated
-	 */
-	int ENABLE_RULE = 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ConditionImpl <em>Condition</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ConditionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCondition()
-	 * @generated
-	 */
-	int CONDITION = 5;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.LeafConditionImpl <em>Leaf Condition</em>}
-	 * ' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.LeafConditionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getLeafCondition()
-	 * @generated
-	 */
-	int LEAF_CONDITION = 6;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.OrConditionImpl <em>Or Condition</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.OrConditionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getOrCondition()
-	 * @generated
-	 */
-	int OR_CONDITION = 7;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AndConditionImpl <em>And Condition</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.AndConditionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAndCondition()
-	 * @generated
-	 */
-	int AND_CONDITION = 8;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CategoryImpl <em>Category</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -186,7 +105,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCategory()
 	 * @generated
 	 */
-	int CATEGORY = 10;
+	int CATEGORY = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl <em>Renderable</em>}'
@@ -198,17 +117,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
-	int RENDERABLE = 20;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int RENDERABLE__RULE = 0;
+	int RENDERABLE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -218,7 +127,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE__VISIBLE = 1;
+	int RENDERABLE__VISIBLE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -228,7 +137,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE__ENABLED = 2;
+	int RENDERABLE__ENABLED = 1;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -238,7 +147,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE__READONLY = 3;
+	int RENDERABLE__READONLY = 2;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -248,7 +157,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE__ATTACHMENTS = 4;
+	int RENDERABLE__ATTACHMENTS = 3;
 
 	/**
 	 * The number of structural features of the '<em>Renderable</em>' class.
@@ -258,17 +167,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE_FEATURE_COUNT = 5;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__RULE = RENDERABLE__RULE;
+	int RENDERABLE_FEATURE_COUNT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -339,16 +238,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__RULE = ABSTRACT_CATEGORIZATION__RULE;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -429,16 +318,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORIZATION_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__RULE = CATEGORIZATION__RULE;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -541,186 +420,6 @@ public interface ViewPackage extends EPackage {
 	int VIEW_FEATURE_COUNT = CATEGORIZATION_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int RULE__CONDITION = 0;
-
-	/**
-	 * The number of structural features of the '<em>Rule</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int RULE_FEATURE_COUNT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int SHOW_RULE__CONDITION = RULE__CONDITION;
-
-	/**
-	 * The feature id for the '<em><b>Hide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int SHOW_RULE__HIDE = RULE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Show Rule</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int SHOW_RULE_FEATURE_COUNT = RULE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ENABLE_RULE__CONDITION = RULE__CONDITION;
-
-	/**
-	 * The feature id for the '<em><b>Disable</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ENABLE_RULE__DISABLE = RULE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Enable Rule</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ENABLE_RULE_FEATURE_COUNT = RULE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Condition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONDITION_FEATURE_COUNT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Attribute</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_CONDITION__ATTRIBUTE = CONDITION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Expected Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_CONDITION__EXPECTED_VALUE = CONDITION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Path To Attribute</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_CONDITION__PATH_TO_ATTRIBUTE = CONDITION_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Leaf Condition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int OR_CONDITION__CONDITIONS = CONDITION_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Or Condition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int OR_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int AND_CONDITION__CONDITIONS = CONDITION_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>And Condition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int AND_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__RULE = ABSTRACT_CATEGORIZATION__RULE;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -809,17 +508,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getComposite()
 	 * @generated
 	 */
-	int COMPOSITE = 11;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE__RULE = RENDERABLE__RULE;
+	int COMPOSITE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -890,7 +579,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getControl()
 	 * @generated
 	 */
-	int CONTROL = 12;
+	int CONTROL = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl <em>Table Control</em>}'
@@ -902,7 +591,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableControl()
 	 * @generated
 	 */
-	int TABLE_CONTROL = 13;
+	int TABLE_CONTROL = 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl <em>Table Column</em>}'
@@ -914,7 +603,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
 	 * @generated
 	 */
-	int TABLE_COLUMN = 14;
+	int TABLE_COLUMN = 7;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
@@ -926,7 +615,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
 	 * @generated
 	 */
-	int CUSTOM_COMPOSITE = 15;
+	int CUSTOM_COMPOSITE = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
@@ -938,7 +627,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
 	 * @generated
 	 */
-	int COMPOSITE_COLLECTION = 16;
+	int COMPOSITE_COLLECTION = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
@@ -950,7 +639,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
 	 * @generated
 	 */
-	int COLUMN_COMPOSITE = 17;
+	int COLUMN_COMPOSITE = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
@@ -961,7 +650,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
 	 * @generated
 	 */
-	int COLUMN = 18;
+	int COLUMN = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.GroupImpl <em>Group</em>}' class.
@@ -972,7 +661,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getGroup()
 	 * @generated
 	 */
-	int GROUP = 19;
+	int GROUP = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
@@ -983,7 +672,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 21;
+	int ACTION = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
@@ -995,17 +684,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
 	 * @generated
 	 */
-	int ABSTRACT_CONTROL = 22;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__RULE = COMPOSITE__RULE;
+	int ABSTRACT_CONTROL = 15;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1076,16 +755,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__RULE = ABSTRACT_CONTROL__RULE;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1206,16 +875,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__RULE = CONTROL__RULE;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1388,16 +1047,6 @@ public interface ViewPackage extends EPackage {
 	int TABLE_COLUMN_FEATURE_COUNT = 2;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__RULE = COMPOSITE__RULE;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1478,16 +1127,6 @@ public interface ViewPackage extends EPackage {
 	int CUSTOM_COMPOSITE_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE_COLLECTION__RULE = COMPOSITE__RULE;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1556,16 +1195,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE_COLLECTION_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__RULE = COMPOSITE_COLLECTION__RULE;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1638,16 +1267,6 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_COMPOSITE_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__RULE = COMPOSITE_COLLECTION__RULE;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1716,16 +1335,6 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__RULE = COMPOSITE_COLLECTION__RULE;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1837,7 +1446,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
 	 * @generated
 	 */
-	int ATTACHMENT = 23;
+	int ATTACHMENT = 16;
 
 	/**
 	 * The number of structural features of the '<em>Attachment</em>' class.
@@ -1858,7 +1467,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 24;
+	int ALIGNMENT = 17;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1934,186 +1543,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAbstractCategorization_Actions();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Rule <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Rule</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Rule
-	 * @generated
-	 */
-	EClass getRule();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.ecp.view.model.Rule#getCondition
-	 * <em>Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference '<em>Condition</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Rule#getCondition()
-	 * @see #getRule()
-	 * @generated
-	 */
-	EReference getRule_Condition();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.ShowRule <em>Show Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Show Rule</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.ShowRule
-	 * @generated
-	 */
-	EClass getShowRule();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.ShowRule#isHide <em>Hide</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Hide</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.ShowRule#isHide()
-	 * @see #getShowRule()
-	 * @generated
-	 */
-	EAttribute getShowRule_Hide();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.EnableRule <em>Enable Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Enable Rule</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.EnableRule
-	 * @generated
-	 */
-	EClass getEnableRule();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.EnableRule#isDisable
-	 * <em>Disable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Disable</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.EnableRule#isDisable()
-	 * @see #getEnableRule()
-	 * @generated
-	 */
-	EAttribute getEnableRule_Disable();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Condition <em>Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Condition</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Condition
-	 * @generated
-	 */
-	EClass getCondition();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.LeafCondition <em>Leaf Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Leaf Condition</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.LeafCondition
-	 * @generated
-	 */
-	EClass getLeafCondition();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.model.LeafCondition#getAttribute
-	 * <em>Attribute</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference '<em>Attribute</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.LeafCondition#getAttribute()
-	 * @see #getLeafCondition()
-	 * @generated
-	 */
-	EReference getLeafCondition_Attribute();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.LeafCondition#getExpectedValue
-	 * <em>Expected Value</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Expected Value</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.LeafCondition#getExpectedValue()
-	 * @see #getLeafCondition()
-	 * @generated
-	 */
-	EAttribute getLeafCondition_ExpectedValue();
-
-	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.LeafCondition#getPathToAttribute <em>Path To Attribute</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference list '<em>Path To Attribute</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.LeafCondition#getPathToAttribute()
-	 * @see #getLeafCondition()
-	 * @generated
-	 */
-	EReference getLeafCondition_PathToAttribute();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.OrCondition <em>Or Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Or Condition</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.OrCondition
-	 * @generated
-	 */
-	EClass getOrCondition();
-
-	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.OrCondition#getConditions <em>Conditions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Conditions</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.OrCondition#getConditions()
-	 * @see #getOrCondition()
-	 * @generated
-	 */
-	EReference getOrCondition_Conditions();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.AndCondition <em>And Condition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>And Condition</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.AndCondition
-	 * @generated
-	 */
-	EClass getAndCondition();
-
-	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.AndCondition#getConditions <em>Conditions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Conditions</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.AndCondition#getConditions()
-	 * @see #getAndCondition()
-	 * @generated
-	 */
-	EReference getAndCondition_Conditions();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Categorization <em>Categorization</em>}
@@ -2447,19 +1876,6 @@ public interface ViewPackage extends EPackage {
 	EClass getRenderable();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.ecp.view.model.Renderable#getRule
-	 * <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference '<em>Rule</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Renderable#getRule()
-	 * @see #getRenderable()
-	 * @generated
-	 */
-	EReference getRenderable_Rule();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Renderable#isVisible
 	 * <em>Visible</em>}'.
 	 * <!-- begin-user-doc -->
@@ -2677,161 +2093,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ABSTRACT_CATEGORIZATION__ACTIONS = eINSTANCE.getAbstractCategorization_Actions();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RuleImpl <em>Rule</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.RuleImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRule()
-		 * @generated
-		 */
-		EClass RULE = eINSTANCE.getRule();
-
-		/**
-		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference RULE__CONDITION = eINSTANCE.getRule_Condition();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ShowRuleImpl <em>Show Rule</em>}'
-		 * class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.ShowRuleImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getShowRule()
-		 * @generated
-		 */
-		EClass SHOW_RULE = eINSTANCE.getShowRule();
-
-		/**
-		 * The meta object literal for the '<em><b>Hide</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute SHOW_RULE__HIDE = eINSTANCE.getShowRule_Hide();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.EnableRuleImpl
-		 * <em>Enable Rule</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.EnableRuleImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getEnableRule()
-		 * @generated
-		 */
-		EClass ENABLE_RULE = eINSTANCE.getEnableRule();
-
-		/**
-		 * The meta object literal for the '<em><b>Disable</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute ENABLE_RULE__DISABLE = eINSTANCE.getEnableRule_Disable();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ConditionImpl <em>Condition</em>}
-		 * ' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.ConditionImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCondition()
-		 * @generated
-		 */
-		EClass CONDITION = eINSTANCE.getCondition();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.LeafConditionImpl
-		 * <em>Leaf Condition</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.LeafConditionImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getLeafCondition()
-		 * @generated
-		 */
-		EClass LEAF_CONDITION = eINSTANCE.getLeafCondition();
-
-		/**
-		 * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference LEAF_CONDITION__ATTRIBUTE = eINSTANCE.getLeafCondition_Attribute();
-
-		/**
-		 * The meta object literal for the '<em><b>Expected Value</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute LEAF_CONDITION__EXPECTED_VALUE = eINSTANCE.getLeafCondition_ExpectedValue();
-
-		/**
-		 * The meta object literal for the '<em><b>Path To Attribute</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference LEAF_CONDITION__PATH_TO_ATTRIBUTE = eINSTANCE.getLeafCondition_PathToAttribute();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.OrConditionImpl
-		 * <em>Or Condition</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.OrConditionImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getOrCondition()
-		 * @generated
-		 */
-		EClass OR_CONDITION = eINSTANCE.getOrCondition();
-
-		/**
-		 * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference OR_CONDITION__CONDITIONS = eINSTANCE.getOrCondition_Conditions();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.AndConditionImpl
-		 * <em>And Condition</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.AndConditionImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAndCondition()
-		 * @generated
-		 */
-		EClass AND_CONDITION = eINSTANCE.getAndCondition();
-
-		/**
-		 * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference AND_CONDITION__CONDITIONS = eINSTANCE.getAndCondition_Conditions();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CategorizationImpl
@@ -3110,15 +2371,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass RENDERABLE = eINSTANCE.getRenderable();
-
-		/**
-		 * The meta object literal for the '<em><b>Rule</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference RENDERABLE__RULE = eINSTANCE.getRenderable_Rule();
 
 		/**
 		 * The meta object literal for the '<em><b>Visible</b></em>' attribute feature.

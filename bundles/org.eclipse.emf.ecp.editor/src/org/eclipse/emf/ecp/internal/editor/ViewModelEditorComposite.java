@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -31,6 +32,7 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
 	private final ECPControlContext modelElementContext;
 	private RendererContext rendererContext;
+	private ViewModelContextImpl viewContext;
 
 	/**
 	 * Default Constructor.
@@ -48,7 +50,9 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 		Node node = null;
 		try {
 			node = NodeBuilders.INSTANCE.build(view, modelElementContext);
+			viewContext = new ViewModelContextImpl(view, modelElementContext.getModelElement());
 			rendererContext = renderer.render(node, parent);
+
 		} catch (final NoRendererFoundException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
@@ -68,6 +72,7 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
 	public void dispose() {
 		rendererContext.dispose();
+		viewContext.dispose();
 	}
 
 	public void updateLiveValidation() {

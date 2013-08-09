@@ -15,10 +15,10 @@ import org.eclipse.emf.ecp.view.rule.model.RulePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.EnableRuleImpl#isDisable <em>Disable</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.EnableRuleImpl#isDisable <em>Disable</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class EnableRuleImpl extends RuleImpl implements EnableRule {
@@ -26,6 +26,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * The default value of the '{@link #isDisable() <em>Disable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isDisable()
 	 * @generated
 	 * @ordered
@@ -36,6 +37,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * The cached value of the '{@link #isDisable() <em>Disable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isDisable()
 	 * @generated
 	 * @ordered
@@ -45,6 +47,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected EnableRuleImpl() {
@@ -54,6 +57,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -64,6 +68,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isDisable() {
@@ -73,24 +78,26 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setDisable(boolean newDisable) {
 		boolean oldDisable = disable;
 		disable = newDisable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					RulePackage.ENABLE_RULE__DISABLE, oldDisable, disable));
+			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.ENABLE_RULE__DISABLE, oldDisable, disable));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.ENABLE_RULE__DISABLE:
 			return isDisable();
 		}
@@ -100,11 +107,13 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.ENABLE_RULE__DISABLE:
 			setDisable((Boolean) newValue);
 			return;
@@ -115,11 +124,13 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.ENABLE_RULE__DISABLE:
 			setDisable(DISABLE_EDEFAULT);
 			return;
@@ -130,11 +141,13 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.ENABLE_RULE__DISABLE:
 			return disable != DISABLE_EDEFAULT;
 		}
@@ -144,6 +157,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -158,4 +172,4 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 		return result.toString();
 	}
 
-} //EnableRuleImpl
+} // EnableRuleImpl

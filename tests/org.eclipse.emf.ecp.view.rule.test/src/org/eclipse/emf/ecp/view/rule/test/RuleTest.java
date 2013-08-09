@@ -18,16 +18,17 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Alignment;
-import org.eclipse.emf.ecp.view.model.AndCondition;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.EnableRule;
-import org.eclipse.emf.ecp.view.model.LeafCondition;
-import org.eclipse.emf.ecp.view.model.OrCondition;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Rule;
-import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.rule.model.AndCondition;
+import org.eclipse.emf.ecp.view.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.rule.model.OrCondition;
+import org.eclipse.emf.ecp.view.rule.model.Rule;
+import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
+import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -338,12 +339,12 @@ public class RuleTest {
 	}
 
 	private AndCondition createAndCondition() {
-		final AndCondition andCondition = ViewFactory.eINSTANCE.createAndCondition();
+		final AndCondition andCondition = RuleFactory.eINSTANCE.createAndCondition();
 		return andCondition;
 	}
 
 	private OrCondition createOrCondition() {
-		final OrCondition andCondition = ViewFactory.eINSTANCE.createOrCondition();
+		final OrCondition andCondition = RuleFactory.eINSTANCE.createOrCondition();
 		return andCondition;
 	}
 
@@ -356,7 +357,7 @@ public class RuleTest {
 	}
 
 	private static LeafCondition createLeafCondition() {
-		final LeafCondition leafCondition = ViewFactory.eINSTANCE.createLeafCondition();
+		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
 		leafCondition.setAttribute(ViewPackage.eINSTANCE.getControl_LabelAlignment());
 		return leafCondition;
 	}
@@ -397,22 +398,22 @@ public class RuleTest {
 
 	private static Renderable createRuleContainerAndAddRule(Rule rule) {
 		final Renderable renderable = ViewFactory.eINSTANCE.createView();
-		renderable.setRule(rule);
+		renderable.getAttachments().add(rule);
 		return renderable;
 	}
 
 	private static EnableRule createEnableRule() {
-		return ViewFactory.eINSTANCE.createEnableRule();
+		return RuleFactory.eINSTANCE.createEnableRule();
 	}
 
 	public static RuleHandel createVisibleShowRule() {
-		final ShowRule showRule = ViewFactory.eINSTANCE.createShowRule();
+		final ShowRule showRule = RuleFactory.eINSTANCE.createShowRule();
 		showRule.setHide(false);
 		return createRuleHandel(showRule);
 	}
 
 	public static RuleHandel createInvisibleShowRule() {
-		final ShowRule showRule = ViewFactory.eINSTANCE.createShowRule();
+		final ShowRule showRule = RuleFactory.eINSTANCE.createShowRule();
 		showRule.setHide(true);
 		return createRuleHandel(showRule);
 	}

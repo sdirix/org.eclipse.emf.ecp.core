@@ -1,7 +1,6 @@
 package org.eclipse.emf.ecp.view.separator.model;
 
 import org.eclipse.core.runtime.Plugin;
-
 import org.osgi.framework.BundleContext;
 
 /**

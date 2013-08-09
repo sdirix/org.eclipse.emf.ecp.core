@@ -19,9 +19,9 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Rule;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.test.RuleHandel;
 import org.eclipse.emf.ecp.view.rule.test.RuleTest;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -237,7 +237,7 @@ public class RuleSWTTest {
 	 * @param control2
 	 */
 	private void addRuleToElement(Rule enabledEnableRule, Control control2) {
-		control.setRule(enabledEnableRule);
+		control.getAttachments().add(enabledEnableRule);
 
 	}
 

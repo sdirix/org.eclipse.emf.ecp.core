@@ -2,6 +2,10 @@
  */
 package org.eclipse.emf.ecp.view.separator.model.provider;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -30,10 +34,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -348,8 +348,8 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 			ArrayList<Object> result = new ArrayList<Object>();
-			new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
-			return result;
+		   new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
+		   return result;
 		}
 
 		/**

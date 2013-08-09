@@ -15,10 +15,10 @@ import org.eclipse.emf.ecp.view.rule.model.ShowRule;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ShowRuleImpl extends RuleImpl implements ShowRule {
@@ -26,6 +26,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * The default value of the '{@link #isHide() <em>Hide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isHide()
 	 * @generated
 	 * @ordered
@@ -36,6 +37,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * The cached value of the '{@link #isHide() <em>Hide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isHide()
 	 * @generated
 	 * @ordered
@@ -45,6 +47,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ShowRuleImpl() {
@@ -54,6 +57,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -64,6 +68,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isHide() {
@@ -73,24 +78,26 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setHide(boolean newHide) {
 		boolean oldHide = hide;
 		hide = newHide;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					RulePackage.SHOW_RULE__HIDE, oldHide, hide));
+			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.SHOW_RULE__HIDE, oldHide, hide));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.SHOW_RULE__HIDE:
 			return isHide();
 		}
@@ -100,11 +107,13 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.SHOW_RULE__HIDE:
 			setHide((Boolean) newValue);
 			return;
@@ -115,11 +124,13 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.SHOW_RULE__HIDE:
 			setHide(HIDE_EDEFAULT);
 			return;
@@ -130,11 +141,13 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.SHOW_RULE__HIDE:
 			return hide != HIDE_EDEFAULT;
 		}
@@ -144,6 +157,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -158,4 +172,4 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 		return result.toString();
 	}
 
-} //ShowRuleImpl
+} // ShowRuleImpl

@@ -23,15 +23,17 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.rule.model.OrCondition} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class OrConditionItemProvider extends ConditionItemProvider implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public OrConditionItemProvider(AdapterFactory adapterFactory) {
@@ -42,11 +44,13 @@ public class OrConditionItemProvider extends ConditionItemProvider implements
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 		}
@@ -59,12 +63,14 @@ public class OrConditionItemProvider extends ConditionItemProvider implements
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
-			Object object) {
-		if (childrenFeatures == null) {
+		Object object) {
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(RulePackage.Literals.OR_CONDITION__CONDITIONS);
 		}
@@ -74,6 +80,7 @@ public class OrConditionItemProvider extends ConditionItemProvider implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -88,18 +95,19 @@ public class OrConditionItemProvider extends ConditionItemProvider implements
 	 * This returns OrCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object,
-				getResourceLocator().getImage("full/obj16/OrCondition"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/OrCondition"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -112,16 +120,17 @@ public class OrConditionItemProvider extends ConditionItemProvider implements
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(OrCondition.class)) {
+		switch (notification.getFeatureID(OrCondition.class))
+		{
 		case RulePackage.OR_CONDITION__CONDITIONS:
-			fireNotifyChanged(new ViewerNotification(notification,
-					notification.getNotifier(), true, false));
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -132,23 +141,27 @@ public class OrConditionItemProvider extends ConditionItemProvider implements
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	protected void collectNewChildDescriptors(
-			Collection<Object> newChildDescriptors, Object object) {
+		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(
-				RulePackage.Literals.OR_CONDITION__CONDITIONS,
+		newChildDescriptors.add
+			(createChildParameter
+			(RulePackage.Literals.OR_CONDITION__CONDITIONS,
 				RuleFactory.eINSTANCE.createLeafCondition()));
 
-		newChildDescriptors.add(createChildParameter(
-				RulePackage.Literals.OR_CONDITION__CONDITIONS,
+		newChildDescriptors.add
+			(createChildParameter
+			(RulePackage.Literals.OR_CONDITION__CONDITIONS,
 				RuleFactory.eINSTANCE.createOrCondition()));
 
-		newChildDescriptors.add(createChildParameter(
-				RulePackage.Literals.OR_CONDITION__CONDITIONS,
+		newChildDescriptors.add
+			(createChildParameter
+			(RulePackage.Literals.OR_CONDITION__CONDITIONS,
 				RuleFactory.eINSTANCE.createAndCondition()));
 	}
 

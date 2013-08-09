@@ -4,13 +4,11 @@ package org.eclipse.emf.ecp.view.separator.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-
-import org.eclipse.emf.ecp.view.separator.model.*;
+import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->

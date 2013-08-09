@@ -70,9 +70,9 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 
 			setLayoutDataForResultRows(resultRows);
 
-			if (!node.isVisible()) {
-				node.show(false);
-			}
+			// if (!node.isVisible()) {
+			// node.show(false);
+			// }
 		}
 
 		return createResult(columnComposite);

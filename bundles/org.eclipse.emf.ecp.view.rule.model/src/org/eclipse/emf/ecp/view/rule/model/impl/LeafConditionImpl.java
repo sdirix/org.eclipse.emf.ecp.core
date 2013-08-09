@@ -22,12 +22,12 @@ import org.eclipse.emf.ecp.view.rule.model.RulePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getAttribute <em>Attribute</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getExpectedValue <em>Expected Value</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getPathToAttribute <em>Path To Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getAttribute <em>Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getExpectedValue <em>Expected Value</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getPathToAttribute <em>Path To Attribute</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
@@ -35,6 +35,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getAttribute()
 	 * @generated
 	 * @ordered
@@ -45,6 +46,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The default value of the '{@link #getExpectedValue() <em>Expected Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getExpectedValue()
 	 * @generated
 	 * @ordered
@@ -55,6 +57,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The cached value of the '{@link #getExpectedValue() <em>Expected Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getExpectedValue()
 	 * @generated
 	 * @ordered
@@ -65,6 +68,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The cached value of the '{@link #getPathToAttribute() <em>Path To Attribute</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getPathToAttribute()
 	 * @generated
 	 * @ordered
@@ -74,6 +78,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected LeafConditionImpl() {
@@ -83,6 +88,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -93,17 +99,19 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute getAttribute() {
-		if (attribute != null && attribute.eIsProxy()) {
+		if (attribute != null && attribute.eIsProxy())
+		{
 			InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
-			if (attribute != oldAttribute) {
+			if (attribute != oldAttribute)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							RulePackage.LEAF_CONDITION__ATTRIBUTE,
-							oldAttribute, attribute));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RulePackage.LEAF_CONDITION__ATTRIBUTE,
+						oldAttribute, attribute));
 			}
 		}
 		return attribute;
@@ -112,6 +120,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute basicGetAttribute() {
@@ -121,20 +130,21 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setAttribute(EAttribute newAttribute) {
 		EAttribute oldAttribute = attribute;
 		attribute = newAttribute;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					RulePackage.LEAF_CONDITION__ATTRIBUTE, oldAttribute,
-					attribute));
+			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__ATTRIBUTE, oldAttribute,
+				attribute));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Object getExpectedValue() {
@@ -144,27 +154,28 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setExpectedValue(Object newExpectedValue) {
 		Object oldExpectedValue = expectedValue;
 		expectedValue = newExpectedValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					RulePackage.LEAF_CONDITION__EXPECTED_VALUE,
-					oldExpectedValue, expectedValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__EXPECTED_VALUE,
+				oldExpectedValue, expectedValue));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<EReference> getPathToAttribute() {
-		if (pathToAttribute == null) {
-			pathToAttribute = new EObjectResolvingEList<EReference>(
-					EReference.class, this,
-					RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE);
+		if (pathToAttribute == null)
+		{
+			pathToAttribute = new EObjectResolvingEList<EReference>(EReference.class, this,
+				RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE);
 		}
 		return pathToAttribute;
 	}
@@ -172,11 +183,13 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
 			if (resolve)
 				return getAttribute();
@@ -192,12 +205,14 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
 			setAttribute((EAttribute) newValue);
 			return;
@@ -206,8 +221,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			return;
 		case RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE:
 			getPathToAttribute().clear();
-			getPathToAttribute().addAll(
-					(Collection<? extends EReference>) newValue);
+			getPathToAttribute().addAll((Collection<? extends EReference>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -216,11 +230,13 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
 			setAttribute((EAttribute) null);
 			return;
@@ -237,16 +253,18 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
+		switch (featureID)
+		{
 		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
 			return attribute != null;
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
-			return EXPECTED_VALUE_EDEFAULT == null ? expectedValue != null
-					: !EXPECTED_VALUE_EDEFAULT.equals(expectedValue);
+			return EXPECTED_VALUE_EDEFAULT == null ? expectedValue != null : !EXPECTED_VALUE_EDEFAULT
+				.equals(expectedValue);
 		case RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE:
 			return pathToAttribute != null && !pathToAttribute.isEmpty();
 		}
@@ -256,6 +274,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -270,4 +289,4 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		return result.toString();
 	}
 
-} //LeafConditionImpl
+} // LeafConditionImpl

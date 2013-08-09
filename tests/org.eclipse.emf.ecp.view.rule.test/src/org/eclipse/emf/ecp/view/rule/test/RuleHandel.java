@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.rule.test;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.Rule;
+import org.eclipse.emf.ecp.view.rule.model.Rule;
 
 /**
  * @author Jonas

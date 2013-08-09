@@ -7,7 +7,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.rule.model.*;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -22,6 +21,7 @@ import org.eclipse.emf.ecp.view.rule.model.ShowRule;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.ecp.view.rule.model.RulePackage
  * @generated
  */
@@ -30,6 +30,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected static RulePackage modelPackage;
@@ -38,10 +39,12 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public RuleAdapterFactory() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = RulePackage.eINSTANCE;
 		}
 	}
@@ -49,17 +52,21 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * Returns whether this factory is applicable for the type of the object.
 	 * <!-- begin-user-doc -->
-	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
+	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
+	 * object of the model.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
+		if (object == modelPackage)
+		{
 			return true;
 		}
-		if (object instanceof EObject) {
+		if (object instanceof EObject)
+		{
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -69,51 +76,62 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected RuleSwitch<Adapter> modelSwitch = new RuleSwitch<Adapter>() {
+	protected RuleSwitch<Adapter> modelSwitch = new RuleSwitch<Adapter>()
+	{
 		@Override
-		public Adapter caseCondition(Condition object) {
+		public Adapter caseCondition(Condition object)
+		{
 			return createConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseLeafCondition(LeafCondition object) {
+		public Adapter caseLeafCondition(LeafCondition object)
+		{
 			return createLeafConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseOrCondition(OrCondition object) {
+		public Adapter caseOrCondition(OrCondition object)
+		{
 			return createOrConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseAndCondition(AndCondition object) {
+		public Adapter caseAndCondition(AndCondition object)
+		{
 			return createAndConditionAdapter();
 		}
 
 		@Override
-		public Adapter caseRule(Rule object) {
+		public Adapter caseRule(Rule object)
+		{
 			return createRuleAdapter();
 		}
 
 		@Override
-		public Adapter caseShowRule(ShowRule object) {
+		public Adapter caseShowRule(ShowRule object)
+		{
 			return createShowRuleAdapter();
 		}
 
 		@Override
-		public Adapter caseEnableRule(EnableRule object) {
+		public Adapter caseEnableRule(EnableRule object)
+		{
 			return createEnableRuleAdapter();
 		}
 
 		@Override
-		public Adapter caseAttachment(Attachment object) {
+		public Adapter caseAttachment(Attachment object)
+		{
 			return createAttachmentAdapter();
 		}
 
 		@Override
-		public Adapter defaultCase(EObject object) {
+		public Adapter defaultCase(EObject object)
+		{
 			return createEObjectAdapter();
 		}
 	};
@@ -122,6 +140,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
@@ -132,11 +151,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.Condition <em>Condition</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.Condition
+	 * <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.Condition
 	 * @generated
@@ -146,11 +167,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition <em>Leaf Condition</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition
+	 * <em>Leaf Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.LeafCondition
 	 * @generated
@@ -160,11 +183,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.OrCondition <em>Or Condition</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.OrCondition
+	 * <em>Or Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.OrCondition
 	 * @generated
@@ -174,11 +199,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.AndCondition <em>And Condition</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.AndCondition
+	 * <em>And Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.AndCondition
 	 * @generated
@@ -193,6 +220,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.Rule
 	 * @generated
@@ -202,11 +230,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.ShowRule <em>Show Rule</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.ShowRule
+	 * <em>Show Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.ShowRule
 	 * @generated
@@ -216,11 +246,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.EnableRule <em>Enable Rule</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.rule.model.EnableRule
+	 * <em>Enable Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.rule.model.EnableRule
 	 * @generated
@@ -230,11 +262,13 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Attachment <em>Attachment</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Attachment
+	 * <em>Attachment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.model.Attachment
 	 * @generated
@@ -248,6 +282,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the new adapter.
 	 * @generated
 	 */
@@ -255,4 +290,4 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //RuleAdapterFactory
+} // RuleAdapterFactory

@@ -56,13 +56,13 @@ public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRe
 		final List<RenderingResultRow<Control>> renderingRows = renderSWT(node, adapterFactoryItemDelegator,
 			initData);
 
-		if (!node.isVisible()) {
-			node.show(false);
-		}
-
-		if (!node.isEnabled()) {
-			node.enable(false);
-		}
+		// if (!node.isVisible()) {
+		// node.show(false);
+		// }
+		//
+		// if (!node.isEnabled()) {
+		// node.enable(false);
+		// }
 
 		return renderingRows;
 	}
