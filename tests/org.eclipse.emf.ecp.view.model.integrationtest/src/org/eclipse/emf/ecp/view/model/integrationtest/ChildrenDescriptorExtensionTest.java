@@ -19,22 +19,22 @@ public class ChildrenDescriptorExtensionTest {
 	 * Needs to be adapted after refactoring
 	 * These are the counts for a fully integrated model with all elements
 	 */
-	private static final int VIEW_CHILD_COUNT = 15;
+	private static final int VIEW_CHILD_COUNT = 16;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = 6;
-	private static final int CATEGORY_CHILD_COUNT = 12;
+	private static final int CATEGORY_CHILD_COUNT = 13;
 	private static final int CONTROL_CHILD_COUNT = 2;
 	private static final int TABLECONTROL_CHILD_COUNT = 3;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = 2;
 	private static final int SEPARATOR_CHILD_COUNT = 2;
-	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 11;
-	private static final int COLUMN_CHILD_COUNT = 11;
-	private static final int GROUP_CHILD_COUNT = 11;
+	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 12;
+	private static final int COLUMN_CHILD_COUNT = 12;
+	private static final int GROUP_CHILD_COUNT = 12;
 	private static final int ACTION_CHILD_COUNT = 0;
 	private static final int GROUPEDGRID_CHILD_COUNT = 3;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
