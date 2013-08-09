@@ -51,6 +51,7 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 		try {
 			node = NodeBuilders.INSTANCE.build(view, modelElementContext);
 			viewContext = new ViewModelContextImpl(view, modelElementContext.getModelElement());
+			viewContext.registerViewChangeListener(node);
 			rendererContext = renderer.render(node, parent);
 
 		} catch (final NoRendererFoundException ex) {

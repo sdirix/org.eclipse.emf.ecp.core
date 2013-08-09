@@ -17,16 +17,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
+import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -39,7 +40,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  *            the type of the actual control
  */
 // FIXME:
-public class Node<T extends Renderable> implements ValidationListener {
+public class Node<T extends Renderable> implements ValidationListener, ModelChangeListener {
 
 	private T viewModelElement;
 	private List<Node<?>> children;
@@ -265,33 +266,33 @@ public class Node<T extends Renderable> implements ValidationListener {
 	// return viewModelElement.getRule().getCondition() instanceof LeafCondition;
 	// }
 
-	private boolean isEAttributeNotification(Notification notification) {
-		if (notification.getFeature() instanceof EAttribute) {
-			return true;
-		}
-
-		return false;
-	}
-
-	// public void enable(final boolean shouldBeEnabled) {
-	// isEnabled = shouldBeEnabled & evalEnableCondition();
-	// for (final Node<? extends Renderable> child : getChildren()) {
-	// child.enable(shouldBeEnabled);
-	// }
-	// for (final RenderingResultDelegator delegator : delegators) {
-	// delegator.enable(shouldBeEnabled);
-	// }
+	// private boolean isEAttributeNotification(Notification notification) {
+	// if (notification.getFeature() instanceof EAttribute) {
+	// return true;
 	// }
 	//
-	// public void show(final boolean isVisible) {
-	// this.isVisible = isVisible & evalShowCondition();
-	// for (final Node<? extends Renderable> child : getChildren()) {
-	// child.show(isVisible);
+	// return false;
 	// }
-	// for (final RenderingResultDelegator delegator : delegators) {
-	// delegator.show(isVisible);
-	// }
-	// }
+
+	public void enable(final boolean shouldBeEnabled) {
+		isEnabled = shouldBeEnabled;
+		for (final Node<? extends Renderable> child : getChildren()) {
+			child.enable(shouldBeEnabled);
+		}
+		for (final RenderingResultDelegator delegator : delegators) {
+			delegator.enable(shouldBeEnabled);
+		}
+	}
+
+	public void show(final boolean isVisible) {
+		this.isVisible = isVisible;
+		for (final Node<? extends Renderable> child : getChildren()) {
+			child.show(isVisible);
+		}
+		for (final RenderingResultDelegator delegator : delegators) {
+			delegator.show(isVisible);
+		}
+	}
 
 	public void layout() {
 		for (final RenderingResultDelegator delegator : delegators) {
@@ -433,6 +434,30 @@ public class Node<T extends Renderable> implements ValidationListener {
 	public void fireSelectedChildNodeChanged(Node<?> selectedChild) {
 		for (final SelectedChildNodeListener listener : selectedChildNodeListeners) {
 			listener.childSelected(selectedChild);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.context.ModelChangeNotification)
+	 */
+	public void notifyChange(ModelChangeNotification notification) {
+		if (notification.getNotifier() == viewModelElement) {
+			enable(viewModelElement.isEnabled());
+			show(viewModelElement.isVisible());
+			if (!viewModelElement.isVisible()) {
+				final TreeIterator<EObject> allContents = viewModelElement.eAllContents();
+				while (allContents.hasNext()) {
+					final EObject o = allContents.next();
+					unset(controlContext, o);
+				}
+				unset(controlContext, viewModelElement);
+			}
+		} else {
+			for (final Node<?> child : getChildren()) {
+				child.notifyChange(notification);
+			}
 		}
 	}
 }
