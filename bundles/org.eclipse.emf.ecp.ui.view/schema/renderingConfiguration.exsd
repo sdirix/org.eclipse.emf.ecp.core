@@ -50,8 +50,8 @@
    <element name="renderingConfiguration">
       <complexType>
          <sequence>
-            <element ref="renderingResultRowFactory"/>
-            <element ref="renderingLayoutHelper"/>
+            <element ref="renderingResultRowFactory" minOccurs="0" maxOccurs="1"/>
+            <element ref="renderingLayoutHelper" minOccurs="0" maxOccurs="1"/>
          </sequence>
       </complexType>
    </element>

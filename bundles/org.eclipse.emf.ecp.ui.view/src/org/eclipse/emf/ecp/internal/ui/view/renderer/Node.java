@@ -48,8 +48,8 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	private ECPControlContext controlContext;
 	private Object labelObject;
 
-	protected boolean isVisible;
-	protected boolean isEnabled;
+	// protected boolean isVisible;
+	// protected boolean isEnabled;
 	protected int severity;
 
 	private List<ECPAction> actions;
@@ -68,7 +68,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 
 	public Node(T model, ECPControlContext context, boolean isVisible) {
 		this(model, context);
-		this.isVisible = isVisible;
+		// this.isVisible = isVisible;
 	}
 
 	public T getRenderable() {
@@ -275,7 +275,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	// }
 
 	public void enable(final boolean shouldBeEnabled) {
-		isEnabled = shouldBeEnabled;
+		// isEnabled = shouldBeEnabled;
 		for (final Node<? extends Renderable> child : getChildren()) {
 			child.enable(shouldBeEnabled);
 		}
@@ -285,7 +285,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	}
 
 	public void show(final boolean isVisible) {
-		this.isVisible = isVisible;
+		// this.isVisible = isVisible;
 		for (final Node<? extends Renderable> child : getChildren()) {
 			child.show(isVisible);
 		}
@@ -373,7 +373,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * @return {@code true}, if this node is visible, {@code false} otherwise
 	 */
 	public boolean isVisible() {
-		return isVisible;
+		return viewModelElement.isVisible();
 	}
 
 	/**
@@ -382,7 +382,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * @return {@code true}, if this node is enabled, {@code false} otherwise
 	 */
 	public boolean isEnabled() {
-		return isEnabled;
+		return viewModelElement.isEnabled();
 	}
 
 	public ECPControlContext getControlContext() {

@@ -83,4 +83,5 @@ public interface ViewModelContext {
 	 */
 	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
+	void dispose();
 }
