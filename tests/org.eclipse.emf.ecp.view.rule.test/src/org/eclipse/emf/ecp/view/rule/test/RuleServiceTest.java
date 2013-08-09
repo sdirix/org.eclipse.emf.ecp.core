@@ -15,25 +15,38 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.EnableRule;
-import org.eclipse.emf.ecp.view.model.LeafCondition;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ShowRule;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.rule.RuleService;
+import org.eclipse.emf.ecp.view.rule.model.AndCondition;
+import org.eclipse.emf.ecp.view.rule.model.Condition;
+import org.eclipse.emf.ecp.view.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.rule.model.OrCondition;
+import org.eclipse.emf.ecp.view.rule.model.Rule;
+import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
+import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
+import org.eclipse.emf.emfstore.bowling.Matchup;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emf.emfstore.bowling.Tournament;
 import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -130,24 +143,32 @@ public class RuleServiceTest {
 	public void tearDown() throws Exception {
 	}
 
+	private RuleService instantiateRuleService() {
+		return instantiateRuleService(league);
+	}
+
 	/**
 	 * Instantiate rule service.
 	 * 
 	 * @return the rule service
 	 */
-	private RuleService instantiateRuleService() {
+	private RuleService instantiateRuleService(final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
 		ruleService.instantiate(new ViewModelContext() {
 
 			private EContentAdapter viewContentAdapter;
 			private EContentAdapter domainContentAdapter;
+			private final List<ModelChangeListener> domainChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
+			private final List<ModelChangeListener> viewChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
 
 			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+				viewChangeListeners.remove(modelChangeListener);
 				view.eAdapters().remove(viewContentAdapter);
 			}
 
 			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-				league.eAdapters().remove(domainContentAdapter);
+				domainChangeListeners.remove(modelChangeListener);
+				domainModel.eAdapters().remove(domainContentAdapter);
 			}
 
 			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -155,21 +176,26 @@ public class RuleServiceTest {
 					@Override
 					public void notifyChanged(Notification notification) {
 						super.notifyChanged(notification);
-						// TODO notify
+						for (final ModelChangeListener listener : viewChangeListeners) {
+							listener.notifyChange(new ModelChangeNotification(notification));
+						}
 					}
 				};
 				view.eAdapters().add(viewContentAdapter);
 			}
 
 			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+				domainChangeListeners.add(modelChangeListener);
 				domainContentAdapter = new EContentAdapter() {
 					@Override
 					public void notifyChanged(Notification notification) {
 						super.notifyChanged(notification);
-						// TODO notify
+						for (final ModelChangeListener listener : domainChangeListeners) {
+							listener.notifyChange(new ModelChangeNotification(notification));
+						}
 					}
 				};
-				league.eAdapters().add(domainContentAdapter);
+				domainModel.eAdapters().add(domainContentAdapter);
 			}
 
 			public View getViewModel() {
@@ -177,7 +203,7 @@ public class RuleServiceTest {
 			}
 
 			public EObject getDomainModel() {
-				return league;
+				return domainModel;
 			}
 		});
 		return ruleService;
@@ -204,13 +230,49 @@ public class RuleServiceTest {
 	 * @param visibleOnRightValue the visible on right value
 	 */
 	private void addLeagueShowRule(Renderable control, boolean visibleOnRightValue) {
-		final ShowRule rule = ViewFactory.eINSTANCE.createShowRule();
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(visibleOnRightValue);
-		final LeafCondition condition = ViewFactory.eINSTANCE.createLeafCondition();
+		rule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"));
+		control.getAttachments().add(rule);
+	}
+
+	private void addShowRule(Renderable control, boolean visibleOnRightValue, EAttribute attribute,
+		Object expectedValue) {
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
+		rule.setHide(visibleOnRightValue);
+		rule.setCondition(createLeafCondition(attribute, expectedValue));
+		control.getAttachments().add(rule);
+	}
+
+	private LeafCondition createLeafCondition(EAttribute attribute, Object expectedValue) {
+		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
+		condition.setAttribute(attribute);
+		condition.setExpectedValue(expectedValue);
+		return condition;
+	}
+
+	private void addLeagueShowRuleWithOrCondition(Renderable control, boolean visibleOnRightValue,
+		Condition... childConditions) {
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
+		rule.setHide(visibleOnRightValue);
+		final OrCondition condition = RuleFactory.eINSTANCE.createOrCondition();
+		for (final Condition childCondition : childConditions) {
+			condition.getConditions().add(childCondition);
+		}
 		rule.setCondition(condition);
-		condition.setAttribute(BowlingPackage.eINSTANCE.getLeague_Name());
-		condition.setExpectedValue("League");
-		control.setRule(rule);
+		control.getAttachments().add(rule);
+	}
+
+	private void addLeagueShowRuleWithAndCondition(Renderable control, boolean visibleOnRightValue,
+		Condition... childConditions) {
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
+		rule.setHide(visibleOnRightValue);
+		final AndCondition condition = RuleFactory.eINSTANCE.createAndCondition();
+		for (final Condition childCondition : childConditions) {
+			condition.getConditions().add(childCondition);
+		}
+		rule.setCondition(condition);
+		control.getAttachments().add(rule);
 	}
 
 	/**
@@ -220,13 +282,13 @@ public class RuleServiceTest {
 	 * @param enableOnRightValue the enable on right value
 	 */
 	private void addLeagueEnableRule(Renderable control, boolean enableOnRightValue) {
-		final EnableRule rule = ViewFactory.eINSTANCE.createEnableRule();
+		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
 		rule.setDisable(enableOnRightValue);
-		final LeafCondition condition = ViewFactory.eINSTANCE.createLeafCondition();
+		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
 		rule.setCondition(condition);
 		condition.setAttribute(BowlingPackage.eINSTANCE.getLeague_Name());
 		condition.setExpectedValue("League");
-		control.setRule(rule);
+		control.getAttachments().add(rule);
 	}
 
 	private boolean registeredViewListener = false;
@@ -253,15 +315,75 @@ public class RuleServiceTest {
 			}
 
 			public View getViewModel() {
-				return null;
+				return view;
+			}
+
+			public EObject getDomainModel() {
+				return league;
+			}
+		});
+		assertTrue(registeredDomainListener);
+		assertTrue(registeredViewListener);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testInitializationWithNullDomainModel() {
+		final RuleService ruleService = new RuleService();
+
+		ruleService.instantiate(new ViewModelContext() {
+
+			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+			}
+
+			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+			}
+
+			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+				registeredViewListener = true;
+			}
+
+			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+				registeredDomainListener = true;
+			}
+
+			public View getViewModel() {
+				return view;
 			}
 
 			public EObject getDomainModel() {
 				return null;
 			}
 		});
-		assertTrue(registeredDomainListener);
-		assertTrue(registeredViewListener);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testInitializationWithNullViewModel() {
+		final RuleService ruleService = new RuleService();
+
+		ruleService.instantiate(new ViewModelContext() {
+
+			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+			}
+
+			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+			}
+
+			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+				registeredViewListener = true;
+			}
+
+			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+				registeredDomainListener = true;
+			}
+
+			public View getViewModel() {
+				return null;
+			}
+
+			public EObject getDomainModel() {
+				return league;
+			}
+		});
 	}
 
 	@Test
@@ -287,11 +409,11 @@ public class RuleServiceTest {
 			}
 
 			public View getViewModel() {
-				return null;
+				return view;
 			}
 
 			public EObject getDomainModel() {
-				return null;
+				return league;
 			}
 		});
 		ruleService.dispose();
@@ -377,6 +499,349 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		instantiateRuleService();
 		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithOrCondition_FirstConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		setLeagueToRight();
+		assertTrue(column.isVisible());
+		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithOrCondition_SecondConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		league.setName("League2");
+		assertTrue(column.isVisible());
+		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithOrCondition_NoConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		setLeagueToWrong();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithOrCondition_FirstConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		setLeagueToRight();
+		instantiateRuleService();
+		assertTrue(column.isVisible());
+		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithOrCondition_SecondConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		league.setName("League2");
+		instantiateRuleService();
+		assertTrue(column.isVisible());
+		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithOrCondition_BothConditionsApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		addLeagueShowRuleWithOrCondition(control1, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3));
+		player.setName("foo");
+		player.setNumberOfVictories(3);
+		instantiateRuleService(player);
+		assertTrue(column.isVisible());
+		assertTrue(control1.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithOrCondition_BothConditionsApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		addLeagueShowRuleWithOrCondition(control1, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3));
+		instantiateRuleService(player);
+		player.setName("foo");
+		player.setNumberOfVictories(3);
+		assertTrue(column.isVisible());
+		assertTrue(control1.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithOrCondition_NoConditionApplies() {
+		addLeagueShowRuleWithOrCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		setLeagueToWrong();
+		instantiateRuleService();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithAndCondition_FirstConditionApplies() {
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		setLeagueToRight();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithAndCondition_SecondConditionApplies() {
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		league.setName("League2");
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithAndCondition_NoConditionApplies() {
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		instantiateRuleService();
+		setLeagueToWrong();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithAndCondition_BothConditionsApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3));
+		instantiateRuleService(player);
+		player.setName("foo");
+		player.setNumberOfVictories(3);
+		assertTrue(column.isVisible());
+		assertTrue(control1.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleInitWithAndCondition_FirstConditionApplies() {
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		setLeagueToRight();
+		instantiateRuleService();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithAndCondition_SecondConditionApplies() {
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		league.setName("League2");
+		instantiateRuleService();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithAndCondition_NoConditionApplies() {
+		addLeagueShowRuleWithAndCondition(column, true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
+			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
+		setLeagueToWrong();
+		instantiateRuleService();
+		assertFalse(column.isVisible());
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithTwoPossibleTargetsWhereOnlyOneSettingShouldApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		control2.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control2);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
+		addShowRule(control2, true, BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3);
+
+		instantiateRuleService(player);
+		player.setName("foo");
+		assertTrue(control1.isVisible());
+		assertFalse(control2.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithTwoPossibleTargetsWhereTheOtherSettingShouldApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		control2.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control2);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
+		addShowRule(control2, true, BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3);
+
+		instantiateRuleService(player);
+		player.setNumberOfVictories(3);
+		assertFalse(control1.isVisible());
+		assertTrue(control2.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWhereConditionReferencesAnotherTarget() {
+		final Tournament tournament = BowlingFactory.eINSTANCE.createTournament();
+		view.setRootEClass(tournament.eClass());
+		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
+		tournament.getMatchups().add(matchup);
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getMatchup_NrSpectators());
+		control1.getPathToFeature().add(BowlingPackage.eINSTANCE.getTournament_Matchups());
+		column.getComposites().add(control1);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getMatchup_NrSpectators(), new BigInteger("3"));
+
+		Rule rule = null;
+		for (final Attachment attachment : control1.getAttachments()) {
+			if (Rule.class.isInstance(attachment)) {
+				rule = (Rule) attachment;
+			}
+		}
+
+		((LeafCondition) rule.getCondition()).getPathToAttribute().add(
+			BowlingPackage.eINSTANCE.getTournament_Matchups());
+
+		instantiateRuleService(tournament);
+		matchup.setNrSpectators(new BigInteger("3"));
+		assertTrue(control1.isVisible());
+	}
+
+	@Test
+	public void testShowRuleWithTwoPossibleTargetsWhereBothSettingShouldApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		control2.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control2);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
+		addShowRule(control2, true, BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3);
+
+		instantiateRuleService(player);
+		player.setName("foo");
+		player.setNumberOfVictories(3);
+		assertTrue(control1.isVisible());
+		assertTrue(control2.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithTwoPossibleTargetsWhereOnlyOneSettingShouldApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		control2.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control2);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
+		addShowRule(control2, true, BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3);
+
+		player.setName("foo");
+		instantiateRuleService(player);
+		assertTrue(control1.isVisible());
+		assertFalse(control2.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithTwoPossibleTargetsWhereTheOtherSettingShouldApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		control2.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control2);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
+		addShowRule(control2, true, BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3);
+
+		player.setNumberOfVictories(3);
+		instantiateRuleService(player);
+		assertFalse(control1.isVisible());
+		assertTrue(control2.isVisible());
+	}
+
+	@Test
+	public void testInitShowRuleWithTwoPossibleTargetsWhereBothSettingShouldApply() {
+		view.setRootEClass(player.eClass());
+
+		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		control1.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control1);
+
+		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		control2.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		column.getComposites().add(control2);
+
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
+		addShowRule(control2, true, BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3);
+
+		player.setName("foo");
+		player.setNumberOfVictories(3);
+		instantiateRuleService(player);
+		assertTrue(control1.isVisible());
+		assertTrue(control2.isVisible());
 	}
 
 	/**
@@ -585,7 +1050,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(column, true);
 		setLeagueToWrong();
 		instantiateRuleService();
-		assertFalse(controlPName.isVisible());
+		assertFalse(controlPName.isEnabled());
 	}
 
 	/**
@@ -608,7 +1073,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(controlPName, false);
 		setLeagueToWrong();
 		instantiateRuleService();
-		assertFalse(controlPName.isVisible());
+		assertFalse(controlPName.isEnabled());
 	}
 
 	/**
@@ -1073,7 +1538,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(column, false);
 		setLeagueToRight();
 		instantiateRuleService();
-		assertFalse(controlPName.isVisible());
+		assertFalse(controlPName.isEnabled());
 	}
 
 	/**
@@ -1084,7 +1549,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(column, false);
 		setLeagueToWrong();
 		instantiateRuleService();
-		assertTrue(controlPName.isVisible());
+		assertTrue(controlPName.isEnabled());
 	}
 
 	/**
@@ -1096,7 +1561,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(controlPName, true);
 		setLeagueToRight();
 		instantiateRuleService();
-		assertFalse(controlPName.isVisible());
+		assertFalse(controlPName.isEnabled());
 	}
 
 	/**
@@ -1108,7 +1573,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(controlPName, true);
 		setLeagueToWrong();
 		instantiateRuleService();
-		assertTrue(controlPName.isVisible());
+		assertTrue(controlPName.isEnabled());
 	}
 
 	/**
@@ -1292,7 +1757,7 @@ public class RuleServiceTest {
 		addLeagueEnableRule(controlPName, true);
 		setLeagueToRight();
 		instantiateRuleService();
-		assertFalse(controlPName.isVisible());
+		assertFalse(controlPName.isEnabled());
 	}
 
 	/**
