@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.ui.view.swt.DefaultRenderingResultFactory;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
@@ -100,7 +99,7 @@ public class RendererNodeTest {
 							shell);
 						root = NodeBuilders.INSTANCE.build(view, context);
 
-						rendererContext = renderer.render(root, new DefaultRenderingResultFactory(), parent);
+						rendererContext = renderer.render(root, parent);
 						rendererContext.addListener(root);
 						rendererContext.triggerValidation();
 
