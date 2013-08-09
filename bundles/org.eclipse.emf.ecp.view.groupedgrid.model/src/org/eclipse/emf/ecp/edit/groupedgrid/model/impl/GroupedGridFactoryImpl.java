@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.*;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
@@ -42,7 +43,7 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 		try
 		{
 			GroupedGridFactory theGroupedGridFactory = (GroupedGridFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/groupedgrid/model");
+				.getEFactory(GroupedGridPackage.eNS_URI);
 			if (theGroupedGridFactory != null)
 			{
 				return theGroupedGridFactory;

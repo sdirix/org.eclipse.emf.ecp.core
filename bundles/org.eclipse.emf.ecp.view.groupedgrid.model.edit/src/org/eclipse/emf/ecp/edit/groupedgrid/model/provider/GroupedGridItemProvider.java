@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeItemProvider;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -126,7 +127,7 @@ public class GroupedGridItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((GroupedGrid) object).getName();
+		String label = ((GroupedGrid) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_GroupedGrid_type") :
 			getString("_UI_GroupedGrid_type") + " " + label;
@@ -164,6 +165,11 @@ public class GroupedGridItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+			(ViewPackage.Literals.RENDERABLE__ATTACHMENTS,
+				GroupedGridFactory.eINSTANCE.createSpan()));
 
 		newChildDescriptors.add
 			(createChildParameter

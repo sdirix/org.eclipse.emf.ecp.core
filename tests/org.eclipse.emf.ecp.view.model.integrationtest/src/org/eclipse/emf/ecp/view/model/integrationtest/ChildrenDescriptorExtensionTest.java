@@ -25,18 +25,19 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int LEAFCONDITION_CHILD_COUNT = 0;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
-	private static final int CATEGORIZATION_CHILD_COUNT = 6;
+	private static final int CATEGORIZATION_CHILD_COUNT = 7;
 	private static final int CATEGORY_CHILD_COUNT = 13;
-	private static final int CONTROL_CHILD_COUNT = 2;
-	private static final int TABLECONTROL_CHILD_COUNT = 3;
+	private static final int CONTROL_CHILD_COUNT = 3;
+	private static final int TABLECONTROL_CHILD_COUNT = 4;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
-	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = 2;
+	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = 3;
+	// TODO: Should be 3, span is missing
 	private static final int SEPARATOR_CHILD_COUNT = 2;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 12;
 	private static final int COLUMN_CHILD_COUNT = 12;
 	private static final int GROUP_CHILD_COUNT = 12;
 	private static final int ACTION_CHILD_COUNT = 0;
-	private static final int GROUPEDGRID_CHILD_COUNT = 3;
+	private static final int GROUPEDGRID_CHILD_COUNT = 4;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
 	private static final int GRIDEDGROUPROW_CHILD_COUNT = 7;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;

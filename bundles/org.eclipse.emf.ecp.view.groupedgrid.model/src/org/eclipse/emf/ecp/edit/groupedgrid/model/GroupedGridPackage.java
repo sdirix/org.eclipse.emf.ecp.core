@@ -93,14 +93,34 @@ public interface GroupedGridPackage extends EPackage {
 	int GROUPED_GRID__RULE = ViewPackage.COMPOSITE__RULE;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__NAME = ViewPackage.COMPOSITE__NAME;
+	int GROUPED_GRID__VISIBLE = ViewPackage.COMPOSITE__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPED_GRID__ENABLED = ViewPackage.COMPOSITE__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPED_GRID__READONLY = ViewPackage.COMPOSITE__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -111,6 +131,16 @@ public interface GroupedGridPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUPED_GRID__ATTACHMENTS = ViewPackage.COMPOSITE__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUPED_GRID__NAME = ViewPackage.COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Groups</b></em>' containment reference list.
