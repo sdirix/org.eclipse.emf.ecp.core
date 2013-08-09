@@ -53,6 +53,9 @@ public class SWTViewTestHelper {
 		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, node,
 			adapterFactoryItemDelegator);
 		// TODO return resultRows
+		if (resultRows == null) {
+			return null;
+		}
 		return resultRows.get(0).getMainControl();
 
 	}
