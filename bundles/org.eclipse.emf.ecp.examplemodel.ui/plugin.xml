@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+ <extension
+         point="org.eclipse.emf.ecp.edit.controls">
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl"
+            id="org.eclipse.emf.ecp.application.e3.control"
+            showLabel="true">
+         <staticTest
+               priority="3"
+               singleValue="false"
+               supportedClassType="org.eclipse.emf.ecore.EObject"
+               supportedEObject="org.eclipse.emf.emfstore.bowling.League"
+               supportedFeature="players">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl"
+            id="org.eclipse.emf.ecp.application.e3.control"
+            showLabel="true">
+         <staticTest
+               priority="3"
+               singleValue="false"
+               supportedClassType="org.eclipse.emf.ecore.EObject"
+               supportedEObject="org.eclipse.emf.emfstore.bowling.Tournament"
+               supportedFeature="matchups">
+         </staticTest>
+      </control>
+   </extension>
+</plugin>
