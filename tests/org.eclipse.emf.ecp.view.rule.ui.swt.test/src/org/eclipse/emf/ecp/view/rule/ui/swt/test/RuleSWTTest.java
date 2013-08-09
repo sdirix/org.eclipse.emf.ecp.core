@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
-import org.eclipse.emf.ecp.view.rule.test.RuleHandel;
+import org.eclipse.emf.ecp.view.rule.test.RuleHandle;
 import org.eclipse.emf.ecp.view.rule.test.RuleTest;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
@@ -85,8 +85,8 @@ public class RuleSWTTest {
 	public void testDisableRuleAndTrueLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addDisableRule();
-		RuleTest.addTrueLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addDisableRule();
+		RuleTest.addTrueLeafCondition(ruleHandle.getRule());
 		render();
 		assertFalse(isControlEnabled());
 	}
@@ -95,8 +95,8 @@ public class RuleSWTTest {
 	public void testDisableRuleAndFalseLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addDisableRule();
-		RuleTest.addFalseLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addDisableRule();
+		RuleTest.addFalseLeafCondition(ruleHandle.getRule());
 		render();
 		assertTrue(isControlEnabled());
 	}
@@ -105,8 +105,8 @@ public class RuleSWTTest {
 	public void testEnableRuleAndFalseLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addEnableRule();
-		RuleTest.addFalseLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addEnableRule();
+		RuleTest.addFalseLeafCondition(ruleHandle.getRule());
 		render();
 		assertFalse(isControlEnabled());
 	}
@@ -115,8 +115,8 @@ public class RuleSWTTest {
 	public void testEnabledRuleAndTrueLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addEnableRule();
-		RuleTest.addTrueLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addEnableRule();
+		RuleTest.addTrueLeafCondition(ruleHandle.getRule());
 		render();
 		assertTrue(isControlEnabled());
 	}
@@ -125,8 +125,8 @@ public class RuleSWTTest {
 	public void testInvisibleRuleAndFalseLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addInVisibleRule();
-		RuleTest.addFalseLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addInVisibleRule();
+		RuleTest.addFalseLeafCondition(ruleHandle.getRule());
 		render();
 		assertTrue(isControlVisible());
 	}
@@ -135,8 +135,8 @@ public class RuleSWTTest {
 	public void testInvisibleRuleAndTrueLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addInVisibleRule();
-		RuleTest.addTrueLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addInVisibleRule();
+		RuleTest.addTrueLeafCondition(ruleHandle.getRule());
 		render();
 		assertFalse(isControlVisible());
 	}
@@ -145,8 +145,8 @@ public class RuleSWTTest {
 	public void testVisibleRuleAndTrueLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addVisibleRule();
-		RuleTest.addTrueLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addVisibleRule();
+		RuleTest.addTrueLeafCondition(ruleHandle.getRule());
 		render();
 		assertTrue(isControlVisible());
 	}
@@ -155,8 +155,8 @@ public class RuleSWTTest {
 	public void testVisibleRuleAndFalseLeafCondition() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final RuleHandel ruleHandel = addVisibleRule();
-		RuleTest.addFalseLeafCondition(ruleHandel.rule);
+		final RuleHandle ruleHandle = addVisibleRule();
+		RuleTest.addFalseLeafCondition(ruleHandle.getRule());
 		render();
 		assertFalse(isControlVisible());
 	}
@@ -165,9 +165,9 @@ public class RuleSWTTest {
 	 * @return
 	 * 
 	 */
-	private RuleHandel addInVisibleRule() {
-		final RuleHandel invisibleShowRule = RuleTest.createInvisibleShowRule();
-		addRuleToElement(invisibleShowRule.rule, control);
+	private RuleHandle addInVisibleRule() {
+		final RuleHandle invisibleShowRule = RuleTest.createInvisibleShowRule();
+		addRuleToElement(invisibleShowRule.getRule(), control);
 		return invisibleShowRule;
 
 	}
@@ -183,16 +183,16 @@ public class RuleSWTTest {
 	/**
 	 * 
 	 */
-	private RuleHandel addVisibleRule() {
-		final RuleHandel visibleShowRule = RuleTest.createVisibleShowRule();
-		addRuleToElement(visibleShowRule.rule, control);
+	private RuleHandle addVisibleRule() {
+		final RuleHandle visibleShowRule = RuleTest.createVisibleShowRule();
+		addRuleToElement(visibleShowRule.getRule(), control);
 		return visibleShowRule;
 
 	}
 
-	private RuleHandel addDisableRule() {
-		final RuleHandel enabledEnableRule = RuleTest.createDisabledEnableRule();
-		addRuleToElement(enabledEnableRule.rule, control);
+	private RuleHandle addDisableRule() {
+		final RuleHandle enabledEnableRule = RuleTest.createDisabledEnableRule();
+		addRuleToElement(enabledEnableRule.getRule(), control);
 		return enabledEnableRule;
 	}
 
@@ -226,9 +226,9 @@ public class RuleSWTTest {
 	/**
 	 * @param control
 	 */
-	private RuleHandel addEnableRule() {
-		final RuleHandel enabledEnableRule = RuleTest.createEnabledEnableRule();
-		addRuleToElement(enabledEnableRule.rule, control);
+	private RuleHandle addEnableRule() {
+		final RuleHandle enabledEnableRule = RuleTest.createEnabledEnableRule();
+		addRuleToElement(enabledEnableRule.getRule(), control);
 		return enabledEnableRule;
 	}
 
