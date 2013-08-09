@@ -156,15 +156,15 @@ public class RuleService extends AbstractViewService {
 
 			if (isEnableRule(rule)) {
 				if (((EnableRule) rule).isDisable()) {
-					enable(renderable, result);
-				} else {
 					enable(renderable, !result);
+				} else {
+					enable(renderable, result);
 				}
 			} else {
 				if (((ShowRule) rule).isHide()) {
-					show(renderable, result);
-				} else {
 					show(renderable, !result);
+				} else {
+					show(renderable, result);
 				}
 			}
 		}
