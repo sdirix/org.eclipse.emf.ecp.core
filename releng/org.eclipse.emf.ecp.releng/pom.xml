@@ -128,12 +128,9 @@
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		
 		<!-- Rule Feature -->
-		
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model</module>
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
-		
-		
-		
 		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
