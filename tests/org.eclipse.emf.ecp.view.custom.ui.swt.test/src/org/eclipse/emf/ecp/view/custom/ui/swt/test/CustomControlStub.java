@@ -24,8 +24,8 @@ import org.eclipse.swt.widgets.Label;
 public class CustomControlStub extends ECPAbstractCustomControlSWT {
 
 	public static final String LABEL_TEXT = "labelText";
-	public static Label label;
-	public static Composite parent;
+	private static Label label;
+	private static Composite parent;
 
 	public CustomControlStub() {
 		super(null, null);
@@ -38,8 +38,8 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	 */
 	@Override
 	protected void createContentControl(Composite composite) {
-		parent = composite;
-		label = new Label(composite, SWT.NONE);
+		setParent(composite);
+		setLabel(new Label(composite, SWT.NONE));
 	}
 
 	/**
@@ -74,6 +74,34 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	protected void resetContentValidation() {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * @return the label
+	 */
+	public static Label getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label the label to set
+	 */
+	public static void setLabel(Label label) {
+		CustomControlStub.label = label;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	public static Composite getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent the parent to set
+	 */
+	public static void setParent(Composite parent) {
+		CustomControlStub.parent = parent;
 	}
 
 }

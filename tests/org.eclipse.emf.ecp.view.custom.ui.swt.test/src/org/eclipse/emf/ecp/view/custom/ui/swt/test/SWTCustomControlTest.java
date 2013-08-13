@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -48,9 +49,23 @@ public class SWTCustomControlTest {
 			this.customControl = customControl;
 		}
 
+		/**
+		 * @return the view
+		 */
+		public View getView() {
+			return view;
+		}
+
+		/**
+		 * @return the customControl
+		 */
+		public CustomControl getCustomControl() {
+			return customControl;
+		}
+
 	}
 
-	private static final String Bundle_ID = "org.eclipse.emf.ecp.view.custom.ui.swt.test";
+	private static final String BUNDLE_ID = "org.eclipse.emf.ecp.view.custom.ui.swt.test";
 
 	/**
 	 * 
@@ -58,23 +73,22 @@ public class SWTCustomControlTest {
 
 	@Test
 	public void testCustomControlinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final TestHandel testHandel = createCustomControlInView();
+		final Renderable controlInView = createCustomControlInView();
 		final Shell shell = SWTViewTestHelper.createShell();
-		final Composite composite = (Composite) SWTViewTestHelper.render(testHandel.view, shell);
-		assertSame(getParentCompositeFromView(composite), CustomControlStub.parent);
+		final Composite composite = (Composite) SWTViewTestHelper.render(controlInView, shell);
+		assertSame(getParentCompositeFromView(composite), CustomControlStub.getParent());
 	}
 
 	/**
 	 * @return
 	 */
-	private TestHandel createCustomControlInView() {
+	private Renderable createCustomControlInView() {
 		final View view = ViewFactory.eINSTANCE.createView();
 		final CustomControl customControl = createCustomControl();
 		view.getChildren().add(customControl);
-		customControl.setBundle(Bundle_ID);
+		customControl.setBundle(BUNDLE_ID);
 		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
-		final TestHandel testHandel = new TestHandel(view, customControl);
-		return testHandel;
+		return view;
 	}
 
 	/**
@@ -91,7 +105,6 @@ public class SWTCustomControlTest {
 	 * @param child
 	 * @return the inner composite from the outer one
 	 */
-	// TODO move to SWTTestHelper?
 	public static Composite getParentCompositeforInnerContentFromOuterComposite(Composite child) {
 		return (Composite) child.getChildren()[0];
 	}
@@ -102,7 +115,7 @@ public class SWTCustomControlTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		final CustomControl customControl = createCustomControl();
 		view.getChildren().add(customControl);
-		customControl.setBundle(Bundle_ID);
+		customControl.setBundle(BUNDLE_ID);
 		customControl.setClassName("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
 		// setup ui
 		final Shell shell = SWTViewTestHelper.createShell();
@@ -114,7 +127,6 @@ public class SWTCustomControlTest {
 	 * @return
 	 */
 	private CustomControl createCustomControl() {
-		// TODO Auto-generated method stub
 		return CustomFactory.eINSTANCE.createCustomControl();
 	}
 }

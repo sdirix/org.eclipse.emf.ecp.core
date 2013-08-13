@@ -66,13 +66,13 @@ public class ECPAbstractCustomControlSWTTest {
 
 		private static final String TEST_MESSAGE = "TestMessage";
 		private static final String TEST_TITEL = "TestTitel";
-		public boolean rendered = false;
-		public int lastValidationSeverity;
-		public EStructuralFeature lastValidationFeature;
-		public boolean disposed = false;
-		public Composite textControl;
+		private boolean rendered;
+		private int lastValidationSeverity;
+		private EStructuralFeature lastValidationFeature;
+		private boolean disposed;
+		private Composite textControl;
 		private final boolean withControl;
-		public boolean validationReseted = false;
+		private boolean validationReseted;
 
 		public ECPAbstractCustomControlSWTStub() {
 			this(false);
@@ -92,13 +92,13 @@ public class ECPAbstractCustomControlSWTTest {
 		protected void createContentControl(Composite composite) {
 			final Label label = new Label(composite, SWT.NONE);
 			label.setText(LABELTEXT);
-			rendered = true;
+			setRendered(true);
 			if (!withControl) {
 				return;
 			}
 			for (final ECPCustomControlFeature controlFeature : editableFeaturess) {
 				if (controlFeature.getTargetFeature() == CustomPackage.eINSTANCE.getCustomControl_Bundle()) {
-					textControl = createControl(controlFeature, composite);
+					setTextControl(createControl(controlFeature, composite));
 				}
 			}
 
@@ -112,8 +112,8 @@ public class ECPAbstractCustomControlSWTTest {
 		 */
 		@Override
 		protected void handleContentValidation(int severity, EStructuralFeature feature) {
-			lastValidationSeverity = severity;
-			lastValidationFeature = feature;
+			setLastValidationSeverity(severity);
+			setLastValidationFeature(feature);
 
 		}
 
@@ -124,7 +124,7 @@ public class ECPAbstractCustomControlSWTTest {
 		 */
 		@Override
 		protected void resetContentValidation() {
-			validationReseted = true;
+			setValidationReseted(true);
 
 		}
 
@@ -135,7 +135,7 @@ public class ECPAbstractCustomControlSWTTest {
 		 */
 		@Override
 		protected void disposeCustomControl() {
-			disposed = true;
+			setDisposed(true);
 
 		}
 
@@ -165,6 +165,90 @@ public class ECPAbstractCustomControlSWTTest {
 		public void stubInitValidation(Composite parent) {
 			super.createValidationLabel(parent);
 
+		}
+
+		/**
+		 * @return the rendered
+		 */
+		public boolean isRendered() {
+			return rendered;
+		}
+
+		/**
+		 * @param rendered the rendered to set
+		 */
+		public void setRendered(boolean rendered) {
+			this.rendered = rendered;
+		}
+
+		/**
+		 * @return the lastValidationSeverity
+		 */
+		public int getLastValidationSeverity() {
+			return lastValidationSeverity;
+		}
+
+		/**
+		 * @param lastValidationSeverity the lastValidationSeverity to set
+		 */
+		public void setLastValidationSeverity(int lastValidationSeverity) {
+			this.lastValidationSeverity = lastValidationSeverity;
+		}
+
+		/**
+		 * @return the lastValidationFeature
+		 */
+		public EStructuralFeature getLastValidationFeature() {
+			return lastValidationFeature;
+		}
+
+		/**
+		 * @param lastValidationFeature the lastValidationFeature to set
+		 */
+		public void setLastValidationFeature(EStructuralFeature lastValidationFeature) {
+			this.lastValidationFeature = lastValidationFeature;
+		}
+
+		/**
+		 * @return the disposed
+		 */
+		public boolean isDisposed() {
+			return disposed;
+		}
+
+		/**
+		 * @param disposed the disposed to set
+		 */
+		public void setDisposed(boolean disposed) {
+			this.disposed = disposed;
+		}
+
+		/**
+		 * @return the textControl
+		 */
+		public Composite getTextControl() {
+			return textControl;
+		}
+
+		/**
+		 * @param textControl the textControl to set
+		 */
+		public void setTextControl(Composite textControl) {
+			this.textControl = textControl;
+		}
+
+		/**
+		 * @return the validationReseted
+		 */
+		public boolean isValidationReseted() {
+			return validationReseted;
+		}
+
+		/**
+		 * @param validationReseted the validationReseted to set
+		 */
+		public void setValidationReseted(boolean validationReseted) {
+			this.validationReseted = validationReseted;
 		}
 
 	}
@@ -221,7 +305,7 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testCreateControl() {
 		final Composite composite = customControl
 			.createControl(new Composite(SWTViewTestHelper.createShell(), SWT.NONE));
-		assertTrue(customControl.rendered);
+		assertTrue(customControl.isRendered());
 		final Composite parentCompositeFromView = SWTCustomControlTest
 			.getParentCompositeforInnerContentFromOuterComposite(composite);
 		final Control control = getLabelFromComposite(parentCompositeFromView);
@@ -273,11 +357,11 @@ public class ECPAbstractCustomControlSWTTest {
 		final Diagnostic validate = new Diagnostician().validate(domainObject);
 		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
-		assertEquals(Diagnostic.ERROR, customControl.lastValidationSeverity);
-		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.lastValidationFeature);
-		customControl.validationReseted = false;
+		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
+		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
+		customControl.setValidationReseted(false);
 		customControl.resetValidation();
-		assertTrue(customControl.validationReseted);
+		assertTrue(customControl.isValidationReseted());
 	}
 
 	/**
@@ -294,19 +378,19 @@ public class ECPAbstractCustomControlSWTTest {
 		Diagnostic validate = new Diagnostician().validate(domainObject);
 		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
-		assertEquals(Diagnostic.ERROR, customControl.lastValidationSeverity);
-		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.lastValidationFeature);
+		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
+		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
 		customControl.createControl(testComposite);
 		customControl.handleValidation(validate.getChildren().get(1));
-		final Composite textControl = customControl.textControl;
+		final Composite textControl = customControl.getTextControl();
 		final Control control = textControl.getChildren()[0];
 		assertTrue(control instanceof Label);
 		final Label label = (Label) control;
 		assertNotNull(label.getImage());
 		domainObject.setBundle("not empty");
-		customControl.validationReseted = false;
+		customControl.setValidationReseted(false);
 		customControl.resetValidation();
-		assertTrue(customControl.validationReseted);
+		assertTrue(customControl.isValidationReseted());
 		validate = new Diagnostician().validate(domainObject);
 		customControl.handleValidation(validate.getChildren().get(1));
 		assertNull(label.getImage());
@@ -322,8 +406,8 @@ public class ECPAbstractCustomControlSWTTest {
 		final EAttribute validationFeature = CustomPackage.eINSTANCE.getCustomControl_Bundle();
 		final int severity = 0;
 		customControl.handleContentValidation(severity, validationFeature);
-		assertEquals(severity, customControl.lastValidationSeverity);
-		assertSame(validationFeature, customControl.lastValidationFeature);
+		assertEquals(severity, customControl.getLastValidationSeverity());
+		assertSame(validationFeature, customControl.getLastValidationFeature());
 	}
 
 	/**
@@ -401,9 +485,9 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testDispose() {
-		assertFalse(customControl.disposed);
+		assertFalse(customControl.isDisposed());
 		customControl.dispose();
-		assertTrue(customControl.disposed);
+		assertTrue(customControl.isDisposed());
 	}
 
 	/**
