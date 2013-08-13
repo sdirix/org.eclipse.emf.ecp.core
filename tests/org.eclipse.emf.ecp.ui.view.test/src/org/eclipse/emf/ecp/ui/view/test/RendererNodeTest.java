@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Jonas - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.test;
 
 import static org.junit.Assert.assertEquals;
@@ -54,7 +65,80 @@ import org.junit.runners.model.Statement;
 // TODO: test case for filtering nodes
 // TODO: remove EMFStore provider dependency
 // TODO: how to retrieve ECPControlContext
+@SuppressWarnings("restriction")
 public class RendererNodeTest {
+
+	/**
+	 * @author Jonas
+	 * 
+	 */
+	private final class MethodRuleImplementation implements MethodRule {
+		/**
+		 * @author Jonas
+		 * 
+		 */
+		private final class StatementImpl extends Statement {
+			private final String viewModelName;
+			private final Statement base;
+
+			/**
+			 * @param viewModelName
+			 * @param base
+			 */
+			private StatementImpl(String viewModelName, Statement base) {
+				this.viewModelName = viewModelName;
+				this.base = base;
+			}
+
+			@Override
+			public void evaluate() throws Throwable {
+
+				final Display display = Display.getDefault();
+				shell = new Shell(display);
+				shell.setText("DirectoryDialog");
+				shell.setLayout(new GridLayout());
+				final Composite parent = new Composite(shell, SWT.NONE);
+				parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				parent.setLayout(new GridLayout());
+				final View view = getView(player, viewModelName);
+
+				if (view == null) {
+					throw new IllegalStateException(
+						"@ViewModel annotation missing or view model does not exist.");
+				}
+
+				final ModelRenderer<org.eclipse.swt.widgets.Control> renderer = ModelRenderer.INSTANCE
+					.getRenderer();
+				final ECPProvider provider = ECPUtil.getECPProviderRegistry()
+					.getProvider(EMFStoreProvider.NAME);
+
+				ECPProject p = ECPProjectManagerImpl.INSTANCE.getProject("hello");
+				if (p == null) {
+					p = ECPProjectManagerImpl.INSTANCE.createProject(provider, "hello");
+				}
+
+				final ECPControlContextImpl context = new ECPControlContextImpl(player,
+					p,
+					shell);
+				root = NodeBuilders.INSTANCE.build(view, context);
+
+				rendererContext = renderer.render(root, parent);
+				rendererContext.addListener(root);
+				rendererContext.triggerValidation();
+
+				final org.eclipse.swt.widgets.Control c = rendererContext.getControl();
+				c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				base.evaluate();
+
+			}
+		}
+
+		public Statement apply(final Statement base, FrameworkMethod method, Object target) {
+			final String viewModelName = method.getAnnotation(ViewModel.class).value();
+
+			return new StatementImpl(viewModelName, base);
+		}
+	}
 
 	private static final String EXAMPLE_VIEW_MODEL = "ExampleViewModel";
 	private static final String EXAMPLE_VIEW_MODEL_2 = "ExampleViewModel2";
@@ -62,58 +146,7 @@ public class RendererNodeTest {
 	private static final String EXAMPLE_VIEW_MODEL_4 = "ExampleViewModel4";
 
 	@Rule
-	public MethodRule viewModelRule = new MethodRule() {
-		public Statement apply(final Statement base, FrameworkMethod method, Object target) {
-			final String viewModelName = method.getAnnotation(ViewModel.class).value();
-
-			return new Statement() {
-				@Override
-				public void evaluate() throws Throwable {
-					try {
-						final Display display = Display.getDefault();
-						shell = new Shell(display);
-						shell.setText("DirectoryDialog");
-						shell.setLayout(new GridLayout());
-						final Composite parent = new Composite(shell, SWT.NONE);
-						parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-						parent.setLayout(new GridLayout());
-						final View view = getView(player, viewModelName);
-
-						if (view == null) {
-							throw new IllegalStateException(
-								"@ViewModel annotation missing or view model does not exist.");
-						}
-
-						final ModelRenderer<org.eclipse.swt.widgets.Control> renderer = ModelRenderer.INSTANCE
-							.getRenderer();
-						final ECPProvider provider = ECPUtil.getECPProviderRegistry()
-							.getProvider(EMFStoreProvider.NAME);
-
-						ECPProject p = ECPProjectManagerImpl.INSTANCE.getProject("hello");
-						if (p == null) {
-							p = ECPProjectManagerImpl.INSTANCE.createProject(provider, "hello");
-						}
-
-						final ECPControlContextImpl context = new ECPControlContextImpl(player,
-							p,
-							shell);
-						root = NodeBuilders.INSTANCE.build(view, context);
-
-						rendererContext = renderer.render(root, parent);
-						rendererContext.addListener(root);
-						rendererContext.triggerValidation();
-
-						final org.eclipse.swt.widgets.Control c = rendererContext.getControl();
-						c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-						base.evaluate();
-
-					} catch (final Exception e) {
-						throw e;
-					}
-				}
-			};
-		}
-	};
+	private final MethodRule viewModelRule = new MethodRuleImplementation();
 
 	private static Player player;
 	private RendererContext<org.eclipse.swt.widgets.Control> rendererContext;
@@ -312,9 +345,9 @@ public class RendererNodeTest {
 	@Test
 	public void testValidationOfEMailFails() {
 		// TODO: root node is not marked?
-		final Node<Control> control3_2 = findNodeByName(root, "Control3_2");
+		final Node<Control> control32 = findNodeByName(root, "Control3_2");
 		final Node<Category> myCategory = findNodeByName(root, "MyCategory");
-		assertEquals(Diagnostic.ERROR, control3_2.getSeverity());
+		assertEquals(Diagnostic.ERROR, control32.getSeverity());
 		assertEquals(Diagnostic.ERROR, myCategory.getSeverity());
 	}
 
@@ -360,14 +393,14 @@ public class RendererNodeTest {
 	@Test
 	public void testValidationOfEMail() {
 		// TODO: root node is not marked?
-		final Node<Control> control3_2 = findNodeByName(root, "Control3_2");
+		final Node<Control> control32 = findNodeByName(root, "Control3_2");
 		final Node<Category> myCategory = findNodeByName(root, "MyCategory");
-		assertEquals(Diagnostic.ERROR, control3_2.getSeverity());
+		assertEquals(Diagnostic.ERROR, control32.getSeverity());
 		assertEquals(Diagnostic.ERROR, myCategory.getSeverity());
 
 		player.getEMails().add("foo@bar.net");
 
-		assertEquals(Diagnostic.OK, control3_2.getSeverity());
+		assertEquals(Diagnostic.OK, control32.getSeverity());
 		assertEquals(Diagnostic.OK, myCategory.getSeverity());
 	}
 
@@ -405,7 +438,7 @@ public class RendererNodeTest {
 	}
 
 	// @Test
-	public void showControl_SourceAndTargetOnSameComposite() {
+	public void showControlWithSourceAndTargetOnSameComposite() {
 		final Node<Control> isProfessionalControl = findNodeByName(root, "column5_isProfessionalControl");
 		assertFalse(isProfessionalControl.isVisible());
 		player.setHeight(42);

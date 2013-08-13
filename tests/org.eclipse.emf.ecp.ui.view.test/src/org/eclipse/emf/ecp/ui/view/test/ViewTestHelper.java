@@ -31,10 +31,14 @@ import org.eclipse.swt.widgets.Shell;
  * @author Jonas
  * 
  */
-public class ViewTestHelper {
+public abstract class ViewTestHelper {
+
+	private ViewTestHelper() {
+
+	}
 
 	/**
-	 * @param view
+	 * @param domainObject
 	 * @param shell
 	 * @return an {@link ECPControlContext}
 	 */
@@ -60,7 +64,7 @@ public class ViewTestHelper {
 
 	/**
 	 * @param node
-	 * @return
+	 * @return the number of all nodes in the node tree
 	 */
 	public static int countNodes(Node<?> node) {
 		int i = 0;
@@ -76,7 +80,7 @@ public class ViewTestHelper {
 	/**
 	 * @param view
 	 * @param domainObject
-	 * @return
+	 * @return the main node
 	 */
 	public static Node<Renderable> build(Renderable view, EObject domainObject) {
 		final Shell shell = new Shell();

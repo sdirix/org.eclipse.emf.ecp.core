@@ -89,6 +89,75 @@ import org.junit.Test;
 
 public class RuleServiceTest {
 
+	/**
+	 * @author Jonas
+	 * 
+	 */
+	private final class ViewModelContextStub implements ViewModelContext {
+		private final EObject domainModel;
+		private EContentAdapter viewContentAdapter;
+		private EContentAdapter domainContentAdapter;
+		private final List<ModelChangeListener> domainChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
+		private final List<ModelChangeListener> viewChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
+
+		/**
+		 * @param domainModel
+		 */
+		private ViewModelContextStub(EObject domainModel) {
+			this.domainModel = domainModel;
+		}
+
+		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+			viewChangeListeners.remove(modelChangeListener);
+			view.eAdapters().remove(viewContentAdapter);
+		}
+
+		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+			domainChangeListeners.remove(modelChangeListener);
+			domainModel.eAdapters().remove(domainContentAdapter);
+		}
+
+		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+			viewContentAdapter = new EContentAdapter() {
+				@Override
+				public void notifyChanged(Notification notification) {
+					super.notifyChanged(notification);
+					for (final ModelChangeListener listener : viewChangeListeners) {
+						listener.notifyChange(new ModelChangeNotification(notification));
+					}
+				}
+			};
+			view.eAdapters().add(viewContentAdapter);
+		}
+
+		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+			domainChangeListeners.add(modelChangeListener);
+			domainContentAdapter = new EContentAdapter() {
+				@Override
+				public void notifyChanged(Notification notification) {
+					super.notifyChanged(notification);
+					for (final ModelChangeListener listener : domainChangeListeners) {
+						listener.notifyChange(new ModelChangeNotification(notification));
+					}
+				}
+			};
+			domainModel.eAdapters().add(domainContentAdapter);
+		}
+
+		public View getViewModel() {
+			return view;
+		}
+
+		public EObject getDomainModel() {
+			return domainModel;
+		}
+
+		public void dispose() {
+			domainModel.eAdapters().remove(domainContentAdapter);
+			domainModel.eAdapters().remove(viewContentAdapter);
+		}
+	}
+
 	/** The player. */
 	private Player player;
 
@@ -154,63 +223,7 @@ public class RuleServiceTest {
 	 */
 	private RuleService instantiateRuleService(final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
-		ruleService.instantiate(new ViewModelContext() {
-
-			private EContentAdapter viewContentAdapter;
-			private EContentAdapter domainContentAdapter;
-			private final List<ModelChangeListener> domainChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
-			private final List<ModelChangeListener> viewChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
-
-			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-				viewChangeListeners.remove(modelChangeListener);
-				view.eAdapters().remove(viewContentAdapter);
-			}
-
-			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-				domainChangeListeners.remove(modelChangeListener);
-				domainModel.eAdapters().remove(domainContentAdapter);
-			}
-
-			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-				viewContentAdapter = new EContentAdapter() {
-					@Override
-					public void notifyChanged(Notification notification) {
-						super.notifyChanged(notification);
-						for (final ModelChangeListener listener : viewChangeListeners) {
-							listener.notifyChange(new ModelChangeNotification(notification));
-						}
-					}
-				};
-				view.eAdapters().add(viewContentAdapter);
-			}
-
-			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-				domainChangeListeners.add(modelChangeListener);
-				domainContentAdapter = new EContentAdapter() {
-					@Override
-					public void notifyChanged(Notification notification) {
-						super.notifyChanged(notification);
-						for (final ModelChangeListener listener : domainChangeListeners) {
-							listener.notifyChange(new ModelChangeNotification(notification));
-						}
-					}
-				};
-				domainModel.eAdapters().add(domainContentAdapter);
-			}
-
-			public View getViewModel() {
-				return view;
-			}
-
-			public EObject getDomainModel() {
-				return domainModel;
-			}
-
-			public void dispose() {
-				domainModel.eAdapters().remove(domainContentAdapter);
-				domainModel.eAdapters().remove(viewContentAdapter);
-			}
-		});
+		ruleService.instantiate(new ViewModelContextStub(domainModel));
 		return ruleService;
 	}
 
@@ -296,8 +309,8 @@ public class RuleServiceTest {
 		control.getAttachments().add(rule);
 	}
 
-	private boolean registeredViewListener = false;
-	private boolean registeredDomainListener = false;
+	private boolean registeredViewListener;
+	private boolean registeredDomainListener;
 
 	@Test
 	public void testInitialization() {
@@ -523,7 +536,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithOrCondition_FirstConditionApplies() {
+	public void testShowRuleWithOrConditionWithFirstConditionApplies() {
 		addLeagueShowRuleWithOrCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -534,7 +547,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithOrCondition_SecondConditionApplies() {
+	public void testShowRuleWithOrConditionWithSecondConditionApplies() {
 		addLeagueShowRuleWithOrCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -545,7 +558,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithOrCondition_NoConditionApplies() {
+	public void testShowRuleWithOrConditionWithNoConditionApplies() {
 		addLeagueShowRuleWithOrCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -556,7 +569,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleWithOrCondition_FirstConditionApplies() {
+	public void testInitShowRuleWithOrConditionWithFirstConditionApplies() {
 		addLeagueShowRuleWithOrCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -567,7 +580,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleWithOrCondition_SecondConditionApplies() {
+	public void testInitShowRuleWithOrConditionWithSecondConditionApplies() {
 		addLeagueShowRuleWithOrCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -578,7 +591,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleWithOrCondition_BothConditionsApply() {
+	public void testInitShowRuleWithOrConditionWithBothConditionsApply() {
 		view.setRootEClass(player.eClass());
 
 		final Control control1 = ViewFactory.eINSTANCE.createControl();
@@ -596,7 +609,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithOrCondition_BothConditionsApply() {
+	public void testShowRuleWithOrConditionWithBothConditionsApply() {
 		view.setRootEClass(player.eClass());
 
 		final Control control1 = ViewFactory.eINSTANCE.createControl();
@@ -614,7 +627,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleWithOrCondition_NoConditionApplies() {
+	public void testInitShowRuleWithOrConditionWithNoConditionApplies() {
 		addLeagueShowRuleWithOrCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -625,7 +638,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithAndCondition_FirstConditionApplies() {
+	public void testShowRuleWithAndConditionWithFirstConditionApplies() {
 		addLeagueShowRuleWithAndCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -636,7 +649,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithAndCondition_SecondConditionApplies() {
+	public void testShowRuleWithAndConditionWithSecondConditionApplies() {
 		addLeagueShowRuleWithAndCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -647,7 +660,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithAndCondition_NoConditionApplies() {
+	public void testShowRuleWithAndConditionWithNoConditionApplies() {
 		addLeagueShowRuleWithAndCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -658,7 +671,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testShowRuleWithAndCondition_BothConditionsApply() {
+	public void testShowRuleWithAndConditionWithBothConditionsApply() {
 		view.setRootEClass(player.eClass());
 
 		final Control control1 = ViewFactory.eINSTANCE.createControl();
@@ -676,7 +689,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleInitWithAndCondition_FirstConditionApplies() {
+	public void testInitShowRuleInitWithAndConditionWithFirstConditionApplies() {
 		addLeagueShowRuleWithAndCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -687,7 +700,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleWithAndCondition_SecondConditionApplies() {
+	public void testInitShowRuleWithAndConditionWithSecondConditionApplies() {
 		addLeagueShowRuleWithAndCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
@@ -698,7 +711,7 @@ public class RuleServiceTest {
 	}
 
 	@Test
-	public void testInitShowRuleWithAndCondition_NoConditionApplies() {
+	public void testInitShowRuleWithAndConditionWithNoConditionApplies() {
 		addLeagueShowRuleWithAndCondition(column, true,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League2"));
