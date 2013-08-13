@@ -44,7 +44,6 @@ public class SWTTableTest {
 
 	private Shell shell;
 	private EObject domainElement;
-	private final int i = 0;
 
 	@Before
 	public void init() {
@@ -61,7 +60,7 @@ public class SWTTableTest {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createUninitializedTableWithoutColumns();
 
-		final Control render = SWTViewTestHelper.render(handle.tableControl, domainElement, shell);
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertNull(render);
 
 	}
@@ -76,7 +75,7 @@ public class SWTTableTest {
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
 
 		try {
-			SWTViewTestHelper.render(handle.tableControl, domainElement, shell);
+			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		} catch (final NullPointerException e) {
 			fail("Fails without a reference in domain object");
 		}
@@ -92,10 +91,10 @@ public class SWTTableTest {
 		view.setRootEClass(ViewPackage.eINSTANCE.getView());
 		domainElement = view;
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
-		handle.tableControl.setTargetFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		handle.getTableControl().setTargetFeature(ViewPackage.eINSTANCE.getView_RootEClass());
 
 		try {
-			SWTViewTestHelper.render(handle.tableControl, domainElement, shell);
+			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		} catch (final ClassCastException e) {
 			e.printStackTrace();
 			fail("Fails with single reference in domain object");
@@ -111,10 +110,10 @@ public class SWTTableTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		domainElement = view;
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
-		handle.tableControl.setTargetFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		handle.getTableControl().setTargetFeature(ViewPackage.eINSTANCE.getView_RootEClass());
 
 		try {
-			SWTViewTestHelper.render(handle.tableControl, domainElement, shell);
+			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		} catch (final NullPointerException e) {
 			fail("Fails with empty single reference in domain object");
 		}
@@ -126,9 +125,8 @@ public class SWTTableTest {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
 
-		final Control render = SWTViewTestHelper.render(handle.tableControl, domainElement, shell);
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
-		final Composite composite = (Composite) render;
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -153,9 +151,8 @@ public class SWTTableTest {
 	public void testTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createTableWithTwoTableColumns();
-		final Control render = SWTViewTestHelper.render(handle.tableControl, domainElement, shell);
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
-		final Composite composite = (Composite) render;
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);

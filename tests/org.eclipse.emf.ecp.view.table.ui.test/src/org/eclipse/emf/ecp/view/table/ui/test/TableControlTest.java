@@ -39,9 +39,9 @@ public class TableControlTest {
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(handle.tableControl);
+		final Node<Renderable> node = buildNode(handle.getTableControl());
 		assertEquals(1, ViewTestHelper.countNodes(node));
-		assertEquals(handle.tableControl, node.getRenderable());
+		assertEquals(handle.getTableControl(), node.getRenderable());
 	}
 
 	@Test
@@ -50,9 +50,9 @@ public class TableControlTest {
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(handle.tableControl);
+		final Node<Renderable> node = buildNode(handle.getTableControl());
 		assertEquals(1, ViewTestHelper.countNodes(node));
-		assertEquals(handle.tableControl, node.getRenderable());
+		assertEquals(handle.getTableControl(), node.getRenderable());
 	}
 
 	public static TableControlHandle createTableWithTwoTableColumns() {
@@ -75,7 +75,7 @@ public class TableControlTest {
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
 		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		tableControlHandle.tableControl.setTargetFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableControlHandle.getTableControl().setTargetFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		return tableControlHandle;
 	}
 

@@ -21,20 +21,19 @@ import org.eclipse.emf.ecp.view.model.TableControl;
 public class TableControlHandle {
 
 	public TableControlHandle(TableControl tableControl) {
-		this.tableControl = tableControl;
-		// TODO Auto-generated constructor stub
+		setTableControl(tableControl);
 	}
 
-	public TableControl tableControl;
-	public TableColumn tableColumn1;
-	public TableColumn tableColumn2;
+	private TableControl tableControl;
+	private TableColumn tableColumn1;
+	private TableColumn tableColumn2;
 
 	/**
 	 * @param tableColumn1
 	 */
 	public void addFirstTableColumn(TableColumn tableColumn1) {
-		this.tableColumn1 = tableColumn1;
-		tableControl.getColumns().add(tableColumn1);
+		setTableColumn1(tableColumn1);
+		getTableControl().getColumns().add(tableColumn1);
 
 	}
 
@@ -42,9 +41,51 @@ public class TableControlHandle {
 	 * @param tableColumn2
 	 */
 	public void addSecondTableColumn(TableColumn tableColumn2) {
-		this.tableColumn2 = tableColumn2;
-		tableControl.getColumns().add(tableColumn2);
+		setTableColumn2(tableColumn2);
+		getTableControl().getColumns().add(tableColumn2);
 
+	}
+
+	/**
+	 * @return the tableControl
+	 */
+	public TableControl getTableControl() {
+		return tableControl;
+	}
+
+	/**
+	 * @param tableControl the tableControl to set
+	 */
+	public void setTableControl(TableControl tableControl) {
+		this.tableControl = tableControl;
+	}
+
+	/**
+	 * @return the tableColumn1
+	 */
+	public TableColumn getTableColumn1() {
+		return tableColumn1;
+	}
+
+	/**
+	 * @param tableColumn1 the tableColumn1 to set
+	 */
+	public void setTableColumn1(TableColumn tableColumn1) {
+		this.tableColumn1 = tableColumn1;
+	}
+
+	/**
+	 * @return the tableColumn2
+	 */
+	public TableColumn getTableColumn2() {
+		return tableColumn2;
+	}
+
+	/**
+	 * @param tableColumn2 the tableColumn2 to set
+	 */
+	public void setTableColumn2(TableColumn tableColumn2) {
+		this.tableColumn2 = tableColumn2;
 	}
 
 }
