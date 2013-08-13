@@ -31,7 +31,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public class SWTViewTestHelper {
+public final class SWTViewTestHelper {
+
+	private SWTViewTestHelper() {
+
+	}
 
 	public static Shell createShell() {
 		final Display display = Display.getDefault();
@@ -60,13 +64,6 @@ public class SWTViewTestHelper {
 
 	}
 
-	/**
-	 * @param view
-	 * @param shell
-	 * @return
-	 * @throws NoPropertyDescriptorFoundExeption
-	 * @throws NoRendererFoundException
-	 */
 	public static Control render(Renderable renderable, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		return render(renderable, ViewFactory.eINSTANCE.createView(), shell);
