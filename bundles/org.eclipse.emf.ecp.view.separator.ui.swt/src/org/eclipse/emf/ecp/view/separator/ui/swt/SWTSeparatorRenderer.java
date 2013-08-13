@@ -11,14 +11,12 @@
  */
 package org.eclipse.emf.ecp.view.separator.ui.swt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.separator.model.Separator;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
