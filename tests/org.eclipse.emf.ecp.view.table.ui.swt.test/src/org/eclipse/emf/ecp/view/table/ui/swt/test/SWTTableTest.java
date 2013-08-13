@@ -134,6 +134,20 @@ public class SWTTableTest {
 		assertEquals(0, table.getColumnCount());
 	}
 
+	@Test
+	public void testTableWithColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// setup model
+		final TableControlHandle handle = TableControlTest.createTableWithTwoTableColumns();
+
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+		assertEquals(2, table.getColumnCount());
+	}
+
 	/**
 	 * @param render
 	 * @return
