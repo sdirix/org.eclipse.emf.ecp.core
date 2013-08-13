@@ -72,7 +72,7 @@ public class RendererNodeTest {
 	 * @author Jonas
 	 * 
 	 */
-	private final class MethodRuleImplementation implements MethodRule {
+	public final class MethodRuleImplementation implements MethodRule {
 		/**
 		 * @author Jonas
 		 * 
@@ -146,7 +146,7 @@ public class RendererNodeTest {
 	private static final String EXAMPLE_VIEW_MODEL_4 = "ExampleViewModel4";
 
 	@Rule
-	private final MethodRule viewModelRule = new MethodRuleImplementation();
+	public final MethodRule viewModelRule = new MethodRuleImplementation();
 
 	private static Player player;
 	private RendererContext<org.eclipse.swt.widgets.Control> rendererContext;
