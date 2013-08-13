@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule;
 
 import java.util.List;
@@ -10,12 +21,25 @@ import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.OrCondition;
 
+/**
+ * Helper class to evaluate condition.
+ * 
+ * @author Jonas
+ * 
+ */
 public final class ConditionEvaluator {
 
 	private ConditionEvaluator() {
 
 	}
 
+	/**
+	 * Evaluates an condition.
+	 * 
+	 * @param eObject the domain object
+	 * @param condition the condition to evaluate
+	 * @return the result of the evaluation of the condition
+	 */
 	public static boolean evaluate(EObject eObject, Condition condition) {
 
 		if (AndCondition.class.isInstance(condition)) {

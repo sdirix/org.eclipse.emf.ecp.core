@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.generator;
 
 import org.eclipse.emf.ecore.EObject;
@@ -16,20 +27,20 @@ public class ViewProvider implements IViewProvider {
 	}
 
 	public View generate(EObject eObject) {
-		View view = ViewFactory.eINSTANCE.createView();
-		Category category = ViewFactory.eINSTANCE.createCategory();
+		final View view = ViewFactory.eINSTANCE.createView();
+		final Category category = ViewFactory.eINSTANCE.createCategory();
 		view.getCategorizations().add(category);
 
-		Column column = ViewFactory.eINSTANCE.createColumn();
+		final Column column = ViewFactory.eINSTANCE.createColumn();
 		category.setComposite(column);
 
-		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
+		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 
 			if (isInvalidFeature(feature)) {
 				continue;
 			}
 
-			Control control = ViewFactory.eINSTANCE.createControl();
+			final Control control = ViewFactory.eINSTANCE.createControl();
 			control.setTargetFeature(feature);
 			column.getComposites().add(control);
 		}
@@ -43,7 +54,7 @@ public class ViewProvider implements IViewProvider {
 
 	private boolean isContainerReference(EStructuralFeature feature) {
 		if (feature instanceof EReference) {
-			EReference reference = (EReference) feature;
+			final EReference reference = (EReference) feature;
 			if (reference.isContainer()) {
 				return true;
 			}
