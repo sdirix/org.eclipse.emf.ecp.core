@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.core.test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,94 +50,99 @@ public class ECPProviderTests extends AbstractTest {
 		assertEquals("EMFStore", getProvider().getLabel());
 	}
 
-//	@Test
-//	public void canAddRepositoriesTest() {
-//		boolean canAddRepositories = getProvider().hasCreateRepositorySupport();
-//
-//		int countReposBefore = getProvider().getRepositories().size();
-//		repository = ECPUtil.getECPRepositoryManager().addRepository(getProvider(), "repository4Name", "repository4Label",
-//			"description", getNewProperties());
-//		int countReposAfterAdd = getProvider().getRepositories().size();
-//
-//		if (countReposAfterAdd - countReposBefore == 1) {
-//			assertTrue(canAddRepositories);
-//		} else if (countReposAfterAdd - countReposBefore == 0) {
-//			assertFalse(canAddRepositories);
-//		} else {
-//			fail("More than one repository was added or deleted.");
-//		}
-//
-//	}
+	// @Test
+	// public void canAddRepositoriesTest() {
+	// boolean canAddRepositories = getProvider().hasCreateRepositorySupport();
+	//
+	// int countReposBefore = getProvider().getRepositories().size();
+	// repository = ECPUtil.getECPRepositoryManager().addRepository(getProvider(), "repository4Name",
+	// "repository4Label",
+	// "description", getNewProperties());
+	// int countReposAfterAdd = getProvider().getRepositories().size();
+	//
+	// if (countReposAfterAdd - countReposBefore == 1) {
+	// assertTrue(canAddRepositories);
+	// } else if (countReposAfterAdd - countReposBefore == 0) {
+	// assertFalse(canAddRepositories);
+	// } else {
+	// fail("More than one repository was added or deleted.");
+	// }
+	//
+	// }
 
 	@Test
 	public void hasUnsharedProjectSupportTest() {
-		boolean hasUnsharedProjectSupport = getProvider().hasCreateProjectWithoutRepositorySupport();
+		final boolean hasUnsharedProjectSupport = getProvider().hasCreateProjectWithoutRepositorySupport();
 		boolean isActuallyPossible = false;
 
 		try {
 			// try to create an offline project;
-			ECPProject project = getProjectManager().createProject(getProvider(), "test");
+			final ECPProject project = getProjectManager().createProject(getProvider(), "test");
 			if (project == null && !Arrays.asList(getProjectManager().getProjects()).contains(project)) {
 				isActuallyPossible = false;
 			} else {
 				isActuallyPossible = true;
 			}
-		} catch (ECPProjectWithNameExistsException e) {
+		} catch (final ECPProjectWithNameExistsException e) {
 			fail("Project with name already existing. Fix test setup.");
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			isActuallyPossible = false;
 		}
 
 		assertEquals(hasUnsharedProjectSupport, isActuallyPossible);
 	}
-	
+
 	@Test
-	public void getUIProviderTest(){
-		InternalProvider provider=(InternalProvider) getProvider();
-		//TODO add correct test
-//		AdapterProvider uiProvider=provider.getUIProvider();
-//		assertNotNull(uiProvider);
+	public void getUIProviderTest() {
+		getProvider();
+		// TODO add correct test
+		// AdapterProvider uiProvider=provider.getUIProvider();
+		// assertNotNull(uiProvider);
 	}
+
 	@Test
-	public void setUIProviderTest(){
-		//TODO add test
-//		fail("Not yet implemented");
+	public void setUIProviderTest() {
+		// TODO add test
+		// fail("Not yet implemented");
 	}
+
 	@Test
-	public void isSlowTest(){
-		InternalProvider provider=(InternalProvider) getProvider();
-		boolean isSlow=provider.isSlow(null);
-		//TODO add correct assert
-//		fail("what should be passed?");
+	public void isSlowTest() {
+		final InternalProvider provider = (InternalProvider) getProvider();
+		provider.isSlow(null);
+		// TODO add correct assert
+		// fail("what should be passed?");
 	}
+
 	@Test
-	public void createEditingDomainTest(){
-		InternalProvider provider=(InternalProvider) getProvider();
-		InternalProject project=null;
+	public void createEditingDomainTest() {
+		final InternalProvider provider = (InternalProvider) getProvider();
+		InternalProject project = null;
 		try {
 			project = (InternalProject) getProjectManager().createProject(
-					getProvider(), "test");
-		} catch (ECPProjectWithNameExistsException e) {
+				getProvider(), "test");
+		} catch (final ECPProjectWithNameExistsException e) {
 			fail(e.getMessage());
 		}
-		EditingDomain editingDomain=provider.createEditingDomain(project);
+		final EditingDomain editingDomain = provider.createEditingDomain(project);
 		assertNotNull(editingDomain);
 	}
+
 	@Test
-	public void getOpenProjectsTest(){
-		InternalProvider provider=(InternalProvider) getProvider();
-		assertEquals(0,provider.getOpenProjects().size());
-		InternalProject project=null;
+	public void getOpenProjectsTest() {
+		final InternalProvider provider = (InternalProvider) getProvider();
+		assertEquals(0, provider.getOpenProjects().size());
+		InternalProject project = null;
 		try {
-			project = (InternalProject)getProjectManager().createProject(
-					getProvider(), "test");
-		} catch (ECPProjectWithNameExistsException e) {
+			project = (InternalProject) getProjectManager().createProject(
+				getProvider(), "test");
+		} catch (final ECPProjectWithNameExistsException e) {
 			fail(e.getMessage());
 		}
-		assertEquals(1,provider.getOpenProjects().size());
+		assertEquals(1, provider.getOpenProjects().size());
 		project.close();
-		assertEquals(0,provider.getOpenProjects().size());
+		assertEquals(0, provider.getOpenProjects().size());
 		project.open();
-		assertEquals(1,provider.getOpenProjects().size());
+		assertEquals(1, provider.getOpenProjects().size());
 	}
 }

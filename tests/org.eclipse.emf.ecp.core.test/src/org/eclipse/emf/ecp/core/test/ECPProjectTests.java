@@ -46,25 +46,27 @@ import org.junit.Test;
  */
 public class ECPProjectTests extends AbstractTest {
 
-	
 	/** The project. */
 	private InternalProject project;
-	
+
 	/**
 	 * Setup.
 	 */
 	@Before
-	public void setup()  {
-		
+	public void setup() {
+
 		boolean done = false;
-		
-		while(!done)
+
+		while (!done) {
 			try {
-				this.project = (InternalProject)getProjectManager().createProject(getProvider(), "Projekt " + UUID.randomUUID());
+				project = (InternalProject) getProjectManager().createProject(getProvider(),
+					"Projekt " + UUID.randomUUID());
 				done = true;
-			} catch (ECPProjectWithNameExistsException e) {}
+			} catch (final ECPProjectWithNameExistsException e) {
+			}
+		}
 	}
-			
+
 	/**
 	 * Tear down.
 	 */
@@ -72,237 +74,234 @@ public class ECPProjectTests extends AbstractTest {
 	public void tearDown() {
 		project.delete();
 	}
-	
-	
+
 	/**
 	 * Test get elements.
 	 */
 	@Test
 	public void testGetElements() {
-		assertEquals(0,project.getContents().size());
+		assertEquals(0, project.getContents().size());
 
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		EObject reference = EcoreFactory.eINSTANCE.createEReference();
-		
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
+		final EObject reference = EcoreFactory.eINSTANCE.createEReference();
+
 		project.getContents().add(clazz);
-		
-		assertEquals(1,project.getContents().size());
+
+		assertEquals(1, project.getContents().size());
 		assertTrue(project.contains(clazz));
 		assertTrue(project.getContents().contains(clazz));
-		
+
 		project.getContents().add(reference);
-		assertEquals(2,project.getContents().size());
+		assertEquals(2, project.getContents().size());
 		assertTrue(project.contains(clazz));
 		assertTrue(project.getContents().contains(clazz));
 		assertTrue(project.contains(reference));
 		assertTrue(project.getContents().contains(reference));
-		
+
 		project.getContents().remove(clazz);
-		assertEquals(1,project.getContents().size());
+		assertEquals(1, project.getContents().size());
 		assertFalse(project.contains(clazz));
 		assertFalse(project.getContents().contains(clazz));
 		assertTrue(project.contains(reference));
 		assertTrue(project.getContents().contains(reference));
-		
+
 		project.getContents().remove(reference);
-		assertEquals(0,project.getContents().size());
+		assertEquals(0, project.getContents().size());
 		assertFalse(project.contains(clazz));
 		assertFalse(project.getContents().contains(clazz));
 		assertFalse(project.contains(reference));
 		assertFalse(project.getContents().contains(reference));
 	}
-	
+
 	/**
 	 * Test get unsupported e packages.
 	 */
 	@Test
 	public void testGetUnsupportedEPackages() {
-		Collection<EPackage> unsupportedPackages = project.getUnsupportedEPackages();
-		//TODO add correct assert
-//		fail("This method always returns an empty list");
+		project.getUnsupportedEPackages();
+		// TODO add correct assert
+		// fail("This method always returns an empty list");
 	}
-	
 
 	/**
 	 * Test visible packages.
 	 */
 	@Test
 	public void testVisiblePackages() {
-		Set<EPackage> packages = project.getVisiblePackages();
-		assertFalse( packages.contains(EcorePackage.eINSTANCE));
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		EObject reference = EcoreFactory.eINSTANCE.createEReference();
-		
+		final Set<EPackage> packages = project.getVisiblePackages();
+		assertFalse(packages.contains(EcorePackage.eINSTANCE));
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
+		final EObject reference = EcoreFactory.eINSTANCE.createEReference();
+
 		project.getContents().add(clazz);
 		assertTrue(project.contains(clazz));
-		
+
 		packages.add(EcorePackage.eINSTANCE);
 		assertTrue(packages.contains(EcorePackage.eINSTANCE));
-				
+
 		project.getContents().add(reference);
-		assertTrue(project.contains(reference));	
+		assertTrue(project.contains(reference));
 	}
-	
+
 	/**
 	 * Test visible classes.
 	 */
 	@Test
 	public void testVisibleClasses() {
-		boolean failed=true;
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		EObject reference = EcoreFactory.eINSTANCE.createEReference();
-		
+		boolean failed = true;
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
+		final EObject reference = EcoreFactory.eINSTANCE.createEReference();
+
 		try {
-			project.getVisibleEClasses().add(clazz.eClass()); 
-			}
-		catch (UnsupportedOperationException upe) {
+			project.getVisibleEClasses().add(clazz.eClass());
+		} catch (final UnsupportedOperationException upe) {
 			failed = false;
 		}
-		
+
 		if (failed) {
 			fail("Class list is modifiable");
 		}
-		
-		Set<EClass> classes = new HashSet<EClass>(project.getVisibleEClasses());
-		assertEquals(0,classes.size());
+
+		final Set<EClass> classes = new HashSet<EClass>(project.getVisibleEClasses());
+		assertEquals(0, classes.size());
 		classes.add(clazz.eClass());
 		project.setVisibleEClasses(classes);
-		
-		assertEquals(1,project.getVisibleEClasses().size());
+
+		assertEquals(1, project.getVisibleEClasses().size());
 		assertTrue(project.getVisibleEClasses().contains(clazz.eClass()));
-		
+
 		classes.add(reference.eClass());
-		
-		assertEquals(2,project.getVisibleEClasses().size());
+
+		assertEquals(2, project.getVisibleEClasses().size());
 		assertTrue(project.getVisibleEClasses().contains(clazz.eClass()));
-		assertTrue(project.getVisibleEClasses().contains(reference.eClass()));	
+		assertTrue(project.getVisibleEClasses().contains(reference.eClass()));
 	}
-	
+
 	/**
 	 * Test get reference candidates.
 	 */
 	@Test
 	public void testGetReferenceCandidates() {
-		
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		
-		EObject referenceObjectA = EcoreFactory.eINSTANCE.createEReference();
-		referenceObjectA.eSet( referenceObjectA.eClass().getEStructuralFeature("name"), "my little reference");
-		
-		EObject referenceObjectB = EcoreFactory.eINSTANCE.createEReference();
-		referenceObjectB.eSet( referenceObjectB.eClass().getEStructuralFeature("name"), "my big reference");
-		
-		EReference reference = (EReference) clazz.eClass().getEStructuralFeature(EcorePackage.EREFERENCE);
-		
+
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
+
+		final EObject referenceObjectA = EcoreFactory.eINSTANCE.createEReference();
+		referenceObjectA.eSet(referenceObjectA.eClass().getEStructuralFeature("name"), "my little reference");
+
+		final EObject referenceObjectB = EcoreFactory.eINSTANCE.createEReference();
+		referenceObjectB.eSet(referenceObjectB.eClass().getEStructuralFeature("name"), "my big reference");
+
+		final EReference reference = (EReference) clazz.eClass().getEStructuralFeature(EcorePackage.EREFERENCE);
+
 		project.getContents().add(clazz);
-		
+
 		assertFalse(project.getReferenceCandidates(clazz, reference).hasNext());
-		
+
 		project.getContents().add(referenceObjectA);
-		
+
 		Iterator<EObject> iterator = project.getReferenceCandidates(clazz, reference);
-		List<EObject> objects = new ArrayList<EObject>(2);
+		final List<EObject> objects = new ArrayList<EObject>(2);
 		while (iterator.hasNext()) {
 			objects.add(iterator.next());
 		}
-		
+
 		assertFalse(iterator.hasNext());
-		assertEquals(1,objects.size());
+		assertEquals(1, objects.size());
 		assertTrue(objects.contains(referenceObjectA));
 		objects.clear();
-		
+
 		project.getContents().add(referenceObjectB);
 		iterator = project.getReferenceCandidates(clazz, reference);
-		
+
 		while (iterator.hasNext()) {
 			objects.add(iterator.next());
 		}
-	
+
 		assertFalse(iterator.hasNext());
-		assertEquals(2,objects.size());
+		assertEquals(2, objects.size());
 		assertTrue(objects.contains(referenceObjectA));
-		assertTrue(objects.contains(referenceObjectB));		
+		assertTrue(objects.contains(referenceObjectB));
 	}
-	
+
 	/**
 	 * Test save properties.
 	 */
 	@Test
 	public void testSaveProperties() {
-		project.saveProperties();	
+		project.saveProperties();
 	}
-	
+
 	/**
 	 * Test dirty save model.
 	 */
 	@Test
 	public void testDirtySaveModel() {
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();	
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
 		assertFalse(project.hasDirtyContents());
 		project.getContents().add(clazz);
 		assertTrue(project.hasDirtyContents());
 		project.saveContents();
 		assertFalse(project.hasDirtyContents());
 	}
-	
+
 	/**
 	 * Test delete elements.
 	 */
 	@Test
 	public void testDeleteElements() {
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		EObject reference = EcoreFactory.eINSTANCE.createEReference();
-		EObject attribute = EcoreFactory.eINSTANCE.createEAttribute();
-		
-		assertEquals(0,project.getContents().size());
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
+		final EObject reference = EcoreFactory.eINSTANCE.createEReference();
+		final EObject attribute = EcoreFactory.eINSTANCE.createEAttribute();
+
+		assertEquals(0, project.getContents().size());
 		project.getContents().add(clazz);
 		project.getContents().add(reference);
-		assertEquals(2,project.getContents().size());
-		
-		project.deleteElements((Collection)Collections.singleton(clazz));
-		assertEquals(1,project.getContents().size());
+		assertEquals(2, project.getContents().size());
+
+		project.deleteElements((Collection) Collections.singleton(clazz));
+		assertEquals(1, project.getContents().size());
 		assertTrue(project.contains(reference));
 		assertFalse(project.contains(clazz));
-		
-		project.deleteElements((Collection)Collections.singleton(reference));
-		assertEquals(0,project.getContents().size());
-		
+
+		project.deleteElements((Collection) Collections.singleton(reference));
+		assertEquals(0, project.getContents().size());
+
 		project.getContents().add(clazz);
 		project.getContents().add(reference);
 		project.getContents().add(attribute);
-		
-		assertEquals(3,project.getContents().size());
-		project.deleteElements((Collection)Arrays.asList(clazz,reference,attribute));
-		assertEquals(0,project.getContents().size());
-		
-		boolean thrown=false;
+
+		assertEquals(3, project.getContents().size());
+		project.deleteElements((Collection) Arrays.asList(clazz, reference, attribute));
+		assertEquals(0, project.getContents().size());
+
+		boolean thrown = false;
 		try {
-			project.deleteElements((Collection)Collections.singleton(clazz));
-		} catch (IllegalArgumentException iae) {
+			project.deleteElements((Collection) Collections.singleton(clazz));
+		} catch (final IllegalArgumentException iae) {
 			thrown = true;
 		}
 		assertTrue(thrown);
 	}
-	
+
 	/**
 	 * Checks if is modelroot.
 	 */
 	@Test
 	public void testIsModelroot() {
-		EObject clazz = EcoreFactory.eINSTANCE.createEClass();
-		EObject reference = EcoreFactory.eINSTANCE.createEReference();
-		EObject attribute = EcoreFactory.eINSTANCE.createEAttribute();
-		
-		assertEquals(0,project.getContents().size());
+		final EObject clazz = EcoreFactory.eINSTANCE.createEClass();
+		final EObject reference = EcoreFactory.eINSTANCE.createEReference();
+		final EObject attribute = EcoreFactory.eINSTANCE.createEAttribute();
+
+		assertEquals(0, project.getContents().size());
 		project.getContents().add(clazz);
 		project.getContents().add(reference);
 		project.getContents().add(attribute);
-		assertEquals(3,project.getContents().size());
-		
+		assertEquals(3, project.getContents().size());
+
 		assertFalse(project.isModelRoot(clazz));
 		assertFalse(project.isModelRoot(reference));
 		assertFalse(project.isModelRoot(attribute));
-	
-		assertTrue(project.isModelRoot(clazz.eContainer()));	
+
+		assertTrue(project.isModelRoot(clazz.eContainer()));
 	}
 }
