@@ -9,7 +9,7 @@ public class TreeCategoryNodeBuilder implements NodeBuilder<TreeCategory> {
 
 	public Node<TreeCategory> build(TreeCategory treeCategory, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		Node<TreeCategory> node = new Node<TreeCategory>(treeCategory, context, false);
+		final Node<TreeCategory> node = new Node<TreeCategory>(treeCategory, context);
 
 		node.addChild(NodeBuilders.INSTANCE.build(treeCategory.getChildComposite(), context,
 			adapterFactoryItemDelegator));

@@ -7,9 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.rule;
+package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.OrCondition;
 
 /**
- * Helper class to evaluate condition.
+ * Evaluates a given condition.
  * 
- * @author Jonas
+ * @author Eugen Neufeld
  * 
  */
 public final class ConditionEvaluator {
@@ -34,11 +34,13 @@ public final class ConditionEvaluator {
 	}
 
 	/**
-	 * Evaluates an condition.
+	 * Evaluates the given condition.
 	 * 
-	 * @param eObject the domain object
-	 * @param condition the condition to evaluate
-	 * @return the result of the evaluation of the condition
+	 * @param eObject
+	 *            the affected object the condition's attribute is pointing at
+	 * @param condition
+	 *            the condition to be evaluated
+	 * @return {@code true}, if the condition matches, {@code false} otherwise
 	 */
 	public static boolean evaluate(EObject eObject, Condition condition) {
 
@@ -78,17 +80,20 @@ public final class ConditionEvaluator {
 			if (eReference.getEReferenceType().isInstance(parent)) {
 				break;
 			}
+
 			final EObject child = (EObject) parent.eGet(eReference);
+
 			if (child == null) {
 				break;
 			}
+
 			parent = child;
 		}
+
 		if (!attributeClass.isInstance(parent)) {
 			return false;
 		}
 
 		return condition.getExpectedValue().equals(parent.eGet(condition.getAttribute()));
 	}
-
 }

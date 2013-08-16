@@ -19,52 +19,67 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Jonas
  * 
  */
-public abstract class ViewTestHelper {
+public final class ViewTestHelper {
+
+	private static ViewModelContext viewModelContext;
 
 	private ViewTestHelper() {
 
 	}
 
 	/**
+	 * Creates an {@link ECPControlContext} for the given domain object.
+	 * 
 	 * @param domainObject
+	 *            the domain to create the context for
 	 * @param shell
-	 * @return an {@link ECPControlContext}
+	 *            the shell used by the created context
+	 * @return an {@link ECPControlContext} for the given domain object
 	 */
 	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell) {
 		// setup context
 		@SuppressWarnings("restriction")
-		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
+		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
+			org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider.NAME);
 		final Collection<ECPProject> projects = ECPUtil.getECPProjectManager().getProjects();
+
 		for (final ECPProject ecpProject : projects) {
 			ecpProject.delete();
 		}
+
 		ECPProject project;
 		try {
 			project = ECPProjectManagerImpl.INSTANCE.createProject(provider, "test");
 			project.getContents().add(domainObject);
 			return new ECPControlContextImpl(domainObject, project, shell);
 		} catch (final ECPProjectWithNameExistsException ex) {
-			// Should no happen during tests
+			// Should not happen during tests
 			System.err.println("Project with name already exists, clean-up test environment");
 		}
+
 		return null;
 	}
 
 	/**
+	 * Counts the node and all its children.
+	 * 
 	 * @param node
-	 * @return the number of all nodes in the node tree
+	 *            the node whose children should be counted. The node itself is also considered.
+	 * @return the number of children of the given node + 1 (the node itself)
 	 */
 	public static int countNodes(Node<?> node) {
 		int i = 0;
@@ -78,13 +93,32 @@ public abstract class ViewTestHelper {
 	}
 
 	/**
+	 * Creates a {@link Node} containing the the given {@link Renderable}.
+	 * 
 	 * @param view
+	 *            the {@link Renderable} for which to create a node tree
 	 * @param domainObject
-	 * @return the main node
+	 *            the domain object belonging to the given renderable
+	 * @return the created node tree
 	 */
 	public static Node<Renderable> build(Renderable view, EObject domainObject) {
 		final Shell shell = new Shell();
-		return NodeBuilders.INSTANCE.build(view, createECPControlContext(domainObject, shell));
+		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, createECPControlContext(domainObject, shell));
+		if (viewModelContext == null) {
+			viewModelContext = new ViewModelContextImpl((View) view, domainObject);
+			viewModelContext.registerViewChangeListener(node);
+		}
+		return node;
 	}
 
+	public static ViewModelContext getViewModelContext() {
+		return viewModelContext;
+	}
+
+	/**
+	 * @param object
+	 */
+	public static void setViewModelContext(Object object) {
+		viewModelContext = null;
+	}
 }

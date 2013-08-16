@@ -17,15 +17,19 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.test.RuleHandle;
 import org.eclipse.emf.ecp.view.rule.test.RuleTest;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Fan;
+import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Before;
@@ -39,6 +43,7 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class RuleSWTTest {
 
+	private org.eclipse.emf.ecp.view.model.View view;
 	private org.eclipse.emf.ecp.view.model.Control control;
 	private Shell shell;
 	private EObject input;
@@ -46,9 +51,10 @@ public class RuleSWTTest {
 
 	@Before
 	public void init() {
-		control = createControl();
-		input = createControl();
-		control.setTargetFeature(ViewPackage.eINSTANCE.getControl_LabelAlignment());
+		view = createView();
+		input = createFan();
+		control = (Control) view.getChildren().get(0);
+		control.setTargetFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		shell = SWTViewTestHelper.createShell();
 		shell.setVisible(true);
 	}
@@ -167,7 +173,7 @@ public class RuleSWTTest {
 	 */
 	private RuleHandle addInVisibleRule() {
 		final RuleHandle invisibleShowRule = RuleTest.createInvisibleShowRule();
-		addRuleToElement(invisibleShowRule.getRule(), control);
+		addRuleToElement(invisibleShowRule.getRule(), view);
 		return invisibleShowRule;
 
 	}
@@ -185,14 +191,14 @@ public class RuleSWTTest {
 	 */
 	private RuleHandle addVisibleRule() {
 		final RuleHandle visibleShowRule = RuleTest.createVisibleShowRule();
-		addRuleToElement(visibleShowRule.getRule(), control);
+		addRuleToElement(visibleShowRule.getRule(), view);
 		return visibleShowRule;
 
 	}
 
 	private RuleHandle addDisableRule() {
 		final RuleHandle enabledEnableRule = RuleTest.createDisabledEnableRule();
-		addRuleToElement(enabledEnableRule.getRule(), control);
+		addRuleToElement(enabledEnableRule.getRule(), view);
 		return enabledEnableRule;
 	}
 
@@ -202,7 +208,7 @@ public class RuleSWTTest {
 	 * 
 	 */
 	private void render() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		renderedControl = SWTViewTestHelper.render(control, input, shell);
+		renderedControl = SWTViewTestHelper.render(view, input, shell);
 
 	}
 
@@ -228,7 +234,7 @@ public class RuleSWTTest {
 	 */
 	private RuleHandle addEnableRule() {
 		final RuleHandle enabledEnableRule = RuleTest.createEnabledEnableRule();
-		addRuleToElement(enabledEnableRule.getRule(), control);
+		addRuleToElement(enabledEnableRule.getRule(), view);
 		return enabledEnableRule;
 	}
 
@@ -236,19 +242,22 @@ public class RuleSWTTest {
 	 * @param enabledEnableRule
 	 * @param control2
 	 */
-	private void addRuleToElement(Rule enabledEnableRule, Control control2) {
-		control.getAttachments().add(enabledEnableRule);
-
+	private void addRuleToElement(Rule enabledEnableRule, Renderable renderable) {
+		renderable.getAttachments().add(enabledEnableRule);
 	}
 
-	/**
-	 * 
-	 */
-	private org.eclipse.emf.ecp.view.model.Control createControl() {
-		final Control createControl = ViewFactory.eINSTANCE.createControl();
-		createControl.setLabelAlignment(Alignment.LEFT);
-		return createControl;
-
+	private Fan createFan() {
+		final Fan fan = BowlingFactory.eINSTANCE.createFan();
+		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
+		fan.setFavouriteMerchandise(merchandise);
+		merchandise.setName("foo");
+		return fan;
 	}
 
+	private org.eclipse.emf.ecp.view.model.View createView() {
+		final View view = ViewFactory.eINSTANCE.createView();
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(control);
+		return view;
+	}
 }

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecp.view.context.viewServices">
       <viewService
-            class="org.eclipse.emf.ecp.view.rule.RuleService">
+            class="org.eclipse.emf.ecp.view.internal.rule.RuleService">
       </viewService>
    </extension>
 

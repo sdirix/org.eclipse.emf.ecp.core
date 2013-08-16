@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.rule.internal;
+package org.eclipse.emf.ecp.view.internal.rule;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

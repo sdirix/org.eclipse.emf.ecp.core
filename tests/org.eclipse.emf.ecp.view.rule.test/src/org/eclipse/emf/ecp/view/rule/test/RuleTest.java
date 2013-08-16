@@ -17,11 +17,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.Alignment;
-import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -30,6 +27,11 @@ import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Fan;
+import org.eclipse.emf.emfstore.bowling.Merchandise;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,6 +42,12 @@ import org.junit.runner.RunWith;
  */
 @RunWith(DatabindingClassRunner.class)
 public class RuleTest {
+
+	@After
+	public void after() {
+		ViewTestHelper.getViewModelContext().dispose();
+		ViewTestHelper.setViewModelContext(null);
+	}
 
 	@Test
 	public void testEnableRuleNodeRendererWithDisableRule() {
@@ -58,6 +66,7 @@ public class RuleTest {
 
 		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
+		// no condition defaults to false
 		assertFalse(node.isEnabled());
 	}
 
@@ -68,6 +77,7 @@ public class RuleTest {
 
 		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
+		// no condition defaults to false
 		assertFalse(node.isVisible());
 	}
 
@@ -237,13 +247,13 @@ public class RuleTest {
 
 	private static LeafCondition createFalseLeafCondition() {
 		final LeafCondition leafCondition = createLeafCondition();
-		leafCondition.setExpectedValue(Alignment.NONE);
+		leafCondition.setExpectedValue("bar");
 		return leafCondition;
 	}
 
 	private static LeafCondition createTrueLeafCondition() {
 		final LeafCondition leafCondition = createLeafCondition();
-		leafCondition.setExpectedValue(Alignment.LEFT);
+		leafCondition.setExpectedValue("foo");
 		return leafCondition;
 	}
 
@@ -330,11 +340,16 @@ public class RuleTest {
 
 	private static LeafCondition createLeafCondition() {
 		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
-		leafCondition.setAttribute(ViewPackage.eINSTANCE.getControl_LabelAlignment());
+		leafCondition.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		leafCondition.getPathToAttribute().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+
 		return leafCondition;
 	}
 
 	private void checkNodes(Node<Renderable> node, RuleHandle ruleHandle) {
+		// final RuleService ruleService = new RuleService();
+		// ruleService.instantiate(ViewTestHelper.getViewModelContext());
+		// ruleService.dispose();
 		assertEquals(1, ViewTestHelper.countNodes(node));
 		assertEquals(ruleHandle.getParent(), node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 0, node.getChildren().size());
@@ -344,20 +359,22 @@ public class RuleTest {
 	public static RuleHandle createDisabledEnableRule() {
 		final EnableRule enableRule = createEnableRule();
 		enableRule.setDisable(true);
-		return createruleHandle(enableRule);
+		return createRuleHandle(enableRule);
 	}
 
 	public static RuleHandle createEnabledEnableRule() {
 		final EnableRule enableRule = createEnableRule();
 		enableRule.setDisable(false);
-		return createruleHandle(enableRule);
+		return createRuleHandle(enableRule);
 	}
 
-	private static RuleHandle createruleHandle(Rule enableRule) {
+	private static RuleHandle createRuleHandle(Rule enableRule) {
 		final Renderable renderable = createRuleContainerAndAddRule(enableRule);
-		final Control domainObject = ViewFactory.eINSTANCE.createControl();
-		domainObject.setLabelAlignment(Alignment.LEFT);
-		return new RuleHandle(enableRule, renderable, domainObject);
+		final Fan fan = BowlingFactory.eINSTANCE.createFan();
+		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
+		merchandise.setName("foo");
+		fan.setFavouriteMerchandise(merchandise);
+		return new RuleHandle(enableRule, renderable, fan);
 	}
 
 	private static Renderable createRuleContainerAndAddRule(Rule rule) {
@@ -373,13 +390,13 @@ public class RuleTest {
 	public static RuleHandle createVisibleShowRule() {
 		final ShowRule showRule = RuleFactory.eINSTANCE.createShowRule();
 		showRule.setHide(false);
-		return createruleHandle(showRule);
+		return createRuleHandle(showRule);
 	}
 
 	public static RuleHandle createInvisibleShowRule() {
 		final ShowRule showRule = RuleFactory.eINSTANCE.createShowRule();
 		showRule.setHide(true);
-		return createruleHandle(showRule);
+		return createRuleHandle(showRule);
 	}
 
 }

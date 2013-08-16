@@ -12,49 +12,47 @@
 package org.eclipse.emf.ecp.internal.ui.view.renderer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * 
  * @author emueller
  * 
- * @param <CONTROL>
+ * @param <T>
  *            the type of the actual control
  */
 // FIXME:
 public class Node<T extends Renderable> implements ValidationListener, ModelChangeListener {
 
-	private T viewModelElement;
-	private List<Node<?>> children;
 	protected List<RenderingResultDelegator> delegators;
-	private ECPControlContext controlContext;
+	protected int severity;
+	private final T viewModelElement;
+	private final List<Node<?>> children;
+	private final ECPControlContext controlContext;
 	private Object labelObject;
 
-	// protected boolean isVisible;
-	// protected boolean isEnabled;
-	protected int severity;
-
 	private List<ECPAction> actions;
-	private List<SelectedChildNodeListener> selectedChildNodeListeners;
+	private final List<SelectedChildNodeListener> selectedChildNodeListeners;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param model
+	 *            the view model element that should be associated with this node
+	 * @param controlContext
+	 *            the control context for this node
+	 */
 	public Node(T model, ECPControlContext controlContext) {
 		this.viewModelElement = model;
 		this.labelObject = model;
@@ -62,228 +60,62 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		this.children = new ArrayList<Node<?>>();
 		this.delegators = new ArrayList<RenderingResultDelegator>();
 		this.selectedChildNodeListeners = new ArrayList<SelectedChildNodeListener>();
-		// isVisible = evalShowCondition();
-		// isEnabled = evalEnableCondition();
 	}
 
-	public Node(T model, ECPControlContext context, boolean isVisible) {
-		this(model, context);
-		// this.isVisible = isVisible;
-	}
-
+	/**
+	 * Returns the view model element associated with this node.
+	 * 
+	 * @return the view model element associated with this node
+	 */
 	public T getRenderable() {
 		return viewModelElement;
 	}
 
+	/**
+	 * Adds a child to this node.
+	 * 
+	 * @param node
+	 *            child to be added as a child to this node
+	 */
 	public void addChild(Node<? extends Renderable> node) {
 		children.add(node);
 	}
 
+	/**
+	 * Returns all children of this node.
+	 * 
+	 * @return all children of this node
+	 */
 	public List<Node<?>> getChildren() {
 		return children;
 	}
 
-	// // FIXME: change type of notification to attribute
-	// public void checkShow(Notification notification) {
-	//
-	// if (isLeafCondition()) {
-	// final Condition condition = viewModelElement.getRule().getCondition();
-	// if (isShowRule()) {
-	// final LeafCondition leaf = (LeafCondition) condition;
-	// EAttribute attr = null;
-	//
-	// if (isEAttributeNotification(notification)) {
-	// attr = (EAttribute) notification.getFeature();
-	// if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
-	//
-	// final boolean isVisible = evalShowCondition();
-	//
-	// if (!isVisible) {
-	// show(false);
-	// final TreeIterator<EObject> eAllContents = viewModelElement.eAllContents();
-	// while (eAllContents.hasNext()) {
-	// final EObject o = eAllContents.next();
-	// unset(controlContext, o);
-	// }
-	// unset(controlContext, viewModelElement);
-	// } else {
-	// show(true);
-	// }
-	//
-	// layout();
-	// }
-	// }
-	// }
-	//
-	// }
-	// for (final Node<?> child : getChildren()) {
-	// child.checkShow(notification);
-	// }
-	// }
-	//
-	// public boolean hasRule() {
-	// return viewModelElement.getRule() != null;
-	// }
-	//
-	// public boolean evalShowCondition() {
-	//
-	// if (!hasRule()) {
-	// return true;
-	// }
-	//
-	// final Condition condition = viewModelElement.getRule().getCondition();
-	//
-	// if (!isShowRule()) {
-	// return true;
-	// }
-	//
-	// final boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
-	//
-	// if (((ShowRule) viewModelElement.getRule()).isHide()) {
-	// if (v) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// } else {
-	// if (v) {
-	// return true;
-	// } else {
-	// return false;
-	// }
-	// }
-	// }
-	//
-	// /**
-	// * @return
-	// */
-	// private boolean isShowRule() {
-	// return ShowRule.class.isInstance(viewModelElement.getRule());
-	// }
-	//
-	// public boolean evalEnableCondition() {
-	//
-	// if (viewModelElement.getRule() == null) {
-	// return true;
-	// }
-	//
-	// final Condition condition = viewModelElement.getRule().getCondition();
-	//
-	// if (!EnableRule.class.isInstance(viewModelElement.getRule())) {
-	// return true;
-	// }
-	//
-	// final boolean v = ConditionEvaluator.evaluate(controlContext.getModelElement(), condition);
-	//
-	// if (((EnableRule) viewModelElement.getRule()).isDisable()) {
-	// if (v) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// } else {
-	// if (v) {
-	// return true;
-	// } else {
-	// return false;
-	// }
-	// }
-	// }
-
-	public void unset(ECPControlContext context, EObject eObject) {
-		// TODO: missing unset for custom controls
-		if (eObject instanceof Control) {
-			final Control control = (Control) eObject;
-			EObject parent = context.getModelElement();
-			for (final EReference eReference : control.getPathToFeature()) {
-				parent = (EObject) parent.eGet(eReference);
-			}
-			final ECPControlContext editContext = context.createSubContext(parent);
-			final EStructuralFeature targetFeature = control.getTargetFeature();
-			if (targetFeature.isMany()) {
-				final Collection<?> collection = (Collection<?>) editContext.getModelElement().eGet(targetFeature);
-				if (collection.size() > 0) {
-					collection.clear();
-				}
-			} else {
-				final Object targetFeatureValue = editContext.getModelElement().eGet(targetFeature);
-
-				if (targetFeatureValue == null) {
-					return;
-				}
-
-				if (!targetFeatureValue.equals(targetFeature.getDefaultValue())) {
-					editContext.getModelElement().eSet(targetFeature, // null);
-						targetFeature.getDefaultValue());
-				}
-			}
-		} else if (eObject instanceof Group) {
-			final Group group = (Group) eObject;
-			final EList<org.eclipse.emf.ecp.view.model.Composite> composites = group.getComposites();
-			for (final org.eclipse.emf.ecp.view.model.Composite composite : composites) {
-				unset(context, composite);
-			}
-		}
-	}
-
-	// // FIXME: change type of notification to attribute
-	// public void checkEnable(Notification notification) {
-	//
-	// if (isLeafCondition()) {
-	// // FIXME: MKVMR
-	// final Condition condition = viewModelElement.getRule().getCondition();
-	// if (EnableRule.class.isInstance(viewModelElement.getRule())) {
-	//
-	// final LeafCondition leaf = (LeafCondition) condition;
-	// EAttribute attr = null;
-	//
-	// if (isEAttributeNotification(notification)) {
-	// attr = (EAttribute) notification.getFeature();
-	// if (leaf.getAttribute().getFeatureID() == attr.getFeatureID()) {
-	//
-	// final boolean isEnabled = evalEnableCondition();
-	//
-	// if (!isEnabled) {
-	// enable(false);
-	// } else {
-	// enable(true);
-	// }
-	// }
-	// }
-	// }
-	// }
-	// for (final Node<?> child : getChildren()) {
-	// child.checkEnable(notification);
-	// }
-	//
-	// }
-	//
-	// private boolean isLeafCondition() {
-	// if (viewModelElement.getRule() == null) {
-	// return false;
-	// }
-	//
-	// return viewModelElement.getRule().getCondition() instanceof LeafCondition;
-	// }
-
-	// private boolean isEAttributeNotification(Notification notification) {
-	// if (notification.getFeature() instanceof EAttribute) {
-	// return true;
-	// }
-	//
-	// return false;
-	// }
-
-	public void enable(final boolean shouldBeEnabled) {
+	/**
+	 * Delegates the enable call to all {@link RenderingResultDelegator}s
+	 * of this node.
+	 * 
+	 * @param isEnabled
+	 *            whether this node's {@link RenderingResultDelegator}s
+	 *            should be enabled
+	 */
+	public void enable(final boolean isEnabled) {
 		// isEnabled = shouldBeEnabled;
 		for (final Node<? extends Renderable> child : getChildren()) {
-			child.enable(shouldBeEnabled);
+			child.enable(isEnabled);
 		}
 		for (final RenderingResultDelegator delegator : delegators) {
-			delegator.enable(shouldBeEnabled);
+			delegator.enable(isEnabled);
 		}
 	}
 
+	/**
+	 * Delegates the show call to all {@link RenderingResultDelegator}s
+	 * of this node.
+	 * 
+	 * @param isVisible
+	 *            whether this node's {@link RenderingResultDelegator}s
+	 *            should be visible
+	 */
 	public void show(final boolean isVisible) {
 		// this.isVisible = isVisible;
 		for (final Node<? extends Renderable> child : getChildren()) {
@@ -294,12 +126,21 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		}
 	}
 
+	/**
+	 * Delegates the layout call to all {@link RenderingResultDelegator}s
+	 * of this node.
+	 */
 	public void layout() {
 		for (final RenderingResultDelegator delegator : delegators) {
 			delegator.layout();
 		}
 	}
 
+	/**
+	 * Template method for performing cleanup tasks. Called by {@code dispose}.
+	 * This method only calls {@code cleanup()} on the {@link RenderingResultDelegator}s
+	 * of this node.
+	 */
 	public void cleanup() {
 		for (final RenderingResultDelegator delegator : delegators) {
 			delegator.cleanup();
@@ -310,6 +151,12 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		}
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener#validationChanged(java.util.Map)
+	 */
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
 
 		severity = calculateSeverity(affectedObjects);
@@ -322,7 +169,11 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	}
 
 	/**
+	 * Notifies the {@link RenderingResultDelegator} that the validation of the
+	 * given affected objects has changed.
+	 * 
 	 * @param affectedObjects
+	 *            the object that are affected by the validation
 	 */
 	protected void notifyDelegatorsAboutValidationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
 		for (final RenderingResultDelegator delegator : delegators) {
@@ -330,6 +181,13 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		}
 	}
 
+	/**
+	 * Calculates the severity returned by {@code getSeverity}.
+	 * 
+	 * @param affectedObjects
+	 *            the object that are affected by the validation
+	 * @return a {@link Diagnostic} constant that tells about the severity of this node
+	 */
 	protected int calculateSeverity(Map<EObject, Set<Diagnostic>> affectedObjects) {
 		int max = Diagnostic.OK;
 		if (affectedObjects.containsKey(viewModelElement)) {
@@ -346,10 +204,18 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		return max;
 	}
 
+	/**
+	 * Whether this node is a leaf.
+	 * 
+	 * @return {@code true} if this node is a leaf, otherwise {@code false}
+	 */
 	public boolean isLeaf() {
 		return false;
 	}
 
+	/**
+	 * Disposes this node.
+	 */
 	public void dispose() {
 		for (final Node<? extends Renderable> child : getChildren()) {
 			child.dispose();
@@ -359,10 +225,25 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		selectedChildNodeListeners.clear();
 	}
 
+	/**
+	 * Adds an {@link RenderingResultDelegator} that will perform
+	 * the task of updating the actual UI elements.
+	 * 
+	 * @param delegator
+	 *            the rending delegator to be added
+	 */
 	public void addRenderingResultDelegator(RenderingResultDelegator delegator) {
 		delegators.add(delegator);
+		delegator.enable(viewModelElement.isEnabled());
+		delegator.show(viewModelElement.isVisible());
 	}
 
+	/**
+	 * Removes the given {@link RenderingResultDelegator}.
+	 * 
+	 * @param delegator
+	 *            the rending delegator to be removed
+	 */
 	public void removeRenderingResultDelegator(RenderingResultDelegator delegator) {
 		delegators.remove(delegator);
 	}
@@ -385,14 +266,30 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		return viewModelElement.isEnabled();
 	}
 
+	/**
+	 * Returns the control context of this node.
+	 * 
+	 * @return the control context of this node
+	 */
 	public ECPControlContext getControlContext() {
 		return controlContext;
 	}
 
+	/**
+	 * Returns the label object of this node, that is the domain object.
+	 * 
+	 * @return the domain object
+	 */
 	public Object getLabelObject() {
 		return labelObject;
 	}
 
+	/**
+	 * Sets the domain object.
+	 * 
+	 * @param object
+	 *            the domain object to be set
+	 */
 	public void setLabelObject(Object object) {
 		labelObject = object;
 	}
@@ -415,22 +312,53 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		this.actions = actions;
 	}
 
+	/**
+	 * Whether this node has an rendering result delegator.
+	 * 
+	 * @return {@code true}, if this node has a rendering result delegator, {@code false} otherwise
+	 */
 	public boolean isLifted() {
 		return !delegators.isEmpty();
 	}
 
+	/**
+	 * Returns the validation severity associated with this node.
+	 * 
+	 * @return the validation severity of this node
+	 * 
+	 */
 	public int getSeverity() {
 		return severity;
 	}
 
+	/**
+	 * Adds an selection child node listener, that is a listener that will be notified
+	 * if any of the children of this node has been selected.
+	 * 
+	 * @param listener
+	 *            the listener to be added
+	 */
 	public void addSelectedChildNodeListener(SelectedChildNodeListener listener) {
 		selectedChildNodeListeners.add(listener);
 	}
 
+	/**
+	 * Removes the given selection child node listener.
+	 * 
+	 * @param listener
+	 *            the listener to be removed
+	 */
 	public void removeSelectedChildNodeListener(SelectedChildNodeListener listener) {
 		selectedChildNodeListeners.add(listener);
 	}
 
+	/**
+	 * Notifies all {@link SelectedChildNodeListener} that a child of this node
+	 * has been selected.
+	 * 
+	 * @param selectedChild
+	 *            the selected child node
+	 */
 	public void fireSelectedChildNodeChanged(Node<?> selectedChild) {
 		for (final SelectedChildNodeListener listener : selectedChildNodeListeners) {
 			listener.childSelected(selectedChild);
@@ -446,14 +374,6 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		if (notification.getNotifier() == viewModelElement) {
 			enable(viewModelElement.isEnabled());
 			show(viewModelElement.isVisible());
-			if (!viewModelElement.isVisible()) {
-				final TreeIterator<EObject> allContents = viewModelElement.eAllContents();
-				while (allContents.hasNext()) {
-					final EObject o = allContents.next();
-					unset(controlContext, o);
-				}
-				unset(controlContext, viewModelElement);
-			}
 		} else {
 			for (final Node<?> child : getChildren()) {
 				child.notifyChange(notification);
