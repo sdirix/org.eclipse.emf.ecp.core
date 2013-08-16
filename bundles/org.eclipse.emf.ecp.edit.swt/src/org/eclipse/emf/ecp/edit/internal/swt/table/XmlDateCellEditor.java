@@ -189,7 +189,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * Applies the currently selected value and deactiavates the cell editor
+	 * Applies the currently selected value and deactiavates the cell editor.
 	 */
 	void applyEditorValueAndDeactivate() {
 		// must set the selection before getting value

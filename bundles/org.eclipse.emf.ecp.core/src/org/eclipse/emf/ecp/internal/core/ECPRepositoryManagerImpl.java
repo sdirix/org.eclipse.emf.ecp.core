@@ -13,9 +13,23 @@
 
 package org.eclipse.emf.ecp.internal.core;
 
-import org.eclipse.net4j.util.AdapterUtil;
-import org.eclipse.net4j.util.io.IOUtil;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -36,24 +50,8 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesStore;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 
 /**
  * This class manages the repositories.
@@ -87,7 +85,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	/** {@inheritDoc} **/
 	public InternalRepository getRepository(Object adaptable) {
 		if (adaptable instanceof ECPRepositoryAware) {
-			ECPRepositoryAware repositoryAware = (ECPRepositoryAware) adaptable;
+			final ECPRepositoryAware repositoryAware = (ECPRepositoryAware) adaptable;
 			return (InternalRepository) repositoryAware.getRepository();
 		}
 
@@ -120,7 +118,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 			throw new UnsupportedOperationException("The provider " + provider.getLabel()
 				+ " doesn't support the addition of new repositories.");
 		}
-		InternalRepository repository = new ECPRepositoryImpl(provider, name, properties);
+		final InternalRepository repository = new ECPRepositoryImpl(provider, name, properties);
 		repository.setLabel(label);
 		repository.setDescription(description);
 
@@ -140,14 +138,14 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		try {
 			ECPUtil.getECPObserverBus().notify(ECPRepositoryContentChangedObserver.class)
 				.contentChanged(repository, objects);
-		} catch (Exception ex) {
+		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
 	}
 
 	/** {@inheritDoc} **/
 	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
-		Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
+		final Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {
 			load();
 		}
@@ -209,7 +207,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 		@Override
 		protected InternalRepository createElement(String name, IConfigurationElement configurationElement) {
-			RepositoryDescriptor descriptor = new RepositoryDescriptor(name, configurationElement);
+			final RepositoryDescriptor descriptor = new RepositoryDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
 			descriptor.setDescription(configurationElement.getAttribute("description"));
 			return descriptor;
@@ -221,8 +219,8 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 */
 	private final class RepositoryDescriptor extends ExtensionDescriptor<InternalRepository> implements
 		InternalRepository {
-		private Set<String> declaredPropertyKeys;
-		private ECPProperties properties = new Properties() {
+		private final Set<String> declaredPropertyKeys;
+		private final ECPProperties properties = new Properties() {
 			@Override
 			public void addProperty(String key, String value) {
 				excludeDeclaredProperties(key);
@@ -243,22 +241,21 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 			@Override
 			protected Collection<Map.Entry<String, String>> getElementsToWrite() {
-				List<Map.Entry<String, String>> elementsToWrite = new ArrayList<Map.Entry<String, String>>();
-				for (Map.Entry<String, String> entry : getElements()) {
+				final List<Map.Entry<String, String>> elementsToWrite = new ArrayList<Map.Entry<String, String>>();
+				for (final Map.Entry<String, String> entry : getElements()) {
 					if (!declaredPropertyKeys.contains(entry.getKey())) {
 						elementsToWrite.add(entry);
 					}
 				}
-
 				return elementsToWrite;
 			}
 		};
 
 		public RepositoryDescriptor(String name, IConfigurationElement configurationElement) {
 			super(ECPRepositoryManagerImpl.this, name, TYPE, configurationElement);
-			for (IConfigurationElement property : configurationElement.getChildren("property")) {
-				String key = property.getAttribute("key");
-				String value = property.getAttribute("value");
+			for (final IConfigurationElement property : configurationElement.getChildren("property")) {
+				final String key = property.getAttribute("key");
+				final String value = property.getAttribute("value");
 				properties.addProperty(key, value);
 			}
 
@@ -267,15 +264,15 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 			InputStream stream = null;
 
 			try {
-				File file = getFile(this);
+				final File file = getFile(this);
 				stream = new FileInputStream(file);
-				ObjectInputStream in = new ObjectInputStream(stream);
+				final ObjectInputStream in = new ObjectInputStream(stream);
 
-				Properties dynamicProperties = new Properties(in);
-				for (Entry<String, String> property : dynamicProperties.getProperties()) {
+				final Properties dynamicProperties = new Properties(in);
+				for (final Entry<String, String> property : dynamicProperties.getProperties()) {
 					properties.addProperty(property.getKey(), property.getValue());
 				}
-			} catch (IOException ex) {
+			} catch (final IOException ex) {
 				Activator.log(ex);
 			} finally {
 				IOUtil.close(stream);
@@ -301,7 +298,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 		/** {@inheritDoc} */
 		public InternalProvider getProvider() {
-			String providerName = getConfigurationElement().getAttribute("provider");
+			final String providerName = getConfigurationElement().getAttribute("provider");
 			return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		}
 

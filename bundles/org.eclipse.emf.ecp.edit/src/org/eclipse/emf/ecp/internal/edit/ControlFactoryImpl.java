@@ -124,9 +124,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + EditMessages.ControlFactoryImpl_CannotBeLoadedBecauseBundle
+			throw new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
 				+ bundleName
-				+ EditMessages.ControlFactoryImpl_CannotBeResolved);
+				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 

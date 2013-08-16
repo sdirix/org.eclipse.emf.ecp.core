@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPEditorContext;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
@@ -94,8 +93,9 @@ public class MEEditorInput implements IEditorInput {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof MEEditorInput) {
-			MEEditorInput other = (MEEditorInput) obj;
-			boolean ret = modelElementContext.getModelElement().equals(other.modelElementContext.getModelElement());
+			final MEEditorInput other = (MEEditorInput) obj;
+			final boolean ret = modelElementContext.getModelElement().equals(
+				other.modelElementContext.getModelElement());
 			return ret;
 		}
 		return false;

@@ -11,13 +11,18 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
@@ -33,16 +38,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
-import java.text.DateFormat;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	private DateTime dateWidget;
-	private DateFormat dateFormat = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+	private final DateFormat dateFormat = SimpleDateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
 	// private DateTime timeWidget;
 
@@ -131,7 +130,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected Object doGetValue() {
-		Calendar selectedCalendarDate = Calendar.getInstance();
+		final Calendar selectedCalendarDate = Calendar.getInstance();
 		selectedCalendarDate.set(Calendar.YEAR, dateWidget.getYear());
 		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth());
 		selectedCalendarDate.set(Calendar.DAY_OF_MONTH, dateWidget.getDay());
@@ -148,7 +147,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected void doSetValue(Object value) {
-		Calendar cal = Calendar.getInstance();
+		final Calendar cal = Calendar.getInstance();
 		cal.setTime((Date) value);
 		dateWidget.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 		dateWidget.setTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
@@ -180,14 +179,14 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * Applies the currently selected value and deactiavates the cell editor
+	 * Applies the currently selected value and deactiavates the cell editor.
 	 */
 	void applyEditorValueAndDeactivate() {
 		// must set the selection before getting value
 
-		Object newValue = doGetValue();
+		final Object newValue = doGetValue();
 		markDirty();
-		boolean isValid = isCorrect(newValue);
+		final boolean isValid = isCorrect(newValue);
 		setValueValid(isValid);
 
 		if (!isValid) {
@@ -203,7 +202,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	public String getFormatedString(Object value) {
-		Date cal = (Date) value;
+		final Date cal = (Date) value;
 		if (value == null) {
 			return ""; //$NON-NLS-1$
 		}

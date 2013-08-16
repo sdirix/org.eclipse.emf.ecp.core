@@ -10,25 +10,24 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.dialogs;
 
+import java.util.Collection;
+import java.util.Comparator;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.Activator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
-
-import java.util.Collection;
-import java.util.Comparator;
 
 // TODO: Repair docu
 /**
@@ -93,7 +92,6 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
 		adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		if (modelElements != null) {
 			this.modelElements = modelElements;
@@ -187,7 +185,7 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 		// FIXME
 		// progressMonitor.beginTask(Messages.ModelelementSelectionDialog_ProgressMonitor_Searching,
 		// modelElements.size());
-		for (EObject modelElement : modelElements) {
+		for (final EObject modelElement : modelElements) {
 			contentProvider.add(modelElement, itemsFilter);
 			progressMonitor.worked(1);
 		}
@@ -277,7 +275,7 @@ public abstract class ModelelementSelectionDialog extends FilteredItemsSelection
 		 */
 		@Override
 		public boolean matchItem(Object item) {
-			String label = getLabelProvider().getText(item);
+			final String label = getLabelProvider().getText(item);
 
 			if (!patternMatcher.getPattern().startsWith("*")) //$NON-NLS-1$
 			{

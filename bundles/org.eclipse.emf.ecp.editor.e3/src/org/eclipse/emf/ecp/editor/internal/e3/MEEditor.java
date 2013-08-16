@@ -10,6 +10,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
@@ -20,11 +28,6 @@ import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -33,10 +36,6 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * GUI view for editing MEs.
@@ -78,12 +77,12 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	@Override
 	protected void addPages() {
-		String editorID = "Edit";
-		String editorDesc = "Standard View";
-		MEEditorInput editorInput = (MEEditorInput) getEditorInput();
+		final String editorID = "Edit";
+		final String editorDesc = "Standard View";
+		final MEEditorInput editorInput = (MEEditorInput) getEditorInput();
 
 		// add pages from the extension point
-		IConfigurationElement[] configTemp = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IConfigurationElement[] configTemp = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.editor.internal.e3.pages");
 		IConfigurationElement[] configIn = null;
 
@@ -98,11 +97,11 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 				try {
 					newPage = (AbstractMEEditorPage) configTemp[i].createExecutableExtension("class");
-					FormPage createPage = newPage.createPage(this, modelElementContext);
+					final FormPage createPage = newPage.createPage(this, modelElementContext);
 					if (createPage != null) {
 						addPage(createPage);
 					}
-				} catch (CoreException e1) {
+				} catch (final CoreException e1) {
 					Activator.logException(e1);
 				}
 
@@ -135,22 +134,22 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 				addPage(mePage);
 				configIn = configTemp;
-			} catch (PartInitException e) {
+			} catch (final PartInitException e) {
 				// JH Auto-generated catch block
 				Activator.logException(e);
 			}
 		}
 
 		// Sort the pages by the "after" attribute and omit replaced pages
-		List<IConfigurationElement> config = PageCandidate.getPages(configIn);
-		for (IConfigurationElement e : config) {
+		final List<IConfigurationElement> config = PageCandidate.getPages(configIn);
+		for (final IConfigurationElement e : config) {
 			try {
-				AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class");
-				FormPage createPage = newPage.createPage(this, modelElementContext);
+				final AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class");
+				final FormPage createPage = newPage.createPage(this, modelElementContext);
 				if (createPage != null) {
 					addPage(createPage);
 				}
-			} catch (CoreException e1) {
+			} catch (final CoreException e1) {
 				Activator.logException(e1);
 			}
 		}
@@ -200,7 +199,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 			composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-			;
 			shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 			setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
 			setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
@@ -251,21 +249,22 @@ public class MEEditor extends SharedHeaderFormEditor {
 	}
 
 	private void initStatusProvider() {
-		IConfigurationElement[] configurationElements = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.editor.internal.e3.statusmessage");
-		ArrayList<IConfigurationElement> provider = new ArrayList<IConfigurationElement>();
+		final IConfigurationElement[] configurationElements = Platform.getExtensionRegistry()
+			.getConfigurationElementsFor(
+				"org.eclipse.emf.ecp.editor.internal.e3.statusmessage");
+		final ArrayList<IConfigurationElement> provider = new ArrayList<IConfigurationElement>();
 		provider.addAll(Arrays.asList(configurationElements));
 		int priority = 0;
-		for (IConfigurationElement e : provider) {
+		for (final IConfigurationElement e : provider) {
 			try {
-				StatusMessageProvider statusMessageProvider = (StatusMessageProvider) e
+				final StatusMessageProvider statusMessageProvider = (StatusMessageProvider) e
 					.createExecutableExtension("class");
-				int newpriority = statusMessageProvider.canRender(modelElementContext.getModelElement());
+				final int newpriority = statusMessageProvider.canRender(modelElementContext.getModelElement());
 				if (newpriority > priority) {
 					priority = newpriority;
 					this.statusMessageProvider = statusMessageProvider;
 				}
-			} catch (CoreException e1) {
+			} catch (final CoreException e1) {
 				Activator.logException(e1);
 			}
 		}
@@ -325,7 +324,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 			try {
 				mePage.getManagedForm().getForm()
 					.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
-			} catch (SWTException e) {
+			} catch (final SWTException e) {
 				// Catch in case Editor is directly closed after change.
 			}
 		}

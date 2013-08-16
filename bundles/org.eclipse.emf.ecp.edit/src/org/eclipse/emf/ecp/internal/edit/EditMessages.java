@@ -22,10 +22,10 @@ public final class EditMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.internal.edit.messages"; //$NON-NLS-1$
 
 	/** The Control factory impl_ cannot be loaded because bundle. */
-	public static String ControlFactoryImpl_CannotBeLoadedBecauseBundle;
+	public static String CONTROLFACTROY_CANNOT_BE_LOADED;
 
 	/** The Control factory impl_ cannot be resolved. */
-	public static String ControlFactoryImpl_CannotBeResolved;
+	public static String CONTROLFACTORY_CANNOT_BE_RESOLVED;
 
 	private EditMessages() {
 	}

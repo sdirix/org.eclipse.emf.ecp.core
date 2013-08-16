@@ -11,6 +11,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
+import java.text.MessageFormat;
+
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
@@ -19,10 +24,6 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
@@ -32,8 +33,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
-
-import java.text.MessageFormat;
 
 public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
@@ -133,7 +132,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected void doSetValue(Object value) {
-		String linkName = adapterFactoryItemDelegator.getText(value);
+		final String linkName = adapterFactoryItemDelegator.getText(value);
 		link.setText("<a>" + linkName + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -163,14 +162,14 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * Applies the currently selected value and deactiavates the cell editor
+	 * Applies the currently selected value and deactiavates the cell editor.
 	 */
 	void applyEditorValueAndDeactivate() {
 		// must set the selection before getting value
 
-		Object newValue = doGetValue();
+		final Object newValue = doGetValue();
 		markDirty();
-		boolean isValid = isCorrect(newValue);
+		final boolean isValid = isCorrect(newValue);
 		setValueValid(isValid);
 
 		if (!isValid) {
