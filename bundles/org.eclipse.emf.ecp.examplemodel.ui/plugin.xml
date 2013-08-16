@@ -27,5 +27,17 @@
                supportedFeature="matchups">
          </staticTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl"
+            id="org.eclipse.emf.ecp.application.e3.control"
+            showLabel="true">
+         <staticTest
+               priority="3"
+               singleValue="false"
+               supportedClassType="org.eclipse.emf.ecore.EObject"
+               supportedEObject="org.eclipse.emf.emfstore.bowling.Matchup"
+               supportedFeature="games">
+         </staticTest>
+      </control>
    </extension>
 </plugin>
