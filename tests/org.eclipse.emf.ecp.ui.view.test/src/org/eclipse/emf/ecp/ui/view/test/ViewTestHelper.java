@@ -104,9 +104,12 @@ public final class ViewTestHelper {
 	public static Node<Renderable> build(Renderable view, EObject domainObject) {
 		final Shell shell = new Shell();
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, createECPControlContext(domainObject, shell));
-		if (viewModelContext == null) {
-			viewModelContext = new ViewModelContextImpl((View) view, domainObject);
-			viewModelContext.registerViewChangeListener(node);
+		// TODO: Remove this check, once ViewContext accepts renderable
+		if (view instanceof View) {
+			if (viewModelContext == null) {
+				viewModelContext = new ViewModelContextImpl((View) view, domainObject);
+				viewModelContext.registerViewChangeListener(node);
+			}
 		}
 		return node;
 	}

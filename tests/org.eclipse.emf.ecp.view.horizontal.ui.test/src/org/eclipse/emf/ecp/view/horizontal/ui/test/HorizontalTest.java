@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -52,46 +53,55 @@ public class HorizontalTest {
 
 	@Test
 	public void testHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() {
-		// TODO: Implement
 		final HorizontalHandle horizontalHandle = createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
 
 		final Node<Renderable> node = buildNode(horizontalHandle.getHorizontal());
-		assertEquals(3, ViewTestHelper.countNodes(node));
+		assertEquals(7, ViewTestHelper.countNodes(node));
 		assertEquals(horizontalHandle.getHorizontal(), node.getRenderable());
 		assertEquals(horizontalHandle.getFirstChild(), node.getChildren().get(0).getRenderable());
 		assertEquals(horizontalHandle.getSecondChild(), node.getChildren().get(1).getRenderable());
+		assertEquals(horizontalHandle.getFirstFirstChild(), node.getChildren().get(0).getChildren().get(0)
+			.getRenderable());
+		assertEquals(horizontalHandle.getFirstSecondChild(), node.getChildren().get(0).getChildren().get(1)
+			.getRenderable());
+		assertEquals(horizontalHandle.getSecondFirstChild(), node.getChildren().get(1).getChildren().get(0)
+			.getRenderable());
+		assertEquals(horizontalHandle.getSecondSecondChild(), node.getChildren().get(1).getChildren().get(1)
+			.getRenderable());
 	}
 
-	/**
-	 * @return
-	 */
-	private HorizontalHandle createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() {
-		// final HorizontalHandle horizontalHandle = createHorizontalWithTwoControlsAsChildren();
-		// horizontalHandle.addFirstToFirstChild()
-		return null;
-	}
-
-	/**
-	 * @return
-	 */
-	private HorizontalHandle createHorizontalWithTwoControlsAsChildren() {
+	public static HorizontalHandle createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() {
 		final HorizontalHandle horizontalHandle = createHorizontalWithoutChildren();
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		horizontalHandle.addFirstChildToRoot(createHorizontal());
+		horizontalHandle.addSecondChildToRoot(createHorizontal());
+		horizontalHandle.addFirstChildToFirstChild(createControl());
+		horizontalHandle.addSecondChildToFirstChild(createControl());
+		horizontalHandle.addFirstChildToSecondChild(createControl());
+		horizontalHandle.addSecondChildToSecondChild(createControl());
+		return horizontalHandle;
+	}
+
+	public static HorizontalHandle createHorizontalWithTwoControlsAsChildren() {
+		final HorizontalHandle horizontalHandle = createHorizontalWithoutChildren();
+		final Control control1 = createControl();
 		horizontalHandle.addFirstChildToRoot(control1);
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		final Control control2 = createControl();
 		horizontalHandle.addSecondChildToRoot(control2);
 		return horizontalHandle;
 	}
 
-	/**
-	 * @return
-	 */
-	private HorizontalHandle createHorizontalWithoutChildren() {
+	private static Control createControl() {
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		control.setTargetFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
+		return control;
+	}
+
+	public static HorizontalHandle createHorizontalWithoutChildren() {
 		final Renderable horizontal = createHorizontal();
 		return new HorizontalHandle(horizontal);
 	}
 
-	private Renderable createHorizontal() {
+	public static Renderable createHorizontal() {
 		return ViewFactory.eINSTANCE.createColumnComposite();
 	}
 

@@ -57,16 +57,16 @@ public final class SWTViewTestHelper {
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-
-		viewModelContextImpl = new ViewModelContextImpl((View) renderable, input);
-		viewModelContextImpl.registerViewChangeListener(node);
+		if (renderable instanceof View) {
+			viewModelContextImpl = new ViewModelContextImpl((View) renderable, input);
+			viewModelContextImpl.registerViewChangeListener(node);
+		}
 		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, node,
 			adapterFactoryItemDelegator);
 		// TODO return resultRows
 		if (resultRows == null) {
 			return null;
 		}
-
 		composedAdapterFactory.dispose();
 
 		return resultRows.get(0).getMainControl();

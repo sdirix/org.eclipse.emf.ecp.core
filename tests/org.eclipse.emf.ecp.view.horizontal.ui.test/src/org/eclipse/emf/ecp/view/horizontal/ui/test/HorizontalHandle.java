@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.horizontal.ui.test;
 
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.CompositeCollection;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
@@ -24,6 +26,11 @@ public class HorizontalHandle {
 	private final Renderable horizontal;
 	private Renderable firstChild;
 	private Renderable secondChild;
+
+	private Renderable firstFirstChild;
+	private Renderable firstSecondChild;
+	private Renderable secondFirstChild;
+	private Renderable secondSecondChild;
 
 	/**
 	 * @param horizontal
@@ -78,6 +85,99 @@ public class HorizontalHandle {
 	 */
 	public void setSecondChild(Renderable secondChild) {
 		this.secondChild = secondChild;
+	}
+
+	/**
+	 * 
+	 */
+	public void addFirstChildToFirstChild(Composite composite) {
+		final CompositeCollection collection = (CompositeCollection) getFirstChild();
+		collection.getComposites().add(composite);
+		setFirstFirstChild(composite);
+	}
+
+	/**
+	 * @return the firstFirstChild
+	 */
+	public Renderable getFirstFirstChild() {
+		return firstFirstChild;
+	}
+
+	/**
+	 * @param firstFirstChild the firstFirstChild to set
+	 */
+	public void setFirstFirstChild(Renderable firstFirstChild) {
+		this.firstFirstChild = firstFirstChild;
+	}
+
+	/**
+	 * @return the firstSecondChild
+	 */
+	public Renderable getFirstSecondChild() {
+		return firstSecondChild;
+	}
+
+	/**
+	 * @param firstSecondChild the firstSecondChild to set
+	 */
+	public void setFirstSecondChild(Renderable firstSecondChild) {
+		this.firstSecondChild = firstSecondChild;
+	}
+
+	/**
+	 * @return the secondFirstChild
+	 */
+	public Renderable getSecondFirstChild() {
+		return secondFirstChild;
+	}
+
+	/**
+	 * @param secondFirstChild the secondFirstChild to set
+	 */
+	public void setSecondFirstChild(Renderable secondFirstChild) {
+		this.secondFirstChild = secondFirstChild;
+	}
+
+	/**
+	 * @return the secondSecondChild
+	 */
+	public Renderable getSecondSecondChild() {
+		return secondSecondChild;
+	}
+
+	/**
+	 * @param secondSecondChild the secondSecondChild to set
+	 */
+	public void setSecondSecondChild(Renderable secondSecondChild) {
+		this.secondSecondChild = secondSecondChild;
+	}
+
+	/**
+	 * @param composite
+	 */
+	public void addSecondChildToFirstChild(Control composite) {
+		final CompositeCollection collection = (CompositeCollection) getFirstChild();
+		collection.getComposites().add(composite);
+		setFirstSecondChild(composite);
+	}
+
+	/**
+	 * @param composite
+	 */
+	public void addFirstChildToSecondChild(Control composite) {
+		final CompositeCollection collection = (CompositeCollection) getSecondChild();
+		collection.getComposites().add(composite);
+		setSecondFirstChild(composite);
+
+	}
+
+	/**
+	 * @param composite
+	 */
+	public void addSecondChildToSecondChild(Control composite) {
+		final CompositeCollection collection = (CompositeCollection) getSecondChild();
+		collection.getComposites().add(composite);
+		setSecondSecondChild(composite);
 	}
 
 }
