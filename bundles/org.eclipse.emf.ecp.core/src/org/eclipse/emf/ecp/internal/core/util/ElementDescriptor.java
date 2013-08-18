@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
 
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
  */
 public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Element implements
 	InternalDescriptor<ELEMENT>, DisposeListener {
@@ -29,7 +30,7 @@ public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Elem
 			if (resolvedElement instanceof ECPDisposable) {
 				try {
 					((ECPDisposable) resolvedElement).dispose();
-				} catch (Exception ex) {
+				} catch (final Exception ex) {
 					Activator.log(ex);
 				}
 			}
@@ -91,18 +92,18 @@ public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Elem
 				try {
 					resolvedElement = resolve();
 					if (resolvedElement instanceof InternalRegistryElement) {
-						InternalRegistryElement registryElement = (InternalRegistryElement) resolvedElement;
+						final InternalRegistryElement registryElement = (InternalRegistryElement) resolvedElement;
 						registryElement.setLabel(getLabel());
 						registryElement.setDescription(getDescription());
 					}
 
 					if (resolvedElement instanceof ECPDisposable) {
-						ECPDisposable disposable = (ECPDisposable) resolvedElement;
+						final ECPDisposable disposable = (ECPDisposable) resolvedElement;
 						disposable.addDisposeListener(this);
 					}
 
 					resolvedElement(resolvedElement);
-				} catch (Throwable t) {
+				} catch (final Throwable t) {
 					throw new Error("Unable to resolve " + this, t);
 				}
 

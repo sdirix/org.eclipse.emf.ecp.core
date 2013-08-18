@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
+ * @param <OBSERVER>
  */
 public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Lifecycle implements DisposeListener {
 	private static final ThreadLocal<Boolean> DISPOSING_ELEMENT = new InheritableThreadLocal<Boolean>();

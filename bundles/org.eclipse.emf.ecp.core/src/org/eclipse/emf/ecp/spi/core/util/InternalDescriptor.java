@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
  */
 public interface InternalDescriptor<ELEMENT extends ECPElement> extends InternalRegistryElement {
 	boolean isResolved();

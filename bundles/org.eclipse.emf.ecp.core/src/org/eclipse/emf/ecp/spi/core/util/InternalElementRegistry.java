@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
  */
 public interface InternalElementRegistry<ELEMENT extends ECPElement> {
 	void addResolveListener(ResolveListener<ELEMENT> listener);

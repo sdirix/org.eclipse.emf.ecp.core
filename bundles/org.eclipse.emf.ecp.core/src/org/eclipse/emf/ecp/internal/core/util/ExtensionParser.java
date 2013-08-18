@@ -11,10 +11,9 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
-
-import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
-import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -23,15 +22,14 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
-
+import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
+import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.osgi.framework.Bundle;
-
-import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
  */
 public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> extends Lifecycle implements
 	IRegistryChangeListener {
@@ -61,11 +59,11 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 
 	/** {@inheritDoc} */
 	public void registryChanged(IRegistryChangeEvent event) {
-		Set<String> remove = new HashSet<String>();
-		Set<ELEMENT> add = new HashSet<ELEMENT>();
-		for (IExtensionDelta delta : event.getExtensionDeltas(namespace, name)) {
-			IExtension extension = delta.getExtension();
-			int kind = delta.getKind();
+		final Set<String> remove = new HashSet<String>();
+		final Set<ELEMENT> add = new HashSet<ELEMENT>();
+		for (final IExtensionDelta delta : event.getExtensionDeltas(namespace, name)) {
+			final IExtension extension = delta.getExtension();
+			final int kind = delta.getKind();
 			switch (kind) {
 			case IExtensionDelta.ADDED:
 				addExtension(extension, add);
@@ -77,11 +75,11 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 			}
 		}
 
-		Set<ELEMENT> removedElements = elementRegistry.doChangeElements(remove, add);
+		final Set<ELEMENT> removedElements = elementRegistry.doChangeElements(remove, add);
 		if (removedElements != null) {
-			for (ELEMENT removedElement : removedElements) {
+			for (final ELEMENT removedElement : removedElements) {
 				if (removedElement instanceof ECPDisposable) {
-					ECPDisposable disposable = removedElement;
+					final ECPDisposable disposable = removedElement;
 					disposable.dispose();
 				}
 			}
@@ -92,11 +90,11 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 	protected void doActivate() throws Exception {
 		super.doActivate();
 
-		String extensionPointID = namespace + "." + name;
-		Set<ELEMENT> add = new HashSet<ELEMENT>();
+		final String extensionPointID = namespace + "." + name;
+		final Set<ELEMENT> add = new HashSet<ELEMENT>();
 
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(extensionPointID);
-		for (IExtension extension : extensionPoint.getExtensions()) {
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(extensionPointID);
+		for (final IExtension extension : extensionPoint.getExtensions()) {
 			addExtension(extension, add);
 		}
 
@@ -111,17 +109,17 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 	}
 
 	protected void addExtension(IExtension extension, Set<ELEMENT> result) {
-		String name = extension.getUniqueIdentifier();
-		IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+		final String name = extension.getUniqueIdentifier();
+		final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 
-		ELEMENT element = createElement(name, configurationElement);
+		final ELEMENT element = createElement(name, configurationElement);
 		element.setLabel(extension.getLabel());
 		element.setDescription(configurationElement.getAttribute("description"));
 		result.add(element);
 	}
 
 	protected void removeExtension(IExtension extension, Set<String> result) {
-		String name = extension.getUniqueIdentifier();
+		final String name = extension.getUniqueIdentifier();
 		result.add(name);
 	}
 
@@ -142,15 +140,15 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 			this.configurationElement = configurationElement;
 
 			try {
-				String bundleName = configurationElement.getContributor().getName();
-				Bundle bundle = Platform.getBundle(bundleName);
+				final String bundleName = configurationElement.getContributor().getName();
+				final Bundle bundle = Platform.getBundle(bundleName);
 				String location = bundle.getLocation();
 
 				if (location.startsWith("initial@")) {
 					location = location.substring("initial@".length());
 				}
 
-				String prefix = "reference:file:";
+				final String prefix = "reference:file:";
 				if (location.startsWith(prefix)) {
 					location = location.substring(prefix.length());
 
@@ -158,7 +156,7 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 					System.out.println(getClass().getSimpleName() + ": " + bundleName + " [" + bundle.getBundleId()
 						+ "] --> file:" + new File(location).getCanonicalPath());
 				}
-			} catch (Exception ex) {
+			} catch (final Exception ex) {
 				ex.printStackTrace();
 			}
 		}
