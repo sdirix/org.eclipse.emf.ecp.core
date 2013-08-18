@@ -29,9 +29,12 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public final class SWTViewTestHelper {
 
@@ -78,4 +81,27 @@ public final class SWTViewTestHelper {
 		return render(renderable, ViewFactory.eINSTANCE.createView(), shell);
 	}
 
+	public static int getNumberofColumns(Composite composite) {
+		final GridLayout gridLayout = (GridLayout) composite.getLayout();
+		return gridLayout.numColumns;
+	}
+
+	public static boolean checkIfThereIsATextControlWithLabel(Control control) {
+		if (!(control instanceof Composite)) {
+			return false;
+		}
+		Composite controlComposite = (Composite) control;
+		controlComposite = (Composite) controlComposite.getChildren()[1];
+		return checkIfThereIsATextControl(controlComposite);
+	}
+
+	public static boolean checkIfThereIsATextControl(Control control) {
+		Composite controlComposite = (Composite) control;
+		controlComposite = (Composite) controlComposite.getChildren()[1];
+		controlComposite = (Composite) controlComposite.getChildren()[0];
+		controlComposite = (Composite) controlComposite.getChildren()[0];
+		final Control textControl = controlComposite.getChildren()[0];
+
+		return textControl instanceof Text;
+	}
 }
