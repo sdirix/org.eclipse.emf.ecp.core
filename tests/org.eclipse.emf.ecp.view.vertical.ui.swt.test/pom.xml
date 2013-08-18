@@ -10,7 +10,7 @@
     <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
   </parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
-	<artifactId>org.eclipse.emf.ecp.view.horizontal.ui.swt.test</artifactId>
+	<artifactId>org.eclipse.emf.ecp.view.vertical.ui.swt.test</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 
@@ -22,8 +22,8 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<testSuite>org.eclipse.emf.ecp.view.horizontal.ui.swt.test</testSuite>
-		          	<testClass>org.eclipse.emf.ecp.view.horizontal.ui.swt.test.AllTests</testClass>
+					<testSuite>org.eclipse.emf.ecp.view.vertical.ui.swt.test</testSuite>
+		          	<testClass>org.eclipse.emf.ecp.view.vertical.ui.swt.test.AllTests</testClass>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
 		          	<testFailureIgnore>true</testFailureIgnore>
