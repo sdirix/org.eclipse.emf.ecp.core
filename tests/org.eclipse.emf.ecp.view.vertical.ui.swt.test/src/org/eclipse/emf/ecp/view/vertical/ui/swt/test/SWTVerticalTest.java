@@ -90,9 +90,9 @@ public class SWTVerticalTest {
 		assertEquals(2, SWTViewTestHelper.getNumberofColumns(firstVertical));
 		assertEquals(2, SWTViewTestHelper.getNumberofColumns(secondVertical));
 
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[0]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[0]));
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[1]));
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[1]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[3]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[3]));
 	}
 }
