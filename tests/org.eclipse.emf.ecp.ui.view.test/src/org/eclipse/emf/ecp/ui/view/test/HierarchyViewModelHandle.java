@@ -9,9 +9,8 @@
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.horizontal.ui.test;
+package org.eclipse.emf.ecp.ui.view.test;
 
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -21,9 +20,9 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * @author Jonas
  * 
  */
-public class HorizontalHandle {
+public class HierarchyViewModelHandle {
 
-	private final Renderable horizontal;
+	private final Renderable root;
 	private Renderable firstChild;
 	private Renderable secondChild;
 
@@ -33,17 +32,17 @@ public class HorizontalHandle {
 	private Renderable secondSecondChild;
 
 	/**
-	 * @param horizontal
+	 * @param root
 	 */
-	public HorizontalHandle(Renderable horizontal) {
-		this.horizontal = horizontal;
+	public HierarchyViewModelHandle(Renderable root) {
+		this.root = root;
 	}
 
 	/**
 	 * @return the horizontal
 	 */
-	public Renderable getHorizontal() {
-		return horizontal;
+	public Renderable getRoot() {
+		return root;
 	}
 
 	/**
@@ -51,8 +50,8 @@ public class HorizontalHandle {
 	 */
 	public void addFirstChildToRoot(Renderable renderable) {
 		firstChild = renderable;
-		final ColumnComposite columnComposite = (ColumnComposite) horizontal;
-		columnComposite.getComposites().add((Composite) renderable);
+		final CompositeCollection collection = (CompositeCollection) root;
+		collection.getComposites().add((Composite) renderable);
 
 	}
 
@@ -61,8 +60,8 @@ public class HorizontalHandle {
 	 */
 	public void addSecondChildToRoot(Renderable renderable) {
 		setSecondChild(renderable);
-		final ColumnComposite columnComposite = (ColumnComposite) horizontal;
-		columnComposite.getComposites().add((Composite) renderable);
+		final CompositeCollection collection = (CompositeCollection) root;
+		collection.getComposites().add((Composite) renderable);
 
 	}
 

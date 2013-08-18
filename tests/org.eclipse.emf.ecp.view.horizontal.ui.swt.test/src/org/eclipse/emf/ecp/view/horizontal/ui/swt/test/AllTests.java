@@ -10,7 +10,7 @@
  * Jonas
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.view.table.ui.swt.test;
+package org.eclipse.emf.ecp.view.horizontal.ui.swt.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

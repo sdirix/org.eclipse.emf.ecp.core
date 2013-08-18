@@ -10,7 +10,7 @@
  * Jonas
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.view.table.ui.swt.test;
+package org.eclipse.emf.ecp.view.horizontal.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.horizontal.ui.test.HorizontalHandle;
+import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
 import org.eclipse.emf.ecp.view.horizontal.ui.test.HorizontalTest;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
@@ -54,8 +54,8 @@ public class SWTHorizontalTest {
 	public void testHorizontalWithoutChildren() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final HorizontalHandle handle = HorizontalTest.createHorizontalWithoutChildren();
-		final Control render = SWTViewTestHelper.render(handle.getHorizontal(), domainElement, shell);
+		final HierarchyViewModelHandle handle = HorizontalTest.createHorizontalWithoutChildren();
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 		final Composite composite = (Composite) render;
 		assertEquals(0, composite.getChildren().length);
@@ -65,8 +65,8 @@ public class SWTHorizontalTest {
 	public void testHorizontalWithTwoControlsAsChildren() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final HorizontalHandle handle = HorizontalTest.createHorizontalWithTwoControlsAsChildren();
-		final Control render = SWTViewTestHelper.render(handle.getHorizontal(), domainElement, shell);
+		final HierarchyViewModelHandle handle = HorizontalTest.createHorizontalWithTwoControlsAsChildren();
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 		final Composite composite = (Composite) render;
 		assertEquals(2, composite.getChildren().length);
@@ -88,9 +88,9 @@ public class SWTHorizontalTest {
 	public void testHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final HorizontalHandle handle = HorizontalTest
+		final HierarchyViewModelHandle handle = HorizontalTest
 			.createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
-		final Control render = SWTViewTestHelper.render(handle.getHorizontal(), domainElement, shell);
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 		final Composite composite = (Composite) render;
 		assertEquals(2, composite.getChildren().length);

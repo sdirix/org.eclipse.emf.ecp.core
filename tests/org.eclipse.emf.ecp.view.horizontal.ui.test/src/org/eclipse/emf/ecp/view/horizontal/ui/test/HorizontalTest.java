@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -34,30 +35,30 @@ public class HorizontalTest {
 
 	@Test
 	public void testHorizontalWithoutChildren() {
-		final HorizontalHandle horizontalHandle = createHorizontalWithoutChildren();
-		final Node<Renderable> node = buildNode(horizontalHandle.getHorizontal());
+		final HierarchyViewModelHandle horizontalHandle = createHorizontalWithoutChildren();
+		final Node<Renderable> node = buildNode(horizontalHandle.getRoot());
 		assertEquals(1, ViewTestHelper.countNodes(node));
-		assertEquals(horizontalHandle.getHorizontal(), node.getRenderable());
+		assertEquals(horizontalHandle.getRoot(), node.getRenderable());
 	}
 
 	@Test
 	public void testHorizontalWithTwoControlsAsChildren() {
-		final HorizontalHandle horizontalHandle = createHorizontalWithTwoControlsAsChildren();
+		final HierarchyViewModelHandle horizontalHandle = createHorizontalWithTwoControlsAsChildren();
 
-		final Node<Renderable> node = buildNode(horizontalHandle.getHorizontal());
+		final Node<Renderable> node = buildNode(horizontalHandle.getRoot());
 		assertEquals(3, ViewTestHelper.countNodes(node));
-		assertEquals(horizontalHandle.getHorizontal(), node.getRenderable());
+		assertEquals(horizontalHandle.getRoot(), node.getRenderable());
 		assertEquals(horizontalHandle.getFirstChild(), node.getChildren().get(0).getRenderable());
 		assertEquals(horizontalHandle.getSecondChild(), node.getChildren().get(1).getRenderable());
 	}
 
 	@Test
 	public void testHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() {
-		final HorizontalHandle horizontalHandle = createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
+		final HierarchyViewModelHandle horizontalHandle = createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
 
-		final Node<Renderable> node = buildNode(horizontalHandle.getHorizontal());
+		final Node<Renderable> node = buildNode(horizontalHandle.getRoot());
 		assertEquals(7, ViewTestHelper.countNodes(node));
-		assertEquals(horizontalHandle.getHorizontal(), node.getRenderable());
+		assertEquals(horizontalHandle.getRoot(), node.getRenderable());
 		assertEquals(horizontalHandle.getFirstChild(), node.getChildren().get(0).getRenderable());
 		assertEquals(horizontalHandle.getSecondChild(), node.getChildren().get(1).getRenderable());
 		assertEquals(horizontalHandle.getFirstFirstChild(), node.getChildren().get(0).getChildren().get(0)
@@ -70,8 +71,8 @@ public class HorizontalTest {
 			.getRenderable());
 	}
 
-	public static HorizontalHandle createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() {
-		final HorizontalHandle horizontalHandle = createHorizontalWithoutChildren();
+	public static HierarchyViewModelHandle createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() {
+		final HierarchyViewModelHandle horizontalHandle = createHorizontalWithoutChildren();
 		horizontalHandle.addFirstChildToRoot(createHorizontal());
 		horizontalHandle.addSecondChildToRoot(createHorizontal());
 		horizontalHandle.addFirstChildToFirstChild(createControl());
@@ -81,8 +82,8 @@ public class HorizontalTest {
 		return horizontalHandle;
 	}
 
-	public static HorizontalHandle createHorizontalWithTwoControlsAsChildren() {
-		final HorizontalHandle horizontalHandle = createHorizontalWithoutChildren();
+	public static HierarchyViewModelHandle createHorizontalWithTwoControlsAsChildren() {
+		final HierarchyViewModelHandle horizontalHandle = createHorizontalWithoutChildren();
 		final Control control1 = createControl();
 		horizontalHandle.addFirstChildToRoot(control1);
 		final Control control2 = createControl();
@@ -96,9 +97,9 @@ public class HorizontalTest {
 		return control;
 	}
 
-	public static HorizontalHandle createHorizontalWithoutChildren() {
+	public static HierarchyViewModelHandle createHorizontalWithoutChildren() {
 		final Renderable horizontal = createHorizontal();
-		return new HorizontalHandle(horizontal);
+		return new HierarchyViewModelHandle(horizontal);
 	}
 
 	public static Renderable createHorizontal() {
