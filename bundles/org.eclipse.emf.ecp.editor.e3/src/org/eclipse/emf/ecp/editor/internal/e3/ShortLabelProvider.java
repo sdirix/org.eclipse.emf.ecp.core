@@ -38,7 +38,7 @@ public class ShortLabelProvider extends AdapterFactoryLabelProvider {
 	 */
 	@Override
 	public String getText(Object object) {
-		int limit = 30;
+		final int limit = 30;
 		String name = super.getText(object);
 		if (name == null) {
 			name = ""; //$NON-NLS-1$

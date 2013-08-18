@@ -33,7 +33,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -73,6 +72,9 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 	private final RepositoryParser extensionParser = new RepositoryParser();
 
+	/**
+	 * Default constructor.
+	 */
 	public ECPRepositoryManagerImpl() {
 		INSTANCE = this;
 	}
@@ -315,16 +317,6 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		/** {@inheritDoc} */
 		public void setProviderSpecificData(Object data) {
 			getResolvedElement().setProviderSpecificData(data);
-		}
-
-		// /** {@inheritDoc} */
-		// public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
-		// return getResolvedElement().getAdapter(adapterType);
-		// }
-
-		/** {@inheritDoc} */
-		public ECPContainer getContext() {
-			return this;
 		}
 
 		/** {@inheritDoc} */
