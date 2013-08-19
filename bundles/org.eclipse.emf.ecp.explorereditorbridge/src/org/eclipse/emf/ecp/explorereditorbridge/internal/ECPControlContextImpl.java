@@ -11,6 +11,13 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.explorereditorbridge.internal;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Set;
+
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -22,28 +29,25 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.dialogs.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
+import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Set;
 
 /**
  * @author Eugen Neufeld
@@ -52,11 +56,12 @@ import java.util.Set;
 public class ECPControlContextImpl implements ECPControlContext {
 
 	private final EObject modelElement;
+	private final ViewModelContext viewContext;
 
 	private final ECPProject ecpProject;
 	private final Shell shell;
 
-	private EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
+	private final EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
 
 	/**
 	 * Constructor for the default implementation of the ECPControlContext.
@@ -70,6 +75,22 @@ public class ECPControlContextImpl implements ECPControlContext {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		this.shell = shell;
+		viewContext = new ViewModelContextImpl(getView(), getModelElement());
+	}
+
+	/**
+	 * Constructor for the default implementation of the ECPControlContext.
+	 * 
+	 * @param modelElement the {@link EObject} which will be opened in the editor
+	 * @param ecpProject the {@link ECPProject} to which the modelElement belongs
+	 * @param shell the {@link Shell} to use for UI elements
+	 */
+	public ECPControlContextImpl(EObject modelElement, ECPProject ecpProject, Shell shell, ViewModelContext viewContext) {
+		super();
+		this.modelElement = modelElement;
+		this.ecpProject = ecpProject;
+		this.shell = shell;
+		this.viewContext = viewContext;
 	}
 
 	/** {@inheritDoc} */
@@ -144,30 +165,31 @@ public class ECPControlContextImpl implements ECPControlContext {
 
 	/** {@inheritDoc} */
 	public EObject getNewElementFor(EReference eReference) {
-		Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
+		final Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
 
-		SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element",
+		final SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element",
 			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 			Messages.NewModelElementWizard_PageTitle_AddModelElement,
 			Messages.NewModelElementWizard_PageDescription_AddModelElement);
 
-		SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
+		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+			new HashSet<EPackage>(),
 			new HashSet<EPackage>(), classes);
 		wizard.setCompositeProvider(helper);
 
-		WizardDialog wd = new WizardDialog(shell, wizard);
+		final WizardDialog wd = new WizardDialog(shell, wizard);
 		// wizard.setWindowTitle("New Reference Element");
 		EObject newMEInstance = null;
-		int result = wd.open();
+		final int result = wd.open();
 
-		if (result == WizardDialog.OK) {
-			Object[] selection = helper.getSelection();
+		if (result == Window.OK) {
+			final Object[] selection = helper.getSelection();
 			if (selection == null || selection.length == 0) {
 				return null;
 			}
-			EClass eClasse = (EClass) selection[0];
+			final EClass eClasse = (EClass) selection[0];
 			// 1.create ME
-			EPackage ePackage = eClasse.getEPackage();
+			final EPackage ePackage = eClasse.getEPackage();
 			newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
 		}
 		if (newMEInstance == null) {
@@ -212,7 +234,8 @@ public class ECPControlContextImpl implements ECPControlContext {
 		// Collection<EObject> allElements=new HashSet<EObject>();
 		//
 
-		Iterator<EObject> allElements = ((InternalProject) ecpProject).getReferenceCandidates(modelElement, eReference);
+		final Iterator<EObject> allElements = ((InternalProject) ecpProject).getReferenceCandidates(modelElement,
+			eReference);
 
 		// EClass clazz = eReference.getEReferenceType();
 		// Collection<EObject> allElements = context.getAllModelElementsbyClass(clazz, true);
@@ -250,7 +273,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		// }
 		// }
 		// }
-		Set<EObject> elements = new HashSet<EObject>();
+		final Set<EObject> elements = new HashSet<EObject>();
 		while (allElements.hasNext()) {
 			elements.add(allElements.next());
 		}
@@ -258,15 +281,15 @@ public class ECPControlContextImpl implements ECPControlContext {
 		// ECPHandlerHelper.createNewReferenceElement(modelElement, eReference,
 		// new WizardUICallback<SelectModelElementComposite>(shell, null));
 		// TODO remove PlatformUI
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		// TODO language
-		MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,//$NON-NLS-1$
+		final MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,//$NON-NLS-1$
 			getModelElement(), eReference, elements, shell);
 
-		int dialogResult = dlg.open();
+		final int dialogResult = dlg.open();
 		// TODO commands
 		if (dialogResult == Window.OK) {
-			Object result = dlg.getFirstResult();
+			final Object result = dlg.getFirstResult();
 			return (EObject) result;
 			// if (eReference.isMany()) {
 			// Object[] results = dlg.getResult();
@@ -311,7 +334,36 @@ public class ECPControlContextImpl implements ECPControlContext {
 	}
 
 	public ECPControlContext createSubContext(EObject eObject) {
-		return new ECPControlContextImpl(eObject, ecpProject, shell);
+		return new ECPControlContextImpl(eObject, ecpProject, shell, viewContext);
+	}
+
+	/**
+	 * @return
+	 */
+	private View getView() {
+		int highestPrio = IViewProvider.NOT_APPLICABLE;
+		IViewProvider selectedProvider = null;
+		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
+			final int prio = viewProvider.canRender(getModelElement());
+			if (prio > highestPrio) {
+				highestPrio = prio;
+				selectedProvider = viewProvider;
+			}
+		}
+		if (selectedProvider != null) {
+			return selectedProvider.generate(getModelElement());
+		}
+		return null;
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getViewContext()
+	 */
+	public ViewModelContext getViewContext() {
+		return getViewContext();
 	}
 
 }

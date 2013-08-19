@@ -17,6 +17,7 @@ import java.util.Locale;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
@@ -102,4 +103,11 @@ public interface ECPControlContext {
 	 * @return the locale for this context
 	 */
 	Locale getLocale();
+
+	/**
+	 * Returns the view context associated with the context.
+	 * 
+	 * @return the view context
+	 */
+	ViewModelContext getViewContext();
 }
