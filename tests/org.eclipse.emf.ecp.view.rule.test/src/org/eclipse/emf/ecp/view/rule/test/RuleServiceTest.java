@@ -973,6 +973,8 @@ public class RuleServiceTest {
 
 	/**
 	 * Test propagation show rule child rule right to wrong.
+	 * 
+	 * Control should not be visible since its parent will be hidden.
 	 */
 	@Test
 	public void testPropagationShowRuleChildRuleRightToWrong() {
