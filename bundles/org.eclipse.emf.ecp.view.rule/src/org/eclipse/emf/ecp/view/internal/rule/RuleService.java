@@ -173,7 +173,11 @@ public class RuleService extends AbstractViewService {
 
 			if (dry) {
 				final Object currentValue = domainEObject.eGet(attribute);
-				hasChanged = !currentValue.equals(newValue);
+				if (currentValue == null) {
+					hasChanged = newValue == null ? false : true;
+				} else {
+					hasChanged = !currentValue.equals(newValue);
+				}
 			}
 
 			if (hasChanged) {

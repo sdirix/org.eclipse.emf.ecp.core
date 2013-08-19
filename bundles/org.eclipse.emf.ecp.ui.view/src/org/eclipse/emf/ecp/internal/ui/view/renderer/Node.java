@@ -99,6 +99,9 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 *            should be enabled
 	 */
 	public void enable(final boolean isEnabled) {
+		if (viewModelElement.isReadonly()) {
+			return;
+		}
 		// isEnabled = shouldBeEnabled;
 		for (final Node<? extends Renderable> child : getChildren()) {
 			child.enable(isEnabled);
@@ -234,8 +237,10 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 */
 	public void addRenderingResultDelegator(RenderingResultDelegator delegator) {
 		delegators.add(delegator);
-		delegator.enable(viewModelElement.isEnabled());
 		delegator.show(viewModelElement.isVisible());
+		if (!viewModelElement.isReadonly()) {
+			delegator.enable(viewModelElement.isEnabled());
+		}
 	}
 
 	/**

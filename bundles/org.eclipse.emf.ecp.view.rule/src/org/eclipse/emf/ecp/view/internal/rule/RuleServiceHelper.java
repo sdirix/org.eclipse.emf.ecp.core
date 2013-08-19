@@ -67,12 +67,13 @@ public class RuleServiceHelper extends AbstractViewService {
 
 			final Renderable renderable = entry.getKey();
 			final Boolean newState = entry.getValue();
-
+			if (newState) {
+				continue;
+			}
 			if (cls.isInstance(renderable)) {
-				if (!newState) {
-					result.add((T) renderable);
-				}
-			} else {
+				result.add((T) renderable);
+			}
+			else {
 				EObject parent = renderable.eContainer();
 				while (parent != null) {
 					if (cls.isInstance(parent)) {
@@ -82,6 +83,7 @@ public class RuleServiceHelper extends AbstractViewService {
 					parent = parent.eContainer();
 				}
 			}
+
 		}
 
 		return result;
