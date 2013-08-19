@@ -2022,14 +2022,104 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test get involved e object change.
-	 * 
-	 * Should return empty set, since renderable will
+	 * Should return the control. Changing the league's name to
+	 * 'League2' should not alter the disabled/show state of the
+	 * control.
 	 */
-	// @Test
+	@Test
+	public void testGetInvolvedEObjectsHelperBothRulesApply() {
+		addLeagueEnableRule(controlPName, true);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League2", Control.class);
+		assertEquals(1, involvedEControls.size());
+	}
+
+	/**
+	 * Should return the parent columns of the control.
+	 * Changing the league's name to 'League2' should not alter
+	 * the disabled/show state of the control.
+	 */
+	@Test
+	public void testGetInvolvedEObjectsHelperNoRuleAppliesFilterForComposite() {
+		addLeagueEnableRule(controlPName, true);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Column> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League2", Column.class);
+		assertEquals(2, involvedEControls.size());
+	}
+
+	/**
+	 * Should return nothing since the correct value is set.
+	 */
+	@Test
 	public void testGetInvolvedEObjectsHelperNoRuleApplies() {
 		addLeagueEnableRule(controlPName, true);
 		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League", Control.class);
+		assertEquals(0, involvedEControls.size());
+	}
+
+	/**
+	 * Should return the control since the disable rule applies because
+	 * of the wrong value.
+	 */
+	@Test
+	public void testGetInvolvedEObjectsHelperEnableRuleAppliesWrongValue() {
+		addLeagueEnableRule(controlPName, false);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League2", Control.class);
+		assertEquals(1, involvedEControls.size());
+	}
+
+	/**
+	 * Should return nothing since correct value is set.
+	 */
+	@Test
+	public void testGetInvolvedEObjectsHelperEnableRuleAppliesCorrectValue() {
+		addLeagueEnableRule(controlPName, false);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League", Control.class);
+		assertEquals(0, involvedEControls.size());
+	}
+
+	/**
+	 * Should return nothing because the column should be visible, since
+	 * 'League2' is the wrong value and the we have a disable rule.
+	 */
+
+	@Test
+	public void testGetInvolvedEObjectsHelperShowRuleAppliesWrongValue() {
+		addLeagueEnableRule(controlPName, true);
+		addLeagueShowRule(parentColumn, false);
 		setLeagueToWrong();
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
@@ -2041,40 +2131,11 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test get involved e object change.
-	 * 
-	 * Should return empty set, since renderable will
+	 * Should return the control because the column should be hidden, since
+	 * 'League' is the right value and the we have a disable rule.
 	 */
-	// @Test
-	public void testGetInvolvedEObjectsHelperEnableAndShowRulesApply() {
-		addLeagueEnableRule(controlPName, true);
-		addLeagueShowRule(parentColumn, true);
-		setLeagueToWrong();
-		instantiateRuleService();
-		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Control.class);
-		assertEquals(1, involvedEControls.size());
-	}
-
-	// @Test
-	public void testGetInvolvedEObjectsHelperShowRuleApplies() {
-		addLeagueEnableRule(controlPName, false);
-		addLeagueShowRule(parentColumn, true);
-		setLeagueToWrong();
-		instantiateRuleService();
-		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Control.class);
-		assertEquals(1, involvedEControls.size());
-	}
-
-	// @Test
-	public void testGetInvolvedEObjectsHelperEnableRuleApplies() {
+	@Test
+	public void testGetInvolvedEObjectsHelperShowRuleAppliesCorrectValue() {
 		addLeagueEnableRule(controlPName, true);
 		addLeagueShowRule(parentColumn, false);
 		setLeagueToWrong();
