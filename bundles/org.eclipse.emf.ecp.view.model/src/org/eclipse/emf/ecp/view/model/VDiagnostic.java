@@ -49,4 +49,18 @@ public interface VDiagnostic extends EObject
 	 */
 	EList<Object> getDiagnostics();
 
+	/**
+	 * Returns the highest severity found in the diagnostics.
+	 * 
+	 * @return the highest severity
+	 */
+	int getHighestSeverity();
+
+	/**
+	 * Returns the message associated with this validation.
+	 * 
+	 * @return the message
+	 */
+	String getMessage();
+
 } // VDiagnostic
