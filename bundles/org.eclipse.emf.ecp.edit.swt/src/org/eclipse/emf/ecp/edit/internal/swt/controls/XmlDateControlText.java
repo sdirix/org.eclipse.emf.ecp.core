@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -96,7 +97,8 @@ public class XmlDateControlText extends AbstractTextControl {
 		super.fillControlComposite(composite);
 		((GridLayout) composite.getLayout()).numColumns = 2;
 		final Button button = new Button(composite, SWT.PUSH);
-		button.setText(ControlMessages.XmlDateControlText_SelectDate);
+		button.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
+		button.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		button.addSelectionListener(new SelectionAdapter() {
 
 			@Override

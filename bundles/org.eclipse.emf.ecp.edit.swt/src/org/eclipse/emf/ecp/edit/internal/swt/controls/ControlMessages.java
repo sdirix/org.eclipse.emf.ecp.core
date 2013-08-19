@@ -60,7 +60,6 @@ public class ControlMessages extends NLS {
 	public static String XmlDateControlText_InvalidNumber;
 	public static String XmlDateControlText_NoDateSetClickToSetDate;
 	public static String XmlDateControlText_NumberInvalidValueWillBeUnset;
-	public static String XmlDateControlText_SelectDate;
 	public static String XmlDateControlText_UnsetDate;
 
 	private ControlMessages() {
