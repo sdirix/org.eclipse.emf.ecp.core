@@ -381,6 +381,33 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.VDiagnostic} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected VDiagnosticItemProvider vDiagnosticItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VDiagnostic}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createVDiagnosticAdapter()
+	{
+		if (vDiagnosticItemProvider == null)
+		{
+			vDiagnosticItemProvider = new VDiagnosticItemProvider(this);
+		}
+
+		return vDiagnosticItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -543,6 +570,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			groupItemProvider.dispose();
 		if (actionItemProvider != null)
 			actionItemProvider.dispose();
+		if (vDiagnosticItemProvider != null)
+			vDiagnosticItemProvider.dispose();
 	}
 
 }

@@ -134,6 +134,16 @@ public interface ViewFactory extends EFactory {
 	Action createAction();
 
 	/**
+	 * Returns a new object of class '<em>VDiagnostic</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>VDiagnostic</em>'.
+	 * @generated
+	 */
+	VDiagnostic createVDiagnostic();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -150,6 +150,16 @@ public interface ViewPackage extends EPackage {
 	int RENDERABLE__READONLY = 2;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int RENDERABLE__DIAGNOSTIC = 3;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -157,7 +167,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE__ATTACHMENTS = 3;
+	int RENDERABLE__ATTACHMENTS = 4;
 
 	/**
 	 * The number of structural features of the '<em>Renderable</em>' class.
@@ -167,7 +177,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RENDERABLE_FEATURE_COUNT = 4;
+	int RENDERABLE_FEATURE_COUNT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -198,6 +208,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_CATEGORIZATION__READONLY = RENDERABLE__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__DIAGNOSTIC = RENDERABLE__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -268,6 +288,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORIZATION__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__DIAGNOSTIC = ABSTRACT_CATEGORIZATION__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -348,6 +378,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIEW__READONLY = CATEGORIZATION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__DIAGNOSTIC = CATEGORIZATION__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -450,6 +490,16 @@ public interface ViewPackage extends EPackage {
 	int CATEGORY__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__DIAGNOSTIC = ABSTRACT_CATEGORIZATION__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -539,6 +589,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE__READONLY = RENDERABLE__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__DIAGNOSTIC = RENDERABLE__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -717,6 +777,16 @@ public interface ViewPackage extends EPackage {
 	int ABSTRACT_CONTROL__READONLY = COMPOSITE__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CONTROL__DIAGNOSTIC = COMPOSITE__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -785,6 +855,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTROL__READONLY = ABSTRACT_CONTROL__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__DIAGNOSTIC = ABSTRACT_CONTROL__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -905,6 +985,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__READONLY = CONTROL__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__DIAGNOSTIC = CONTROL__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1077,6 +1167,16 @@ public interface ViewPackage extends EPackage {
 	int CUSTOM_COMPOSITE__READONLY = COMPOSITE__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_COMPOSITE__DIAGNOSTIC = COMPOSITE__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1157,6 +1257,16 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_COLLECTION__READONLY = COMPOSITE__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_COLLECTION__DIAGNOSTIC = COMPOSITE__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1225,6 +1335,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int COLUMN_COMPOSITE__READONLY = COMPOSITE_COLLECTION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN_COMPOSITE__DIAGNOSTIC = COMPOSITE_COLLECTION__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1297,6 +1417,16 @@ public interface ViewPackage extends EPackage {
 	int COLUMN__READONLY = COMPOSITE_COLLECTION__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COLUMN__DIAGNOSTIC = COMPOSITE_COLLECTION__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1365,6 +1495,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int GROUP__READONLY = COMPOSITE_COLLECTION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__DIAGNOSTIC = COMPOSITE_COLLECTION__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -1459,6 +1599,38 @@ public interface ViewPackage extends EPackage {
 	int ATTACHMENT_FEATURE_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl <em>VDiagnostic</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDiagnostic()
+	 * @generated
+	 */
+	int VDIAGNOSTIC = 17;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostics</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VDIAGNOSTIC__DIAGNOSTICS = 0;
+
+	/**
+	 * The number of structural features of the '<em>VDiagnostic</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VDIAGNOSTIC_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1467,7 +1639,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 17;
+	int ALIGNMENT = 18;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1915,6 +2087,19 @@ public interface ViewPackage extends EPackage {
 	EAttribute getRenderable_Readonly();
 
 	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.model.Renderable#getDiagnostic <em>Diagnostic</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference '<em>Diagnostic</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Renderable#getDiagnostic()
+	 * @see #getRenderable()
+	 * @generated
+	 */
+	EReference getRenderable_Diagnostic();
+
+	/**
 	 * Returns the meta object for the containment reference list '
 	 * {@link org.eclipse.emf.ecp.view.model.Renderable#getAttachments <em>Attachments</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1999,6 +2184,30 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getAttachment();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VDiagnostic <em>VDiagnostic</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>VDiagnostic</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VDiagnostic
+	 * @generated
+	 */
+	EClass getVDiagnostic();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecp.view.model.VDiagnostic#getDiagnostics
+	 * <em>Diagnostics</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute list '<em>Diagnostics</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VDiagnostic#getDiagnostics()
+	 * @see #getVDiagnostic()
+	 * @generated
+	 */
+	EAttribute getVDiagnostic_Diagnostics();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}'.
@@ -2400,6 +2609,15 @@ public interface ViewPackage extends EPackage {
 		EAttribute RENDERABLE__READONLY = eINSTANCE.getRenderable_Readonly();
 
 		/**
+		 * The meta object literal for the '<em><b>Diagnostic</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference RENDERABLE__DIAGNOSTIC = eINSTANCE.getRenderable_Diagnostic();
+
+		/**
 		 * The meta object literal for the '<em><b>Attachments</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2470,6 +2688,27 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ATTACHMENT = eINSTANCE.getAttachment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl
+		 * <em>VDiagnostic</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDiagnostic()
+		 * @generated
+		 */
+		EClass VDIAGNOSTIC = eINSTANCE.getVDiagnostic();
+
+		/**
+		 * The meta object literal for the '<em><b>Diagnostics</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute VDIAGNOSTIC__DIAGNOSTICS = eINSTANCE.getVDiagnostic_Diagnostics();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.

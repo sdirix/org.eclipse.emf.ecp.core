@@ -17,9 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
@@ -34,13 +32,13 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Renderable} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VDiagnostic} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
-public class RenderableItemProvider
+public class VDiagnosticItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider,
@@ -56,7 +54,7 @@ public class RenderableItemProvider
 	 * 
 	 * @generated
 	 */
-	public RenderableItemProvider(AdapterFactory adapterFactory)
+	public VDiagnosticItemProvider(AdapterFactory adapterFactory)
 	{
 		super(adapterFactory);
 	}
@@ -75,122 +73,47 @@ public class RenderableItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
-			addVisiblePropertyDescriptor(object);
-			addEnabledPropertyDescriptor(object);
-			addReadonlyPropertyDescriptor(object);
+			addDiagnosticsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Visible feature.
+	 * This adds a property descriptor for the Diagnostics feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected void addVisiblePropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Renderable_visible_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Renderable_visible_feature", "_UI_Renderable_type"),
-				ViewPackage.Literals.RENDERABLE__VISIBLE,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Enabled feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addEnabledPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Renderable_enabled_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Renderable_enabled_feature", "_UI_Renderable_type"),
-				ViewPackage.Literals.RENDERABLE__ENABLED,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Readonly feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addReadonlyPropertyDescriptor(Object object)
+	protected void addDiagnosticsPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Renderable_readonly_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Renderable_readonly_feature",
-					"_UI_Renderable_type"),
-				ViewPackage.Literals.RENDERABLE__READONLY,
+				getString("_UI_VDiagnostic_diagnostics_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_VDiagnostic_diagnostics_feature",
+					"_UI_VDiagnostic_type"),
+				ViewPackage.Literals.VDIAGNOSTIC__DIAGNOSTICS,
 				true,
 				false,
 				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				null,
 				null));
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This returns VDiagnostic.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	public Object getImage(Object object)
 	{
-		if (childrenFeatures == null)
-		{
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__DIAGNOSTIC);
-			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__ATTACHMENTS);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/VDiagnostic"));
 	}
 
 	/**
@@ -203,8 +126,7 @@ public class RenderableItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		Renderable renderable = (Renderable) object;
-		return getString("_UI_Renderable_type") + " " + renderable.isVisible();
+		return getString("_UI_VDiagnostic_type");
 	}
 
 	/**
@@ -220,16 +142,10 @@ public class RenderableItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Renderable.class))
+		switch (notification.getFeatureID(VDiagnostic.class))
 		{
-		case ViewPackage.RENDERABLE__VISIBLE:
-		case ViewPackage.RENDERABLE__ENABLED:
-		case ViewPackage.RENDERABLE__READONLY:
+		case ViewPackage.VDIAGNOSTIC__DIAGNOSTICS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case ViewPackage.RENDERABLE__DIAGNOSTIC:
-		case ViewPackage.RENDERABLE__ATTACHMENTS:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -247,11 +163,6 @@ public class RenderableItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
 	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.RENDERABLE__DIAGNOSTIC,
-				ViewFactory.eINSTANCE.createVDiagnostic()));
 	}
 
 	/**

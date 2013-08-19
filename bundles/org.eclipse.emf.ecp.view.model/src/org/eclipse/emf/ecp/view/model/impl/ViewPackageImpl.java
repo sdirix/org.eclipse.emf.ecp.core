@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -164,6 +165,14 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
+	private EClass vDiagnosticEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	private EEnum alignmentEEnum = null;
 
 	/**
@@ -210,7 +219,8 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		// Obtain or create and register package
 		ViewPackageImpl theViewPackage = (ViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ViewPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new ViewPackageImpl());
+			.get(eNS_URI)
+			: new ViewPackageImpl());
 
 		isInited = true;
 
@@ -570,9 +580,20 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EReference getRenderable_Attachments()
+	public EReference getRenderable_Diagnostic()
 	{
 		return (EReference) renderableEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getRenderable_Attachments()
+	{
+		return (EReference) renderableEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -630,6 +651,28 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	public EClass getAttachment()
 	{
 		return attachmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getVDiagnostic()
+	{
+		return vDiagnosticEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getVDiagnostic_Diagnostics()
+	{
+		return (EAttribute) vDiagnosticEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -723,6 +766,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
 		createEAttribute(renderableEClass, RENDERABLE__ENABLED);
 		createEAttribute(renderableEClass, RENDERABLE__READONLY);
+		createEReference(renderableEClass, RENDERABLE__DIAGNOSTIC);
 		createEReference(renderableEClass, RENDERABLE__ATTACHMENTS);
 
 		actionEClass = createEClass(ACTION);
@@ -733,6 +777,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEReference(abstractControlEClass, ABSTRACT_CONTROL__TARGET_FEATURES);
 
 		attachmentEClass = createEClass(ATTACHMENT);
+
+		vDiagnosticEClass = createEClass(VDIAGNOSTIC);
+		createEAttribute(vDiagnosticEClass, VDIAGNOSTIC__DIAGNOSTICS);
 
 		// Create enums
 		alignmentEEnum = createEEnum(ALIGNMENT);
@@ -882,6 +929,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEAttribute(getRenderable_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1,
 			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEReference(getRenderable_Diagnostic(), this.getVDiagnostic(), null, "diagnostic", null, 0, 1,
+			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRenderable_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
 			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -900,6 +950,12 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		initEClass(attachmentEClass, Attachment.class, "Attachment", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(vDiagnosticEClass, VDiagnostic.class, "VDiagnostic", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVDiagnostic_Diagnostics(), theEcorePackage.getEJavaObject(), "diagnostics", null, 0, -1,
+			VDiagnostic.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(alignmentEEnum, Alignment.class, "Alignment");

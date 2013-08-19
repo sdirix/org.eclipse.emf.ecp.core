@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -261,6 +262,13 @@ public class ViewSwitch<T> extends Switch<T> {
 		case ViewPackage.ATTACHMENT: {
 			Attachment attachment = (Attachment) theEObject;
 			T result = caseAttachment(attachment);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case ViewPackage.VDIAGNOSTIC: {
+			VDiagnostic vDiagnostic = (VDiagnostic) theEObject;
+			T result = caseVDiagnostic(vDiagnostic);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -539,6 +547,23 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAttachment(Attachment object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>VDiagnostic</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>VDiagnostic</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVDiagnostic(VDiagnostic object)
 	{
 		return null;
 	}

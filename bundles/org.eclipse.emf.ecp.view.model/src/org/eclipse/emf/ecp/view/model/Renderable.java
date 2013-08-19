@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.model.Renderable#isVisible <em>Visible</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Renderable#isEnabled <em>Enabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Renderable#isReadonly <em>Readonly</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Renderable#getDiagnostic <em>Diagnostic</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Renderable#getAttachments <em>Attachments</em>}</li>
  * </ul>
  * </p>
@@ -112,6 +113,35 @@ public interface Renderable extends EObject {
 	 * @generated
 	 */
 	void setReadonly(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Diagnostic</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Diagnostic</em>' containment reference.
+	 * @see #setDiagnostic(VDiagnostic)
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getRenderable_Diagnostic()
+	 * @model containment="true"
+	 * @generated
+	 */
+	VDiagnostic getDiagnostic();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Renderable#getDiagnostic <em>Diagnostic</em>}'
+	 * containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Diagnostic</em>' containment reference.
+	 * @see #getDiagnostic()
+	 * @generated
+	 */
+	void setDiagnostic(VDiagnostic value);
 
 	/**
 	 * Returns the value of the '<em><b>Attachments</b></em>' containment reference list.
