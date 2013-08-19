@@ -12,30 +12,22 @@
 package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.context.AbstractViewService;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * @author emueller
  * 
  */
-public class RuleServiceHelper {
+public class RuleServiceHelper extends AbstractViewService {
 
-	private final RuleService ruleService;
-
-	/**
-	 * Constructor.
-	 * 
-	 * @param ruleService
-	 *            the {@link RuleService}
-	 */
-	public RuleServiceHelper(RuleService ruleService) {
-		this.ruleService = ruleService;
-
-	}
+	private ViewModelContext context;
 
 	/**
 	 * Gets the involved {@link org.eclipse.emf.ecore.EObject EObjects}.
@@ -52,14 +44,20 @@ public class RuleServiceHelper {
 	 * @return the involved {@link Renderable}s that match the given type {@code T}
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Renderable> Set<T> getInvolvedEObject(Setting setting, Object newValue, Class<T> cls) {
+	public <T extends Renderable> Set<T> getInvolvedEObjects(Setting setting, Object newValue, Class<T> cls) {
 
-		final Set<Renderable> involvedEObjects = ruleService.getInvolvedEObject(setting, newValue);
+		final Map<Renderable, Boolean> involvedEObjects = context.getService(RuleService.class).getInvolvedEObjects(
+			setting,
+			newValue);
 		final Set<T> result = new LinkedHashSet<T>();
 
-		for (final Renderable renderable : involvedEObjects) {
+		for (final Map.Entry<Renderable, Boolean> entry : involvedEObjects.entrySet()) {
+
+			final Renderable renderable = entry.getKey();
+			final Boolean newState = entry.getValue();
+
 			if (cls.isInstance(renderable)) {
-				if (renderable.isEnabled() || renderable.isVisible()) {
+				if (!newState) {
 					result.add((T) renderable);
 				}
 			} else {
@@ -75,5 +73,25 @@ public class RuleServiceHelper {
 		}
 
 		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
+	@Override
+	public void instantiate(ViewModelContext context) {
+		this.context = context;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#dispose()
+	 */
+	@Override
+	public void dispose() {
+
 	}
 }

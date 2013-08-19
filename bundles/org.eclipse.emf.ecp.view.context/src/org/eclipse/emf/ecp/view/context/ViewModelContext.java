@@ -83,5 +83,32 @@ public interface ViewModelContext {
 	 */
 	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
+	/**
+	 * Disposes the context.
+	 */
 	void dispose();
+
+	/**
+	 * Whether the context has a service of the given type {@code serviceType}.
+	 * 
+	 * @param <T>
+	 *            the type of the desired service
+	 * 
+	 * @param serviceType
+	 *            the type of the service
+	 * @return {@code true}, if the context has a service of the given type, {@code false} otherwise
+	 */
+	<T> boolean hasService(Class<T> serviceType);
+
+	/**
+	 * Retrieve an {@link AbstractViewService} of type {@code serviceType}.
+	 * 
+	 * @param <T>
+	 *            the type of the desired service
+	 * 
+	 * @param serviceType
+	 *            the type of the service to be retrieved
+	 * @return the service
+	 */
+	<T> T getService(Class<T> serviceType);
 }

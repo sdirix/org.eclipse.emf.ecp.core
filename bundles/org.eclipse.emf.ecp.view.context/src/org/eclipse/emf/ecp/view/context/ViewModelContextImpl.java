@@ -226,4 +226,33 @@ public class ViewModelContextImpl implements ViewModelContext {
 		domainModelChangeListener.remove(modelChangeListener);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#hasService(java.lang.Class)
+	 */
+	public <T> boolean hasService(Class<T> serviceType) {
+		for (final AbstractViewService service : viewServices) {
+			if (serviceType.isInstance(service)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getService(java.lang.Class)
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T getService(Class<T> serviceType) {
+		for (final AbstractViewService service : viewServices) {
+			if (serviceType.isInstance(service)) {
+				return (T) service;
+			}
+		}
+
+		throw new RuntimeException("No view service of type " + serviceType.getCanonicalName() + " found");
+	}
 }

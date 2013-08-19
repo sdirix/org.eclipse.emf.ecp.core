@@ -16,15 +16,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
@@ -94,55 +90,25 @@ public class RuleServiceTest {
 	 * @author Jonas
 	 * 
 	 */
-	private final class ViewModelContextStub implements ViewModelContext {
-		private final EObject domainModel;
-		private EContentAdapter viewContentAdapter;
-		private EContentAdapter domainContentAdapter;
-		private final List<ModelChangeListener> domainChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
-		private final List<ModelChangeListener> viewChangeListeners = new ArrayList<ViewModelContext.ModelChangeListener>();
+	private class ViewModelContextStub implements ViewModelContext {
 
-		/**
-		 * @param domainModel
-		 */
-		private ViewModelContextStub(EObject domainModel) {
-			this.domainModel = domainModel;
-		}
+		private boolean hasRegisteredViewListener;
+		private boolean hasRegisteredDomainListener;
 
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-			viewChangeListeners.remove(modelChangeListener);
-			view.eAdapters().remove(viewContentAdapter);
+			hasRegisteredViewListener = false;
 		}
 
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-			domainChangeListeners.remove(modelChangeListener);
-			domainModel.eAdapters().remove(domainContentAdapter);
+			hasRegisteredDomainListener = false;
 		}
 
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-			viewContentAdapter = new EContentAdapter() {
-				@Override
-				public void notifyChanged(Notification notification) {
-					super.notifyChanged(notification);
-					for (final ModelChangeListener listener : viewChangeListeners) {
-						listener.notifyChange(new ModelChangeNotification(notification));
-					}
-				}
-			};
-			view.eAdapters().add(viewContentAdapter);
+			hasRegisteredViewListener = true;
 		}
 
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-			domainChangeListeners.add(modelChangeListener);
-			domainContentAdapter = new EContentAdapter() {
-				@Override
-				public void notifyChanged(Notification notification) {
-					super.notifyChanged(notification);
-					for (final ModelChangeListener listener : domainChangeListeners) {
-						listener.notifyChange(new ModelChangeNotification(notification));
-					}
-				}
-			};
-			domainModel.eAdapters().add(domainContentAdapter);
+			hasRegisteredDomainListener = true;
 		}
 
 		public View getViewModel() {
@@ -150,12 +116,21 @@ public class RuleServiceTest {
 		}
 
 		public EObject getDomainModel() {
-			return domainModel;
+			return null;
 		}
 
 		public void dispose() {
-			domainModel.eAdapters().remove(domainContentAdapter);
-			domainModel.eAdapters().remove(viewContentAdapter);
+
+		}
+
+		public <T> boolean hasService(Class<T> serviceType) {
+			// not used in tests
+			return false;
+		}
+
+		public <T> T getService(Class<T> serviceType) {
+			// not used in tests
+			return null;
 		}
 	}
 
@@ -176,6 +151,8 @@ public class RuleServiceTest {
 
 	/** The parent column. */
 	private Column parentColumn;
+
+	private TestViewModelContext context;
 
 	/**
 	 * Sets the up.
@@ -211,6 +188,9 @@ public class RuleServiceTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		if (context != null) {
+			context.dispose();
+		}
 	}
 
 	private RuleService instantiateRuleService() {
@@ -224,7 +204,10 @@ public class RuleServiceTest {
 	 */
 	private RuleService instantiateRuleService(final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
-		ruleService.instantiate(new TestViewModelContext(view, domainModel));
+		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
+		context = new TestViewModelContext(view, domainModel);
+		ruleService.instantiate(context);
+		ruleServiceHelper.instantiate(context);
 		return ruleService;
 	}
 
@@ -318,150 +301,49 @@ public class RuleServiceTest {
 		control.getAttachments().add(rule);
 	}
 
-	private boolean registeredViewListener;
-	private boolean registeredDomainListener;
-
 	@Test
 	public void testInitialization() {
 		final RuleService ruleService = new RuleService();
-
-		ruleService.instantiate(new ViewModelContext() {
-
-			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-			}
-
-			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-			}
-
-			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-				registeredViewListener = true;
-			}
-
-			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-				registeredDomainListener = true;
-			}
-
-			public View getViewModel() {
+		final ViewModelContextStub contextStub = new ViewModelContextStub() {
+			@Override
+			public EObject getDomainModel() {
 				return view;
 			}
-
-			public EObject getDomainModel() {
-				return league;
-			}
-
-			public void dispose() {
-
-			}
-		});
-		assertTrue(registeredDomainListener);
-		assertTrue(registeredViewListener);
+		};
+		ruleService.instantiate(contextStub);
+		assertTrue(contextStub.hasRegisteredViewListener);
+		assertTrue(contextStub.hasRegisteredDomainListener);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testInitializationWithNullDomainModel() {
 		final RuleService ruleService = new RuleService();
-
-		ruleService.instantiate(new ViewModelContext() {
-
-			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-			}
-
-			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-			}
-
-			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-				registeredViewListener = true;
-			}
-
-			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-				registeredDomainListener = true;
-			}
-
-			public View getViewModel() {
-				return view;
-			}
-
-			public EObject getDomainModel() {
-				return null;
-			}
-
-			public void dispose() {
-
-			}
-		});
+		final ViewModelContextStub contextStub = new ViewModelContextStub();
+		ruleService.instantiate(contextStub);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testInitializationWithNullViewModel() {
 		final RuleService ruleService = new RuleService();
-
-		ruleService.instantiate(new ViewModelContext() {
-
-			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-			}
-
-			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-			}
-
-			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-				registeredViewListener = true;
-			}
-
-			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-				registeredDomainListener = true;
-			}
-
-			public View getViewModel() {
-				return null;
-			}
-
-			public EObject getDomainModel() {
-				return league;
-			}
-
-			public void dispose() {
-
-			}
-		});
+		final ViewModelContextStub contextStub = new ViewModelContextStub();
+		ruleService.instantiate(contextStub);
 	}
 
 	@Test
 	public void testUnregisterOnViewModelContext() {
 		final RuleService ruleService = new RuleService();
-
-		ruleService.instantiate(new ViewModelContext() {
-
-			public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-				registeredViewListener = false;
-			}
-
-			public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-				registeredDomainListener = false;
-			}
-
-			public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-				registeredViewListener = true;
-			}
-
-			public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-				registeredDomainListener = true;
-			}
-
-			public View getViewModel() {
+		final ViewModelContextStub contextStub = new ViewModelContextStub() {
+			@Override
+			public EObject getDomainModel() {
 				return view;
 			}
-
-			public EObject getDomainModel() {
-				return league;
-			}
-
-			public void dispose() {
-
-			}
-		});
+		};
+		ruleService.instantiate(contextStub);
+		assertTrue(contextStub.hasRegisteredViewListener);
+		assertTrue(contextStub.hasRegisteredDomainListener);
 		ruleService.dispose();
-		assertFalse(registeredDomainListener);
-		assertFalse(registeredViewListener);
+		assertFalse(contextStub.hasRegisteredViewListener);
+		assertFalse(contextStub.hasRegisteredDomainListener);
 	}
 
 	/**
@@ -2043,14 +1925,12 @@ public class RuleServiceTest {
 	 */
 	@Test
 	public void testDispose() {
-		// if the expected value equals the model value, then the control should be disabled
-
 		addLeagueEnableRule(controlPName, false);
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 		ruleService.dispose();
 		setLeagueToWrong();
-		assertFalse(controlPName.isEnabled());
+		assertTrue(controlPName.isEnabled());
 	}
 
 	/**
@@ -2064,9 +1944,9 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Set<Renderable> involvedEObject = ruleService.getInvolvedEObject(
+		final Map<Renderable, Boolean> involvedEObjects = ruleService.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
-		assertTrue(involvedEObject.isEmpty());
+		assertTrue(involvedEObjects.isEmpty());
 	}
 
 	/**
@@ -2080,7 +1960,7 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		ruleService.getInvolvedEObject(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+		ruleService.getInvolvedEObjects(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League");
 		assertTrue(controlPName.isEnabled());
 	}
@@ -2096,13 +1976,13 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Set<Renderable> involvedEObject = ruleService.getInvolvedEObject(
+		final Map<Renderable, Boolean> involvedEObjects = ruleService.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League_Wrong");
 
-		assertEquals(3, involvedEObject.size());
-		assertTrue(involvedEObject.contains(parentColumn));
-		assertTrue(involvedEObject.contains(column));
-		assertTrue(involvedEObject.contains(controlPName));
+		assertEquals(3, involvedEObjects.size());
+		assertTrue(involvedEObjects.containsKey(parentColumn));
+		assertTrue(involvedEObjects.containsKey(column));
+		assertTrue(involvedEObjects.containsKey(controlPName));
 	}
 
 	/**
@@ -2117,7 +1997,7 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Set<Renderable> involvedEObjects = ruleService.getInvolvedEObject(
+		final Map<Renderable, Boolean> involvedEObjects = ruleService.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -2132,13 +2012,79 @@ public class RuleServiceTest {
 		addLeagueEnableRule(controlPName, true);
 		addLeagueShowRule(parentColumn, true);
 		setLeagueToRight();
-		final RuleService ruleService = instantiateRuleService();
-		final RuleServiceHelper helper = new RuleServiceHelper(ruleService);
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObject(
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League", Control.class);
-		assertEquals(0, involvedEObjects.size());
+		assertEquals(0, involvedEControls.size());
+	}
+
+	/**
+	 * Test get involved e object change.
+	 * 
+	 * Should return empty set, since renderable will
+	 */
+	// @Test
+	public void testGetInvolvedEObjectsHelperNoRuleApplies() {
+		addLeagueEnableRule(controlPName, true);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League2", Control.class);
+		assertEquals(0, involvedEControls.size());
+	}
+
+	/**
+	 * Test get involved e object change.
+	 * 
+	 * Should return empty set, since renderable will
+	 */
+	// @Test
+	public void testGetInvolvedEObjectsHelperEnableAndShowRulesApply() {
+		addLeagueEnableRule(controlPName, true);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League", Control.class);
+		assertEquals(1, involvedEControls.size());
+	}
+
+	// @Test
+	public void testGetInvolvedEObjectsHelperShowRuleApplies() {
+		addLeagueEnableRule(controlPName, false);
+		addLeagueShowRule(parentColumn, true);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League", Control.class);
+		assertEquals(1, involvedEControls.size());
+	}
+
+	// @Test
+	public void testGetInvolvedEObjectsHelperEnableRuleApplies() {
+		addLeagueEnableRule(controlPName, true);
+		addLeagueShowRule(parentColumn, false);
+		setLeagueToWrong();
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+			"League", Control.class);
+		assertEquals(1, involvedEControls.size());
 	}
 
 	/**
@@ -2150,13 +2096,13 @@ public class RuleServiceTest {
 
 		addLeagueEnableRule(controlPName, true);
 		setLeagueToRight();
-		final RuleService ruleService = instantiateRuleService();
-		final RuleServiceHelper helper = new RuleServiceHelper(ruleService);
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Column> involvedEObjects = helper.getInvolvedEObject(
+		final Set<Column> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Column.class);
-		assertEquals(1, involvedEObjects.size());
+		assertEquals(1, involvedColumns.size());
 	}
 
 	/**
@@ -2168,13 +2114,13 @@ public class RuleServiceTest {
 
 		addLeagueEnableRule(controlPName, true);
 		setLeagueToRight();
-		final RuleService ruleService = instantiateRuleService();
-		final RuleServiceHelper helper = new RuleServiceHelper(ruleService);
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Column> involvedEObjects = helper.getInvolvedEObject(
+		final Set<Column> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League", Column.class);
-		assertEquals(0, involvedEObjects.size());
+		assertEquals(0, involvedColumns.size());
 	}
 
 	/**
@@ -2186,14 +2132,14 @@ public class RuleServiceTest {
 
 		addLeagueShowRule(parentColumn, true);
 		setLeagueToRight();
-		final RuleService ruleService = instantiateRuleService();
-		final RuleServiceHelper helper = new RuleServiceHelper(ruleService);
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObject(
+		final Set<Control> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Control.class);
-		assertEquals(1, involvedEObjects.size());
-		assertTrue(involvedEObjects.contains(controlPName));
+		assertEquals(1, involvedControls.size());
+		assertTrue(involvedControls.contains(controlPName));
 	}
 
 	/**
@@ -2201,19 +2147,17 @@ public class RuleServiceTest {
 	 */
 	@Test
 	public void testGetInvolvedEObjectWithVanishingRenderableEnableRuleApplies() {
-		// if the expected value equals the model value, then the control should be enabled
-
 		addLeagueEnableRule(controlPName, true);
 
 		setLeagueToRight();
-		final RuleService ruleService = instantiateRuleService();
-		final RuleServiceHelper helper = new RuleServiceHelper(ruleService);
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObject(
+		final Set<Control> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Control.class);
-		assertEquals(1, involvedEObjects.size());
-		assertTrue(involvedEObjects.contains(controlPName));
+		assertEquals(1, involvedControls.size());
+		assertTrue(involvedControls.contains(controlPName));
 	}
 
 	/**
@@ -2226,14 +2170,14 @@ public class RuleServiceTest {
 		addLeagueEnableRule(controlPName, true);
 		addLeagueShowRule(parentColumn, true);
 		setLeagueToRight();
-		final RuleService ruleService = instantiateRuleService();
-		final RuleServiceHelper helper = new RuleServiceHelper(ruleService);
+		instantiateRuleService();
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObject(
+		final Set<Control> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Control.class);
-		assertEquals(1, involvedEObjects.size());
-		assertTrue(involvedEObjects.contains(controlPName));
+		assertEquals(1, involvedControls.size());
+		assertTrue(involvedControls.contains(controlPName));
 	}
 
 	@Test

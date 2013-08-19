@@ -15,9 +15,7 @@ import static org.eclipse.emf.ecp.view.internal.rule.UniqueSetting.createSetting
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
@@ -166,6 +164,7 @@ public class RuleService extends AbstractViewService {
 
 			final Rule rule = ruleAndRenderable.getKey();
 			final Renderable renderable = ruleAndRenderable.getValue();
+			// whether the value changed at all, if newValue has been provided
 			boolean hasChanged = false;
 
 			if (!ruleType.isInstance(rule)) {
@@ -174,10 +173,13 @@ public class RuleService extends AbstractViewService {
 
 			if (dry) {
 				final Object currentValue = domainEObject.eGet(attribute);
-				hasChanged = currentValue != newValue;
+				hasChanged = !currentValue.equals(newValue);
 			}
 
-			if (hasChanged || !dry) {
+			if (hasChanged) {
+				final boolean result = ConditionEvaluator.evaluate(newValue, rule.getCondition());
+				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
+			} else if (!dry) {
 				final boolean result = ConditionEvaluator.evaluate(domainEObject, rule.getCondition());
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			}
@@ -281,30 +283,32 @@ public class RuleService extends AbstractViewService {
 	/**
 	 * Gets the involved {@link org.eclipse.emf.ecore.EObject EObjects}.
 	 * 
-	 * @param s the setting
-	 * @param newValue the new value
-	 * @return the involved {@link Renderable}s
+	 * @param setting
+	 *            the setting
+	 * @param newValue
+	 *            the new value
+	 * @return the involved {@link Renderable}s and their state if newValue would be set
 	 */
-	public Set<Renderable> getInvolvedEObject(Setting s, Object newValue) {
+	public Map<Renderable, Boolean> getInvolvedEObjects(Setting setting, Object newValue) {
 
-		final EStructuralFeature feature = s.getEStructuralFeature();
+		final EStructuralFeature feature = setting.getEStructuralFeature();
 
 		if (feature instanceof EAttribute) {
 
 			final EAttribute attribute = (EAttribute) feature;
 
 			final Map<Renderable, Boolean> affectedEvalRenderables = evalAffectedRenderables(enableRuleRegistry,
-				EnableRule.class, s.getEObject(), attribute, newValue);
+				EnableRule.class, setting.getEObject(), attribute, newValue);
 			final Map<Renderable, Boolean> affectedShowRenderables = evalAffectedRenderables(showRuleRegistry,
-				ShowRule.class, s.getEObject(), attribute, newValue);
+				ShowRule.class, setting.getEObject(), attribute, newValue);
 
-			final Set<Renderable> renderables = new LinkedHashSet<Renderable>();
-			renderables.addAll(affectedEvalRenderables.keySet());
-			renderables.addAll(affectedShowRenderables.keySet());
+			final Map<Renderable, Boolean> renderables = new LinkedHashMap<Renderable, Boolean>();
+			renderables.putAll(affectedEvalRenderables);
+			renderables.putAll(affectedShowRenderables);
 			return renderables;
 		}
 
-		return Collections.emptySet();
+		return Collections.emptyMap();
 	}
 
 	private void unset(Renderable renderable) {

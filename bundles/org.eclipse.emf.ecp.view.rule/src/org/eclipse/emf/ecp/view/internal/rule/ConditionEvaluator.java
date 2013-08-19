@@ -56,6 +56,45 @@ public final class ConditionEvaluator {
 		return false;
 	}
 
+	/**
+	 * Evaluates the given condition.
+	 * 
+	 * @param newValue
+	 *            the new value that should be compared against the expected value of the condition
+	 * @param condition
+	 *            the condition to be evaluated
+	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 */
+	public static boolean evaluate(Object newValue, Condition condition) {
+
+		if (AndCondition.class.isInstance(condition)) {
+			return doEvaluate(newValue, (AndCondition) condition);
+		}
+		if (OrCondition.class.isInstance(condition)) {
+			return doEvaluate(newValue, (OrCondition) condition);
+		}
+		if (LeafCondition.class.isInstance(condition)) {
+			return doEvaluate(newValue, (LeafCondition) condition);
+		}
+		return false;
+	}
+
+	private static boolean doEvaluate(Object newValue, AndCondition condition) {
+		boolean result = true;
+		for (final Condition innerCondition : condition.getConditions()) {
+			result &= evaluate(newValue, innerCondition);
+		}
+		return result;
+	}
+
+	private static boolean doEvaluate(Object newValue, OrCondition condition) {
+		boolean result = false;
+		for (final Condition innerCondition : condition.getConditions()) {
+			result |= evaluate(newValue, innerCondition);
+		}
+		return result;
+	}
+
 	private static boolean doEvaluate(EObject eObject, AndCondition condition) {
 		boolean result = true;
 		for (final Condition innerCondition : condition.getConditions()) {
@@ -70,6 +109,10 @@ public final class ConditionEvaluator {
 			result |= evaluate(eObject, innerCondition);
 		}
 		return result;
+	}
+
+	private static boolean doEvaluate(Object newValue, LeafCondition condition) {
+		return condition.getExpectedValue().equals(newValue);
 	}
 
 	private static boolean doEvaluate(EObject eObject, LeafCondition condition) {
