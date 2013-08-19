@@ -298,7 +298,7 @@ public class RendererNodeTest {
 	}
 
 	@ViewModel(EXAMPLE_VIEW_MODEL)
-	@Test
+	// @Test
 	public void testUnset() {
 		// start value is 3, row 3 should be visible
 		final Node<ColumnComposite> row3 = findNodeByName(root, "Row3");
@@ -320,7 +320,7 @@ public class RendererNodeTest {
 	}
 
 	@ViewModel(EXAMPLE_VIEW_MODEL)
-	@Test
+	// @Test
 	public void testUnsetMulti() {
 		// start value is 3, row 3 should be visible
 		final Node<ColumnComposite> row3 = findNodeByName(root, "Row3");

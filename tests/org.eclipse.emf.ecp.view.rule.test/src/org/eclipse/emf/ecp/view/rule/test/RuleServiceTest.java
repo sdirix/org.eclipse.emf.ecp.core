@@ -2260,6 +2260,20 @@ public class RuleServiceTest {
 	}
 
 	@Test
+	public void testMultiUnset() {
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		control.setTargetFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		column.getComposites().add(control);
+
+		addShowRule(control, true, BowlingPackage.eINSTANCE.getLeague_Name(), "League");
+		setLeagueToRight();
+		instantiateRuleService();
+		assertEquals(1, league.getPlayers().size());
+		setLeagueToWrong();
+		assertEquals(0, league.getPlayers().size());
+	}
+
+	@Test
 	public void testInitUnset() {
 		final Fan fan = BowlingFactory.eINSTANCE.createFan();
 		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
