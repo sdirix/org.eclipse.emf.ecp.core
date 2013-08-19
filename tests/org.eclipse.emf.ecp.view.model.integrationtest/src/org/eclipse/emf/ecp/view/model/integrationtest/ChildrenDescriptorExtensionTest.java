@@ -34,7 +34,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int RENDERABLE_CHILD_COUNT = 3;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	private static final int NUMBER_OF_COMPOSITES = 9;
+	private static final int NUMBER_OF_COMPOSITES = 10;
 	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
 		+ NUMBER_OF_CATEGORIZATIONS;
@@ -60,8 +60,8 @@ public class ChildrenDescriptorExtensionTest {
 	// TODO: Should be not -2, rules are missing
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1 - 2;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
-	// TODO: Should be not -2, labels and separator are missing
-	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 2;
+	// TODO: Should be not -2, labels, custom composites and separator are missing
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 3;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
