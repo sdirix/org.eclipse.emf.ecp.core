@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.viewmodel.feature"
-      label="ViewModel Feature"
-      version="1.0.2.qualifier">
+      label="View Model Core Feature"
+      version="1.0.2.qualifier"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.0.0">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      Provides the core view model.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="%copyrightURL">
+      %copyright
    </copyright>
 
    <license url="http://www.example.com/license">

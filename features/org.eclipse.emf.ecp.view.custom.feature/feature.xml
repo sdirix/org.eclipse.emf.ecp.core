@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.custom.feature"
-      label="Custom Control Feature"
-      version="1.0.0.qualifier">
+      label="View Model Custom Control Feature"
+      version="1.0.0.qualifier"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.0.0">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      Provides the view model element &quot;custom control&quot;
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="%copyrightURL">
+      %copyright
    </copyright>
 
    <license url="http://www.example.com/license">

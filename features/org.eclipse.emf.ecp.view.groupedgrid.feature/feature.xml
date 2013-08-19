@@ -4,14 +4,16 @@
       label="View Model Grouped Grid Feature"
       version="1.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.view.groupedgrid.model">
+      plugin="org.eclipse.emf.ecp.view.groupedgrid.model"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.0.0">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      Provides the view model element &quot;grouped grid&quot;
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="%copyrightURL">
+      %copyright
    </copyright>
 
    <license url="http://www.example.com/license">
