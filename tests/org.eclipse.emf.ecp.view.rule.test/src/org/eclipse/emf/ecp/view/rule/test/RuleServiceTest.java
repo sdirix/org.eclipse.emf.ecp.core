@@ -1944,7 +1944,7 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Map<Renderable, Boolean> involvedEObjects = ruleService.getInvolvedEObjects(
+		final Map<Renderable, Boolean> involvedEObjects = ruleService.getDisabledRenderables(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
 		assertTrue(involvedEObjects.isEmpty());
 	}
@@ -1960,7 +1960,7 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		ruleService.getInvolvedEObjects(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+		ruleService.getDisabledRenderables(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League");
 		assertTrue(controlPName.isEnabled());
 	}
@@ -1976,13 +1976,18 @@ public class RuleServiceTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Map<Renderable, Boolean> involvedEObjects = ruleService.getInvolvedEObjects(
+		final Map<Renderable, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League_Wrong");
+		final Map<Renderable, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League_Wrong");
 
-		assertEquals(3, involvedEObjects.size());
-		assertTrue(involvedEObjects.containsKey(parentColumn));
-		assertTrue(involvedEObjects.containsKey(column));
-		assertTrue(involvedEObjects.containsKey(controlPName));
+		assertEquals(3, hiddenRenderables.size());
+		assertTrue(hiddenRenderables.containsKey(parentColumn));
+		assertTrue(hiddenRenderables.containsKey(column));
+		assertTrue(hiddenRenderables.containsKey(controlPName));
+
+		assertEquals(1, disabledRenderables.size());
+		assertTrue(disabledRenderables.containsKey(controlPName));
 	}
 
 	/**
@@ -1990,16 +1995,18 @@ public class RuleServiceTest {
 	 */
 	@Test
 	public void testGetInvolvedEObjectChangeWithoutChangedValue() {
-		// if the expected value equals the model value, then the control should be enabled
-
 		addLeagueEnableRule(controlPName, true);
 		addLeagueShowRule(parentColumn, true);
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Map<Renderable, Boolean> involvedEObjects = ruleService.getInvolvedEObjects(
+		final Map<Renderable, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
-		assertEquals(0, involvedEObjects.size());
+		final Map<Renderable, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
+
+		assertEquals(0, disabledRenderables.size());
+		assertEquals(0, hiddenRenderables.size());
 	}
 
 	/**
@@ -2095,7 +2102,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Should return nothing since correct value is set.
+	 * Should return the control because of the {@link EnableRule} on the control.
 	 */
 	@Test
 	public void testGetInvolvedEObjectsHelperEnableRuleAppliesCorrectValue() {
@@ -2105,30 +2112,17 @@ public class RuleServiceTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+		final Set<Control> hiddenOrDisabledControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League", Control.class);
-		assertEquals(0, involvedEControls.size());
+
+		assertEquals(1, hiddenOrDisabledControls.size());
 	}
 
 	/**
 	 * Should return nothing because the column should be visible, since
 	 * 'League2' is the wrong value and the we have a disable rule.
 	 */
-
-	@Test
-	public void testGetInvolvedEObjectsHelperShowRuleAppliesWrongValue() {
-		addLeagueEnableRule(controlPName, true);
-		addLeagueShowRule(parentColumn, false);
-		setLeagueToWrong();
-		instantiateRuleService();
-		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Control.class);
-		assertEquals(0, involvedEControls.size());
-	}
 
 	/**
 	 * Should return the control because the column should be hidden, since

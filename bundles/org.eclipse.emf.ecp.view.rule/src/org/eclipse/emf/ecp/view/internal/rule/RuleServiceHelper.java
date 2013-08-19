@@ -43,15 +43,27 @@ public class RuleServiceHelper extends AbstractViewService {
 	 *            the class type that has to be matched. Used for filtering
 	 * @return the involved {@link Renderable}s that match the given type {@code T}
 	 */
-	@SuppressWarnings("unchecked")
 	public <T extends Renderable> Set<T> getInvolvedEObjects(Setting setting, Object newValue, Class<T> cls) {
 
-		final Map<Renderable, Boolean> involvedEObjects = context.getService(RuleService.class).getInvolvedEObjects(
-			setting,
-			newValue);
+		final Map<Renderable, Boolean> disabledRenderables = context.getService(RuleService.class)
+			.getDisabledRenderables(setting, newValue);
+		final Map<Renderable, Boolean> hiddenRenderables = context.getService(RuleService.class).getHiddenRenderables(
+			setting, newValue);
+
+		final Set<T> result = new LinkedHashSet<T>();
+		result.addAll(collectFalseValues(cls, disabledRenderables));
+		result.addAll(collectFalseValues(cls, hiddenRenderables));
+
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T extends Renderable> Set<T> collectFalseValues(Class<T> cls,
+		final Map<Renderable, Boolean> renderableToStateMapping) {
+
 		final Set<T> result = new LinkedHashSet<T>();
 
-		for (final Map.Entry<Renderable, Boolean> entry : involvedEObjects.entrySet()) {
+		for (final Map.Entry<Renderable, Boolean> entry : renderableToStateMapping.entrySet()) {
 
 			final Renderable renderable = entry.getKey();
 			final Boolean newState = entry.getValue();

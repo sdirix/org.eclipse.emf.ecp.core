@@ -281,15 +281,16 @@ public class RuleService extends AbstractViewService {
 	}
 
 	/**
-	 * Gets the involved {@link org.eclipse.emf.ecore.EObject EObjects}.
+	 * Returns all {@link Renderable}s, that would we disabled if {@code newValue} would be set for the given
+	 * {@code setting}.
 	 * 
 	 * @param setting
 	 *            the setting
 	 * @param newValue
-	 *            the new value
-	 * @return the involved {@link Renderable}s and their state if newValue would be set
+	 *            the new value of the setting
+	 * @return the disabled {@link Renderable}s and their new state if newValue would be set
 	 */
-	public Map<Renderable, Boolean> getInvolvedEObjects(Setting setting, Object newValue) {
+	public Map<Renderable, Boolean> getDisabledRenderables(Setting setting, Object newValue) {
 
 		final EStructuralFeature feature = setting.getEStructuralFeature();
 
@@ -297,15 +298,32 @@ public class RuleService extends AbstractViewService {
 
 			final EAttribute attribute = (EAttribute) feature;
 
-			final Map<Renderable, Boolean> affectedEvalRenderables = evalAffectedRenderables(enableRuleRegistry,
+			return evalAffectedRenderables(enableRuleRegistry,
 				EnableRule.class, setting.getEObject(), attribute, newValue);
-			final Map<Renderable, Boolean> affectedShowRenderables = evalAffectedRenderables(showRuleRegistry,
-				ShowRule.class, setting.getEObject(), attribute, newValue);
+		}
 
-			final Map<Renderable, Boolean> renderables = new LinkedHashMap<Renderable, Boolean>();
-			renderables.putAll(affectedEvalRenderables);
-			renderables.putAll(affectedShowRenderables);
-			return renderables;
+		return Collections.emptyMap();
+	}
+
+	/**
+	 * Returns all {@link Renderable}s, that would we hidden if {@code newValue} would be set for the given
+	 * {@code setting}.
+	 * 
+	 * @param setting
+	 *            the setting
+	 * @param newValue
+	 *            the new value of the setting
+	 * @return the hidden {@link Renderable}s and their new state if newValue would be set
+	 */
+	public Map<Renderable, Boolean> getHiddenRenderables(Setting setting, Object newValue) {
+		final EStructuralFeature feature = setting.getEStructuralFeature();
+
+		if (feature instanceof EAttribute) {
+
+			final EAttribute attribute = (EAttribute) feature;
+
+			return evalAffectedRenderables(showRuleRegistry,
+				ShowRule.class, setting.getEObject(), attribute, newValue);
 		}
 
 		return Collections.emptyMap();
