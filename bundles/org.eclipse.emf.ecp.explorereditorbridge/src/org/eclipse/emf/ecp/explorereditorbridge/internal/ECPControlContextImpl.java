@@ -363,7 +363,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getViewContext()
 	 */
 	public ViewModelContext getViewContext() {
-		return getViewContext();
+		return viewContext;
 	}
 
 }

@@ -22,9 +22,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -42,8 +40,6 @@ public final class SWTViewTestHelper {
 
 	}
 
-	private static ViewModelContextImpl viewModelContextImpl;
-
 	public static Shell createShell() {
 		final Display display = Display.getDefault();
 		final Shell shell = new Shell(display);
@@ -60,10 +56,7 @@ public final class SWTViewTestHelper {
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		if (renderable instanceof View) {
-			viewModelContextImpl = new ViewModelContextImpl((View) renderable, input);
-			viewModelContextImpl.registerViewChangeListener(node);
-		}
+		context.getViewContext().registerViewChangeListener(node);
 		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, node,
 			adapterFactoryItemDelegator);
 		// TODO return resultRows
