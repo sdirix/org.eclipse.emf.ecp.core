@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Jonas - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.edit.test;
 
 import static org.junit.Assert.assertEquals;
@@ -18,17 +29,27 @@ public class ChildrenDescriptorTest {
 	 * These are the counts for the core model only
 	 * If a model elements is moved out, the respective test can be removed here
 	 */
-	private static final int VIEW_CHILD_COUNT = 12;
-	private static final int CATEGORIZATION_CHILD_COUNT = 6;
-	private static final int CATEGORY_CHILD_COUNT = 9;
-	private static final int CONTROL_CHILD_COUNT = 2;
-	private static final int TABLECONTROL_CHILD_COUNT = 3;
+	private static final int RENDERABLE_CHILD_COUNT = 0;
+	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
+	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
+	private static final int NUMBER_OF_COMPOSITES = 6;
+	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
+	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
+		+ NUMBER_OF_CATEGORIZATIONS;
+	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
+	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + CATEGORIZATION_CHILD_COUNT;
+
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
+	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
+	private static final int TABLECONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
-	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = 2;
-	private static final int COLUMNCOMPOSITE_CHILD_COUNT = 8;
-	private static final int COLUMN_CHILD_COUNT = 8;
-	private static final int GROUP_CHILD_COUNT = 8;
+	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
+
+	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int ACTION_CHILD_COUNT = 0;
+
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
 		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
 
