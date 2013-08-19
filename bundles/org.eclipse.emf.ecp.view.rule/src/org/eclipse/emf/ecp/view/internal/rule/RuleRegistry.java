@@ -106,20 +106,21 @@ public class RuleRegistry<T extends Rule> {
 		settingToRules.get(setting).add(rule);
 	}
 
-	private static EObject getTargetEObject(LeafCondition condition, EObject parent) {
+	private static EObject getTargetEObject(LeafCondition condition, final EObject parent) {
 		final EList<EReference> pathToAttribute = condition.getPathToAttribute();
+		EObject result = parent;
 		for (final EReference eReference : pathToAttribute) {
 
-			EObject child = (EObject) parent.eGet(eReference);
+			EObject child = (EObject) result.eGet(eReference);
 
 			if (child == null) {
 				child = EcoreUtil.create(eReference.getEReferenceType());
-				parent.eSet(eReference, child);
+				result.eSet(eReference, child);
 			}
-			parent = child;
+			result = child;
 		}
 
-		return parent;
+		return result;
 	}
 
 	/**

@@ -229,7 +229,7 @@ public class RuleService extends AbstractViewService {
 			final boolean isCurrentlyVisible = renderable.isVisible();
 			renderable.setVisible(isVisible);
 			if (isCurrentlyVisible && !isVisible) {
-				unset(domainEObject, renderable);
+				unset(renderable);
 			}
 		}
 	}
@@ -307,11 +307,11 @@ public class RuleService extends AbstractViewService {
 		return Collections.emptySet();
 	}
 
-	private void unset(EObject domainObject, Renderable renderable) {
+	private void unset(Renderable renderable) {
 
 		if (renderable instanceof Control) {
 			final Control control = (Control) renderable;
-			EObject parent = domainObject;
+			EObject parent = context.getDomainModel();
 			final EStructuralFeature targetFeature = control.getTargetFeature();
 			final Class<?> containerClass = targetFeature.getContainerClass();
 
