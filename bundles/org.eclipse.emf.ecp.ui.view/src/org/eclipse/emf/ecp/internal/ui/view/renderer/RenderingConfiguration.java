@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 /**
@@ -47,7 +48,11 @@ public final class RenderingConfiguration {
 	 * 
 	 */
 	private void readExtensionPoint() {
-		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] controls = extensionRegistry.getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.ui.view.renderingConfiguration");
 		for (final IConfigurationElement e : controls) {
 			for (final IConfigurationElement e2 : e.getChildren()) {
