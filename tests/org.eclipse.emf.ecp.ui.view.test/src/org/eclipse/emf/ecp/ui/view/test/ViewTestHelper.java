@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.swt.widgets.Shell;
@@ -35,7 +34,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public final class ViewTestHelper {
 
-	private static ViewModelContext viewModelContext;
+	private static ECPControlContext context;
 
 	private ViewTestHelper() {
 
@@ -48,9 +47,11 @@ public final class ViewTestHelper {
 	 *            the domain to create the context for
 	 * @param shell
 	 *            the shell used by the created context
+	 * @param view
+	 *            the view that is used to create the {@link ViewModelContext} of the ECP control context
 	 * @return an {@link ECPControlContext} for the given domain object
 	 */
-	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell) {
+	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell, View view) {
 		// setup context
 		@SuppressWarnings("restriction")
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
@@ -65,7 +66,7 @@ public final class ViewTestHelper {
 		try {
 			project = ECPProjectManagerImpl.INSTANCE.createProject(provider, "test");
 			project.getContents().add(domainObject);
-			return new ECPControlContextImpl(domainObject, project, shell);
+			return new ECPControlContextImpl(domainObject, project, shell, view);
 		} catch (final ECPProjectWithNameExistsException ex) {
 			// Should not happen during tests
 			System.err.println("Project with name already exists, clean-up test environment");
@@ -103,25 +104,13 @@ public final class ViewTestHelper {
 	 */
 	public static Node<Renderable> build(Renderable view, EObject domainObject) {
 		final Shell shell = new Shell();
-		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, createECPControlContext(domainObject, shell));
-		// TODO: Remove this check, once ViewContext accepts renderable
-		if (view instanceof View) {
-			if (viewModelContext == null) {
-				viewModelContext = new ViewModelContextImpl((View) view, domainObject);
-				viewModelContext.registerViewChangeListener(node);
-			}
-		}
+		context = createECPControlContext(domainObject, shell, (View) view);
+		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, context);
 		return node;
 	}
 
 	public static ViewModelContext getViewModelContext() {
-		return viewModelContext;
+		return context.getViewContext();
 	}
 
-	/**
-	 * @param object
-	 */
-	public static void setViewModelContext(Object object) {
-		viewModelContext = null;
-	}
 }
