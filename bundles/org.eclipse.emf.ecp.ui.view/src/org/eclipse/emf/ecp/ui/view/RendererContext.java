@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -212,21 +213,15 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 			public void notifyChanged(final Notification notification) {
 				super.notifyChanged(notification);
 
-				// // node is null, since render hasn't been called yet
-				// if (node != null) {
-				// node.checkEnable(notification);
-				// node.checkShow(notification);
-				// }
-
 				triggerValidation();
 			}
 
-			// @Override
-			// protected void addAdapter(Notifier notifier) {
-			// super.addAdapter(notifier);
-			// // FIXME HACK
-			// analyseView();
-			// }
+			@Override
+			protected void addAdapter(Notifier notifier) {
+				super.addAdapter(notifier);
+				// FIXME HACK
+				analyseView();
+			}
 
 		};
 
