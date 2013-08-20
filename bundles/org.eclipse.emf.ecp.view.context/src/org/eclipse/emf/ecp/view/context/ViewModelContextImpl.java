@@ -55,7 +55,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * The disposed state.
 	 */
-	private boolean disposed;
+	private boolean isDisposed;
+
+	/**
+	 * Whether the context is being disposed.
+	 */
+	private boolean isDisposing;
 
 	/**
 	 * Instantiates a new view model context impl.
@@ -80,6 +85,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 			@Override
 			public void notifyChanged(Notification notification) {
 				super.notifyChanged(notification);
+
+				// do not notify while being disposed
+				if (isDisposing) {
+					return;
+				}
+
 				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyChange(modelChangeNotification);
@@ -95,6 +106,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 			@Override
 			public void notifyChanged(Notification notification) {
 				super.notifyChanged(notification);
+
+				// do not notify while being disposed
+				if (isDisposing) {
+					return;
+				}
+
 				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 					modelChangeListener.notifyChange(modelChangeNotification);
@@ -136,7 +153,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getViewModel()
 	 */
 	public Renderable getViewModel() {
-		if (disposed) {
+		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
 		return view;
@@ -148,7 +165,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getDomainModel()
 	 */
 	public EObject getDomainModel() {
-		if (disposed) {
+		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
 		return domainObject;
@@ -158,6 +175,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * Dispose.
 	 */
 	public void dispose() {
+		isDisposing = true;
 		view.eAdapters().remove(viewModelContentAdapter);
 		domainObject.eAdapters().remove(domainModelContentAdapter);
 
@@ -169,7 +187,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		viewServices.clear();
 
-		disposed = true;
+		isDisposing = false;
+		isDisposed = true;
 	}
 
 	/**
@@ -178,7 +197,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-		if (disposed) {
+		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
 		if (modelChangeListener == null) {
@@ -193,7 +212,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-		if (disposed) {
+		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
 		viewModelChangeListener.remove(modelChangeListener);
@@ -205,7 +224,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-		if (disposed) {
+		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
 		if (modelChangeListener == null) {
@@ -220,7 +239,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-		if (disposed) {
+		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
 		domainModelChangeListener.remove(modelChangeListener);
