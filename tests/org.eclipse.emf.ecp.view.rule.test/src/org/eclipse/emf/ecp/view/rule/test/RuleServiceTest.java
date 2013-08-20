@@ -22,6 +22,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
 import org.eclipse.emf.ecp.view.model.Attachment;
@@ -111,7 +112,7 @@ public class RuleServiceTest {
 			hasRegisteredDomainListener = true;
 		}
 
-		public View getViewModel() {
+		public Renderable getViewModel() {
 			return view;
 		}
 
@@ -152,7 +153,7 @@ public class RuleServiceTest {
 	/** The parent column. */
 	private Column parentColumn;
 
-	private TestViewModelContext context;
+	private ViewModelContext context;
 
 	/**
 	 * Sets the up.
@@ -205,7 +206,7 @@ public class RuleServiceTest {
 	private RuleService instantiateRuleService(final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
 		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
-		context = new TestViewModelContext(view, domainModel);
+		context = new ViewModelContextImpl(view, domainModel);
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);
 		return ruleService;

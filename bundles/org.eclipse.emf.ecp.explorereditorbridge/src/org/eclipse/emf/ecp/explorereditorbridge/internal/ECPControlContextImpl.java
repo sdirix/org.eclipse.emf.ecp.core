@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -102,7 +103,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	 * @param shell the {@link Shell} to use for UI elements
 	 * @param view the view
 	 */
-	public ECPControlContextImpl(EObject domainObject, ECPProject ecpProject, Shell shell, View view) {
+	public ECPControlContextImpl(EObject domainObject, ECPProject ecpProject, Shell shell, Renderable view) {
 		super();
 		modelElement = domainObject;
 		this.ecpProject = ecpProject;

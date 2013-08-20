@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -51,7 +50,7 @@ public final class SWTViewTestHelper {
 	public static Control render(Renderable renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(
-			input, shell, (View) renderable);
+			input, shell, renderable);
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(renderable, context);
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);

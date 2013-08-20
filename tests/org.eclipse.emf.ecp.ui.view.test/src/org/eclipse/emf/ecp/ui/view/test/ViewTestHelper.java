@@ -25,7 +25,6 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -84,7 +83,7 @@ public final class ViewTestHelper {
 	 *            the view that is used to create the {@link ViewModelContext} of the ECP control context
 	 * @return an {@link ECPControlContext} for the given domain object
 	 */
-	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell, View view) {
+	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell, Renderable view) {
 		// setup context
 		@SuppressWarnings("restriction")
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
@@ -137,7 +136,7 @@ public final class ViewTestHelper {
 	 */
 	public static Node<Renderable> build(Renderable view, EObject domainObject) {
 		final Shell shell = new Shell();
-		context = createECPControlContext(domainObject, shell, (View) view);
+		context = createECPControlContext(domainObject, shell, view);
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, context);
 		return node;
 	}

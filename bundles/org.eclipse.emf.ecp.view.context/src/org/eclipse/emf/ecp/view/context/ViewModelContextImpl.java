@@ -22,7 +22,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * The Class ViewModelContextImpl.
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.model.View;
 public class ViewModelContextImpl implements ViewModelContext {
 
 	/** The view. */
-	private final View view;
+	private final Renderable view;
 
 	/** The domain object. */
 	private final EObject domainObject;
@@ -63,7 +63,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @param view the view
 	 * @param domainObject the domain object
 	 */
-	public ViewModelContextImpl(View view, EObject domainObject) {
+	public ViewModelContextImpl(Renderable view, EObject domainObject) {
 		this.view = view;
 		this.domainObject = domainObject;
 
@@ -135,7 +135,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getViewModel()
 	 */
-	public View getViewModel() {
+	public Renderable getViewModel() {
 		if (disposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}

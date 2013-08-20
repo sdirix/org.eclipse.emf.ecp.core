@@ -30,7 +30,6 @@ import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
@@ -89,7 +88,7 @@ public class RuleService extends AbstractViewService {
 		};
 		context.registerViewChangeListener(viewChangeListener);
 
-		final View view = context.getViewModel();
+		final Renderable view = context.getViewModel();
 
 		if (view == null) {
 			throw new IllegalStateException("View model must not be null");

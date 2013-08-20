@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.context;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.Renderable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,7 +46,7 @@ public interface ViewModelContext {
 	 * 
 	 * @return the view model
 	 */
-	View getViewModel();
+	Renderable getViewModel();
 
 	/**
 	 * Gets the domain model.
