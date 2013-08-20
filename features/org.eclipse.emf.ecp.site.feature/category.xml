@@ -39,6 +39,9 @@
    <feature url="features/org.eclipse.emf.ecp.view.rule.feature_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.view.rule.feature" version="1.0.0.qualifier">
       <category name="org.eclipse.emf.ecp.view.additional"/>
    </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.group.feature_1.0.0.qualifier.jar" id="org.eclipse.emf.ecp.view.group.feature" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.ecp.view.additional"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
    <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (at least one is required)"/>
    <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>
