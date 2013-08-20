@@ -117,7 +117,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
-	int RENDERABLE = 13;
+	int RENDERABLE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -653,17 +653,6 @@ public interface ViewPackage extends EPackage {
 	int COLUMN = 11;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.GroupImpl <em>Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.GroupImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getGroup()
-	 * @generated
-	 */
-	int GROUP = 12;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -672,7 +661,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 14;
+	int ACTION = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
@@ -684,7 +673,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
 	 * @generated
 	 */
-	int ABSTRACT_CONTROL = 15;
+	int ABSTRACT_CONTROL = 14;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1337,76 +1326,6 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__ENABLED = COMPOSITE_COLLECTION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__READONLY = COMPOSITE_COLLECTION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__NAME = COMPOSITE_COLLECTION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__COMPOSITES = COMPOSITE_COLLECTION__COMPOSITES;
-
-	/**
-	 * The number of structural features of the '<em>Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1446,7 +1365,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
 	 * @generated
 	 */
-	int ATTACHMENT = 16;
+	int ATTACHMENT = 15;
 
 	/**
 	 * The number of structural features of the '<em>Attachment</em>' class.
@@ -1467,7 +1386,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 17;
+	int ALIGNMENT = 16;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1852,17 +1771,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getColumn();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Group <em>Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Group</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Group
-	 * @generated
-	 */
-	EClass getGroup();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
@@ -2348,17 +2256,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass COLUMN = eINSTANCE.getColumn();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.GroupImpl <em>Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.GroupImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getGroup()
-		 * @generated
-		 */
-		EClass GROUP = eINSTANCE.getGroup();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl

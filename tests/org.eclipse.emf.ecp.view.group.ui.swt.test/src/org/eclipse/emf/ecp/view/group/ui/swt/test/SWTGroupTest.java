@@ -44,7 +44,8 @@ public class SWTGroupTest {
 
 		// setup model
 		final View view = GroupTest.createViewWithOneGroup();
-		final org.eclipse.emf.ecp.view.model.Group group = (org.eclipse.emf.ecp.view.model.Group) view.getChildren()
+		final org.eclipse.emf.ecp.view.group.model.Group group = (org.eclipse.emf.ecp.view.group.model.Group) view
+			.getChildren()
 			.get(0);
 		group.setName(GROUP_NAME);
 
@@ -70,11 +71,13 @@ public class SWTGroupTest {
 
 		// setup model
 		final View view = GroupTest.createViewWithTwoGroups();
-		final org.eclipse.emf.ecp.view.model.Group group = (org.eclipse.emf.ecp.view.model.Group) view.getChildren()
+		final org.eclipse.emf.ecp.view.group.model.Group group = (org.eclipse.emf.ecp.view.group.model.Group) view
+			.getChildren()
 			.get(0);
 		group.setName(GROUP_NAME);
 
-		final org.eclipse.emf.ecp.view.model.Group group2 = (org.eclipse.emf.ecp.view.model.Group) view.getChildren()
+		final org.eclipse.emf.ecp.view.group.model.Group group2 = (org.eclipse.emf.ecp.view.group.model.Group) view
+			.getChildren()
 			.get(1);
 		group2.setName(GROUP_NAME2);
 
@@ -108,9 +111,10 @@ public class SWTGroupTest {
 	public void testTwoGroupsHierachicalinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final View view = GroupTest.createViewWithTwoHierachicalGroups();
-		final org.eclipse.emf.ecp.view.model.Group group = (org.eclipse.emf.ecp.view.model.Group) view.getChildren()
+		final org.eclipse.emf.ecp.view.group.model.Group group = (org.eclipse.emf.ecp.view.group.model.Group) view
+			.getChildren()
 			.get(0);
-		final org.eclipse.emf.ecp.view.model.Group subGroup = (org.eclipse.emf.ecp.view.model.Group) group
+		final org.eclipse.emf.ecp.view.group.model.Group subGroup = (org.eclipse.emf.ecp.view.group.model.Group) group
 			.getComposites().get(0);
 		group.setName(GROUP_NAME);
 

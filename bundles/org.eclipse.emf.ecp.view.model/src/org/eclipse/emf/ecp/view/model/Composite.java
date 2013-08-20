@@ -2,7 +2,6 @@
  */
 package org.eclipse.emf.ecp.view.model;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Composite</b></em>'.

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
@@ -216,19 +215,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = caseComposite(column);
 			if (result == null)
 				result = caseRenderable(column);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case ViewPackage.GROUP: {
-			Group group = (Group) theEObject;
-			T result = caseGroup(group);
-			if (result == null)
-				result = caseCompositeCollection(group);
-			if (result == null)
-				result = caseComposite(group);
-			if (result == null)
-				result = caseRenderable(group);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -459,22 +445,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseColumn(Column object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Group</em>'.
-	 * <!-- begin-user-doc --> This
-	 * implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Group</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseGroup(Group object) {
 		return null;
 	}
 

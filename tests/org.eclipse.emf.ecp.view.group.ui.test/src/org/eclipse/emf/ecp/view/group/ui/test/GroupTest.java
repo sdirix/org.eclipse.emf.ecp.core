@@ -17,7 +17,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.view.group.model.Group;
+import org.eclipse.emf.ecp.view.group.model.GroupFactory;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -125,7 +126,7 @@ public class GroupTest {
 	 * @return
 	 */
 	private static Group createGroup() {
-		return ViewFactory.eINSTANCE.createGroup();
+		return GroupFactory.eINSTANCE.createGroup();
 	}
 
 }

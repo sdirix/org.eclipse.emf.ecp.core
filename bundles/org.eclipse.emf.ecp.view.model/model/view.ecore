@@ -61,7 +61,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnComposite" eSuperTypes="#//CompositeCollection"/>
   <eClassifiers xsi:type="ecore:EClass" name="Column" eSuperTypes="#//CompositeCollection"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//CompositeCollection"/>
   <eClassifiers xsi:type="ecore:EClass" name="Renderable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="visible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         transient="true" defaultValueLiteral="true"/>

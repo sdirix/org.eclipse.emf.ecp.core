@@ -37,7 +37,6 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl;
 import org.eclipse.emf.ecp.view.model.impl.ColumnImpl;
 import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
-import org.eclipse.emf.ecp.view.model.impl.GroupImpl;
 import org.eclipse.emf.ecp.view.model.impl.TableControlImpl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -91,7 +90,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			add(ColumnImpl.class);
 			add(ControlImpl.class);
 			add(TableControlImpl.class);
-			add(GroupImpl.class);
+			// add(GroupImpl.class);
 		}
 	};
 

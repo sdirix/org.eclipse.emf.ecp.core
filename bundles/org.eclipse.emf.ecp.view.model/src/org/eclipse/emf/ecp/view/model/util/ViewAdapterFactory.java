@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
@@ -156,12 +155,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseColumn(Column object)
 		{
 			return createColumnAdapter();
-		}
-
-		@Override
-		public Adapter caseGroup(Group object)
-		{
-			return createGroupAdapter();
 		}
 
 		@Override
@@ -391,20 +384,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createColumnAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Group <em>Group</em>}'. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Group
-	 * @generated
-	 */
-	public Adapter createGroupAdapter() {
 		return null;
 	}
 

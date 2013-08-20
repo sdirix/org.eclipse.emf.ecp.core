@@ -32,7 +32,7 @@ public class ChildrenDescriptorTest {
 	private static final int RENDERABLE_CHILD_COUNT = 0;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	private static final int NUMBER_OF_COMPOSITES = 6;
+	private static final int NUMBER_OF_COMPOSITES = 5;
 	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
 		+ NUMBER_OF_CATEGORIZATIONS;
@@ -47,7 +47,6 @@ public class ChildrenDescriptorTest {
 
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int ACTION_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
@@ -131,11 +130,11 @@ public class ChildrenDescriptorTest {
 		assertEquals(COLUMN_CHILD_COUNT, size);
 	}
 
-	@Test
-	public void testGroupDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getGroup());
-		assertEquals(GROUP_CHILD_COUNT, size);
-	}
+	// @Test
+	// public void testGroupDescriptors() {
+	// final int size = getChildrenSize(ViewPackage.eINSTANCE.getGroup());
+	// assertEquals(GROUP_CHILD_COUNT, size);
+	// }
 
 	/**
 	 * Class is abstract, Exception expected

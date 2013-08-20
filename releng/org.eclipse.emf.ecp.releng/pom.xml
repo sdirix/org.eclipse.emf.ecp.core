@@ -127,6 +127,13 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		
+		<!-- Group Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
+		
 		<!-- Rule Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model</module>

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
+import org.eclipse.emf.ecp.view.group.model.GroupPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
@@ -55,13 +56,14 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT - 3;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	// TODO: Should be not -7, labels, custom control, groupedgrid, span, 2 rules and separator are missing
+	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 7;
 	private static final int ACTION_CHILD_COUNT = 0;
 	// TODO: Should be not -2, rules are missing
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1 - 2;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
-	// TODO: Should be not -2, labels, custom composites and separator are missing
-	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 3;
+	// TODO: Should be not -4, labels, group, custom composites and separator are missing
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 4;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
@@ -223,7 +225,7 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testGroupDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getGroup());
+		final int size = getChildrenSize(GroupPackage.eINSTANCE.getGroup());
 		assertEquals(GROUP_CHILD_COUNT, size);
 	}
 

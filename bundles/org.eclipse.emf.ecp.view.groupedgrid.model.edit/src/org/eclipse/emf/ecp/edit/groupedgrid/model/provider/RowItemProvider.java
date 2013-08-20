@@ -197,10 +197,6 @@ public class RowItemProvider
 			(GroupedGridPackage.Literals.ROW__CHILDREN,
 				ViewFactory.eINSTANCE.createColumn()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(GroupedGridPackage.Literals.ROW__CHILDREN,
-				ViewFactory.eINSTANCE.createGroup()));
 	}
 
 	/**

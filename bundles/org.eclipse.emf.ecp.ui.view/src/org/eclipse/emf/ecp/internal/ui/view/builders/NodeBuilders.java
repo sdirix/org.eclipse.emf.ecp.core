@@ -20,7 +20,6 @@ import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.TreeCategory;
@@ -44,14 +43,14 @@ public class NodeBuilders {
 		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>() {
 			{
 				put(ColumnComposite.class,
-						new CompositeCollectionNodeBuilder<ColumnComposite>());
+					new CompositeCollectionNodeBuilder<ColumnComposite>());
 				put(Column.class, new CompositeCollectionNodeBuilder<Column>());
-				put(Group.class, new CompositeCollectionNodeBuilder<Group>());
+				// put(Group.class, new CompositeCollectionNodeBuilder<Group>());
 				put(TableControl.class,
-						new RenderableNodeBuilder<TableControl>());
+					new RenderableNodeBuilder<TableControl>());
 				put(Control.class, new RenderableNodeBuilder<Control>());
 				put(CustomComposite.class,
-						new RenderableNodeBuilder<CustomComposite>());
+					new RenderableNodeBuilder<CustomComposite>());
 				put(View.class, new ViewNodeBuilder());
 				put(Category.class, new CategoryNodeBuilder());
 				put(Categorization.class, new CategorizationNodeBuilder());
@@ -61,9 +60,9 @@ public class NodeBuilders {
 			}
 		};
 
-		for (CustomNodeBuilder customBuilder : getCustomNodeBuilders()) {
-			for (Map.Entry<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> entry : customBuilder
-					.getCustomNodeBuilders().entrySet()) {
+		for (final CustomNodeBuilder customBuilder : getCustomNodeBuilders()) {
+			for (final Map.Entry<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> entry : customBuilder
+				.getCustomNodeBuilders().entrySet()) {
 				builders.put(entry.getKey(), entry.getValue());
 			}
 		}
@@ -72,18 +71,18 @@ public class NodeBuilders {
 	}
 
 	public Set<CustomNodeBuilder> getCustomNodeBuilders() {
-		Set<CustomNodeBuilder> builders = new LinkedHashSet<CustomNodeBuilder>();
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
-				.getExtensionPoint(
-						"org.eclipse.emf.ecp.ui.view.customNodeBuilders");
-		for (IExtension extension : extensionPoint.getExtensions()) {
-			IConfigurationElement configurationElement = extension
-					.getConfigurationElements()[0];
+		final Set<CustomNodeBuilder> builders = new LinkedHashSet<CustomNodeBuilder>();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
+			.getExtensionPoint(
+				"org.eclipse.emf.ecp.ui.view.customNodeBuilders");
+		for (final IExtension extension : extensionPoint.getExtensions()) {
+			final IConfigurationElement configurationElement = extension
+				.getConfigurationElements()[0];
 			try {
-				CustomNodeBuilder renderer = (CustomNodeBuilder) configurationElement
-						.createExecutableExtension("class");
+				final CustomNodeBuilder renderer = (CustomNodeBuilder) configurationElement
+					.createExecutableExtension("class");
 				builders.add(renderer);
-			} catch (CoreException ex) {
+			} catch (final CoreException ex) {
 				Activator.log(ex);
 			}
 		}
@@ -92,31 +91,31 @@ public class NodeBuilders {
 	}
 
 	public <R extends Renderable> Node<R> build(R renderable,
-			ECPControlContext controlContext) {
+		ECPControlContext controlContext) {
 
-		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-				composedAdapterFactory);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
 
-		Node<R> build = build(renderable, controlContext,
-				adapterFactoryItemDelegator);
+		final Node<R> build = build(renderable, controlContext,
+			adapterFactoryItemDelegator);
 		composedAdapterFactory.dispose();
 		return build;
 	}
 
 	public <R extends Renderable> Node<R> build(R renderable,
-			ECPControlContext controlContext,
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+		ECPControlContext controlContext,
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 
 		if (!buildersInitialized) {
 			initBuilders();
 		}
 
 		Class<?> c = null;
-		for (Class<? extends Renderable> cls : builders.keySet()) {
-			Class<?>[] interfaces = renderable.getClass().getInterfaces();
-			int indexOf = Arrays.asList(interfaces).indexOf(cls);
+		for (final Class<? extends Renderable> cls : builders.keySet()) {
+			final Class<?>[] interfaces = renderable.getClass().getInterfaces();
+			final int indexOf = Arrays.asList(interfaces).indexOf(cls);
 			if (indexOf != -1) {
 				c = interfaces[indexOf];
 				break;
@@ -125,9 +124,9 @@ public class NodeBuilders {
 
 		if (c != null) {
 			@SuppressWarnings("unchecked")
-			NodeBuilder<R> builder = (NodeBuilder<R>) builders.get(c);
+			final NodeBuilder<R> builder = (NodeBuilder<R>) builders.get(c);
 			return builder.build(renderable, controlContext,
-					adapterFactoryItemDelegator);
+				adapterFactoryItemDelegator);
 		}
 
 		return null;

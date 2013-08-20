@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
@@ -120,13 +119,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass columnEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass groupEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -518,15 +510,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EClass getGroup() {
-		return groupEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EClass getRenderable() {
 		return renderableEClass;
 	}
@@ -717,8 +700,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		columnEClass = createEClass(COLUMN);
 
-		groupEClass = createEClass(GROUP);
-
 		renderableEClass = createEClass(RENDERABLE);
 		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
 		createEAttribute(renderableEClass, RENDERABLE__ENABLED);
@@ -781,7 +762,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		compositeCollectionEClass.getESuperTypes().add(this.getComposite());
 		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
 		columnEClass.getESuperTypes().add(this.getCompositeCollection());
-		groupEClass.getESuperTypes().add(this.getCompositeCollection());
 		abstractControlEClass.getESuperTypes().add(this.getComposite());
 
 		// Initialize classes and features; add operations and parameters
@@ -870,8 +850,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);

@@ -16,7 +16,6 @@ import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.Group;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
@@ -91,8 +90,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createColumnComposite();
 		case ViewPackage.COLUMN:
 			return createColumn();
-		case ViewPackage.GROUP:
-			return createGroup();
 		case ViewPackage.ACTION:
 			return createAction();
 		default:
@@ -224,16 +221,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Column createColumn() {
 		ColumnImpl column = new ColumnImpl();
 		return column;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public Group createGroup() {
-		GroupImpl group = new GroupImpl();
-		return group;
 	}
 
 	/**

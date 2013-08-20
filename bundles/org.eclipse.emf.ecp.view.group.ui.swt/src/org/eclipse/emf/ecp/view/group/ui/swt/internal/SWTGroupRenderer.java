@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.ui.view.swt;
+package org.eclipse.emf.ecp.view.group.ui.swt.internal;
 
 import java.util.List;
 
@@ -17,7 +17,9 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Group;
+import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
+import org.eclipse.emf.ecp.view.group.model.Group;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
@@ -29,6 +31,9 @@ import org.eclipse.swt.widgets.Control;
  * 
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
+	/**
+	 * Singleton instance of the SWT Group renderer.
+	 */
 	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
 	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group";
 

@@ -202,11 +202,6 @@ public class ViewItemProvider
 			(createChildParameter
 			(ViewPackage.Literals.VIEW__CHILDREN,
 				ViewFactory.eINSTANCE.createColumn()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.VIEW__CHILDREN,
-				ViewFactory.eINSTANCE.createGroup()));
 	}
 
 }
