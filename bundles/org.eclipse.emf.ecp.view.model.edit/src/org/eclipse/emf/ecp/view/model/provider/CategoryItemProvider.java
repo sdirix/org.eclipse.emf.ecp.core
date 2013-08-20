@@ -186,11 +186,6 @@ public class CategoryItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				ViewFactory.eINSTANCE.createTableControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.CATEGORY__COMPOSITE,
 				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add

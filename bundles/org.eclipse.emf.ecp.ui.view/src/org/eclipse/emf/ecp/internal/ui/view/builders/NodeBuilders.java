@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.TreeCategory;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -46,15 +45,15 @@ public class NodeBuilders {
 					new CompositeCollectionNodeBuilder<ColumnComposite>());
 				put(Column.class, new CompositeCollectionNodeBuilder<Column>());
 				// put(Group.class, new CompositeCollectionNodeBuilder<Group>());
-				put(TableControl.class,
-					new RenderableNodeBuilder<TableControl>());
+				// put(TableControl.class,
+				// new RenderableNodeBuilder<TableControl>());
 				put(Control.class, new RenderableNodeBuilder<Control>());
 				put(CustomComposite.class,
 					new RenderableNodeBuilder<CustomComposite>());
 				put(View.class, new ViewNodeBuilder());
 				put(Category.class, new CategoryNodeBuilder());
 				put(Categorization.class, new CategorizationNodeBuilder());
-				put(TableControl.class, new ControlNodeBuilder<TableControl>());
+				// put(TableControl.class, new ControlNodeBuilder<TableControl>());
 				put(Control.class, new ControlNodeBuilder<Control>());
 				put(TreeCategory.class, new TreeCategoryNodeBuilder());
 			}

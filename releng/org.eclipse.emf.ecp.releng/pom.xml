@@ -140,6 +140,13 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model.edit</module>
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
 		
+		<!-- Table Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
+		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
 		<!-- Graphiti 

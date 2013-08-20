@@ -36,7 +36,6 @@ import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
@@ -55,7 +54,7 @@ public final class SWTRenderers implements SWTRenderer<Renderable> {
 				put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
 				put(Column.class, SWTColumnRenderer.INSTANCE);
 				// put(Group.class, SWTGroupRenderer.INSTANCE);
-				put(TableControl.class, SWTTableControlRenderer.INSTANCE);
+				// put(TableControl.class, SWTTableControlRenderer.INSTANCE);
 				put(Control.class, SWTControlRenderer.INSTANCE);
 				put(CustomComposite.class, SWTCustomCompositeRenderer.INSTANCE);
 				put(Categorization.class, SWTCategorizationRenderer.INSTANCE);

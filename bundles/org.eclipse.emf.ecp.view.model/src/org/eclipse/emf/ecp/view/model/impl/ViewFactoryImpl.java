@@ -16,8 +16,6 @@ import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -80,10 +78,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createCategory();
 		case ViewPackage.CONTROL:
 			return createControl();
-		case ViewPackage.TABLE_CONTROL:
-			return createTableControl();
-		case ViewPackage.TABLE_COLUMN:
-			return createTableColumn();
 		case ViewPackage.CUSTOM_COMPOSITE:
 			return createCustomComposite();
 		case ViewPackage.COLUMN_COMPOSITE:
@@ -171,26 +165,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Control createControl() {
 		ControlImpl control = new ControlImpl();
 		return control;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public TableControl createTableControl() {
-		TableControlImpl tableControl = new TableControlImpl();
-		return tableControl;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public TableColumn createTableColumn() {
-		TableColumnImpl tableColumn = new TableColumnImpl();
-		return tableColumn;
 	}
 
 	/**

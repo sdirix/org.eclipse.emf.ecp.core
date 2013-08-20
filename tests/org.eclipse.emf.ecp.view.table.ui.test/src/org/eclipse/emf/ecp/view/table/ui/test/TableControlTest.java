@@ -19,9 +19,9 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.table.model.TableColumn;
+import org.eclipse.emf.ecp.view.table.model.TableControl;
+import org.eclipse.emf.ecp.view.table.model.TableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +70,7 @@ public class TableControlTest {
 	 * @return
 	 */
 	private static TableColumn createTableColumn() {
-		return ViewFactory.eINSTANCE.createTableColumn();
+		return TableFactory.eINSTANCE.createTableColumn();
 	}
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
@@ -88,7 +88,7 @@ public class TableControlTest {
 	 * @return
 	 */
 	private static TableControl createTableControl() {
-		return ViewFactory.eINSTANCE.createTableControl();
+		return TableFactory.eINSTANCE.createTableControl();
 	}
 
 	private Node<Renderable> buildNode(final Renderable renderable) {

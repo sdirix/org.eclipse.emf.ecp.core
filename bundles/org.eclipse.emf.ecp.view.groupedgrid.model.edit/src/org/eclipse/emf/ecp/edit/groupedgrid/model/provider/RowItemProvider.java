@@ -180,11 +180,6 @@ public class RowItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(GroupedGridPackage.Literals.ROW__CHILDREN,
-				ViewFactory.eINSTANCE.createTableControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(GroupedGridPackage.Literals.ROW__CHILDREN,
 				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add

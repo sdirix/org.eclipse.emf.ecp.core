@@ -186,11 +186,6 @@ public class ViewItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(ViewPackage.Literals.VIEW__CHILDREN,
-				ViewFactory.eINSTANCE.createTableControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.VIEW__CHILDREN,
 				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add

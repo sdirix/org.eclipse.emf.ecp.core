@@ -7,8 +7,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.table.model.TableColumn;
+import org.eclipse.emf.ecp.view.table.model.TableControl;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -22,33 +22,35 @@ import org.eclipse.ui.dialogs.ListDialog;
 public class TableColumnAttributeControl extends LinkControl {
 
 	public TableColumnAttributeControl(boolean showLabel,
-			IItemPropertyDescriptor itemPropertyDescriptor,
-			EStructuralFeature feature, ECPControlContext modelElementContext,
-			boolean embedded) {
+		IItemPropertyDescriptor itemPropertyDescriptor,
+		EStructuralFeature feature, ECPControlContext modelElementContext,
+		boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,
-				embedded);
+			embedded);
 	}
 
+	@Override
 	protected int getNumButtons() {
 		return 2;
 	}
 
+	@Override
 	protected Button[] createButtons(Composite composite) {
-		Button[] buttons = new Button[2];
+		final Button[] buttons = new Button[2];
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(
-				getModelElementContext(), getItemPropertyDescriptor(),
-				getStructuralFeature()), composite);
+			getModelElementContext(), getItemPropertyDescriptor(),
+			getStructuralFeature()), composite);
 		buttons[1] = createButtonForAction(new FilteredReferenceAction(
-				(EReference) getStructuralFeature(),
-				getItemPropertyDescriptor(), composite.getShell()), composite);
+			(EReference) getStructuralFeature(),
+			getItemPropertyDescriptor(), composite.getShell()), composite);
 		return buttons;
 	}
 
 	private class FilteredReferenceAction extends
-			AbstractFilteredReferenceAction {
+		AbstractFilteredReferenceAction {
 
 		public FilteredReferenceAction(EReference eReference,
-				IItemPropertyDescriptor descriptor, Shell shell) {
+			IItemPropertyDescriptor descriptor, Shell shell) {
 			super(eReference, descriptor, shell);
 		}
 
@@ -58,18 +60,18 @@ public class TableColumnAttributeControl extends LinkControl {
 		@Override
 		public void run() {
 			getModelElementContext()
-					.getEditingDomain()
-					.getCommandStack()
-					.execute(
-							new FilteredReferenceCommand(
-									getModelElementContext().getModelElement(),
-									shell));
+				.getEditingDomain()
+				.getCommandStack()
+				.execute(
+					new FilteredReferenceCommand(
+						getModelElementContext().getModelElement(),
+						shell));
 		}
 	}
 
 	private class FilteredReferenceCommand extends ChangeCommand {
 
-		private Shell shell;
+		private final Shell shell;
 
 		public FilteredReferenceCommand(Notifier notifier, Shell shell) {
 			super(notifier);
@@ -79,19 +81,20 @@ public class TableColumnAttributeControl extends LinkControl {
 		@Override
 		protected void doExecute() {
 
-			AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-					composedAdapterFactory);
-			EReference eref=(EReference) ((TableControl)getModelElementContext().getModelElement().eContainer()).getTargetFeature();
-			ListDialog ld=new ListDialog(shell);
+			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+				composedAdapterFactory);
+			final EReference eref = (EReference) ((TableControl) getModelElementContext().getModelElement()
+				.eContainer()).getTargetFeature();
+			final ListDialog ld = new ListDialog(shell);
 			ld.setLabelProvider(labelProvider);
 			ld.setContentProvider(ArrayContentProvider.getInstance());
 			ld.setInput(eref.getEReferenceType().getEAllAttributes());
 			ld.setTitle("Select Attribute for TableColumn");
-			int result =ld.open();
+			final int result = ld.open();
 			if (Window.OK == result) {
-				Object selection = ld.getResult()[0];
+				final Object selection = ld.getResult()[0];
 				if (EAttribute.class.isInstance(selection)) {
-					EAttribute selectedFeature = (EAttribute) selection;
+					final EAttribute selectedFeature = (EAttribute) selection;
 
 					((TableColumn) getModelElementContext().getModelElement()).setAttribute(selectedFeature);
 				}

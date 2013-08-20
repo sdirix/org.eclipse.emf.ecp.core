@@ -19,8 +19,6 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -119,18 +117,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseControl(Control object)
 		{
 			return createControlAdapter();
-		}
-
-		@Override
-		public Adapter caseTableControl(TableControl object)
-		{
-			return createTableControlAdapter();
-		}
-
-		@Override
-		public Adapter caseTableColumn(TableColumn object)
-		{
-			return createTableColumnAdapter();
 		}
 
 		@Override
@@ -290,37 +276,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createControlAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.TableControl
-	 * <em>Table Control</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.TableControl
-	 * @generated
-	 */
-	public Adapter createTableControlAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.TableColumn
-	 * <em>Table Column</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so
-	 * that we can easily ignore cases; it's useful to ignore a case when
-	 * inheritance will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.TableColumn
-	 * @generated
-	 */
-	public Adapter createTableColumnAdapter() {
 		return null;
 	}
 

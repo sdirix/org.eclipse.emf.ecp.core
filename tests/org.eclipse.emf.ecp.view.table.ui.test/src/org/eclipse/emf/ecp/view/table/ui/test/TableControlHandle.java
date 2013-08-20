@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.test;
 
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.table.model.TableColumn;
+import org.eclipse.emf.ecp.view.table.model.TableControl;
 
 /**
  * @author Jonas

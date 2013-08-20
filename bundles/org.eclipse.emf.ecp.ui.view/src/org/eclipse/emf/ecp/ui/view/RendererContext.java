@@ -22,8 +22,6 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.SelectedChildNodeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 
 public class RendererContext<CONTROL> implements SelectedChildNodeListener {
@@ -130,27 +128,27 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 					if (structuralFeature.isMany() && EReference.class.isInstance(structuralFeature)) {
 						final EReference eReference = (EReference) structuralFeature;
 						if (eReference.isContainment()) {
-							if (TableControl.class.isInstance(control)) {
-								final TableControl tc = (TableControl) control;
-								for (final TableColumn column : tc.getColumns()) {
-									Set<EObject> controls2 = categoryValidationMap.get(column.getAttribute());
-									if (controls2 == null) {
-										controls2 = new HashSet<EObject>();
-										categoryValidationMap.put(column.getAttribute(), controls2);
-									}
-									controls2.add(control);
+							// if (TableControl.class.isInstance(control)) {
+							// final TableControl tc = (TableControl) control;
+							// for (final TableColumn column : tc.getColumns()) {
+							// Set<EObject> controls2 = categoryValidationMap.get(column.getAttribute());
+							// if (controls2 == null) {
+							// controls2 = new HashSet<EObject>();
+							// categoryValidationMap.put(column.getAttribute(), controls2);
+							// }
+							// controls2.add(control);
+							// }
+							// } else {
+							for (final EStructuralFeature feature : eReference.getEReferenceType()
+								.getEAllStructuralFeatures()) {
+								Set<EObject> controls2 = categoryValidationMap.get(feature);
+								if (controls2 == null) {
+									controls2 = new HashSet<EObject>();
+									categoryValidationMap.put(feature, controls2);
 								}
-							} else {
-								for (final EStructuralFeature feature : eReference.getEReferenceType()
-									.getEAllStructuralFeatures()) {
-									Set<EObject> controls2 = categoryValidationMap.get(feature);
-									if (controls2 == null) {
-										controls2 = new HashSet<EObject>();
-										categoryValidationMap.put(feature, controls2);
-									}
-									controls2.add(control);
-								}
+								controls2.add(control);
 							}
+							// }
 						}
 					}
 					EObject parent = control.eContainer();

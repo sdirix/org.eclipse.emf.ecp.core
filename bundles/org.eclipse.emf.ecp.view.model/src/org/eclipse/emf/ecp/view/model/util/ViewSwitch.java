@@ -18,8 +18,6 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -145,28 +143,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = caseComposite(control);
 			if (result == null)
 				result = caseRenderable(control);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case ViewPackage.TABLE_CONTROL: {
-			TableControl tableControl = (TableControl) theEObject;
-			T result = caseTableControl(tableControl);
-			if (result == null)
-				result = caseControl(tableControl);
-			if (result == null)
-				result = caseAbstractControl(tableControl);
-			if (result == null)
-				result = caseComposite(tableControl);
-			if (result == null)
-				result = caseRenderable(tableControl);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case ViewPackage.TABLE_COLUMN: {
-			TableColumn tableColumn = (TableColumn) theEObject;
-			T result = caseTableColumn(tableColumn);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -349,38 +325,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseControl(Control object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Table Control</em>'.
-	 * <!-- begin-user-doc
-	 * --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Table Control</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTableControl(TableControl object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Table Column</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Table Column</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTableColumn(TableColumn object) {
 		return null;
 	}
 
