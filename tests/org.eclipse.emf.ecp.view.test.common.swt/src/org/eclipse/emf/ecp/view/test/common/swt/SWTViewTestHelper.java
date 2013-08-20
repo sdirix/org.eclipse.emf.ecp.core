@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -77,6 +78,11 @@ public final class SWTViewTestHelper {
 	public static int getNumberofColumns(Composite composite) {
 		final GridLayout gridLayout = (GridLayout) composite.getLayout();
 		return gridLayout.numColumns;
+	}
+
+	public static int getHorizontalSpan(Composite composite) {
+		final GridData gridData = (GridData) composite.getLayoutData();
+		return gridData.horizontalSpan;
 	}
 
 	public static boolean checkIfThereIsATextControlWithLabel(Control control) {

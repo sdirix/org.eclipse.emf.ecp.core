@@ -85,6 +85,9 @@ public class SWTVerticalTest {
 		final Composite firstVertical = (Composite) composite.getChildren()[0];
 		final Composite secondVertical = (Composite) composite.getChildren()[1];
 
+		assertEquals(2, SWTViewTestHelper.getHorizontalSpan(firstVertical));
+		assertEquals(2, SWTViewTestHelper.getHorizontalSpan(secondVertical));
+
 		assertEquals(4, firstVertical.getChildren().length);
 		assertEquals(4, secondVertical.getChildren().length);
 		assertEquals(2, SWTViewTestHelper.getNumberofColumns(firstVertical));
