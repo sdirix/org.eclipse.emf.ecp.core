@@ -73,250 +73,319 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.cdo.core.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.cdo.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.common.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.core.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.core.emffilter.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.edit.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.edit.swt.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.editor.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.editor.e3.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.emfstore.core.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.emfstore.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.emfstore.ui.search.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
          id="org.eclipse.emf.ecp.explorereditorbridge.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.ui.e3.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.validation.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.validation.connector.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.workspace.core.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.workspace.ui.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.ui.view.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.ui.view.editor.controls.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.ui.view.swt.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.validation.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.validation.connector.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.context.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.custom.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.custom.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.custom.ui.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.custom.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.groupedgrid.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.groupedgrid.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.groupedgrid.ui.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.groupedgrid.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.label.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.label.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.label.ui.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.label.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
          id="org.eclipse.emf.ecp.view.model.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.view.model.edit.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.model.provider.generator.source"
+         id="org.eclipse.emf.ecp.view.model.generator.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
          id="org.eclipse.emf.ecp.view.model.provider.xmi.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.custom.model.source"
+         id="org.eclipse.emf.ecp.view.rule.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.custom.model.edit.source"
+         id="org.eclipse.emf.ecp.view.rule.model.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.custom.ui.source"
+         id="org.eclipse.emf.ecp.view.rule.model.edit.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.custom.ui.swt.source"
+         id="org.eclipse.emf.ecp.view.separator.model.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.label.model.source"
+         id="org.eclipse.emf.ecp.view.separator.model.edit.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.label.model.edit.source"
+         id="org.eclipse.emf.ecp.view.separator.ui.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.label.ui.source"
+         id="org.eclipse.emf.ecp.view.separator.ui.swt.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.label.ui.swt.source"
+         id="org.eclipse.emf.ecp.workspace.core.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
-         id="org.eclipse.emf.ecp.view.groupedgrid.model.source"
+         id="org.eclipse.emf.ecp.workspace.ui.source"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.groupedgrid.model.edit.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.groupedgrid.ui.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.groupedgrid.ui.swt.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 </feature>
