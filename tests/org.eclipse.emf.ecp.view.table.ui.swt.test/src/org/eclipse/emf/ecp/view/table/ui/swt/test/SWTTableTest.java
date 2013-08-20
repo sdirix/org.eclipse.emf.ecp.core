@@ -135,33 +135,6 @@ public class SWTTableTest {
 	}
 
 	@Test
-	public void testTableWithColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		// setup model
-		final TableControlHandle handle = TableControlTest.createTableWithTwoTableColumns();
-
-		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
-		assertTrue(render instanceof Composite);
-
-		final Control control = getTable(render);
-		assertTrue(control instanceof Table);
-		final Table table = (Table) control;
-		assertEquals(2, table.getColumnCount());
-	}
-
-	/**
-	 * @param render
-	 * @return
-	 */
-	private Control getTable(Control render) {
-		Composite composite = (Composite) render;
-		composite = (Composite) composite.getChildren()[1];
-		composite = (Composite) composite.getChildren()[0];
-		composite = (Composite) composite.getChildren()[0];
-		composite = (Composite) composite.getChildren()[0];
-		return composite.getChildren()[0];
-	}
-
-	@Test
 	public void testTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createTableWithTwoTableColumns();
@@ -173,6 +146,15 @@ public class SWTTableTest {
 		final Table table = (Table) control;
 		assertEquals(2, table.getColumnCount());
 
+	}
+
+	private Control getTable(Control render) {
+		Composite composite = (Composite) render;
+		composite = (Composite) composite.getChildren()[1];
+		composite = (Composite) composite.getChildren()[0];
+		composite = (Composite) composite.getChildren()[0];
+		composite = (Composite) composite.getChildren()[0];
+		return composite.getChildren()[0];
 	}
 
 }
