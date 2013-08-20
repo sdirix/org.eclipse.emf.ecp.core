@@ -376,6 +376,34 @@
          unpack="false"/>
 		 
    <plugin
+         id="org.eclipse.emf.ecp.view.group.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.group.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.group.ui.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="org.eclipse.emf.ecp.view.group.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
          id="org.eclipse.emf.ecp.workspace.core.source"
          download-size="0"
          install-size="0"
