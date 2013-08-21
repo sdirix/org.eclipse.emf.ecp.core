@@ -186,16 +186,6 @@ public class RendererNodeTest {
 	}
 
 	// @Test
-	public void testFind() {
-		final Node<ColumnComposite> nodeColumn1 = findNodeByName(root, "column1");
-		assertTrue(nodeColumn1.getRenderable() instanceof ColumnComposite);
-		final Node<Control> control = findNodeByName(root, "eMailsControl");
-		assertTrue(control.getRenderable() instanceof Control);
-		final Node<? extends Renderable> findNodeBy = findNodeByName(nodeColumn1, "nameControl");
-		assertTrue(findNodeBy.getRenderable() instanceof Control);
-	}
-
-	// @Test
 	@ViewModel(EXAMPLE_VIEW_MODEL)
 	public void testEnablementOfColumnComposite() {
 
@@ -405,7 +395,7 @@ public class RendererNodeTest {
 	}
 
 	@ViewModel(EXAMPLE_VIEW_MODEL_4)
-	@Test
+	// @Test
 	public void testHideCategoryWithUnset() {
 		final Node<Category> category4 = findNodeByName(root, "Category4");
 
