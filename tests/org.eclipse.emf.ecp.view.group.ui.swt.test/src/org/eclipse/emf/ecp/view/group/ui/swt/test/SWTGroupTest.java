@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.group.ui.test.GroupTest;
@@ -144,6 +145,50 @@ public class SWTGroupTest {
 			GROUP_NAME2, groupControl2.getText());
 		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl2.getData("org.eclipse.rap.rwt.customVariant"));
+	}
+
+	@Test
+	public void testTwoGroupsWithTwoControlsInView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final View view = GroupTest.createViewWithTwoGroupsWithTwoControls();
+		final org.eclipse.emf.ecp.view.group.model.Group group1 = (org.eclipse.emf.ecp.view.group.model.Group) view
+			.getChildren()
+			.get(0);
+		final org.eclipse.emf.ecp.view.group.model.Group group2 = (org.eclipse.emf.ecp.view.group.model.Group) view
+			.getChildren().get(1);
+		group1.setName(GROUP_NAME);
+
+		group2.setName(GROUP_NAME2);
+
+		// setup ui
+		final Shell shell = SWTViewTestHelper.createShell();
+
+		final Control control = SWTViewTestHelper.render(view, EcoreFactory.eINSTANCE.createEClass(), shell);
+		final Composite viewComposite = (Composite) shell.getChildren()[0];
+		final Composite renderedControl1 = (Composite) viewComposite.getChildren()[0];
+		final Composite renderedControl2 = (Composite) viewComposite.getChildren()[1];
+		assertTrue("Rendered Control is not a Group", renderedControl1 instanceof org.eclipse.swt.widgets.Group);
+		assertEquals(
+			"Rendered Control and control returned by renderer are not the same",
+			control, viewComposite);
+		final Group groupControl1 = (Group) renderedControl1;
+		assertEquals("Rendered Group does not have correct name",
+			GROUP_NAME, groupControl1.getText());
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
+			renderedControl1.getData("org.eclipse.rap.rwt.customVariant"));
+
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl1.getChildren()[1]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl1.getChildren()[3]));
+
+		assertTrue("Rendered Control is not a Group", renderedControl2 instanceof org.eclipse.swt.widgets.Group);
+
+		final Group groupControl2 = (Group) renderedControl2;
+		assertEquals("Rendered Group does not have correct name",
+			GROUP_NAME2, groupControl2.getText());
+		assertEquals("org_eclipse_emf_ecp_ui_control_group",
+			renderedControl2.getData("org.eclipse.rap.rwt.customVariant"));
+
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl2.getChildren()[1]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl2.getChildren()[3]));
 	}
 
 	@Test
