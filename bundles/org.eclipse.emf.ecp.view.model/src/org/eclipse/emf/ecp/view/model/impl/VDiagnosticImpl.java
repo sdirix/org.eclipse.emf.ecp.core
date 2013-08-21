@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -182,8 +183,15 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @see org.eclipse.emf.ecp.view.model.VDiagnostic#getHighestSeverity()
 	 */
 	public int getHighestSeverity() {
-		// TODO Auto-generated method stub
-		return 0;
+		int highestSeverity = Diagnostic.OK;
+		if (getDiagnostics().size() > 0) {
+			for (final Object o : getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) o;
+				highestSeverity = highestSeverity >= diagnostic.getSeverity() ? highestSeverity : diagnostic
+					.getSeverity();
+			}
+		}
+		return highestSeverity;
 	}
 
 	/**
@@ -192,8 +200,15 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @see org.eclipse.emf.ecp.view.model.VDiagnostic#getMessage()
 	 */
 	public String getMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		String message = "";
+		if (getDiagnostics().size() > 0) {
+			for (final Object o : getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) o;
+				final String diagnosticMessage = diagnostic.getMessage();
+				message = message.concat(diagnosticMessage + "\n");
+			}
+		}
+		return message;
 	}
 
 } // VDiagnosticImpl
