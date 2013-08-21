@@ -544,7 +544,45 @@ public class ValidationServiceTest {
 		final int expectedSeverityAll = expectedSeverityWriter > diagnosticBooks ? expectedSeverityWriter
 			: diagnosticBooks;
 		assertEquals(expectedSeverityAll, view.getDiagnostic().getHighestSeverity());
+	}
 
+	@Test
+	public void testMappingDiagnosticResultToControls() {
+		// Book with warning (no writer) and error (no title)
+		final Book book = TestFactory.eINSTANCE.createBook();
+
+		final View view = ViewFactory.eINSTANCE.createView();
+		view.setRootEClass(book.eClass());
+
+		final Control controlTitle = ViewFactory.eINSTANCE.createControl();
+		controlTitle.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
+		view.getChildren().add(controlTitle);
+
+		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
+		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getBook_Writers());
+		view.getChildren().add(controlWriter);
+
+		instantiateValidationService(view, book);
+
+		VDiagnostic diagnosticTitle = controlTitle.getDiagnostic();
+		assertEquals(Diagnostic.ERROR, diagnosticTitle.getHighestSeverity());
+
+		VDiagnostic diagnosticWriter = controlWriter.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticWriter.getHighestSeverity());
+
+		VDiagnostic diagnosticBook = view.getDiagnostic();
+		assertEquals(Diagnostic.ERROR, diagnosticBook.getHighestSeverity());
+
+		book.setTitle("a");
+
+		diagnosticTitle = controlTitle.getDiagnostic();
+		assertEquals(Diagnostic.INFO, diagnosticTitle.getHighestSeverity());
+
+		diagnosticWriter = controlWriter.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticWriter.getHighestSeverity());
+
+		diagnosticBook = view.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticBook.getHighestSeverity());
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////

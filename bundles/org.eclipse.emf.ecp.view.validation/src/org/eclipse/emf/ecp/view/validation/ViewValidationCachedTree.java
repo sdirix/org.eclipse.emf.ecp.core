@@ -193,11 +193,44 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		@Override
 		public void putIntoCache(Object key, Diagnostic value) {
 			super.putIntoCache(key, value);
+
+			// update renderables
+			final Set<EStructuralFeature> affectedFeatures = new HashSet<EStructuralFeature>();
+			for (final Diagnostic diagnostic : value.getChildren()) {
+				for (final Object o : diagnostic.getData()) {
+					if (o instanceof EStructuralFeature) {
+						affectedFeatures.add((EStructuralFeature) o);
+					}
+				}
+			}
+
 			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) key);
 			for (final Renderable renderable : renderables) {
 				renderable.getDiagnostic().getDiagnostics().clear();
-				renderable.getDiagnostic().getDiagnostics().add(getDisplayValue());
+				if (renderable instanceof AbstractControl) {
+					final AbstractControl control = (AbstractControl) renderable;
+					for (final EStructuralFeature targetFeature : control.getTargetFeatures()) {
+						if (affectedFeatures.contains(targetFeature)) {
+							for (final Diagnostic childDiagnostic : value.getChildren()) {
+								if (isFeatureAffected(childDiagnostic, targetFeature)) {
+									control.getDiagnostic().getDiagnostics().add(childDiagnostic);
+								}
+							}
+						}
+					}
+				} else {
+					renderable.getDiagnostic().getDiagnostics().add(getDisplayValue());
+				}
 			}
+		}
+
+		private boolean isFeatureAffected(Diagnostic diagnostic, EStructuralFeature feature) {
+			for (final Object o : diagnostic.getData()) {
+				if (feature.getClass().isInstance(o)) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		/**

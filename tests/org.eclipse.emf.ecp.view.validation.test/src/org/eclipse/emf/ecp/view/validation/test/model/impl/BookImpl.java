@@ -251,6 +251,9 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * @generated
 	 */
 	public boolean validate(DiagnosticChain chain, Map<Object, Object> context) {
+
+		boolean wasSuccesful = true;
+
 		// cancel if name is offensive
 		if (getTitle() != null && getTitle().equals("Offensive")) {
 			if (chain != null) {
@@ -262,11 +265,11 @@ public class BookImpl extends EObjectImpl implements Book {
 						"Title is too offensive to validate",
 						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
-			return false;
+			wasSuccesful = false;
 		}
 
 		// error when no title
-		else if (getTitle() == null || getTitle().equals("")) {
+		if (getTitle() == null || getTitle().equals("")) {
 			if (chain != null) {
 				chain.add
 					(new BasicDiagnostic
@@ -276,11 +279,11 @@ public class BookImpl extends EObjectImpl implements Book {
 						"Books need to have a title",
 						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
-			return false;
+			wasSuccesful = false;
 		}
 
 		// warning when no writer
-		else if (getWriters() == null) {
+		if (getWriters() == null) {
 			if (chain != null) {
 				chain.add
 					(new BasicDiagnostic
@@ -290,11 +293,11 @@ public class BookImpl extends EObjectImpl implements Book {
 						"Warning: A book without a writer?",
 						new Object[] { this, TestPackage.eINSTANCE.getBook_Writers() }));
 			}
-			return false;
+			wasSuccesful = false;
 		}
 
 		// info when title short
-		else if (getTitle().length() == 1) {
+		if (getTitle() != null && getTitle().length() == 1) {
 			if (chain != null) {
 				chain.add
 					(new BasicDiagnostic
@@ -304,10 +307,10 @@ public class BookImpl extends EObjectImpl implements Book {
 						"Very short title.",
 						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
-			return false;
+			wasSuccesful = false;
 		}
 
-		return true;
+		return wasSuccesful;
 	}
 
 	/**
