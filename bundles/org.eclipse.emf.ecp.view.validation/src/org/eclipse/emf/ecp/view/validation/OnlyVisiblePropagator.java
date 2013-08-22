@@ -18,6 +18,8 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 
 /**
  * @author jfaltermeier
@@ -40,7 +42,7 @@ public class OnlyVisiblePropagator implements ECPValidationPropagator {
 	 * @see org.eclipse.emf.ecp.view.validation.ECPValidationPropagator#propagate(org.eclipse.emf.ecp.view.model.Renderable)
 	 */
 	public void propagate(Renderable renderable) {
-		renderable.getDiagnostic().getDiagnostics().clear();
+		final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
 		if (isRelevantForPropagation(renderable)) {
 			final Set<Object> childDiagnostics = new HashSet<Object>();
 			for (final EObject o : renderable.eContents()) {
@@ -54,9 +56,11 @@ public class OnlyVisiblePropagator implements ECPValidationPropagator {
 				childDiagnostics.add(Diagnostic.OK_INSTANCE);
 			}
 
-			renderable.getDiagnostic().getDiagnostics().addAll(childDiagnostics);
+			vDiagnostic.getDiagnostics().addAll(childDiagnostics);
+			renderable.setDiagnostic(vDiagnostic);
 		} else {
-			renderable.getDiagnostic().getDiagnostics().add(Diagnostic.OK_INSTANCE);
+			vDiagnostic.getDiagnostics().add(Diagnostic.OK_INSTANCE);
+			renderable.setDiagnostic(vDiagnostic);
 		}
 	}
 

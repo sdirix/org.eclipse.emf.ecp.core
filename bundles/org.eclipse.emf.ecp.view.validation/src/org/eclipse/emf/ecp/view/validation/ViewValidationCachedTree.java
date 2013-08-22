@@ -34,6 +34,8 @@ import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 
 /**
  * {@link AbstractCachedTree} for view validation.
@@ -173,7 +175,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 			for (final Renderable renderable : renderables) {
 				if (renderable instanceof AbstractControl) {
 					final AbstractControl control = (AbstractControl) renderable;
-					control.getDiagnostic().getDiagnostics().clear();
+					final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
 					final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
 
 					final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
@@ -183,11 +185,11 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 						if (nodes.containsKey(o)) {
 							final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
 							for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
-								control.getDiagnostic().getDiagnostics()
-									.add(d);
+								vDiagnostic.getDiagnostics().add(d);
 							}
 						}
 					}
+					control.setDiagnostic(vDiagnostic);
 
 				}
 				// non controls
@@ -195,8 +197,9 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 					if (propagator != null && propagator.canHandle(renderable)) {
 						propagator.propagate(renderable);
 					} else {
-						renderable.getDiagnostic().getDiagnostics().clear();
-						renderable.getDiagnostic().getDiagnostics().add(value);
+						final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+						vDiagnostic.getDiagnostics().add(value);
+						renderable.setDiagnostic(vDiagnostic);
 					}
 				}
 			}
@@ -242,7 +245,8 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 			super.removeFromCache(key);
 			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) key);
 			for (final Renderable renderable : renderables) {
-				renderable.getDiagnostic().getDiagnostics().clear();
+				final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+				renderable.setDiagnostic(vDiagnostic);
 			}
 		}
 
