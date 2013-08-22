@@ -173,6 +173,9 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
 		
+		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.swt.test</module>
+		
 		
 		
 		<!-- Should run on a seperate integration job -->
