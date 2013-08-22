@@ -112,6 +112,16 @@ public interface TestPackage extends EPackage {
 	int LIBRARY__BOOKS = 2;
 
 	/**
+	 * The feature id for the '<em><b>Librarian</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__LIBRARIAN = 3;
+
+	/**
 	 * The number of structural features of the '<em>Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -119,7 +129,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY_FEATURE_COUNT = 3;
+	int LIBRARY_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl
@@ -266,6 +276,38 @@ public interface TestPackage extends EPackage {
 	int BOOK_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl
+	 * <em>Librarian</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getLibrarian()
+	 * @generated
+	 */
+	int LIBRARIAN = 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARIAN__NAME = 0;
+
+	/**
+	 * The number of structural features of the '<em>Librarian</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARIAN_FEATURE_COUNT = 1;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
 	 * <em>Library</em>}'.
 	 * <!-- begin-user-doc -->
@@ -315,6 +357,19 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getLibrary_Books();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Library#getLibrarian <em>Librarian</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference '<em>Librarian</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Library#getLibrarian()
+	 * @see #getLibrary()
+	 * @generated
+	 */
+	EReference getLibrary_Librarian();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer <em>Writer</em>}
@@ -470,6 +525,31 @@ public interface TestPackage extends EPackage {
 	EReference getBook_Writers();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Librarian
+	 * <em>Librarian</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Librarian</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Librarian
+	 * @generated
+	 */
+	EClass getLibrarian();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Librarian#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Librarian#getName()
+	 * @see #getLibrarian()
+	 * @generated
+	 */
+	EAttribute getLibrarian_Name();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -531,6 +611,15 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference LIBRARY__BOOKS = eINSTANCE.getLibrary_Books();
+
+		/**
+		 * The meta object literal for the '<em><b>Librarian</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference LIBRARY__LIBRARIAN = eINSTANCE.getLibrary_Librarian();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl
@@ -645,6 +734,27 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BOOK__WRITERS = eINSTANCE.getBook_Writers();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl
+		 * <em>Librarian</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getLibrarian()
+		 * @generated
+		 */
+		EClass LIBRARIAN = eINSTANCE.getLibrarian();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute LIBRARIAN__NAME = eINSTANCE.getLibrarian_Name();
 
 	}
 

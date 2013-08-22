@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -103,6 +104,13 @@ public class TestSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case TestPackage.LIBRARIAN: {
+			Librarian librarian = (Librarian) theEObject;
+			T result = caseLibrarian(librarian);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -153,6 +161,22 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseBook(Book object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Librarian</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Librarian</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLibrarian(Librarian object) {
 		return null;
 	}
 

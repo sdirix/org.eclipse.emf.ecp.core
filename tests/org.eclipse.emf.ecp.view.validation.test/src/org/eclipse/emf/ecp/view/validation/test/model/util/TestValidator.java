@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -71,13 +72,22 @@ public class TestValidator extends EObjectValidator {
 	public static final int BOOK__VALIDATE = 2;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Librarian'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public static final int LIBRARIAN__VALIDATE = 3;
+
+	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 2;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 3;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a
@@ -128,6 +138,8 @@ public class TestValidator extends EObjectValidator {
 			return validateWriter((Writer) value, diagnostics, context);
 		case TestPackage.BOOK:
 			return validateBook((Book) value, diagnostics, context);
+		case TestPackage.LIBRARIAN:
+			return validateLibrarian((Librarian) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -221,6 +233,47 @@ public class TestValidator extends EObjectValidator {
 	 */
 	public boolean validateBook_validate(Book book, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return book.validate(diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateLibrarian(Librarian librarian, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(librarian, diagnostics, context))
+			return false;
+		boolean result = validate_EveryMultiplicityConforms(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryDataValueConforms(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryReferenceIsContained(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryBidirectionalReferenceIsPaired(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryProxyResolves(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_UniqueID(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryKeyUnique(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validate_EveryMapEntryUnique(librarian, diagnostics, context);
+		if (result || diagnostics != null)
+			result &= validateLibrarian_validate(librarian, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the validate constraint of '<em>Librarian</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateLibrarian_validate(Librarian librarian, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return librarian.validate(diagnostics, context);
 	}
 
 	/**

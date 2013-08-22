@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
@@ -57,6 +58,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	private EClass bookEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass librarianEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -103,8 +112,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		// Obtain or create and register package
 		TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new TestPackageImpl());
+			.get(eNS_URI) : new TestPackageImpl());
 
 		isInited = true;
 
@@ -169,6 +177,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 */
 	public EReference getLibrary_Books() {
 		return (EReference) libraryEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getLibrary_Librarian() {
+		return (EReference) libraryEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -297,6 +315,26 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	public EClass getLibrarian() {
+		return librarianEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getLibrarian_Name() {
+		return (EAttribute) librarianEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
@@ -327,6 +365,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEAttribute(libraryEClass, LIBRARY__NAME);
 		createEReference(libraryEClass, LIBRARY__WRITERS);
 		createEReference(libraryEClass, LIBRARY__BOOKS);
+		createEReference(libraryEClass, LIBRARY__LIBRARIAN);
 
 		writerEClass = createEClass(WRITER);
 		createEAttribute(writerEClass, WRITER__FIRST_NAME);
@@ -341,6 +380,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEAttribute(bookEClass, BOOK__TITLE);
 		createEAttribute(bookEClass, BOOK__PAGES);
 		createEReference(bookEClass, BOOK__WRITERS);
+
+		librarianEClass = createEClass(LIBRARIAN);
+		createEAttribute(librarianEClass, LIBRARIAN__NAME);
 	}
 
 	/**
@@ -385,6 +427,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getLibrary_Books(), this.getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
+		initEReference(getLibrary_Librarian(), this.getLibrarian(), null, "librarian", null, 0, 1, Library.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(writerEClass, Writer.class, "Writer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWriter_FirstName(), ecorePackage.getEString(), "firstName", null, 0, 1, Writer.class,
@@ -423,6 +468,20 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(bookEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+		initEClass(librarianEClass, Librarian.class, "Librarian", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLibrarian_Name(), ecorePackage.getEString(), "name", null, 0, 1, Librarian.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		op = addEOperation(librarianEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());

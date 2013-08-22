@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getWriters <em>Writers</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getBooks <em>Books</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getLibrarian <em>Librarian</em>}</li>
  * </ul>
  * </p>
  * 
@@ -87,6 +89,17 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * @ordered
 	 */
 	protected EList<Book> books;
+
+	/**
+	 * The cached value of the '{@link #getLibrarian() <em>Librarian</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getLibrarian()
+	 * @generated
+	 * @ordered
+	 */
+	protected Librarian librarian;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -165,6 +178,60 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * 
 	 * @generated
 	 */
+	public Librarian getLibrarian() {
+		return librarian;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public NotificationChain basicSetLibrarian(Librarian newLibrarian, NotificationChain msgs) {
+		Librarian oldLibrarian = librarian;
+		librarian = newLibrarian;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				TestPackage.LIBRARY__LIBRARIAN, oldLibrarian, newLibrarian);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setLibrarian(Librarian newLibrarian) {
+		if (newLibrarian != librarian) {
+			NotificationChain msgs = null;
+			if (librarian != null)
+				msgs = ((InternalEObject) librarian).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+					- TestPackage.LIBRARY__LIBRARIAN, null, msgs);
+			if (newLibrarian != null)
+				msgs = ((InternalEObject) newLibrarian).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+					- TestPackage.LIBRARY__LIBRARIAN, null, msgs);
+			msgs = basicSetLibrarian(newLibrarian, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.LIBRARY__LIBRARIAN, newLibrarian,
+				newLibrarian));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -188,6 +255,8 @@ public class LibraryImpl extends EObjectImpl implements Library {
 			return ((InternalEList<?>) getWriters()).basicRemove(otherEnd, msgs);
 		case TestPackage.LIBRARY__BOOKS:
 			return ((InternalEList<?>) getBooks()).basicRemove(otherEnd, msgs);
+		case TestPackage.LIBRARY__LIBRARIAN:
+			return basicSetLibrarian(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -207,6 +276,8 @@ public class LibraryImpl extends EObjectImpl implements Library {
 			return getWriters();
 		case TestPackage.LIBRARY__BOOKS:
 			return getBooks();
+		case TestPackage.LIBRARY__LIBRARIAN:
+			return getLibrarian();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -232,6 +303,9 @@ public class LibraryImpl extends EObjectImpl implements Library {
 			getBooks().clear();
 			getBooks().addAll((Collection<? extends Book>) newValue);
 			return;
+		case TestPackage.LIBRARY__LIBRARIAN:
+			setLibrarian((Librarian) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -254,6 +328,9 @@ public class LibraryImpl extends EObjectImpl implements Library {
 		case TestPackage.LIBRARY__BOOKS:
 			getBooks().clear();
 			return;
+		case TestPackage.LIBRARY__LIBRARIAN:
+			setLibrarian((Librarian) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -273,6 +350,8 @@ public class LibraryImpl extends EObjectImpl implements Library {
 			return writers != null && !writers.isEmpty();
 		case TestPackage.LIBRARY__BOOKS:
 			return books != null && !books.isEmpty();
+		case TestPackage.LIBRARY__LIBRARIAN:
+			return librarian != null;
 		}
 		return super.eIsSet(featureID);
 	}

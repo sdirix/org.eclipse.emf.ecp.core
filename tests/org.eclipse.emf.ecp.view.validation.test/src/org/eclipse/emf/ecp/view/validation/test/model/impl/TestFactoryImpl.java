@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
@@ -75,6 +76,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createWriter();
 		case TestPackage.BOOK:
 			return createBook();
+		case TestPackage.LIBRARIAN:
+			return createLibrarian();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -111,6 +114,17 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public Book createBook() {
 		BookImpl book = new BookImpl();
 		return book;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public Librarian createLibrarian() {
+		LibrarianImpl librarian = new LibrarianImpl();
+		return librarian;
 	}
 
 	/**

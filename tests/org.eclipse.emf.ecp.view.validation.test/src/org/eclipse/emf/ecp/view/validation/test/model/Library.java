@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getWriters <em>Writers</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getBooks <em>Books</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getLibrarian <em>Librarian</em>}</li>
  * </ul>
  * </p>
  * 
@@ -97,5 +98,34 @@ public interface Library extends EObject {
 	 * @generated
 	 */
 	EList<Book> getBooks();
+
+	/**
+	 * Returns the value of the '<em><b>Librarian</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Librarian</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Librarian</em>' containment reference.
+	 * @see #setLibrarian(Librarian)
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary_Librarian()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Librarian getLibrarian();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getLibrarian
+	 * <em>Librarian</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Librarian</em>' containment reference.
+	 * @see #getLibrarian()
+	 * @generated
+	 */
+	void setLibrarian(Librarian value);
 
 } // Library

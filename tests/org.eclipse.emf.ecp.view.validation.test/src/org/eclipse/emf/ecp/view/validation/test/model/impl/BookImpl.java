@@ -136,11 +136,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * @generated
 	 */
 	public void setTitle(String newTitle) {
-		final String oldTitle = title;
+		String oldTitle = title;
 		title = newTitle;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__TITLE, oldTitle, title));
-		}
 	}
 
 	/**
@@ -160,11 +159,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * @generated
 	 */
 	public void setPages(int newPages) {
-		final int oldPages = pages;
+		int oldPages = pages;
 		pages = newPages;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__PAGES, oldPages, pages));
-		}
 	}
 
 	/**
@@ -175,13 +173,12 @@ public class BookImpl extends EObjectImpl implements Book {
 	 */
 	public Writer getWriters() {
 		if (writers != null && writers.eIsProxy()) {
-			final InternalEObject oldWriters = (InternalEObject) writers;
+			InternalEObject oldWriters = (InternalEObject) writers;
 			writers = (Writer) eResolveProxy(oldWriters);
 			if (writers != oldWriters) {
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.BOOK__WRITERS, oldWriters,
 						writers));
-				}
 			}
 		}
 		return writers;
@@ -204,17 +201,15 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * @generated
 	 */
 	public NotificationChain basicSetWriters(Writer newWriters, NotificationChain msgs) {
-		final Writer oldWriters = writers;
+		Writer oldWriters = writers;
 		writers = newWriters;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				TestPackage.BOOK__WRITERS,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS,
 				oldWriters, newWriters);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -228,28 +223,25 @@ public class BookImpl extends EObjectImpl implements Book {
 	public void setWriters(Writer newWriters) {
 		if (newWriters != writers) {
 			NotificationChain msgs = null;
-			if (writers != null) {
+			if (writers != null)
 				msgs = ((InternalEObject) writers).eInverseRemove(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
-			}
-			if (newWriters != null) {
+			if (newWriters != null)
 				msgs = ((InternalEObject) newWriters).eInverseAdd(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
-			}
 			msgs = basicSetWriters(newWriters, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS, newWriters, newWriters));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
+	// BEGIN COMPLEX CODE
 	public boolean validate(DiagnosticChain chain, Map<Object, Object> context) {
 
 		boolean wasSuccesful = true;
@@ -277,6 +269,20 @@ public class BookImpl extends EObjectImpl implements Book {
 						TestValidator.DIAGNOSTIC_SOURCE,
 						TestValidator.BOOK__VALIDATE,
 						"Books need to have a title",
+						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
+			}
+			wasSuccesful = false;
+		}
+
+		// warning title equals warning
+		if (getTitle() != null && getTitle().equals("Warning")) {
+			if (chain != null) {
+				chain.add
+					(new BasicDiagnostic
+					(Diagnostic.WARNING,
+						TestValidator.DIAGNOSTIC_SOURCE,
+						TestValidator.BOOK__VALIDATE,
+						"Title says warning",
 						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
 			wasSuccesful = false;
@@ -313,6 +319,8 @@ public class BookImpl extends EObjectImpl implements Book {
 		return wasSuccesful;
 	}
 
+	// END COMPLEX CODE
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -323,9 +331,8 @@ public class BookImpl extends EObjectImpl implements Book {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case TestPackage.BOOK__WRITERS:
-			if (writers != null) {
+			if (writers != null)
 				msgs = ((InternalEObject) writers).eInverseRemove(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
-			}
 			return basicSetWriters((Writer) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -360,9 +367,8 @@ public class BookImpl extends EObjectImpl implements Book {
 		case TestPackage.BOOK__PAGES:
 			return getPages();
 		case TestPackage.BOOK__WRITERS:
-			if (resolve) {
+			if (resolve)
 				return getWriters();
-			}
 			return basicGetWriters();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -439,11 +445,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (title: ");
 		result.append(title);
 		result.append(", pages: ");

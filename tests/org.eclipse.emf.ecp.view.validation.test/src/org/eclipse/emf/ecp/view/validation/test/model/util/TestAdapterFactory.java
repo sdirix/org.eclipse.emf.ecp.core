@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -98,6 +99,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
+			public Adapter caseLibrarian(Librarian object) {
+				return createLibrarianAdapter();
+			}
+
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -162,6 +168,22 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBookAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Librarian
+	 * <em>Librarian</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Librarian
+	 * @generated
+	 */
+	public Adapter createLibrarianAdapter() {
 		return null;
 	}
 

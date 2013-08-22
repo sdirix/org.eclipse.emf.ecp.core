@@ -13,13 +13,15 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -39,12 +41,10 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * @author jfaltermeier
  * 
  */
-@SuppressWarnings("restriction")
 public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
-	// TODO restrict warnings -> x-friends?
 
-	private final IExcludedObjectsCallback excludedCallback;
 	private final ValidationRegistry validationRegistry;
+	private final ECPValidationPropagator propagator;
 
 	/**
 	 * Default constructor.
@@ -54,8 +54,25 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 */
 	public ViewValidationCachedTree(IExcludedObjectsCallback callback, ValidationRegistry validationRegistry) {
 		super(callback);
-		excludedCallback = callback;
 		this.validationRegistry = validationRegistry;
+		propagator = getPropagator();
+	}
+
+	private ECPValidationPropagator getPropagator() {
+		final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.emf.ecp.view.validation.propagator");
+		try {
+			for (final IConfigurationElement e : config) {
+				final Object o =
+					e.createExecutableExtension("class");
+				if (o instanceof ECPValidationPropagator) {
+					return (ECPValidationPropagator) o;
+				}
+			}
+		} catch (final CoreException ex) {
+			return null;
+		}
+		return null;
 	}
 
 	/**
@@ -76,48 +93,6 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	@Override
 	protected CachedTreeNode<Diagnostic> createdCachedTreeNode(Diagnostic value) {
 		return new ViewValidationTreeNode(value);
-	}
-
-	/**
-	 * Updates the cached entry for the given {@link EObject} with the given value.<br/>
-	 * If the cached entry does not yet exist, it will be created.
-	 * 
-	 * @param eObject
-	 *            the {@link EObject}
-	 * @param value
-	 *            the value associated with the {@link EObject}
-	 * @return set of affected eobjects
-	 */
-	@Override
-	public Set<EObject> update(EObject eObject, Diagnostic value) {
-
-		if (excludedCallback.isExcluded(eObject)) {
-			return Collections.emptySet();
-		}
-
-		final List<EStructuralFeature> affectedFeatures = new ArrayList<EStructuralFeature>();
-
-		if (!value.getChildren().isEmpty()) {
-			final List<?> diagnosticData = value.getChildren().get(0).getData();
-			for (int i = 1; i < diagnosticData.size(); i++) {
-				affectedFeatures.add((EStructuralFeature) diagnosticData.get(i));
-			}
-		}
-
-		final List<Renderable> renderables = validationRegistry.getRenderablesForEObject(eObject);
-		for (final Renderable renderable : renderables) {
-			if (renderable instanceof AbstractControl) {
-				final AbstractControl control = (AbstractControl) renderable;
-				for (final EStructuralFeature targetFeature : control.getTargetFeatures()) {
-					if (affectedFeatures.contains(targetFeature)) {
-						// needed?
-						control.getDiagnostic().getDiagnostics().add(value);
-					}
-				}
-			}
-		}
-
-		return super.update(eObject, value);
 	}
 
 	/**
@@ -194,43 +169,66 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		public void putIntoCache(Object key, Diagnostic value) {
 			super.putIntoCache(key, value);
 
-			// update renderables
-			final Set<EStructuralFeature> affectedFeatures = new HashSet<EStructuralFeature>();
-			for (final Diagnostic diagnostic : value.getChildren()) {
-				for (final Object o : diagnostic.getData()) {
-					if (o instanceof EStructuralFeature) {
-						affectedFeatures.add((EStructuralFeature) o);
-					}
-				}
-			}
-
 			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) key);
 			for (final Renderable renderable : renderables) {
-				renderable.getDiagnostic().getDiagnostics().clear();
 				if (renderable instanceof AbstractControl) {
 					final AbstractControl control = (AbstractControl) renderable;
-					for (final EStructuralFeature targetFeature : control.getTargetFeatures()) {
-						if (affectedFeatures.contains(targetFeature)) {
-							for (final Diagnostic childDiagnostic : value.getChildren()) {
-								if (isFeatureAffected(childDiagnostic, targetFeature)) {
-									control.getDiagnostic().getDiagnostics().add(childDiagnostic);
-								}
+					control.getDiagnostic().getDiagnostics().clear();
+					final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
+
+					final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
+					final Map<Object, CachedTreeNode<Diagnostic>> nodes = getNodes();
+
+					for (final EObject o : associatedEObjects) {
+						if (nodes.containsKey(o)) {
+							final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
+							for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
+								control.getDiagnostic().getDiagnostics()
+									.add(d);
 							}
 						}
 					}
-				} else {
-					renderable.getDiagnostic().getDiagnostics().add(getDisplayValue());
+
+				}
+				// non controls
+				else {
+					if (propagator != null && propagator.canHandle(renderable)) {
+						propagator.propagate(renderable);
+					} else {
+						renderable.getDiagnostic().getDiagnostics().clear();
+						renderable.getDiagnostic().getDiagnostics().add(getDisplayValue());
+					}
 				}
 			}
 		}
 
-		private boolean isFeatureAffected(Diagnostic diagnostic, EStructuralFeature feature) {
-			for (final Object o : diagnostic.getData()) {
-				if (feature.getClass().isInstance(o)) {
-					return true;
+		/**
+		 * Checks if this diagnostic contains a validation result for an element in the given list.
+		 * 
+		 * @param diagnostic
+		 * @param features
+		 * @return
+		 */
+		private Collection<Diagnostic> extractRelevantDiagnostics(Diagnostic diagnostic,
+			List<EStructuralFeature> features) {
+
+			final Collection<Diagnostic> result = new ArrayList<Diagnostic>();
+
+			if (diagnostic.getSeverity() == Diagnostic.OK) {
+				result.add(diagnostic);
+				return result;
+			}
+
+			for (final EStructuralFeature feature : features) {
+				for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+					for (final Object o : childDiagnostic.getData()) {
+						if (feature.getClass().isInstance(o)) {
+							result.add(childDiagnostic);
+						}
+					}
 				}
 			}
-			return false;
+			return result;
 		}
 
 		/**

@@ -12,8 +12,10 @@
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -21,11 +23,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.validation.ValidationRegistry;
 import org.eclipse.emf.ecp.view.validation.ValidationService;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
@@ -74,7 +79,7 @@ public class ValidationServiceTest {
 	 */
 	@Test
 	public void testInitParentPropagationOneChildAllCases() {
-		// testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
 		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.INFO);
 		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.WARNING);
 		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.ERROR);
@@ -440,17 +445,18 @@ public class ValidationServiceTest {
 		assertEquals(severityBefore, severityAfterRemove);
 	}
 
+	@Test
 	public void testChangeParentPropagationTwoChildrenAllCases() {
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.INFO);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.WARNING);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.ERROR);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.CANCEL);
+		// testChangeParentPropagationTwoChildren(
+		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK);
+		// testChangeParentPropagationTwoChildren(
+		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.INFO);
+		// testChangeParentPropagationTwoChildren(
+		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.WARNING);
+		// testChangeParentPropagationTwoChildren(
+		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.ERROR);
+		// testChangeParentPropagationTwoChildren(
+		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.CANCEL);
 
 		testChangeParentPropagationTwoChildren(
 			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.OK);
@@ -573,6 +579,7 @@ public class ValidationServiceTest {
 		VDiagnostic diagnosticBook = view.getDiagnostic();
 		assertEquals(Diagnostic.ERROR, diagnosticBook.getHighestSeverity());
 
+		// change book title info
 		book.setTitle("a");
 
 		diagnosticTitle = controlTitle.getDiagnostic();
@@ -583,6 +590,123 @@ public class ValidationServiceTest {
 
 		diagnosticBook = view.getDiagnostic();
 		assertEquals(Diagnostic.WARNING, diagnosticBook.getHighestSeverity());
+	}
+
+	@Test
+	public void testRegistry() {
+		final Library library = addBooksToLibrary(createLibaryWithWriters(1, 1, 1, 1, 1), createBooks(1, 1, 1, 1, 1));
+
+		final View view = ViewFactory.eINSTANCE.createView();
+		view.setRootEClass(library.eClass());
+
+		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		view.getChildren().add(parentColumn);
+
+		// Writers //////////////////////////////////////
+		final Column columnWriter = ViewFactory.eINSTANCE.createColumn();
+		parentColumn.getComposites().add(columnWriter);
+
+		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
+		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		columnWriter.getComposites().add(controlWriter);
+
+		// Books //////////////////////////////////////////
+		final Column columnBooks = ViewFactory.eINSTANCE.createColumn();
+		parentColumn.getComposites().add(columnBooks);
+
+		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
+		controlBooks.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
+		controlBooks.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Books());
+		columnBooks.getComposites().add(controlBooks);
+
+		// Test ///////////////////////////////////////////
+		final ValidationRegistry registry = new ValidationRegistry();
+		registry.register(library, view);
+
+		final List<Renderable> librayRenderables = registry.getRenderablesForEObject(library);
+		assertEquals("Library has false renderable count", 2, librayRenderables.size());
+		assertEquals("Wrong renderable is associated to library", parentColumn, librayRenderables.get(0));
+		assertEquals("Wrong renderable is associated to library", view, librayRenderables.get(1));
+
+		for (final Writer writer : library.getWriters()) {
+			final List<Renderable> writerRenderables = registry.getRenderablesForEObject(writer);
+			assertEquals("Writer has false renderable count", 2, writerRenderables.size());
+			assertEquals("Wrong renderable is associated to writer", controlWriter, writerRenderables.get(0));
+			assertEquals("Wrong renderable is associated to writer", columnWriter, writerRenderables.get(1));
+		}
+
+		for (final Book book : library.getBooks()) {
+			final List<Renderable> bookRenderables = registry.getRenderablesForEObject(book);
+			assertEquals("Book has false renderable count", 2, bookRenderables.size());
+			assertEquals("Wrong renderable is associated to book", controlBooks, bookRenderables.get(0));
+			assertEquals("Wrong renderable is associated to book", columnBooks, bookRenderables.get(1));
+		}
+
+		final List<EObject> writerControlObjects = registry.getEObjectsForControl(controlWriter);
+		assertEquals("Number of books associated to book control is wrong.", 5, writerControlObjects.size(), 0);
+		for (final EObject o : writerControlObjects) {
+			assertTrue(library.getWriters().contains(o));
+		}
+
+		final List<EObject> bookControlObjects = registry.getEObjectsForControl(controlBooks);
+		assertEquals("Number of books associated to book control is wrong.", 5, bookControlObjects.size(), 0);
+		for (final EObject o : bookControlObjects) {
+			assertTrue(library.getBooks().contains(o));
+		}
+
+		// TODO remove after coverage
+		testRegistrySingleContainmentRef();
+	}
+
+	@Test
+	public void testRegistrySingleContainmentRef() {
+		final Library library = TestFactory.eINSTANCE.createLibrary();
+		final Writer writer = createOKWriter();
+		final Librarian librarian = TestFactory.eINSTANCE.createLibrarian();
+		library.getWriters().add(writer);
+		library.setLibrarian(librarian);
+
+		final View view = ViewFactory.eINSTANCE.createView();
+		view.setRootEClass(library.eClass());
+
+		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		view.getChildren().add(parentColumn);
+
+		final Control controlWriterFirstName = ViewFactory.eINSTANCE.createControl();
+		controlWriterFirstName.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		controlWriterFirstName.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		parentColumn.getComposites().add(controlWriterFirstName);
+
+		final Control controlLibrarianName = ViewFactory.eINSTANCE.createControl();
+		controlLibrarianName.setTargetFeature(TestPackage.eINSTANCE.getLibrarian_Name());
+		controlLibrarianName.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Librarian());
+		parentColumn.getComposites().add(controlLibrarianName);
+
+		// Test ///////////////////////////////////////////
+		final ValidationRegistry registry = new ValidationRegistry();
+		registry.register(library, view);
+
+		final List<Renderable> librayRenderables = registry.getRenderablesForEObject(library);
+		assertEquals("Library has false renderable count", 2, librayRenderables.size());
+		assertEquals("Wrong renderable is associated to library", parentColumn, librayRenderables.get(0));
+		assertEquals("Wrong renderable is associated to library", view, librayRenderables.get(1));
+
+		final List<Renderable> writerRenderables = registry.getRenderablesForEObject(writer);
+		assertEquals(1, writerRenderables.size(), 0);
+		assertTrue(writerRenderables.contains(controlWriterFirstName));
+
+		final List<Renderable> librarianRenderables = registry.getRenderablesForEObject(librarian);
+		assertEquals(1, librarianRenderables.size(), 0);
+		assertTrue(librarianRenderables.contains(controlLibrarianName));
+
+		final List<EObject> librarianObjects = registry.getEObjectsForControl(controlLibrarianName);
+		assertEquals(1, librarianObjects.size(), 0);
+		assertTrue(librarianObjects.contains(librarian));
+
+		final List<EObject> writerNameObjects = registry.getEObjectsForControl(controlWriterFirstName);
+		assertEquals(1, writerNameObjects.size(), 0);
+		assertTrue(writerNameObjects.contains(writer));
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -724,7 +848,7 @@ public class ValidationServiceTest {
 
 	private Book createWarningBook() {
 		final Book book = TestFactory.eINSTANCE.createBook();
-		book.setTitle("Eine Chronik");
+		book.setTitle("Warning");
 		return book;
 	}
 

@@ -63,6 +63,16 @@ public interface TestFactory extends EFactory {
 	Book createBook();
 
 	/**
+	 * Returns a new object of class '<em>Librarian</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Librarian</em>'.
+	 * @generated
+	 */
+	Librarian createLibrarian();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

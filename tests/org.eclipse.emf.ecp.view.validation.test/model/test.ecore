@@ -8,6 +8,8 @@
         eType="#//Writer" containment="true" eOpposite="#//Writer/library"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="books" upperBound="-1"
         eType="#//Book" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="librarian" eType="#//Librarian"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Writer">
     <eOperations name="validate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -45,5 +47,17 @@
         defaultValueLiteral="100"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="writers" eType="#//Writer"
         eOpposite="#//Writer/books"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Librarian">
+    <eOperations name="validate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="diagnostic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -12,14 +12,15 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
@@ -33,13 +34,15 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
  */
 public class ValidationRegistry {
 
-	private final Map<EObject, HashSet<Renderable>> eObjectToRenderablesMap;
+	private final Map<EObject, LinkedHashSet<Renderable>> eObjectToRenderablesMap;
+	private final Map<AbstractControl, LinkedHashSet<EObject>> controlToElementsMap;
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationRegistry() {
-		eObjectToRenderablesMap = new LinkedHashMap<EObject, HashSet<Renderable>>();
+		eObjectToRenderablesMap = new LinkedHashMap<EObject, LinkedHashSet<Renderable>>();
+		controlToElementsMap = new LinkedHashMap<AbstractControl, LinkedHashSet<EObject>>();
 	}
 
 	/**
@@ -73,11 +76,10 @@ public class ValidationRegistry {
 				} else {
 					for (final EReference reference : references) {
 						if (reference.isMany()) {
-							final List<Object> childObjects = (List<Object>) model.eGet(reference);
-							for (final Object o : childObjects) {
-								if (o instanceof EObject) {
-									usedKeys.addAll(registerWithKeyResult((EObject) o, control));
-								}
+							@SuppressWarnings("unchecked")
+							final List<EObject> childObjects = (List<EObject>) model.eGet(reference);
+							for (final EObject o : childObjects) {
+								usedKeys.addAll(registerWithKeyResult(o, control));
 							}
 						} else {
 							final EObject o = (EObject) model.eGet(reference);
@@ -99,34 +101,36 @@ public class ValidationRegistry {
 
 		if (renderable instanceof View) {
 			// the view model will always be registered with the domain model
-			getOrCreateRenderables(model).add(renderable);
+			putIntoMaps(model, renderable);
 			keys.add(model);
 		} else if (childRenderables.size() == 1) {
 			// if the renderable has only one child we register the renderable with the same keys as the child
 			for (final EObject o : usedKeys) {
-				getOrCreateRenderables(o).add(renderable);
+				putIntoMaps(o, renderable);
 				keys.add(o);
 			}
 		} else {
 			// else register current eObject with current renderable
-			getOrCreateRenderables(model).add(renderable);
+			putIntoMaps(model, renderable);
 			keys.add(model);
 		}
 
 		return keys;
 	}
 
-	/**
-	 * Returns the entry for the given paramter from the registry. If there is no entry one will be created.
-	 * 
-	 * @param object the key
-	 * @return the value
-	 */
-	private Set<Renderable> getOrCreateRenderables(EObject object) {
-		if (!eObjectToRenderablesMap.containsKey(object)) {
-			eObjectToRenderablesMap.put(object, new HashSet<Renderable>());
+	private void putIntoMaps(EObject model, Renderable renderable) {
+		if (!eObjectToRenderablesMap.containsKey(model)) {
+			eObjectToRenderablesMap.put(model, new LinkedHashSet<Renderable>());
 		}
-		return eObjectToRenderablesMap.get(object);
+		eObjectToRenderablesMap.get(model).add(renderable);
+
+		if (renderable instanceof AbstractControl) {
+			final Control control = (Control) renderable;
+			if (!controlToElementsMap.containsKey(control)) {
+				controlToElementsMap.put(control, new LinkedHashSet<EObject>());
+			}
+			controlToElementsMap.get(control).add(model);
+		}
 	}
 
 	private List<Renderable> getChildRenderables(Renderable renderable) {
@@ -140,7 +144,8 @@ public class ValidationRegistry {
 	}
 
 	/**
-	 * Returns all associated {@link Renderable}s for the given model.
+	 * Returns all associated {@link Renderable}s for the given model. The list is ordered so that if two renderables
+	 * are part of the same hierachy the child will have a lower index than the parent.
 	 * 
 	 * @param model the model
 	 * @return list of all renderables
@@ -153,4 +158,17 @@ public class ValidationRegistry {
 		return new ArrayList<Renderable>();
 	}
 
+	/**
+	 * Returns the elements that are associated with a control.
+	 * 
+	 * @param control the control
+	 * @return the associated elements
+	 */
+	public List<EObject> getEObjectsForControl(AbstractControl control) {
+		final LinkedHashSet<EObject> result = controlToElementsMap.get(control);
+		if (result != null) {
+			return new ArrayList<EObject>(result);
+		}
+		return new ArrayList<EObject>();
+	}
 }

@@ -93,7 +93,7 @@ public class ValidationService extends AbstractViewService {
 
 		viewChangeListener = new ModelChangeListener() {
 			public void notifyChange(ModelChangeNotification notification) {
-				// TODO
+				// do nothing for now, not supported
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);
