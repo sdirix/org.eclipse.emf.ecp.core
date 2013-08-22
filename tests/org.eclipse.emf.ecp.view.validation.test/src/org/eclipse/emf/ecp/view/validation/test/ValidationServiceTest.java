@@ -44,20 +44,8 @@ import org.junit.Test;
 public class ValidationServiceTest {
 
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Init tests
+	// Private configurable tests
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Tests if a control's {@link VDiagnostic} returns the expected severity.
-	 */
-	@Test
-	public void testInitSingleControlAllCases() {
-		testInitSingleControl(createOKWriter(), Diagnostic.OK);
-		testInitSingleControl(createInfoWriter(), Diagnostic.INFO);
-		testInitSingleControl(createWarningWriter(), Diagnostic.WARNING);
-		testInitSingleControl(createErrorWriter(), Diagnostic.ERROR);
-		testInitSingleControl(createCancelWriter(), Diagnostic.CANCEL);
-	}
 
 	private void testInitSingleControl(Writer writer, int severity) {
 		final View view = ViewFactory.eINSTANCE.createView();
@@ -72,18 +60,6 @@ public class ValidationServiceTest {
 		final VDiagnostic diagnostic = control.getDiagnostic();
 		assertEquals("Validation of severity " + severity + " was not propagated to control", severity,
 			diagnostic.getHighestSeverity(), 0);
-	}
-
-	/**
-	 * Tests if a controls severity is propagted to its parent.
-	 */
-	@Test
-	public void testInitParentPropagationOneChildAllCases() {
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.INFO);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.WARNING);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.CANCEL);
 	}
 
 	/**
@@ -111,98 +87,6 @@ public class ValidationServiceTest {
 		assertEquals("Validation result was not propagated to parent.", severity,
 			diagnosticLibary.getHighestSeverity(),
 			0);
-	}
-
-	/**
-	 * Tests if a (multi-)control choses the highest severity.
-	 */
-	@Test
-	public void testInitHighestSeverityAllCases() {
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.INFO);
-
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.WARNING);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 0, 0), Diagnostic.WARNING);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 0, 0), Diagnostic.WARNING);
-
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 1, 0), Diagnostic.ERROR);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 1, 0), Diagnostic.ERROR);
-
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 1, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 1), Diagnostic.CANCEL);
-		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 1), Diagnostic.CANCEL);
-	}
-
-	/**
-	 * Tests if control with two child controls has to highest severity of its children as its severity.
-	 */
-	@Test
-	public void testInitParentPropagationTwoChildrenAllCases() {
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK,
-			Diagnostic.OK);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 1, 0, 0, 0)), Diagnostic.OK,
-			Diagnostic.INFO);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 0, 1, 0, 0)), Diagnostic.OK,
-			Diagnostic.WARNING);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.OK,
-			Diagnostic.ERROR);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.OK,
-			Diagnostic.CANCEL);
-
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 1, 0, 0, 0)), Diagnostic.INFO,
-			Diagnostic.INFO);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 0, 1, 0, 0)), Diagnostic.INFO,
-			Diagnostic.WARNING);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.INFO,
-			Diagnostic.ERROR);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.INFO,
-			Diagnostic.CANCEL);
-
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 0, 1, 0, 0), createBooks(0, 0, 1, 0, 0)), Diagnostic.WARNING,
-			Diagnostic.WARNING);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 0, 1, 0, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.WARNING,
-			Diagnostic.ERROR);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 0, 1, 0, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.WARNING,
-			Diagnostic.CANCEL);
-
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 1, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.ERROR,
-			Diagnostic.ERROR);
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 1, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.ERROR,
-			Diagnostic.CANCEL);
-
-		testInitParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 0, 1), createBooks(0, 0, 0, 0, 1)), Diagnostic.CANCEL,
-			Diagnostic.CANCEL);
 	}
 
 	/**
@@ -251,46 +135,6 @@ public class ValidationServiceTest {
 			diagnosticLibary.getHighestSeverity(), 0);
 	}
 
-	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Validation upon change tests
-	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Tests if a control's {@link VDiagnostic} returns the expected severity when context changes.
-	 */
-	@Test
-	public void testChangeSingleControlAllCases() {
-		testChangeSingleControl(createOKWriter(), Diagnostic.OK);
-		testChangeSingleControl(createOKWriter(), Diagnostic.INFO);
-		testChangeSingleControl(createOKWriter(), Diagnostic.WARNING);
-		testChangeSingleControl(createOKWriter(), Diagnostic.ERROR);
-		testChangeSingleControl(createOKWriter(), Diagnostic.CANCEL);
-
-		testChangeSingleControl(createInfoWriter(), Diagnostic.OK);
-		testChangeSingleControl(createInfoWriter(), Diagnostic.INFO);
-		testChangeSingleControl(createInfoWriter(), Diagnostic.WARNING);
-		testChangeSingleControl(createInfoWriter(), Diagnostic.ERROR);
-		testChangeSingleControl(createInfoWriter(), Diagnostic.CANCEL);
-
-		testChangeSingleControl(createWarningWriter(), Diagnostic.OK);
-		testChangeSingleControl(createWarningWriter(), Diagnostic.INFO);
-		testChangeSingleControl(createWarningWriter(), Diagnostic.WARNING);
-		testChangeSingleControl(createWarningWriter(), Diagnostic.ERROR);
-		testChangeSingleControl(createWarningWriter(), Diagnostic.CANCEL);
-
-		testChangeSingleControl(createErrorWriter(), Diagnostic.OK);
-		testChangeSingleControl(createErrorWriter(), Diagnostic.INFO);
-		testChangeSingleControl(createErrorWriter(), Diagnostic.WARNING);
-		testChangeSingleControl(createErrorWriter(), Diagnostic.ERROR);
-		testChangeSingleControl(createErrorWriter(), Diagnostic.CANCEL);
-
-		testChangeSingleControl(createCancelWriter(), Diagnostic.OK);
-		testChangeSingleControl(createCancelWriter(), Diagnostic.INFO);
-		testChangeSingleControl(createCancelWriter(), Diagnostic.WARNING);
-		testChangeSingleControl(createCancelWriter(), Diagnostic.ERROR);
-		testChangeSingleControl(createCancelWriter(), Diagnostic.CANCEL);
-	}
-
 	private void testChangeSingleControl(Writer writer, int changeToSeverity) {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(writer.eClass());
@@ -306,42 +150,6 @@ public class ValidationServiceTest {
 		final VDiagnostic diagnostic = control.getDiagnostic();
 		assertEquals("Validation upon change is wrong", changeToSeverity,
 			diagnostic.getHighestSeverity(), 0);
-	}
-
-	/**
-	 * Tests if a controls severity is propagted to its parent upon change.
-	 */
-	@Test
-	public void testChangeParentPropagationOneChildAllCases() {
-		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.INFO);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.WARNING);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.ERROR);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.CANCEL);
-
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.OK);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.INFO);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.WARNING);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.ERROR);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.CANCEL);
-
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.OK);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.INFO);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.WARNING);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.ERROR);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.CANCEL);
-
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.OK);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.INFO);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.WARNING);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.ERROR);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.CANCEL);
-
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.OK);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.INFO);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.WARNING);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.ERROR);
-		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.CANCEL);
 	}
 
 	/**
@@ -372,39 +180,6 @@ public class ValidationServiceTest {
 		final VDiagnostic diagnosticLibary = view.getDiagnostic();
 		assertEquals("Validation result was not propagated to parent.", changeToSeverity,
 			diagnosticLibary.getHighestSeverity(), 0);
-	}
-
-	@Test
-	public void testAddAndRemoveChildHighestSeverityAllCases() {
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.OK);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.OK);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.OK);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.OK);
-
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.INFO);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.INFO);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.INFO);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.INFO);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.INFO);
-
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.WARNING);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.WARNING);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.WARNING);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.WARNING);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.WARNING);
-
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.ERROR);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.ERROR);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.ERROR);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.ERROR);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.ERROR);
-
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.CANCEL);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.CANCEL);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.CANCEL);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.CANCEL);
-		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.CANCEL);
 	}
 
 	private void testAddAndRemoveChildHighestSeverity(Library library, int severityOfNewWriter) {
@@ -443,89 +218,6 @@ public class ValidationServiceTest {
 		final int severityAfterRemove = view.getDiagnostic().getHighestSeverity();
 
 		assertEquals(severityBefore, severityAfterRemove);
-	}
-
-	@Test
-	public void testChangeParentPropagationTwoChildrenAllCases() {
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK,
-			Diagnostic.OK);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.INFO,
-			Diagnostic.OK);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.WARNING,
-			Diagnostic.OK);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.ERROR,
-			Diagnostic.OK);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.CANCEL,
-			Diagnostic.OK);
-
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.OK,
-			Diagnostic.INFO);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.INFO,
-			Diagnostic.INFO);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.WARNING,
-			Diagnostic.INFO);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.ERROR,
-			Diagnostic.INFO);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.CANCEL,
-			Diagnostic.INFO);
-
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.OK,
-			Diagnostic.WARNING);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.INFO,
-			Diagnostic.WARNING);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.WARNING,
-			Diagnostic.WARNING);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.ERROR,
-			Diagnostic.WARNING);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.CANCEL,
-			Diagnostic.WARNING);
-
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.OK,
-			Diagnostic.ERROR);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.INFO,
-			Diagnostic.ERROR);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.WARNING,
-			Diagnostic.ERROR);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.ERROR,
-			Diagnostic.ERROR);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.CANCEL,
-			Diagnostic.ERROR);
-
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.OK,
-			Diagnostic.CANCEL);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.INFO,
-			Diagnostic.CANCEL);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.WARNING,
-			Diagnostic.CANCEL);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.ERROR,
-			Diagnostic.CANCEL);
-		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.CANCEL,
-			Diagnostic.CANCEL);
 	}
 
 	/**
@@ -572,6 +264,856 @@ public class ValidationServiceTest {
 		assertEquals(expectedSeverityAll, view.getDiagnostic().getHighestSeverity());
 	}
 
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Init tests
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Test
+	public void testInitSingleControlOK() {
+		testInitSingleControl(createOKWriter(), Diagnostic.OK);
+	}
+
+	@Test
+	public void testInitSingleControlInfo() {
+		testInitSingleControl(createInfoWriter(), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testInitSingleControlWarning() {
+		testInitSingleControl(createWarningWriter(), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitSingleControlError() {
+		testInitSingleControl(createErrorWriter(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitSingleControlCancel() {
+		testInitSingleControl(createCancelWriter(), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitParentPropagationOneControlOK() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testInitParentPropagationOneControlInfo() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testInitParentPropagationOneControlWarning() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitParentPropagationOneControlError() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitParentPropagationOneControlCancel() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsInfoCase1() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsWarningCase1() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsWarningCase2() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsWarningCase3() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase1() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase2() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase3() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase4() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase5() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase6() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsErrorCase7() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase1() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase2() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 1, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase3() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase4() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 1, 0, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase5() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase6() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 1, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase7() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase8() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase9() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase10() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 1, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase11() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase12() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase13() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase14() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitHighestSeverityMultipleElementsCancelCase15() {
+		testInitParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseOkOk() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK,
+			Diagnostic.OK);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseOkInfo() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 1, 0, 0, 0)), Diagnostic.OK,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseOkWarning() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 0, 1, 0, 0)), Diagnostic.OK,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseOkError() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.OK,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseOkCancel() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.OK,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseInfoInfo() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 1, 0, 0, 0)), Diagnostic.INFO,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseInfoWarning() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 0, 1, 0, 0)), Diagnostic.INFO,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseInfoError() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.INFO,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseInfoCancel() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 1, 0, 0, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.INFO,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseWarningWarning() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 0, 1, 0, 0), createBooks(0, 0, 1, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseWarningError() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 0, 1, 0, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.WARNING,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseWarningCancel() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 0, 1, 0, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.WARNING,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseErrorError() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 1, 0), createBooks(0, 0, 0, 1, 0)), Diagnostic.ERROR,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseErrorCancel() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 1, 0), createBooks(0, 0, 0, 0, 1)), Diagnostic.ERROR,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testInitParentPropagationTwoControlsCancelCaseCancelCancel() {
+		testInitParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 0, 1), createBooks(0, 0, 0, 0, 1)), Diagnostic.CANCEL,
+			Diagnostic.CANCEL);
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Validation upon change tests
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Test
+	public void testChangeSingleControlOKToOk() {
+		testChangeSingleControl(createOKWriter(), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeSingleControlOKToInfo() {
+		testChangeSingleControl(createOKWriter(), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeSingleControlOKToWarning() {
+		testChangeSingleControl(createOKWriter(), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeSingleControlOKToError() {
+		testChangeSingleControl(createOKWriter(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeSingleControlOKToCancel() {
+		testChangeSingleControl(createOKWriter(), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeSingleControlInfoToOk() {
+		testChangeSingleControl(createInfoWriter(), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeSingleControlInfoToInfo() {
+		testChangeSingleControl(createInfoWriter(), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeSingleControlInfoToWarning() {
+		testChangeSingleControl(createInfoWriter(), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeSingleControlInfoToError() {
+		testChangeSingleControl(createInfoWriter(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeSingleControlInfoToCancel() {
+		testChangeSingleControl(createInfoWriter(), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeSingleControlWarningToOk() {
+		testChangeSingleControl(createWarningWriter(), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeSingleControlWarningToInfo() {
+		testChangeSingleControl(createWarningWriter(), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeSingleControlWarningToWarning() {
+		testChangeSingleControl(createWarningWriter(), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeSingleControlWarningToError() {
+		testChangeSingleControl(createWarningWriter(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeSingleControlWarningToCancel() {
+		testChangeSingleControl(createWarningWriter(), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeSingleControlErrorToOk() {
+		testChangeSingleControl(createErrorWriter(), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeSingleControlErrorToInfo() {
+		testChangeSingleControl(createErrorWriter(), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeSingleControlErrorToWarning() {
+		testChangeSingleControl(createErrorWriter(), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeSingleControlErrorToError() {
+		testChangeSingleControl(createErrorWriter(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeSingleControlErrorToCancel() {
+		testChangeSingleControl(createErrorWriter(), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeSingleControlCancelToOk() {
+		testChangeSingleControl(createCancelWriter(), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeSingleControlCancelToInfo() {
+		testChangeSingleControl(createCancelWriter(), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeSingleControlCancelToWarning() {
+		testChangeSingleControl(createCancelWriter(), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeSingleControlCancelToError() {
+		testChangeSingleControl(createCancelWriter(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeSingleControlCancelToCancel() {
+		testChangeSingleControl(createCancelWriter(), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlOKToOk() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlOKToInfo() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlOKToWarning() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlOKToError() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlOKToCancel() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlInfoToOk() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlInfoToInfo() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlInfoToWarning() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlInfoToError() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlInfoToCancel() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 1, 0, 0, 0), Diagnostic.CANCEL);
+
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlWarningToOk() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlWarningToInfo() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlWarningToWarning() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlWarningToError() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlWarningToCancel() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 1, 0, 0), Diagnostic.CANCEL);
+
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlErrorToOk() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlErrorToInfo() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlErrorToWarning() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlErrorToError() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlErrorToCancel() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 1, 0), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlCancelToOk() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlCancelToInfo() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlCancelToWarning() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlCancelToError() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationOneControlCancelToCancel() {
+		testChangeParentPropagationOneChild(createLibaryWithWriters(0, 0, 0, 0, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewOKinOK() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewOKinInfo() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewOKinWarning() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewOKinError() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.OK);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewOKinCancel() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.OK);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewInfoinOK() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewInfoinInfo() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewInfoinWarning() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewInfoinError() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewInfoinCancel() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.INFO);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewWarninginOK() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewWarninginInfo() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewWarninginWarning() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewWarninginError() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewWarninginCancel() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewErrorinOK() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewErrorinInfo() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewErrorinWarning() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewErrorinError() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewErrorinCancel() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewCancelinOK() {
+
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 0, 0, 0, 0), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewCancelinInfo() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 0, 0, 0), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewCancelinWarning() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 0, 0), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewCancelinError() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 0), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testAddAndRemoveSeverityNewCancelinCancel() {
+		testAddAndRemoveChildHighestSeverity(createLibaryWithWriters(1, 1, 1, 1, 1), Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToOkversusOk() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK,
+			Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToInfoversusOk() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.INFO,
+			Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToWarningversusOk() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToErrorversusOk() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.ERROR,
+			Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToCancelversusOk() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.CANCEL,
+			Diagnostic.OK);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToOkversusInfo() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.OK,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToInfoversusInfo() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.INFO,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToWarningversusInfo() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToErrorversusInfo() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.ERROR,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToCancelversusInfo() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.CANCEL,
+			Diagnostic.INFO);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToOkversusWarning() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.OK,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToInfoversusWarning() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.INFO,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToWarningversusWarning() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToErrorversusWarning() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.ERROR,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToCancelversusWarning() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.CANCEL,
+			Diagnostic.WARNING);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToOkversusError() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.OK,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToInfoversusError() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.INFO,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToWarningversusError() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.WARNING,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToErrorversusError() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.ERROR,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToCancelversusError() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.CANCEL,
+			Diagnostic.ERROR);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToOkversusCancel() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.OK,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToInfoversusCancel() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.INFO,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToWarningversusCancel() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.WARNING,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToErrorversusCancel() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.ERROR,
+			Diagnostic.CANCEL);
+	}
+
+	@Test
+	public void testChangeParentPropagationTwoControlsCaseOkToCancelversusCancel() {
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.CANCEL,
+			Diagnostic.CANCEL);
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Test mapping features to controls
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	@Test
 	public void testMappingDiagnosticResultToControls() {
 		// Book with warning (no writer) and error (no title)
@@ -611,6 +1153,10 @@ public class ValidationServiceTest {
 		diagnosticBook = view.getDiagnostic();
 		assertEquals(Diagnostic.WARNING, diagnosticBook.getHighestSeverity());
 	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Test registry
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
 	public void testRegistry() {
