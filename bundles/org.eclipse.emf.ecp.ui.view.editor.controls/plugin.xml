@@ -23,7 +23,7 @@
                priority="1"
                singleValue="true"
                supportedClassType="java.lang.Object"
-               supportedEObject="org.eclipse.emf.ecp.view.model.LeafCondition"
+               supportedEObject="org.eclipse.emf.ecp.view.rule.model.LeafCondition"
                supportedFeature="expectedValue">
          </staticTest>
       </control>
@@ -35,7 +35,7 @@
                priority="3"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EAttribute"
-               supportedEObject="org.eclipse.emf.ecp.view.model.LeafCondition"
+               supportedEObject="org.eclipse.emf.ecp.view.rule.model.LeafCondition"
                supportedFeature="attribute">
          </staticTest>
       </control>
@@ -51,6 +51,7 @@
                supportedFeature="rootEClass">
          </staticTest>
       </control>
+      <!--
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.TreeCategoryTargetFeatureControl"
             id="org.eclipse.emf.ecp.view.editor.controls.treecategory"
@@ -63,6 +64,7 @@
                supportedFeature="targetFeature">
          </staticTest>
       </control>
+      -->
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.TableColumnAttributeControl"
             id="org.eclipse.emf.ecp.view.editor.controls.tableColumnAttribute"
