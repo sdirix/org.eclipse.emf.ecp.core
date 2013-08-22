@@ -27,6 +27,11 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  */
 public class RuleServiceHelper extends AbstractViewService {
 
+	private interface RenderablePredicate {
+
+		boolean checkCurrentState(Renderable renderable);
+	}
+
 	private ViewModelContext context;
 
 	/**
@@ -51,15 +56,26 @@ public class RuleServiceHelper extends AbstractViewService {
 			setting, newValue);
 
 		final Set<T> result = new LinkedHashSet<T>();
-		result.addAll(collectFalseValues(cls, disabledRenderables));
-		result.addAll(collectFalseValues(cls, hiddenRenderables));
+		result.addAll(collectFalseValues(cls, disabledRenderables, new RenderablePredicate() {
+
+			public boolean checkCurrentState(Renderable renderable) {
+				return renderable.isEnabled();
+			}
+		}));
+		result.addAll(collectFalseValues(cls, hiddenRenderables, new RenderablePredicate() {
+
+			public boolean checkCurrentState(Renderable renderable) {
+				return renderable.isVisible();
+			}
+
+		}));
 
 		return result;
 	}
 
 	@SuppressWarnings("unchecked")
 	private <T extends Renderable> Set<T> collectFalseValues(Class<T> cls,
-		final Map<Renderable, Boolean> renderableToStateMapping) {
+		final Map<Renderable, Boolean> renderableToStateMapping, RenderablePredicate renderablePredicate) {
 
 		final Set<T> result = new LinkedHashSet<T>();
 
@@ -68,6 +84,9 @@ public class RuleServiceHelper extends AbstractViewService {
 			final Renderable renderable = entry.getKey();
 			final Boolean newState = entry.getValue();
 			if (newState) {
+				continue;
+			}
+			if (renderablePredicate.checkCurrentState(renderable) == newState) {
 				continue;
 			}
 			if (cls.isInstance(renderable)) {
