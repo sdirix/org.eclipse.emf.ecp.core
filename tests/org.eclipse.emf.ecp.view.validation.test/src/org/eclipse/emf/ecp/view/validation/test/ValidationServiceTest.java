@@ -447,60 +447,85 @@ public class ValidationServiceTest {
 
 	@Test
 	public void testChangeParentPropagationTwoChildrenAllCases() {
-		// testChangeParentPropagationTwoChildren(
-		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK);
-		// testChangeParentPropagationTwoChildren(
-		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.INFO);
-		// testChangeParentPropagationTwoChildren(
-		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.WARNING);
-		// testChangeParentPropagationTwoChildren(
-		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.ERROR);
-		// testChangeParentPropagationTwoChildren(
-		// addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.CANCEL);
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.OK,
+			Diagnostic.OK);
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.INFO,
+			Diagnostic.OK);
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.OK);
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.ERROR,
+			Diagnostic.OK);
+		testChangeParentPropagationTwoChildren(
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0)), Diagnostic.CANCEL,
+			Diagnostic.OK);
 
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.OK);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.OK,
+			Diagnostic.INFO);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.INFO);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.INFO,
+			Diagnostic.INFO);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.WARNING);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.INFO);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.ERROR);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.ERROR,
+			Diagnostic.INFO);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.CANCEL);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 1, 0, 0, 0)), Diagnostic.CANCEL,
+			Diagnostic.INFO);
 
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.OK);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.OK,
+			Diagnostic.WARNING);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.INFO);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.INFO,
+			Diagnostic.WARNING);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.WARNING);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.WARNING,
+			Diagnostic.WARNING);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.ERROR);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.ERROR,
+			Diagnostic.WARNING);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.CANCEL);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 0, 0)), Diagnostic.CANCEL,
+			Diagnostic.WARNING);
 
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.OK);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.OK,
+			Diagnostic.ERROR);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.INFO);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.INFO,
+			Diagnostic.ERROR);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.WARNING);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.WARNING,
+			Diagnostic.ERROR);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.ERROR);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.ERROR,
+			Diagnostic.ERROR);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.CANCEL);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 1, 1, 0)), Diagnostic.CANCEL,
+			Diagnostic.ERROR);
 
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.OK);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.OK,
+			Diagnostic.CANCEL);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.INFO);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.INFO,
+			Diagnostic.CANCEL);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.WARNING);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.WARNING,
+			Diagnostic.CANCEL);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.ERROR);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.ERROR,
+			Diagnostic.CANCEL);
 		testChangeParentPropagationTwoChildren(
-			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.CANCEL);
+			addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 1)), Diagnostic.CANCEL,
+			Diagnostic.CANCEL);
 	}
 
 	/**
@@ -509,7 +534,7 @@ public class ValidationServiceTest {
 	 * @param newSeverityWriter expected severity for writer
 	 * @param severityBooks expected severity for books
 	 */
-	private void testChangeParentPropagationTwoChildren(Library library, int newSeverityWriter) {
+	private void testChangeParentPropagationTwoChildren(Library library, int newSeverityWriter, int severityBooks) {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(library.eClass());
 
@@ -537,18 +562,13 @@ public class ValidationServiceTest {
 		// Validation ///////////////////////////////////////
 		instantiateValidationService(view, library);
 
-		final int diagnosticWriterBefore = columnWriter.getDiagnostic().getHighestSeverity();
-		final int diagnosticBooks = columnBooks.getDiagnostic().getHighestSeverity();
-
 		final Writer writer = library.getWriters().get(0);
 		changeWriter(writer, newSeverityWriter);
 
-		final int expectedSeverityWriter = diagnosticWriterBefore > newSeverityWriter ? diagnosticWriterBefore
-			: newSeverityWriter;
-		assertEquals(expectedSeverityWriter, columnWriter.getDiagnostic().getHighestSeverity());
+		assertEquals(newSeverityWriter, columnWriter.getDiagnostic().getHighestSeverity());
 
-		final int expectedSeverityAll = expectedSeverityWriter > diagnosticBooks ? expectedSeverityWriter
-			: diagnosticBooks;
+		final int expectedSeverityAll = newSeverityWriter > severityBooks ? newSeverityWriter
+			: severityBooks;
 		assertEquals(expectedSeverityAll, view.getDiagnostic().getHighestSeverity());
 	}
 

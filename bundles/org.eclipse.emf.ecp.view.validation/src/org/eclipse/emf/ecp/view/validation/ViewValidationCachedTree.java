@@ -196,7 +196,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 						propagator.propagate(renderable);
 					} else {
 						renderable.getDiagnostic().getDiagnostics().clear();
-						renderable.getDiagnostic().getDiagnostics().add(getDisplayValue());
+						renderable.getDiagnostic().getDiagnostics().add(value);
 					}
 				}
 			}
