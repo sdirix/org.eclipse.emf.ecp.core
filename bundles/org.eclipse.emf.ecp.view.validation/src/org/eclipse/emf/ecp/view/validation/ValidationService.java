@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.view.model.View;
  * @author jfaltermeier
  * 
  */
-@SuppressWarnings("restriction")
 public class ValidationService extends AbstractViewService {
 
 	private ViewModelContext context;
