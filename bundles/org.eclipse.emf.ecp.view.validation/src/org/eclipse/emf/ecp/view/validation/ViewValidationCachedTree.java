@@ -159,19 +159,16 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		}
 
 		/**
-		 * Puts a value into the cache and updates the diagnostics in the view model.
+		 * {@inheritDoc}
 		 * 
-		 * @param key
-		 *            the (child) object that contains the given value
-		 * @param value
-		 *            an additional value that will be considered for the computation of the
-		 *            actual value that results to a {@link #update()} call
+		 * @see org.eclipse.emf.ecp.common.cachetree.CachedTreeNode#setOwnValue(java.lang.Object)
 		 */
 		@Override
-		public void putIntoCache(Object key, Diagnostic value) {
-			super.putIntoCache(key, value);
+		public void setOwnValue(Diagnostic newValue) {
+			super.setOwnValue(newValue);
 
-			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) key);
+			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) newValue
+				.getData().get(0));
 			for (final Renderable renderable : renderables) {
 				if (renderable instanceof AbstractControl) {
 					final AbstractControl control = (AbstractControl) renderable;
@@ -198,7 +195,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 						propagator.propagate(renderable);
 					} else {
 						final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-						vDiagnostic.getDiagnostics().add(value);
+						vDiagnostic.getDiagnostics().add(newValue);
 						renderable.setDiagnostic(vDiagnostic);
 					}
 				}
