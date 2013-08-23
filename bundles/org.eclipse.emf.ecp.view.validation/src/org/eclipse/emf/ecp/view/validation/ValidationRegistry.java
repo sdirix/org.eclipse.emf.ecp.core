@@ -71,7 +71,7 @@ public class ValidationRegistry {
 		for (final Renderable r : childRenderables) {
 			if (r instanceof Control) {
 				final Control control = (Control) r;
-				final List<EReference> references = control.getPathToFeature();
+				final List<EReference> references = new ArrayList<EReference>(control.getPathToFeature());
 
 				if (references.isEmpty()) {
 					usedKeys.addAll(registerWithKeyResult(model, r));
