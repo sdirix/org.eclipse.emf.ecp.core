@@ -73,10 +73,6 @@ public class DefaultValidationPropagator implements ECPValidationPropagator {
 	 * @return <code>true</code> if renderable is enabled, visible and not read only, <code>false</code> otherwise
 	 */
 	private boolean isRelevantForPropagation(Renderable renderable) {
-		// if (renderable.isEnabled() && renderable.isVisible() && !renderable.isReadonly()) {
-		// return true;
-		// }
-		// return false;
 		return true;
 	}
 

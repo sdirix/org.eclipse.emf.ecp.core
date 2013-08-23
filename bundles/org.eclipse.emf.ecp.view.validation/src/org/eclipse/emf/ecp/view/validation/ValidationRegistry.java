@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -71,20 +72,15 @@ public class ValidationRegistry {
 			if (r instanceof Control) {
 				final Control control = (Control) r;
 				final List<EReference> references = control.getPathToFeature();
+
 				if (references.isEmpty()) {
 					usedKeys.addAll(registerWithKeyResult(model, r));
 				} else {
-					for (final EReference reference : references) {
-						if (reference.isMany()) {
-							@SuppressWarnings("unchecked")
-							final List<EObject> childObjects = (List<EObject>) model.eGet(reference);
-							for (final EObject o : childObjects) {
-								usedKeys.addAll(registerWithKeyResult(o, control));
-							}
-						} else {
-							final EObject o = (EObject) model.eGet(reference);
-							usedKeys.addAll(registerWithKeyResult(o, control));
-						}
+					final List<EObject> models = new ArrayList<EObject>();
+					models.add(model);
+					final List<EObject> referencedModels = collectReferencedModelsForPathToFeature(references, models);
+					for (final EObject refModel : referencedModels) {
+						usedKeys.addAll(registerWithKeyResult(refModel, control));
 					}
 				}
 			} else {
@@ -116,6 +112,35 @@ public class ValidationRegistry {
 		}
 
 		return keys;
+	}
+
+	private List<EObject> collectReferencedModelsForPathToFeature(List<EReference> references, List<EObject> models) {
+
+		if (references == null || models == null) {
+			// TODO exception?
+			return Collections.emptyList();
+		}
+
+		if (references.isEmpty()) {
+			return models;
+		}
+
+		final EReference reference = references.remove(0);
+
+		final List<EObject> result = new ArrayList<EObject>();
+		for (final EObject model : models) {
+			if (reference.isMany()) {
+				@SuppressWarnings("unchecked")
+				final List<EObject> childObjects = (List<EObject>) model.eGet(reference);
+				result.addAll(collectReferencedModelsForPathToFeature(references, childObjects));
+			} else {
+				final EObject o = (EObject) model.eGet(reference);
+				final List<EObject> childObjects = new ArrayList<EObject>();
+				childObjects.add(o);
+				result.addAll(collectReferencedModelsForPathToFeature(references, childObjects));
+			}
+		}
+		return result;
 	}
 
 	private void putIntoMaps(EObject model, Renderable renderable) {

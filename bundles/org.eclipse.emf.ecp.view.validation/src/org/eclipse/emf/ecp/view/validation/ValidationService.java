@@ -13,9 +13,13 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -37,6 +41,7 @@ import org.eclipse.emf.ecp.view.model.View;
 public class ValidationService extends AbstractViewService {
 
 	private ViewModelContext context;
+	private View view;
 
 	private ModelChangeListener domainChangeListener;
 	private ModelChangeListener viewChangeListener;
@@ -44,10 +49,13 @@ public class ValidationService extends AbstractViewService {
 	private ViewValidationCachedTree viewValidationCachedTree;
 	private ValidationRegistry validationRegistry;
 
+	private final LinkedHashSet<ViewValidationListener> validationListener;
+
 	/**
 	 * Default constructor.
 	 */
 	public ValidationService() {
+		validationListener = new LinkedHashSet<ViewValidationListener>();
 	}
 
 	/**
@@ -59,7 +67,7 @@ public class ValidationService extends AbstractViewService {
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 
-		final View view = context.getViewModel();
+		view = context.getViewModel();
 
 		if (view == null) {
 			throw new IllegalStateException("View model must not be null");
@@ -79,12 +87,14 @@ public class ValidationService extends AbstractViewService {
 				case Notification.REMOVE:
 				case Notification.ADD_MANY:
 				case Notification.REMOVE_MANY:
-					// TODO don't reinit everytime?
+					// TODO don't reinit everytime
 					init(view, domainModel);
 					viewValidationCachedTree.validate(getAllEObjects(domainModel));
+					notifyListeners();
 					break;
 				default:
 					viewValidationCachedTree.validate(notification.getNotifier());
+					notifyListeners();
 				}
 			}
 		};
@@ -100,6 +110,8 @@ public class ValidationService extends AbstractViewService {
 		init(view, domainModel);
 
 		viewValidationCachedTree.validate(getAllEObjects(domainModel));
+
+		notifyListeners();
 	}
 
 	private void init(Renderable view, EObject domainModel) {
@@ -127,6 +139,45 @@ public class ValidationService extends AbstractViewService {
 			result.add(iterator.next());
 		}
 		return result;
+	}
+
+	/**
+	 * Registers a listener that will be informed once the validation result's severity is higher than
+	 * {@link Diagnostic#OK}.
+	 * 
+	 * @param listener the listener to register
+	 */
+	public void registerValidationListener(ViewValidationListener listener) {
+		validationListener.add(listener);
+	}
+
+	/**
+	 * Deregisters the given listener.
+	 * 
+	 * @param listener the listener to deregister
+	 */
+	public void deregisterValidationListener(ViewValidationListener listener) {
+		validationListener.remove(listener);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void notifyListeners() {
+		if (validationListener.size() > 0) {
+			final Set<Diagnostic> result = new HashSet<Diagnostic>();
+			if (view.getDiagnostic().getHighestSeverity() > Diagnostic.OK) {
+				for (final Object o : view.getDiagnostic().getDiagnostics()) {
+					if (((Diagnostic) o).getSeverity() > Diagnostic.OK) {
+						result.add((Diagnostic) o);
+					}
+				}
+			}
+
+			if (result.size() > 0) {
+				for (final ViewValidationListener l : validationListener) {
+					l.onValidationErrors(result);
+				}
+			}
+		}
 	}
 
 	/**

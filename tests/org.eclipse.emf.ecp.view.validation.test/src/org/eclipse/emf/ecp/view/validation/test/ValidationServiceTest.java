@@ -13,7 +13,9 @@ package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.validation.ValidationRegistry;
 import org.eclipse.emf.ecp.view.validation.ValidationService;
+import org.eclipse.emf.ecp.view.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
@@ -1329,14 +1332,145 @@ public class ValidationServiceTest {
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Test validation listener
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private ValidationService setupViewModelAndRegisterListeners(View view, Library library,
+		List<ViewValidationListener> listener) {
+
+		view.setRootEClass(library.eClass());
+
+		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		view.getChildren().add(parentColumn);
+
+		// Writers //////////////////////////////////////
+		final Column columnWriter = ViewFactory.eINSTANCE.createColumn();
+		parentColumn.getComposites().add(columnWriter);
+
+		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
+		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		columnWriter.getComposites().add(controlWriter);
+
+		// Books //////////////////////////////////////////
+		final Column columnBooks = ViewFactory.eINSTANCE.createColumn();
+		parentColumn.getComposites().add(columnBooks);
+
+		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
+		controlBooks.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
+		controlBooks.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Books());
+		columnBooks.getComposites().add(controlBooks);
+
+		// Validation Service ///////////////////////////////
+		final ValidationService validationService = new ValidationService();
+
+		for (final ViewValidationListener l : listener) {
+			validationService.registerValidationListener(l);
+		}
+
+		return validationService;
+	}
+
+	@Test
+	public void testSingleListenerInitError() throws InterruptedException {
+		final Library library = addBooksToLibrary(createLibaryWithWriters(0, 0, 0, 1, 0), createBooks(0, 0, 0, 0, 1));
+		final View view = ViewFactory.eINSTANCE.createView();
+
+		final Set<Diagnostic> diagnostics = new HashSet<Diagnostic>();
+
+		final ViewValidationListener listener = new ViewValidationListener() {
+			public void onValidationErrors(Set<Diagnostic> validationResults) {
+				diagnostics.addAll(validationResults);
+			}
+		};
+		final List<ViewValidationListener> listeners = new ArrayList<ViewValidationListener>();
+		listeners.add(listener);
+
+		final ValidationService validationService = setupViewModelAndRegisterListeners(view, library, listeners);
+
+		// Validation ///////////////////////////////////////
+		final Thread thread = new Thread(new Runnable() {
+			public void run() {
+				validationService.instantiate(new ViewModelContextImpl(view, library));
+			}
+		});
+		thread.start();
+		thread.join(1000);
+
+		assertTrue("Listener was not called or timeout reached.", diagnostics.size() > 0);
+		assertEquals(2, diagnostics.size(), 0);
+		int highestSeverity = Diagnostic.OK;
+		for (final Diagnostic d : diagnostics) {
+			highestSeverity = d.getSeverity() > highestSeverity ? d.getSeverity() : highestSeverity;
+		}
+		assertTrue(highestSeverity > Diagnostic.OK);
+		assertEquals(Diagnostic.CANCEL, highestSeverity, 0);
+	}
+
+	@Test
+	public void testSingleListenerInitOK() throws InterruptedException {
+		final Library library = addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0));
+		final View view = ViewFactory.eINSTANCE.createView();
+
+		final Set<Diagnostic> diagnostics = null;
+
+		final ViewValidationListener listener = new ViewValidationListener() {
+			@SuppressWarnings("null")
+			public void onValidationErrors(Set<Diagnostic> validationResults) {
+				// this should not be called. fail because of NPE
+				diagnostics.addAll(validationResults);
+			}
+		};
+		final List<ViewValidationListener> listeners = new ArrayList<ViewValidationListener>();
+		listeners.add(listener);
+
+		final ValidationService validationService = setupViewModelAndRegisterListeners(view, library, listeners);
+
+		// Validation ///////////////////////////////////////
+		try {
+			validationService.instantiate(new ViewModelContextImpl(view, library));
+		} catch (final NullPointerException ex) {
+			fail("Listener was called when not expected to be called");
+		}
+	}
+
+	@Test
+	public void testSingleListenerRegisterAfterInstantiate() throws InterruptedException {
+		final Library library = addBooksToLibrary(createLibaryWithWriters(1, 0, 0, 0, 0), createBooks(1, 0, 0, 0, 0));
+		final View view = ViewFactory.eINSTANCE.createView();
+		final List<ViewValidationListener> listeners = new ArrayList<ViewValidationListener>();
+
+		final ValidationService service = setupViewModelAndRegisterListeners(view, library, listeners);
+		service.instantiate(new ViewModelContextImpl(view, library));
+
+		final Set<Diagnostic> diagnostics = new HashSet<Diagnostic>();
+
+		final ViewValidationListener listener = new ViewValidationListener() {
+			public void onValidationErrors(Set<Diagnostic> validationResults) {
+				diagnostics.addAll(validationResults);
+			}
+		};
+
+		service.registerValidationListener(listener);
+
+		final Thread thread = new Thread(new Runnable() {
+			public void run() {
+				changeWriter(library.getWriters().get(0), Diagnostic.WARNING);
+			}
+		});
+		thread.start();
+		thread.join(1000);
+
+		assertTrue("Listener was not called or timeout reached.", diagnostics.size() > 0);
+		assertEquals(1, diagnostics.size(), 0);
+		assertEquals(Diagnostic.WARNING, diagnostics.iterator().next().getSeverity(), 0);
+
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Util from here
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	/**
-	 * Instantiate validation service
-	 * 
-	 * @return the validation service
-	 */
 	private ValidationService instantiateValidationService(View view, final EObject domainModel) {
 		final ValidationService validationService = new ValidationService();
 		validationService.instantiate(new ViewModelContextImpl(view, domainModel));
