@@ -1157,6 +1157,56 @@ public class ValidationServiceTest {
 		assertEquals(Diagnostic.WARNING, diagnosticBook.getHighestSeverity());
 	}
 
+	@Test
+	public void testMappingDiagnosticResultToControlsSameFeatureTwice() {
+		// Book with warning (no writer) and error (no title)
+		final Book book = TestFactory.eINSTANCE.createBook();
+
+		final View view = ViewFactory.eINSTANCE.createView();
+		view.setRootEClass(book.eClass());
+
+		final Control controlTitle = ViewFactory.eINSTANCE.createControl();
+		controlTitle.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
+		view.getChildren().add(controlTitle);
+
+		final Control controlWriter1 = ViewFactory.eINSTANCE.createControl();
+		controlWriter1.setTargetFeature(TestPackage.eINSTANCE.getBook_Writers());
+		view.getChildren().add(controlWriter1);
+
+		final Control controlWriter2 = ViewFactory.eINSTANCE.createControl();
+		controlWriter2.setTargetFeature(TestPackage.eINSTANCE.getBook_Writers());
+		view.getChildren().add(controlWriter2);
+
+		instantiateValidationService(view, book);
+
+		VDiagnostic diagnosticTitle = controlTitle.getDiagnostic();
+		assertEquals(Diagnostic.ERROR, diagnosticTitle.getHighestSeverity());
+
+		VDiagnostic diagnosticWriter1 = controlWriter1.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticWriter1.getHighestSeverity());
+
+		VDiagnostic diagnosticWriter2 = controlWriter2.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticWriter2.getHighestSeverity());
+
+		VDiagnostic diagnosticBook = view.getDiagnostic();
+		assertEquals(Diagnostic.ERROR, diagnosticBook.getHighestSeverity());
+
+		// change book title info
+		book.setTitle("a");
+
+		diagnosticTitle = controlTitle.getDiagnostic();
+		assertEquals(Diagnostic.INFO, diagnosticTitle.getHighestSeverity());
+
+		diagnosticWriter1 = controlWriter1.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticWriter1.getHighestSeverity());
+
+		diagnosticWriter2 = controlWriter2.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticWriter2.getHighestSeverity());
+
+		diagnosticBook = view.getDiagnostic();
+		assertEquals(Diagnostic.WARNING, diagnosticBook.getHighestSeverity());
+	}
+
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Test registry
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
