@@ -177,6 +177,9 @@ public class ValidationServiceTest {
 
 		changeWriter(library.getWriters().get(0), changeToSeverity);
 
+		assertEquals(changeToSeverity, column.getDiagnostic().getHighestSeverity(), 0);
+		assertEquals(changeToSeverity, parentColumn.getDiagnostic().getHighestSeverity(), 0);
+
 		final VDiagnostic diagnosticLibary = view.getDiagnostic();
 		assertEquals("Validation result was not propagated to parent.", changeToSeverity,
 			diagnosticLibary.getHighestSeverity(), 0);

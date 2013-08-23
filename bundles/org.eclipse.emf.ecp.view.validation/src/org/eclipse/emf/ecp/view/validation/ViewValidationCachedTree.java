@@ -74,7 +74,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		} catch (final CoreException ex) {
 			return null;
 		}
-		return null;
+		return new DefaultValidationPropagator();
 	}
 
 	/**
@@ -143,6 +143,78 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		return diagnostics;
 	}
 
+	private void updateAssociatedRenderables(EObject object, Diagnostic value) {
+		final List<Renderable> renderables = validationRegistry.getRenderablesForEObject(object);
+		for (final Renderable renderable : renderables) {
+			if (renderable instanceof AbstractControl) {
+				final AbstractControl control = (AbstractControl) renderable;
+				final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+				final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
+
+				final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
+				final Map<Object, CachedTreeNode<Diagnostic>> nodes = getNodes();
+
+				for (final EObject o : associatedEObjects) {
+					if (nodes.containsKey(o)) {
+						final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
+						for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
+							vDiagnostic.getDiagnostics().add(d);
+						}
+					}
+				}
+				control.setDiagnostic(vDiagnostic);
+
+			}
+			// non controls
+			else {
+				if (propagator != null && propagator.canHandle(renderable)) {
+					propagator.propagate(renderable);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks if this diagnostic contains a validation result for an element in the given list.
+	 * 
+	 * @param diagnostic
+	 * @param features
+	 * @return
+	 */
+	private Collection<Diagnostic> extractRelevantDiagnostics(Diagnostic diagnostic,
+		List<EStructuralFeature> features) {
+
+		final Collection<Diagnostic> result = new ArrayList<Diagnostic>();
+
+		if (diagnostic.getSeverity() == Diagnostic.OK) {
+			result.add(diagnostic);
+			return result;
+		}
+
+		for (final EStructuralFeature feature : features) {
+			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+				for (final Object o : childDiagnostic.getData()) {
+					if (feature.getClass().isInstance(o)) {
+						result.add(childDiagnostic);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree#updateNode(java.lang.Object, java.lang.Object)
+	 */
+	@Override
+	protected CachedTreeNode<Diagnostic> updateNode(Object object, Diagnostic t) {
+		final CachedTreeNode<Diagnostic> updateNode = super.updateNode(object, t);
+		updateAssociatedRenderables((EObject) object, t);
+		return updateNode;
+	}
+
 	/**
 	 * Tree node that caches the diagnostics of its children.
 	 */
@@ -156,95 +228,6 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		 */
 		public ViewValidationTreeNode(Diagnostic diagnostic) {
 			super(diagnostic);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.common.cachetree.CachedTreeNode#setOwnValue(java.lang.Object)
-		 */
-		@Override
-		public void setOwnValue(Diagnostic newValue) {
-			super.setOwnValue(newValue);
-
-			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) newValue
-				.getData().get(0));
-			for (final Renderable renderable : renderables) {
-				if (renderable instanceof AbstractControl) {
-					final AbstractControl control = (AbstractControl) renderable;
-					final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-					final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
-
-					final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
-					final Map<Object, CachedTreeNode<Diagnostic>> nodes = getNodes();
-
-					for (final EObject o : associatedEObjects) {
-						if (nodes.containsKey(o)) {
-							final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
-							for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
-								vDiagnostic.getDiagnostics().add(d);
-							}
-						}
-					}
-					control.setDiagnostic(vDiagnostic);
-
-				}
-				// non controls
-				else {
-					if (propagator != null && propagator.canHandle(renderable)) {
-						propagator.propagate(renderable);
-					} else {
-						final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-						vDiagnostic.getDiagnostics().add(newValue);
-						renderable.setDiagnostic(vDiagnostic);
-					}
-				}
-			}
-		}
-
-		/**
-		 * Checks if this diagnostic contains a validation result for an element in the given list.
-		 * 
-		 * @param diagnostic
-		 * @param features
-		 * @return
-		 */
-		private Collection<Diagnostic> extractRelevantDiagnostics(Diagnostic diagnostic,
-			List<EStructuralFeature> features) {
-
-			final Collection<Diagnostic> result = new ArrayList<Diagnostic>();
-
-			if (diagnostic.getSeverity() == Diagnostic.OK) {
-				result.add(diagnostic);
-				return result;
-			}
-
-			for (final EStructuralFeature feature : features) {
-				for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-					for (final Object o : childDiagnostic.getData()) {
-						if (feature.getClass().isInstance(o)) {
-							result.add(childDiagnostic);
-						}
-					}
-				}
-			}
-			return result;
-		}
-
-		/**
-		 * Removes a (child) object from the cache and updates the diagnostics in the view model.
-		 * 
-		 * @param key
-		 *            the object to be removed
-		 */
-		@Override
-		public void removeFromCache(Object key) {
-			super.removeFromCache(key);
-			final List<Renderable> renderables = validationRegistry.getRenderablesForEObject((EObject) key);
-			for (final Renderable renderable : renderables) {
-				final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-				renderable.setDiagnostic(vDiagnostic);
-			}
 		}
 
 		/**

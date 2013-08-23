@@ -189,7 +189,14 @@ public abstract class AbstractCachedTree<T> {
 		}
 	}
 
-	private void updateNode(Object object, T t) {
+	/**
+	 * Updates the node.
+	 * 
+	 * @param object the object associated with the node
+	 * @param t the type of the node
+	 * @return the updated node
+	 */
+	protected CachedTreeNode<T> updateNode(Object object, T t) {
 		CachedTreeNode<T> node = nodes.get(object);
 
 		if (node == null) {
@@ -197,6 +204,7 @@ public abstract class AbstractCachedTree<T> {
 		}
 
 		node.setOwnValue(t);
+		return node;
 	}
 
 	private CachedTreeNode<T> createNodeEntry(Object object, T t) {
@@ -214,12 +222,14 @@ public abstract class AbstractCachedTree<T> {
 	 */
 	protected void updateParentNode(Object parent, Object object, T value) {
 		final CachedTreeNode<T> node = nodes.get(object);
-		CachedTreeNode<T> parentNode = nodes.get(parent);
 		node.setParent(parent);
 
-		if (parentNode == null) {
-			parentNode = createNodeEntry(parent, getDefaultValue());
-		}
+		// CachedTreeNode<T> parentNode = nodes.get(parent);
+		//
+		// if (parentNode == null) {
+		// parentNode = createNodeEntry(parent, getDefaultValue());
+		// }
+		final CachedTreeNode<T> parentNode = updateNode(parent, value);
 
 		parentNode.putIntoCache(object, value);
 		rootValue.putIntoCache(parent, parentNode.getDisplayValue());

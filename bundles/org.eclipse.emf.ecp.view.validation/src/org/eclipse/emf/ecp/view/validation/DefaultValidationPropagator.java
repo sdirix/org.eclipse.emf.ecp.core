@@ -22,10 +22,12 @@ import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
 /**
+ * Default propagator for the view validation service.
+ * 
  * @author jfaltermeier
  * 
  */
-public class OnlyVisiblePropagator implements ECPValidationPropagator {
+public class DefaultValidationPropagator implements ECPValidationPropagator {
 
 	/**
 	 * {@inheritDoc}
@@ -71,10 +73,11 @@ public class OnlyVisiblePropagator implements ECPValidationPropagator {
 	 * @return <code>true</code> if renderable is enabled, visible and not read only, <code>false</code> otherwise
 	 */
 	private boolean isRelevantForPropagation(Renderable renderable) {
-		if (renderable.isEnabled() && renderable.isVisible() && !renderable.isReadonly()) {
-			return true;
-		}
-		return false;
+		// if (renderable.isEnabled() && renderable.isVisible() && !renderable.isReadonly()) {
+		// return true;
+		// }
+		// return false;
+		return true;
 	}
 
 }
