@@ -8,18 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.SelectedChildNodeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
 
 public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
@@ -45,21 +41,21 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 		// analyseView();
 
-		if (node.getRenderable() instanceof View) {
-			node.addSelectedChildNodeListener(this);
-		}
+		// if (node.getRenderable() instanceof View) {
+		// node.addSelectedChildNodeListener(this);
+		// }
 	}
 
 	public void setValidationSeverityHandler(ValidationSeverityModifier validationSeverityHandler) {
 		this.validationSeverityHandler = validationSeverityHandler;
 	}
 
-	public void triggerValidation() {
-		validate();
-		for (final ValidationListener validationListener : listeners) {
-			validationListener.validationChanged(validationMap);
-		}
-	}
+	// public void triggerValidation() {
+	// validate();
+	// for (final ValidationListener validationListener : listeners) {
+	// validationListener.validationChanged(validationMap);
+	// }
+	// }
 
 	public void addListener(ValidationListener listener) {
 		listeners.add(listener);
@@ -69,43 +65,43 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		listeners.remove(listener);
 	}
 
-	private void validate() {
-		final Diagnostic diagnostic = Diagnostician.INSTANCE.validate(context.getModelElement());
-		validationMap.clear();
-		for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (childDiagnostic.getData().size() < 2) {
-				continue;
-			}
+	// private void validate() {
+	// final Diagnostic diagnostic = Diagnostician.INSTANCE.validate(context.getModelElement());
+	// validationMap.clear();
+	// for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
+	// if (childDiagnostic.getData().size() < 2) {
+	// continue;
+	// }
+	//
+	// final EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
+	//
+	// final Set<EObject> objectsToMark = categoryValidationMap.get(feature);
+	// if (objectsToMark == null) {
+	// continue;
+	// }
+	// for (final EObject object : objectsToMark) {
+	// final Set<Diagnostic> currentValues = validationMap.get(object);
+	// if (currentValues == null) {
+	// validationMap.put(object, new HashSet<Diagnostic>());
+	// }
+	// if (validationSeverityHandler != null) {
+	// final int severityForDiagnostic = validationSeverityHandler.getSeverityForDiagnostic(
+	// childDiagnostic,
+	// feature);
+	// if (severityForDiagnostic != childDiagnostic.getSeverity()) {
+	// childDiagnostic = createDiagnosticWithSeverity(childDiagnostic, severityForDiagnostic);
+	// }
+	// }
+	// validationMap.get(object).add(childDiagnostic);
+	// }
+	//
+	// }
+	// }
 
-			final EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
-
-			final Set<EObject> objectsToMark = categoryValidationMap.get(feature);
-			if (objectsToMark == null) {
-				continue;
-			}
-			for (final EObject object : objectsToMark) {
-				final Set<Diagnostic> currentValues = validationMap.get(object);
-				if (currentValues == null) {
-					validationMap.put(object, new HashSet<Diagnostic>());
-				}
-				if (validationSeverityHandler != null) {
-					final int severityForDiagnostic = validationSeverityHandler.getSeverityForDiagnostic(
-						childDiagnostic,
-						feature);
-					if (severityForDiagnostic != childDiagnostic.getSeverity()) {
-						childDiagnostic = createDiagnosticWithSeverity(childDiagnostic, severityForDiagnostic);
-					}
-				}
-				validationMap.get(object).add(childDiagnostic);
-			}
-
-		}
-	}
-
-	private static BasicDiagnostic createDiagnosticWithSeverity(Diagnostic diagnosticTemplate, int severity) {
-		return new BasicDiagnostic(severity, diagnosticTemplate.getSource(), diagnosticTemplate.getCode(),
-			diagnosticTemplate.getMessage(), diagnosticTemplate.getData().toArray());
-	}
+	// private static BasicDiagnostic createDiagnosticWithSeverity(Diagnostic diagnosticTemplate, int severity) {
+	// return new BasicDiagnostic(severity, diagnosticTemplate.getSource(), diagnosticTemplate.getCode(),
+	// diagnosticTemplate.getMessage(), diagnosticTemplate.getData().toArray());
+	// }
 
 	// private void analyseView() {
 	// categoryValidationMap.clear();
@@ -165,7 +161,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	public void dispose() {
 		alive = false;
 		listeners.clear();
-		context.getModelElement().eAdapters().remove(contentAdapter);
+		// context.getModelElement().eAdapters().remove(contentAdapter);
 		validationMap.clear();
 		categoryValidationMap.clear();
 		selectionChangedListeners.clear();
@@ -202,31 +198,31 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 	public void setRenderedResult(CONTROL control) {
 		this.control = control;
-		this.contentAdapter = new EContentAdapter() {
-
-			@Override
-			public void notifyChanged(final Notification notification) {
-				super.notifyChanged(notification);
-
-				// // node is null, since render hasn't been called yet
-				// if (node != null) {
-				// node.checkEnable(notification);
-				// node.checkShow(notification);
-				// }
-
-				triggerValidation();
-			}
-
-			// @Override
-			// protected void addAdapter(Notifier notifier) {
-			// super.addAdapter(notifier);
-			// // FIXME HACK
-			// analyseView();
-			// }
-
-		};
-
-		this.context.getModelElement().eAdapters().add(contentAdapter);
+		// this.contentAdapter = new EContentAdapter() {
+		//
+		// @Override
+		// public void notifyChanged(final Notification notification) {
+		// super.notifyChanged(notification);
+		//
+		// // // node is null, since render hasn't been called yet
+		// // if (node != null) {
+		// // node.checkEnable(notification);
+		// // node.checkShow(notification);
+		// // }
+		//
+		// // triggerValidation();
+		// }
+		//
+		// // @Override
+		// // protected void addAdapter(Notifier notifier) {
+		// // super.addAdapter(notifier);
+		// // // FIXME HACK
+		// // analyseView();
+		// // }
+		//
+		// };
+		//
+		// this.context.getModelElement().eAdapters().add(contentAdapter);
 	}
 
 	public CONTROL getControl() {
@@ -241,15 +237,15 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		selectionChangedListeners.remove(listener);
 	}
 
-	private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
-		for (final SelectedNodeChangedListener listener : selectionChangedListeners) {
-			listener.selectionChanged(selectedRenderable);
-		}
-	}
+	// private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
+	// for (final SelectedNodeChangedListener listener : selectionChangedListeners) {
+	// listener.selectionChanged(selectedRenderable);
+	// }
+	// }
 
 	public void childSelected(Node<?> child) {
-		// trigger validation in order to update validation status of controls
-		triggerValidation();
-		fireSelectionChanged(child.getRenderable());
+		// // trigger validation in order to update validation status of controls
+		// triggerValidation();
+		// fireSelectionChanged(child.getRenderable());
 	}
 }

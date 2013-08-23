@@ -53,8 +53,8 @@ public class SWTRenderingResultDelegatorWithControl extends SWTRenderingResultDe
 			}
 
 		};
-
 		model.eAdapters().add(adapter);
+		updateValidation();
 	}
 
 	@Override

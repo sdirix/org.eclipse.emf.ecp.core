@@ -66,8 +66,8 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		tabContent.setLayoutData(gridData);
 		// TODO: strange api
-		rendererContext.addListener(node);
-		rendererContext.triggerValidation();
+		// rendererContext.addListener(node);
+		// rendererContext.triggerValidation();
 		return tabContent;
 	}
 

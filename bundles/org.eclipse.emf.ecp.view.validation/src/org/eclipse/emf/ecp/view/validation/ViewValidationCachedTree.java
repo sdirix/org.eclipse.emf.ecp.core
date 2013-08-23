@@ -211,7 +211,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	@Override
 	protected CachedTreeNode<Diagnostic> updateNode(Object object, Diagnostic t) {
 		final CachedTreeNode<Diagnostic> updateNode = super.updateNode(object, t);
-		updateAssociatedRenderables((EObject) object, t);
+		updateAssociatedRenderables((EObject) object, updateNode.getDisplayValue());
 		return updateNode;
 	}
 
@@ -255,7 +255,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 			if (getChildValue() == null) {
 				return getOwnValue();
 			}
-			return getOwnValue().getSeverity() > getChildValue().getSeverity() ? getOwnValue() : getChildValue();
+			return getOwnValue().getSeverity() >= getChildValue().getSeverity() ? getOwnValue() : getChildValue();
 		}
 	}
 

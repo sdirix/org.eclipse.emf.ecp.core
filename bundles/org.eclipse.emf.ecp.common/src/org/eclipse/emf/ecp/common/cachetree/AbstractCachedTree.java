@@ -92,7 +92,8 @@ public abstract class AbstractCachedTree<T> {
 			return Collections.emptySet();
 		}
 
-		updateNode(eObject, value);
+		final CachedTreeNode<T> node = updateNode(eObject, value);
+		node.setOwnValue(value);
 		rootValue.putIntoCache(eObject, value);
 
 		final Set<EObject> affectedElements = removeOutdatedParentCacheIfNeeded(eObject);
@@ -203,7 +204,6 @@ public abstract class AbstractCachedTree<T> {
 			node = createNodeEntry(object, t);
 		}
 
-		node.setOwnValue(t);
 		return node;
 	}
 
