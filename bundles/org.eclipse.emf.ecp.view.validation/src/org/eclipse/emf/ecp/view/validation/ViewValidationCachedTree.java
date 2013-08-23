@@ -209,10 +209,8 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 * @see org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree#updateNode(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	protected CachedTreeNode<Diagnostic> updateNode(Object object, Diagnostic t) {
-		final CachedTreeNode<Diagnostic> updateNode = super.updateNode(object, t);
-		updateAssociatedRenderables((EObject) object, updateNode.getDisplayValue());
-		return updateNode;
+	protected void updateNodeObject(Object object) {
+		updateAssociatedRenderables((EObject) object, getNodes().get(object).getDisplayValue());
 	}
 
 	/**

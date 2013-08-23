@@ -92,8 +92,11 @@ public abstract class AbstractCachedTree<T> {
 			return Collections.emptySet();
 		}
 
-		final CachedTreeNode<T> node = updateNode(eObject, value);
+		final CachedTreeNode<T> node = createNodeIfNecessary(eObject, value);
 		node.setOwnValue(value);
+
+		updateNodeObject(eObject);
+
 		rootValue.putIntoCache(eObject, value);
 
 		final Set<EObject> affectedElements = removeOutdatedParentCacheIfNeeded(eObject);
@@ -108,6 +111,11 @@ public abstract class AbstractCachedTree<T> {
 			affectedElements.add(eObject);
 		}
 		return affectedElements;
+	}
+
+	// TODO better way
+	protected void updateNodeObject(Object object) {
+
 	}
 
 	// If an object has been moved the cached entries must be removed from old parents.
@@ -190,14 +198,7 @@ public abstract class AbstractCachedTree<T> {
 		}
 	}
 
-	/**
-	 * Updates the node.
-	 * 
-	 * @param object the object associated with the node
-	 * @param t the type of the node
-	 * @return the updated node
-	 */
-	protected CachedTreeNode<T> updateNode(Object object, T t) {
+	private CachedTreeNode<T> createNodeIfNecessary(Object object, T t) {
 		CachedTreeNode<T> node = nodes.get(object);
 
 		if (node == null) {
@@ -229,8 +230,8 @@ public abstract class AbstractCachedTree<T> {
 		// if (parentNode == null) {
 		// parentNode = createNodeEntry(parent, getDefaultValue());
 		// }
-		final CachedTreeNode<T> parentNode = updateNode(parent, value);
-
+		final CachedTreeNode<T> parentNode = createNodeIfNecessary(parent, value);
+		updateNodeObject(parent);
 		parentNode.putIntoCache(object, value);
 		rootValue.putIntoCache(parent, parentNode.getDisplayValue());
 	}

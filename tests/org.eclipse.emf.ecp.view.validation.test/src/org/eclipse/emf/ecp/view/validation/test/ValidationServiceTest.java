@@ -1471,10 +1471,8 @@ public class ValidationServiceTest {
 	// Util from here
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	private ValidationService instantiateValidationService(View view, final EObject domainModel) {
-		final ValidationService validationService = new ValidationService();
-		validationService.instantiate(new ViewModelContextImpl(view, domainModel));
-		return validationService;
+	private void instantiateValidationService(View view, final EObject domainModel) {
+		new ViewModelContextImpl(view, domainModel);
 	}
 
 	/**
