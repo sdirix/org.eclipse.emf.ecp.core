@@ -2047,7 +2047,7 @@ public class RuleServiceTest {
 		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Control.class);
-		assertEquals(1, involvedEControls.size());
+		assertEquals(0, involvedEControls.size());
 	}
 
 	/**
@@ -2066,7 +2066,7 @@ public class RuleServiceTest {
 		final Set<Column> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Column.class);
-		assertEquals(2, involvedEControls.size());
+		assertEquals(0, involvedEControls.size());
 	}
 
 	/**
@@ -2101,7 +2101,7 @@ public class RuleServiceTest {
 		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 			"League2", Control.class);
-		assertEquals(1, involvedEControls.size());
+		assertEquals(0, involvedEControls.size());
 	}
 
 	/**
