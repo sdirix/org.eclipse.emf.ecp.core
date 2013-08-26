@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -39,8 +40,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public static ViewFactory init() {
 		try
 		{
-			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/model");
+			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE.getEFactory(ViewPackage.eNS_URI);
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
@@ -92,6 +92,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createColumn();
 		case ViewPackage.ACTION:
 			return createAction();
+		case ViewPackage.VDIAGNOSTIC:
+			return createVDiagnostic();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -231,6 +233,18 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Action createAction() {
 		ActionImpl action = new ActionImpl();
 		return action;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VDiagnostic createVDiagnostic()
+	{
+		VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
+		return vDiagnostic;
 	}
 
 	/**

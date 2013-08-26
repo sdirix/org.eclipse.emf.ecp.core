@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#isVisible <em>Visible</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#isEnabled <em>Enabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#isReadonly <em>Readonly</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#getDiagnostic <em>Diagnostic</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl#getAttachments <em>Attachments</em>}</li>
  * </ul>
  * </p>
@@ -109,6 +111,17 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	 * @ordered
 	 */
 	protected boolean readonly = READONLY_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getDiagnostic() <em>Diagnostic</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getDiagnostic()
+	 * @generated
+	 * @ordered
+	 */
+	protected VDiagnostic diagnostic;
 
 	/**
 	 * The cached value of the '{@link #getAttachments() <em>Attachments</em>}' containment reference list.
@@ -226,6 +239,65 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	 * 
 	 * @generated
 	 */
+	public VDiagnostic getDiagnostic()
+	{
+		return diagnostic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public NotificationChain basicSetDiagnostic(VDiagnostic newDiagnostic, NotificationChain msgs)
+	{
+		VDiagnostic oldDiagnostic = diagnostic;
+		diagnostic = newDiagnostic;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				ViewPackage.RENDERABLE__DIAGNOSTIC, oldDiagnostic, newDiagnostic);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setDiagnostic(VDiagnostic newDiagnostic)
+	{
+		if (newDiagnostic != diagnostic)
+		{
+			NotificationChain msgs = null;
+			if (diagnostic != null)
+				msgs = ((InternalEObject) diagnostic).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+					- ViewPackage.RENDERABLE__DIAGNOSTIC, null, msgs);
+			if (newDiagnostic != null)
+				msgs = ((InternalEObject) newDiagnostic).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+					- ViewPackage.RENDERABLE__DIAGNOSTIC, null, msgs);
+			msgs = basicSetDiagnostic(newDiagnostic, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.RENDERABLE__DIAGNOSTIC, newDiagnostic,
+				newDiagnostic));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public EList<Attachment> getAttachments()
 	{
 		if (attachments == null)
@@ -247,6 +319,8 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 	{
 		switch (featureID)
 		{
+		case ViewPackage.RENDERABLE__DIAGNOSTIC:
+			return basicSetDiagnostic(null, msgs);
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			return ((InternalEList<?>) getAttachments()).basicRemove(otherEnd, msgs);
 		}
@@ -270,6 +344,8 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 			return isEnabled();
 		case ViewPackage.RENDERABLE__READONLY:
 			return isReadonly();
+		case ViewPackage.RENDERABLE__DIAGNOSTIC:
+			return getDiagnostic();
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			return getAttachments();
 		}
@@ -296,6 +372,9 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 			return;
 		case ViewPackage.RENDERABLE__READONLY:
 			setReadonly((Boolean) newValue);
+			return;
+		case ViewPackage.RENDERABLE__DIAGNOSTIC:
+			setDiagnostic((VDiagnostic) newValue);
 			return;
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			getAttachments().clear();
@@ -325,6 +404,9 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 		case ViewPackage.RENDERABLE__READONLY:
 			setReadonly(READONLY_EDEFAULT);
 			return;
+		case ViewPackage.RENDERABLE__DIAGNOSTIC:
+			setDiagnostic((VDiagnostic) null);
+			return;
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			getAttachments().clear();
 			return;
@@ -349,6 +431,8 @@ public abstract class RenderableImpl extends EObjectImpl implements Renderable
 			return enabled != ENABLED_EDEFAULT;
 		case ViewPackage.RENDERABLE__READONLY:
 			return readonly != READONLY_EDEFAULT;
+		case ViewPackage.RENDERABLE__DIAGNOSTIC:
+			return diagnostic != null;
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			return attachments != null && !attachments.isEmpty();
 		}

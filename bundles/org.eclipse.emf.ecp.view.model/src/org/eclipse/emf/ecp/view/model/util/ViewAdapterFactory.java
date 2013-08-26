@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -179,6 +180,12 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseAttachment(Attachment object)
 		{
 			return createAttachmentAdapter();
+		}
+
+		@Override
+		public Adapter caseVDiagnostic(VDiagnostic object)
+		{
+			return createVDiagnosticAdapter();
 		}
 
 		@Override
@@ -446,6 +453,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAttachmentAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDiagnostic
+	 * <em>VDiagnostic</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VDiagnostic
+	 * @generated
+	 */
+	public Adapter createVDiagnosticAdapter()
 	{
 		return null;
 	}

@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
@@ -171,6 +172,7 @@ public class RenderableItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__DIAGNOSTIC);
 			childrenFeatures.add(ViewPackage.Literals.RENDERABLE__ATTACHMENTS);
 		}
 		return childrenFeatures;
@@ -225,6 +227,7 @@ public class RenderableItemProvider
 		case ViewPackage.RENDERABLE__READONLY:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
+		case ViewPackage.RENDERABLE__DIAGNOSTIC:
 		case ViewPackage.RENDERABLE__ATTACHMENTS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -244,6 +247,11 @@ public class RenderableItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
 	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+			(ViewPackage.Literals.RENDERABLE__DIAGNOSTIC,
+				ViewFactory.eINSTANCE.createVDiagnostic()));
 	}
 
 	/**

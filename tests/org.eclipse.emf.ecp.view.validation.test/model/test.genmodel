@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="" modelDirectory="/org.eclipse.emf.ecp.view.validation.test/src"
+    modelPluginID="org.eclipse.emf.ecp.view.validation.test" modelName="Test" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" classNamePattern="">
+  <foreignModel>test.ecore</foreignModel>
+  <genPackages prefix="Test" basePackage="org.eclipse.emf.ecp.view.validation.test"
+      disposableProviderFactory="true" ecorePackage="test.ecore#/">
+    <genClasses ecoreClass="test.ecore#//Library">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Library/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/writers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/books"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//Writer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/EMail"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/BirthDate"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//Writer/books"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/Pseudonym"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference test.ecore#//Writer/library"/>
+      <genOperations ecoreOperation="test.ecore#//Writer/validate">
+        <genParameters ecoreParameter="test.ecore#//Writer/validate/diagnostic"/>
+        <genParameters ecoreParameter="test.ecore#//Writer/validate/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//Book">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Book/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Book/pages"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//Book/writers"/>
+      <genOperations ecoreOperation="test.ecore#//Book/validate">
+        <genParameters ecoreParameter="test.ecore#//Book/validate/diagnostic"/>
+        <genParameters ecoreParameter="test.ecore#//Book/validate/context"/>
+      </genOperations>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

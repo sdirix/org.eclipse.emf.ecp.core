@@ -124,7 +124,7 @@ public class RendererNodeTest {
 
 				rendererContext = renderer.render(root, parent);
 				rendererContext.addListener(root);
-				rendererContext.triggerValidation();
+				// rendererContext.triggerValidation();
 
 				final org.eclipse.swt.widgets.Control c = rendererContext.getControl();
 				c.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

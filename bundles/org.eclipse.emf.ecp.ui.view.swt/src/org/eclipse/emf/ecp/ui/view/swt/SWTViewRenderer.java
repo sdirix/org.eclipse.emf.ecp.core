@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -34,6 +36,7 @@ import org.eclipse.emf.ecp.view.model.AbstractCategorization;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl;
 import org.eclipse.emf.ecp.view.model.impl.ColumnImpl;
 import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
@@ -54,6 +57,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TreeEditor;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Image;
@@ -94,6 +99,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		}
 	};
 
+	private AdapterImpl adapter;
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -107,6 +114,32 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 		final View view = viewNode.getRenderable();
+		adapter = new AdapterImpl() {
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+			 */
+			@Override
+			public void notifyChanged(Notification msg) {
+				super.notifyChanged(msg);
+				if (AbstractCategorization.class.isInstance(msg.getNotifier())
+					&& ViewPackage.eINSTANCE.getRenderable_Diagnostic().equals(msg.getFeature())) {
+					if (msg.getEventType() == Notification.SET) {
+						treeViewer.refresh();
+					}
+				}
+			}
+
+		};
+		view.eAdapters().add(adapter);
+		parent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent event) {
+				view.eAdapters().remove(adapter);
+			}
+		});
 		final EList<AbstractCategorization> categorizations = view.getCategorizations();
 
 		if (categorizations.size() == 0) {
@@ -239,7 +272,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	protected TreeViewer createTreeViewer(final Composite composite,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode
 		) {
-		final TreeViewer treeViewer = new TreeViewer(composite);
+		treeViewer = new TreeViewer(composite);
 
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
@@ -384,6 +417,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 	/** The editor composite. */
 	private ScrolledComposite editorComposite;
+
+	/**
+	 * The {@link TreeViewer} rendered by this renderer.
+	 */
+	protected TreeViewer treeViewer;
 
 	/**
 	 * Adds the tree editor.

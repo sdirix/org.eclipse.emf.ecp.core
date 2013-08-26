@@ -164,11 +164,11 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 
 		severity = calculateSeverity(affectedObjects);
 
-		for (final Node<?> child : getChildren()) {
-			child.validationChanged(affectedObjects);
-		}
-
-		notifyDelegatorsAboutValidationChanged(affectedObjects);
+		// for (final Node<?> child : getChildren()) {
+		// child.validationChanged(affectedObjects);
+		// }
+		//
+		// notifyDelegatorsAboutValidationChanged(affectedObjects);
 	}
 
 	/**
@@ -178,11 +178,11 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * @param affectedObjects
 	 *            the object that are affected by the validation
 	 */
-	protected void notifyDelegatorsAboutValidationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-		for (final RenderingResultDelegator delegator : delegators) {
-			delegator.validationChanged(affectedObjects);
-		}
-	}
+	// protected void notifyDelegatorsAboutValidationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
+	// for (final RenderingResultDelegator delegator : delegators) {
+	// delegator.validationChanged(affectedObjects);
+	// }
+	// }
 
 	/**
 	 * Calculates the severity returned by {@code getSeverity}.
@@ -333,7 +333,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * 
 	 */
 	public int getSeverity() {
-		return severity;
+		return viewModelElement.getDiagnostic().getHighestSeverity();
 	}
 
 	/**
