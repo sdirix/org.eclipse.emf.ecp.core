@@ -225,14 +225,9 @@ public abstract class AbstractCachedTree<T> {
 		final CachedTreeNode<T> node = nodes.get(object);
 		node.setParent(parent);
 
-		// CachedTreeNode<T> parentNode = nodes.get(parent);
-		//
-		// if (parentNode == null) {
-		// parentNode = createNodeEntry(parent, getDefaultValue());
-		// }
 		final CachedTreeNode<T> parentNode = createNodeIfNecessary(parent, value);
-		updateNodeObject(parent);
 		parentNode.putIntoCache(object, value);
+		updateNodeObject(parent);
 		rootValue.putIntoCache(parent, parentNode.getDisplayValue());
 	}
 

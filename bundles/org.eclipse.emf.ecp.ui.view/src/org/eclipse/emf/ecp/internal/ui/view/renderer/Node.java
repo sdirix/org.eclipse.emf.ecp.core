@@ -328,7 +328,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * 
 	 */
 	public int getSeverity() {
-		return severity;
+		return viewModelElement.getDiagnostic().getHighestSeverity();
 	}
 
 	/**
