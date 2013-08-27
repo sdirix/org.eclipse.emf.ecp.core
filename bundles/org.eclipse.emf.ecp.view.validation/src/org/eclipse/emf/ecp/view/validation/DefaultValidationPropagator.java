@@ -34,8 +34,8 @@ public class DefaultValidationPropagator implements ECPValidationPropagator {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.validation.ECPValidationPropagator#canHandle(org.eclipse.emf.ecp.view.model.Renderable)
 	 */
-	public boolean canHandle(Renderable renderable) {
-		return !(renderable instanceof AbstractControl);
+	public int canHandle(Renderable renderable) {
+		return !(renderable instanceof AbstractControl) ? 1 : 0;
 	}
 
 	/**
@@ -59,9 +59,12 @@ public class DefaultValidationPropagator implements ECPValidationPropagator {
 			}
 
 			vDiagnostic.getDiagnostics().addAll(childDiagnostics);
-			renderable.setDiagnostic(vDiagnostic);
+
 		} else {
 			vDiagnostic.getDiagnostics().add(Diagnostic.OK_INSTANCE);
+
+		}
+		if (!VDiagnosticHelper.isEqual(renderable.getDiagnostic(), vDiagnostic)) {
 			renderable.setDiagnostic(vDiagnostic);
 		}
 	}

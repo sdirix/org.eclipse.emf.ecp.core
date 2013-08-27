@@ -19,9 +19,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
@@ -29,7 +31,7 @@ import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -41,7 +43,7 @@ import org.eclipse.emf.ecp.view.model.View;
 public class ValidationService extends AbstractViewService {
 
 	private ViewModelContext context;
-	private View view;
+	private Renderable renderable;
 
 	private ModelChangeListener domainChangeListener;
 	private ModelChangeListener viewChangeListener;
@@ -67,9 +69,9 @@ public class ValidationService extends AbstractViewService {
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 
-		view = context.getViewModel();
+		renderable = context.getViewModel();
 
-		if (view == null) {
+		if (renderable == null) {
 			throw new IllegalStateException("View model must not be null");
 		}
 
@@ -81,14 +83,22 @@ public class ValidationService extends AbstractViewService {
 
 		domainChangeListener = new ModelChangeListener() {
 			public void notifyChange(ModelChangeNotification notification) {
+				// ignore notifications during initialization
+				if (viewValidationCachedTree == null) {
+					return;
+				}
 				final Notification rawNotification = notification.getRawNotification();
+				// ignore notifications due to initializations of elements
+				if (EReference.class.isInstance(rawNotification.getFeature()) && rawNotification.getOldValue() == null) {
+					return;
+				}
 				switch (rawNotification.getEventType()) {
 				case Notification.ADD:
 				case Notification.REMOVE:
 				case Notification.ADD_MANY:
 				case Notification.REMOVE_MANY:
 					// TODO don't reinit everytime
-					init(view, domainModel);
+					// init(renderable, domainModel);
 					viewValidationCachedTree.validate(getAllEObjects(domainModel));
 					notifyListeners();
 					break;
@@ -97,17 +107,55 @@ public class ValidationService extends AbstractViewService {
 					notifyListeners();
 				}
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);
 
 		viewChangeListener = new ModelChangeListener() {
 			public void notifyChange(ModelChangeNotification notification) {
 				// do nothing for now, not supported
+				if (Renderable.class.isInstance(notification.getRawNotification().getNotifier())) {
+					if (notification.getRawNotification().getFeature() == ViewPackage.eINSTANCE
+						.getRenderable_Diagnostic()) {
+
+					}
+					else if (EReference.class.isInstance(notification.getRawNotification().getFeature())
+						&& Renderable.class.isInstance(notification.getRawNotification().getNewValue())) {
+
+						System.out.println("ValidationService ViewModel Notification");
+					}
+				}
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				System.out.println("ADD: " + notifier);
+				if (Renderable.class.isInstance(notifier)) {
+					final Renderable renderable = (Renderable) notifier;
+					final EObject renderableParent = renderable.eContainer();
+					if (Renderable.class.isInstance(renderableParent)
+						&& validationRegistry.contains((Renderable) renderableParent)) {
+						validationRegistry.register(domainModel, renderable);
+					}
+				}
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+				System.out.println("REMOVE: " + notifier);
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);
 
-		init(view, domainModel);
+		init(renderable, domainModel);
 
 		viewValidationCachedTree.validate(getAllEObjects(domainModel));
 
@@ -164,8 +212,8 @@ public class ValidationService extends AbstractViewService {
 	private void notifyListeners() {
 		if (validationListener.size() > 0) {
 			final Set<Diagnostic> result = new HashSet<Diagnostic>();
-			if (view.getDiagnostic().getHighestSeverity() > Diagnostic.OK) {
-				for (final Object o : view.getDiagnostic().getDiagnostics()) {
+			if (renderable.getDiagnostic().getHighestSeverity() > Diagnostic.OK) {
+				for (final Object o : renderable.getDiagnostic().getDiagnostics()) {
 					if (((Diagnostic) o).getSeverity() > Diagnostic.OK) {
 						result.add((Diagnostic) o);
 					}

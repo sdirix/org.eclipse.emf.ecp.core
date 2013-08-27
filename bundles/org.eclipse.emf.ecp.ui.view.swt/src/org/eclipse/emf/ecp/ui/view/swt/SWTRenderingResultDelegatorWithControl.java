@@ -77,8 +77,10 @@ public class SWTRenderingResultDelegatorWithControl extends SWTRenderingResultDe
 
 			public void run() {
 				swtControl.resetValidation();
-				for (final Object diagnostic : model.getDiagnostic().getDiagnostics()) {
-					swtControl.handleValidation((Diagnostic) diagnostic);
+				if (model.getDiagnostic() != null) {
+					for (final Object diagnostic : model.getDiagnostic().getDiagnostics()) {
+						swtControl.handleValidation((Diagnostic) diagnostic);
+					}
 				}
 
 			}

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
  * 
@@ -60,6 +62,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 		this.children = new ArrayList<Node<?>>();
 		this.delegators = new ArrayList<RenderingResultDelegator>();
 		this.selectedChildNodeListeners = new ArrayList<SelectedChildNodeListener>();
+
 	}
 
 	/**
@@ -377,12 +380,36 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 */
 	public void notifyChange(ModelChangeNotification notification) {
 		if (notification.getNotifier() == viewModelElement) {
-			enable(viewModelElement.isEnabled());
-			show(viewModelElement.isVisible());
+			if (notification.getStructuralFeature() == ViewPackage.eINSTANCE.getRenderable_Enabled()) {
+				enable(viewModelElement.isEnabled());
+			}
+			if (notification.getStructuralFeature() == ViewPackage.eINSTANCE.getRenderable_Visible()) {
+				show(viewModelElement.isVisible());
+			}
 		} else {
 			for (final Node<?> child : getChildren()) {
 				child.notifyChange(notification);
 			}
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+	 */
+	public void notifyAdd(Notifier notifier) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+	 */
+	public void notifyRemove(Notifier notifier) {
+		// TODO Auto-generated method stub
+
 	}
 }

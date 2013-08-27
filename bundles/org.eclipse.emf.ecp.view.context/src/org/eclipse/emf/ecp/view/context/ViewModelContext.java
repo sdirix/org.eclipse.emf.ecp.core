@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.context;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
@@ -39,6 +40,16 @@ public interface ViewModelContext {
 		 * @param notification the {@link ModelChangeNotification}
 		 */
 		void notifyChange(ModelChangeNotification notification);
+
+		/**
+		 * @param notifier
+		 */
+		void notifyAdd(Notifier notifier);
+
+		/**
+		 * @param notifier
+		 */
+		void notifyRemove(Notifier notifier);
 	}
 
 	/**

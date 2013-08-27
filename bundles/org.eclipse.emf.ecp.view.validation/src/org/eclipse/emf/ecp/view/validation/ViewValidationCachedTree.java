@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +34,6 @@ import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
 import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
-import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
@@ -46,7 +46,7 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
 public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 
 	private final ValidationRegistry validationRegistry;
-	private final ECPValidationPropagator propagator;
+	private final Set<ECPValidationPropagator> propagators;
 
 	/**
 	 * Default constructor.
@@ -57,24 +57,26 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	public ViewValidationCachedTree(IExcludedObjectsCallback callback, ValidationRegistry validationRegistry) {
 		super(callback);
 		this.validationRegistry = validationRegistry;
-		propagator = getPropagator();
+		propagators = new HashSet<ECPValidationPropagator>();
+		readPropagators();
 	}
 
-	private ECPValidationPropagator getPropagator() {
+	private void readPropagators() {
 		final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.view.validation.propagator");
-		try {
-			for (final IConfigurationElement e : config) {
+		for (final IConfigurationElement e : config) {
+			try {
 				final Object o =
 					e.createExecutableExtension("class");
 				if (o instanceof ECPValidationPropagator) {
-					return (ECPValidationPropagator) o;
+					propagators.add((ECPValidationPropagator) o);
 				}
+			} catch (final CoreException ex) {
+				continue;
 			}
-		} catch (final CoreException ex) {
-			return null;
 		}
-		return new DefaultValidationPropagator();
+		propagators.add(new DefaultValidationPropagator());
+		// return new DefaultValidationPropagator();
 	}
 
 	/**
@@ -104,6 +106,9 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 * @return the set of affected elements
 	 */
 	public Set<EObject> validate(EObject eObject) {
+		if (validationRegistry.getRenderablesForEObject(eObject).isEmpty()) {
+			return Collections.emptySet();
+		}
 		return update(eObject, getDiagnosticForEObject(eObject));
 	}
 
@@ -140,37 +145,47 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		context.put(EValidator.class, validator);
 
 		validator.validate(object, diagnostics, context);
+
 		return diagnostics;
 	}
 
 	private void updateAssociatedRenderables(EObject object, Diagnostic value) {
-		final List<Renderable> renderables = validationRegistry.getRenderablesForEObject(object);
-		for (final Renderable renderable : renderables) {
-			if (renderable instanceof AbstractControl) {
-				final AbstractControl control = (AbstractControl) renderable;
-				final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-				final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
+		final Set<AbstractControl> renderables = validationRegistry.getRenderablesForEObject(object);
+		for (final AbstractControl control : renderables) {
+			// if (renderable instanceof AbstractControl) {
+			// final AbstractControl control = (AbstractControl) renderable;
+			final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+			final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
 
-				final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
-				final Map<Object, CachedTreeNode<Diagnostic>> nodes = getNodes();
+			final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
+			final Map<Object, CachedTreeNode<Diagnostic>> nodes = getNodes();
 
-				for (final EObject o : associatedEObjects) {
-					if (nodes.containsKey(o)) {
-						final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
-						for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
-							vDiagnostic.getDiagnostics().add(d);
-						}
+			for (final EObject o : associatedEObjects) {
+				if (nodes.containsKey(o)) {
+					final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
+					for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
+						vDiagnostic.getDiagnostics().add(d);
 					}
 				}
+			}
+			if (!VDiagnosticHelper.isEqual(control.getDiagnostic(), vDiagnostic)) {
 				control.setDiagnostic(vDiagnostic);
+			}
 
-			}
+			// }
 			// non controls
-			else {
-				if (propagator != null && propagator.canHandle(renderable)) {
-					propagator.propagate(renderable);
-				}
-			}
+			// else {
+			// int maxValue = 0;
+			// ECPValidationPropagator bestPropagator = null;
+			// for (final ECPValidationPropagator propagator : propagators) {
+			// final int currentValue = propagator.canHandle(renderable);
+			// if (currentValue > maxValue) {
+			// bestPropagator = propagator;
+			// maxValue = currentValue;
+			// }
+			// }
+			// bestPropagator.propagate(renderable);
+			// }
 		}
 	}
 
@@ -191,15 +206,17 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 			return result;
 		}
 
-		for (final EStructuralFeature feature : features) {
-			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-				for (final Object o : childDiagnostic.getData()) {
-					if (feature.getClass().isInstance(o)) {
-						result.add(childDiagnostic);
-					}
-				}
+		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+			if (childDiagnostic.getData().size() != 2) {
+				continue;
 			}
+
+			if (features.contains(childDiagnostic.getData().get(1))) {
+				result.add(childDiagnostic);
+			}
+
 		}
+
 		return result;
 	}
 

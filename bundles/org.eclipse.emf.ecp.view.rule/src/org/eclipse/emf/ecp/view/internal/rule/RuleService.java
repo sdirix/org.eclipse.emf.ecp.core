@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -79,11 +80,31 @@ public class RuleService extends AbstractViewService {
 					evalEnable(notification.getNotifier(), attribute);
 				}
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);
 		viewChangeListener = new ModelChangeListener() {
 			public void notifyChange(ModelChangeNotification notification) {
 				// do nothing for now, dynamic registration of rules isn't possible yet
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);

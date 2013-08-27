@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.ecp.view.validation" id="org.eclipse.emf.ecp.view.validation.propagator" name="Validation Propagator"/>
       </appinfo>
       <documentation>
-         This extension point allows to change the way validation results from controls are propagated to its parent. 
+         This extension point allows to change the way validation results from controls are propagated to its parent.
       </documentation>
    </annotation>
 
@@ -17,7 +17,7 @@
          </appinfo>
       </annotation>
       <complexType>
-         <sequence>
+         <sequence minOccurs="1" maxOccurs="unbounded">
             <element ref="propagator"/>
          </sequence>
          <attribute name="point" type="string" use="required">

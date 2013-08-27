@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
@@ -94,6 +95,22 @@ public class ViewModelContextImpl implements ViewModelContext {
 				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyChange(modelChangeNotification);
+				}
+			}
+
+			@Override
+			protected void addAdapter(Notifier notifier) {
+				super.addAdapter(notifier);
+				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+					modelChangeListener.notifyAdd(notifier);
+				}
+			}
+
+			@Override
+			protected void removeAdapter(Notifier notifier) {
+				super.removeAdapter(notifier);
+				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+					modelChangeListener.notifyRemove(notifier);
 				}
 			}
 

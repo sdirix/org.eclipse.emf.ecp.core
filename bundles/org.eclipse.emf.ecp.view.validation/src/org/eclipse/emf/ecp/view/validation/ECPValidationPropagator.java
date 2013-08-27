@@ -28,7 +28,7 @@ public interface ECPValidationPropagator {
 	 * @return <code>true</code> if this class can handle the propagation, <code>false</code> if the default propagation
 	 *         should be used.
 	 */
-	boolean canHandle(Renderable renderable);
+	int canHandle(Renderable renderable);
 
 	/**
 	 * Computes the validation result for the given {@link Renderable} from its child results.

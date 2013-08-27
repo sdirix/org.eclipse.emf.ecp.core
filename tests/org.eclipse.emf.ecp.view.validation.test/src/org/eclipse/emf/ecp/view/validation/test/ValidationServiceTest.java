@@ -207,9 +207,10 @@ public class ValidationServiceTest {
 
 		final int severityBefore = view.getDiagnostic().getHighestSeverity();
 
-		final Writer writer = changeWriter(TestFactory.eINSTANCE.createWriter(), severityOfNewWriter);
+		// final Writer writer = changeWriter(TestFactory.eINSTANCE.createWriter(), severityOfNewWriter);
+		// library.getWriters().add(writer);
 
-		library.getWriters().add(writer);
+		changeWriter(library.getWriters().get(0), severityOfNewWriter);
 
 		final int severityAfterAdd = view.getDiagnostic().getHighestSeverity();
 
@@ -219,7 +220,8 @@ public class ValidationServiceTest {
 			assertEquals(severityOfNewWriter, severityAfterAdd, 0);
 		}
 
-		library.getWriters().remove(writer);
+		// library.getWriters().remove(writer);
+		changeWriter(library.getWriters().get(0), severityBefore);
 
 		final int severityAfterRemove = view.getDiagnostic().getHighestSeverity();
 
@@ -1247,6 +1249,7 @@ public class ValidationServiceTest {
 		registry.register(library, view);
 
 		final List<Renderable> librayRenderables = registry.getRenderablesForEObject(library);
+		// TODO why?
 		assertEquals("Library has false renderable count", 2, librayRenderables.size());
 		assertEquals("Wrong renderable is associated to library", parentColumn, librayRenderables.get(0));
 		assertEquals("Wrong renderable is associated to library", view, librayRenderables.get(1));
@@ -1557,23 +1560,23 @@ public class ValidationServiceTest {
 		switch (changeToSeverity) {
 		case Diagnostic.OK:
 			writer.setFirstName("Hans");
-			writer.setLastName("Meyer");
+			// writer.setLastName("Meyer");
 			break;
 		case Diagnostic.INFO:
-			writer.setFirstName("H");
-			writer.setLastName("M");
+			writer.setFirstName("Ha");
+			// writer.setLastName("M");
 			break;
 		case Diagnostic.WARNING:
-			writer.setFirstName("Hans");
-			writer.setLastName("Hans");
+			writer.setFirstName("H");
+			// writer.setLastName("Hans");
 			break;
 		case Diagnostic.ERROR:
 			writer.setFirstName("");
-			writer.setLastName("");
+			// writer.setLastName("");
 			break;
 		case Diagnostic.CANCEL:
 			writer.setFirstName("Offensive");
-			writer.setLastName("Offensive");
+			// writer.setLastName("Offensive");
 			break;
 		default:
 			org.junit.Assert.fail("No Diagnostic value like " + changeToSeverity + "found.");
