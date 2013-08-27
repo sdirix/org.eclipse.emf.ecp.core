@@ -3,6 +3,7 @@
       id="org.eclipse.emf.ecp.view.custom.feature"
       label="View Model Custom Control Feature"
       version="1.0.0.qualifier"
+      provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.0.0">
 
