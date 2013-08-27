@@ -101,6 +101,14 @@
             id="org.eclipse.emf.ecp.emfstore.ui.startLocalServer"
             name="Start local server">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.export.project"
+            name="Export Project">
+      </command>
+      <command
+            id="org.eclipse.emf.ecp.emfstore.ui.import.project"
+            name="Import Project">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -383,6 +391,49 @@
                   </iterate>
                </and>
                </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.export.project"
+               label="Export Project"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.emf.ecp.core.project.providerName"
+                              value="org.eclipse.emf.ecp.emfstore.provider">
+                        </test>
+                        <test
+                              args="org.eclipse.emf.ecp.emfstore.ui.export.project"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.emfstore.ui.import.project"
+               label="Import Project"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <test
+                     args="org.eclipse.emf.ecp.emfstore.ui.import.project"
+                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                     value="true">
+               </test>
             </visibleWhen>
          </command>
       </menuContribution>
@@ -898,6 +949,14 @@
                </iterate>
             </with>
          </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ExportProjectHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.export.project">
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.emfstore.internal.ui.handler.ImportProjectHandler"
+            commandId="org.eclipse.emf.ecp.emfstore.ui.import.project">
       </handler>
    </extension>
    <extension

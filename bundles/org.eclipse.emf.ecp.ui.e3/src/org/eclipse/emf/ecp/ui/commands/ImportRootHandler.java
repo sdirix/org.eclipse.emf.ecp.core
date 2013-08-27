@@ -19,16 +19,14 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.emf.ecp.ui.platform.PreferenceHelper;
-import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -39,7 +37,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-public class ImportHandler extends AbstractHandler {
+public class ImportRootHandler extends AbstractHandler {
 
 	/**
 	 * These filter extensions are used to filter which files are displayed.
@@ -53,22 +51,18 @@ public class ImportHandler extends AbstractHandler {
 
 	private static final String IMPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.importModelPath";
 
+	private boolean imported;
+
 	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final EObject selectedModelElement = (EObject) ((IStructuredSelection) HandlerUtil
-			.getActiveMenuSelection(event)).getFirstElement();
+		final ECPProject ecpProject = (ECPProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
+			.getFirstElement();
 
-		// ECPModelContextProvider contextProvider =
-		// (ECPModelContextProvider)((TreeView)HandlerUtil.getActivePart(event))
-		// .getViewer().getContentProvider();
-		// IStructuredSelection selection=(IStructuredSelection)HandlerUtil.getCurrentSelection(event);
-		// final ECPProject project = (ECPProject)ECPUtil.getModelContext(contextProvider, selectedModelElement);
-
-		if (selectedModelElement == null) {// project == null ||
+		if (ecpProject == null) {// project == null ||
 			return null;
 		}
 
@@ -84,14 +78,14 @@ public class ImportHandler extends AbstractHandler {
 
 		final Resource resource = resourceSet.getResource(fileURI, true);
 
-		importFile(selectedModelElement, fileURI, resource, HandlerUtil.getActiveShell(event));
+		importFile(ecpProject, fileURI, resource, HandlerUtil.getActiveShell(event));
 
 		return null;
 	}
 
-	private void importFile(EObject parentObject, final URI fileURI, final Resource resource,
+	private void importFile(final ECPProject parentObject, final URI fileURI, final Resource resource,
 		final Shell shell) {
-		boolean imported = false;
+		imported = false;
 		final ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(shell);
 		try {
 
@@ -101,28 +95,16 @@ public class ImportHandler extends AbstractHandler {
 			// Set<EObject> importElements = validation(resource);
 			final EObject eObjectImport = resource.getContents().get(0);
 
-			for (final EReference ref : parentObject.eClass().getEAllContainments()) {
-				if (ref.getEReferenceType().isInstance(eObjectImport)) {
-					final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(parentObject);
-					if (ref.isMany()) {
-						editingDomain.getCommandStack().execute(
-							new AddCommand(editingDomain, parentObject, ref, EcoreUtil.copy(eObjectImport)));
-					}
-					else {
-						editingDomain.getCommandStack().execute(
-							new SetCommand(editingDomain, parentObject, ref, EcoreUtil.copy(eObjectImport)));
-					}
-					imported = true;
-					break;
-				}
-			}
+			final EditingDomain editingDomain = parentObject.getEditingDomain();
+			editingDomain.getCommandStack().execute(new ChangeCommand(eObjectImport) {
 
-			// if (importElements.size() > 0) {
-			// for (EObject eObject : importElements) {
-			// project.addModelElement(EcoreUtil.copy(eObject));
-			// progressDialog.getProgressMonitor().worked(10);
-			// }
-			// }
+				@Override
+				protected void doExecute() {
+					parentObject.getContents().add(EcoreUtil.copy(eObjectImport));
+					imported = true;
+				}
+			});
+
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final RuntimeException e) {
 			Activator.log(e.getMessage(), e);
