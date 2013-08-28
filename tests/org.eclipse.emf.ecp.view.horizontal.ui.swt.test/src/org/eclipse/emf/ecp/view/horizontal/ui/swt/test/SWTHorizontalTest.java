@@ -7,94 +7,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Jonas
- * 
- *******************************************************************************/
+ * Jonas - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.horizontal.ui.swt.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
+import org.eclipse.emf.ecp.view.horizontal.ui.test.AbstractHorizontalTest;
+import org.junit.BeforeClass;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
-import org.eclipse.emf.ecp.view.horizontal.ui.test.HorizontalTest;
-import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
-import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+/**
+ * @author Jonas
+ * 
+ */
+public class SWTHorizontalTest extends AbstractSWTHorizontalTest {
 
-@RunWith(DatabindingClassRunner.class)
-public class SWTHorizontalTest {
-
-	private Shell shell;
-	private EObject domainElement;
-
-	@Before
-	public void init() {
-		shell = SWTViewTestHelper.createShell();
-
-		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
-		eClass.setInstanceClassName("Test");
-		domainElement = eClass;
+	@BeforeClass
+	public static void initClass() {
+		AbstractHorizontalTest.setHorizontalClass(HorizontalPackage.eINSTANCE.getVHorizontalLayout());
 	}
-
-	@Test
-	public void testHorizontalWithoutChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
-		// setup model
-		final HierarchyViewModelHandle handle = HorizontalTest.createHorizontalWithoutChildren();
-		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
-		assertTrue(render instanceof Composite);
-		final Composite composite = (Composite) render;
-		assertEquals(0, composite.getChildren().length);
-	}
-
-	@Test
-	public void testHorizontalWithTwoControlsAsChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
-		// setup model
-		final HierarchyViewModelHandle handle = HorizontalTest.createHorizontalWithTwoControlsAsChildren();
-		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
-		assertTrue(render instanceof Composite);
-		final Composite composite = (Composite) render;
-		assertEquals(2, composite.getChildren().length);
-		assertEquals(2, SWTViewTestHelper.getNumberofColumns(composite));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(composite.getChildren()[0]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(composite.getChildren()[1]));
-	}
-
-	@Test
-	public void testHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
-		// setup model
-		final HierarchyViewModelHandle handle = HorizontalTest
-			.createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
-		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
-		assertTrue(render instanceof Composite);
-		final Composite composite = (Composite) render;
-		assertEquals(2, composite.getChildren().length);
-		final Composite firstHorizontal = (Composite) ((Composite) composite.getChildren()[0]).getChildren()[0];
-		final Composite secondHorizontal = (Composite) ((Composite) composite.getChildren()[1]).getChildren()[0];
-
-		assertEquals(2, firstHorizontal.getChildren().length);
-		assertEquals(2, secondHorizontal.getChildren().length);
-		assertEquals(2, SWTViewTestHelper.getNumberofColumns(firstHorizontal));
-		assertEquals(2, SWTViewTestHelper.getNumberofColumns(secondHorizontal));
-
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(firstHorizontal.getChildren()[0]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(secondHorizontal.getChildren()[0]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(firstHorizontal.getChildren()[1]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(secondHorizontal.getChildren()[1]));
-	}
-
 }

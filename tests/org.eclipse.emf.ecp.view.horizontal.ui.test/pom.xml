@@ -45,6 +45,12 @@
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.emf.ecp.view.horizontal.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						
+						<dependency>
+							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.emfstore.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>

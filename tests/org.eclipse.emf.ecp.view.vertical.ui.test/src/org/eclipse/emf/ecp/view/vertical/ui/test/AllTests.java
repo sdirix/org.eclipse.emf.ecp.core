@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ VerticalTest.class })
+@SuiteClasses({ OldVerticalTest.class, VerticalTest.class })
 public class AllTests {
 
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
+import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
@@ -39,7 +40,7 @@ public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnCompos
 		// Label l=new Label(getParent(), SWT.NONE);
 		// l.setText(modelColumnComposite.getName());
 		final Composite parent = getParentFromInitData(initData);
-		final ColumnComposite modelColumnComposite = node.getRenderable();
+		final CompositeCollection modelColumnComposite = node.getRenderable();
 
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());

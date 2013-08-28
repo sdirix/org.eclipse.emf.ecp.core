@@ -140,9 +140,25 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model.edit</module>
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
 		
+
 		<!-- View Validation Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
 		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
+
+		<!-- Vertical Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.vertical.feature</module>
+		
+		<!-- Horizontal Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
+
 		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
