@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -118,6 +119,16 @@ public class ViewModelContextTest {
 				// TODO Auto-generated method stub
 
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		});
 		fail("No exception throw!");
 	}
@@ -131,6 +142,16 @@ public class ViewModelContextTest {
 		viewModelContext.registerViewChangeListener(new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
@@ -150,6 +171,16 @@ public class ViewModelContextTest {
 				// TODO Auto-generated method stub
 
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		});
 		fail("No exception throw!");
 	}
@@ -163,6 +194,16 @@ public class ViewModelContextTest {
 		viewModelContext.unregisterViewChangeListener(new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
@@ -190,6 +231,16 @@ public class ViewModelContextTest {
 				correctNotificationArrived = notification.getNotifier() == view
 					&& notification.getStructuralFeature() == ViewPackage.eINSTANCE.getAbstractCategorization_Name();
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		});
 		view.setName("Test");
 		assertTrue(correctNotificationArrived);
@@ -214,6 +265,16 @@ public class ViewModelContextTest {
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		});
 		player.setName("Test");
 		assertFalse(correctNotificationArrived);
@@ -231,6 +292,16 @@ public class ViewModelContextTest {
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		};
 		viewModelContext.registerViewChangeListener(modelChangeListener);
 		viewModelContext.unregisterViewChangeListener(modelChangeListener);
@@ -247,6 +318,16 @@ public class ViewModelContextTest {
 
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
 			}
 		};
 		viewModelContext.registerViewChangeListener(modelChangeListener);
@@ -267,6 +348,16 @@ public class ViewModelContextTest {
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = notification.getNotifier() == player
 					&& notification.getStructuralFeature() == BowlingPackage.eINSTANCE.getPlayer_Name();
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
 			}
 		});
 		player.setName("Test");
@@ -292,6 +383,16 @@ public class ViewModelContextTest {
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		});
 		view.setName("Test");
 		assertFalse(correctNotificationArrived);
@@ -309,6 +410,16 @@ public class ViewModelContextTest {
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
 		};
 		viewModelContext.registerDomainChangeListener(modelChangeListener);
 		viewModelContext.unregisterDomainChangeListener(modelChangeListener);
@@ -325,6 +436,16 @@ public class ViewModelContextTest {
 
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
 			}
 		};
 		viewModelContext.registerDomainChangeListener(modelChangeListener);

@@ -117,7 +117,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
-	int RENDERABLE = 13;
+	int RENDERABLE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1456,86 +1456,6 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__ENABLED = COMPOSITE_COLLECTION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__READONLY = COMPOSITE_COLLECTION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__DIAGNOSTIC = COMPOSITE_COLLECTION__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__NAME = COMPOSITE_COLLECTION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__COMPOSITES = COMPOSITE_COLLECTION__COMPOSITES;
-
-	/**
-	 * The number of structural features of the '<em>Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1575,7 +1495,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
 	 * @generated
 	 */
-	int ATTACHMENT = 16;
+	int ATTACHMENT = 15;
 
 	/**
 	 * The number of structural features of the '<em>Attachment</em>' class.
@@ -1597,7 +1517,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDiagnostic()
 	 * @generated
 	 */
-	int VDIAGNOSTIC = 17;
+	int VDIAGNOSTIC = 16;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostics</b></em>' attribute list.
@@ -1628,7 +1548,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 18;
+	int ALIGNMENT = 17;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.

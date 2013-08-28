@@ -127,4 +127,15 @@ public class RuleServiceHelper extends AbstractViewService {
 	public void dispose() {
 
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 */
+	@Override
+	public int getPriority() {
+		// TODO Auto-generated method stub
+		return 2;
+	}
 }

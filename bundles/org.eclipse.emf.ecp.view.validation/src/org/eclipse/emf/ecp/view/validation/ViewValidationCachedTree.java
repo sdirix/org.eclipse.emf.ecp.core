@@ -11,12 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,14 +23,15 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
 import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
 import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
@@ -43,7 +41,7 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
  * @author jfaltermeier
  * 
  */
-public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
+public class ViewValidationCachedTree extends AbstractCachedTree<VDiagnostic> {
 
 	private final ValidationRegistry validationRegistry;
 	private final Set<ECPValidationPropagator> propagators;
@@ -72,11 +70,11 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 					propagators.add((ECPValidationPropagator) o);
 				}
 			} catch (final CoreException ex) {
+				Activator.logException(ex);
 				continue;
 			}
 		}
 		propagators.add(new DefaultValidationPropagator());
-		// return new DefaultValidationPropagator();
 	}
 
 	/**
@@ -85,8 +83,10 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 * @see org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree#getDefaultValue()
 	 */
 	@Override
-	public Diagnostic getDefaultValue() {
-		return Diagnostic.OK_INSTANCE;
+	public VDiagnostic getDefaultValue() {
+		final VDiagnostic result = ViewFactory.eINSTANCE.createVDiagnostic();
+		result.getDiagnostics().add(Diagnostic.OK_INSTANCE);
+		return result;
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 * @see org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree#createdCachedTreeNode(java.lang.Object)
 	 */
 	@Override
-	protected CachedTreeNode<Diagnostic> createdCachedTreeNode(Diagnostic value) {
+	protected CachedTreeNode<VDiagnostic> createdCachedTreeNode(VDiagnostic value) {
 		return new ViewValidationTreeNode(value);
 	}
 
@@ -103,28 +103,40 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 * Validate the given eObject.
 	 * 
 	 * @param eObject the eObject to validate
-	 * @return the set of affected elements
 	 */
-	public Set<EObject> validate(EObject eObject) {
-		if (validationRegistry.getRenderablesForEObject(eObject).isEmpty()) {
-			return Collections.emptySet();
+	public void validate(EObject eObject) {
+		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
+		for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
+			if (diagnostic.getSeverity() == Diagnostic.OK) {
+				update(control, getDefaultValue());
+			} else {
+				final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+
+				for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+					if (childDiagnostic.getData().size() != 2) {
+						continue;
+					}
+
+					if (control.getTargetFeatures().contains(childDiagnostic.getData().get(1))) {
+						vDiagnostic.getDiagnostics().add(childDiagnostic);
+					}
+				}
+				update(control, vDiagnostic);
+			}
 		}
-		return update(eObject, getDiagnosticForEObject(eObject));
 	}
 
 	/**
 	 * Validates all given eObjects.
 	 * 
 	 * @param eObjects the eObjects to validate
-	 * @return the set of affected elements
 	 */
-	public Set<EObject> validate(Collection<EObject> eObjects) {
-		final Set<EObject> allAffected = new HashSet<EObject>();
+	public void validate(Collection<EObject> eObjects) {
+
 		for (final EObject eObject : eObjects) {
-			final Set<EObject> affected = validate(eObject);
-			allAffected.addAll(affected);
+			validate(eObject);
 		}
-		return allAffected;
+
 	}
 
 	/**
@@ -140,84 +152,13 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		if (validator == null) {
 			validator = new EObjectValidator();
 		}
-		final Map<Object, Object> context = new HashMap<Object, Object>();
+		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
 		context.put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
 		context.put(EValidator.class, validator);
 
 		validator.validate(object, diagnostics, context);
 
 		return diagnostics;
-	}
-
-	private void updateAssociatedRenderables(EObject object, Diagnostic value) {
-		final Set<AbstractControl> renderables = validationRegistry.getRenderablesForEObject(object);
-		for (final AbstractControl control : renderables) {
-			// if (renderable instanceof AbstractControl) {
-			// final AbstractControl control = (AbstractControl) renderable;
-			final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-			final List<EStructuralFeature> targetFeatures = control.getTargetFeatures();
-
-			final List<EObject> associatedEObjects = validationRegistry.getEObjectsForControl(control);
-			final Map<Object, CachedTreeNode<Diagnostic>> nodes = getNodes();
-
-			for (final EObject o : associatedEObjects) {
-				if (nodes.containsKey(o)) {
-					final Diagnostic diagnostic = nodes.get(o).getDisplayValue();
-					for (final Diagnostic d : extractRelevantDiagnostics(diagnostic, targetFeatures)) {
-						vDiagnostic.getDiagnostics().add(d);
-					}
-				}
-			}
-			if (!VDiagnosticHelper.isEqual(control.getDiagnostic(), vDiagnostic)) {
-				control.setDiagnostic(vDiagnostic);
-			}
-
-			// }
-			// non controls
-			// else {
-			// int maxValue = 0;
-			// ECPValidationPropagator bestPropagator = null;
-			// for (final ECPValidationPropagator propagator : propagators) {
-			// final int currentValue = propagator.canHandle(renderable);
-			// if (currentValue > maxValue) {
-			// bestPropagator = propagator;
-			// maxValue = currentValue;
-			// }
-			// }
-			// bestPropagator.propagate(renderable);
-			// }
-		}
-	}
-
-	/**
-	 * Checks if this diagnostic contains a validation result for an element in the given list.
-	 * 
-	 * @param diagnostic
-	 * @param features
-	 * @return
-	 */
-	private Collection<Diagnostic> extractRelevantDiagnostics(Diagnostic diagnostic,
-		List<EStructuralFeature> features) {
-
-		final Collection<Diagnostic> result = new ArrayList<Diagnostic>();
-
-		if (diagnostic.getSeverity() == Diagnostic.OK) {
-			result.add(diagnostic);
-			return result;
-		}
-
-		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (childDiagnostic.getData().size() != 2) {
-				continue;
-			}
-
-			if (features.contains(childDiagnostic.getData().get(1))) {
-				result.add(childDiagnostic);
-			}
-
-		}
-
-		return result;
 	}
 
 	/**
@@ -227,13 +168,19 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 	 */
 	@Override
 	protected void updateNodeObject(Object object) {
-		updateAssociatedRenderables((EObject) object, getNodes().get(object).getDisplayValue());
+		final Renderable renderable = (Renderable) object;
+
+		final VDiagnostic displayValue = getNodes().get(object).getDisplayValue();
+		if (!VDiagnosticHelper.isEqual(renderable.getDiagnostic(), displayValue))
+		{
+			renderable.setDiagnostic(EcoreUtil.copy(displayValue));
+		}
 	}
 
 	/**
 	 * Tree node that caches the diagnostics of its children.
 	 */
-	private class ViewValidationTreeNode extends CachedTreeNode<Diagnostic> {
+	private class ViewValidationTreeNode extends CachedTreeNode<VDiagnostic> {
 
 		/**
 		 * Constructor.
@@ -241,7 +188,7 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		 * @param diagnostic
 		 *            the initial diagnostic containing the severity and validation message
 		 */
-		public ViewValidationTreeNode(Diagnostic diagnostic) {
+		public ViewValidationTreeNode(VDiagnostic diagnostic) {
 			super(diagnostic);
 		}
 
@@ -250,12 +197,12 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		 */
 		@Override
 		public void update() {
-			final Collection<Diagnostic> severities = values();
+			final Collection<VDiagnostic> severities = values();
 
 			if (severities.size() > 0) {
-				Diagnostic mostSevereDiagnostic = values().iterator().next();
-				for (final Diagnostic diagnostic : severities) {
-					if (diagnostic.getSeverity() > mostSevereDiagnostic.getSeverity()) {
+				VDiagnostic mostSevereDiagnostic = values().iterator().next();
+				for (final VDiagnostic diagnostic : severities) {
+					if (diagnostic.getHighestSeverity() > mostSevereDiagnostic.getHighestSeverity()) {
 						mostSevereDiagnostic = diagnostic;
 					}
 				}
@@ -266,11 +213,11 @@ public class ViewValidationCachedTree extends AbstractCachedTree<Diagnostic> {
 		}
 
 		@Override
-		public Diagnostic getDisplayValue() {
-			if (getChildValue() == null) {
-				return getOwnValue();
+		public VDiagnostic getDisplayValue() {
+			if (getChildValue() != null) {
+				return getChildValue();
 			}
-			return getOwnValue().getSeverity() >= getChildValue().getSeverity() ? getOwnValue() : getChildValue();
+			return getOwnValue();
 		}
 	}
 

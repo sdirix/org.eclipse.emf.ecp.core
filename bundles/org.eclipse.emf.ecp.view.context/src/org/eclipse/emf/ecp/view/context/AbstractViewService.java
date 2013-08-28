@@ -37,4 +37,6 @@ public abstract class AbstractViewService {
 	 * Dispose.
 	 */
 	public abstract void dispose();
+
+	public abstract int getPriority();
 }

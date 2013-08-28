@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.common.cachetree;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -37,7 +37,7 @@ public abstract class CachedTreeNode<T> {
 	 */
 	public CachedTreeNode(T initialValue) {
 		this.ownValue = initialValue;
-		cache = new HashMap<Object, T>();
+		cache = new LinkedHashMap<Object, T>();
 	}
 
 	/**

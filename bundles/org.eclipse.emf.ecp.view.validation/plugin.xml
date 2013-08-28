@@ -9,5 +9,12 @@
             class="org.eclipse.emf.ecp.view.validation.ValidationService">
       </viewService>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecp.view.validation.validationSubProcessor">
+      <validationSubProcessor
+            associatedRenderable="org.eclipse.emf.ecp.view.model.TableControl"
+            class="org.eclipse.emf.ecp.view.validation.TableControlSubProcessor">
+      </validationSubProcessor>
+   </extension>
 
 </plugin>

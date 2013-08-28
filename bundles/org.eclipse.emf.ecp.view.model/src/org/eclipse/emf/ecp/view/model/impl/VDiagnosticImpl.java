@@ -166,11 +166,10 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	@Override
 	public String toString()
 	{
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (diagnostics: ");
 		result.append(diagnostics);
 		result.append(')');

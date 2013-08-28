@@ -19,11 +19,24 @@ import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
+ * An ECPValidationSubProcessor can be registered in order to handle special cases in the view model.
+ * E.g. a control displaying a table can register itself as the control to be notified if the children of the
+ * domainObject have validation errors.
+ * 
  * @author Eugen Neufeld
  * 
  */
 public interface ECPValidationSubProcessor {
 
+	/**
+	 * Process the passed {@link Renderable}.
+	 * 
+	 * @param domainObject the domain {@link EObject}
+	 * @param parentRenderable the {@link Renderable} to process
+	 * @param validationRegistry callback to the {@link ValidationRegistry} to be able to use the
+	 *            {@link ValidationRegistry#getDomainToControlMapping(EObject, Renderable)} method
+	 * @return a map from {@link EObject} to its {@link org.eclipse.emf.ecp.view.model.Control Controls}
+	 */
 	Map<EObject, Set<AbstractControl>> processRenderable(EObject domainObject, Renderable parentRenderable,
 		ValidationRegistry validationRegistry);
 }

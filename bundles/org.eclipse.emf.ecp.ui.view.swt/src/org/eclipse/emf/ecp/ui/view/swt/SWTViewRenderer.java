@@ -25,6 +25,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
@@ -114,7 +115,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 		final View view = viewNode.getRenderable();
-		adapter = new AdapterImpl() {
+		adapter = new EContentAdapter() {
 
 			/**
 			 * {@inheritDoc}

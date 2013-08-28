@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.validation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -51,13 +50,13 @@ public class ValidationService extends AbstractViewService {
 	private ViewValidationCachedTree viewValidationCachedTree;
 	private ValidationRegistry validationRegistry;
 
-	private final LinkedHashSet<ViewValidationListener> validationListener;
+	private final List<ViewValidationListener> validationListener;
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationService() {
-		validationListener = new LinkedHashSet<ViewValidationListener>();
+		validationListener = new ArrayList<ViewValidationListener>();
 	}
 
 	/**
@@ -88,24 +87,20 @@ public class ValidationService extends AbstractViewService {
 					return;
 				}
 				final Notification rawNotification = notification.getRawNotification();
-				// ignore notifications due to initializations of elements
-				if (EReference.class.isInstance(rawNotification.getFeature()) && rawNotification.getOldValue() == null) {
-					return;
-				}
 				switch (rawNotification.getEventType()) {
 				case Notification.ADD:
 				case Notification.REMOVE:
+					viewValidationCachedTree.validate(getAllEObjects(notification.getNotifier()));
+					break;
 				case Notification.ADD_MANY:
 				case Notification.REMOVE_MANY:
-					// TODO don't reinit everytime
-					// init(renderable, domainModel);
 					viewValidationCachedTree.validate(getAllEObjects(domainModel));
-					notifyListeners();
+
 					break;
 				default:
 					viewValidationCachedTree.validate(notification.getNotifier());
-					notifyListeners();
 				}
+				notifyListeners();
 			}
 
 			public void notifyAdd(Notifier notifier) {
@@ -130,27 +125,22 @@ public class ValidationService extends AbstractViewService {
 					}
 					else if (EReference.class.isInstance(notification.getRawNotification().getFeature())
 						&& Renderable.class.isInstance(notification.getRawNotification().getNewValue())) {
-
-						System.out.println("ValidationService ViewModel Notification");
 					}
 				}
 			}
 
 			public void notifyAdd(Notifier notifier) {
-				System.out.println("ADD: " + notifier);
 				if (Renderable.class.isInstance(notifier)) {
 					final Renderable renderable = (Renderable) notifier;
 					final EObject renderableParent = renderable.eContainer();
 					if (Renderable.class.isInstance(renderableParent)
-						&& validationRegistry.contains((Renderable) renderableParent)) {
+						&& validationRegistry.containsRenderable((Renderable) renderableParent)) {
 						validationRegistry.register(domainModel, renderable);
 					}
 				}
 			}
 
 			public void notifyRemove(Notifier notifier) {
-				// TODO Auto-generated method stub
-				System.out.println("REMOVE: " + notifier);
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);
@@ -208,7 +198,6 @@ public class ValidationService extends AbstractViewService {
 		validationListener.remove(listener);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void notifyListeners() {
 		if (validationListener.size() > 0) {
 			final Set<Diagnostic> result = new HashSet<Diagnostic>();
@@ -237,6 +226,16 @@ public class ValidationService extends AbstractViewService {
 	public void dispose() {
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 */
+	@Override
+	public int getPriority() {
+		return 3;
 	}
 
 }

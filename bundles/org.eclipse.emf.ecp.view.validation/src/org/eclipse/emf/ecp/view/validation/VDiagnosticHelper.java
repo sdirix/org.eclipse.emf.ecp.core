@@ -20,6 +20,12 @@ import org.eclipse.emf.ecp.view.model.VDiagnostic;
 public class VDiagnosticHelper {
 
 	public static boolean isEqual(VDiagnostic vDiagnostic1, VDiagnostic vDiagnostic2) {
+		if (vDiagnostic1 == null && vDiagnostic2 != null) {
+			return false;
+		}
+		if (vDiagnostic2 == null && vDiagnostic1 != null) {
+			return false;
+		}
 		if (vDiagnostic1.getHighestSeverity() != vDiagnostic2.getHighestSeverity()) {
 			return false;
 		}

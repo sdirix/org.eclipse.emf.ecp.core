@@ -211,8 +211,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		// Obtain or create and register package
 		ViewPackageImpl theViewPackage = (ViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ViewPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new ViewPackageImpl());
+			.get(eNS_URI) : new ViewPackageImpl());
 
 		isInited = true;
 

@@ -12,7 +12,10 @@
 package org.eclipse.emf.ecp.view.context;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -51,7 +54,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private EContentAdapter viewModelContentAdapter;
 
 	/** The view services. */
-	private final List<AbstractViewService> viewServices = new ArrayList<AbstractViewService>();
+	private final SortedSet<AbstractViewService> viewServices = new TreeSet<AbstractViewService>(
+		new Comparator<AbstractViewService>() {
+
+			public int compare(AbstractViewService arg0, AbstractViewService arg1) {
+				return arg0.getPriority() - arg1.getPriority();
+			}
+		});
 
 	/**
 	 * The disposed state.
@@ -91,6 +100,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 				if (isDisposing) {
 					return;
 				}
+				if (notification.isTouch()) {
+					return;
+				}
 
 				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
@@ -101,6 +113,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			@Override
 			protected void addAdapter(Notifier notifier) {
 				super.addAdapter(notifier);
+				// do not notify while being disposed
+				if (isDisposing) {
+					return;
+				}
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyAdd(notifier);
 				}
@@ -109,6 +125,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			@Override
 			protected void removeAdapter(Notifier notifier) {
 				super.removeAdapter(notifier);
+				// do not notify while being disposed
+				if (isDisposing) {
+					return;
+				}
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyRemove(notifier);
 				}
@@ -117,6 +137,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		};
 
 		view.eAdapters().add(viewModelContentAdapter);
+
+		// TODO extract contentadapter into shared class for both models
 
 		domainModelContentAdapter = new EContentAdapter() {
 
@@ -128,10 +150,37 @@ public class ViewModelContextImpl implements ViewModelContext {
 				if (isDisposing) {
 					return;
 				}
+				if (notification.isTouch()) {
+					return;
+				}
 
 				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 					modelChangeListener.notifyChange(modelChangeNotification);
+				}
+			}
+
+			@Override
+			protected void addAdapter(Notifier notifier) {
+				super.addAdapter(notifier);
+				// do not notify while being disposed
+				if (isDisposing) {
+					return;
+				}
+				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+					modelChangeListener.notifyAdd(notifier);
+				}
+			}
+
+			@Override
+			protected void removeAdapter(Notifier notifier) {
+				super.removeAdapter(notifier);
+				// do not notify while being disposed
+				if (isDisposing) {
+					return;
+				}
+				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+					modelChangeListener.notifyRemove(notifier);
 				}
 			}
 
@@ -140,6 +189,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		readAbstractViewServices();
 
+		for (final AbstractViewService viewService : viewServices) {
+			viewService.instantiate(this);
+		}
 	}
 
 	/**
@@ -156,7 +208,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final IConfigurationElement e : controls) {
 			try {
 				final AbstractViewService viewService = (AbstractViewService) e.createExecutableExtension("class");
-				viewService.instantiate(this);
 				viewServices.add(viewService);
 			} catch (final CoreException e1) {
 				Activator.log(e1);

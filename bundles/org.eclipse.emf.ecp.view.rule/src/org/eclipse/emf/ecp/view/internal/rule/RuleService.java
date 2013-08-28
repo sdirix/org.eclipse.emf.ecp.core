@@ -399,4 +399,15 @@ public class RuleService extends AbstractViewService {
 
 		return false;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 */
+	@Override
+	public int getPriority() {
+		// TODO Auto-generated method stub
+		return 1;
+	}
 }

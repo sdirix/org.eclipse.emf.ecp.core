@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -26,22 +25,18 @@ import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.osgi.framework.Bundle;
 
 /**
  * This registry maps eObjects in a domain model to their corresponding renderables.
  * 
  * @author jfaltermeier
- * 
+ * @author Eugen Neufeld
  * 
  */
 public class ValidationRegistry {
@@ -51,17 +46,15 @@ public class ValidationRegistry {
 	 * are part of the same hierarchy the child will have a lower index than the parent.
 	 */
 	private final Map<EObject, Set<AbstractControl>> domainObjectToAffectedControls;
-	private final Set<Renderable> addedRenderables = new LinkedHashSet<Renderable>();
-	private final Map<AbstractControl, Set<EObject>> controlToUsedDomainObjects;
 	private final Map<Class<Renderable>, ECPValidationSubProcessor> subProcessors;
+	private final Set<Renderable> processedRenderables = new LinkedHashSet<Renderable>();
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationRegistry() {
 		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<AbstractControl>>();
-		controlToUsedDomainObjects = new LinkedHashMap<AbstractControl, Set<EObject>>();
-		subProcessors = new HashMap<Class<Renderable>, ECPValidationSubProcessor>();
+		subProcessors = new LinkedHashMap<Class<Renderable>, ECPValidationSubProcessor>();
 
 		final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.view.validation.validationSubProcessor");
@@ -77,12 +70,11 @@ public class ValidationRegistry {
 				subProcessors.put(supportedClassType, o);
 			}
 		} catch (final CoreException ex) {
-			// TODO log
-			ex.printStackTrace();
+			Activator.logException(ex);
 		} catch (final InvalidRegistryObjectException ex) {
-			ex.printStackTrace();
+			Activator.logException(ex);
 		} catch (final ClassNotFoundException ex) {
-			ex.printStackTrace();
+			Activator.logException(ex);
 		}
 
 	}
@@ -102,215 +94,91 @@ public class ValidationRegistry {
 	/**
 	 * Maps eObjects from the model to their corresponding renderables.
 	 * 
-	 * @param model the domain model
+	 * @param domainModel the domain model
 	 * @param renderable the view model
 	 */
-	public void register(EObject model, Renderable renderable) {
-		final Map<EObject, Set<AbstractControl>> domainToControlMapping = getDomainToControlMapping(model, renderable);
-		for (final EObject domainObject : domainToControlMapping.keySet()) {
-			if (domainObjectToAffectedControls.containsKey(domainObject)) {
-				domainObjectToAffectedControls.get(domainObject).addAll(domainToControlMapping.get(domainObject));
-			} else {
-				domainToControlMapping.put(domainObject, domainToControlMapping.get(domainObject));
-			}
-		}
-		// registerWithKeyResult(model, renderable);
+	public void register(EObject domainModel, Renderable renderable) {
+		final Map<EObject, Set<AbstractControl>> domainToControlMapping = getDomainToControlMapping(domainModel,
+			renderable);
+		fillMap(domainToControlMapping, domainObjectToAffectedControls);
 	}
 
 	/**
-	 * @param model
-	 * @param renderable
-	 * @return
+	 * This method walks down the containment tree of the renderable and collects the EObject to Control mapping.
+	 * All renderables are added to the {@link #processedRenderables} set, which contains all {@link Renderable
+	 * Renderables} which were parsed.
+	 * Furthermore this method adds a default {@link org.eclipse.emf.ecp.view.model.VDiagnostic VDiagnostic} to each
+	 * {@link Renderable} if it was not set before.
+	 * 3 cases are differentiated:
+	 * - there is a subprocessor for the {@link Renderable}.
+	 * - the {@link Renderable} is a {@link Control} - the renderable is searched for containment {@link Renderable
+	 * Renderables}, which are then passed recursively
+	 * 
+	 * @param domainModel the {@link EObject} representing the root Domain Element
+	 * @param renderable the {@link Renderable} to check
+	 * @return a Map of EObject to {@link AbstractControl AbstractControls}
 	 */
 	public Map<EObject, Set<AbstractControl>> getDomainToControlMapping(EObject domainModel, Renderable renderable) {
-		final Map<EObject, Set<AbstractControl>> result = new HashMap<EObject, Set<AbstractControl>>();
+		processedRenderables.add(renderable);
+		if (renderable.getDiagnostic() == null) {
+			renderable.setDiagnostic(ViewFactory.eINSTANCE.createVDiagnostic());
+		}
+		final Map<EObject, Set<AbstractControl>> result = new LinkedHashMap<EObject, Set<AbstractControl>>();
 		final Class<?> renderableClass = renderable.getClass().getInterfaces()[0];
 		if (subProcessors.containsKey(renderableClass)) {
-			result.putAll(subProcessors.get(renderableClass).processRenderable(
-				domainModel, renderable, this));
-		}
-		else if (View.class.isInstance(renderable)) {
-			final View view = (View) renderable;
-			for (final Composite composite : view.getChildren()) {
-				result.putAll(getDomainToControlMapping(domainModel, composite));
-			}
-			for (final AbstractCategorization categorization : view.getCategorizations()) {
-				result.putAll(getDomainToControlMapping(domainModel, categorization));
-			}
-		}
-		else if (CompositeCollection.class.isInstance(renderable)) {
-			final CompositeCollection collection = (CompositeCollection) renderable;
-			for (final Composite composite : collection.getComposites()) {
-				result.putAll(getDomainToControlMapping(domainModel, composite));
-			}
+			fillMap(subProcessors.get(renderableClass).processRenderable(
+				domainModel, renderable, this), result);
 		}
 		// TODO subprocessor for CustomControl
 		else if (Control.class.isInstance(renderable)) {
 			final Control control = (Control) renderable;
 			final List<EReference> references = new ArrayList<EReference>(control.getPathToFeature());
-			EObject referencedDomainModel = domainModel;
-			for (final EReference eReference : references) {
-				referencedDomainModel = (EObject) referencedDomainModel.eGet(eReference);
-			}
+			final EObject referencedDomainModel = resolveDomainModel(domainModel, references);
 			if (!result.containsKey(referencedDomainModel)) {
 				result.put(referencedDomainModel, new LinkedHashSet<AbstractControl>());
 			}
 			result.get(referencedDomainModel).add((AbstractControl) renderable);
 		}
-		// TODO move in processor
-		else if (Categorization.class.isInstance(renderable)) {
-			final Categorization view = (Categorization) renderable;
-			for (final AbstractCategorization categorization : view.getCategorizations()) {
-				result.putAll(getDomainToControlMapping(domainModel, categorization));
+		else {
+			for (final EObject eObject : renderable.eContents()) {
+				if (Renderable.class.isInstance(eObject)) {
+					fillMap(getDomainToControlMapping(domainModel, (Renderable) eObject), result);
+				}
 			}
 		}
-		else if (Category.class.isInstance(renderable)) {
-			final Category view = (Category) renderable;
-			result.putAll(getDomainToControlMapping(domainModel, view.getComposite()));
-		}
+
 		return result;
 	}
 
 	/**
-	 * Maps eObjects from the model to their corresponding renderables.
+	 * Resolved an {@link EObject} based on the list of {@link EReference EReferences}.
 	 * 
-	 * @param model the domain model
-	 * @param renderable the view model
-	 * @return the list of keys with which the given renderable was registered
+	 * @param domainModel the root domain Model
+	 * @param references the list of {@link EReference} to use for navigation
+	 * @return the resolved {@link EObject}
 	 */
-	// private void registerWithKeyResult(EObject model, Renderable renderable) {
-	//
-	// putIntoMaps(model, renderable);
-	//
-	// final Class<?> renderableClass = renderable.getClass().getInterfaces()[0];
-	// if (subProcessors.containsKey(renderableClass)) {
-	// subProcessors.get(renderableClass).processRenderable(
-	// model, renderable, this);
-	// }
-	// else {
-	// final List<Renderable> childRenderables = getChildRenderables(renderable);
-	// // register all children
-	// for (final Renderable r : childRenderables) {
-	// if (r instanceof Control) {
-	// final Control control = (Control) r;
-	// final List<EReference> references = new ArrayList<EReference>(control.getPathToFeature());
-	//
-	// if (references.isEmpty()) {
-	// registerWithKeyResult(model, r);
-	// } else {
-	// final List<EObject> models = new ArrayList<EObject>();
-	// models.add(model);
-	// final List<EObject> referencedModels = collectReferencedModelsForPathToFeature(references,
-	// models);
-	// for (final EObject refModel : referencedModels) {
-	// registerWithKeyResult(refModel, control);
-	// }
-	// }
-	// } else {
-	// // test renderebale
-	// registerWithKeyResult(model, r);
-	//
-	// }
-	// }
-	// }
-	// // children are registered. register self based on result
-	// // final ArrayList<EObject> keys = new ArrayList<EObject>();
-	//
-	// // TODO Why?
-	// // if (renderable instanceof View) {
-	// // // the view model will always be registered with the domain model
-	// // putIntoMaps(model, renderable);
-	// // keys.add(model);
-	// // } else if (childRenderables.size() == 1) {
-	// // // if the renderable has only one child we register the renderable with the same keys as the child
-	// // for (final EObject o : usedKeys) {
-	// // putIntoMaps(o, renderable);
-	// // keys.add(o);
-	// // }
-	// // } else {
-	// // else register current eObject with current renderable
-	// // if (init)
-	// // {
-	// // putIntoMaps(model, renderable, init);
-	// // // keys.add(model);
-	// // // }
-	// // }
-	//
-	// // return keys;
-	// }
+	public EObject resolveDomainModel(EObject domainModel, List<EReference> references) {
+		EObject referencedDomainModel = domainModel;
+		for (final EReference eReference : references) {
+			EObject child = (EObject) referencedDomainModel.eGet(eReference);
+			if (child == null) {
+				child = EcoreUtil.create(eReference.getEReferenceType());
+				referencedDomainModel.eSet(eReference, child);
+			}
+			referencedDomainModel = child;
+		}
+		return referencedDomainModel;
+	}
 
-	// private List<EObject> collectReferencedModelsForPathToFeature(List<EReference> references, List<EObject> models)
-	// {
-	//
-	// if (references == null || models == null) {
-	// // TODO exception?
-	// return Collections.emptyList();
-	// }
-	//
-	// if (references.isEmpty()) {
-	// return models;
-	// }
-	//
-	// final EReference reference = references.remove(0);
-	//
-	// final List<EObject> result = new ArrayList<EObject>();
-	// for (final EObject model : models) {
-	// if (reference.isMany()) {
-	// @SuppressWarnings("unchecked")
-	// final List<EObject> childObjects = (List<EObject>) model.eGet(reference);
-	// result.addAll(collectReferencedModelsForPathToFeature(references, childObjects));
-	// } else {
-	// try {
-	// EObject o = (EObject) model.eGet(reference);
-	// if (o == null) {
-	// o = EcoreUtil.create(reference.getEReferenceType());
-	// model.eSet(reference, o);
-	// }
-	// final List<EObject> childObjects = new ArrayList<EObject>();
-	// childObjects.add(o);
-	// result.addAll(collectReferencedModelsForPathToFeature(references, childObjects));
-	// } catch (final ClassCastException e) {
-	// System.out.println(reference);
-	// System.out.println(model);
-	// }
-	// }
-	// }
-	// return result;
-	// }
-
-	// private void putIntoMaps(EObject model, AbstractControl renderable) {
-	// if (renderable.getDiagnostic() == null) {
-	// renderable.setDiagnostic(ViewFactory.eINSTANCE.createVDiagnostic());
-	// }
-	// addedRenderables.add(renderable);
-	//
-	// if (!domainObjectToAffectedControls.containsKey(model)) {
-	// domainObjectToAffectedControls.put(model, new LinkedList<AbstractControl>());
-	// }
-	// if (!domainObjectToAffectedControls.get(model).contains(renderable)) {
-	// domainObjectToAffectedControls.get(model).add(0, renderable);
-	// }
-	//
-	// if (renderable instanceof AbstractControl) {
-	// final Control control = (Control) renderable;
-	// if (!controlToUsedDomainObjects.containsKey(control)) {
-	// controlToUsedDomainObjects.put(control, new LinkedHashSet<EObject>());
-	// }
-	// if (!controlToUsedDomainObjects.get(control).contains(model)) {
-	// controlToUsedDomainObjects.get(control).add(model);
-	// }
-	// }
-	// }
-
-	// private List<Renderable> getChildRenderables(Renderable renderable) {
-	// final List<Renderable> result = new ArrayList<Renderable>();
-	// for (final EObject o : renderable.eContents()) {
-	// if (o instanceof Renderable) {
-	// result.add((Renderable) o);
-	// }
-	// }
-	// return result;
-	// }
+	private void fillMap(Map<EObject, Set<AbstractControl>> source, Map<EObject, Set<AbstractControl>> target) {
+		for (final EObject domainSource : source.keySet()) {
+			if (!target.containsKey(domainSource)) {
+				target.put(domainSource, source.get(domainSource));
+			} else {
+				target.get(domainSource).addAll(source.get(domainSource));
+			}
+		}
+	}
 
 	/**
 	 * Returns all associated {@link Renderable}s for the given model. The list is ordered so that if two renderables
@@ -327,21 +195,14 @@ public class ValidationRegistry {
 	}
 
 	/**
-	 * Returns the elements that are associated with a control.
+	 * Checks whether a {@link Renderable} was already checked for controls a thus added to the
+	 * {@link #domainObjectToAffectedControls}.
 	 * 
-	 * @param control the control
-	 * @return the associated elements
+	 * @param renderable the {@link Renderable} to check
+	 * @return true if {@link Renderable} was already checked
 	 */
-	public List<EObject> getEObjectsForControl(AbstractControl control) {
-		final Set<EObject> result = controlToUsedDomainObjects.get(control);
-		if (result != null) {
-			return new ArrayList<EObject>(result);
-		}
-		return new ArrayList<EObject>();
-	}
-
-	public boolean contains(Renderable renderable) {
-		return addedRenderables.contains(renderable);
+	public boolean containsRenderable(Renderable renderable) {
+		return processedRenderables.contains(renderable);
 	}
 
 }
