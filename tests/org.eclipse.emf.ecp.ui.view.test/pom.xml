@@ -13,7 +13,7 @@
 	<artifactId>org.eclipse.emf.ecp.ui.view.test</artifactId>
 	<version>1.0.2-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
-
+<!-- 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -58,4 +58,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	 -->
 </project>
