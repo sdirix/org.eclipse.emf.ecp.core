@@ -98,7 +98,7 @@ public class ValidationService extends AbstractViewService {
 
 					break;
 				default:
-					viewValidationCachedTree.validate(notification.getNotifier());
+					viewValidationCachedTree.validate(getAllEObjects(notification.getNotifier()));
 				}
 				notifyListeners();
 			}

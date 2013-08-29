@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -245,6 +246,21 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 		result.append(addRemoveDisabled);
 		result.append(')');
 		return result.toString();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.ControlImpl#getTargetFeatures()
+	 * @generated NOT
+	 */
+	@Override
+	public EList<EStructuralFeature> getTargetFeatures() {
+		final EList<EStructuralFeature> result = super.getTargetFeatures();
+		for (final TableColumn tc : getColumns()) {
+			result.add(tc.getAttribute());
+		}
+		return result;
 	}
 
 } // TableControlImpl

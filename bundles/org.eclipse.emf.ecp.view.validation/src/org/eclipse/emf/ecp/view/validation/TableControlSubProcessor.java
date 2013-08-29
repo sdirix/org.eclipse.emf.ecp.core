@@ -51,11 +51,6 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 		return result;
 	}
 
-	/**
-	 * @param tableControl
-	 * @param result
-	 * @param referencedDomainModel
-	 */
 	private void addControlToMap(TableControl tableControl, Map<EObject, Set<AbstractControl>> result,
 		EObject referencedDomainModel) {
 		if (!result.containsKey(referencedDomainModel)) {

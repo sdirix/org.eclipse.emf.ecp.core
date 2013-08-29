@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
@@ -55,8 +56,11 @@ public class ValidationRegistry {
 	public ValidationRegistry() {
 		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<AbstractControl>>();
 		subProcessors = new LinkedHashMap<Class<Renderable>, ECPValidationSubProcessor>();
-
-		final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] config = extensionRegistry.getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.view.validation.validationSubProcessor");
 		try {
 			for (final IConfigurationElement e : config) {
