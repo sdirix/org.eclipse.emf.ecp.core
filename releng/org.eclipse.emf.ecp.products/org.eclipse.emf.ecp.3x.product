@@ -19,7 +19,6 @@
 
    <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
 
-
    <launcher name="ecp">
       <solaris/>
       <win useIco="false">
@@ -45,6 +44,8 @@
       <feature id="org.eclipse.emf.ecp.workspace.feature"/>
       <feature id="org.eclipse.emf.ecp.target.feature"/>
       <feature id="org.eclipse.emf.ecp.examplemodel.ui.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.rule.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.validation.feature"/>
    </features>
 
    <configurations>
