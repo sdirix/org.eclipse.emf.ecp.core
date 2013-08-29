@@ -12,14 +12,9 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -44,7 +39,6 @@ import org.eclipse.emf.ecp.view.model.ViewFactory;
 public class ViewValidationCachedTree extends AbstractCachedTree<VDiagnostic> {
 
 	private final ValidationRegistry validationRegistry;
-	private final Set<ECPValidationPropagator> propagators;
 
 	/**
 	 * Default constructor.
@@ -55,26 +49,8 @@ public class ViewValidationCachedTree extends AbstractCachedTree<VDiagnostic> {
 	public ViewValidationCachedTree(IExcludedObjectsCallback callback, ValidationRegistry validationRegistry) {
 		super(callback);
 		this.validationRegistry = validationRegistry;
-		propagators = new HashSet<ECPValidationPropagator>();
-		readPropagators();
-	}
 
-	private void readPropagators() {
-		final IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.view.validation.propagator");
-		for (final IConfigurationElement e : config) {
-			try {
-				final Object o =
-					e.createExecutableExtension("class");
-				if (o instanceof ECPValidationPropagator) {
-					propagators.add((ECPValidationPropagator) o);
-				}
-			} catch (final CoreException ex) {
-				Activator.logException(ex);
-				continue;
-			}
-		}
-		propagators.add(new DefaultValidationPropagator());
+		// readPropagators();
 	}
 
 	/**

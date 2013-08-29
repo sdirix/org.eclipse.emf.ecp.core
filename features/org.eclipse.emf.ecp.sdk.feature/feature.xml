@@ -71,6 +71,10 @@
          id="org.eclipse.emf.ecp.view.group.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.validation.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e3.source"
          download-size="0"
@@ -402,6 +406,13 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.group.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+    
+    <plugin
+         id="org.eclipse.emf.ecp.view.validation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

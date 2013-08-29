@@ -14,11 +14,24 @@ package org.eclipse.emf.ecp.view.validation;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 
 /**
+ * This class compares to {@link VDiagnostic} elements for equality.
+ * 
  * @author Eugen Neufeld
  * 
  */
-public class VDiagnosticHelper {
+public final class VDiagnosticHelper {
 
+	private VDiagnosticHelper() {
+
+	}
+
+	/**
+	 * Compares two {@link VDiagnostic VDiagnostics} with each other.
+	 * 
+	 * @param vDiagnostic1 the first {@link VDiagnostic} to compare
+	 * @param vDiagnostic2 the second {@link VDiagnostic} to compare
+	 * @return true if both {@link VDiagnostic VDiagnostics} are equal
+	 */
 	public static boolean isEqual(VDiagnostic vDiagnostic1, VDiagnostic vDiagnostic2) {
 		if (vDiagnostic1 == null && vDiagnostic2 != null) {
 			return false;

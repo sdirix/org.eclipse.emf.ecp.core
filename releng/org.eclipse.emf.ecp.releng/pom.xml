@@ -140,6 +140,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model.edit</module>
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
 		
+		<!-- View Validation Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
+		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
+		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
 		<!-- Graphiti 
