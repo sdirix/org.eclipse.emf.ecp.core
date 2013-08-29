@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VerticalPackage
+ * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage
  * @generated
  */
-public interface VerticalFactory extends EFactory
+public interface VVerticalFactory extends EFactory
 {
 	/**
 	 * The singleton instance of the factory.
@@ -31,17 +31,17 @@ public interface VerticalFactory extends EFactory
 	 * 
 	 * @generated
 	 */
-	VerticalFactory eINSTANCE = org.eclipse.emf.ecp.view.vertical.model.impl.VerticalFactoryImpl.init();
+	VVerticalFactory eINSTANCE = org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>VVertical Layout</em>'.
+	 * Returns a new object of class '<em>Layout</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return a new object of class '<em>VVertical Layout</em>'.
+	 * @return a new object of class '<em>Layout</em>'.
 	 * @generated
 	 */
-	VVerticalLayout createVVerticalLayout();
+	VVerticalLayout createVerticalLayout();
 
 	/**
 	 * Returns the package supported by this factory.
@@ -51,6 +51,6 @@ public interface VerticalFactory extends EFactory
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	VerticalPackage getVerticalPackage();
+	VVerticalPackage getVerticalPackage();
 
-} // VerticalFactory
+} // VVerticalFactory

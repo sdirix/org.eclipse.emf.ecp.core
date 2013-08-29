@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VerticalPackage
+ * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage
  * @generated
  */
 public class VerticalAdapterFactory extends AdapterFactoryImpl
@@ -39,7 +39,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * 
 	 * @generated
 	 */
-	protected static VerticalPackage modelPackage;
+	protected static VVerticalPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -52,7 +52,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	{
 		if (modelPackage == null)
 		{
-			modelPackage = VerticalPackage.eINSTANCE;
+			modelPackage = VVerticalPackage.eINSTANCE;
 		}
 	}
 
@@ -91,9 +91,9 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 		new VerticalSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseVVerticalLayout(VVerticalLayout object)
+			public Adapter caseVerticalLayout(VVerticalLayout object)
 			{
-				return createVVerticalLayoutAdapter();
+				return createVerticalLayoutAdapter();
 			}
 
 			@Override
@@ -138,7 +138,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
-	 * <em>VVertical Layout</em>}'.
+	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -148,7 +148,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
 	 * @generated
 	 */
-	public Adapter createVVerticalLayoutAdapter()
+	public Adapter createVerticalLayoutAdapter()
 	{
 		return null;
 	}

@@ -27,11 +27,11 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VerticalFactory
+ * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory
  * @model kind="package"
  * @generated
  */
-public interface VerticalPackage extends EPackage
+public interface VVerticalPackage extends EPackage
 {
 	/**
 	 * The package name.
@@ -67,19 +67,19 @@ public interface VerticalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	VerticalPackage eINSTANCE = org.eclipse.emf.ecp.view.vertical.model.impl.VerticalPackageImpl.init();
+	VVerticalPackage eINSTANCE = org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
-	 * <em>VVertical Layout</em>}' class.
+	 * <em>Layout</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
-	 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VerticalPackageImpl#getVVerticalLayout()
+	 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalPackageImpl#getVerticalLayout()
 	 * @generated
 	 */
-	int VVERTICAL_LAYOUT = 0;
+	int VERTICAL_LAYOUT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -89,7 +89,7 @@ public interface VerticalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT__VISIBLE = ViewPackage.COMPOSITE_COLLECTION__VISIBLE;
+	int VERTICAL_LAYOUT__VISIBLE = ViewPackage.COMPOSITE_COLLECTION__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -99,7 +99,7 @@ public interface VerticalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT__ENABLED = ViewPackage.COMPOSITE_COLLECTION__ENABLED;
+	int VERTICAL_LAYOUT__ENABLED = ViewPackage.COMPOSITE_COLLECTION__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -109,7 +109,17 @@ public interface VerticalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT__READONLY = ViewPackage.COMPOSITE_COLLECTION__READONLY;
+	int VERTICAL_LAYOUT__READONLY = ViewPackage.COMPOSITE_COLLECTION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VERTICAL_LAYOUT__DIAGNOSTIC = ViewPackage.COMPOSITE_COLLECTION__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -119,7 +129,7 @@ public interface VerticalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT__ATTACHMENTS = ViewPackage.COMPOSITE_COLLECTION__ATTACHMENTS;
+	int VERTICAL_LAYOUT__ATTACHMENTS = ViewPackage.COMPOSITE_COLLECTION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -129,7 +139,7 @@ public interface VerticalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT__NAME = ViewPackage.COMPOSITE_COLLECTION__NAME;
+	int VERTICAL_LAYOUT__NAME = ViewPackage.COMPOSITE_COLLECTION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -139,29 +149,29 @@ public interface VerticalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT__COMPOSITES = ViewPackage.COMPOSITE_COLLECTION__COMPOSITES;
+	int VERTICAL_LAYOUT__COMPOSITES = ViewPackage.COMPOSITE_COLLECTION__COMPOSITES;
 
 	/**
-	 * The number of structural features of the '<em>VVertical Layout</em>' class.
+	 * The number of structural features of the '<em>Layout</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VVERTICAL_LAYOUT_FEATURE_COUNT = ViewPackage.COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
+	int VERTICAL_LAYOUT_FEATURE_COUNT = ViewPackage.COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
-	 * <em>VVertical Layout</em>}'.
+	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for class '<em>VVertical Layout</em>'.
+	 * @return the meta object for class '<em>Layout</em>'.
 	 * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
 	 * @generated
 	 */
-	EClass getVVerticalLayout();
+	EClass getVerticalLayout();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -171,7 +181,7 @@ public interface VerticalPackage extends EPackage
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	VerticalFactory getVerticalFactory();
+	VVerticalFactory getVerticalFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -190,16 +200,16 @@ public interface VerticalPackage extends EPackage
 	{
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
-		 * <em>VVertical Layout</em>}' class.
+		 * <em>Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
-		 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VerticalPackageImpl#getVVerticalLayout()
+		 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalPackageImpl#getVerticalLayout()
 		 * @generated
 		 */
-		EClass VVERTICAL_LAYOUT = eINSTANCE.getVVerticalLayout();
+		EClass VERTICAL_LAYOUT = eINSTANCE.getVerticalLayout();
 
 	}
 
-} // VerticalPackage
+} // VVerticalPackage

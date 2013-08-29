@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
  * 
  * @generated
  */
-public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
+public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPackage
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -34,7 +34,7 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 	 * 
 	 * @generated
 	 */
-	private EClass vVerticalLayoutEClass = null;
+	private EClass verticalLayoutEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -46,13 +46,13 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.vertical.model.VerticalPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private VerticalPackageImpl()
+	private VVerticalPackageImpl()
 	{
-		super(eNS_URI, VerticalFactory.eINSTANCE);
+		super(eNS_URI, VVerticalFactory.eINSTANCE);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link VerticalPackage#eINSTANCE} when that field is accessed. Clients should
+	 * This method is used to initialize {@link VVerticalPackage#eINSTANCE} when that field is accessed. Clients should
 	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
 	 * 
@@ -76,15 +76,14 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VerticalPackage init()
+	public static VVerticalPackage init()
 	{
 		if (isInited)
-			return (VerticalPackage) EPackage.Registry.INSTANCE.getEPackage(VerticalPackage.eNS_URI);
+			return (VVerticalPackage) EPackage.Registry.INSTANCE.getEPackage(VVerticalPackage.eNS_URI);
 
 		// Obtain or create and register package
-		VerticalPackageImpl theVerticalPackage = (VerticalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VerticalPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VerticalPackageImpl());
+		VVerticalPackageImpl theVerticalPackage = (VVerticalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VVerticalPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VVerticalPackageImpl());
 
 		isInited = true;
 
@@ -101,7 +100,7 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 		theVerticalPackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(VerticalPackage.eNS_URI, theVerticalPackage);
+		EPackage.Registry.INSTANCE.put(VVerticalPackage.eNS_URI, theVerticalPackage);
 		return theVerticalPackage;
 	}
 
@@ -111,9 +110,9 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 	 * 
 	 * @generated
 	 */
-	public EClass getVVerticalLayout()
+	public EClass getVerticalLayout()
 	{
-		return vVerticalLayoutEClass;
+		return verticalLayoutEClass;
 	}
 
 	/**
@@ -122,9 +121,9 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 	 * 
 	 * @generated
 	 */
-	public VerticalFactory getVerticalFactory()
+	public VVerticalFactory getVerticalFactory()
 	{
-		return (VerticalFactory) getEFactoryInstance();
+		return (VVerticalFactory) getEFactoryInstance();
 	}
 
 	/**
@@ -150,7 +149,7 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 		isCreated = true;
 
 		// Create classes and their features
-		vVerticalLayoutEClass = createEClass(VVERTICAL_LAYOUT);
+		verticalLayoutEClass = createEClass(VERTICAL_LAYOUT);
 	}
 
 	/**
@@ -188,14 +187,14 @@ public class VerticalPackageImpl extends EPackageImpl implements VerticalPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		vVerticalLayoutEClass.getESuperTypes().add(theViewPackage.getCompositeCollection());
+		verticalLayoutEClass.getESuperTypes().add(theViewPackage.getCompositeCollection());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(vVerticalLayoutEClass, VVerticalLayout.class, "VVerticalLayout", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(verticalLayoutEClass, VVerticalLayout.class, "VerticalLayout", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} // VerticalPackageImpl
+} // VVerticalPackageImpl

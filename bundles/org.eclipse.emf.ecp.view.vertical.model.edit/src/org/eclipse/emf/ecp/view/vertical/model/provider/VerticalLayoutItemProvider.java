@@ -18,8 +18,8 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeCollectionItemProvider;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  * @generated
  */
-public class VVerticalLayoutItemProvider
+public class VerticalLayoutItemProvider
 	extends CompositeCollectionItemProvider
 
 {
@@ -40,7 +40,7 @@ public class VVerticalLayoutItemProvider
 	 * 
 	 * @generated
 	 */
-	public VVerticalLayoutItemProvider(AdapterFactory adapterFactory)
+	public VerticalLayoutItemProvider(AdapterFactory adapterFactory)
 	{
 		super(adapterFactory);
 	}
@@ -64,7 +64,7 @@ public class VVerticalLayoutItemProvider
 	}
 
 	/**
-	 * This returns VVerticalLayout.gif.
+	 * This returns VerticalLayout.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -73,7 +73,7 @@ public class VVerticalLayoutItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/VVerticalLayout"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/VerticalLayout"));
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class VVerticalLayoutItemProvider
 	{
 		final String label = ((VVerticalLayout) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_VVerticalLayout_type") :
-			getString("_UI_VVerticalLayout_type") + " " + label;
+			getString("_UI_VerticalLayout_type") :
+			getString("_UI_VerticalLayout_type") + " " + label;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class VVerticalLayoutItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				VerticalFactory.eINSTANCE.createVVerticalLayout()));
+				VVerticalFactory.eINSTANCE.createVerticalLayout()));
 	}
 
 }

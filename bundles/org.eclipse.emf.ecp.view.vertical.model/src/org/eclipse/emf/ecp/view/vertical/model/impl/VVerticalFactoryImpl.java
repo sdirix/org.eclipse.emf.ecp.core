@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
  * 
  * @generated
  */
-public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
+public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFactory
 {
 	/**
 	 * Creates the default factory implementation.
@@ -36,12 +36,12 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 	 * 
 	 * @generated
 	 */
-	public static VerticalFactory init()
+	public static VVerticalFactory init()
 	{
 		try
 		{
-			VerticalFactory theVerticalFactory = (VerticalFactory) EPackage.Registry.INSTANCE
-				.getEFactory(VerticalPackage.eNS_URI);
+			VVerticalFactory theVerticalFactory = (VVerticalFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VVerticalPackage.eNS_URI);
 			if (theVerticalFactory != null)
 			{
 				return theVerticalFactory;
@@ -50,7 +50,7 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new VerticalFactoryImpl();
+		return new VVerticalFactoryImpl();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 	 * 
 	 * @generated
 	 */
-	public VerticalFactoryImpl()
+	public VVerticalFactoryImpl()
 	{
 		super();
 	}
@@ -76,8 +76,8 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 	{
 		switch (eClass.getClassifierID())
 		{
-		case VerticalPackage.VVERTICAL_LAYOUT:
-			return createVVerticalLayout();
+		case VVerticalPackage.VERTICAL_LAYOUT:
+			return createVerticalLayout();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -89,10 +89,10 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 	 * 
 	 * @generated
 	 */
-	public VVerticalLayout createVVerticalLayout()
+	public VVerticalLayout createVerticalLayout()
 	{
-		VVerticalLayoutImpl vVerticalLayout = new VVerticalLayoutImpl();
-		return vVerticalLayout;
+		VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
+		return verticalLayout;
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 	 * 
 	 * @generated
 	 */
-	public VerticalPackage getVerticalPackage()
+	public VVerticalPackage getVerticalPackage()
 	{
-		return (VerticalPackage) getEPackage();
+		return (VVerticalPackage) getEPackage();
 	}
 
 	/**
@@ -114,9 +114,9 @@ public class VerticalFactoryImpl extends EFactoryImpl implements VerticalFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static VerticalPackage getPackage()
+	public static VVerticalPackage getPackage()
 	{
-		return VerticalPackage.eINSTANCE;
+		return VVerticalPackage.eINSTANCE;
 	}
 
-} // VerticalFactoryImpl
+} // VVerticalFactoryImpl

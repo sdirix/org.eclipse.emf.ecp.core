@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VerticalPackage
+ * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage
  * @generated
  */
 public class VerticalSwitch<T> extends Switch<T>
@@ -43,7 +43,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * 
 	 * @generated
 	 */
-	protected static VerticalPackage modelPackage;
+	protected static VVerticalPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -56,7 +56,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	{
 		if (modelPackage == null)
 		{
-			modelPackage = VerticalPackage.eINSTANCE;
+			modelPackage = VVerticalPackage.eINSTANCE;
 		}
 	}
 
@@ -89,15 +89,15 @@ public class VerticalSwitch<T> extends Switch<T>
 	{
 		switch (classifierID)
 		{
-		case VerticalPackage.VVERTICAL_LAYOUT: {
-			VVerticalLayout vVerticalLayout = (VVerticalLayout) theEObject;
-			T result = caseVVerticalLayout(vVerticalLayout);
+		case VVerticalPackage.VERTICAL_LAYOUT: {
+			VVerticalLayout verticalLayout = (VVerticalLayout) theEObject;
+			T result = caseVerticalLayout(verticalLayout);
 			if (result == null)
-				result = caseCompositeCollection(vVerticalLayout);
+				result = caseCompositeCollection(verticalLayout);
 			if (result == null)
-				result = caseComposite(vVerticalLayout);
+				result = caseComposite(verticalLayout);
 			if (result == null)
-				result = caseRenderable(vVerticalLayout);
+				result = caseRenderable(verticalLayout);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -108,18 +108,18 @@ public class VerticalSwitch<T> extends Switch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VVertical Layout</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Layout</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VVertical Layout</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Layout</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVVerticalLayout(VVerticalLayout object)
+	public T caseVerticalLayout(VVerticalLayout object)
 	{
 		return null;
 	}

@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.vertical.ui.test;
 
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 import org.junit.BeforeClass;
 
 /**
@@ -22,6 +22,6 @@ public class VerticalTest extends AbstractVerticalTest {
 
 	@BeforeClass
 	public static void initTest() {
-		setVerticalClass(VerticalPackage.eINSTANCE.getVVerticalLayout());
+		setVerticalClass(VVerticalPackage.eINSTANCE.getVerticalLayout());
 	}
 }

@@ -18,18 +18,27 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
+
 import org.eclipse.emf.ecp.view.vertical.model.util.VerticalAdapterFactory;
+
 import org.eclipse.emf.edit.command.CommandParameter;
+
 import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -84,7 +93,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		VerticalEditPlugin.INSTANCE, VerticalPackage.eNS_URI);
+		VerticalEditPlugin.INSTANCE, VVerticalPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -119,7 +128,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	 * 
 	 * @generated
 	 */
-	protected VVerticalLayoutItemProvider vVerticalLayoutItemProvider;
+	protected VerticalLayoutItemProvider verticalLayoutItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout}.
@@ -129,14 +138,14 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Adapter createVVerticalLayoutAdapter()
+	public Adapter createVerticalLayoutAdapter()
 	{
-		if (vVerticalLayoutItemProvider == null)
+		if (verticalLayoutItemProvider == null)
 		{
-			vVerticalLayoutItemProvider = new VVerticalLayoutItemProvider(this);
+			verticalLayoutItemProvider = new VerticalLayoutItemProvider(this);
 		}
 
-		return vVerticalLayoutItemProvider;
+		return verticalLayoutItemProvider;
 	}
 
 	/**
@@ -292,8 +301,8 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	 */
 	public void dispose()
 	{
-		if (vVerticalLayoutItemProvider != null)
-			vVerticalLayoutItemProvider.dispose();
+		if (verticalLayoutItemProvider != null)
+			verticalLayoutItemProvider.dispose();
 	}
 
 	/**
@@ -357,7 +366,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.VIEW__CHILDREN,
-						VerticalFactory.eINSTANCE.createVVerticalLayout()));
+						VVerticalFactory.eINSTANCE.createVerticalLayout()));
 
 				return null;
 			}
@@ -374,7 +383,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.CATEGORY__COMPOSITE,
-						VerticalFactory.eINSTANCE.createVVerticalLayout()));
+						VVerticalFactory.eINSTANCE.createVerticalLayout()));
 
 				return null;
 			}
@@ -391,7 +400,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						VerticalFactory.eINSTANCE.createVVerticalLayout()));
+						VVerticalFactory.eINSTANCE.createVerticalLayout()));
 
 				return null;
 			}

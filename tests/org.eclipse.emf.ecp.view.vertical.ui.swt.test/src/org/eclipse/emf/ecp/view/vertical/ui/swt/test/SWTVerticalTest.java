@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.vertical.ui.swt.test;
 
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 import org.eclipse.emf.ecp.view.vertical.ui.test.AbstractVerticalTest;
 import org.junit.BeforeClass;
 
@@ -23,7 +23,7 @@ public class SWTVerticalTest extends AbstractSWTVerticalTest {
 
 	@BeforeClass
 	public static void classInit() {
-		AbstractVerticalTest.setVerticalClass(VerticalPackage.eINSTANCE.getVVerticalLayout());
+		AbstractVerticalTest.setVerticalClass(VVerticalPackage.eINSTANCE.getVerticalLayout());
 	}
 
 }

@@ -14,11 +14,11 @@ package org.eclipse.emf.ecp.view.vertical.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VerticalPackage;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>VVertical Layout</b></em>'.
+ * An implementation of the model object '<em><b>Layout</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
@@ -47,7 +47,7 @@ public class VVerticalLayoutImpl extends CompositeCollectionImpl implements VVer
 	@Override
 	protected EClass eStaticClass()
 	{
-		return VerticalPackage.Literals.VVERTICAL_LAYOUT;
+		return VVerticalPackage.Literals.VERTICAL_LAYOUT;
 	}
 
 } // VVerticalLayoutImpl

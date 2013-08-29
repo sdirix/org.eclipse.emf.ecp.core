@@ -15,11 +15,11 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>VVertical Layout</b></em>'.
+ * A representation of the model object '<em><b>Layout</b></em>'.
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VerticalPackage#getVVerticalLayout()
+ * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage#getVerticalLayout()
  * @model
  * @generated
  */
