@@ -16,10 +16,7 @@
       %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
-   </license>
-
+   
    <plugin
          id="org.eclipse.emf.ecp.view.groupedgrid.model"
          download-size="0"
