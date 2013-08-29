@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ RendererNodeTest.class })
+@Suite.SuiteClasses({})
 public class AllTests {
 
 }

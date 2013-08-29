@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -89,13 +98,14 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	public EAttribute getAttribute() {
 		if (attribute != null && attribute.eIsProxy())
 		{
-			InternalEObject oldAttribute = (InternalEObject) attribute;
+			final InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
 			if (attribute != oldAttribute)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.TABLE_COLUMN__ATTRIBUTE,
 						oldAttribute, attribute));
+				}
 			}
 		}
 		return attribute;
@@ -118,11 +128,12 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * @generated
 	 */
 	public void setAttribute(EAttribute newAttribute) {
-		EAttribute oldAttribute = attribute;
+		final EAttribute oldAttribute = attribute;
 		attribute = newAttribute;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__ATTRIBUTE, oldAttribute,
 				attribute));
+		}
 	}
 
 	/**
@@ -142,11 +153,12 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * @generated
 	 */
 	public void setReadOnly(boolean newReadOnly) {
-		boolean oldReadOnly = readOnly;
+		final boolean oldReadOnly = readOnly;
 		readOnly = newReadOnly;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__READ_ONLY, oldReadOnly,
 				readOnly));
+		}
 	}
 
 	/**
@@ -160,8 +172,9 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 		switch (featureID)
 		{
 		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
-			if (resolve)
+			if (resolve) {
 				return getAttribute();
+			}
 			return basicGetAttribute();
 		case ViewPackage.TABLE_COLUMN__READ_ONLY:
 			return isReadOnly();
@@ -235,10 +248,11 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (readOnly: ");
 		result.append(readOnly);
 		result.append(')');

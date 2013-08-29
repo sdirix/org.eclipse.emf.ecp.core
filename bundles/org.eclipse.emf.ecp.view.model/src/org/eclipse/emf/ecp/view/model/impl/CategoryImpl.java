@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -74,16 +83,17 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 * @generated
 	 */
 	public NotificationChain basicSetComposite(Composite newComposite, NotificationChain msgs) {
-		Composite oldComposite = composite;
+		final Composite oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.CATEGORY__COMPOSITE, oldComposite, newComposite);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -98,19 +108,23 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 		if (newComposite != composite)
 		{
 			NotificationChain msgs = null;
-			if (composite != null)
+			if (composite != null) {
 				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CATEGORY__COMPOSITE, null, msgs);
-			if (newComposite != null)
+			}
+			if (newComposite != null) {
 				msgs = ((InternalEObject) newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CATEGORY__COMPOSITE, null, msgs);
+			}
 			msgs = basicSetComposite(newComposite, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CATEGORY__COMPOSITE, newComposite,
 				newComposite));
+		}
 	}
 
 	/**

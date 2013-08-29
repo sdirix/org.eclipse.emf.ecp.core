@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -40,13 +49,13 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public static ViewFactory init() {
 		try
 		{
-			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
+			final ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
 				.getEFactory("http://org/eclipse/emf/ecp/view/model");
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -142,7 +151,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public View createView() {
-		ViewImpl view = new ViewImpl();
+		final ViewImpl view = new ViewImpl();
 		return view;
 	}
 
@@ -152,7 +161,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Categorization createCategorization() {
-		CategorizationImpl categorization = new CategorizationImpl();
+		final CategorizationImpl categorization = new CategorizationImpl();
 		return categorization;
 	}
 
@@ -162,7 +171,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Category createCategory() {
-		CategoryImpl category = new CategoryImpl();
+		final CategoryImpl category = new CategoryImpl();
 		return category;
 	}
 
@@ -172,7 +181,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Control createControl() {
-		ControlImpl control = new ControlImpl();
+		final ControlImpl control = new ControlImpl();
 		return control;
 	}
 
@@ -182,7 +191,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public TableControl createTableControl() {
-		TableControlImpl tableControl = new TableControlImpl();
+		final TableControlImpl tableControl = new TableControlImpl();
 		return tableControl;
 	}
 
@@ -192,7 +201,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public TableColumn createTableColumn() {
-		TableColumnImpl tableColumn = new TableColumnImpl();
+		final TableColumnImpl tableColumn = new TableColumnImpl();
 		return tableColumn;
 	}
 
@@ -202,7 +211,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public CustomComposite createCustomComposite() {
-		CustomCompositeImpl customComposite = new CustomCompositeImpl();
+		final CustomCompositeImpl customComposite = new CustomCompositeImpl();
 		return customComposite;
 	}
 
@@ -212,7 +221,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public ColumnComposite createColumnComposite() {
-		ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
+		final ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
 		return columnComposite;
 	}
 
@@ -222,7 +231,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Column createColumn() {
-		ColumnImpl column = new ColumnImpl();
+		final ColumnImpl column = new ColumnImpl();
 		return column;
 	}
 
@@ -232,7 +241,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Action createAction() {
-		ActionImpl action = new ActionImpl();
+		final ActionImpl action = new ActionImpl();
 		return action;
 	}
 
@@ -244,7 +253,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public VDiagnostic createVDiagnostic()
 	{
-		VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
+		final VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
 		return vDiagnostic;
 	}
 
@@ -256,10 +265,11 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public Alignment createAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		Alignment result = Alignment.get(initialValue);
-		if (result == null)
+		final Alignment result = Alignment.get(initialValue);
+		if (result == null) {
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
+		}
 		return result;
 	}
 

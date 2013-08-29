@@ -69,7 +69,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="diagnostic" eType="#//VDiagnostic"
-        containment="true"/>
+        transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachments" upperBound="-1"
         eType="#//Attachment" containment="true"/>
   </eClassifiers>

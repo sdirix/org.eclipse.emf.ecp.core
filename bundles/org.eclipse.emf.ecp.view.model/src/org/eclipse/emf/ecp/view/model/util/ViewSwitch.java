@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.util;
 
@@ -85,178 +94,223 @@ public class ViewSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case ViewPackage.VIEW: {
-			View view = (View) theEObject;
+			final View view = (View) theEObject;
 			T result = caseView(view);
-			if (result == null)
+			if (result == null) {
 				result = caseCategorization(view);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseAbstractCategorization(view);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(view);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.ABSTRACT_CATEGORIZATION: {
-			AbstractCategorization abstractCategorization = (AbstractCategorization) theEObject;
+			final AbstractCategorization abstractCategorization = (AbstractCategorization) theEObject;
 			T result = caseAbstractCategorization(abstractCategorization);
-			if (result == null)
+			if (result == null) {
 				result = caseRenderable(abstractCategorization);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.CATEGORIZATION: {
-			Categorization categorization = (Categorization) theEObject;
+			final Categorization categorization = (Categorization) theEObject;
 			T result = caseCategorization(categorization);
-			if (result == null)
+			if (result == null) {
 				result = caseAbstractCategorization(categorization);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(categorization);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.CATEGORY: {
-			Category category = (Category) theEObject;
+			final Category category = (Category) theEObject;
 			T result = caseCategory(category);
-			if (result == null)
+			if (result == null) {
 				result = caseAbstractCategorization(category);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(category);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.COMPOSITE: {
-			Composite composite = (Composite) theEObject;
+			final Composite composite = (Composite) theEObject;
 			T result = caseComposite(composite);
-			if (result == null)
+			if (result == null) {
 				result = caseRenderable(composite);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.CONTROL: {
-			Control control = (Control) theEObject;
+			final Control control = (Control) theEObject;
 			T result = caseControl(control);
-			if (result == null)
+			if (result == null) {
 				result = caseAbstractControl(control);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseComposite(control);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(control);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.TABLE_CONTROL: {
-			TableControl tableControl = (TableControl) theEObject;
+			final TableControl tableControl = (TableControl) theEObject;
 			T result = caseTableControl(tableControl);
-			if (result == null)
+			if (result == null) {
 				result = caseControl(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseAbstractControl(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseComposite(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.TABLE_COLUMN: {
-			TableColumn tableColumn = (TableColumn) theEObject;
+			final TableColumn tableColumn = (TableColumn) theEObject;
 			T result = caseTableColumn(tableColumn);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.CUSTOM_COMPOSITE: {
-			CustomComposite customComposite = (CustomComposite) theEObject;
+			final CustomComposite customComposite = (CustomComposite) theEObject;
 			T result = caseCustomComposite(customComposite);
-			if (result == null)
+			if (result == null) {
 				result = caseComposite(customComposite);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(customComposite);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.COMPOSITE_COLLECTION: {
-			CompositeCollection compositeCollection = (CompositeCollection) theEObject;
+			final CompositeCollection compositeCollection = (CompositeCollection) theEObject;
 			T result = caseCompositeCollection(compositeCollection);
-			if (result == null)
+			if (result == null) {
 				result = caseComposite(compositeCollection);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(compositeCollection);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.COLUMN_COMPOSITE: {
-			ColumnComposite columnComposite = (ColumnComposite) theEObject;
+			final ColumnComposite columnComposite = (ColumnComposite) theEObject;
 			T result = caseColumnComposite(columnComposite);
-			if (result == null)
+			if (result == null) {
 				result = caseCompositeCollection(columnComposite);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseComposite(columnComposite);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(columnComposite);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.COLUMN: {
-			Column column = (Column) theEObject;
+			final Column column = (Column) theEObject;
 			T result = caseColumn(column);
-			if (result == null)
+			if (result == null) {
 				result = caseCompositeCollection(column);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseComposite(column);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(column);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.RENDERABLE: {
-			Renderable renderable = (Renderable) theEObject;
+			final Renderable renderable = (Renderable) theEObject;
 			T result = caseRenderable(renderable);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.ACTION: {
-			Action action = (Action) theEObject;
+			final Action action = (Action) theEObject;
 			T result = caseAction(action);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.ABSTRACT_CONTROL: {
-			AbstractControl abstractControl = (AbstractControl) theEObject;
+			final AbstractControl abstractControl = (AbstractControl) theEObject;
 			T result = caseAbstractControl(abstractControl);
-			if (result == null)
+			if (result == null) {
 				result = caseComposite(abstractControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseRenderable(abstractControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.ATTACHMENT: {
-			Attachment attachment = (Attachment) theEObject;
+			final Attachment attachment = (Attachment) theEObject;
 			T result = caseAttachment(attachment);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case ViewPackage.VDIAGNOSTIC: {
-			VDiagnostic vDiagnostic = (VDiagnostic) theEObject;
+			final VDiagnostic vDiagnostic = (VDiagnostic) theEObject;
 			T result = caseVDiagnostic(vDiagnostic);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

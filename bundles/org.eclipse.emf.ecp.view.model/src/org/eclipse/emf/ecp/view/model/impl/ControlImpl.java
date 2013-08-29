@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -143,13 +152,14 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public EStructuralFeature getTargetFeature() {
 		if (targetFeature != null && targetFeature.eIsProxy())
 		{
-			InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
+			final InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
 			targetFeature = (EStructuralFeature) eResolveProxy(oldTargetFeature);
 			if (targetFeature != oldTargetFeature)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.CONTROL__TARGET_FEATURE,
 						oldTargetFeature, targetFeature));
+				}
 			}
 		}
 		return targetFeature;
@@ -172,11 +182,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public void setTargetFeature(EStructuralFeature newTargetFeature) {
-		EStructuralFeature oldTargetFeature = targetFeature;
+		final EStructuralFeature oldTargetFeature = targetFeature;
 		targetFeature = newTargetFeature;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__TARGET_FEATURE,
 				oldTargetFeature, targetFeature));
+		}
 	}
 
 	/**
@@ -210,11 +221,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public void setMandatory(boolean newMandatory) {
-		boolean oldMandatory = mandatory;
+		final boolean oldMandatory = mandatory;
 		mandatory = newMandatory;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
 				mandatory));
+		}
 	}
 
 	/**
@@ -251,11 +263,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	public void setLabelAlignment(Alignment newLabelAlignment)
 	{
-		Alignment oldLabelAlignment = labelAlignment;
+		final Alignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
+		}
 	}
 
 	/**
@@ -269,8 +282,9 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		switch (featureID)
 		{
 		case ViewPackage.CONTROL__TARGET_FEATURE:
-			if (resolve)
+			if (resolve) {
 				return getTargetFeature();
+			}
 			return basicGetTargetFeature();
 		case ViewPackage.CONTROL__HINT:
 			return getHint();
@@ -377,10 +391,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hint: ");
 		result.append(hint);
 		result.append(", mandatory: ");
@@ -399,7 +414,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public EList<EStructuralFeature> getTargetFeatures() {
-		EList<EStructuralFeature> result = new BasicEList<EStructuralFeature>();
+		final EList<EStructuralFeature> result = new BasicEList<EStructuralFeature>();
 		if (getTargetFeature() != null) {
 			result.add(getTargetFeature());
 		}

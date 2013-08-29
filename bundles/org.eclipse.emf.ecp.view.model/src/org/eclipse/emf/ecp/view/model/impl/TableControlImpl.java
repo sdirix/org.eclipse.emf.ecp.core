@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -117,11 +126,12 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 * @generated
 	 */
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled) {
-		boolean oldAddRemoveDisabled = addRemoveDisabled;
+		final boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
+		}
 	}
 
 	/**
@@ -226,10 +236,11 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: ");
 		result.append(addRemoveDisabled);
 		result.append(')');

@@ -61,11 +61,11 @@
     </genClasses>
     <genClasses ecoreClass="view.ecore#//ColumnComposite"/>
     <genClasses ecoreClass="view.ecore#//Column"/>
-    <genClasses ecoreClass="view.ecore#//Group"/>
     <genClasses image="false" ecoreClass="view.ecore#//Renderable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/enabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/readonly"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Renderable/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Renderable/attachments"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//Action">
@@ -76,5 +76,8 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference view.ecore#//AbstractControl/targetFeatures"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
+    <genClasses ecoreClass="view.ecore#//VDiagnostic">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//VDiagnostic/diagnostics"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -125,6 +125,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 			@Override
 			public void notifyChanged(Notification msg) {
 				super.notifyChanged(msg);
+				if (treeViewer == null) {
+					return;
+				}
 				if (AbstractCategorization.class.isInstance(msg.getNotifier())
 					&& ViewPackage.eINSTANCE.getRenderable_Diagnostic().equals(msg.getFeature())) {
 					if (msg.getEventType() == Notification.SET) {

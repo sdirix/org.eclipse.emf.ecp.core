@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -105,11 +114,12 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 * @generated
 	 */
 	public void setBundle(String newBundle) {
-		String oldBundle = bundle;
+		final String oldBundle = bundle;
 		bundle = newBundle;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CUSTOM_COMPOSITE__BUNDLE, oldBundle,
 				bundle));
+		}
 	}
 
 	/**
@@ -129,11 +139,12 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 * @generated
 	 */
 	public void setClassName(String newClassName) {
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CUSTOM_COMPOSITE__CLASS_NAME,
 				oldClassName, className));
+		}
 	}
 
 	/**
@@ -220,10 +231,11 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundle: ");
 		result.append(bundle);
 		result.append(", className: ");

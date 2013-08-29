@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
@@ -83,13 +92,14 @@ public class ViewImpl extends CategorizationImpl implements View {
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy())
 		{
-			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
 			if (rootEClass != oldRootEClass)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
+				}
 			}
 		}
 		return rootEClass;
@@ -112,11 +122,12 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 * @generated
 	 */
 	public void setRootEClass(EClass newRootEClass) {
-		EClass oldRootEClass = rootEClass;
+		final EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.VIEW__ROOT_ECLASS, oldRootEClass,
 				rootEClass));
+		}
 	}
 
 	/**
@@ -160,8 +171,9 @@ public class ViewImpl extends CategorizationImpl implements View {
 		switch (featureID)
 		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
-			if (resolve)
+			if (resolve) {
 				return getRootEClass();
+			}
 			return basicGetRootEClass();
 		case ViewPackage.VIEW__CHILDREN:
 			return getChildren();
