@@ -35,7 +35,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int RENDERABLE_CHILD_COUNT = 3;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	private static final int NUMBER_OF_COMPOSITES = 10;
+	private static final int NUMBER_OF_COMPOSITES = 12;
 	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
 		+ NUMBER_OF_CATEGORIZATIONS;
