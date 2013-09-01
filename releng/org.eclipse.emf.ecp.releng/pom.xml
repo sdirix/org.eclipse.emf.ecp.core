@@ -97,6 +97,9 @@
 
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
 
+		<!-- IDE Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.ide.feature</module>
 
 		
 		<!-- Custom Control Feature -->

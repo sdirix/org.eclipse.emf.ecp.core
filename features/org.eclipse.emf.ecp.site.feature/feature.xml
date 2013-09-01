@@ -99,4 +99,8 @@
          id="org.eclipse.emf.ecp.view.vertical.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.model.ide.feature"
+         version="0.0.0"/>
+
 </feature>
