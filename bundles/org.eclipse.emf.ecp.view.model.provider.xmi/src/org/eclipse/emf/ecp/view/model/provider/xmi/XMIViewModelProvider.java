@@ -11,20 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
-import java.io.IOException;
-import java.util.Map;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
  * Abstract class to implement a view provider reading the view model from an xmi file.
@@ -41,19 +33,7 @@ public abstract class XMIViewModelProvider implements IViewProvider {
 	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
 	public View generate(EObject eObject) {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final Map<String, Object> extensionToFactoryMap = resourceSet
-			.getResourceFactoryRegistry().getExtensionToFactoryMap();
-		extensionToFactoryMap.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-			new XMIResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put(ViewPackage.eNS_URI,
-			ViewPackage.eINSTANCE);
-		final Resource resource = resourceSet.createResource(getXMIPath());
-		try {
-			resource.load(null);
-		} catch (final IOException exception) {
-			Activator.log(exception);
-		}
+		final Resource resource = ViewModelFileExtensionsManager.loadResource(getXMIPath());
 		final View result = EcoreUtil.copy((View) resource.getContents().get(0));
 		return result;
 	}
