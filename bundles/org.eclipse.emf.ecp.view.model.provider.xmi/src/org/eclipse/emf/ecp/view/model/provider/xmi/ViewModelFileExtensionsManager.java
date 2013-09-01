@@ -12,14 +12,22 @@
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
+import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -28,6 +36,11 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * 
  */
 public final class ViewModelFileExtensionsManager {
+
+	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file";
+	private static final String FILEPATH_ATTRIBUTE = "filePath";
+
+	private final Map<EClass, View> map = new HashMap<EClass, View>();
 
 	private ViewModelFileExtensionsManager() {
 	}
@@ -49,17 +62,31 @@ public final class ViewModelFileExtensionsManager {
 	 * 
 	 */
 	private void init() {
-		// TODO Auto-generated method stub
+		final List<URI> extensionURIS = getExtensionURIS();
+		for (final URI uri : extensionURIS) {
+			final Resource resource = loadResource(uri);
+			final EObject eObject = resource.getContents().get(0);
+			if (!(eObject instanceof View)) {
+				// TODO:log
+				continue;
+			}
+			final View view = (View) eObject;
+			if (view.getRootEClass() == null) {
+				// TODO:log
+				continue;
+			}
+			map.put(view.getRootEClass(), view);
+		}
 
 	}
 
 	/**
 	 * Loads a resource containing a view model.
 	 * 
-	 * @param xmiPath a URI containing the path to the file
+	 * @param uri a URI containing the path to the file
 	 * @return the loaded resource
 	 */
-	public static Resource loadResource(URI xmiPath) {
+	public static Resource loadResource(URI uri) {
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		final Map<String, Object> extensionToFactoryMap = resourceSet
 			.getResourceFactoryRegistry().getExtensionToFactoryMap();
@@ -67,7 +94,7 @@ public final class ViewModelFileExtensionsManager {
 			new XMIResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(ViewPackage.eNS_URI,
 			ViewPackage.eINSTANCE);
-		final Resource resource = resourceSet.createResource(xmiPath);
+		final Resource resource = resourceSet.createResource(uri);
 		try {
 			resource.load(null);
 		} catch (final IOException exception) {
@@ -81,6 +108,42 @@ public final class ViewModelFileExtensionsManager {
 	 */
 	public static void dispose() {
 		instance = null;
+	}
+
+	/**
+	 * 
+	 * @return a list of uris of all xmi files registered
+	 */
+	public static List<URI> getExtensionURIS() {
+		final List<URI> ret = new ArrayList<URI>();
+		final IConfigurationElement[] files = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			FILE_EXTENSION);
+		for (final IConfigurationElement file : files) {
+			final String filePath = file.getAttribute(FILEPATH_ATTRIBUTE);
+
+			URI uri;
+			final String bundleName = file.getContributor().getName();
+			final String path = bundleName + '/' + filePath;
+			uri = URI.createPlatformPluginURI(path, false);
+			ret.add(uri);
+		}
+		return ret;
+	}
+
+	/**
+	 * @param eObject the object to be rendered
+	 * @return if there is a xmi file registered containing a view model for the given type
+	 */
+	public boolean hasViewModelFor(EObject eObject) {
+		return map.containsKey(eObject.eClass());
+	}
+
+	/**
+	 * @param eObject The {@link EObject} to create a view for
+	 * @return a view model for the given eObject
+	 */
+	public View createView(EObject eObject) {
+		return map.get(eObject.eClass());
 	}
 
 }
