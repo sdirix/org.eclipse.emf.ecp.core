@@ -23,7 +23,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<testSuite>org.eclipse.emf.ecp.view.model.provider.xmi.test</testSuite>
-		          	<testClass>org.eclipse.emf.ecp.view.model.provider.xmi.AllTests</testClass>
+		          	<testClass>org.eclipse.emf.ecp.view.model.provider.xmi.test.AllTests</testClass>
 		          	<useUIHarness>false</useUIHarness>
 		          	<useUIThread>false</useUIThread>
 		          	<testFailureIgnore>true</testFailureIgnore>
