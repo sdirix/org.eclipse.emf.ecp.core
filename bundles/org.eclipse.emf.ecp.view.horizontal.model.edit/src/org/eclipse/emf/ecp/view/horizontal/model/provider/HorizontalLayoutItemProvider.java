@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalFactory;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeCollectionItemProvider;
@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  * @generated
  */
-public class VHorizontalLayoutItemProvider
+public class HorizontalLayoutItemProvider
 	extends CompositeCollectionItemProvider
 
 {
@@ -40,7 +40,7 @@ public class VHorizontalLayoutItemProvider
 	 * 
 	 * @generated
 	 */
-	public VHorizontalLayoutItemProvider(AdapterFactory adapterFactory)
+	public HorizontalLayoutItemProvider(AdapterFactory adapterFactory)
 	{
 		super(adapterFactory);
 	}
@@ -64,7 +64,7 @@ public class VHorizontalLayoutItemProvider
 	}
 
 	/**
-	 * This returns VHorizontalLayout.gif.
+	 * This returns HorizontalLayout.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -73,7 +73,7 @@ public class VHorizontalLayoutItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/VHorizontalLayout"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/HorizontalLayout"));
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class VHorizontalLayoutItemProvider
 	{
 		final String label = ((VHorizontalLayout) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_VHorizontalLayout_type") :
-			getString("_UI_VHorizontalLayout_type") + " " + label;
+			getString("_UI_HorizontalLayout_type") :
+			getString("_UI_HorizontalLayout_type") + " " + label;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class VHorizontalLayoutItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				HorizontalFactory.eINSTANCE.createVHorizontalLayout()));
+				VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 	}
 
 }

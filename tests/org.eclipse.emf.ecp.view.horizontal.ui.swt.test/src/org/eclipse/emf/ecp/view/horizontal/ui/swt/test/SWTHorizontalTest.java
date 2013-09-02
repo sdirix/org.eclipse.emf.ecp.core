@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.horizontal.ui.swt.test;
 
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.horizontal.ui.test.AbstractHorizontalTest;
 import org.junit.BeforeClass;
 
@@ -23,6 +23,6 @@ public class SWTHorizontalTest extends AbstractSWTHorizontalTest {
 
 	@BeforeClass
 	public static void initClass() {
-		AbstractHorizontalTest.setHorizontalClass(HorizontalPackage.eINSTANCE.getVHorizontalLayout());
+		AbstractHorizontalTest.setHorizontalClass(VHorizontalPackage.eINSTANCE.getHorizontalLayout());
 	}
 }

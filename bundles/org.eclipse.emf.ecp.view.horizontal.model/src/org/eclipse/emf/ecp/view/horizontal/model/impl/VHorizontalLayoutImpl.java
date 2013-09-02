@@ -12,13 +12,13 @@
 package org.eclipse.emf.ecp.view.horizontal.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>VHorizontal Layout</b></em>'.
+ * An implementation of the model object '<em><b>Layout</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
@@ -47,7 +47,7 @@ public class VHorizontalLayoutImpl extends CompositeCollectionImpl implements VH
 	@Override
 	protected EClass eStaticClass()
 	{
-		return HorizontalPackage.Literals.VHORIZONTAL_LAYOUT;
+		return VHorizontalPackage.Literals.HORIZONTAL_LAYOUT;
 	}
 
 } // VHorizontalLayoutImpl

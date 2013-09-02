@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.horizontal.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage
+ * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage
  * @generated
  */
 public class HorizontalSwitch<T> extends Switch<T>
@@ -43,7 +43,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * 
 	 * @generated
 	 */
-	protected static HorizontalPackage modelPackage;
+	protected static VHorizontalPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -56,7 +56,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	{
 		if (modelPackage == null)
 		{
-			modelPackage = HorizontalPackage.eINSTANCE;
+			modelPackage = VHorizontalPackage.eINSTANCE;
 		}
 	}
 
@@ -89,15 +89,15 @@ public class HorizontalSwitch<T> extends Switch<T>
 	{
 		switch (classifierID)
 		{
-		case HorizontalPackage.VHORIZONTAL_LAYOUT: {
-			VHorizontalLayout vHorizontalLayout = (VHorizontalLayout) theEObject;
-			T result = caseVHorizontalLayout(vHorizontalLayout);
+		case VHorizontalPackage.HORIZONTAL_LAYOUT: {
+			VHorizontalLayout horizontalLayout = (VHorizontalLayout) theEObject;
+			T result = caseHorizontalLayout(horizontalLayout);
 			if (result == null)
-				result = caseCompositeCollection(vHorizontalLayout);
+				result = caseCompositeCollection(horizontalLayout);
 			if (result == null)
-				result = caseComposite(vHorizontalLayout);
+				result = caseComposite(horizontalLayout);
 			if (result == null)
-				result = caseRenderable(vHorizontalLayout);
+				result = caseRenderable(horizontalLayout);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -108,18 +108,18 @@ public class HorizontalSwitch<T> extends Switch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VHorizontal Layout</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Layout</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VHorizontal Layout</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Layout</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVHorizontalLayout(VHorizontalLayout object)
+	public T caseHorizontalLayout(VHorizontalLayout object)
 	{
 		return null;
 	}

@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.horizontal.ui.test;
 
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.junit.BeforeClass;
 
 /**
@@ -22,6 +22,6 @@ public class HorizontalTest extends AbstractHorizontalTest {
 
 	@BeforeClass
 	public static void init() {
-		setHorizontalClass(HorizontalPackage.eINSTANCE.getVHorizontalLayout());
+		setHorizontalClass(VHorizontalPackage.eINSTANCE.getHorizontalLayout());
 	}
 }

@@ -27,11 +27,11 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.HorizontalFactory
+ * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory
  * @model kind="package"
  * @generated
  */
-public interface HorizontalPackage extends EPackage
+public interface VHorizontalPackage extends EPackage
 {
 	/**
 	 * The package name.
@@ -67,19 +67,19 @@ public interface HorizontalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	HorizontalPackage eINSTANCE = org.eclipse.emf.ecp.view.horizontal.model.impl.HorizontalPackageImpl.init();
+	VHorizontalPackage eINSTANCE = org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalPackageImpl.init();
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-	 * <em>VHorizontal Layout</em>}' class.
+	 * <em>Layout</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-	 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.HorizontalPackageImpl#getVHorizontalLayout()
+	 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
 	 * @generated
 	 */
-	int VHORIZONTAL_LAYOUT = 0;
+	int HORIZONTAL_LAYOUT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -89,7 +89,7 @@ public interface HorizontalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT__VISIBLE = ViewPackage.COMPOSITE_COLLECTION__VISIBLE;
+	int HORIZONTAL_LAYOUT__VISIBLE = ViewPackage.COMPOSITE_COLLECTION__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -99,7 +99,7 @@ public interface HorizontalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT__ENABLED = ViewPackage.COMPOSITE_COLLECTION__ENABLED;
+	int HORIZONTAL_LAYOUT__ENABLED = ViewPackage.COMPOSITE_COLLECTION__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -109,7 +109,17 @@ public interface HorizontalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT__READONLY = ViewPackage.COMPOSITE_COLLECTION__READONLY;
+	int HORIZONTAL_LAYOUT__READONLY = ViewPackage.COMPOSITE_COLLECTION__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int HORIZONTAL_LAYOUT__DIAGNOSTIC = ViewPackage.COMPOSITE_COLLECTION__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -119,7 +129,7 @@ public interface HorizontalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT__ATTACHMENTS = ViewPackage.COMPOSITE_COLLECTION__ATTACHMENTS;
+	int HORIZONTAL_LAYOUT__ATTACHMENTS = ViewPackage.COMPOSITE_COLLECTION__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -129,7 +139,7 @@ public interface HorizontalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT__NAME = ViewPackage.COMPOSITE_COLLECTION__NAME;
+	int HORIZONTAL_LAYOUT__NAME = ViewPackage.COMPOSITE_COLLECTION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
@@ -139,29 +149,29 @@ public interface HorizontalPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT__COMPOSITES = ViewPackage.COMPOSITE_COLLECTION__COMPOSITES;
+	int HORIZONTAL_LAYOUT__COMPOSITES = ViewPackage.COMPOSITE_COLLECTION__COMPOSITES;
 
 	/**
-	 * The number of structural features of the '<em>VHorizontal Layout</em>' class.
+	 * The number of structural features of the '<em>Layout</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VHORIZONTAL_LAYOUT_FEATURE_COUNT = ViewPackage.COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
+	int HORIZONTAL_LAYOUT_FEATURE_COUNT = ViewPackage.COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
-	 * <em>VHorizontal Layout</em>}'.
+	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for class '<em>VHorizontal Layout</em>'.
+	 * @return the meta object for class '<em>Layout</em>'.
 	 * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
 	 * @generated
 	 */
-	EClass getVHorizontalLayout();
+	EClass getHorizontalLayout();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -171,7 +181,7 @@ public interface HorizontalPackage extends EPackage
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	HorizontalFactory getHorizontalFactory();
+	VHorizontalFactory getHorizontalFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -190,16 +200,16 @@ public interface HorizontalPackage extends EPackage
 	{
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-		 * <em>VHorizontal Layout</em>}' class.
+		 * <em>Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-		 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.HorizontalPackageImpl#getVHorizontalLayout()
+		 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
 		 * @generated
 		 */
-		EClass VHORIZONTAL_LAYOUT = eINSTANCE.getVHorizontalLayout();
+		EClass HORIZONTAL_LAYOUT = eINSTANCE.getHorizontalLayout();
 
 	}
 
-} // HorizontalPackage
+} // VHorizontalPackage

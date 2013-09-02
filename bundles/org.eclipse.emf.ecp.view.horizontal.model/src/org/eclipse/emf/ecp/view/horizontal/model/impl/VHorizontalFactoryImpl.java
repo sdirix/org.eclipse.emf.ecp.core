@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalFactory;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
  * 
  * @generated
  */
-public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFactory
+public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory
 {
 	/**
 	 * Creates the default factory implementation.
@@ -36,12 +36,12 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 	 * 
 	 * @generated
 	 */
-	public static HorizontalFactory init()
+	public static VHorizontalFactory init()
 	{
 		try
 		{
-			HorizontalFactory theHorizontalFactory = (HorizontalFactory) EPackage.Registry.INSTANCE
-				.getEFactory(HorizontalPackage.eNS_URI);
+			VHorizontalFactory theHorizontalFactory = (VHorizontalFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VHorizontalPackage.eNS_URI);
 			if (theHorizontalFactory != null)
 			{
 				return theHorizontalFactory;
@@ -50,7 +50,7 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new HorizontalFactoryImpl();
+		return new VHorizontalFactoryImpl();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 	 * 
 	 * @generated
 	 */
-	public HorizontalFactoryImpl()
+	public VHorizontalFactoryImpl()
 	{
 		super();
 	}
@@ -76,8 +76,8 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 	{
 		switch (eClass.getClassifierID())
 		{
-		case HorizontalPackage.VHORIZONTAL_LAYOUT:
-			return createVHorizontalLayout();
+		case VHorizontalPackage.HORIZONTAL_LAYOUT:
+			return createHorizontalLayout();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -89,10 +89,10 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 	 * 
 	 * @generated
 	 */
-	public VHorizontalLayout createVHorizontalLayout()
+	public VHorizontalLayout createHorizontalLayout()
 	{
-		VHorizontalLayoutImpl vHorizontalLayout = new VHorizontalLayoutImpl();
-		return vHorizontalLayout;
+		VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
+		return horizontalLayout;
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 	 * 
 	 * @generated
 	 */
-	public HorizontalPackage getHorizontalPackage()
+	public VHorizontalPackage getHorizontalPackage()
 	{
-		return (HorizontalPackage) getEPackage();
+		return (VHorizontalPackage) getEPackage();
 	}
 
 	/**
@@ -114,9 +114,9 @@ public class HorizontalFactoryImpl extends EFactoryImpl implements HorizontalFac
 	 * @generated
 	 */
 	@Deprecated
-	public static HorizontalPackage getPackage()
+	public static VHorizontalPackage getPackage()
 	{
-		return HorizontalPackage.eINSTANCE;
+		return VHorizontalPackage.eINSTANCE;
 	}
 
-} // HorizontalFactoryImpl
+} // VHorizontalFactoryImpl

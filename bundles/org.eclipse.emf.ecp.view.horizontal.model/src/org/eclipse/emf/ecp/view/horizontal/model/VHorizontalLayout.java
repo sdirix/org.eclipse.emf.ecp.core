@@ -15,11 +15,11 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>VHorizontal Layout</b></em>'.
+ * A representation of the model object '<em><b>Layout</b></em>'.
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage#getVHorizontalLayout()
+ * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage#getHorizontalLayout()
  * @model
  * @generated
  */

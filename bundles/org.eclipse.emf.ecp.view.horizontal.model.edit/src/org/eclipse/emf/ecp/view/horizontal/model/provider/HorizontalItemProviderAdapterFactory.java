@@ -18,18 +18,27 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalFactory;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
+
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
+
 import org.eclipse.emf.ecp.view.horizontal.model.util.HorizontalAdapterFactory;
+
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
+
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
+
 import org.eclipse.emf.edit.command.CommandParameter;
+
 import org.eclipse.emf.edit.domain.EditingDomain;
+
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -84,7 +93,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		HorizontalEditPlugin.INSTANCE, HorizontalPackage.eNS_URI);
+		HorizontalEditPlugin.INSTANCE, VHorizontalPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -119,7 +128,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
-	protected VHorizontalLayoutItemProvider vHorizontalLayoutItemProvider;
+	protected HorizontalLayoutItemProvider horizontalLayoutItemProvider;
 
 	/**
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout}.
@@ -129,14 +138,14 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * @generated
 	 */
 	@Override
-	public Adapter createVHorizontalLayoutAdapter()
+	public Adapter createHorizontalLayoutAdapter()
 	{
-		if (vHorizontalLayoutItemProvider == null)
+		if (horizontalLayoutItemProvider == null)
 		{
-			vHorizontalLayoutItemProvider = new VHorizontalLayoutItemProvider(this);
+			horizontalLayoutItemProvider = new HorizontalLayoutItemProvider(this);
 		}
 
-		return vHorizontalLayoutItemProvider;
+		return horizontalLayoutItemProvider;
 	}
 
 	/**
@@ -292,8 +301,8 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 */
 	public void dispose()
 	{
-		if (vHorizontalLayoutItemProvider != null)
-			vHorizontalLayoutItemProvider.dispose();
+		if (horizontalLayoutItemProvider != null)
+			horizontalLayoutItemProvider.dispose();
 	}
 
 	/**
@@ -357,7 +366,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.VIEW__CHILDREN,
-						HorizontalFactory.eINSTANCE.createVHorizontalLayout()));
+						VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 
 				return null;
 			}
@@ -374,7 +383,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.CATEGORY__COMPOSITE,
-						HorizontalFactory.eINSTANCE.createVHorizontalLayout()));
+						VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 
 				return null;
 			}
@@ -391,7 +400,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						HorizontalFactory.eINSTANCE.createVHorizontalLayout()));
+						VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 
 				return null;
 			}

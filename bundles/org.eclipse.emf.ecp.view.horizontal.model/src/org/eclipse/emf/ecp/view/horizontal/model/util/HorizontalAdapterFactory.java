@@ -15,8 +15,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage
+ * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage
  * @generated
  */
 public class HorizontalAdapterFactory extends AdapterFactoryImpl
@@ -39,7 +39,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * 
 	 * @generated
 	 */
-	protected static HorizontalPackage modelPackage;
+	protected static VHorizontalPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -52,7 +52,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	{
 		if (modelPackage == null)
 		{
-			modelPackage = HorizontalPackage.eINSTANCE;
+			modelPackage = VHorizontalPackage.eINSTANCE;
 		}
 	}
 
@@ -91,9 +91,9 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 		new HorizontalSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseVHorizontalLayout(VHorizontalLayout object)
+			public Adapter caseHorizontalLayout(VHorizontalLayout object)
 			{
-				return createVHorizontalLayoutAdapter();
+				return createHorizontalLayoutAdapter();
 			}
 
 			@Override
@@ -138,7 +138,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
-	 * <em>VHorizontal Layout</em>}'.
+	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -148,7 +148,7 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
 	 * @generated
 	 */
-	public Adapter createVHorizontalLayoutAdapter()
+	public Adapter createHorizontalLayoutAdapter()
 	{
 		return null;
 	}

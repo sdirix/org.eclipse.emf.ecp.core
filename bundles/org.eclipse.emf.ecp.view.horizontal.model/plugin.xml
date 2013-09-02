@@ -21,7 +21,7 @@
       <!-- @generated horizontal -->
       <package
             uri="http://org/eclipse/emf/ecp/view/horizontal/model"
-            class="org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage"
+            class="org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage"
             genModel="model/horizontal.genmodel"/>
    </extension>
 

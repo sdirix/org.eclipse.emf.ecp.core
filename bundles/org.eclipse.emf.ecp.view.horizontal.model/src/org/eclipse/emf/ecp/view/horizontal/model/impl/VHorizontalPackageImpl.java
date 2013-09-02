@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.view.horizontal.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalFactory;
-import org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * 
  * @generated
  */
-public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPackage
+public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalPackage
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -34,7 +34,7 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 	 * 
 	 * @generated
 	 */
-	private EClass vHorizontalLayoutEClass = null;
+	private EClass horizontalLayoutEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -46,13 +46,13 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.horizontal.model.HorizontalPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private HorizontalPackageImpl()
+	private VHorizontalPackageImpl()
 	{
-		super(eNS_URI, HorizontalFactory.eINSTANCE);
+		super(eNS_URI, VHorizontalFactory.eINSTANCE);
 	}
 
 	/**
@@ -67,23 +67,23 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link HorizontalPackage#eINSTANCE} when that field is accessed. Clients should
-	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
+	 * This method is used to initialize {@link VHorizontalPackage#eINSTANCE} when that field is accessed. Clients
+	 * should not invoke it directly. Instead, they should simply access that field to obtain the package. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static HorizontalPackage init()
+	public static VHorizontalPackage init()
 	{
 		if (isInited)
-			return (HorizontalPackage) EPackage.Registry.INSTANCE.getEPackage(HorizontalPackage.eNS_URI);
+			return (VHorizontalPackage) EPackage.Registry.INSTANCE.getEPackage(VHorizontalPackage.eNS_URI);
 
 		// Obtain or create and register package
-		HorizontalPackageImpl theHorizontalPackage = (HorizontalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof HorizontalPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new HorizontalPackageImpl());
+		VHorizontalPackageImpl theHorizontalPackage = (VHorizontalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VHorizontalPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VHorizontalPackageImpl());
 
 		isInited = true;
 
@@ -100,7 +100,7 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 		theHorizontalPackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(HorizontalPackage.eNS_URI, theHorizontalPackage);
+		EPackage.Registry.INSTANCE.put(VHorizontalPackage.eNS_URI, theHorizontalPackage);
 		return theHorizontalPackage;
 	}
 
@@ -110,9 +110,9 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 	 * 
 	 * @generated
 	 */
-	public EClass getVHorizontalLayout()
+	public EClass getHorizontalLayout()
 	{
-		return vHorizontalLayoutEClass;
+		return horizontalLayoutEClass;
 	}
 
 	/**
@@ -121,9 +121,9 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 	 * 
 	 * @generated
 	 */
-	public HorizontalFactory getHorizontalFactory()
+	public VHorizontalFactory getHorizontalFactory()
 	{
-		return (HorizontalFactory) getEFactoryInstance();
+		return (VHorizontalFactory) getEFactoryInstance();
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 		isCreated = true;
 
 		// Create classes and their features
-		vHorizontalLayoutEClass = createEClass(VHORIZONTAL_LAYOUT);
+		horizontalLayoutEClass = createEClass(HORIZONTAL_LAYOUT);
 	}
 
 	/**
@@ -187,14 +187,14 @@ public class HorizontalPackageImpl extends EPackageImpl implements HorizontalPac
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		vHorizontalLayoutEClass.getESuperTypes().add(theViewPackage.getCompositeCollection());
+		horizontalLayoutEClass.getESuperTypes().add(theViewPackage.getCompositeCollection());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(vHorizontalLayoutEClass, VHorizontalLayout.class, "VHorizontalLayout", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(horizontalLayoutEClass, VHorizontalLayout.class, "HorizontalLayout", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} // HorizontalPackageImpl
+} // VHorizontalPackageImpl
