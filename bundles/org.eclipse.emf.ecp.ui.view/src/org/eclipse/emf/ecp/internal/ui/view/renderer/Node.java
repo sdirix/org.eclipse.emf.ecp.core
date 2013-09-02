@@ -81,6 +81,9 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 *            child to be added as a child to this node
 	 */
 	public void addChild(Node<? extends Renderable> node) {
+		if (node == null) {
+			throw new IllegalArgumentException("Invalid child node: null");
+		}
 		children.add(node);
 	}
 
