@@ -22,6 +22,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -44,7 +45,7 @@ public class ControlRootEClassControl extends LinkControl {
 
 	@Override
 	protected Button[] createButtons(Composite composite) {
-		Button[] buttons = new Button[2];
+		final Button[] buttons = new Button[2];
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
 			getItemPropertyDescriptor(), getStructuralFeature()), composite);
 		buttons[1] = createButtonForAction(new FilteredReferenceAction((EReference) getStructuralFeature(),
@@ -70,7 +71,7 @@ public class ControlRootEClassControl extends LinkControl {
 
 	private class FilteredReferenceCommand extends ChangeCommand {
 
-		private Shell shell;
+		private final Shell shell;
 
 		public FilteredReferenceCommand(Notifier notifier, Shell shell) {
 			super(notifier);
@@ -80,8 +81,8 @@ public class ControlRootEClassControl extends LinkControl {
 		@Override
 		protected void doExecute() {
 
-			AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
-			ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(shell, labelProvider,
+			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+			final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(shell, labelProvider,
 				getContentProvider());
 			dialog.setAllowMultiple(false);
 			dialog.setValidator(new ISelectionStatusValidator() {
@@ -98,11 +99,12 @@ public class ControlRootEClassControl extends LinkControl {
 			dialog.setInput(Registry.INSTANCE);
 			dialog.setMessage("Select an EClass.");
 			dialog.setTitle("Select an EClass.");
-			int result = dialog.open();
+			dialog.setComparator(new ViewerComparator());
+			final int result = dialog.open();
 			if (Window.OK == result) {
-				Object selection = dialog.getFirstResult();
+				final Object selection = dialog.getFirstResult();
 				if (EClass.class.isInstance(selection)) {
-					EClass selectedFeature = (EClass) selection;
+					final EClass selectedFeature = (EClass) selection;
 
 					((View) getModelElementContext().getModelElement()).setRootEClass(selectedFeature);
 				}
@@ -128,7 +130,7 @@ public class ControlRootEClassControl extends LinkControl {
 						return true;
 					}
 					if (Descriptor.class.isInstance(element)) {
-						Descriptor descriptor = (Descriptor) element;
+						final Descriptor descriptor = (Descriptor) element;
 						descriptor.getEPackage();
 						return true;
 					}
@@ -151,9 +153,9 @@ public class ControlRootEClassControl extends LinkControl {
 
 				public Object[] getChildren(Object parentElement) {
 					if (EPackage.class.isInstance(parentElement)) {
-						EPackage ePackage = (EPackage) parentElement;
-						Set<EClass> result = new LinkedHashSet<EClass>();
-						for (EClassifier classifier : ePackage.getEClassifiers()) {
+						final EPackage ePackage = (EPackage) parentElement;
+						final Set<EClass> result = new LinkedHashSet<EClass>();
+						for (final EClassifier classifier : ePackage.getEClassifiers()) {
 							if (EClass.class.isInstance(classifier)) {
 								result.add((EClass) classifier);
 							}
