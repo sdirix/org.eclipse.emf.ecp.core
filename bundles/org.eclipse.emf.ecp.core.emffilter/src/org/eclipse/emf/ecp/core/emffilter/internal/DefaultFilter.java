@@ -71,6 +71,11 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/ecp/view/separator/model");
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model");
 		packages.add("http://org/eclipse/emf/ecp/view/groupedgrid/model");
+		packages.add("http://org/eclipse/emf/ecp/view/label/model");
+		packages.add("http://org/eclipse/emf/ecp/view/group/model");
+		packages.add("http://org/eclipse/emf/ecp/view/horizontal/model");
+		packages.add("http://org/eclipse/emf/ecp/view/vertical/model");
+		packages.add("http://org/eclipse/emf/ecp/view/rule/model");
 
 	}
 
@@ -118,6 +123,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://eclipse.org/graphiti/mm/pictograms");
 		packages.add("http://eclipse.org/graphiti/mm/algorithms");
 		packages.add("http://eclipse.org/graphiti/mm");
+		packages.add("http:///org/eclipse/graphiti/examples/filesystem");
 	}
 
 	/**
