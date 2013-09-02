@@ -7,44 +7,47 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.View;
 import org.osgi.framework.Bundle;
 
 public class ViewProviderHelper {
 
-	private static Set<IViewProvider> viewProviders=new HashSet<IViewProvider>();
+	private static Set<IViewProvider> viewProviders = new HashSet<IViewProvider>();
 
 	public static Set<IViewProvider> getViewProviders() {
-		if (viewProviders == null || viewProviders.isEmpty())
+		if (viewProviders == null || viewProviders.isEmpty()) {
 			readViewProviders();
+		}
 		return viewProviders;
 	}
 
 	private static void readViewProviders() {
-		IConfigurationElement[] controls = Platform.getExtensionRegistry()
-				.getConfigurationElementsFor(
-						"org.eclipse.emf.ecp.ui.view.viewModelProviders");
-		for (IConfigurationElement e : controls) {
+		final IConfigurationElement[] controls = Platform.getExtensionRegistry()
+			.getConfigurationElementsFor(
+				"org.eclipse.emf.ecp.ui.view.viewModelProviders");
+		for (final IConfigurationElement e : controls) {
 			try {
-				String clazz = e.getAttribute("class");
-				Class<? extends IViewProvider> resolvedClass = loadClass(e
-						.getContributor().getName(), clazz);
-				Constructor<? extends IViewProvider> controlConstructor = resolvedClass
-						.getConstructor();
-				IViewProvider viewProvider = controlConstructor.newInstance();
+				final String clazz = e.getAttribute("class");
+				final Class<? extends IViewProvider> resolvedClass = loadClass(e
+					.getContributor().getName(), clazz);
+				final Constructor<? extends IViewProvider> controlConstructor = resolvedClass
+					.getConstructor();
+				final IViewProvider viewProvider = controlConstructor.newInstance();
 				viewProviders.add(viewProvider);
-			} catch (ClassNotFoundException ex) {
+			} catch (final ClassNotFoundException ex) {
 				Activator.log(ex);
-			} catch (NoSuchMethodException ex) {
+			} catch (final NoSuchMethodException ex) {
 				Activator.log(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.log(ex);
-			} catch (InstantiationException ex) {
+			} catch (final InstantiationException ex) {
 				Activator.log(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.log(ex);
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.log(ex);
-			} catch (InvocationTargetException ex) {
+			} catch (final InvocationTargetException ex) {
 				Activator.log(ex);
 			}
 
@@ -54,15 +57,35 @@ public class ViewProviderHelper {
 
 	@SuppressWarnings("unchecked")
 	private static <T> Class<T> loadClass(String bundleName, String clazz)
-			throws ClassNotFoundException {
-		Bundle bundle = Platform.getBundle(bundleName);
+		throws ClassNotFoundException {
+		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
 			// TODO externalize strings
 			throw new ClassNotFoundException(clazz
-					+ " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-					+ " cannot be resolved"); //$NON-NLS-1$
+				+ " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
+				+ " cannot be resolved"); //$NON-NLS-1$
 		}
 		return (Class<T>) bundle.loadClass(clazz);
+
+	}
+
+	/**
+	 * @return a view model for the given {@link EObject}
+	 */
+	public static View getView(EObject eObject) {
+		int highestPrio = IViewProvider.NOT_APPLICABLE;
+		IViewProvider selectedProvider = null;
+		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
+			final int prio = viewProvider.canRender(eObject);
+			if (prio > highestPrio) {
+				highestPrio = prio;
+				selectedProvider = viewProvider;
+			}
+		}
+		if (selectedProvider != null) {
+			return selectedProvider.generate(eObject);
+		}
+		return null;
 
 	}
 }
