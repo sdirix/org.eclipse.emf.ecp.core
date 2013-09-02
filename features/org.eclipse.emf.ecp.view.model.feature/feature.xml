@@ -14,7 +14,9 @@
       %copyright
    </copyright>
 
-  
+  <license url="%licenseURL">
+      %license
+   </license>
 
    <plugin
          id="org.eclipse.emf.ecp.view.model"
