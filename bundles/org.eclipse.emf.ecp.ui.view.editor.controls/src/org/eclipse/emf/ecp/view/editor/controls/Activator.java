@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.view.editor.controls;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
@@ -45,7 +46,8 @@ public class Activator extends AbstractUIPlugin {
 
 			public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) {
 				if (project.getProvider().getName().equals(WorkspaceProvider.NAME)) {
-					for (final Object object : objects) {
+					final EList<Object> contents = project.getContents();
+					for (final Object object : contents) {
 						if (object instanceof View) {
 							ViewModelFileExtensionsManager.dispose();
 						}
