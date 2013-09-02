@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
@@ -66,6 +67,13 @@ public class ViewModelFileExtensionsManagerTest {
 	public void testCreateViewModel() {
 		final EObject eObject = EcoreUtil.create(eClass1);
 		final View view = manager.createView(eObject);
+		assertEquals(VIEWNAME, view.getName());
+	}
+
+	@Test
+	public void testIntegrationWithViewProvider() {
+		final EObject eObject = EcoreUtil.create(eClass1);
+		final View view = ViewProviderHelper.getView(eObject);
 		assertEquals(VIEWNAME, view.getName());
 	}
 }

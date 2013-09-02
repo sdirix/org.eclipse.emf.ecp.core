@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.model.View;
@@ -143,7 +144,7 @@ public final class ViewModelFileExtensionsManager {
 	 * @return a view model for the given eObject
 	 */
 	public View createView(EObject eObject) {
-		return map.get(eObject.eClass());
+		return EcoreUtil.copy(map.get(eObject.eClass()));
 	}
 
 }
