@@ -123,6 +123,9 @@ public final class ConditionEvaluator {
 			if (eReference.getEReferenceType().isInstance(parent)) {
 				break;
 			}
+			if (!eReference.getEContainingClass().equals(parent.eClass())) {
+				continue;
+			}
 
 			final EObject child = (EObject) parent.eGet(eReference);
 
