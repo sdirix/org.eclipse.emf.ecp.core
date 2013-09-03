@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SWT Renderer Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt.test
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.2.qualifier
 Fragment-Host: org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.0.1,1.1.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Modeling Project
