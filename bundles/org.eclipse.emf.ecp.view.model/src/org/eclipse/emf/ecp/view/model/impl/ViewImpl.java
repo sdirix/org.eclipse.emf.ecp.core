@@ -92,14 +92,13 @@ public class ViewImpl extends CategorizationImpl implements View {
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy())
 		{
-			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
 			if (rootEClass != oldRootEClass)
 			{
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
-				}
 			}
 		}
 		return rootEClass;
@@ -122,12 +121,11 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 * @generated
 	 */
 	public void setRootEClass(EClass newRootEClass) {
-		final EClass oldRootEClass = rootEClass;
+		EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.VIEW__ROOT_ECLASS, oldRootEClass,
 				rootEClass));
-		}
 	}
 
 	/**
@@ -171,9 +169,8 @@ public class ViewImpl extends CategorizationImpl implements View {
 		switch (featureID)
 		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
-			if (resolve) {
+			if (resolve)
 				return getRootEClass();
-			}
 			return basicGetRootEClass();
 		case ViewPackage.VIEW__CHILDREN:
 			return getChildren();

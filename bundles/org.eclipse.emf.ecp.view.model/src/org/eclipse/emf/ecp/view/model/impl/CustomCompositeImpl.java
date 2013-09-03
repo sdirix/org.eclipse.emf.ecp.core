@@ -114,12 +114,11 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 * @generated
 	 */
 	public void setBundle(String newBundle) {
-		final String oldBundle = bundle;
+		String oldBundle = bundle;
 		bundle = newBundle;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CUSTOM_COMPOSITE__BUNDLE, oldBundle,
 				bundle));
-		}
 	}
 
 	/**
@@ -139,12 +138,11 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 * @generated
 	 */
 	public void setClassName(String newClassName) {
-		final String oldClassName = className;
+		String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CUSTOM_COMPOSITE__CLASS_NAME,
 				oldClassName, className));
-		}
 	}
 
 	/**
@@ -231,11 +229,10 @@ public class CustomCompositeImpl extends CompositeImpl implements CustomComposit
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundle: ");
 		result.append(bundle);
 		result.append(", className: ");

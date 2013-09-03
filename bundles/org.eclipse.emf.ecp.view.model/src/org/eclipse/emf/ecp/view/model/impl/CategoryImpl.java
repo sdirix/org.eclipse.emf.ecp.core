@@ -83,17 +83,16 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 	 * @generated
 	 */
 	public NotificationChain basicSetComposite(Composite newComposite, NotificationChain msgs) {
-		final Composite oldComposite = composite;
+		Composite oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired())
 		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.CATEGORY__COMPOSITE, oldComposite, newComposite);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -108,23 +107,19 @@ public class CategoryImpl extends AbstractCategorizationImpl implements Category
 		if (newComposite != composite)
 		{
 			NotificationChain msgs = null;
-			if (composite != null) {
+			if (composite != null)
 				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CATEGORY__COMPOSITE, null, msgs);
-			}
-			if (newComposite != null) {
+			if (newComposite != null)
 				msgs = ((InternalEObject) newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CATEGORY__COMPOSITE, null, msgs);
-			}
 			msgs = basicSetComposite(newComposite, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CATEGORY__COMPOSITE, newComposite,
 				newComposite));
-		}
 	}
 
 	/**

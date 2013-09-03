@@ -152,14 +152,13 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public EStructuralFeature getTargetFeature() {
 		if (targetFeature != null && targetFeature.eIsProxy())
 		{
-			final InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
+			InternalEObject oldTargetFeature = (InternalEObject) targetFeature;
 			targetFeature = (EStructuralFeature) eResolveProxy(oldTargetFeature);
 			if (targetFeature != oldTargetFeature)
 			{
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.CONTROL__TARGET_FEATURE,
 						oldTargetFeature, targetFeature));
-				}
 			}
 		}
 		return targetFeature;
@@ -182,12 +181,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public void setTargetFeature(EStructuralFeature newTargetFeature) {
-		final EStructuralFeature oldTargetFeature = targetFeature;
+		EStructuralFeature oldTargetFeature = targetFeature;
 		targetFeature = newTargetFeature;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__TARGET_FEATURE,
 				oldTargetFeature, targetFeature));
-		}
 	}
 
 	/**
@@ -221,12 +219,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public void setMandatory(boolean newMandatory) {
-		final boolean oldMandatory = mandatory;
+		boolean oldMandatory = mandatory;
 		mandatory = newMandatory;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
 				mandatory));
-		}
 	}
 
 	/**
@@ -263,12 +260,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	public void setLabelAlignment(Alignment newLabelAlignment)
 	{
-		final Alignment oldLabelAlignment = labelAlignment;
+		Alignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
-		}
 	}
 
 	/**
@@ -282,9 +278,8 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		switch (featureID)
 		{
 		case ViewPackage.CONTROL__TARGET_FEATURE:
-			if (resolve) {
+			if (resolve)
 				return getTargetFeature();
-			}
 			return basicGetTargetFeature();
 		case ViewPackage.CONTROL__HINT:
 			return getHint();
@@ -391,11 +386,10 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hint: ");
 		result.append(hint);
 		result.append(", mandatory: ");

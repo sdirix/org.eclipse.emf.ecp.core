@@ -98,14 +98,13 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	public EAttribute getAttribute() {
 		if (attribute != null && attribute.eIsProxy())
 		{
-			final InternalEObject oldAttribute = (InternalEObject) attribute;
+			InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
 			if (attribute != oldAttribute)
 			{
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.TABLE_COLUMN__ATTRIBUTE,
 						oldAttribute, attribute));
-				}
 			}
 		}
 		return attribute;
@@ -128,12 +127,11 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * @generated
 	 */
 	public void setAttribute(EAttribute newAttribute) {
-		final EAttribute oldAttribute = attribute;
+		EAttribute oldAttribute = attribute;
 		attribute = newAttribute;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__ATTRIBUTE, oldAttribute,
 				attribute));
-		}
 	}
 
 	/**
@@ -153,12 +151,11 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 * @generated
 	 */
 	public void setReadOnly(boolean newReadOnly) {
-		final boolean oldReadOnly = readOnly;
+		boolean oldReadOnly = readOnly;
 		readOnly = newReadOnly;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_COLUMN__READ_ONLY, oldReadOnly,
 				readOnly));
-		}
 	}
 
 	/**
@@ -172,9 +169,8 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 		switch (featureID)
 		{
 		case ViewPackage.TABLE_COLUMN__ATTRIBUTE:
-			if (resolve) {
+			if (resolve)
 				return getAttribute();
-			}
 			return basicGetAttribute();
 		case ViewPackage.TABLE_COLUMN__READ_ONLY:
 			return isReadOnly();
@@ -248,11 +244,10 @@ public class TableColumnImpl extends EObjectImpl implements TableColumn {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (readOnly: ");
 		result.append(readOnly);
 		result.append(')');

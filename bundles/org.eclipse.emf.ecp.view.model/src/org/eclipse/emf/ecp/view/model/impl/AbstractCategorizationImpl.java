@@ -111,12 +111,11 @@ public abstract class AbstractCategorizationImpl extends RenderableImpl implemen
 	 * @generated
 	 */
 	public void setName(String newName) {
-		final String oldName = name;
+		String oldName = name;
 		name = newName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.ABSTRACT_CATEGORIZATION__NAME, oldName,
 				name));
-		}
 	}
 
 	/**
@@ -236,11 +235,10 @@ public abstract class AbstractCategorizationImpl extends RenderableImpl implemen
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');
