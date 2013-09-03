@@ -7,17 +7,25 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar Mueller - initial API and implementation
+ * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view.renderer;
+package org.eclipse.emf.ecp.ui.view;
 
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+/**
+ * Common super type of exceptions, which can occur during rendering a view.
+ * 
+ * @author Jonas
+ * 
+ */
+public class ECPRendererException extends Exception {
 
-public class NoRendererFoundException extends ECPRendererException {
+	private static final long serialVersionUID = -2934792422909524779L;
 
-	private static final long serialVersionUID = -8540544811118107575L;
+	/**
+	 * @param string the message
+	 */
+	public ECPRendererException(String string) {
 
-	public NoRendererFoundException(String string) {
 		super(string);
 	}
 

@@ -14,18 +14,9 @@ package org.eclipse.emf.ecp.internal.editor;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
-import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -36,8 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
 	private final ECPControlContext modelElementContext;
-	private RendererContext rendererContext;
-	private ViewModelContextImpl viewContext;
+	private ECPSWTView swtView;
 
 	/**
 	 * Default Constructor.
@@ -55,31 +45,13 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 	 * @see org.eclipse.emf.ecp.editor.IEditorCompositeProvider#createUI(org.eclipse.swt.widgets.Composite)
 	 */
 	public Composite createUI(Composite parent) {
-		final View view = getView();
-		final ModelRenderer renderer = ModelRenderer.INSTANCE.getRenderer();
-
-		Node node = null;
 		try {
-			node = NodeBuilders.INSTANCE.build(view, modelElementContext);
-			viewContext = new ViewModelContextImpl(view, modelElementContext.getModelElement());
-			viewContext.registerViewChangeListener(node);
-			rendererContext = renderer.render(node, parent);
-
-		} catch (final NoRendererFoundException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		} catch (final NoPropertyDescriptorFoundExeption ex) {
-			// TODO Auto-generated catch block
+			swtView = ECPSWTViewRendererImpl.render(parent, modelElementContext);
+			return (Composite) swtView.getSWTControl();
+		} catch (final ECPRendererException ex) {
 			ex.printStackTrace();
 		}
-		// TODO: remove cast via type parameterization
-		final Composite tabContent = (Composite) rendererContext.getControl();
-		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		tabContent.setLayoutData(gridData);
-		// TODO: strange api
-		// rendererContext.addListener(node);
-		// rendererContext.triggerValidation();
-		return tabContent;
+		return null;
 	}
 
 	/**
@@ -89,8 +61,8 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 	 * @see org.eclipse.emf.ecp.editor.IEditorCompositeProvider#dispose()
 	 */
 	public void dispose() {
-		rendererContext.dispose();
-		viewContext.dispose();
+		swtView.dispose();
+
 	}
 
 	/**
@@ -111,30 +83,7 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 	 * @see org.eclipse.emf.ecp.editor.IEditorCompositeProvider#focus()
 	 */
 	public void focus() {
-		((Composite) rendererContext.getControl()).setFocus();
+		swtView.getSWTControl().setFocus();
 	}
 
-	/**
-	 * @return
-	 */
-	private View getView() {
-		// IViewProvider viewProvider = new ViewProvider(eClass);
-		// IViewProvider viewProvider = new PlayerViewProvider();
-		// View view = viewProvider.generate(modelElementContext.getModelElement());
-		// return view;
-		int highestPrio = IViewProvider.NOT_APPLICABLE;
-		IViewProvider selectedProvider = null;
-		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
-			final int prio = viewProvider.canRender(modelElementContext.getModelElement());
-			if (prio > highestPrio) {
-				highestPrio = prio;
-				selectedProvider = viewProvider;
-			}
-		}
-		if (selectedProvider != null) {
-			return selectedProvider.generate(modelElementContext.getModelElement());
-		}
-		return null;
-
-	}
 }

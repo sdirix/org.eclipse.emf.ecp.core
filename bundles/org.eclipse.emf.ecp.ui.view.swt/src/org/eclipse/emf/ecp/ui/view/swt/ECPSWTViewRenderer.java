@@ -12,7 +12,9 @@
 package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
+import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -33,7 +35,20 @@ public interface ECPSWTViewRenderer {
 	 * @param parent the parent SWT composite to render the view on
 	 * @param domainObject The domainObject to show in the view
 	 * @return an ECPSWTView providing an interface to the rendered view
+	 * @throws ECPRendererException if there is an exception during rendering
 	 */
-	ECPSWTView render(Composite parent, EObject domainObject);
+	ECPSWTView render(Composite parent, EObject domainObject) throws ECPRendererException;
+
+	/**
+	 * Creates a view with the attributes of the domain object. The layout of the view is specified by the given view
+	 * model.
+	 * 
+	 * @param parent the parent SWT composite to render the view on
+	 * @param domainObject The domainObject to show in the view
+	 * @param viewModel the view model describing the layout of the view
+	 * @return an ECPSWTView providing an interface to the rendered view
+	 * @throws ECPRendererException if there is an exception during rendering
+	 */
+	ECPSWTView render(Composite parent, EObject domainObject, View viewModel) throws ECPRendererException;
 
 }

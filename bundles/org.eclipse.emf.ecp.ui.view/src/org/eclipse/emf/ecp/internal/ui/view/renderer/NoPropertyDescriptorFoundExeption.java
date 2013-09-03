@@ -13,8 +13,9 @@ package org.eclipse.emf.ecp.internal.ui.view.renderer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 
-public class NoPropertyDescriptorFoundExeption extends Exception {
+public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 
 	private static final long serialVersionUID = -4450264762772550298L;
 
@@ -23,6 +24,7 @@ public class NoPropertyDescriptorFoundExeption extends Exception {
 
 	public NoPropertyDescriptorFoundExeption(EObject modelElement,
 		EStructuralFeature targetFeature) {
+		super("No Property descriptor found. Make sure, the corresponing edit bundle is started.");
 		this.modelElement = modelElement;
 		this.targetFeature = targetFeature;
 	}

@@ -7,26 +7,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Jonas - initial API and implementation
- ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt;
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 
-import org.eclipse.swt.widgets.Control;
+package org.eclipse.emf.ecp.ui.view.swt.test;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
- * @author Jonas
+ * Runs all tests.
  * 
  */
-public interface ECPSWTView {
-
-	/**
-	 * @return the root SWT Control of this view.
-	 */
-	Control getSWTControl();
-
-	/**
-	 * Disposes the view.
-	 */
-	void dispose();
+@RunWith(Suite.class)
+@Suite.SuiteClasses({ ECPSWTViewRendererTest.class })
+public class AllTests {
 
 }

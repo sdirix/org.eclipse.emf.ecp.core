@@ -15,16 +15,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,23 +39,54 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class ECPSWTViewRendererTest {
 
-	@Test
-	public void testEmptyView() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	private static EObject domainObject;
+	private static Shell shell;
+	private static View view;
+
+	@Before
+	public void init() {
 		// setup model
-		final EObject player = BowlingFactory.eINSTANCE.createPlayer();
+		domainObject = createDomainObject();
+		shell = SWTViewTestHelper.createShell();
+		view = ViewFactory.eINSTANCE.createView();
+	}
 
-		// setup ui
-		final Shell shell = SWTViewTestHelper.createShell();
+	@Test
+	public void testEmptyView() throws ECPRendererException {
 
-		final ECPSWTView view = ECPSWTViewRenderer.INSTANCE.render(shell, player);
+		final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
 
-		final Control control = view.getSWTControl();
+		final Control control = swtView.getSWTControl();
+		checkFirstLevel(control);
+	}
+
+	private void checkFirstLevel(final Control control) {
 		assertEquals("The Composite for the View has not been rendered", 1,
 			shell.getChildren().length);
 		assertTrue("View was not rendered as Composite",
 			shell.getChildren()[0] instanceof Composite);
 		assertEquals("Returned control and rendered control are not the same",
 			control, shell.getChildren()[0]);
+		assertTrue(control instanceof Composite);
+	}
+
+	private static Player createDomainObject() {
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+		player.setName("Test");
+		return player;
+	}
+
+	@Test
+	public void testViewWithControls() throws ECPRendererException {
+		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE.createControl();
+		control.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+
+		final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+
+		final Control swtControl = swtView.getSWTControl();
+		checkFirstLevel(swtControl);
+		final Composite composite = (Composite) swtControl;
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(composite));
 	}
 }
