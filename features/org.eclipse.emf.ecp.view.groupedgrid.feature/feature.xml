@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.groupedgrid.feature"
       label="View Model Grouped Grid Feature"
-      version="1.0.0.qualifier"
+      version="1.1.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.groupedgrid.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.0.0">
+      license-feature-version="1.1.0">
 
    <description>
       Provides the view model element &quot;grouped grid&quot;

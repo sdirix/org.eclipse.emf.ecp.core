@@ -11,6 +11,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.core;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -20,15 +24,12 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
-
 /**
  * @author Eike Stepper
  * @author Eugen Neufeld
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 1.1
  */
 public interface InternalProject extends ECPProject, ECPProjectAware, StorableElement, Cloneable {
 

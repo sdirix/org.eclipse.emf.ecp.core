@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.view.validation.feature"
       label="View Validation Feature"
-      version="1.0.0.qualifier"
+      version="1.1.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">
