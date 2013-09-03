@@ -72,26 +72,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.custom.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.groupedgrid.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.group.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.label.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.separator.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.view.horizontal.feature"
          version="0.0.0"/>
 

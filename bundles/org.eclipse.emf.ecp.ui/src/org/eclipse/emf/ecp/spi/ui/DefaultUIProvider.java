@@ -285,6 +285,14 @@ public class DefaultUIProvider extends Element implements UIProvider {
 				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
+			// TODO: Temporal hack to remove all other elements of the view model for 1.1.M1
+			final EObject objectToCreate = cp.getEValue();
+			if (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/model")) {
+				System.out.println(objectToCreate.eClass().getName());
+				if (!objectToCreate.eClass().getName().equals("Control")) {
+					continue;
+				}
+			}
 			// TODO needed?
 			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
 			// continue;
