@@ -52,6 +52,26 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.ecp.view.custom.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.groupedgrid.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.label.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.rule.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.group.feature"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.ecp.view.validation.feature"
          version="0.0.0"/>
 
@@ -390,8 +410,8 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
+    
+    <plugin
          id="org.eclipse.emf.ecp.view.validation.source"
          download-size="0"
          install-size="0"
