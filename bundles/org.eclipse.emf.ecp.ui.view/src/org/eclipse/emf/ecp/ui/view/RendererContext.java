@@ -46,9 +46,9 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 		// analyseView();
 
-		// if (node.getRenderable() instanceof View) {
-		// node.addSelectedChildNodeListener(this);
-		// }
+		if (node.getRenderable() instanceof View) {
+			node.addSelectedChildNodeListener(this);
+		}
 	}
 
 	public void setValidationSeverityHandler(ValidationSeverityModifier validationSeverityHandler) {
@@ -242,15 +242,15 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		selectionChangedListeners.remove(listener);
 	}
 
-	// private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
-	// for (final SelectedNodeChangedListener listener : selectionChangedListeners) {
-	// listener.selectionChanged(selectedRenderable);
-	// }
-	// }
+	private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
+		for (final SelectedNodeChangedListener listener : selectionChangedListeners) {
+			listener.selectionChanged(selectedRenderable);
+		}
+	}
 
 	public void childSelected(Node<?> child) {
 		// // trigger validation in order to update validation status of controls
 		// triggerValidation();
-		// fireSelectionChanged(child.getRenderable());
+		fireSelectionChanged(child.getRenderable());
 	}
 }
