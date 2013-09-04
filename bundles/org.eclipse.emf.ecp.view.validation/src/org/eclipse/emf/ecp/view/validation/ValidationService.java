@@ -180,13 +180,15 @@ public class ValidationService extends AbstractViewService {
 	}
 
 	/**
-	 * Registers a listener that will be informed once the validation result's severity is higher than
-	 * {@link Diagnostic#OK}.
+	 * Registers a listener that will receive {@link Diagnostic}s with severity higher than {@link Diagnostic#OK}. After
+	 * registration the listener's {@link ViewValidationListener#onNewValidation(Set)} will be called with current
+	 * results.
 	 * 
 	 * @param listener the listener to register
 	 */
 	public void registerValidationListener(ViewValidationListener listener) {
 		validationListener.add(listener);
+		listener.onNewValidation(getDiagnosticResult());
 	}
 
 	/**
@@ -200,21 +202,24 @@ public class ValidationService extends AbstractViewService {
 
 	private void notifyListeners() {
 		if (validationListener.size() > 0) {
-			final Set<Diagnostic> result = new HashSet<Diagnostic>();
-			if (renderable.getDiagnostic().getHighestSeverity() > Diagnostic.OK) {
-				for (final Object o : renderable.getDiagnostic().getDiagnostics()) {
-					if (((Diagnostic) o).getSeverity() > Diagnostic.OK) {
-						result.add((Diagnostic) o);
-					}
-				}
+			final Set<Diagnostic> result = getDiagnosticResult();
+			for (final ViewValidationListener l : validationListener) {
+				l.onNewValidation(result);
 			}
 
-			if (result.size() > 0) {
-				for (final ViewValidationListener l : validationListener) {
-					l.onValidationErrors(result);
+		}
+	}
+
+	private Set<Diagnostic> getDiagnosticResult() {
+		final Set<Diagnostic> result = new HashSet<Diagnostic>();
+		if (renderable.getDiagnostic().getHighestSeverity() > Diagnostic.OK) {
+			for (final Object o : renderable.getDiagnostic().getDiagnostics()) {
+				if (((Diagnostic) o).getSeverity() > Diagnostic.OK) {
+					result.add((Diagnostic) o);
 				}
 			}
 		}
+		return result;
 	}
 
 	/**

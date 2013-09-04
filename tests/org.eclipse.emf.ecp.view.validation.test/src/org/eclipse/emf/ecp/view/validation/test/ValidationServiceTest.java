@@ -1379,7 +1379,7 @@ public class ValidationServiceTest {
 		final Set<Diagnostic> diagnostics = new HashSet<Diagnostic>();
 
 		final ViewValidationListener listener = new ViewValidationListener() {
-			public void onValidationErrors(Set<Diagnostic> validationResults) {
+			public void onNewValidation(Set<Diagnostic> validationResults) {
 				diagnostics.addAll(validationResults);
 			}
 		};
@@ -1416,7 +1416,7 @@ public class ValidationServiceTest {
 
 		final ViewValidationListener listener = new ViewValidationListener() {
 			@SuppressWarnings("null")
-			public void onValidationErrors(Set<Diagnostic> validationResults) {
+			public void onNewValidation(Set<Diagnostic> validationResults) {
 				// this should not be called. fail because of NPE
 				diagnostics.addAll(validationResults);
 			}
@@ -1446,7 +1446,7 @@ public class ValidationServiceTest {
 		final Set<Diagnostic> diagnostics = new HashSet<Diagnostic>();
 
 		final ViewValidationListener listener = new ViewValidationListener() {
-			public void onValidationErrors(Set<Diagnostic> validationResults) {
+			public void onNewValidation(Set<Diagnostic> validationResults) {
 				diagnostics.addAll(validationResults);
 			}
 		};

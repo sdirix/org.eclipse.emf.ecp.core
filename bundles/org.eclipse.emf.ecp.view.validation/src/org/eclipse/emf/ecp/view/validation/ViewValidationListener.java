@@ -16,15 +16,18 @@ import java.util.Set;
 import org.eclipse.emf.common.util.Diagnostic;
 
 /**
+ * Listens for new validation results.
+ * 
  * @author jfaltermeier
  * 
  */
 public interface ViewValidationListener {
 
 	/**
-	 * Returns validation results if the validation severity is higher than {@link Diagnostic#OK}.
+	 * Returns validation results if the validation severity is higher than {@link Diagnostic#OK}. If there are no
+	 * severities higher than OK an empty Set is returned.
 	 * 
 	 * @param validationResults all diagnostics
 	 */
-	void onValidationErrors(Set<Diagnostic> validationResults);
+	void onNewValidation(Set<Diagnostic> validationResults);
 }
