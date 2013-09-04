@@ -13,6 +13,9 @@ package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
@@ -22,6 +25,8 @@ import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.validation.ValidationService;
+import org.eclipse.emf.ecp.view.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
@@ -335,5 +340,59 @@ public class ViewValidationTest {
 		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
 		lib.getWriters().add(writer2);
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testRegisterListener() {
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+
+		final ViewModelContext vmc = new ViewModelContextImpl(control, writer);
+
+		final Set<Diagnostic> result = new LinkedHashSet<Diagnostic>();
+
+		final ViewValidationListener listener = new ViewValidationListener() {
+			public void onNewValidation(Set<Diagnostic> validationResults) {
+				result.addAll(validationResults);
+			}
+		};
+
+		final ValidationService service = vmc.getService(ValidationService.class);
+		service.registerValidationListener(listener);
+
+		assertEquals("One Diagnostic expected", 1, result.size());
+		assertEquals("Severity of control must be Error", Diagnostic.ERROR, result.iterator().next().getSeverity());
+	}
+
+	public void testListenerUponChange() {
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+
+		final ViewModelContext vmc = new ViewModelContextImpl(control, writer);
+
+		final Set<Diagnostic> lastResult = new LinkedHashSet<Diagnostic>();
+
+		final ViewValidationListener listener = new ViewValidationListener() {
+			public void onNewValidation(Set<Diagnostic> validationResults) {
+				lastResult.clear();
+				lastResult.addAll(validationResults);
+			}
+		};
+
+		final ValidationService service = vmc.getService(ValidationService.class);
+		service.registerValidationListener(listener);
+
+		assertEquals("One Diagnostic expected", 1, lastResult.size());
+
+		writer.setFirstName("Hans");
+
+		assertEquals("No Diagnostic expected since OK", 0, lastResult.size());
+
+		writer.setFirstName("");
+
+		assertEquals("One Diagnostic expected", 1, lastResult.size());
+		assertEquals("Severity of control must be Error", Diagnostic.ERROR, lastResult.iterator().next().getSeverity());
 	}
 }
