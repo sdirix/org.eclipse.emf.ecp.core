@@ -176,12 +176,24 @@ public class ValidationRegistry {
 
 	private void fillMap(Map<EObject, Set<AbstractControl>> source, Map<EObject, Set<AbstractControl>> target) {
 		for (final EObject domainSource : source.keySet()) {
-			if (!target.containsKey(domainSource)) {
-				target.put(domainSource, source.get(domainSource));
-			} else {
-				target.get(domainSource).addAll(source.get(domainSource));
-			}
+			final Set<AbstractControl> controlSet = source.get(domainSource);
+			fillMapEntry(target, domainSource, controlSet);
 		}
+	}
+
+	private void fillMapEntry(Map<EObject, Set<AbstractControl>> target, final EObject domainSource,
+		Set<AbstractControl> controlSet) {
+		if (!target.containsKey(domainSource)) {
+			target.put(domainSource, controlSet);
+		} else {
+			target.get(domainSource).addAll(controlSet);
+		}
+	}
+
+	public void addEObjectControlMapping(EObject domainObject, AbstractControl control) {
+		final LinkedHashSet<AbstractControl> controlSet = new LinkedHashSet<AbstractControl>();
+		controlSet.add(control);
+		fillMapEntry(domainObjectToAffectedControls, domainObject, controlSet);
 	}
 
 	/**

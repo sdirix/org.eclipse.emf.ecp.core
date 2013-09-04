@@ -343,6 +343,36 @@ public class ViewValidationTest {
 	}
 
 	@Test
+	public void testValidationTableControlChildrenRemoveAdded() {
+		final Library lib = TestFactory.eINSTANCE.createLibrary();
+		lib.setName("bla");
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		writer.setFirstName("H");
+		lib.getWriters().add(writer);
+
+		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getLibrary_Writers());
+		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.getColumns().add(tc);
+
+		new ViewModelContextImpl(control, lib);
+		
+		assertEquals("Severity of table must be warning", Diagnostic.WARNING, control.getDiagnostic()
+			.getHighestSeverity());
+
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer2);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+
+		lib.getWriters().remove(writer2);
+
+		assertEquals("Severity of table must be warning", Diagnostic.WARNING, control.getDiagnostic()
+			.getHighestSeverity());
+	}
+
+	@Test
 	public void testRegisterListener() {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final Control control = ViewFactory.eINSTANCE.createControl();
