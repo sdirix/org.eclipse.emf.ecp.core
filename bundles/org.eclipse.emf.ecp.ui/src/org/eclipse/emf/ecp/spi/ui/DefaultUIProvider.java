@@ -292,6 +292,9 @@ public class DefaultUIProvider extends Element implements UIProvider {
 					continue;
 				}
 			}
+			if (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/rule/model")) {
+				continue;
+			}
 			// TODO needed?
 			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
 			// continue;
