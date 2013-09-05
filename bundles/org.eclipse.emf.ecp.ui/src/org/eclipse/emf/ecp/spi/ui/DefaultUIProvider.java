@@ -286,15 +286,16 @@ public class DefaultUIProvider extends Element implements UIProvider {
 				continue;
 			}
 			// TODO: Temporal hack to remove all other elements of the view model for 1.1.M1
-			final EObject objectToCreate = cp.getEValue();
-			if (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/model")) {
-				if (!objectToCreate.eClass().getName().equals("Control")) {
-					continue;
-				}
-			}
-			if (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/rule/model")) {
-				continue;
-			}
+			// final EObject objectToCreate = cp.getEValue();
+			// if (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/model")) {
+			// if (!objectToCreate.eClass().getName().equals("Control")) {
+			// continue;
+			// }
+			// }
+			// if
+			// (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/rule/model")) {
+			// continue;
+			// }
 			// TODO needed?
 			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
 			// continue;
