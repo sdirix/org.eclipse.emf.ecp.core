@@ -13,15 +13,13 @@
 
 package org.eclipse.emf.ecp.internal.core;
 
-import org.eclipse.emf.ecp.core.ECPProjectManager;
-import org.eclipse.emf.ecp.core.ECPProviderRegistry;
-import org.eclipse.emf.ecp.core.ECPRepositoryManager;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-
+import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
+import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -48,8 +46,12 @@ public final class Activator extends Plugin {
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		super.start(bundleContext);
 		instance = this;
+		// Initialize all manager
+		getECPProjectManager();
+		getECPRepositoryManager();
+		getECPProjectManager();
+		super.start(bundleContext);
 	}
 
 	@Override
@@ -102,14 +104,14 @@ public final class Activator extends Plugin {
 	 * @return the message of the {@link Throwable}
 	 */
 	public static String log(Throwable t) {
-		IStatus status = getStatus(t);
+		final IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
 
 	private static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			return coreException.getStatus();
 		}
 
@@ -130,7 +132,7 @@ public final class Activator extends Plugin {
 	 */
 	public static ECPProjectManager getECPProjectManager() {
 		if (ecpProjectManager == null) {
-			ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
+			final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
 				.getServiceReference(ECPProjectManager.class);
 			ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
 		}
@@ -146,7 +148,7 @@ public final class Activator extends Plugin {
 	 */
 	public static ECPRepositoryManager getECPRepositoryManager() {
 		if (ecpRepositoryManager == null) {
-			ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
+			final ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
 				.getServiceReference(ECPRepositoryManager.class);
 			ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
 		}
@@ -162,7 +164,7 @@ public final class Activator extends Plugin {
 	 */
 	public static ECPProviderRegistry getECPProviderRegistry() {
 		if (ecpProviderRegistry == null) {
-			ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
+			final ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
 				.getServiceReference(ECPProviderRegistry.class);
 			ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
 		}

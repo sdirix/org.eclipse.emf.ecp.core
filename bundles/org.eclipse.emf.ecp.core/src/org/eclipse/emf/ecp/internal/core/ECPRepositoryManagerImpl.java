@@ -76,12 +76,12 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * Default constructor.
 	 */
 	public ECPRepositoryManagerImpl() {
+		if (INSTANCE != null) {
+			throw new IllegalStateException("Manager must not be initialized twice");
+		}
 		INSTANCE = this;
-	}
-
-	protected void startup() {
-		setFolder(new File(Activator.getInstance().getStateLocation().toFile(), "repositories"));
-		activate();
+		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
+		setFolder(new File(stateLocation, "repositories"));
 	}
 
 	/** {@inheritDoc} **/

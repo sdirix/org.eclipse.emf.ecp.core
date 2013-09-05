@@ -13,8 +13,12 @@
 
 package org.eclipse.emf.ecp.internal.core;
 
-import org.eclipse.net4j.util.AdapterUtil;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Set;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -36,13 +40,7 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Set;
+import org.eclipse.net4j.util.AdapterUtil;
 
 /**
  * This class manages {@link ECPProvider}.
@@ -60,17 +58,16 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	private final ProviderParser extensionParser = new ProviderParser();
 
 	public ECPProviderRegistryImpl() {
+		if (INSTANCE != null) {
+			throw new IllegalStateException("Manager must not be initialized twice");
+		}
 		INSTANCE = this;
-	}
-
-	protected void startup() {
-		activate();
 	}
 
 	/** {@inheritDoc} **/
 	public InternalProvider getProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
-			ECPProviderAware providerAware = (ECPProviderAware) adaptable;
+			final ECPProviderAware providerAware = (ECPProviderAware) adaptable;
 			return (InternalProvider) providerAware.getProvider();
 		}
 		return AdapterUtil.adapt(adaptable, InternalProvider.class);
@@ -138,7 +135,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 
 		@Override
 		protected InternalProvider createElement(String name, IConfigurationElement configurationElement) {
-			ProviderDescriptor descriptor = new ProviderDescriptor(name, configurationElement);
+			final ProviderDescriptor descriptor = new ProviderDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
 			descriptor.setDescription(configurationElement.getAttribute("description"));
 			return descriptor;
