@@ -19,15 +19,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -54,24 +56,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
 	private Label validationLabel;
 	private Composite composite;
-
-	public final Composite createControl(Composite parent) {
-		composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(parent.getBackground());
-		final int numColumns = 1;
-
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0)
-			.applyTo(composite);
-
-		final Composite innerComposite = new Composite(composite, SWT.NONE);
-		innerComposite.setBackground(parent.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false)
-			.align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
-		createContentControl(innerComposite);
-
-		return composite;
-	}
 
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
@@ -106,7 +90,13 @@ public abstract class ECPAbstractCustomControlSWT extends
 		}.execute();
 	}
 
-	protected abstract void createContentControl(Composite composite);
+	/**
+	 * Adds the controls of this {@link CustomControl} to the given composite.
+	 * 
+	 * @param composite The composite on which this custom control shall add its controls.
+	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
+	 */
+	protected abstract List<RenderingResultRow<Control>> createControls(Composite composite);
 
 	public final void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR

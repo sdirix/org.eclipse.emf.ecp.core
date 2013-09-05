@@ -1,14 +1,19 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.example;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.ui.view.swt.SWTRenderingHelper;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 public class ExampleCustomControl extends ECPAbstractCustomControlSWT{
@@ -37,11 +42,22 @@ public class ExampleCustomControl extends ECPAbstractCustomControlSWT{
 	}
 
 	@Override
-	protected void createContentControl(Composite composite) {
+	protected List<RenderingResultRow<Control>> createControls(Composite composite) {
+		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
+		
 		Label label = new Label(composite, SWT.NONE);
 		label.setText("ExampleLabel");
-		createControl(nameFeature, composite);
-		createControl(eMailFeature, composite);
+		Composite nameComposite = createControl(nameFeature, composite);
+		
+		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+				.createRenderingResultRow(label, nameComposite));
+		
+		Composite emailComposite = createControl(eMailFeature, composite);
+		
+		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+				.createRenderingResultRow(emailComposite));
+		
+		return result;
 	}
 
 	@Override

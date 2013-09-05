@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.osgi.framework.Bundle;
 
@@ -46,11 +45,12 @@ public class CustomControlSWTRenderer extends
 			final ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) obj;
 			categoryComposite.init(node.getControlContext());
 
-			final Composite composite = categoryComposite.createControl(getParentFromInitData(initData));
+			final List<RenderingResultRow<Control>> renderingResultRows = categoryComposite
+				.createControls(getParentFromInitData(initData));
 			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(categoryComposite, customControl,
-				composite));
+				getParentFromInitData(initData)));
 
-			return createResult(composite);
+			return renderingResultRows;
 		} catch (final NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

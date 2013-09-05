@@ -11,10 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.ui.view.swt.SWTRenderingHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -34,12 +40,19 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createContentControl(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected void createContentControl(Composite composite) {
+	protected List<RenderingResultRow<Control>> createControls(Composite composite) {
+		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
+
 		setParent(composite);
 		setLabel(new Label(composite, SWT.NONE));
+
+		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+			.createRenderingResultRow(label));
+
+		return result;
 	}
 
 	/**
