@@ -164,6 +164,9 @@ public class ValidationRegistry {
 	public EObject resolveDomainModel(EObject domainModel, List<EReference> references) {
 		EObject referencedDomainModel = domainModel;
 		for (final EReference eReference : references) {
+			if (!eReference.getEContainingClass().isInstance(referencedDomainModel)) {
+				continue;
+			}
 			EObject child = (EObject) referencedDomainModel.eGet(eReference);
 			if (child == null) {
 				child = EcoreUtil.create(eReference.getEReferenceType());
