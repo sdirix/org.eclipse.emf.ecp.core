@@ -547,16 +547,17 @@ public class TableControl extends SWTControl {
 						final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
 						editingDomain.getCommandStack().execute(
 							RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
+
+						final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+						if (containments.size() < getStructuralFeature().getUpperBound()) {
+							addButton.setEnabled(true);
+						}
+						if (containments.size() <= getStructuralFeature().getLowerBound()) {
+							removeButton.setEnabled(false);
+						}
 					}
 				}.execute();
 
-				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
-				if (containments.size() < getStructuralFeature().getUpperBound()) {
-					addButton.setEnabled(true);
-				}
-				if (containments.size() <= getStructuralFeature().getLowerBound()) {
-					removeButton.setEnabled(false);
-				}
 			}
 		});
 		final EObject modelElement = getModelElementContext().getModelElement();
@@ -584,7 +585,7 @@ public class TableControl extends SWTControl {
 				final EObject modelElement = getModelElementContext().getModelElement();
 				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
 				if (getStructuralFeature().getUpperBound() != -1
-					&& containments.size() == getStructuralFeature().getUpperBound()) {
+					&& containments.size() >= getStructuralFeature().getUpperBound()) {
 					addButton.setEnabled(false);
 				}
 				if (containments.size() > getStructuralFeature().getLowerBound()) {
