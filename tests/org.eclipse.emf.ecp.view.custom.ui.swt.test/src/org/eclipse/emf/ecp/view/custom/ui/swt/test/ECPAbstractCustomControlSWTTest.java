@@ -321,8 +321,7 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.createControls(composite);
 
 		assertTrue(customControl.isRendered());
-		final Composite parentCompositeFromView = SWTCustomControlTest
-			.getParentCompositeforInnerContentFromOuterComposite(composite);
+		final Composite parentCompositeFromView = composite;
 		final Control control = getLabelFromComposite(parentCompositeFromView);
 		assertTrue("Control is not the one rendered by the custom control", control instanceof Label);
 		final Label label = (Label) control;
@@ -438,24 +437,6 @@ public class ECPAbstractCustomControlSWTTest {
 			ECPAbstractCustomControlSWT.VALIDATION_ERROR_IMAGE));
 		customControl.resetValidation();
 		assertEquals(null, validationLabel.getImage());
-	}
-
-	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#setEditable(boolean)}.
-	 */
-	// @Test
-	public void testSetEditable() {
-		// final Composite composite = customControl.createControls(testComposite);
-		// customControl.setEditable(false);
-		// assertEquals(false, composite.getEnabled());
-
-		// TODO: shouldn't the inner controls also be disabled?
-		// final Composite innerComposite = SWTCustomControlTest
-		// .getParentCompositeforInnerContentFromOuterComposite(composite);
-		// assertEquals(false, innerComposite.getEnabled());
-		// final Control label = getLabelFromComposite(innerComposite);
-		// assertEquals(false, label.getEnabled());
-
 	}
 
 	/**

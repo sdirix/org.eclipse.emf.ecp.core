@@ -76,7 +76,7 @@ public class SWTCustomControlTest {
 		final Renderable controlInView = createCustomControlInView();
 		final Shell shell = SWTViewTestHelper.createShell();
 		final Composite composite = (Composite) SWTViewTestHelper.render(controlInView, shell);
-		assertSame(getParentCompositeFromView(composite), CustomControlStub.getParent());
+		assertSame(composite, CustomControlStub.getParent());
 	}
 
 	/**
@@ -89,24 +89,6 @@ public class SWTCustomControlTest {
 		customControl.setBundle(BUNDLE_ID);
 		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
 		return view;
-	}
-
-	/**
-	 * @param composite
-	 * @return the parent composite for the custom control
-	 */
-	private static Composite getParentCompositeFromView(Composite composite) {
-		Composite child = (Composite) composite.getChildren()[0];
-		child = getParentCompositeforInnerContentFromOuterComposite(child);
-		return child;
-	}
-
-	/**
-	 * @param child
-	 * @return the inner composite from the outer one
-	 */
-	public static Composite getParentCompositeforInnerContentFromOuterComposite(Composite child) {
-		return (Composite) child.getChildren()[0];
 	}
 
 	@Test

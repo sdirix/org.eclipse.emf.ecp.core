@@ -165,10 +165,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 
 	protected abstract void resetContentValidation();
 
-	public final void setEditable(boolean isEditable) {
-		composite.setEnabled(isEditable);
-	}
-
 	protected final SWTCustomControlHelper getSWTHelper() {
 		return swtHelper;
 	}

@@ -12,9 +12,10 @@
 package org.eclipse.emf.ecp.edit;
 
 import org.eclipse.emf.common.util.Diagnostic;
+
 /**
  * The {@link ECPControl} is the interface describing a control.
- *  
+ * 
  * @author Eugen Neufeld
  * 
  */
@@ -43,10 +44,4 @@ public interface ECPControl {
 	 */
 	boolean showLabel();
 
-	/**
-	 * Sets the state of the widget to be either editable or not.
-	 * 
-	 * @param isEditable whether to set the widget editable
-	 */
-	void setEditable(boolean isEditable);
 }

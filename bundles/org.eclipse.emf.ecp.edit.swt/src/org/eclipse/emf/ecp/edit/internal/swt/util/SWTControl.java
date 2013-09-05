@@ -186,6 +186,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 	}
 
 	/**
+	 * Sets the state of the widget to be either editable or not.
+	 * 
+	 * @param isEditable whether to set the widget editable
+	 */
+	protected abstract void setEditable(boolean isEditable);
+
+	/**
 	 * @return
 	 */
 	protected abstract Control[] getControlsForTooltip();
