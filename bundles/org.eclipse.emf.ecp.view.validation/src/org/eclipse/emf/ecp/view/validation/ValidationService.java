@@ -82,9 +82,8 @@ public class ValidationService extends AbstractViewService {
 
 		domainChangeListener = new ModelChangeListener() {
 			public void notifyChange(ModelChangeNotification notification) {
-				// ignore notifications during initialization
 				if (viewValidationCachedTree == null) {
-					return;
+					return; // ignore notifications during initialization
 				}
 				final Notification rawNotification = notification.getRawNotification();
 				switch (rawNotification.getEventType()) {
@@ -105,12 +104,10 @@ public class ValidationService extends AbstractViewService {
 
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
-
 			}
 
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
-
 			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);

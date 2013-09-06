@@ -193,6 +193,12 @@ public class ValidationRegistry {
 		}
 	}
 
+	/**
+	 * Adds a single control for a domainObject to the registry.
+	 * 
+	 * @param domainObject the domain object
+	 * @param control the control to be registered for the domain object
+	 */
 	public void addEObjectControlMapping(EObject domainObject, AbstractControl control) {
 		final LinkedHashSet<AbstractControl> controlSet = new LinkedHashSet<AbstractControl>();
 		controlSet.add(control);
