@@ -72,15 +72,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.validation.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.view.vertical.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
 
    <plugin
