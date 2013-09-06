@@ -31,6 +31,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eugen Neufeld
@@ -55,7 +56,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
 	private Label validationLabel;
-	private Composite composite;
+	private Shell shell;
 
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
@@ -74,10 +75,19 @@ public abstract class ECPAbstractCustomControlSWT extends
 		showMessageDialog(MessageDialog.INFORMATION, title, message);
 	}
 
+	/**
+	 * Sets the shell where message dialogs are displayed.
+	 * 
+	 * @param shell the shell
+	 */
+	public final void setMessageShell(Shell shell) {
+		this.shell = shell;
+	}
+
 	// Not yet API
 	@SuppressWarnings("restriction")
 	private void showMessageDialog(int type, String title, String message) {
-		final MessageDialog dialog = new MessageDialog(composite.getShell(), title,
+		final MessageDialog dialog = new MessageDialog(shell, title,
 			null, message, type,
 			new String[] { JFaceResources
 				.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
@@ -193,10 +203,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	@Override
 	public final void dispose() {
-		if (composite != null) {
-			composite.dispose();
-			composite = null;
-		}
 		if (validationLabel != null) {
 			validationLabel.dispose();
 			validationLabel = null;
