@@ -13,12 +13,19 @@
 
 package org.eclipse.emf.ecp.internal.core;
 
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
@@ -30,17 +37,7 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.DisposeException;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
-
-import org.eclipse.core.runtime.Platform;
-
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map.Entry;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 /**
  * This Class describes a repository.
@@ -99,7 +96,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 		label = in.readUTF();
 		description = in.readUTF();
 
-		String providerName = in.readUTF();
+		final String providerName = in.readUTF();
 		provider = (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		if (provider == null) {
 			throw new IllegalStateException("Provider not found: " + providerName);
@@ -177,9 +174,9 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object getAdapter(Class adapterType) {
-		InternalProvider provider = getProvider();
+		final InternalProvider provider = getProvider();
 		if (!provider.isDisposed()) {
-			Object result = provider.getAdapter(this, adapterType);
+			final Object result = provider.getAdapter(this, adapterType);
 			if (result != null) {
 				return result;
 			}
@@ -219,11 +216,6 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
-	public ECPContainer getContext() {
-		return this;
-	}
-
-	/** {@inheritDoc} **/
 	public boolean canDelete() {
 		return isStorable();
 	}
@@ -236,7 +228,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 
 		try {
 			provider.handleLifecycle(this, LifecycleEvent.REMOVE);
-		} catch (Exception ex) {
+		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
 
@@ -256,8 +248,8 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	 * @return array of currently open {@link ECPProject ECPProjects} that are shared on this repository
 	 */
 	public InternalProject[] getOpenProjects() {
-		List<InternalProject> result = new ArrayList<InternalProject>();
-		for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
+		final List<InternalProject> result = new ArrayList<InternalProject>();
+		for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
 			if (project.isOpen() && project.getRepository().equals(this)) {
 				result.add((InternalProject) project);
 			}

@@ -73,7 +73,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	private final RepositoryParser extensionParser = new RepositoryParser();
 
 	/**
-	 * Default constructor.
+	 * Should not be called directly, use service instead.
 	 */
 	public ECPRepositoryManagerImpl() {
 		if (INSTANCE != null) {

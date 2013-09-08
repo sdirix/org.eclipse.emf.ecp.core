@@ -62,6 +62,9 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 */
 	private boolean initializedProjects;
 
+	/**
+	 * Should not be called directly, use service instead.
+	 */
 	public ECPProjectManagerImpl() {
 		if (INSTANCE != null) {
 			throw new IllegalStateException("Manager must not be initialized twice");
@@ -183,7 +186,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 		try {
 			ECPUtil.getECPObserverBus().notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
-		} catch (final Exception ex) {
+		} catch (final RuntimeException ex) {
 			Activator.log(ex);
 		}
 	}

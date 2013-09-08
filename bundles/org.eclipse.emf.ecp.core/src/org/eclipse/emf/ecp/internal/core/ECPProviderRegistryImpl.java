@@ -57,6 +57,9 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 
 	private final ProviderParser extensionParser = new ProviderParser();
 
+	/**
+	 * Should not be called directly, use service instead.
+	 */
 	public ECPProviderRegistryImpl() {
 		if (INSTANCE != null) {
 			throw new IllegalStateException("Manager must not be initialized twice");

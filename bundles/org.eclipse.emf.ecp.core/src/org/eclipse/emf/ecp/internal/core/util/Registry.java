@@ -227,8 +227,6 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		// Can be overridden in subclasses
 	}
 
-	// protected abstract ELEMENT[] createElementArray(int size);
-
 	protected abstract String getElementName(ELEMENT element);
 
 	protected static boolean isDisposingElement() {

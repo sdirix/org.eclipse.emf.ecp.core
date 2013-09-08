@@ -32,5 +32,5 @@ Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.1.0";x-internal
  org.eclipse.emf.ecp.edit.internal.swt.actions;version="1.1.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.1.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt",
  org.eclipse.emf.ecp.edit.internal.swt.table;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.edit.internal.swt.util;version="1.1.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.explorereditorbridge"
+ org.eclipse.emf.ecp.edit.internal.swt.util;version="1.1.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.editor"
 Bundle-Vendor: %Bundle-Vendor
