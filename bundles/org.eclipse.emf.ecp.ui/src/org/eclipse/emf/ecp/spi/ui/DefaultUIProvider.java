@@ -70,6 +70,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @author Eike Stepper
  * @author Eugen Neufeld
+ * @since 1.1
  */
 public class DefaultUIProvider extends Element implements UIProvider {
 
@@ -296,7 +297,6 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			// (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/rule/model")) {
 			// continue;
 			// }
-
 
 			// TODO needed?
 			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
