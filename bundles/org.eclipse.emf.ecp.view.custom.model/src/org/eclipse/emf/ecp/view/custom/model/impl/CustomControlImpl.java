@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.model.impl;
 
 import java.lang.reflect.Constructor;
@@ -16,6 +25,7 @@ import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl;
 import org.osgi.framework.Bundle;
 
@@ -26,11 +36,11 @@ import org.osgi.framework.Bundle;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl#getBundle <em>Bundle</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl#getClassName <em>Class Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl#getBundle <em>Bundle</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl#getClassName <em>Class Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CustomControlImpl extends AbstractControlImpl implements CustomControl {
@@ -38,6 +48,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * The default value of the '{@link #getBundle() <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getBundle()
 	 * @generated
 	 * @ordered
@@ -48,6 +59,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * The cached value of the '{@link #getBundle() <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getBundle()
 	 * @generated
 	 * @ordered
@@ -58,6 +70,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * The default value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -68,6 +81,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * The cached value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -77,6 +91,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CustomControlImpl() {
@@ -86,6 +101,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -96,6 +112,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getBundle() {
@@ -105,18 +122,22 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setBundle(String newBundle) {
-		String oldBundle = bundle;
+		final String oldBundle = bundle;
 		bundle = newBundle;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CustomPackage.CUSTOM_CONTROL__BUNDLE, oldBundle, bundle));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, CustomPackage.CUSTOM_CONTROL__BUNDLE, oldBundle,
+				bundle));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getClassName() {
@@ -126,27 +147,31 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setClassName(String newClassName) {
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CustomPackage.CUSTOM_CONTROL__CLASS_NAME, oldClassName, className));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, CustomPackage.CUSTOM_CONTROL__CLASS_NAME,
+				oldClassName, className));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CustomPackage.CUSTOM_CONTROL__BUNDLE:
-				return getBundle();
-			case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
-				return getClassName();
+		case CustomPackage.CUSTOM_CONTROL__BUNDLE:
+			return getBundle();
+		case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+			return getClassName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -154,17 +179,18 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CustomPackage.CUSTOM_CONTROL__BUNDLE:
-				setBundle((String)newValue);
-				return;
-			case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
-				setClassName((String)newValue);
-				return;
+		case CustomPackage.CUSTOM_CONTROL__BUNDLE:
+			setBundle((String) newValue);
+			return;
+		case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+			setClassName((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -172,17 +198,18 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CustomPackage.CUSTOM_CONTROL__BUNDLE:
-				setBundle(BUNDLE_EDEFAULT);
-				return;
-			case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
-				setClassName(CLASS_NAME_EDEFAULT);
-				return;
+		case CustomPackage.CUSTOM_CONTROL__BUNDLE:
+			setBundle(BUNDLE_EDEFAULT);
+			return;
+		case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+			setClassName(CLASS_NAME_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -190,15 +217,16 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CustomPackage.CUSTOM_CONTROL__BUNDLE:
-				return BUNDLE_EDEFAULT == null ? bundle != null : !BUNDLE_EDEFAULT.equals(bundle);
-			case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
-				return CLASS_NAME_EDEFAULT == null ? className != null : !CLASS_NAME_EDEFAULT.equals(className);
+		case CustomPackage.CUSTOM_CONTROL__BUNDLE:
+			return BUNDLE_EDEFAULT == null ? bundle != null : !BUNDLE_EDEFAULT.equals(bundle);
+		case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+			return CLASS_NAME_EDEFAULT == null ? className != null : !CLASS_NAME_EDEFAULT.equals(className);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -206,13 +234,16 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy()) {
+			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundle: ");
 		result.append(bundle);
 		result.append(", className: ");
@@ -224,59 +255,71 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
+	 * @return all editable and referenced features of the associated {@link ECPCustomControl}.
+	 * 
 	 * @generated NOT
 	 */
 	@Override
 	public EList<EStructuralFeature> getTargetFeatures() {
-		EList<EStructuralFeature> result=new BasicEList<EStructuralFeature>();
-		if(getBundle()==null || getClassName()==null){
+		final EList<EStructuralFeature> result = new BasicEList<EStructuralFeature>();
+		if (getBundle() == null || getClassName() == null) {
 			return result;
 		}
 		try {
-			Class<?> clazz = getClass(this.getBundle(),
-					this.getClassName());
-			Constructor<?> constructor = clazz.getConstructor();
-			Object obj = constructor.newInstance();
-			ECPCustomControl categoryComposite = (ECPCustomControl) obj;
-			for(ECPCustomControlFeature editFeature:categoryComposite.getEditableFeatures()){
+			final ECPCustomControl categoryComposite = getECPCustomControl();
+			for (final ECPCustomControlFeature editFeature : categoryComposite.getEditableFeatures()) {
 				result.add(editFeature.getTargetFeature());
 			}
-			for(ECPCustomControlFeature refFeature:categoryComposite.getReferencedFeatures()){
+			for (final ECPCustomControlFeature refFeature : categoryComposite.getReferencedFeatures()) {
 				result.add(refFeature.getTargetFeature());
 			}
-		} catch (NoSuchMethodException e) {
-			//TODO activate?
-//			Activator.logException(e);
-		} catch (InstantiationException e) {
-			//TODO activate?
-//			Activator.logException(e);
-		} catch (IllegalAccessException e) {
-			//TODO activate?
-//			Activator.logException(e);
-		} catch (IllegalArgumentException e) {
-			//TODO activate?
-//			Activator.logException(e);
-		} catch (InvocationTargetException e) {
-			//TODO activate?
-//			Activator.logException(e);
-		} catch (ClassNotFoundException e) {
-			//TODO activate?
-//			Activator.logException(e);
+		} catch (final ECPCustomControlInitException ex) {
+			// TODO activate?
+			// Activator.logException(e);
 		}
 
 		return result;
 	}
 
 	private Class<?> getClass(String pluginID, String className)
-			throws ClassNotFoundException {
-		Bundle bundle = Platform.getBundle(pluginID);
+		throws ClassNotFoundException {
+		final Bundle bundle = Platform.getBundle(pluginID);
 		if (bundle == null) {
 			throw new ClassNotFoundException(className
-					+ " cannot be loaded because because bundle " + pluginID
-					+ " cannot be resolved");
-		} else {
-			return bundle.loadClass(className);
+				+ " cannot be loaded because because bundle " + pluginID
+				+ " cannot be resolved");
+		}
+		return bundle.loadClass(className);
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.custom.model.CustomControl#getECPCustomControl()
+	 */
+	public ECPCustomControl getECPCustomControl() throws ECPCustomControlInitException {
+		try {
+			final Class<?> clazz = getClass(getBundle(), getClassName());
+			final Constructor<?> constructor = clazz.getConstructor();
+			final Object obj = constructor.newInstance();
+			return (ECPCustomControl) obj;
+		} catch (final ClassNotFoundException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
+		} catch (final NoSuchMethodException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
+		} catch (final SecurityException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
+		} catch (final InstantiationException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
+		} catch (final IllegalAccessException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
+		} catch (final IllegalArgumentException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
+		} catch (final InvocationTargetException ex) {
+			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
 		}
 	}
 
-} //CustomControlImpl
+} // CustomControlImpl

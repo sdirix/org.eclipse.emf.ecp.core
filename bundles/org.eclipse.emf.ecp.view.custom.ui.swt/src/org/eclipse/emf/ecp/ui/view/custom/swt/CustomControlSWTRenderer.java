@@ -11,22 +11,24 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.custom.swt;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.osgi.framework.Bundle;
 
+/**
+ * 
+ * @author eneufeld
+ * 
+ */
 public class CustomControlSWTRenderer extends
 	AbstractSWTRenderer<CustomControl> {
 
@@ -39,11 +41,8 @@ public class CustomControlSWTRenderer extends
 
 		// TODO: handle exceptions
 		try {
-			final Class<?> clazz = getClass(customControl.getBundle(),
-				customControl.getClassName());
-			final Constructor<?> constructor = clazz.getConstructor();
-			final Object obj = constructor.newInstance();
-			final ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) obj;
+			final ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) customControl
+				.getECPCustomControl();
 			categoryComposite.init(node.getControlContext());
 
 			final Composite parent = getParentFromInitData(initData);
@@ -54,39 +53,12 @@ public class CustomControlSWTRenderer extends
 				getParentFromInitData(initData)));
 
 			return renderingResultRows;
-		} catch (final NoSuchMethodException e) {
+		} catch (final ECPCustomControlInitException ex) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 
 		return null;
-	}
-
-	private Class<?> getClass(String pluginID, String className)
-		throws ClassNotFoundException {
-		final Bundle bundle = Platform.getBundle(pluginID);
-		if (bundle == null) {
-			throw new ClassNotFoundException(className
-				+ " cannot be loaded because because bundle " + pluginID
-				+ " cannot be resolved");
-		} else {
-			return bundle.loadClass(className);
-		}
 	}
 
 }

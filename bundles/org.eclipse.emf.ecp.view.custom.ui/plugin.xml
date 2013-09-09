@@ -7,5 +7,12 @@
             class="org.eclipse.emf.ecp.ui.view.custom.NodeBuilderCustom">
       </builders>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecp.view.validation.validationSubProcessor">
+      <validationSubProcessor
+            associatedRenderable="org.eclipse.emf.ecp.view.custom.model.CustomControl"
+            class="org.eclipse.emf.ecp.ui.view.custom.CustomControlSubprocessor">
+      </validationSubProcessor>
+   </extension>
 
 </plugin>
