@@ -97,7 +97,7 @@ public abstract class AbstractCachedTree<T> {
 
 		updateNodeObject(eObject);
 
-		rootValue.putIntoCache(eObject, value);
+		rootValue.putIntoCache(eObject, node.getOwnValue());
 
 		final Set<EObject> affectedElements = removeOutdatedParentCacheIfNeeded(eObject);
 		// propagate upwards
@@ -113,9 +113,14 @@ public abstract class AbstractCachedTree<T> {
 		return affectedElements;
 	}
 
-	// TODO better way
+	/**
+	 * Helper method which gets called when an update on the specified object is performed. Implementors can use this
+	 * method when they need to perform special behaviour one a node changes.
+	 * 
+	 * @param object The upject for which an update on the tree is performed
+	 */
 	protected void updateNodeObject(Object object) {
-
+		// TODO better way?
 	}
 
 	// If an object has been moved the cached entries must be removed from old parents.

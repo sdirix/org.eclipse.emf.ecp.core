@@ -146,7 +146,14 @@ public class ViewValidationCachedTree extends AbstractCachedTree<VDiagnostic> {
 	protected void updateNodeObject(Object object) {
 		final Renderable renderable = (Renderable) object;
 
-		final VDiagnostic displayValue = getNodes().get(object).getDisplayValue();
+		final CachedTreeNode<VDiagnostic> node = getNodes().get(object);
+
+		if (!renderable.isEnabled() || !renderable.isVisible() || renderable.isReadonly()) {
+			node.setOwnValue(getDefaultValue());
+		}
+
+		final VDiagnostic displayValue = node.getDisplayValue();
+
 		if (!VDiagnosticHelper.isEqual(renderable.getDiagnostic(), displayValue))
 		{
 			renderable.setDiagnostic(EcoreUtil.copy(displayValue));

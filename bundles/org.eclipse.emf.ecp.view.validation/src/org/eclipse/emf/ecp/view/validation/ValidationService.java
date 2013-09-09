@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -65,7 +66,7 @@ public class ValidationService extends AbstractViewService {
 	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
-	public void instantiate(ViewModelContext context) {
+	public void instantiate(final ViewModelContext context) {
 		this.context = context;
 
 		renderable = context.getViewModel();
@@ -122,6 +123,17 @@ public class ValidationService extends AbstractViewService {
 					}
 					else if (EReference.class.isInstance(notification.getRawNotification().getFeature())
 						&& Renderable.class.isInstance(notification.getRawNotification().getNewValue())) {
+					}
+					else if (ViewPackage.eINSTANCE.getRenderable_Enabled() == notification.getRawNotification()
+						.getFeature()
+						|| ViewPackage.eINSTANCE.getRenderable_Visible() == notification.getRawNotification()
+							.getFeature()) {
+						if (ViewPackage.eINSTANCE.getControl() == notification.getNotifier().eClass()) {
+							final Control control = (Control) notification.getNotifier();
+							final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
+								control.getPathToFeature());
+							viewValidationCachedTree.validate(controlDomainModel);
+						}
 					}
 				}
 			}
