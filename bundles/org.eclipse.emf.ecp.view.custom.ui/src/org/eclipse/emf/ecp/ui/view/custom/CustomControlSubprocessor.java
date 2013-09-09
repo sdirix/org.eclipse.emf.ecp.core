@@ -40,7 +40,6 @@ public class CustomControlSubprocessor implements ECPValidationSubProcessor {
 	 * @see org.eclipse.emf.ecp.view.validation.ECPValidationSubProcessor#processRenderable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecp.view.model.Renderable, org.eclipse.emf.ecp.view.validation.ValidationRegistry)
 	 */
-	@SuppressWarnings("unchecked")
 	public Map<EObject, Set<AbstractControl>> processRenderable(EObject domainObject, Renderable parentRenderable,
 		final ValidationRegistry validationRegistry) {
 
@@ -54,8 +53,13 @@ public class CustomControlSubprocessor implements ECPValidationSubProcessor {
 		} catch (final ECPCustomControlInitException ex) {
 			return result;
 		}
-		allFeatures.addAll(categoryComposite.getEditableFeatures());
-		allFeatures.addAll(categoryComposite.getReferencedFeatures());
+
+		if (categoryComposite.getEditableFeatures() != null) {
+			allFeatures.addAll(categoryComposite.getEditableFeatures());
+		}
+		if (categoryComposite.getReferencedFeatures() != null) {
+			allFeatures.addAll(categoryComposite.getReferencedFeatures());
+		}
 
 		for (final ECPCustomControlFeature ccFeature : allFeatures) {
 
