@@ -11,16 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.custom;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
@@ -70,38 +65,8 @@ public class CustomControlSubprocessor implements ECPValidationSubProcessor {
 				continue;
 			}
 
-			final EList<EObject> customControlContents = new BasicEList<EObject>();
+			final Set<EObject> customControlContents = new LinkedHashSet<EObject>();
 			customControlContents.add(referencedDomainModel);
-			final Object object = referencedDomainModel.eGet(ccFeature.getTargetFeature());
-			if (object != null) {
-				if (object instanceof EObject) {
-					customControlContents.add((EObject) object);
-				} else if (object instanceof EList) {
-					customControlContents.addAll((Collection<? extends EObject>) object);
-
-				}
-			}
-
-			if (!validationRegistry.getRenderablesForEObject(domainObject).contains(parentRenderable)) {
-				referencedDomainModel.eAdapters().add(0, new AdapterImpl() {
-
-					/**
-					 * {@inheritDoc}
-					 * 
-					 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-					 */
-					@Override
-					public void notifyChanged(Notification msg) {
-						if (msg.isTouch()) {
-							return;
-						}
-						for (final EObject customControlElement : customControlContents) {
-							validationRegistry.addEObjectControlMapping(customControlElement, customControl);
-						}
-					}
-
-				});
-			}
 
 			addControlToMap(customControl, result, referencedDomainModel);
 			// EMF API
