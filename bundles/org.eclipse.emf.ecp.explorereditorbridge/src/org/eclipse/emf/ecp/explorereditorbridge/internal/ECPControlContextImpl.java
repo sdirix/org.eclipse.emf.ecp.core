@@ -196,7 +196,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 			elements.add(allElements.next());
 		}
 
-		final SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element",
+		final SelectModelElementWizard wizard = new SelectModelElementWizard("Select Elements",
 			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 			Messages.ModelelementSelectionDialog_DialogTitle,
 			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
