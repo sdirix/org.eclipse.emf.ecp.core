@@ -26,11 +26,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.dialogs.MESuggestedSelectionDialog;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlHelper;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
-import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -43,11 +41,11 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eugen Neufeld
@@ -187,9 +185,6 @@ public class ECPControlContextImpl implements ECPControlContext {
 		return newMEInstance;
 	}
 
-	// TODO externalize
-	private static final String DIALOG_MESSAGE = "Enter model element name prefix or pattern (e.g. *Trun?)"; //$NON-NLS-1$
-
 	/** {@inheritDoc} */
 	public EObject getExistingElementFor(EReference eReference) {
 
@@ -200,16 +195,28 @@ public class ECPControlContextImpl implements ECPControlContext {
 		while (allElements.hasNext()) {
 			elements.add(allElements.next());
 		}
-		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		final MESuggestedSelectionDialog dlg = new MESuggestedSelectionDialog("Select Elements", DIALOG_MESSAGE, true,//$NON-NLS-1$
-			getModelElement(), eReference, elements, shell);
 
-		final int dialogResult = dlg.open();
-		if (dialogResult == Window.OK) {
-			final Object result = dlg.getFirstResult();
-			return (EObject) result;
+		final SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element",
+			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
+			Messages.ModelelementSelectionDialog_DialogTitle,
+			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
+
+		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
+			.getTableSelectionComposite(elements.toArray());
+		wizard.setCompositeProvider(tableSelectionComposite);
+
+		final WizardDialog wd = new WizardDialog(shell, wizard);
+		EObject eObject = null;
+		final int result = wd.open();
+		if (result == Window.OK) {
+			final Object[] selection = tableSelectionComposite.getSelection();
+			if (selection == null || selection.length == 0) {
+				return null;
+			}
+			eObject = (EObject) selection[0];
+
 		}
-		return null;
+		return eObject;
 
 	}
 
@@ -231,20 +238,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	}
 
 	private View getView() {
-		int highestPrio = IViewProvider.NOT_APPLICABLE;
-		IViewProvider selectedProvider = null;
-		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
-			final int prio = viewProvider.canRender(getModelElement());
-			if (prio > highestPrio) {
-				highestPrio = prio;
-				selectedProvider = viewProvider;
-			}
-		}
-		if (selectedProvider != null) {
-			return selectedProvider.generate(getModelElement());
-		}
-		return null;
-
+		return ViewProviderHelper.getView(getModelElement());
 	}
 
 	/**

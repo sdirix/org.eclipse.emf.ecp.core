@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
-
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -51,12 +50,12 @@ public class EditorModelElementOpener implements ECPModelElementOpener {
 	 * @param ecpProject the {@link ECPProject} to open the Editor for
 	 */
 	public void openModelElement(Object modelElement, ECPProject ecpProject) {
-		MEEditorInput input = new MEEditorInput(new EditorContext((EObject) modelElement, ecpProject, PlatformUI
+		final MEEditorInput input = new MEEditorInput(new EditorContext((EObject) modelElement, ecpProject, PlatformUI
 			.getWorkbench().getActiveWorkbenchWindow().getShell()));
 		try {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.openEditor(input, "org.eclipse.emf.ecp.editor", true);
-		} catch (PartInitException e) {
+		} catch (final PartInitException e) {
 			Activator.logException(e);
 		}
 	}
