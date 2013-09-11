@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _yMGr8HHTEeKndsdNMEr_UQ
-Save-Time: 8/2/13 3:45 PM
+Save-Time: 9/11/13 10:43 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -27,7 +27,7 @@ get-editor Game | get-label "(Not Set)" | get-property caption | equals "(Not Se
 get-editor Game | get-button "Link Player" | click
 with [get-window "Select Elements"] {
     get-table | select "Player Maximilian"
-    get-button OK | click
+    get-button FINISH | click
 }
 get-editor Game | get-link "<a>Player Maximilian</a>" | get-property caption | equals "<a>Player Maximilian</a>" 
     | verify-true
