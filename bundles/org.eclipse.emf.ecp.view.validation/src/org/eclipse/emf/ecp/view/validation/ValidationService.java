@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -145,6 +147,10 @@ public class ValidationService extends AbstractViewService {
 					if (Renderable.class.isInstance(renderableParent)
 						&& validationRegistry.containsRenderable((Renderable) renderableParent)) {
 						validationRegistry.register(domainModel, renderable);
+						final Map<EObject, Set<AbstractControl>> map = validationRegistry.getDomainToControlMapping(
+							domainModel,
+							renderable);
+						viewValidationCachedTree.validate(map.keySet());
 					}
 				}
 			}
