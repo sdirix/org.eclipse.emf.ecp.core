@@ -34,7 +34,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	private static Composite parent;
 
 	public CustomControlStub() {
-		super(null, null);
+		super(null);
 	}
 
 	/**

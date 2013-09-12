@@ -268,11 +268,8 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 		}
 		try {
 			final ECPCustomControl categoryComposite = getECPCustomControl();
-			for (final ECPCustomControlFeature editFeature : categoryComposite.getEditableFeatures()) {
+			for (final ECPCustomControlFeature editFeature : categoryComposite.getECPCustomControlFeatures()) {
 				result.add(editFeature.getTargetFeature());
-			}
-			for (final ECPCustomControlFeature refFeature : categoryComposite.getReferencedFeatures()) {
-				result.add(refFeature.getTargetFeature());
 			}
 		} catch (final ECPCustomControlInitException ex) {
 			// TODO activate?

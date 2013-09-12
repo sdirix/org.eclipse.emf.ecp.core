@@ -13,13 +13,9 @@
 package org.eclipse.emf.ecp.ui.view.custom;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
@@ -29,12 +25,18 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+/**
+ * Abstract class implementing {@link ECPCustomControl} providing necessary common access methods.
+ * 
+ * @author emueller
+ * @author eneufeld
+ * 
+ */
 public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 	private final CustomControlHelper helper = new CustomControlHelper();
 
-	private final Set<ECPCustomControlFeature> editableFeatures;
-	private final Set<ECPCustomControlFeature> referencedFeatures;
+	private final Set<ECPCustomControlFeature> features;
 	private ECPControlContext modelElementContext = null;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
@@ -43,11 +45,12 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 	protected final HashMap<EStructuralFeature, ECPControl> controlMap = new HashMap<EStructuralFeature, ECPControl>();
 
-	public ECPAbstractCustomControl(Set<ECPCustomControlFeature> editableFeatures,
-		Set<ECPCustomControlFeature> referencedFeatures) {
+	public ECPAbstractCustomControl(Set<ECPCustomControlFeature> features) {
 		super();
-		this.editableFeatures = editableFeatures;
-		this.referencedFeatures = referencedFeatures;
+		if (features == null) {
+			features = new LinkedHashSet<ECPCustomControlFeature>();
+		}
+		this.features = features;
 		controlFactory = Activator.getECPControlFactory();
 	}
 
@@ -57,8 +60,17 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
+		initFeatures();
+
 		// move to some cleanup service
 		createNecessaryObjects();
+	}
+
+	private void initFeatures() {
+		for (final ECPCustomControlFeature feature : features) {
+			feature.init(modelElementContext.getModelElement(), modelElementContext.getDataBindingContext(),
+				modelElementContext.getEditingDomain());
+		}
 	}
 
 	/**
@@ -69,12 +81,8 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 	}
 
-	public final Set<ECPCustomControlFeature> getEditableFeatures() {
-		return editableFeatures;
-	}
-
-	public final Set<ECPCustomControlFeature> getReferencedFeatures() {
-		return referencedFeatures;
+	public final Set<ECPCustomControlFeature> getECPCustomControlFeatures() {
+		return features;
 	}
 
 	/**
@@ -93,53 +101,22 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	 */
 	private IItemPropertyDescriptor getItemPropertyDescriptor(ECPCustomControlFeature customControlFeature) {
 		return adapterFactoryItemDelegator.getPropertyDescriptor(
-			customControlFeature.getRelevantEObject(modelElementContext.getModelElement()),
+			customControlFeature.getRelevantEObject(),
 			customControlFeature.getTargetFeature());
 	}
 
 	private String getHelp(ECPCustomControlFeature customControlFeature) {
-		if (!getReferencedFeatures().contains(customControlFeature)
-			&& !getEditableFeatures().contains(customControlFeature)) {
+		if (!getECPCustomControlFeatures().contains(customControlFeature)) {
 			throw new IllegalArgumentException("The feature must have been registered before!");
 		}
 		return getItemPropertyDescriptor(customControlFeature).getDescription(null);
 	}
 
 	private String getLabel(ECPCustomControlFeature customControlFeature) {
-		if (!getReferencedFeatures().contains(customControlFeature)
-			&& !getEditableFeatures().contains(customControlFeature)) {
+		if (!getECPCustomControlFeatures().contains(customControlFeature)) {
 			throw new IllegalArgumentException("The feature must have been registered before!");
 		}
 		return getItemPropertyDescriptor(customControlFeature).getDisplayName(null);
-	}
-
-	/**
-	 * Returns the {@link DataBindingContext} set in the constructor.
-	 * 
-	 * @return the {@link DataBindingContext}
-	 */
-	private DataBindingContext getDataBindingContext() {
-		return getModelElementContext().getDataBindingContext();
-	}
-
-	/**
-	 * The model value used for databinding.
-	 * 
-	 * @return the {@link IObservableValue}
-	 */
-	private IObservableValue getModelValue(ECPCustomControlFeature customControlFeature) {
-		return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
-			customControlFeature.getRelevantEObject(getModelElementContext().getModelElement()),
-			customControlFeature.getTargetFeature());
-	}
-
-	private Binding bindTargetToModel(IObservableValue targetValue, UpdateValueStrategy targetToModel,
-		UpdateValueStrategy modelToTarget, ECPCustomControlFeature customControlFeature) {
-		if (!editableFeatures.contains(customControlFeature)) {
-			throw new IllegalArgumentException("Feature is not registered as editable");
-		}
-		return getDataBindingContext().bindValue(targetValue, getModelValue(customControlFeature), targetToModel,
-			modelToTarget);
 	}
 
 	/**
@@ -157,10 +134,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
 		}
-		for (final ECPCustomControlFeature feature : editableFeatures) {
-			feature.dispose();
-		}
-		for (final ECPCustomControlFeature feature : referencedFeatures) {
+		for (final ECPCustomControlFeature feature : features) {
 			feature.dispose();
 		}
 		disposeCustomControl();
@@ -187,12 +161,6 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 		public String getLabel(ECPCustomControlFeature customControlFeature) {
 			return ECPAbstractCustomControl.this.getLabel(customControlFeature);
-		}
-
-		public Binding bindTargetToModel(IObservableValue targetValue, UpdateValueStrategy targetToModel,
-			UpdateValueStrategy modelToTarget, ECPCustomControlFeature customControlFeature) {
-			return ECPAbstractCustomControl.this.bindTargetToModel(targetValue, targetToModel, modelToTarget,
-				customControlFeature);
 		}
 	}
 }

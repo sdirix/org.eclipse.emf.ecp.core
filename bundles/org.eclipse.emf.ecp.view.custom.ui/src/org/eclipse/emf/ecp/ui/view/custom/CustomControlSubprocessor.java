@@ -54,12 +54,7 @@ public class CustomControlSubprocessor implements ECPValidationSubProcessor {
 			return result;
 		}
 
-		if (categoryComposite.getEditableFeatures() != null) {
-			allFeatures.addAll(categoryComposite.getEditableFeatures());
-		}
-		if (categoryComposite.getReferencedFeatures() != null) {
-			allFeatures.addAll(categoryComposite.getReferencedFeatures());
-		}
+		allFeatures.addAll(categoryComposite.getECPCustomControlFeatures());
 
 		for (final ECPCustomControlFeature ccFeature : allFeatures) {
 

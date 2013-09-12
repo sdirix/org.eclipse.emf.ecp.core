@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -49,9 +48,8 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @param referencedFeatures
 	 */
 	public ECPAbstractCustomControlSWT(
-		Set<ECPCustomControlFeature> editableFeatures,
-		Set<ECPCustomControlFeature> referencedFeatures) {
-		super(editableFeatures, referencedFeatures);
+		Set<ECPCustomControlFeature> features) {
+		super(features);
 	}
 
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
@@ -61,9 +59,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
-		// set the size of the label to the size of the image
-		GridDataFactory.fillDefaults().hint(16, 17)
-			.align(SWT.BEGINNING, SWT.CENTER).applyTo(validationLabel);
 
 	}
 

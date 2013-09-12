@@ -20,14 +20,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
@@ -37,9 +42,11 @@ import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -56,6 +63,7 @@ import org.junit.runner.RunWith;
 public class ECPAbstractCustomControlSWTTest {
 
 	private static final String LABELTEXT = "Some Text";
+	private static Set<ECPCustomControlFeature> allFeatures;
 	private static Set<ECPCustomControlFeature> referencedFeatures;
 	private static Set<ECPCustomControlFeature> editableFeaturess;
 	private ECPAbstractCustomControlSWTStub customControl;
@@ -83,7 +91,7 @@ public class ECPAbstractCustomControlSWTTest {
 		}
 
 		public ECPAbstractCustomControlSWTStub(boolean withControl) {
-			super(createEditableFeatures(), createReferencedFeatures());
+			super(createFeatures());
 			this.withControl = withControl;
 		}
 
@@ -268,11 +276,21 @@ public class ECPAbstractCustomControlSWTTest {
 	public void init() {
 		referencedFeatures = null;
 		editableFeaturess = null;
+		allFeatures = null;
 		customControl = new ECPAbstractCustomControlSWTStub();
 		domainObject = CustomFactory.eINSTANCE.createCustomControl();
 		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 			SWTViewTestHelper.createShell()));
 		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
+	}
+
+	public static Set<ECPCustomControlFeature> createFeatures() {
+
+		allFeatures = new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+		allFeatures.addAll(createEditableFeatures());
+		allFeatures.addAll(createReferencedFeatures());
+
+		return allFeatures;
 	}
 
 	/**
@@ -284,7 +302,7 @@ public class ECPAbstractCustomControlSWTTest {
 			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
-				referencedFeatures.add(new ECPCustomControlFeature(null, eStructuralFeature));
+				referencedFeatures.add(new ECPCustomControlFeature(null, eStructuralFeature, false));
 			}
 
 		}
@@ -300,7 +318,7 @@ public class ECPAbstractCustomControlSWTTest {
 			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
-				editableFeaturess.add(new ECPCustomControlFeature(null, eStructuralFeature));
+				editableFeaturess.add(new ECPCustomControlFeature(null, eStructuralFeature, true));
 			}
 
 		}
@@ -342,6 +360,8 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.createValidationLabelInStub(testComposite);
 		final Control control = testComposite.getChildren()[0];
 		assertTrue(control instanceof Label);
+		assertNull(control.getLayoutData());
+
 	}
 
 	/**
@@ -446,26 +466,18 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testInit() {
-		customControl.init(null);
+		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
+			SWTViewTestHelper.createShell()));
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getEditableFeatures()}.
+	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getECPCustomControlFeatures()}
+	 * .
 	 */
 	@Test
 	public void testGetEditableFeatures() {
-		final Set<ECPCustomControlFeature> editableFeatures = customControl.getEditableFeatures();
-		editableFeatures.removeAll(createEditableFeatures());
-		assertTrue(editableFeatures.isEmpty());
-	}
-
-	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getReferencedFeatures()}.
-	 */
-	@Test
-	public void testGetReferencedFeatures() {
-		final Set<ECPCustomControlFeature> editableFeatures = customControl.getReferencedFeatures();
-		editableFeatures.removeAll(createReferencedFeatures());
+		final Set<ECPCustomControlFeature> editableFeatures = customControl.getECPCustomControlFeatures();
+		editableFeatures.removeAll(createFeatures());
 		assertTrue(editableFeatures.isEmpty());
 	}
 
@@ -482,9 +494,14 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testDispose() {
+		customControl.createValidationLabelInStub(testComposite);
+		final Label validationLabel = (Label) testComposite.getChildren()[0];
+
+		assertFalse(validationLabel.isDisposed());
 		assertFalse(customControl.isDisposed());
 		customControl.dispose();
 		assertTrue(customControl.isDisposed());
+		assertTrue(validationLabel.isDisposed());
 	}
 
 	/**
@@ -502,5 +519,91 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testGetHelper() {
 		final SWTCustomControlHelper stubHelper = customControl.getStubHelper();
 		assertNotNull(stubHelper);
+	}
+
+	private ECPCustomControlFeature getFeature(Set<ECPCustomControlFeature> features,
+		EStructuralFeature structuralFeature, boolean isEditable) {
+		final Iterator<ECPCustomControlFeature> iterator = features.iterator();
+
+		while (iterator.hasNext()) {
+			final ECPCustomControlFeature feature = iterator.next();
+			if (feature.getTargetFeature() == structuralFeature && feature.isEditable() == isEditable) {
+				return feature;
+			}
+		}
+
+		throw new NoSuchElementException();
+	}
+
+	/**
+	 * Test set value on {@link ECPCustomControlFeature}.
+	 */
+	@Test
+	public void testCustomControlFeatureSet() {
+		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
+			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+		bundleFeature.setValue("test");
+		assertEquals(domainObject.eGet(CustomPackage.eINSTANCE.getCustomControl_Bundle()), "test");
+	}
+
+	/**
+	 * Test set value on {@link ECPCustomControlFeature} that is not editable.
+	 */
+	@Test(expected = UnsupportedOperationException.class)
+	public void testCustomControlFeatureSetNotEditable() {
+		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
+			CustomPackage.eINSTANCE.getCustomControl_Bundle(), false);
+		bundleFeature.setValue("test");
+	}
+
+	/**
+	 * Test get value on {@link ECPCustomControlFeature}.
+	 */
+	@Test
+	public void testCustomControlFeatureGet() {
+		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
+			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+		assertEquals(domainObject.eGet(CustomPackage.eINSTANCE.getCustomControl_Bundle()), bundleFeature.getValue());
+	}
+
+	/**
+	 * Test set listener on {@link ECPCustomControlFeature}.
+	 */
+	@Test
+	public void testCustomControlFeatureListener() {
+		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
+			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+		final List<Integer> result = new ArrayList<Integer>();
+		bundleFeature.registerChangeListener(new ECPCustomControlChangeListener() {
+			public void notifyChanged() {
+				result.add(1);
+			}
+		});
+
+		bundleFeature.setValue("test");
+		assertEquals("Listener should have been called once", 1, result.size());
+	}
+
+	@Test
+	public void testBindTargetToModel() {
+		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
+			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+		customControl.createControls(testComposite);
+		final Label label = (Label) testComposite.getChildren()[0];
+		final IObservableValue obsValue = SWTObservables.observeText(label);
+		bundleFeature.bindTargetToModel(obsValue, null, null);
+		bundleFeature.setValue("testtesttest");
+		assertEquals("testtesttest", label.getText());
+	}
+
+	@Test
+	public void testReadonlyCustomControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		domainObject = CustomFactory.eINSTANCE.createCustomControl();
+		domainObject.setReadonly(true);
+		domainObject.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		domainObject
+			.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
+		final Control control = SWTViewTestHelper.render(domainObject, SWTViewTestHelper.createShell());
+		assertFalse(control.getEnabled());
 	}
 }

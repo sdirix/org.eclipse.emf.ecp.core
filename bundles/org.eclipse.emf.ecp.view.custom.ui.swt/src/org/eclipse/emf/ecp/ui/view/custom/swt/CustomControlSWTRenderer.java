@@ -18,6 +18,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.DoubleColumnRow;
+import org.eclipse.emf.ecp.ui.view.swt.SingleColumnRow;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -49,6 +51,18 @@ public class CustomControlSWTRenderer extends
 			categoryComposite.setMessageShell(parent.getShell());
 			final List<RenderingResultRow<Control>> renderingResultRows = categoryComposite
 				.createControls(parent);
+			if (customControl.isReadonly()) {
+				for (final RenderingResultRow<Control> row : renderingResultRows) {
+					if (SingleColumnRow.class.isInstance(row)) {
+						((SingleColumnRow) row).getControl().setEnabled(false);
+					}
+					else if (DoubleColumnRow.class.isInstance(row)) {
+						((DoubleColumnRow) row).getLeftControl().setEnabled(false);
+						((DoubleColumnRow) row).getRightControl().setEnabled(false);
+
+					}
+				}
+			}
 			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(categoryComposite, customControl,
 				getParentFromInitData(initData)));
 
