@@ -283,7 +283,6 @@ public interface ECPCustomControl extends ECPControl {
 			return result;
 		}
 
-		// BEGIN COMPLEX CODE
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj) {
@@ -297,35 +296,47 @@ public interface ECPCustomControl extends ECPControl {
 			}
 			final ECPCustomControlFeature other = (ECPCustomControlFeature) obj;
 
-			if (targetFeature == null) {
-				if (other.targetFeature != null) {
-					return false;
-				}
-			} else if (!targetFeature.equals(other.targetFeature)) {
+			if (targetFeature == null && other.targetFeature != null) {
 				return false;
 			}
-			if (eReferencePath == null) {
-				if (other.eReferencePath != null) {
-					return false;
-				}
-			} else if (eReferencePath.size() != other.eReferencePath.size()) {
+			if (targetFeature != null && !targetFeature.equals(other.targetFeature)) {
 				return false;
 			}
-			else {
-				for (final EReference eReference : eReferencePath) {
-					if (!other.eReferencePath.contains(eReference)) {
-						return false;
-					}
-				}
+
+			if (!isEReferencePathEqual(other)) {
+				return false;
 			}
+
 			if (isEditable != other.isEditable) {
 				return false;
 			}
 
 			return true;
 		}
-		// END COMPLEX CODE
 
+		/**
+		 * @param other
+		 */
+		private boolean isEReferencePathEqual(final ECPCustomControlFeature other) {
+			if (eReferencePath == null && other.eReferencePath != null) {
+				return false;
+			}
+
+			if (eReferencePath != null && other.eReferencePath == null) {
+				return false;
+			}
+
+			if (eReferencePath != null && other.eReferencePath != null
+				&& eReferencePath.size() != other.eReferencePath.size()) {
+				return false;
+			}
+			for (final EReference eReference : eReferencePath) {
+				if (!other.eReferencePath.contains(eReference)) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 	/**
