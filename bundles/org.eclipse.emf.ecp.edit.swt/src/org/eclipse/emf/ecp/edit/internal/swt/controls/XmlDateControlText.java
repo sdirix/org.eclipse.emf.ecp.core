@@ -12,15 +12,26 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -36,17 +47,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * This is a XMLDateControl. It is used to display values of type {@link XMLGregorianCalendar}. This control only
@@ -110,14 +110,14 @@ public class XmlDateControlText extends AbstractTextControl {
 					button.getLocation().y + button.getSize().y));
 
 				final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
-				XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) getModelValue().getValue();
-				Calendar cal = Calendar.getInstance(getModelElementContext().getLocale());
+				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) getModelValue().getValue();
+				final Calendar cal = Calendar.getInstance(getModelElementContext().getLocale());
 				if (gregorianCalendar != null) {
 					cal.setTime(gregorianCalendar.toGregorianCalendar().getTime());
 				}
 				calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-				IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
+				final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
 				final Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(),
 					new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
 				binding.updateModelToTarget();
@@ -154,7 +154,7 @@ public class XmlDateControlText extends AbstractTextControl {
 	public Binding bindValue() {
 		// TODO: FocusOut doesn't seem to fire in case the same invalid text is
 		// entered twice
-		IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
 		return binding;
@@ -169,18 +169,18 @@ public class XmlDateControlText extends AbstractTextControl {
 			// format.setGroupingUsed(false);
 			// format.setParseIntegerOnly(isInteger());
 			final DateFormat format = setupFormat();
-			XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) value;
+			final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) value;
 			if (gregorianCalendar == null) {
 				return null;
 			}
-			Date date = gregorianCalendar.toGregorianCalendar().getTime();
+			final Date date = gregorianCalendar.toGregorianCalendar().getTime();
 			return format.format(date);
 		}
 	}
 
 	private class DateTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
-		private DateFormat format;
+		private final DateFormat format;
 
 		DateTargetToModelUpdateStrategy() {
 			super();
@@ -199,12 +199,12 @@ public class XmlDateControlText extends AbstractTextControl {
 				} else if (value == null) {
 					return value;
 				}
-				String formatedDate = format.format(date);
+				final String formatedDate = format.format(date);
 				getText().setText(formatedDate);
 
-				Calendar targetCal = Calendar.getInstance();
+				final Calendar targetCal = Calendar.getInstance();
 				targetCal.setTime(date);
-				XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+				final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 				cal.setYear(targetCal.get(Calendar.YEAR));
 				cal.setMonth(targetCal.get(Calendar.MONTH) + 1);
 				cal.setDay(targetCal.get(Calendar.DAY_OF_MONTH));
@@ -212,9 +212,9 @@ public class XmlDateControlText extends AbstractTextControl {
 				cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
 
 				return cal;
-			} catch (DatatypeConfigurationException ex) {
+			} catch (final DatatypeConfigurationException ex) {
 				// Activator.logException(ex);
-			} catch (ParseException ex) {
+			} catch (final ParseException ex) {
 				return revertToOldValue(value);
 			}
 			return null;
@@ -226,9 +226,9 @@ public class XmlDateControlText extends AbstractTextControl {
 				return null;
 			}
 
-			Object result = getModelValue().getValue();
+			final Object result = getModelValue().getValue();
 
-			MessageDialog messageDialog = new MessageDialog(getText().getShell(),
+			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
 				ControlMessages.XmlDateControlText_InvalidNumber, null,
 				ControlMessages.XmlDateControlText_NumberInvalidValueWillBeUnset, MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
@@ -243,8 +243,8 @@ public class XmlDateControlText extends AbstractTextControl {
 			if (result == null) {
 				getText().setText(""); //$NON-NLS-1$
 			} else {
-				XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) result;
-				Date date = gregorianCalendar.toGregorianCalendar().getTime();
+				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) result;
+				final Date date = gregorianCalendar.toGregorianCalendar().getTime();
 				getText().setText(format.format(date));
 			}
 
@@ -256,7 +256,12 @@ public class XmlDateControlText extends AbstractTextControl {
 		}
 	}
 
-	private DateFormat setupFormat() {
-		return SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, getModelElementContext().getLocale());
+	/**
+	 * Sets up a {@link DateFormat} for the current {@link Locale}.
+	 * 
+	 * @return the date format
+	 */
+	protected DateFormat setupFormat() {
+		return DateFormat.getDateInstance(DateFormat.MEDIUM, getModelElementContext().getLocale());
 	}
 }
