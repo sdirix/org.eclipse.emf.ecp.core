@@ -27,7 +27,7 @@ get-editor Game | get-label "(Not Set)" | get-property caption | equals "(Not Se
 get-editor Game | get-button "Link Player" | click
 with [get-window "Select Elements"] {
     get-table | select "Player Maximilian"
-    get-button FINISH | click
+    get-button Finish | click
 }
 get-editor Game | get-link "<a>Player Maximilian</a>" | get-property caption | equals "<a>Player Maximilian</a>" 
     | verify-true
