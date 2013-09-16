@@ -213,7 +213,7 @@ public class TableControl extends SWTControl {
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, SWT.DEFAULT)
 		// .applyTo(tableViewer.getTable());
-		tableViewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table"); //$NON-NLS-1$
+		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table"); //$NON-NLS-1$
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
@@ -645,6 +645,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		tableViewer.getTable().setEnabled(false);
 	}
