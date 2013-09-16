@@ -15,6 +15,7 @@ import java.util.Collection;
 
 /**
  * @author Eike Stepper
+ * @since 1.1
  */
 public interface UIProviderRegistry {
 	/**
