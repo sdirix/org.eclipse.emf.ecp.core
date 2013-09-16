@@ -9,7 +9,7 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.custom;
+package org.eclipse.emf.ecp.view.custom.internal.ui;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;

@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers">
       <renderers
-            class="org.eclipse.emf.ecp.ui.view.custom.swt.SWTRendererCustom">
+            class="org.eclipse.emf.ecp.view.custom.ui.internal.swt.SWTRendererCustom">
       </renderers>
    </extension>
 

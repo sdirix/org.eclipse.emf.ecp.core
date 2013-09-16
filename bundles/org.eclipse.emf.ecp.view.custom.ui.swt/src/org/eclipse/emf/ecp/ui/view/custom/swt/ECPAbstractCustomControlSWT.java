@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
+import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -33,19 +33,40 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 /**
+ * Extend this class in order to provide an own implementation of an
+ * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl ECPCustomControl}.
+ * 
  * @author Eugen Neufeld
  * 
  */
+// Missing SPI or API definitions
+@SuppressWarnings("restriction")
 public abstract class ECPAbstractCustomControlSWT extends
 	ECPAbstractCustomControl {
-	public final static int VALIDATION_ERROR_IMAGE = 0;
-	public final static int ADD_IMAGE = 1;
-	public final static int DELETE_IMAGE = 2;
-	public final static int HELP_IMAGE = 3;
+	/**
+	 * Constant for an validation error image.
+	 */
+	public static final int VALIDATION_ERROR_IMAGE = 0;
+	/**
+	 * Constant for an add image.
+	 */
+	public static final int ADD_IMAGE = 1;
+	/**
+	 * Constant for an delete image.
+	 */
+	public static final int DELETE_IMAGE = 2;
+	/**
+	 * Constant for a help image.
+	 */
+	public static final int HELP_IMAGE = 3;
 
 	/**
-	 * @param editableFeatures
-	 * @param referencedFeatures
+	 * Extend this class for an SWT implementation of the {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
+	 * ECPCustomControl}.
+	 * 
+	 * @param features the features which will be used in this
+	 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
+	 *            ECPCustomControl}
 	 */
 	public ECPAbstractCustomControlSWT(
 		Set<ECPCustomControlFeature> features) {
@@ -56,16 +77,35 @@ public abstract class ECPAbstractCustomControlSWT extends
 	private Label validationLabel;
 	private Shell shell;
 
+	/**
+	 * This will create a validation label which will show the validation result of the whole
+	 * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
+	 * ECPCustomControl}.
+	 * 
+	 * @param parent the {@link Composite} to position the validation label on
+	 */
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
 
 	}
 
+	/**
+	 * This allows to show an error dialog.
+	 * 
+	 * @param title the title of the dialog
+	 * @param message the message to show in the dialog
+	 */
 	protected final void showError(String title, String message) {
 		showMessageDialog(MessageDialog.ERROR, title, message);
 	}
 
+	/**
+	 * This allows to show an info dialog.
+	 * 
+	 * @param title the title of the dialog
+	 * @param message the message to show in the dialog
+	 */
 	protected final void showInfo(String title, String message) {
 		showMessageDialog(MessageDialog.INFORMATION, title, message);
 	}
@@ -79,8 +119,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 		this.shell = shell;
 	}
 
-	// Not yet API
-	@SuppressWarnings("restriction")
 	private void showMessageDialog(int type, String title, String message) {
 		final MessageDialog dialog = new MessageDialog(shell, title,
 			null, message, type,
@@ -96,13 +134,19 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * Adds the controls of this {@link CustomControl} to the given composite.
+	 * This is called by the framework when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
+	 * ECPCustomControl} is about to be rendered.
 	 * 
 	 * @param composite The composite on which this custom control shall add its controls.
 	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
 	 */
 	protected abstract List<RenderingResultRow<Control>> createControls(Composite composite);
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
+	 */
 	public final void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR
 			|| diagnostic.getSeverity() == Diagnostic.WARNING) {
@@ -130,18 +174,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * @param diagnostic
 	 */
-	private void resetControlValidation() {
-		final Set<EStructuralFeature> keySet = controlMap.keySet();
-
-		for (final EStructuralFeature eStructuralFeature : keySet) {
-			final ECPControl ecpControl = controlMap.get(eStructuralFeature);
-			ecpControl.resetValidation();
-		}
-	}
-
-	/**
-	 * @param diagnostic
-	 */
 	private void handleCreatedControls(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() < 1) {
 			return;
@@ -150,16 +182,27 @@ public abstract class ECPAbstractCustomControlSWT extends
 			return;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) diagnostic.getData().get(1);
-		final ECPControl ecpControl = controlMap.get(feature);
+		final ECPControl ecpControl = getRetrievedControl(feature);
 		if (ecpControl == null) {
 			return;
 		}
 		ecpControl.handleValidation(diagnostic);
 	}
 
+	/**
+	 * This is called so that an error can be shown by the user.
+	 * 
+	 * @param severity the severity of the error
+	 * @param feature the feature for which the error occurred
+	 */
 	protected abstract void handleContentValidation(int severity,
 		EStructuralFeature feature);
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.ECPControl#resetValidation()
+	 */
 	public final void resetValidation() {
 		resetControlValidation();
 		if (validationLabel != null) {
@@ -168,13 +211,22 @@ public abstract class ECPAbstractCustomControlSWT extends
 		resetContentValidation();
 	}
 
+	/**
+	 * This is called so that the user can be reset all validation errors.
+	 */
 	protected abstract void resetContentValidation();
 
+	/**
+	 * This is a helper method which provides an {@link SWTCustomControlHelper}. It allows to get an image based on the
+	 * constants defined in {@link ECPAbstractCustomControlSWT}.
+	 * 
+	 * @return the {@link SWTCustomControlHelper} to use to retrieve images.
+	 */
 	protected final SWTCustomControlHelper getSWTHelper() {
 		return swtHelper;
 	}
 
-	private final Image getImage(int imageType) {
+	private Image getImage(int imageType) {
 		switch (imageType) {
 		case VALIDATION_ERROR_IMAGE:
 			return Activator.getImage("icons/validation_error.png");
@@ -189,7 +241,14 @@ public abstract class ECPAbstractCustomControlSWT extends
 		}
 	}
 
-	public Composite createControl(ECPCustomControlFeature feature, Composite parent) {
+	/**
+	 * Allows to create a framework control based on an {@link ECPCustomControlFeature}.
+	 * 
+	 * @param feature the {@link ECPCustomControlFeature} to create the control for
+	 * @param parent the {@link Composite} to create the control on
+	 * @return the rendered {@link Composite} of the created control
+	 */
+	protected final Composite createControl(ECPCustomControlFeature feature, Composite parent) {
 		return getControl(SWTControl.class, feature).createControl(parent);
 	}
 
@@ -205,9 +264,21 @@ public abstract class ECPAbstractCustomControlSWT extends
 		super.dispose();
 	}
 
+	/**
+	 * The {@link SWTCustomControlHelper} allows the retrieval of SWT specific elements.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
 	public final class SWTCustomControlHelper {
 
-		public final Image getImage(int imageType) {
+		/**
+		 * Allows to get an {@link Image} based on the constants defined in {@link ECPAbstractCustomControlSWT}.
+		 * 
+		 * @param imageType the image type to retrieve
+		 * @return the retrieved Image or null if an unknown imageType was provided
+		 */
+		public Image getImage(int imageType) {
 			return ECPAbstractCustomControlSWT.this.getImage(imageType);
 		}
 	}

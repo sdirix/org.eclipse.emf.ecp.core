@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControl;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
@@ -105,7 +104,7 @@ public interface ECPCustomControl extends ECPControl {
 		/**
 		 * <br>
 		 * Initializes the {@link ECPCustomControlFeature}. Without calling this method some operations will fail. </br>
-		 * All parameters can be resolved from an {@link ECPControlContext}.
+		 * All parameters can be resolved from an {@link org.eclipse.emf.ecp.edit.ECPControlContext ECPControlContext}.
 		 * 
 		 * @param rootObject the root object on which the reference path can be followed
 		 * @param databindingContext the context for databinding

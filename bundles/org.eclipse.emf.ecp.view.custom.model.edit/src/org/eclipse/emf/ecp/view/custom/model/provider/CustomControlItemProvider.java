@@ -1,7 +1,15 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.model.provider;
-
 
 import java.util.Collection;
 import java.util.List;
@@ -25,20 +33,22 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.custom.model.CustomControl} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CustomControlItemProvider
 	extends AbstractControlItemProvider
 	implements
-		IEditingDomainItemProvider,
-		IStructuredItemContentProvider,
-		ITreeItemContentProvider,
-		IItemLabelProvider,
-		IItemPropertySource {
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CustomControlItemProvider(AdapterFactory adapterFactory) {
@@ -49,6 +59,7 @@ public class CustomControlItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -66,50 +77,55 @@ public class CustomControlItemProvider
 	 * This adds a property descriptor for the Bundle feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addBundlePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CustomControl_bundle_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_bundle_feature", "_UI_CustomControl_type"),
-				 CustomPackage.Literals.CUSTOM_CONTROL__BUNDLE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_CustomControl_bundle_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_bundle_feature",
+					"_UI_CustomControl_type"),
+				CustomPackage.Literals.CUSTOM_CONTROL__BUNDLE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Class Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void addClassNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_CustomControl_className_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_className_feature", "_UI_CustomControl_type"),
-				 CustomPackage.Literals.CUSTOM_CONTROL__CLASS_NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_CustomControl_className_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_className_feature",
+					"_UI_CustomControl_type"),
+				CustomPackage.Literals.CUSTOM_CONTROL__CLASS_NAME,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
 	 * This returns CustomControl.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -121,11 +137,12 @@ public class CustomControlItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((CustomControl)object).getName();
+		final String label = ((CustomControl) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_CustomControl_type") :
 			getString("_UI_CustomControl_type") + " " + label;
@@ -136,6 +153,7 @@ public class CustomControlItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,10 +161,10 @@ public class CustomControlItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(CustomControl.class)) {
-			case CustomPackage.CUSTOM_CONTROL__BUNDLE:
-			case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
+		case CustomPackage.CUSTOM_CONTROL__BUNDLE:
+		case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -156,6 +174,7 @@ public class CustomControlItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

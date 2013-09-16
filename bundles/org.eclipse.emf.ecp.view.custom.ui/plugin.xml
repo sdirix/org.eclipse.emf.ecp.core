@@ -4,14 +4,14 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.customNodeBuilders">
       <builders
-            class="org.eclipse.emf.ecp.ui.view.custom.NodeBuilderCustom">
+            class="org.eclipse.emf.ecp.view.custom.internal.ui.NodeBuilderCustom">
       </builders>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.view.validation.validationSubProcessor">
       <validationSubProcessor
             associatedRenderable="org.eclipse.emf.ecp.view.custom.model.CustomControl"
-            class="org.eclipse.emf.ecp.ui.view.custom.CustomControlSubprocessor">
+            class="org.eclipse.emf.ecp.view.custom.internal.ui.CustomControlSubprocessor">
       </validationSubProcessor>
    </extension>
 
