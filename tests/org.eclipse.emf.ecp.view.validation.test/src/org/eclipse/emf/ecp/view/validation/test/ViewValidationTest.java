@@ -303,6 +303,27 @@ public class ViewValidationTest {
 	}
 
 	@Test
+	public void testValidationTableControlChildrenTwoEntries() {
+		final Library lib = TestFactory.eINSTANCE.createLibrary();
+		lib.setName("bla");
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer);
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		writer2.setFirstName("bla");
+		lib.getWriters().add(writer2);
+
+		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getLibrary_Writers());
+		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.getColumns().add(tc);
+
+		final ViewModelContext vmc = new ViewModelContextImpl(control, lib);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
 	public void testValidationTableControlChildrenUpdateExisting() {
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
 		lib.setName("bla");
@@ -317,6 +338,29 @@ public class ViewValidationTest {
 
 		final ViewModelContext vmc = new ViewModelContextImpl(control, lib);
 
+		writer.setFirstName("bla");
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationTableControlChildrenUpdateExistingTwoEntries() {
+		final Library lib = TestFactory.eINSTANCE.createLibrary();
+		lib.setName("bla");
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer);
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer2);
+
+		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getLibrary_Writers());
+		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.getColumns().add(tc);
+
+		final ViewModelContext vmc = new ViewModelContextImpl(control, lib);
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+		writer2.setFirstName("bla");
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
 		writer.setFirstName("bla");
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
@@ -343,6 +387,28 @@ public class ViewValidationTest {
 	}
 
 	@Test
+	public void testValidationTableControlChildrenAddNewWithoutError() {
+		final Library lib = TestFactory.eINSTANCE.createLibrary();
+		lib.setName("bla");
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer);
+
+		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getLibrary_Writers());
+		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.getColumns().add(tc);
+
+		final ViewModelContext vmc = new ViewModelContextImpl(control, lib);
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		writer2.setFirstName("bla");
+		lib.getWriters().add(writer2);
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
 	public void testValidationTableControlChildrenRemoveAdded() {
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
 		lib.setName("bla");
@@ -357,7 +423,7 @@ public class ViewValidationTest {
 		control.getColumns().add(tc);
 
 		new ViewModelContextImpl(control, lib);
-		
+
 		assertEquals("Severity of table must be warning", Diagnostic.WARNING, control.getDiagnostic()
 			.getHighestSeverity());
 
@@ -369,6 +435,39 @@ public class ViewValidationTest {
 		lib.getWriters().remove(writer2);
 
 		assertEquals("Severity of table must be warning", Diagnostic.WARNING, control.getDiagnostic()
+			.getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationTableControlChildrenRemoveEntry() {
+		final Library lib = TestFactory.eINSTANCE.createLibrary();
+		lib.setName("bla");
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer);
+
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer2);
+		final Writer writer3 = TestFactory.eINSTANCE.createWriter();
+		lib.getWriters().add(writer3);
+		writer3.setFirstName("bla");
+
+		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		control.setTargetFeature(TestPackage.eINSTANCE.getLibrary_Writers());
+		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.getColumns().add(tc);
+
+		new ViewModelContextImpl(control, lib);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+
+		lib.getWriters().remove(writer);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+
+		lib.getWriters().remove(writer2);
+
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control.getDiagnostic()
 			.getHighestSeverity());
 	}
 
