@@ -21,7 +21,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
@@ -175,7 +174,7 @@ public class RuleService extends AbstractViewService {
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EObject domainEObject, EAttribute attribute, boolean dry, Object newValue) {
+		Class<T> ruleType, EObject domainEObject, EStructuralFeature attribute, boolean dry, Object newValue) {
 
 		final Map<Renderable, Boolean> map = new LinkedHashMap<Renderable, Boolean>();
 
@@ -213,12 +212,12 @@ public class RuleService extends AbstractViewService {
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EObject domainEObject, EAttribute attribute, Object newValue) {
+		Class<T> ruleType, EObject domainEObject, EStructuralFeature attribute, Object newValue) {
 		return evalAffectedRenderables(registry, ruleType, domainEObject, attribute, true, newValue);
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EObject domainEObject, EAttribute attribute) {
+		Class<T> ruleType, EObject domainEObject, EStructuralFeature attribute) {
 		return evalAffectedRenderables(registry, ruleType, domainEObject, attribute, false, null);
 	}
 
@@ -244,7 +243,7 @@ public class RuleService extends AbstractViewService {
 		return rule instanceof ShowRule;
 	}
 
-	private <T extends Rule> void evalShow(EObject domainEObject, EAttribute attribute) {
+	private <T extends Rule> void evalShow(EObject domainEObject, EStructuralFeature attribute) {
 
 		final Map<Renderable, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
 			domainEObject, attribute);
@@ -260,7 +259,7 @@ public class RuleService extends AbstractViewService {
 		}
 	}
 
-	private <T extends Rule> void evalEnable(EObject domainEObject, EAttribute attribute) {
+	private <T extends Rule> void evalEnable(EObject domainEObject, EStructuralFeature attribute) {
 
 		final Map<Renderable, Boolean> enabledMap = evalAffectedRenderables(enableRuleRegistry, EnableRule.class,
 			domainEObject, attribute);
@@ -272,13 +271,13 @@ public class RuleService extends AbstractViewService {
 
 	private <T extends Rule> void evalShow(EObject domainModel) {
 		for (final UniqueSetting setting : showRuleRegistry.getSettings()) {
-			evalShow(setting.getEObject(), setting.getEAttribute());
+			evalShow(setting.getEObject(), setting.getEStructuralFeature());
 		}
 	}
 
 	private <T extends Rule> void evalEnable(EObject domainModel) {
 		for (final UniqueSetting setting : enableRuleRegistry.getSettings()) {
-			evalEnable(setting.getEObject(), setting.getEAttribute());
+			evalEnable(setting.getEObject(), setting.getEStructuralFeature());
 		}
 	}
 
@@ -357,17 +356,21 @@ public class RuleService extends AbstractViewService {
 
 		if (renderable instanceof Control) {
 			final Control control = (Control) renderable;
-			EObject parent = context.getDomainModel();
-			final EStructuralFeature targetFeature = control.getTargetFeature();
+			// REFACTORING test
+			final EObject parent = control.getDomainModelReference().getDomainModel();
+			final EStructuralFeature targetFeature = control.getDomainModelReference().getModelFeature();
+			if (targetFeature == null) {
+				return;
+			}
 			final Class<?> containerClass = targetFeature.getContainerClass();
 
-			if (!containerClass.isInstance(parent)) {
-				for (final EReference eReference : control.getPathToFeature()) {
-					if (parent.eGet(eReference) instanceof EObject) {
-						parent = (EObject) parent.eGet(eReference);
-					}
-				}
-			}
+			// if (!containerClass.isInstance(parent)) {
+			// for (final EReference eReference : control.getPathToFeature()) {
+			// if (parent.eGet(eReference) instanceof EObject) {
+			// parent = (EObject) parent.eGet(eReference);
+			// }
+			// }
+			// }
 
 			isUnset = true;
 			if (containerClass.isInstance(parent)) {

@@ -35,7 +35,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Control modelControl = node.getRenderable();
-		final EClass dataClass = modelControl.getTargetFeature().getEContainingClass();
+		final EClass dataClass = modelControl.getDomainModelReference().getModelFeature().getEContainingClass();
 		final ECPControlContext subContext = node.getControlContext();
 
 		if (dataClass == null) {
@@ -44,10 +44,11 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
 			.getPropertyDescriptor(subContext.getModelElement(),
-				modelControl.getTargetFeature());
+				modelControl.getDomainModelReference().getModelFeature());
 
 		if (itemPropertyDescriptor == null) {
-			throw new NoPropertyDescriptorFoundExeption(subContext.getModelElement(), modelControl.getTargetFeature());
+			throw new NoPropertyDescriptorFoundExeption(subContext.getModelElement(), modelControl
+				.getDomainModelReference().getModelFeature());
 		}
 
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();

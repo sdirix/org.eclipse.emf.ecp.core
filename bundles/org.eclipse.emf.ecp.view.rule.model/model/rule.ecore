@@ -3,12 +3,11 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/rule/model" nsPrefix="org.eclipse.emf.ecp.view.rule.model">
   <eClassifiers xsi:type="ecore:EClass" name="Condition" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="LeafCondition" eSuperTypes="#//Condition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedValue" lowerBound="1"
         eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pathToAttribute" upperBound="-1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//VSingleDomainModelReference"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrCondition" eSuperTypes="#//Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" lowerBound="2"

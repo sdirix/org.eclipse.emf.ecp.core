@@ -19,10 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
@@ -74,13 +71,15 @@ public class RuleRegistry<T extends Rule> {
 		} else if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
-			final EObject target = getTargetEObject(leafCondition, domainModel);
+			leafCondition.getDomainModelReference().resolve(domainModel);
+			final EObject target = leafCondition.getDomainModelReference().getDomainModel();
 
 			if (target == null) {
 				return;
 			}
 
-			final UniqueSetting setting = createSetting(target, leafCondition.getAttribute());
+			final UniqueSetting setting = createSetting(target, leafCondition.getDomainModelReference()
+				.getModelFeature());
 
 			mapSettingToRule(setting, rule);
 
@@ -106,22 +105,22 @@ public class RuleRegistry<T extends Rule> {
 		settingToRules.get(setting).add(rule);
 	}
 
-	private static EObject getTargetEObject(LeafCondition condition, final EObject parent) {
-		final EList<EReference> pathToAttribute = condition.getPathToAttribute();
-		EObject result = parent;
-		for (final EReference eReference : pathToAttribute) {
-
-			EObject child = (EObject) result.eGet(eReference);
-
-			if (child == null) {
-				child = EcoreUtil.create(eReference.getEReferenceType());
-				result.eSet(eReference, child);
-			}
-			result = child;
-		}
-
-		return result;
-	}
+	// private static EObject getTargetEObject(LeafCondition condition, final EObject parent) {
+	// final EList<EReference> pathToAttribute = condition.getDomainModelReference().getgetPathToAttribute();
+	// EObject result = parent;
+	// for (final EReference eReference : pathToAttribute) {
+	//
+	// EObject child = (EObject) result.eGet(eReference);
+	//
+	// if (child == null) {
+	// child = EcoreUtil.create(eReference.getEReferenceType());
+	// result.eSet(eReference, child);
+	// }
+	// result = child;
+	// }
+	//
+	// return result;
+	// }
 
 	/**
 	 * Returns the settings of this registry.

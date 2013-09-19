@@ -17,6 +17,17 @@
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//Alignment/Top"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//Alignment/None"/>
     </genEnums>
+    <genClasses image="false" ecoreClass="view.ecore#//Renderable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/visible"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/enabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/readonly"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Renderable/diagnostic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Renderable/attachments"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//VDiagnostic">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//VDiagnostic/diagnostics"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/children"/>
@@ -32,16 +43,33 @@
     <genClasses ecoreClass="view.ecore#//Category">
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Category/composite"/>
     </genClasses>
+    <genClasses ecoreClass="view.ecore#//Action">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/bundle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/className"/>
+    </genClasses>
     <genClasses ecoreClass="view.ecore#//Composite">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Composite/name"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//AbstractControl">
+      <genOperations ecoreOperation="view.ecore#//AbstractControl/getDomainModelReferences"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//VDomainModelReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//VDomainModelReference/domainModel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//VDomainModelReference/modelFeature"/>
+      <genOperations ecoreOperation="view.ecore#//VDomainModelReference/resolve">
+        <genParameters ecoreParameter="view.ecore#//VDomainModelReference/resolve/domainModel"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//VFeaturePathDomainModelReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//VFeaturePathDomainModelReference/domainModelEFeature"/>
+      <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference view.ecore#//VFeaturePathDomainModelReference/domainModelEReferencePath"/>
+    </genClasses>
     <genClasses ecoreClass="view.ecore#//Control">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Control/targetFeature"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/hint"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/mandatory"/>
-      <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
-          ecoreFeature="ecore:EReference view.ecore#//Control/pathToFeature"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//TableControl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//TableControl/columns"/>
@@ -61,23 +89,5 @@
     </genClasses>
     <genClasses ecoreClass="view.ecore#//ColumnComposite"/>
     <genClasses ecoreClass="view.ecore#//Column"/>
-    <genClasses image="false" ecoreClass="view.ecore#//Renderable">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/visible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/enabled"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Renderable/readonly"/>
-      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Renderable/diagnostic"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Renderable/attachments"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Action">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/bundle"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/className"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="view.ecore#//AbstractControl">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference view.ecore#//AbstractControl/targetFeatures"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
-    <genClasses ecoreClass="view.ecore#//VDiagnostic">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//VDiagnostic/diagnostics"/>
-    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -24,14 +24,12 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private EClass customControlEClass = null;
@@ -57,7 +55,6 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -65,24 +62,20 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>
-	 * This method is used to initialize {@link CustomPackage#eINSTANCE} when that field is accessed. Clients should not
-	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * <p>This method is used to initialize {@link CustomPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static CustomPackage init() {
-		if (isInited) {
-			return (CustomPackage) EPackage.Registry.INSTANCE.getEPackage(CustomPackage.eNS_URI);
-		}
+		if (isInited) return (CustomPackage)EPackage.Registry.INSTANCE.getEPackage(CustomPackage.eNS_URI);
 
 		// Obtain or create and register package
-		final CustomPackageImpl theCustomPackage = (CustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CustomPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new CustomPackageImpl());
+		CustomPackageImpl theCustomPackage = (CustomPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CustomPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CustomPackageImpl());
 
 		isInited = true;
 
@@ -98,6 +91,7 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 		// Mark meta-data to indicate it can't be changed
 		theCustomPackage.freeze();
 
+  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(CustomPackage.eNS_URI, theCustomPackage);
 		return theCustomPackage;
@@ -106,7 +100,6 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EClass getCustomControl() {
@@ -116,53 +109,46 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EAttribute getCustomControl_Bundle() {
-		return (EAttribute) customControlEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)customControlEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EAttribute getCustomControl_ClassName() {
-		return (EAttribute) customControlEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)customControlEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public CustomFactory getCustomFactory() {
-		return (CustomFactory) getEFactoryInstance();
+		return (CustomFactory)getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package. This method is
+	 * Creates the meta-model objects for the package.  This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
-			return;
-		}
+		if (isCreated) return;
 		isCreated = true;
 
 		// Create classes and their features
@@ -174,23 +160,19 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model. This
+	 * Complete the initialization of the package and its meta-model.  This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
-			return;
-		}
+		if (isInitialized) return;
 		isInitialized = true;
 
 		// Initialize package
@@ -199,7 +181,7 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		ViewPackage theViewPackage = (ViewPackage)EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -209,13 +191,9 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 		customControlEClass.getESuperTypes().add(theViewPackage.getAbstractControl());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(customControlEClass, CustomControl.class, "CustomControl", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCustomControl_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, CustomControl.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCustomControl_ClassName(), ecorePackage.getEString(), "className", null, 1, 1,
-			CustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(customControlEClass, CustomControl.class, "CustomControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCustomControl_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, CustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCustomControl_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, CustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

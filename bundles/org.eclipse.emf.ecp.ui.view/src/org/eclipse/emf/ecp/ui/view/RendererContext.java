@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.SelectedChildNodeListener;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 
 public class RendererContext<CONTROL> implements SelectedChildNodeListener {
@@ -116,7 +117,8 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 			if (org.eclipse.emf.ecp.view.model.AbstractControl.class.isInstance(eObject)) {
 				final org.eclipse.emf.ecp.view.model.AbstractControl control = (org.eclipse.emf.ecp.view.model.AbstractControl)
 					eObject;
-				for (final EStructuralFeature structuralFeature : control.getTargetFeatures()) {
+				for (final VSingleDomainModelReference modelReference : control.getDomainModelReferences()) {
+					final EStructuralFeature structuralFeature = modelReference.getModelFeature();
 					Set<EObject> controls = categoryValidationMap.get(structuralFeature);
 					if (controls == null) {
 						controls = new HashSet<EObject>();

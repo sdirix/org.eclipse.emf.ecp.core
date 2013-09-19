@@ -78,7 +78,8 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 */
 	public static ECPSWTView render(Composite parent, ECPControlContext modelElementContext)
 		throws ECPRendererException {
-		final View view = getView(modelElementContext.getModelElement());
+		// final View view = getView(modelElementContext.getModelElement());
+		final View view = (View) modelElementContext.getViewContext().getViewModel();
 		return render(parent, modelElementContext, view);
 	}
 

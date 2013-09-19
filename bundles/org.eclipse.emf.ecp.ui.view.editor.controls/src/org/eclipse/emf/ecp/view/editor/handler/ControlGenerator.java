@@ -12,34 +12,44 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
 public class ControlGenerator {
 
-    public static void addControls(ECPProject project, CompositeCollection compositeToFill,
-            EClass datasegment, Set<EStructuralFeature> features) {
-        
-        EClass rootClass = Helper.getRootEClass(project);
-        addControls(rootClass, compositeToFill, datasegment, features);
-        
-    }
-    public static void addControls(EClass rootClass, CompositeCollection compositeToFill, EClass datasegment, Set<EStructuralFeature> features){
-    	Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
-    	Helper.getReferenceMap(rootClass, childParentReferenceMap);
-        List<EReference> bottomUpPath = Helper.getReferencePath(datasegment,
-                childParentReferenceMap);
+	public static void addControls(ECPProject project, CompositeCollection compositeToFill,
+		EClass datasegment, Set<EStructuralFeature> features) {
 
-        for (EStructuralFeature feature : features) {
-            Control control = ViewFactory.eINSTANCE.createControl();
-            // control.setData(datasegment);
-            control.setMandatory(false);
-            control.setName("Control " + feature.getName());
-            control.setReadonly(false);
-            control.setTargetFeature(feature);
-            control.getPathToFeature().addAll(bottomUpPath);
-            // add to the composite
-            compositeToFill.getComposites().add(control);
-        }
-    }
+		final EClass rootClass = Helper.getRootEClass(project);
+		addControls(rootClass, compositeToFill, datasegment, features);
+
+	}
+
+	public static void addControls(EClass rootClass, CompositeCollection compositeToFill, EClass datasegment,
+		Set<EStructuralFeature> features) {
+		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
+		Helper.getReferenceMap(rootClass, childParentReferenceMap);
+		final List<EReference> bottomUpPath = Helper.getReferencePath(datasegment,
+			childParentReferenceMap);
+
+		for (final EStructuralFeature feature : features) {
+			final Control control = ViewFactory.eINSTANCE.createControl();
+			// control.setData(datasegment);
+			control.setMandatory(false);
+			control.setName("Control " + feature.getName());
+			control.setReadonly(false);
+
+			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+				.createVFeaturePathDomainModelReference();
+			modelReference.setDomainModelEFeature(feature);
+			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			// control.setTargetFeature(feature);
+			// control.getPathToFeature().addAll(bottomUpPath);
+			control.setDomainModelReference(modelReference);
+
+			// add to the composite
+			compositeToFill.getComposites().add(control);
+		}
+	}
 
 }

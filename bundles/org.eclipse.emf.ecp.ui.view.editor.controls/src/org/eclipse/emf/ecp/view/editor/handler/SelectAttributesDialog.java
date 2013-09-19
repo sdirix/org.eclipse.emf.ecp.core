@@ -212,10 +212,11 @@ public class SelectAttributesDialog extends Dialog {
 					final EObject eObject = eAllContents.next();
 					if (org.eclipse.emf.ecp.view.model.Control.class.isInstance(eObject)) {
 						final org.eclipse.emf.ecp.view.model.Control control = (org.eclipse.emf.ecp.view.model.Control) eObject;
-						final EStructuralFeature feature = control.getTargetFeature();
+
+						final EStructuralFeature feature = control.getDomainModelReference().getModelFeature();
 
 						if (feature != null && feature.getEContainingClass().equals(eClass)) {
-							result.add(control.getTargetFeature());
+							result.add(control.getDomainModelReference().getModelFeature());
 						}
 					}
 				}

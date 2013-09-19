@@ -97,6 +97,24 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>()
 	{
 		@Override
+		public Adapter caseRenderable(Renderable object)
+		{
+			return createRenderableAdapter();
+		}
+
+		@Override
+		public Adapter caseVDiagnostic(VDiagnostic object)
+		{
+			return createVDiagnosticAdapter();
+		}
+
+		@Override
+		public Adapter caseAttachment(Attachment object)
+		{
+			return createAttachmentAdapter();
+		}
+
+		@Override
 		public Adapter caseView(View object)
 		{
 			return createViewAdapter();
@@ -121,9 +139,39 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseAction(Action object)
+		{
+			return createActionAdapter();
+		}
+
+		@Override
 		public Adapter caseComposite(Composite object)
 		{
 			return createCompositeAdapter();
+		}
+
+		@Override
+		public Adapter caseAbstractControl(AbstractControl object)
+		{
+			return createAbstractControlAdapter();
+		}
+
+		@Override
+		public Adapter caseVDomainModelReference(VDomainModelReference object)
+		{
+			return createVDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseVSingleDomainModelReference(VSingleDomainModelReference object)
+		{
+			return createVSingleDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+		{
+			return createVFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
@@ -166,36 +214,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseColumn(Column object)
 		{
 			return createColumnAdapter();
-		}
-
-		@Override
-		public Adapter caseRenderable(Renderable object)
-		{
-			return createRenderableAdapter();
-		}
-
-		@Override
-		public Adapter caseAction(Action object)
-		{
-			return createActionAdapter();
-		}
-
-		@Override
-		public Adapter caseAbstractControl(AbstractControl object)
-		{
-			return createAbstractControlAdapter();
-		}
-
-		@Override
-		public Adapter caseAttachment(Attachment object)
-		{
-			return createAttachmentAdapter();
-		}
-
-		@Override
-		public Adapter caseVDiagnostic(VDiagnostic object)
-		{
-			return createVDiagnosticAdapter();
 		}
 
 		@Override
@@ -447,6 +465,58 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractControlAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * <em>VDomain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * @generated
+	 */
+	public Adapter createVDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VSingleDomainModelReference
+	 * <em>VSingle Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VSingleDomainModelReference
+	 * @generated
+	 */
+	public Adapter createVSingleDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * <em>VFeature Path Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * @generated
+	 */
+	public Adapter createVFeaturePathDomainModelReferenceAdapter()
+	{
 		return null;
 	}
 

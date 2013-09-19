@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -136,8 +135,9 @@ public class ValidationRegistry {
 		// TODO subprocessor for CustomControl
 		else if (Control.class.isInstance(renderable)) {
 			final Control control = (Control) renderable;
-			final List<EReference> references = new ArrayList<EReference>(control.getPathToFeature());
-			final EObject referencedDomainModel = resolveDomainModel(domainModel, references);
+			// final List<EReference> references = new ArrayList<EReference>(control.getPathToFeature());
+			// final EObject referencedDomainModel = resolveDomainModel(domainModel, references);
+			final EObject referencedDomainModel = control.getDomainModelReference().getDomainModel();
 			if (!result.containsKey(referencedDomainModel)) {
 				result.put(referencedDomainModel, new LinkedHashSet<AbstractControl>());
 			}

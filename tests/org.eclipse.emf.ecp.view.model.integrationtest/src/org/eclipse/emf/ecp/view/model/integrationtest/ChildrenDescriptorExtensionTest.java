@@ -43,13 +43,13 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + CATEGORIZATION_CHILD_COUNT;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
-	private static final int LEAFCONDITION_CHILD_COUNT = 0;
+	private static final int LEAFCONDITION_CHILD_COUNT = 1;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
-	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
-	private static final int TABLECONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
+	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	// TODO: Should be not -3, span and rules are missing

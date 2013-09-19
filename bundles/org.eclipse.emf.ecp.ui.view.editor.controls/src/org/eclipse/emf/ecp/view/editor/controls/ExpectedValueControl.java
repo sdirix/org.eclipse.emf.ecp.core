@@ -5,9 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -66,12 +68,18 @@ public class ExpectedValueControl extends SingleControl {
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				final LeafCondition condition = (LeafCondition) getModelElementContext().getModelElement();
-				final EAttribute attribute = condition.getAttribute();
-				if (attribute == null) {
+				final EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
+					.getDomainModelReference()).getDomainModelEFeature();
+				if (structuralFeature == null) {
 					MessageDialog.openError(text.getShell(), "No Attribute selected",
 						"Please select an attribute first. Without the attribute we can't provide you with support!");
 					return;
 				}
+				if (EReference.class.isInstance(structuralFeature)) {
+					// TODO show all references
+					return;
+				}
+				final EAttribute attribute = (EAttribute) structuralFeature;
 				Class<?> attribuetClazz = attribute.getEAttributeType().getInstanceClass();
 				if (attribuetClazz.isPrimitive()) {
 					if (int.class.isAssignableFrom(attribuetClazz)) {
@@ -143,6 +151,7 @@ public class ExpectedValueControl extends SingleControl {
 		});
 	}
 
+	@Override
 	public void setEditable(boolean isEditable) {
 		// text.setEditable(isEditable);
 	}

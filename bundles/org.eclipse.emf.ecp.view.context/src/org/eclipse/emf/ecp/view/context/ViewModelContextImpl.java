@@ -23,10 +23,13 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
  * The Class ViewModelContextImpl.
@@ -90,6 +93,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	private void instantiate() {
 
+		// init viewModel and datamodel by filling in n
+		initViewDataModel();
+
 		viewModelContentAdapter = new EContentAdapter() {
 
 			@Override
@@ -116,6 +122,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 				// do not notify while being disposed
 				if (isDisposing) {
 					return;
+				}
+				if (Control.class.isInstance(notifier)) {
+					final Control control = (Control) notifier;
+					if (control.getDomainModelReference().getDomainModel() == null) {
+						control.getDomainModelReference().resolve(domainObject);
+					}
 				}
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyAdd(notifier);
@@ -192,6 +204,29 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final AbstractViewService viewService : viewServices) {
 			viewService.instantiate(this);
 		}
+	}
+
+	/**
+	 * This inits the view model by reading all necessary data model path from the view model and instantiating the
+	 * missing elements in the data model.
+	 */
+	private void initViewDataModel() {
+		// TODO Auto-generated method stub
+		final TreeIterator<EObject> eAllContents = view.eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject eObject = eAllContents.next();
+
+			if (VDomainModelReference.class.isInstance(eObject)) {
+				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
+				final boolean resolve = modelReference.resolve(domainObject);
+				if (!resolve) {
+					// log
+				}
+
+			}
+
+		}
+
 	}
 
 	/**

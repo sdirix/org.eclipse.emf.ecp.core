@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.widgets.Button;
@@ -33,14 +33,18 @@ public class ControlTargetFeatureControl extends LinkControl {
 
 	@Override
 	protected Button[] createButtons(Composite composite) {
-		Button[] buttons = new Button[2];
+		final Button[] buttons = new Button[2];
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
 			getItemPropertyDescriptor(), getStructuralFeature()) {
 
 			@Override
 			public void run() {
 				super.run();
-				((Control) getModelElementContext().getModelElement()).getPathToFeature().clear();
+				final VFeaturePathDomainModelReference modelReference =
+					(VFeaturePathDomainModelReference) getModelElementContext().getModelElement();
+				modelReference.getDomainModelEReferencePath().clear();
+				modelReference.setDomainModelEFeature(null);
+				modelReference.setDomainModel(null);
 			}
 
 		}, composite);
@@ -88,10 +92,16 @@ public class ControlTargetFeatureControl extends LinkControl {
 
 		@Override
 		protected void setSelectedValues(EStructuralFeature selectedFeature, List<EReference> bottomUpPath) {
-			Control condition = (Control) getModelElementContext().getModelElement();
-			condition.setTargetFeature(selectedFeature);
-			condition.getPathToFeature().clear();
-			condition.getPathToFeature().addAll(bottomUpPath);
+			final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getModelElementContext()
+				.getModelElement();
+			// final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+			// .createVFeaturePathDomainModelReference();
+			modelReference.setDomainModelEFeature(selectedFeature);
+			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			// condition.setTargetFeature(selectedFeature);
+			// condition.getPathToFeature().clear();
+			// condition.getPathToFeature().addAll(bottomUpPath);
+			// condition.setDomainModelReference(modelReference);
 		}
 
 	}

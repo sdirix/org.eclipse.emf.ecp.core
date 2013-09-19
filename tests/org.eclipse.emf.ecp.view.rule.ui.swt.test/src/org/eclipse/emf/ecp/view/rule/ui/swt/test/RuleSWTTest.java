@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
@@ -54,7 +55,12 @@ public class RuleSWTTest {
 		view = createView();
 		input = createFan();
 		control = (Control) view.getChildren().get(0);
-		control.setTargetFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+
+		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		control.setDomainModelReference(modelReference);
+
 		shell = SWTViewTestHelper.createShell();
 		shell.setVisible(true);
 	}

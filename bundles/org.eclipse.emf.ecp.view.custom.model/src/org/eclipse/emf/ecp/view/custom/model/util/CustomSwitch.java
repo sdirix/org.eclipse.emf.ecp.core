@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.custom.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecp.view.custom.model.*;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.ecp.view.custom.model.CustomPackage
  * @generated
  */
@@ -39,7 +39,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected static CustomPackage modelPackage;
@@ -48,7 +47,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public CustomSwitch() {
@@ -61,7 +59,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -72,36 +69,25 @@ public class CustomSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-	 * result.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case CustomPackage.CUSTOM_CONTROL: {
-			final CustomControl customControl = (CustomControl) theEObject;
-			T result = caseCustomControl(customControl);
-			if (result == null) {
-				result = caseAbstractControl(customControl);
+			case CustomPackage.CUSTOM_CONTROL: {
+				CustomControl customControl = (CustomControl)theEObject;
+				T result = caseCustomControl(customControl);
+				if (result == null) result = caseAbstractControl(customControl);
+				if (result == null) result = caseComposite(customControl);
+				if (result == null) result = caseRenderable(customControl);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
 			}
-			if (result == null) {
-				result = caseComposite(customControl);
-			}
-			if (result == null) {
-				result = caseRenderable(customControl);
-			}
-			if (result == null) {
-				result = defaultCase(theEObject);
-			}
-			return result;
-		}
-		default:
-			return defaultCase(theEObject);
+			default: return defaultCase(theEObject);
 		}
 	}
 
@@ -111,7 +97,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -127,7 +112,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Renderable</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -143,7 +127,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Composite</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -159,7 +142,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Abstract Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -175,7 +157,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

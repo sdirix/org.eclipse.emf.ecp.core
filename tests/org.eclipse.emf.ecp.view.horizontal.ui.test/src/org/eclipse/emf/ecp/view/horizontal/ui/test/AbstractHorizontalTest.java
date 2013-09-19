@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
@@ -96,7 +97,10 @@ public abstract class AbstractHorizontalTest {
 
 	private static Control createControl() {
 		final Control control = ViewFactory.eINSTANCE.createControl();
-		control.setTargetFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
+		control.setDomainModelReference(domainModelReference);
 		return control;
 	}
 

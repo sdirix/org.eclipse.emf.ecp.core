@@ -2,6 +2,7 @@
  */
 package org.eclipse.emf.ecp.view.rule.model;
 
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
@@ -14,9 +15,9 @@ import org.eclipse.emf.ecore.EReference;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getAttribute <em>Attribute</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getExpectedValue <em>Expected Value</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getPathToAttribute <em>Path To Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getDomainModelReference <em>Domain Model Reference</em>}
+ * </li>
  * </ul>
  * </p>
  * 
@@ -25,35 +26,6 @@ import org.eclipse.emf.ecore.EReference;
  * @generated
  */
 public interface LeafCondition extends Condition {
-	/**
-	 * Returns the value of the '<em><b>Attribute</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attribute</em>' reference isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Attribute</em>' reference.
-	 * @see #setAttribute(EAttribute)
-	 * @see org.eclipse.emf.ecp.view.rule.model.RulePackage#getLeafCondition_Attribute()
-	 * @model required="true"
-	 * @generated
-	 */
-	EAttribute getAttribute();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getAttribute <em>Attribute</em>}'
-	 * reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param value the new value of the '<em>Attribute</em>' reference.
-	 * @see #getAttribute()
-	 * @generated
-	 */
-	void setAttribute(EAttribute value);
-
 	/**
 	 * Returns the value of the '<em><b>Expected Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -84,20 +56,32 @@ public interface LeafCondition extends Condition {
 	void setExpectedValue(Object value);
 
 	/**
-	 * Returns the value of the '<em><b>Path To Attribute</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EReference}.
+	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Path To Attribute</em>' reference list isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the value of the '<em>Path To Attribute</em>' reference list.
-	 * @see org.eclipse.emf.ecp.view.rule.model.RulePackage#getLeafCondition_PathToAttribute()
-	 * @model
+	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
+	 * @see #setDomainModelReference(VSingleDomainModelReference)
+	 * @see org.eclipse.emf.ecp.view.rule.model.RulePackage#getLeafCondition_DomainModelReference()
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList<EReference> getPathToAttribute();
+	VSingleDomainModelReference getDomainModelReference();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getDomainModelReference
+	 * <em>Domain Model Reference</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
+	 * @see #getDomainModelReference()
+	 * @generated
+	 */
+	void setDomainModelReference(VSingleDomainModelReference value);
 
 } // LeafCondition

@@ -23,11 +23,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getTargetFeature <em>Target Feature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getHint <em>Hint</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getPathToFeature <em>Path To Feature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}</li>
  * </ul>
  * </p>
  * 
@@ -37,33 +36,33 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface Control extends AbstractControl {
 	/**
-	 * Returns the value of the '<em><b>Target Feature</b></em>' reference.
+	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Target Feature</em>' reference isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the value of the '<em>Target Feature</em>' reference.
-	 * @see #setTargetFeature(EStructuralFeature)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_TargetFeature()
-	 * @model required="true"
+	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
+	 * @see #setDomainModelReference(VSingleDomainModelReference)
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_DomainModelReference()
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EStructuralFeature getTargetFeature();
+	VSingleDomainModelReference getDomainModelReference();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getTargetFeature <em>Target Feature</em>}'
-	 * reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference
+	 * <em>Domain Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @param value the new value of the '<em>Target Feature</em>' reference.
-	 * @see #getTargetFeature()
+	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
+	 * @see #getDomainModelReference()
 	 * @generated
 	 */
-	void setTargetFeature(EStructuralFeature value);
+	void setDomainModelReference(VSingleDomainModelReference value);
 
 	/**
 	 * Returns the value of the '<em><b>Hint</b></em>' attribute list.
@@ -110,23 +109,6 @@ public interface Control extends AbstractControl {
 	 * @generated
 	 */
 	void setMandatory(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Path To Feature</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecore.EReference}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Path To Feature</em>' reference list isn't clear, there really should be more of a
-	 * description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Path To Feature</em>' reference list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_PathToFeature()
-	 * @model
-	 * @generated
-	 */
-	EList<EReference> getPathToFeature();
 
 	/**
 	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.

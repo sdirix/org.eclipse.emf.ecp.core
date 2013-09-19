@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
 /**
@@ -92,10 +93,12 @@ public class ViewValidationCachedTree extends AbstractCachedTree<VDiagnostic> {
 					if (childDiagnostic.getData().size() != 2) {
 						continue;
 					}
-
-					if (control.getTargetFeatures().contains(childDiagnostic.getData().get(1))) {
-						vDiagnostic.getDiagnostics().add(childDiagnostic);
+					for (final VSingleDomainModelReference modelReference : control.getDomainModelReferences()) {
+						if (modelReference.getModelFeature().equals(childDiagnostic.getData().get(1))) {
+							vDiagnostic.getDiagnostics().add(childDiagnostic);
+						}
 					}
+
 				}
 				update(control, vDiagnostic);
 			}

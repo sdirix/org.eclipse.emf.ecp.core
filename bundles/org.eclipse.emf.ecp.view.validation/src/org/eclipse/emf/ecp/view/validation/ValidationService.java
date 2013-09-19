@@ -132,9 +132,10 @@ public class ValidationService extends AbstractViewService {
 							.getFeature()) {
 						if (ViewPackage.eINSTANCE.getControl() == notification.getNotifier().eClass()) {
 							final Control control = (Control) notification.getNotifier();
-							final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
-								control.getPathToFeature());
-							viewValidationCachedTree.validate(controlDomainModel);
+							// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
+							// control.getDomainModelReference().());
+							// REFACTORING test
+							viewValidationCachedTree.validate(control.getDomainModelReference().getDomainModel());
 						}
 					}
 				}

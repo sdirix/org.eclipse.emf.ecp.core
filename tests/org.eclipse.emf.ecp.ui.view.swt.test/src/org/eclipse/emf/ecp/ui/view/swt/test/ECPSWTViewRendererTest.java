@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -79,7 +80,10 @@ public class ECPSWTViewRendererTest {
 	@Test
 	public void testViewWithControls() throws ECPRendererException {
 		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE.createControl();
-		control.setTargetFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		control.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control);
 
 		final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);

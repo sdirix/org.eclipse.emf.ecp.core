@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.validation.ValidationService;
@@ -52,7 +53,12 @@ public class ValidationServiceTest {
 		view.setRootEClass(writer.eClass());
 
 		final Control control = ViewFactory.eINSTANCE.createControl();
-		control.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.setDomainModelReference(domainModelReference);
+
 		view.getChildren().add(control);
 
 		instantiateValidationService(view, writer);
@@ -77,8 +83,13 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
-		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		domainModelReference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		controlWriter.setDomainModelReference(domainModelReference);
+
 		column.getComposites().add(controlWriter);
 
 		instantiateValidationService(view, library);
@@ -105,8 +116,11 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(columnWriter);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
-		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		domainModelReference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		controlWriter.setDomainModelReference(domainModelReference);
 		columnWriter.getComposites().add(controlWriter);
 
 		// Books //////////////////////////////////////////
@@ -114,8 +128,13 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(columnBooks);
 
 		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
-		controlBooks.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
-		controlBooks.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Books());
+
+		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference2.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Title());
+		domainModelReference2.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Books());
+		controlWriter.setDomainModelReference(domainModelReference2);
+
 		columnBooks.getComposites().add(controlBooks);
 
 		// Validation ///////////////////////////////////////
@@ -140,7 +159,10 @@ public class ValidationServiceTest {
 		view.setRootEClass(writer.eClass());
 
 		final Control control = ViewFactory.eINSTANCE.createControl();
-		control.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		control.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control);
 
 		instantiateValidationService(view, writer);
@@ -169,8 +191,13 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
-		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		domainModelReference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		controlWriter.setDomainModelReference(domainModelReference);
+
 		column.getComposites().add(controlWriter);
 
 		instantiateValidationService(view, library);
@@ -196,8 +223,11 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
-		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		domainModelReference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		controlWriter.setDomainModelReference(domainModelReference);
 		column.getComposites().add(controlWriter);
 
 		instantiateValidationService(view, library);
@@ -243,8 +273,11 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(columnWriter);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
-		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		domainModelReference.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		controlWriter.setDomainModelReference(domainModelReference);
 		columnWriter.getComposites().add(controlWriter);
 
 		// Books //////////////////////////////////////////
@@ -252,8 +285,13 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(columnBooks);
 
 		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
-		controlBooks.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
-		controlBooks.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Books());
+
+		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference2.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Title());
+		domainModelReference2.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Books());
+		controlBooks.setDomainModelReference(domainModelReference2);
+
 		columnBooks.getComposites().add(controlBooks);
 
 		// Validation ///////////////////////////////////////
@@ -1128,11 +1166,21 @@ public class ValidationServiceTest {
 		view.setRootEClass(book.eClass());
 
 		final Control controlTitle = ViewFactory.eINSTANCE.createControl();
-		controlTitle.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
+
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Title());
+		controlTitle.setDomainModelReference(domainModelReference);
+
 		view.getChildren().add(controlTitle);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getBook_Writers());
+
+		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference2.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Writers());
+		controlWriter.setDomainModelReference(domainModelReference2);
+
 		view.getChildren().add(controlWriter);
 
 		instantiateValidationService(view, book);
@@ -1168,15 +1216,30 @@ public class ValidationServiceTest {
 		view.setRootEClass(book.eClass());
 
 		final Control controlTitle = ViewFactory.eINSTANCE.createControl();
-		controlTitle.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
+
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Title());
+		controlTitle.setDomainModelReference(domainModelReference);
+
 		view.getChildren().add(controlTitle);
 
 		final Control controlWriter1 = ViewFactory.eINSTANCE.createControl();
-		controlWriter1.setTargetFeature(TestPackage.eINSTANCE.getBook_Writers());
+
+		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference2.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Writers());
+		controlWriter1.setDomainModelReference(domainModelReference2);
+
 		view.getChildren().add(controlWriter1);
 
 		final Control controlWriter2 = ViewFactory.eINSTANCE.createControl();
-		controlWriter2.setTargetFeature(TestPackage.eINSTANCE.getBook_Writers());
+
+		final VFeaturePathDomainModelReference domainModelReference3 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference3.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Writers());
+		controlWriter2.setDomainModelReference(domainModelReference3);
+
 		view.getChildren().add(controlWriter2);
 
 		instantiateValidationService(view, book);
@@ -1348,8 +1411,13 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(columnWriter);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
-		controlWriter.setTargetFeature(TestPackage.eINSTANCE.getWriter_FirstName());
-		controlWriter.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Writers());
+
+		final VFeaturePathDomainModelReference domainModelReference3 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference3.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		domainModelReference3.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Writers());
+		controlWriter.setDomainModelReference(domainModelReference3);
+
 		columnWriter.getComposites().add(controlWriter);
 
 		// Books //////////////////////////////////////////
@@ -1357,8 +1425,13 @@ public class ValidationServiceTest {
 		parentColumn.getComposites().add(columnBooks);
 
 		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
-		controlBooks.setTargetFeature(TestPackage.eINSTANCE.getBook_Title());
-		controlBooks.getPathToFeature().add(TestPackage.eINSTANCE.getLibrary_Books());
+
+		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference2.setDomainModelEFeature(TestPackage.eINSTANCE.getBook_Title());
+		domainModelReference2.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getLibrary_Books());
+		controlBooks.setDomainModelReference(domainModelReference2);
+
 		columnBooks.getComposites().add(controlBooks);
 
 		// Validation Service ///////////////////////////////

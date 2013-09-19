@@ -44,10 +44,10 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 
 		final TableControl modelTableControl = node.getRenderable();
 		final ECPControlContext subContext = node.getControlContext();
-		if (modelTableControl.getTargetFeature() == null) {
+		if (modelTableControl.getDomainModelReference().getModelFeature() == null) {
 			return null;
 		}
-		final EClass dataClass = modelTableControl.getTargetFeature().getEContainingClass();
+		final EClass dataClass = modelTableControl.getDomainModelReference().getModelFeature().getEContainingClass();
 
 		if (dataClass == null) {
 			return null;
@@ -56,7 +56,7 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<TableControl> {
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
 			.getPropertyDescriptor(subContext.getModelElement(),
 
-				modelTableControl.getTargetFeature());
+				modelTableControl.getDomainModelReference().getModelFeature());
 		if (itemPropertyDescriptor == null) {
 			return null;
 		}

@@ -96,16 +96,6 @@ public interface RulePackage extends EPackage {
 	int LEAF_CONDITION = 1;
 
 	/**
-	 * The feature id for the '<em><b>Attribute</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_CONDITION__ATTRIBUTE = CONDITION_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Expected Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,17 +103,17 @@ public interface RulePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LEAF_CONDITION__EXPECTED_VALUE = CONDITION_FEATURE_COUNT + 1;
+	int LEAF_CONDITION__EXPECTED_VALUE = CONDITION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Path To Attribute</b></em>' reference list.
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int LEAF_CONDITION__PATH_TO_ATTRIBUTE = CONDITION_FEATURE_COUNT + 2;
+	int LEAF_CONDITION__DOMAIN_MODEL_REFERENCE = CONDITION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Leaf Condition</em>' class.
@@ -133,7 +123,7 @@ public interface RulePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
+	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.rule.model.impl.OrConditionImpl
@@ -338,19 +328,6 @@ public interface RulePackage extends EPackage {
 	EClass getLeafCondition();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getAttribute
-	 * <em>Attribute</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference '<em>Attribute</em>'.
-	 * @see org.eclipse.emf.ecp.view.rule.model.LeafCondition#getAttribute()
-	 * @see #getLeafCondition()
-	 * @generated
-	 */
-	EReference getLeafCondition_Attribute();
-
-	/**
 	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getExpectedValue <em>Expected Value</em>}'.
 	 * <!-- begin-user-doc -->
@@ -364,17 +341,18 @@ public interface RulePackage extends EPackage {
 	EAttribute getLeafCondition_ExpectedValue();
 
 	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getPathToAttribute <em>Path To Attribute</em>}'.
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getDomainModelReference <em>Domain Model Reference</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for the reference list '<em>Path To Attribute</em>'.
-	 * @see org.eclipse.emf.ecp.view.rule.model.LeafCondition#getPathToAttribute()
+	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.rule.model.LeafCondition#getDomainModelReference()
 	 * @see #getLeafCondition()
 	 * @generated
 	 */
-	EReference getLeafCondition_PathToAttribute();
+	EReference getLeafCondition_DomainModelReference();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.rule.model.OrCondition <em>Or Condition</em>}
@@ -547,15 +525,6 @@ public interface RulePackage extends EPackage {
 		EClass LEAF_CONDITION = eINSTANCE.getLeafCondition();
 
 		/**
-		 * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference LEAF_CONDITION__ATTRIBUTE = eINSTANCE.getLeafCondition_Attribute();
-
-		/**
 		 * The meta object literal for the '<em><b>Expected Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -565,13 +534,13 @@ public interface RulePackage extends EPackage {
 		EAttribute LEAF_CONDITION__EXPECTED_VALUE = eINSTANCE.getLeafCondition_ExpectedValue();
 
 		/**
-		 * The meta object literal for the '<em><b>Path To Attribute</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
-		EReference LEAF_CONDITION__PATH_TO_ATTRIBUTE = eINSTANCE.getLeafCondition_PathToAttribute();
+		EReference LEAF_CONDITION__DOMAIN_MODEL_REFERENCE = eINSTANCE.getLeafCondition_DomainModelReference();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.rule.model.impl.OrConditionImpl

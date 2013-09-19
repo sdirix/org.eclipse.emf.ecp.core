@@ -175,18 +175,8 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
-	public EReference getLeafCondition_Attribute() {
-		return (EReference) leafConditionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EAttribute getLeafCondition_ExpectedValue() {
-		return (EAttribute) leafConditionEClass.getEStructuralFeatures().get(1);
+		return (EAttribute) leafConditionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -195,8 +185,9 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
-	public EReference getLeafCondition_PathToAttribute() {
-		return (EReference) leafConditionEClass.getEStructuralFeatures().get(2);
+	public EReference getLeafCondition_DomainModelReference()
+	{
+		return (EReference) leafConditionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -334,9 +325,8 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		conditionEClass = createEClass(CONDITION);
 
 		leafConditionEClass = createEClass(LEAF_CONDITION);
-		createEReference(leafConditionEClass, LEAF_CONDITION__ATTRIBUTE);
 		createEAttribute(leafConditionEClass, LEAF_CONDITION__EXPECTED_VALUE);
-		createEReference(leafConditionEClass, LEAF_CONDITION__PATH_TO_ATTRIBUTE);
+		createEReference(leafConditionEClass, LEAF_CONDITION__DOMAIN_MODEL_REFERENCE);
 
 		orConditionEClass = createEClass(OR_CONDITION);
 		createEReference(orConditionEClass, OR_CONDITION__CONDITIONS);
@@ -402,15 +392,12 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 		initEClass(leafConditionEClass, LeafCondition.class, "LeafCondition", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getLeafCondition_Attribute(), theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
-			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getLeafCondition_ExpectedValue(), theEcorePackage.getEJavaObject(), "expectedValue", null, 1, 1,
 			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getLeafCondition_PathToAttribute(), theEcorePackage.getEReference(), null, "pathToAttribute",
-			null, 0, -1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLeafCondition_DomainModelReference(), theViewPackage.getVSingleDomainModelReference(), null,
+			"domainModelReference", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(orConditionEClass, OrCondition.class, "OrCondition", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);

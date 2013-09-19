@@ -18,6 +18,7 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -339,8 +340,11 @@ public class RuleTest {
 
 	private static LeafCondition createLeafCondition() {
 		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
-		leafCondition.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		leafCondition.getPathToAttribute().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		modelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+		leafCondition.setDomainModelReference(modelReference);
 
 		return leafCondition;
 	}

@@ -133,6 +133,16 @@ public interface ViewFactory extends EFactory {
 	Action createAction();
 
 	/**
+	 * Returns a new object of class '<em>VFeature Path Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>VFeature Path Domain Model Reference</em>'.
+	 * @generated
+	 */
+	VFeaturePathDomainModelReference createVFeaturePathDomainModelReference();
+
+	/**
 	 * Returns a new object of class '<em>VDiagnostic</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

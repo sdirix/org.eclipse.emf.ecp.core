@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.model.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -35,6 +36,9 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -151,6 +155,30 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass abstractControlEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass vDomainModelReferenceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass vSingleDomainModelReferenceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass vFeaturePathDomainModelReferenceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -360,12 +388,14 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	public EReference getControl_TargetFeature() {
-		return (EReference) controlEClass.getEStructuralFeatures().get(0);
+	public EReference getControl_DomainModelReference()
+	{
+		return (EReference) controlEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -374,7 +404,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EAttribute getControl_Hint() {
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(1);
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -383,16 +413,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EAttribute getControl_Mandatory() {
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getControl_PathToFeature() {
-		return (EReference) controlEClass.getEStructuralFeatures().get(3);
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -403,7 +424,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getControl_LabelAlignment()
 	{
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(4);
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -629,8 +650,75 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EReference getAbstractControl_TargetFeatures() {
-		return (EReference) abstractControlEClass.getEStructuralFeatures().get(0);
+	public EClass getVDomainModelReference()
+	{
+		return vDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getVSingleDomainModelReference()
+	{
+		return vSingleDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getVSingleDomainModelReference_DomainModel()
+	{
+		return (EReference) vSingleDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getVSingleDomainModelReference_ModelFeature()
+	{
+		return (EReference) vSingleDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getVFeaturePathDomainModelReference()
+	{
+		return vFeaturePathDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getVFeaturePathDomainModelReference_DomainModelEFeature()
+	{
+		return (EReference) vFeaturePathDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getVFeaturePathDomainModelReference_DomainModelEReferencePath()
+	{
+		return (EReference) vFeaturePathDomainModelReferenceEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -708,6 +796,18 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		isCreated = true;
 
 		// Create classes and their features
+		renderableEClass = createEClass(RENDERABLE);
+		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
+		createEAttribute(renderableEClass, RENDERABLE__ENABLED);
+		createEAttribute(renderableEClass, RENDERABLE__READONLY);
+		createEReference(renderableEClass, RENDERABLE__DIAGNOSTIC);
+		createEReference(renderableEClass, RENDERABLE__ATTACHMENTS);
+
+		vDiagnosticEClass = createEClass(VDIAGNOSTIC);
+		createEAttribute(vDiagnosticEClass, VDIAGNOSTIC__DIAGNOSTICS);
+
+		attachmentEClass = createEClass(ATTACHMENT);
+
 		viewEClass = createEClass(VIEW);
 		createEReference(viewEClass, VIEW__ROOT_ECLASS);
 		createEReference(viewEClass, VIEW__CHILDREN);
@@ -722,15 +822,32 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		categoryEClass = createEClass(CATEGORY);
 		createEReference(categoryEClass, CATEGORY__COMPOSITE);
 
+		actionEClass = createEClass(ACTION);
+		createEAttribute(actionEClass, ACTION__BUNDLE);
+		createEAttribute(actionEClass, ACTION__CLASS_NAME);
+
 		compositeEClass = createEClass(COMPOSITE);
 		createEAttribute(compositeEClass, COMPOSITE__NAME);
 
+		abstractControlEClass = createEClass(ABSTRACT_CONTROL);
+
+		vDomainModelReferenceEClass = createEClass(VDOMAIN_MODEL_REFERENCE);
+
+		vSingleDomainModelReferenceEClass = createEClass(VSINGLE_DOMAIN_MODEL_REFERENCE);
+		createEReference(vSingleDomainModelReferenceEClass, VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL);
+		createEReference(vSingleDomainModelReferenceEClass, VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE);
+
+		vFeaturePathDomainModelReferenceEClass = createEClass(VFEATURE_PATH_DOMAIN_MODEL_REFERENCE);
+		createEReference(vFeaturePathDomainModelReferenceEClass,
+			VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE);
+		createEReference(vFeaturePathDomainModelReferenceEClass,
+			VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
+
 		controlEClass = createEClass(CONTROL);
-		createEReference(controlEClass, CONTROL__TARGET_FEATURE);
 		createEAttribute(controlEClass, CONTROL__HINT);
 		createEAttribute(controlEClass, CONTROL__MANDATORY);
-		createEReference(controlEClass, CONTROL__PATH_TO_FEATURE);
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
+		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCE);
 
 		tableControlEClass = createEClass(TABLE_CONTROL);
 		createEReference(tableControlEClass, TABLE_CONTROL__COLUMNS);
@@ -750,25 +867,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		columnCompositeEClass = createEClass(COLUMN_COMPOSITE);
 
 		columnEClass = createEClass(COLUMN);
-
-		renderableEClass = createEClass(RENDERABLE);
-		createEAttribute(renderableEClass, RENDERABLE__VISIBLE);
-		createEAttribute(renderableEClass, RENDERABLE__ENABLED);
-		createEAttribute(renderableEClass, RENDERABLE__READONLY);
-		createEReference(renderableEClass, RENDERABLE__DIAGNOSTIC);
-		createEReference(renderableEClass, RENDERABLE__ATTACHMENTS);
-
-		actionEClass = createEClass(ACTION);
-		createEAttribute(actionEClass, ACTION__BUNDLE);
-		createEAttribute(actionEClass, ACTION__CLASS_NAME);
-
-		abstractControlEClass = createEClass(ABSTRACT_CONTROL);
-		createEReference(abstractControlEClass, ABSTRACT_CONTROL__TARGET_FEATURES);
-
-		attachmentEClass = createEClass(ATTACHMENT);
-
-		vDiagnosticEClass = createEClass(VDIAGNOSTIC);
-		createEAttribute(vDiagnosticEClass, VDIAGNOSTIC__DIAGNOSTICS);
 
 		// Create enums
 		alignmentEEnum = createEEnum(ALIGNMENT);
@@ -811,15 +909,42 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		compositeEClass.getESuperTypes().add(this.getRenderable());
+		abstractControlEClass.getESuperTypes().add(this.getComposite());
+		vSingleDomainModelReferenceEClass.getESuperTypes().add(this.getVDomainModelReference());
+		vFeaturePathDomainModelReferenceEClass.getESuperTypes().add(this.getVSingleDomainModelReference());
 		controlEClass.getESuperTypes().add(this.getAbstractControl());
 		tableControlEClass.getESuperTypes().add(this.getControl());
 		customCompositeEClass.getESuperTypes().add(this.getComposite());
 		compositeCollectionEClass.getESuperTypes().add(this.getComposite());
 		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
 		columnEClass.getESuperTypes().add(this.getCompositeCollection());
-		abstractControlEClass.getESuperTypes().add(this.getComposite());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRenderable_Visible(), ecorePackage.getEBoolean(), "visible", "true", 0, 1, Renderable.class,
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRenderable_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, Renderable.class,
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRenderable_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1,
+			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getRenderable_Diagnostic(), this.getVDiagnostic(), null, "diagnostic", null, 0, 1,
+			Renderable.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRenderable_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
+			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(vDiagnosticEClass, VDiagnostic.class, "VDiagnostic", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVDiagnostic_Diagnostics(), theEcorePackage.getEJavaObject(), "diagnostics", null, 0, -1,
+			VDiagnostic.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+
+		initEClass(attachmentEClass, Attachment.class, "Attachment", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(viewEClass, View.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", null, 1, 1, View.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
@@ -848,25 +973,54 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
+		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, Action.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAction_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, Action.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComposite_Name(), theEcorePackage.getEString(), "name", null, 1, 1, Composite.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(abstractControlEClass, AbstractControl.class, "AbstractControl", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(vDomainModelReferenceEClass, VDomainModelReference.class, "VDomainModelReference", IS_ABSTRACT,
+			IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(vSingleDomainModelReferenceEClass, VSingleDomainModelReference.class, "VSingleDomainModelReference",
+			IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getVSingleDomainModelReference_DomainModel(), theEcorePackage.getEObject(), null, "domainModel",
+			null, 0, 1, VSingleDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVSingleDomainModelReference_ModelFeature(), theEcorePackage.getEStructuralFeature(), null,
+			"modelFeature", null, 0, 1, VSingleDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(vFeaturePathDomainModelReferenceEClass, VFeaturePathDomainModelReference.class,
+			"VFeaturePathDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getVFeaturePathDomainModelReference_DomainModelEFeature(),
+			theEcorePackage.getEStructuralFeature(), null, "domainModelEFeature", null, 0, 1,
+			VFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVFeaturePathDomainModelReference_DomainModelEReferencePath(),
+			theEcorePackage.getEReference(), null, "domainModelEReferencePath", null, 0, -1,
+			VFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getControl_TargetFeature(), theEcorePackage.getEStructuralFeature(), null, "targetFeature",
-			null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControl_Hint(), ecorePackage.getEString(), "hint", null, 0, -1, Control.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControl_Mandatory(), theEcorePackage.getEBoolean(), "mandatory", "false", 0, 1,
 			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEReference(getControl_PathToFeature(), theEcorePackage.getEReference(), null, "pathToFeature", null, 0, -1,
-			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControl_LabelAlignment(), this.getAlignment(), "labelAlignment", "Left", 0, 1, Control.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getControl_DomainModelReference(), this.getVSingleDomainModelReference(), null,
+			"domainModelReference", null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tableControlEClass, TableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
@@ -905,43 +1059,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getRenderable_Visible(), ecorePackage.getEBoolean(), "visible", "true", 0, 1, Renderable.class,
-			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRenderable_Enabled(), ecorePackage.getEBoolean(), "enabled", "true", 0, 1, Renderable.class,
-			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRenderable_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1,
-			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEReference(getRenderable_Diagnostic(), this.getVDiagnostic(), null, "diagnostic", null, 0, 1,
-			Renderable.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRenderable_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
-			Renderable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, Action.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAction_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, Action.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(abstractControlEClass, AbstractControl.class, "AbstractControl", IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAbstractControl_TargetFeatures(), theEcorePackage.getEStructuralFeature(), null,
-			"targetFeatures", null, 0, -1, AbstractControl.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
-			!IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-		initEClass(attachmentEClass, Attachment.class, "Attachment", IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(vDiagnosticEClass, VDiagnostic.class, "VDiagnostic", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getVDiagnostic_Diagnostics(), theEcorePackage.getEJavaObject(), "diagnostics", null, 0, -1,
-			VDiagnostic.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(alignmentEEnum, Alignment.class, "Alignment");

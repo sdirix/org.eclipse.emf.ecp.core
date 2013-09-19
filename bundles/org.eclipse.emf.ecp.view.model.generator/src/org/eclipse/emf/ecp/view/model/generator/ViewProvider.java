@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
@@ -41,7 +42,10 @@ public class ViewProvider implements IViewProvider {
 			}
 
 			final Control control = ViewFactory.eINSTANCE.createControl();
-			control.setTargetFeature(feature);
+			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+				.createVFeaturePathDomainModelReference();
+			modelReference.setDomainModelEFeature(feature);
+			control.setDomainModelReference(modelReference);
 			column.getComposites().add(control);
 		}
 

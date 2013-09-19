@@ -50,7 +50,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public static ViewFactory init() {
 		try
 		{
-			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE.getEFactory(ViewPackage.eNS_URI);
+			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
+				.getEFactory("http://org/eclipse/emf/ecp/view/model");
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
@@ -82,12 +83,18 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID())
 		{
+		case ViewPackage.VDIAGNOSTIC:
+			return createVDiagnostic();
 		case ViewPackage.VIEW:
 			return createView();
 		case ViewPackage.CATEGORIZATION:
 			return createCategorization();
 		case ViewPackage.CATEGORY:
 			return createCategory();
+		case ViewPackage.ACTION:
+			return createAction();
+		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE:
+			return createVFeaturePathDomainModelReference();
 		case ViewPackage.CONTROL:
 			return createControl();
 		case ViewPackage.TABLE_CONTROL:
@@ -100,10 +107,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createColumnComposite();
 		case ViewPackage.COLUMN:
 			return createColumn();
-		case ViewPackage.ACTION:
-			return createAction();
-		case ViewPackage.VDIAGNOSTIC:
-			return createVDiagnostic();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -243,6 +246,18 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Action createAction() {
 		ActionImpl action = new ActionImpl();
 		return action;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VFeaturePathDomainModelReference createVFeaturePathDomainModelReference()
+	{
+		VFeaturePathDomainModelReferenceImpl vFeaturePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		return vFeaturePathDomainModelReference;
 	}
 
 	/**

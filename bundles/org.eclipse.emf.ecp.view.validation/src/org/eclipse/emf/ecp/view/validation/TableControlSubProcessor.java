@@ -41,14 +41,15 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 		final ValidationRegistry validationRegistry) {
 		final TableControl tableControl = (TableControl) parentRenderable;
 		final Map<EObject, Set<AbstractControl>> result = new LinkedHashMap<EObject, Set<AbstractControl>>();
-		final EObject referencedDomainModel = validationRegistry.resolveDomainModel(domainObject,
-			tableControl.getPathToFeature());
+		// final EObject referencedDomainModel = validationRegistry.resolveDomainModel(domainObject,
+		// tableControl.getPathToFeature());
+		final EObject referencedDomainModel = tableControl.getDomainModelReference().getDomainModel();
 		if (referencedDomainModel == null) {
 			return result;
 		}
 		@SuppressWarnings("unchecked")
 		final EList<EObject> tableContent = (EList<EObject>) referencedDomainModel
-			.eGet(tableControl.getTargetFeature());
+			.eGet(tableControl.getDomainModelReference().getModelFeature());
 
 		if (!validationRegistry.getRenderablesForEObject(domainObject).contains(parentRenderable)) {
 			referencedDomainModel.eAdapters().add(0, new AdapterImpl() {
@@ -63,7 +64,7 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 					if (msg.isTouch()) {
 						return;
 					}
-					if (msg.getFeature() != tableControl.getTargetFeature()) {
+					if (msg.getFeature() != tableControl.getDomainModelReference().getModelFeature()) {
 						return;
 					}
 					for (final EObject tableChild : tableContent) {

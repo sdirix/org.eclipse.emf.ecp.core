@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.rule;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <p>
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public class UniqueSetting {
 
 	private final EObject eObject;
-	private final EAttribute attribute;
+	private final EStructuralFeature structuralFeature;
 
 	/**
 	 * Convenience method for creating a setting.
@@ -39,7 +40,7 @@ public class UniqueSetting {
 	 *            an {@link EAttribute} of the given {@code eObject}
 	 * @return the constructed setting
 	 */
-	public static UniqueSetting createSetting(EObject eObject, EAttribute attribute) {
+	public static UniqueSetting createSetting(EObject eObject, EStructuralFeature attribute) {
 		return new UniqueSetting(eObject, attribute);
 	}
 
@@ -51,9 +52,9 @@ public class UniqueSetting {
 	 * @param attribute
 	 *            an {@link EAttribute} of the given {@code eObject}
 	 */
-	protected UniqueSetting(EObject eObject, EAttribute attribute) {
+	protected UniqueSetting(EObject eObject, EStructuralFeature attribute) {
 		this.eObject = eObject;
-		this.attribute = attribute;
+		this.structuralFeature = attribute;
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class UniqueSetting {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (attribute == null ? 0 : attribute.hashCode());
+		result = prime * result + (structuralFeature == null ? 0 : structuralFeature.hashCode());
 		result = prime * result + (eObject == null ? 0 : eObject.hashCode());
 		return result;
 	}
@@ -87,11 +88,11 @@ public class UniqueSetting {
 			return false;
 		}
 		final UniqueSetting other = (UniqueSetting) obj;
-		if (attribute == null) {
-			if (other.attribute != null) {
+		if (structuralFeature == null) {
+			if (other.structuralFeature != null) {
 				return false;
 			}
-		} else if (!attribute.equals(other.attribute)) {
+		} else if (!structuralFeature.equals(other.structuralFeature)) {
 			return false;
 		}
 		if (eObject == null) {
@@ -118,7 +119,7 @@ public class UniqueSetting {
 	 * 
 	 * @return the {@link EAttribute}
 	 */
-	public EAttribute getEAttribute() {
-		return attribute;
+	public EStructuralFeature getEStructuralFeature() {
+		return structuralFeature;
 	}
 }

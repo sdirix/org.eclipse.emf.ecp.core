@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="viewModel" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="VView">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//VElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VAbstractElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachments" upperBound="-1"
+        eType="#//VAttachment" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minWidth" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxWidth" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minHeight" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxHeight" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+        unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VAttachment" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VElement" abstract="true" eSuperTypes="#//VAbstractElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VContainer" eSuperTypes="#//VElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//VElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VControl" eSuperTypes="#//VElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" eType="#//VDomainModelReference"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VDomainModelReference">
+    <eOperations name="resolve"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEAttribute"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VFeaturePathDomainModelReference" eSuperTypes="#//VDomainModelReference">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEAttribute"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
+        upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+  </eClassifiers>
+  <eSubpackages name="separator">
+    <eClassifiers xsi:type="ecore:EClass" name="VSeparator" eSuperTypes="#//VElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="group">
+    <eClassifiers xsi:type="ecore:EClass" name="VGroup" eSuperTypes="#//VContainer">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="rule">
+    <eClassifiers xsi:type="ecore:EClass" name="VRule" eSuperTypes="#//VAttachment">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//rule/VCondition"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//rule/VRuleType"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="VRuleType">
+      <eLiterals name="ENABLE_ON_RULE_TRIGGER" literal=""/>
+      <eLiterals name="DISABLE_ON_RULE_TRIGGER" value="1" literal=""/>
+      <eLiterals name="SHOW_ON_RULE_TRIGGER" value="2" literal=""/>
+      <eLiterals name="HIDE_ON_RULE_TRIGGER" value="3" literal=""/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VCondition" abstract="true"/>
+    <eClassifiers xsi:type="ecore:EClass" name="VCompositeCondition" abstract="true"
+        eSuperTypes="#//rule/VCondition">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subConditions" upperBound="-1"
+          eType="#//rule/VCondition" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VOrCondition" abstract="true" eSuperTypes="#//rule/VCompositeCondition"/>
+    <eClassifiers xsi:type="ecore:EClass" name="VAndCondition" abstract="true" eSuperTypes="#//rule/VCompositeCondition"/>
+    <eClassifiers xsi:type="ecore:EClass" name="VDomainModelAttributeCondition" eSuperTypes="#//rule/VCondition">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference"
+          eType="#//VDomainModelReference" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="treeMasterDetailView">
+    <eClassifiers xsi:type="ecore:EClass" name="VTreeMasterDetailView" eSuperTypes="#//VElement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rootTreeEntries" upperBound="-1"
+          eType="#//treeMasterDetailView/VTreeEntry" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VTreeEntry" eSuperTypes="#//VAbstractElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="detailViewModelElement"
+          eType="#//VElement" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+          eType="#//treeMasterDetailView/VTreeEntry" containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="customControl">
+    <eClassifiers xsi:type="ecore:EClass" name="VCustomControl" eSuperTypes="#//VElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="osgiBundleName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="customComposite">
+    <eClassifiers xsi:type="ecore:EClass" name="VCustomViewModelElement" eSuperTypes="#//VElement">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="osgiBundleName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="columnComposite">
+    <eClassifiers xsi:type="ecore:EClass" name="VColumnCompoite">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+          eType="#//columnComposite/VColumn" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VColumn" eSuperTypes="#//VContainer"/>
+  </eSubpackages>
+  <eSubpackages name="horizontalLayout">
+    <eClassifiers xsi:type="ecore:EClass" name="VHorizontalLayout" eSuperTypes="#//VContainer"/>
+  </eSubpackages>
+  <eSubpackages name="verticalLayout">
+    <eClassifiers xsi:type="ecore:EClass" name="VVerticalLayout" eSuperTypes="#//VContainer"/>
+  </eSubpackages>
+</ecore:EPackage>

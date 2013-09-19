@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
@@ -75,7 +76,11 @@ public class TableControlTest {
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
 		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		tableControlHandle.getTableControl().setTargetFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
+
 		return tableControlHandle;
 	}
 
@@ -88,7 +93,9 @@ public class TableControlTest {
 	 * @return
 	 */
 	private static TableControl createTableControl() {
-		return ViewFactory.eINSTANCE.createTableControl();
+		final TableControl tc = ViewFactory.eINSTANCE.createTableControl();
+		tc.setDomainModelReference(ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference());
+		return tc;
 	}
 
 	private Node<Renderable> buildNode(final Renderable renderable) {

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -59,7 +60,7 @@ public class SWTTableTest {
 		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createUninitializedTableWithoutColumns();
-
+		handle.getTableControl().getDomainModelReference().setDomainModel(domainElement);
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertNull(render);
 
@@ -91,7 +92,10 @@ public class SWTTableTest {
 		view.setRootEClass(ViewPackage.eINSTANCE.getView());
 		domainElement = view;
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
-		handle.getTableControl().setTargetFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
@@ -110,7 +114,10 @@ public class SWTTableTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		domainElement = view;
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
-		handle.getTableControl().setTargetFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);

@@ -80,7 +80,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractCategorization()
 	 * @generated
 	 */
-	int ABSTRACT_CATEGORIZATION = 1;
+	int ABSTRACT_CATEGORIZATION = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CategorizationImpl
@@ -92,7 +92,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCategorization()
 	 * @generated
 	 */
-	int CATEGORIZATION = 2;
+	int CATEGORIZATION = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ViewImpl <em>View</em>}' class.
@@ -103,7 +103,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getView()
 	 * @generated
 	 */
-	int VIEW = 0;
+	int VIEW = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CategoryImpl <em>Category</em>}' class.
@@ -114,7 +114,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCategory()
 	 * @generated
 	 */
-	int CATEGORY = 3;
+	int CATEGORY = 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl <em>Renderable</em>}'
@@ -126,7 +126,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getRenderable()
 	 * @generated
 	 */
-	int RENDERABLE = 12;
+	int RENDERABLE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -187,6 +187,200 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int RENDERABLE_FEATURE_COUNT = 5;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeImpl <em>Composite</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.CompositeImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getComposite()
+	 * @generated
+	 */
+	int COMPOSITE = 8;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl <em>Control</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.ControlImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getControl()
+	 * @generated
+	 */
+	int CONTROL = 13;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl <em>Table Control</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.TableControlImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableControl()
+	 * @generated
+	 */
+	int TABLE_CONTROL = 14;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl <em>Table Column</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
+	 * @generated
+	 */
+	int TABLE_COLUMN = 15;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
+	 * <em>Custom Composite</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
+	 * @generated
+	 */
+	int CUSTOM_COMPOSITE = 16;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
+	 * <em>Composite Collection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
+	 * @generated
+	 */
+	int COMPOSITE_COLLECTION = 17;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
+	 * <em>Column Composite</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
+	 * @generated
+	 */
+	int COLUMN_COMPOSITE = 18;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
+	 * @generated
+	 */
+	int COLUMN = 19;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.ActionImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
+	 * @generated
+	 */
+	int ACTION = 7;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
+	 * <em>Abstract Control</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
+	 * @generated
+	 */
+	int ABSTRACT_CONTROL = 9;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * <em>VDomain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDomainModelReference()
+	 * @generated
+	 */
+	int VDOMAIN_MODEL_REFERENCE = 10;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
+	 * <em>VFeature Path Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE = 12;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AttachmentImpl <em>Attachment</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.AttachmentImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
+	 * @generated
+	 */
+	int ATTACHMENT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl <em>VDiagnostic</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDiagnostic()
+	 * @generated
+	 */
+	int VDIAGNOSTIC = 1;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostics</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VDIAGNOSTIC__DIAGNOSTICS = 0;
+
+	/**
+	 * The number of structural features of the '<em>VDiagnostic</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VDIAGNOSTIC_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Attachment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHMENT_FEATURE_COUNT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -559,15 +753,34 @@ public interface ViewPackage extends EPackage {
 	int CATEGORY_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeImpl <em>Composite</em>}' class.
+	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.CompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getComposite()
 	 * @generated
+	 * @ordered
 	 */
-	int COMPOSITE = 4;
+	int ACTION__BUNDLE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION__CLASS_NAME = 1;
+
+	/**
+	 * The number of structural features of the '<em>Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ACTION_FEATURE_COUNT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -640,111 +853,6 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl <em>Control</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ControlImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getControl()
-	 * @generated
-	 */
-	int CONTROL = 5;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl <em>Table Control</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.TableControlImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableControl()
-	 * @generated
-	 */
-	int TABLE_CONTROL = 6;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl <em>Table Column</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
-	 * @generated
-	 */
-	int TABLE_COLUMN = 7;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-	 * <em>Custom Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
-	 * @generated
-	 */
-	int CUSTOM_COMPOSITE = 8;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
-	 * <em>Composite Collection</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
-	 * @generated
-	 */
-	int COMPOSITE_COLLECTION = 9;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-	 * <em>Column Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
-	 * @generated
-	 */
-	int COLUMN_COMPOSITE = 10;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
-	 * @generated
-	 */
-	int COLUMN = 11;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ActionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAction()
-	 * @generated
-	 */
-	int ACTION = 13;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
-	 * <em>Abstract Control</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
-	 * @generated
-	 */
-	int ABSTRACT_CONTROL = 14;
-
-	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -805,16 +913,6 @@ public interface ViewPackage extends EPackage {
 	int ABSTRACT_CONTROL__NAME = COMPOSITE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__TARGET_FEATURES = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Abstract Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -822,7 +920,109 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
+	int ABSTRACT_CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>VDomain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VSingleDomainModelReferenceImpl
+	 * <em>VSingle Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VSingleDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVSingleDomainModelReference()
+	 * @generated
+	 */
+	int VSINGLE_DOMAIN_MODEL_REFERENCE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL = VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Model Feature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE = VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>VSingle Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VSINGLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL = VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Model Feature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE = VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = VSINGLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = VSINGLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>VFeature Path Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VSINGLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -885,26 +1085,6 @@ public interface ViewPackage extends EPackage {
 	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__TARGET_FEATURES = ABSTRACT_CONTROL__TARGET_FEATURES;
-
-	/**
-	 * The feature id for the '<em><b>Target Feature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__TARGET_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -912,7 +1092,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__HINT = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
+	int CONTROL__HINT = ABSTRACT_CONTROL_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
@@ -922,17 +1102,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Path To Feature</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__PATH_TO_FEATURE = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
+	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -942,7 +1112,17 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
+	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__DOMAIN_MODEL_REFERENCE = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -952,7 +1132,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 5;
+	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1015,26 +1195,6 @@ public interface ViewPackage extends EPackage {
 	int TABLE_CONTROL__NAME = CONTROL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Target Features</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__TARGET_FEATURES = CONTROL__TARGET_FEATURES;
-
-	/**
-	 * The feature id for the '<em><b>Target Feature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__TARGET_FEATURE = CONTROL__TARGET_FEATURE;
-
-	/**
 	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1055,16 +1215,6 @@ public interface ViewPackage extends EPackage {
 	int TABLE_CONTROL__MANDATORY = CONTROL__MANDATORY;
 
 	/**
-	 * The feature id for the '<em><b>Path To Feature</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__PATH_TO_FEATURE = CONTROL__PATH_TO_FEATURE;
-
-	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1073,6 +1223,16 @@ public interface ViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__LABEL_ALIGNMENT = CONTROL__LABEL_ALIGNMENT;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = CONTROL__DOMAIN_MODEL_REFERENCE;
 
 	/**
 	 * The feature id for the '<em><b>Columns</b></em>' containment reference list.
@@ -1465,90 +1625,6 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION__BUNDLE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION__CLASS_NAME = 1;
-
-	/**
-	 * The number of structural features of the '<em>Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AttachmentImpl <em>Attachment</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.AttachmentImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAttachment()
-	 * @generated
-	 */
-	int ATTACHMENT = 15;
-
-	/**
-	 * The number of structural features of the '<em>Attachment</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ATTACHMENT_FEATURE_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl <em>VDiagnostic</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDiagnostic()
-	 * @generated
-	 */
-	int VDIAGNOSTIC = 16;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostics</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VDIAGNOSTIC__DIAGNOSTICS = 0;
-
-	/**
-	 * The number of structural features of the '<em>VDiagnostic</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VDIAGNOSTIC_FEATURE_COUNT = 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1557,7 +1633,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 17;
+	int ALIGNMENT = 20;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1719,17 +1795,17 @@ public interface ViewPackage extends EPackage {
 	EClass getControl();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.model.Control#getTargetFeature
-	 * <em>Target Feature</em>}'.
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for the reference '<em>Target Feature</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getTargetFeature()
+	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Control#getDomainModelReference()
 	 * @see #getControl()
 	 * @generated
 	 */
-	EReference getControl_TargetFeature();
+	EReference getControl_DomainModelReference();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecp.view.model.Control#getHint
@@ -1756,19 +1832,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getControl_Mandatory();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.emf.ecp.view.model.Control#getPathToFeature
-	 * <em>Path To Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference list '<em>Path To Feature</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getPathToFeature()
-	 * @see #getControl()
-	 * @generated
-	 */
-	EReference getControl_PathToFeature();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment
@@ -2069,17 +2132,94 @@ public interface ViewPackage extends EPackage {
 	EClass getAbstractControl();
 
 	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.AbstractControl#getTargetFeatures <em>Target Features</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * <em>VDomain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for the reference list '<em>Target Features</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.AbstractControl#getTargetFeatures()
-	 * @see #getAbstractControl()
+	 * @return the meta object for class '<em>VDomain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * @generated
 	 */
-	EReference getAbstractControl_TargetFeatures();
+	EClass getVDomainModelReference();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VSingleDomainModelReference
+	 * <em>VSingle Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>VSingle Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VSingleDomainModelReference
+	 * @generated
+	 */
+	EClass getVSingleDomainModelReference();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.model.VSingleDomainModelReference#getDomainModel <em>Domain Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference '<em>Domain Model</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VSingleDomainModelReference#getDomainModel()
+	 * @see #getVSingleDomainModelReference()
+	 * @generated
+	 */
+	EReference getVSingleDomainModelReference_DomainModel();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.model.VSingleDomainModelReference#getModelFeature <em>Model Feature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference '<em>Model Feature</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VSingleDomainModelReference#getModelFeature()
+	 * @see #getVSingleDomainModelReference()
+	 * @generated
+	 */
+	EReference getVSingleDomainModelReference_ModelFeature();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * <em>VFeature Path Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>VFeature Path Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * @generated
+	 */
+	EClass getVFeaturePathDomainModelReference();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEFeature
+	 * <em>Domain Model EFeature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference '<em>Domain Model EFeature</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEFeature()
+	 * @see #getVFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	EReference getVFeaturePathDomainModelReference_DomainModelEFeature();
+
+	/**
+	 * Returns the meta object for the reference list '
+	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath
+	 * <em>Domain Model EReference Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference list '<em>Domain Model EReference Path</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath()
+	 * @see #getVFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	EReference getVFeaturePathDomainModelReference_DomainModelEReferencePath();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Attachment <em>Attachment</em>}'.
@@ -2286,13 +2426,13 @@ public interface ViewPackage extends EPackage {
 		EClass CONTROL = eINSTANCE.getControl();
 
 		/**
-		 * The meta object literal for the '<em><b>Target Feature</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
-		EReference CONTROL__TARGET_FEATURE = eINSTANCE.getControl_TargetFeature();
+		EReference CONTROL__DOMAIN_MODEL_REFERENCE = eINSTANCE.getControl_DomainModelReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Hint</b></em>' attribute list feature.
@@ -2311,15 +2451,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTROL__MANDATORY = eINSTANCE.getControl_Mandatory();
-
-		/**
-		 * The meta object literal for the '<em><b>Path To Feature</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference CONTROL__PATH_TO_FEATURE = eINSTANCE.getControl_PathToFeature();
 
 		/**
 		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
@@ -2565,13 +2696,81 @@ public interface ViewPackage extends EPackage {
 		EClass ABSTRACT_CONTROL = eINSTANCE.getAbstractControl();
 
 		/**
-		 * The meta object literal for the '<em><b>Target Features</b></em>' reference list feature.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+		 * <em>VDomain Model Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDomainModelReference()
+		 * @generated
+		 */
+		EClass VDOMAIN_MODEL_REFERENCE = eINSTANCE.getVDomainModelReference();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VSingleDomainModelReferenceImpl
+		 * <em>VSingle Domain Model Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.impl.VSingleDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVSingleDomainModelReference()
+		 * @generated
+		 */
+		EClass VSINGLE_DOMAIN_MODEL_REFERENCE = eINSTANCE.getVSingleDomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
-		EReference ABSTRACT_CONTROL__TARGET_FEATURES = eINSTANCE.getAbstractControl_TargetFeatures();
+		EReference VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL = eINSTANCE
+			.getVSingleDomainModelReference_DomainModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Model Feature</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE = eINSTANCE
+			.getVSingleDomainModelReference_ModelFeature();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
+		 * <em>VFeature Path Domain Model Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVFeaturePathDomainModelReference()
+		 * @generated
+		 */
+		EClass VFEATURE_PATH_DOMAIN_MODEL_REFERENCE = eINSTANCE.getVFeaturePathDomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model EFeature</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = eINSTANCE
+			.getVFeaturePathDomainModelReference_DomainModelEFeature();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model EReference Path</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = eINSTANCE
+			.getVFeaturePathDomainModelReference_DomainModelEReferencePath();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.AttachmentImpl

@@ -5,12 +5,14 @@ package org.eclipse.emf.ecp.view.rule.model.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
@@ -22,26 +24,15 @@ import org.eclipse.emf.ecp.view.rule.model.RulePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getAttribute <em>Attribute</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getExpectedValue <em>Expected Value</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getPathToAttribute <em>Path To Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl#getDomainModelReference <em>Domain Model
+ * Reference</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
 public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
-	/**
-	 * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getAttribute()
-	 * @generated
-	 * @ordered
-	 */
-	protected EAttribute attribute;
-
 	/**
 	 * The default value of the '{@link #getExpectedValue() <em>Expected Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -65,15 +56,16 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	protected Object expectedValue = EXPECTED_VALUE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getPathToAttribute() <em>Path To Attribute</em>}' reference list.
+	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
+	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see #getPathToAttribute()
+	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<EReference> pathToAttribute;
+	protected VSingleDomainModelReference domainModelReference;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -94,51 +86,6 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	@Override
 	protected EClass eStaticClass() {
 		return RulePackage.Literals.LEAF_CONDITION;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getAttribute() {
-		if (attribute != null && attribute.eIsProxy())
-		{
-			InternalEObject oldAttribute = (InternalEObject) attribute;
-			attribute = (EAttribute) eResolveProxy(oldAttribute);
-			if (attribute != oldAttribute)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, RulePackage.LEAF_CONDITION__ATTRIBUTE,
-						oldAttribute, attribute));
-			}
-		}
-		return attribute;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute basicGetAttribute() {
-		return attribute;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setAttribute(EAttribute newAttribute) {
-		EAttribute oldAttribute = attribute;
-		attribute = newAttribute;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__ATTRIBUTE, oldAttribute,
-				attribute));
 	}
 
 	/**
@@ -171,13 +118,75 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
-	public EList<EReference> getPathToAttribute() {
-		if (pathToAttribute == null)
+	public VSingleDomainModelReference getDomainModelReference()
+	{
+		return domainModelReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public NotificationChain basicSetDomainModelReference(VSingleDomainModelReference newDomainModelReference,
+		NotificationChain msgs)
+	{
+		VSingleDomainModelReference oldDomainModelReference = domainModelReference;
+		domainModelReference = newDomainModelReference;
+		if (eNotificationRequired())
 		{
-			pathToAttribute = new EObjectResolvingEList<EReference>(EReference.class, this,
-				RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
-		return pathToAttribute;
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setDomainModelReference(VSingleDomainModelReference newDomainModelReference)
+	{
+		if (newDomainModelReference != domainModelReference)
+		{
+			NotificationChain msgs = null;
+			if (domainModelReference != null)
+				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+					- RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
+			if (newDomainModelReference != null)
+				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+					- RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
+			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE,
+				newDomainModelReference, newDomainModelReference));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+			return basicSetDomainModelReference(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -190,14 +199,10 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
-			if (resolve)
-				return getAttribute();
-			return basicGetAttribute();
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			return getExpectedValue();
-		case RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE:
-			return getPathToAttribute();
+		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+			return getDomainModelReference();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -213,15 +218,11 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
-			setAttribute((EAttribute) newValue);
-			return;
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			setExpectedValue(newValue);
 			return;
-		case RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE:
-			getPathToAttribute().clear();
-			getPathToAttribute().addAll((Collection<? extends EReference>) newValue);
+		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+			setDomainModelReference((VSingleDomainModelReference) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -237,14 +238,11 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
-			setAttribute((EAttribute) null);
-			return;
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			setExpectedValue(EXPECTED_VALUE_EDEFAULT);
 			return;
-		case RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE:
-			getPathToAttribute().clear();
+		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+			setDomainModelReference((VSingleDomainModelReference) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -260,13 +258,11 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-		case RulePackage.LEAF_CONDITION__ATTRIBUTE:
-			return attribute != null;
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			return EXPECTED_VALUE_EDEFAULT == null ? expectedValue != null : !EXPECTED_VALUE_EDEFAULT
 				.equals(expectedValue);
-		case RulePackage.LEAF_CONDITION__PATH_TO_ATTRIBUTE:
-			return pathToAttribute != null && !pathToAttribute.isEmpty();
+		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+			return domainModelReference != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -355,6 +355,34 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected VFeaturePathDomainModelReferenceItemProvider vFeaturePathDomainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createVFeaturePathDomainModelReferenceAdapter()
+	{
+		if (vFeaturePathDomainModelReferenceItemProvider == null)
+		{
+			vFeaturePathDomainModelReferenceItemProvider = new VFeaturePathDomainModelReferenceItemProvider(this);
+		}
+
+		return vFeaturePathDomainModelReferenceItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.VDiagnostic} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -522,12 +550,18 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * @generated
 	 */
 	public void dispose() {
+		if (vDiagnosticItemProvider != null)
+			vDiagnosticItemProvider.dispose();
 		if (viewItemProvider != null)
 			viewItemProvider.dispose();
 		if (categorizationItemProvider != null)
 			categorizationItemProvider.dispose();
 		if (categoryItemProvider != null)
 			categoryItemProvider.dispose();
+		if (actionItemProvider != null)
+			actionItemProvider.dispose();
+		if (vFeaturePathDomainModelReferenceItemProvider != null)
+			vFeaturePathDomainModelReferenceItemProvider.dispose();
 		if (controlItemProvider != null)
 			controlItemProvider.dispose();
 		if (tableControlItemProvider != null)
@@ -540,10 +574,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			columnCompositeItemProvider.dispose();
 		if (columnItemProvider != null)
 			columnItemProvider.dispose();
-		if (actionItemProvider != null)
-			actionItemProvider.dispose();
-		if (vDiagnosticItemProvider != null)
-			vDiagnosticItemProvider.dispose();
 	}
 
 }

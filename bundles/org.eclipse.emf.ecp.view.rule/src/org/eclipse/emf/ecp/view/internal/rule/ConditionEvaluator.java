@@ -11,11 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -116,30 +113,30 @@ public final class ConditionEvaluator {
 	}
 
 	private static boolean doEvaluate(EObject eObject, LeafCondition condition) {
-		final EClass attributeClass = condition.getAttribute().getEContainingClass();
-		EObject parent = eObject;
-		final List<EReference> referencePath = condition.getPathToAttribute();
-		for (final EReference eReference : referencePath) {
-			if (eReference.getEReferenceType().isInstance(parent)) {
-				break;
-			}
-			if (!eReference.getEContainingClass().equals(parent.eClass())) {
-				continue;
-			}
-
-			final EObject child = (EObject) parent.eGet(eReference);
-
-			if (child == null) {
-				break;
-			}
-
-			parent = child;
-		}
+		final EClass attributeClass = condition.getDomainModelReference().getModelFeature().getEContainingClass();
+		final EObject parent = condition.getDomainModelReference().getDomainModel();
+		// final List<EReference> referencePath = condition.getPathToAttribute();
+		// for (final EReference eReference : referencePath) {
+		// if (eReference.getEReferenceType().isInstance(parent)) {
+		// break;
+		// }
+		// if (!eReference.getEContainingClass().equals(parent.eClass())) {
+		// continue;
+		// }
+		//
+		// final EObject child = (EObject) parent.eGet(eReference);
+		//
+		// if (child == null) {
+		// break;
+		// }
+		//
+		// parent = child;
+		// }
 
 		if (!attributeClass.isInstance(parent)) {
 			return false;
 		}
 
-		return condition.getExpectedValue().equals(parent.eGet(condition.getAttribute()));
+		return condition.getExpectedValue().equals(parent.eGet(condition.getDomainModelReference().getModelFeature()));
 	}
 }

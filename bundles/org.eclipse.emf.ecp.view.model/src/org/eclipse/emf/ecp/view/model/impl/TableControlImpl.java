@@ -12,18 +12,23 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -127,11 +132,12 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 * @generated
 	 */
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled) {
-		boolean oldAddRemoveDisabled = addRemoveDisabled;
+		final boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
+		}
 	}
 
 	/**
@@ -236,10 +242,11 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: ");
 		result.append(addRemoveDisabled);
 		result.append(')');
@@ -249,14 +256,22 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ControlImpl#getTargetFeatures()
-	 * @generated NOT
+	 * @see org.eclipse.emf.ecp.view.model.AbstractControl#getDomainModelReferences()
 	 */
 	@Override
-	public EList<EStructuralFeature> getTargetFeatures() {
-		final EList<EStructuralFeature> result = super.getTargetFeatures();
+	public Set<VSingleDomainModelReference> getDomainModelReferences() {
+		final Set<VSingleDomainModelReference> result = new LinkedHashSet<VSingleDomainModelReference>();
+		result.add(getDomainModelReference());
 		for (final TableColumn tc : getColumns()) {
-			result.add(tc.getAttribute());
+			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+				.createVFeaturePathDomainModelReference();
+			modelReference.setDomainModelEFeature(tc.getAttribute());
+
+			modelReference.getDomainModelEReferencePath().addAll(
+				((VFeaturePathDomainModelReference) getDomainModelReference()).getDomainModelEReferencePath());
+			modelReference.getDomainModelEReferencePath().add(
+				(EReference) getDomainModelReference().getModelFeature());
+			result.add(modelReference);
 		}
 		return result;
 	}

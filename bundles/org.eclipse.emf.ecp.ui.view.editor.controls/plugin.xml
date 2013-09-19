@@ -11,8 +11,8 @@
                priority="2"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EStructuralFeature"
-               supportedEObject="org.eclipse.emf.ecp.view.model.Control"
-               supportedFeature="targetFeature">
+               supportedEObject="org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference"
+               supportedFeature="domainModelEFeature">
          </staticTest>
       </control>
       <control
@@ -32,7 +32,7 @@
             id="org.eclipse.emf.ecp.view.editor.controls.conditionAttribute"
             showLabel="true">
          <staticTest
-               priority="3"
+               priority="1"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EAttribute"
                supportedEObject="org.eclipse.emf.ecp.view.rule.model.LeafCondition"

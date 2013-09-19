@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
@@ -48,19 +47,20 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Control modelControl = node.getRenderable();
-		final EClass dataClass = modelControl.getTargetFeature().getEContainingClass();
+		// final EClass dataClass = modelControl.getTargetFeature().getEContainingClass();
 		final ECPControlContext subContext = node.getControlContext();
 
-		if (dataClass == null) {
-			return null;
-		}
-
+		// if (dataClass == null) {
+		// return null;
+		// }
+		// REFACTORING test
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
 			.getPropertyDescriptor(subContext.getModelElement(),
-				modelControl.getTargetFeature());
+				modelControl.getDomainModelReference().getModelFeature());
 
 		if (itemPropertyDescriptor == null) {
-			throw new NoPropertyDescriptorFoundExeption(subContext.getModelElement(), modelControl.getTargetFeature());
+			throw new NoPropertyDescriptorFoundExeption(subContext.getModelElement(), modelControl
+				.getDomainModelReference().getModelFeature());
 		}
 
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();

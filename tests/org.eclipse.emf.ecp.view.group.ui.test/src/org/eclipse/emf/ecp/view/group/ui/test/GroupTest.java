@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.group.model.Group;
 import org.eclipse.emf.ecp.view.group.model.GroupFactory;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -177,7 +178,10 @@ public class GroupTest {
 
 	private static Control createControl() {
 		final Control control = ViewFactory.eINSTANCE.createControl();
-		control.setTargetFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
+		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		modelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
+		control.setDomainModelReference(modelReference);
 		return control;
 	}
 

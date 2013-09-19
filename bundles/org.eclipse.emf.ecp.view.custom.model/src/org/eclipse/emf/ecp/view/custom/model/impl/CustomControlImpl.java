@@ -13,19 +13,21 @@ package org.eclipse.emf.ecp.view.custom.model.impl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl;
 import org.osgi.framework.Bundle;
 
@@ -252,24 +254,51 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 		return result.toString();
 	}
 
+	// /**
+	// * <!-- begin-user-doc -->
+	// * <!-- end-user-doc -->
+	// *
+	// * @return all editable and referenced features of the associated {@link ECPCustomControl}.
+	// *
+	// * @generated NOT
+	// */
+	// @Override
+	// public EList<EStructuralFeature> getTargetFeatures() {
+	// final EList<EStructuralFeature> result = new BasicEList<EStructuralFeature>();
+	// if (getBundle() == null || getClassName() == null) {
+	// return result;
+	// }
+	// try {
+	// final ECPCustomControl categoryComposite = getECPCustomControl();
+	// for (final ECPCustomControlFeature editFeature : categoryComposite.getECPCustomControlFeatures()) {
+	// result.add(editFeature.getTargetFeature());
+	// }
+	// } catch (final ECPCustomControlInitException ex) {
+	// // TODO activate?
+	// // Activator.logException(e);
+	// }
+	//
+	// return result;
+	// }
+
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * {@inheritDoc}
 	 * 
-	 * @return all editable and referenced features of the associated {@link ECPCustomControl}.
-	 * 
-	 * @generated NOT
+	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl#getDomainModelReferences()
 	 */
-	@Override
-	public EList<EStructuralFeature> getTargetFeatures() {
-		final EList<EStructuralFeature> result = new BasicEList<EStructuralFeature>();
+	public Set<VSingleDomainModelReference> getDomainModelReferences() {
+		final Set<VSingleDomainModelReference> result = new LinkedHashSet<VSingleDomainModelReference>();
 		if (getBundle() == null || getClassName() == null) {
 			return result;
 		}
 		try {
 			final ECPCustomControl categoryComposite = getECPCustomControl();
 			for (final ECPCustomControlFeature editFeature : categoryComposite.getECPCustomControlFeatures()) {
-				result.add(editFeature.getTargetFeature());
+				final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+					.createVFeaturePathDomainModelReference();
+				domainModelReference.setDomainModelEFeature(editFeature.getTargetFeature());
+				domainModelReference.getDomainModelEReferencePath().addAll(editFeature.geteReferencePath());
+				result.add(domainModelReference);
 			}
 		} catch (final ECPCustomControlInitException ex) {
 			// TODO activate?
