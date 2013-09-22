@@ -27,14 +27,14 @@
 <repository location="http://download.eclipse.org/eclipse/updates/4.2"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.1.v20130912-0410"/>
-<repository location="https://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/1042/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/"/>
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.0.1.v20130916-0410"/>
+<repository location="http://download.eclipse.org/emf-store/releases/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.rap.fileupload.feature.feature.group" version="2.0.0.20130302-1418"/>
