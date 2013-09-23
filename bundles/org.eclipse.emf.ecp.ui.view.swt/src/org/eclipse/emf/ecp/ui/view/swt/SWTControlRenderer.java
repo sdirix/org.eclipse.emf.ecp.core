@@ -91,7 +91,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 			}
 
 			final Composite controlComposite = control.createControl(parent);
-			controlComposite.setEnabled(!modelControl.isReadonly());
+			// controlComposite.setEnabled(!modelControl.isReadonly());
+			control.setEditable(!modelControl.isReadonly());
 			controlComposite.setBackground(parent.getBackground());
 
 			if (label == null) {

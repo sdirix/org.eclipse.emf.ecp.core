@@ -9,6 +9,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
 import org.eclipse.emf.ecp.view.model.TableColumn;
 import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -83,8 +84,9 @@ public class TableColumnAttributeControl extends LinkControl {
 
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
 				composedAdapterFactory);
-			final EReference eref = (EReference) ((TableControl) getModelElementContext().getModelElement()
-				.eContainer()).getDomainModelReference().getModelFeature();
+			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((TableControl) getModelElementContext()
+				.getModelElement()
+				.eContainer()).getDomainModelReference()).getDomainModelEFeature();
 			final ListDialog ld = new ListDialog(shell);
 			ld.setLabelProvider(labelProvider);
 			ld.setContentProvider(ArrayContentProvider.getInstance());

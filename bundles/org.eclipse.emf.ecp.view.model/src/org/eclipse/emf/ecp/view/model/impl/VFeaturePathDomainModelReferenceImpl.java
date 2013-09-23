@@ -12,9 +12,6 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -22,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -254,9 +250,16 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
 	 */
 	public boolean resolve(final EObject domainModel) {
+		final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
+		if (domainModel == null || domainModelEFeatureValue == null) {
+			return false;
+		}
 		EObject parent = domainModel;
 		for (final EReference eReference : getDomainModelEReferencePath()) {
 			if (eReference.isMany()) {
+				return false;
+			}
+			if (!eReference.eContainer().equals(parent.eClass())) {
 				return false;
 			}
 			EObject child = (EObject) parent.eGet(eReference);
@@ -266,27 +269,9 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 			}
 			parent = child;
 		}
-		if (parent == null) {
-			return false;
-		}
 		setDomainModel(parent);
-		setModelFeature(getDomainModelEFeature());
+		setModelFeature(domainModelEFeatureValue);
 		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getIterator()
-	 */
-	public Iterator<Setting> getIterator() {
-		if (getDomainModel() == null || getModelFeature() == null) {
-			final List<Setting> list = Collections.emptyList();
-			return list.iterator();
-		}
-		final List<Setting> singletonList = Collections.singletonList(((InternalEObject) getDomainModel())
-			.eSetting(getModelFeature()));
-		return singletonList.iterator();
 	}
 
 } // VFeaturePathDomainModelReferenceImpl

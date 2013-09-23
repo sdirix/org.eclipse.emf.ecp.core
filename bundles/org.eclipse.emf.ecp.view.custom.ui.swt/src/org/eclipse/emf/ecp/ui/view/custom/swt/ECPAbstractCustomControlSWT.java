@@ -143,6 +143,17 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected abstract List<RenderingResultRow<Control>> createControls(Composite composite);
 
 	/**
+	 * Override this method in order to correctly set the custom control to editable or not editable.
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.ECPControl#setEditable(boolean)
+	 */
+	public void setEditable(boolean isEditable) {
+		// Do nothing
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)

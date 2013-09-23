@@ -28,9 +28,22 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  */
 public interface VDomainModelReference extends EObject
 {
-
+	/**
+	 * Resolve attempts to resolve the domain model reference. If it fails existing results will be kept. Thus even
+	 * after
+	 * a failed resolution the iterator might not be empty.
+	 * 
+	 * @param eObject the root domain model to use to resolve the path
+	 * @return true if resolution succeeded and false otherwise
+	 */
 	boolean resolve(EObject eObject);
 
+	/**
+	 * Returns an iterator allowing to iterate over found settings for this domain model reference.
+	 * Will return an empty Iterator if resolve was not successfully completed.
+	 * 
+	 * @return the {@link Iterator} for this domain model reference
+	 */
 	Iterator<Setting> getIterator();
 
 } // VDomainModelReference

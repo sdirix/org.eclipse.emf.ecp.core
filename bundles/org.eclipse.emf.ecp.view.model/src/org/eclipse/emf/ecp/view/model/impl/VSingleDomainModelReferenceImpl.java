@@ -11,16 +11,18 @@
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -96,13 +98,14 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	{
 		if (domainModel != null && domainModel.eIsProxy())
 		{
-			InternalEObject oldDomainModel = (InternalEObject) domainModel;
+			final InternalEObject oldDomainModel = (InternalEObject) domainModel;
 			domainModel = eResolveProxy(oldDomainModel);
 			if (domainModel != oldDomainModel)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL, oldDomainModel, domainModel));
+				}
 			}
 		}
 		return domainModel;
@@ -127,11 +130,12 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	 */
 	public void setDomainModel(EObject newDomainModel)
 	{
-		EObject oldDomainModel = domainModel;
+		final EObject oldDomainModel = domainModel;
 		domainModel = newDomainModel;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL, oldDomainModel, domainModel));
+		}
 	}
 
 	/**
@@ -144,13 +148,14 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	{
 		if (modelFeature != null && modelFeature.eIsProxy())
 		{
-			InternalEObject oldModelFeature = (InternalEObject) modelFeature;
+			final InternalEObject oldModelFeature = (InternalEObject) modelFeature;
 			modelFeature = (EStructuralFeature) eResolveProxy(oldModelFeature);
 			if (modelFeature != oldModelFeature)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE, oldModelFeature, modelFeature));
+				}
 			}
 		}
 		return modelFeature;
@@ -175,11 +180,12 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	 */
 	public void setModelFeature(EStructuralFeature newModelFeature)
 	{
-		EStructuralFeature oldModelFeature = modelFeature;
+		final EStructuralFeature oldModelFeature = modelFeature;
 		modelFeature = newModelFeature;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE, oldModelFeature, modelFeature));
+		}
 	}
 
 	/**
@@ -194,12 +200,14 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 		switch (featureID)
 		{
 		case ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL:
-			if (resolve)
+			if (resolve) {
 				return getDomainModel();
+			}
 			return basicGetDomainModel();
 		case ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE:
-			if (resolve)
+			if (resolve) {
 				return getModelFeature();
+			}
 			return basicGetModelFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -264,6 +272,22 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 			return modelFeature != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getIterator()
+	 * @generated NOT
+	 */
+	public Iterator<Setting> getIterator() {
+		if (getDomainModel() == null || getModelFeature() == null) {
+			final List<Setting> list = Collections.emptyList();
+			return list.iterator();
+		}
+		final List<Setting> singletonList = Collections.singletonList(((InternalEObject) getDomainModel())
+			.eSetting(getModelFeature()));
+		return singletonList.iterator();
 	}
 
 } // VSingleDomainModelReferenceImpl

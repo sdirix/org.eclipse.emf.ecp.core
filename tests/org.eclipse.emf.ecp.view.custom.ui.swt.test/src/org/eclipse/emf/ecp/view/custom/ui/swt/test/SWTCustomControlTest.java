@@ -12,10 +12,12 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -23,6 +25,8 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Test;
@@ -103,6 +107,20 @@ public class SWTCustomControlTest {
 		final Shell shell = SWTViewTestHelper.createShell();
 		SWTViewTestHelper.render(view, shell);
 		// TODO: What to expect
+	}
+
+	@Test
+	public void testCustomControlInit() {
+		final View view = ViewFactory.eINSTANCE.createView();
+		final CustomControl customControl = createCustomControl();
+		view.getChildren().add(customControl);
+		customControl.setBundle(BUNDLE_ID);
+		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+
+		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
+		new ViewModelContextImpl(view, domainModel);
+
+		assertNotNull(domainModel.getFavouriteMerchandise());
 	}
 
 	/**

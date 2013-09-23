@@ -151,7 +151,6 @@ public class ExpectedValueControl extends SingleControl {
 		});
 	}
 
-	@Override
 	public void setEditable(boolean isEditable) {
 		// text.setEditable(isEditable);
 	}
