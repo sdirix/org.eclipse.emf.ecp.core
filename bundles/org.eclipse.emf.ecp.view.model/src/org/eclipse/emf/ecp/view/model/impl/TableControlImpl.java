@@ -270,7 +270,7 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 			modelReference.getDomainModelEReferencePath().addAll(
 				((VFeaturePathDomainModelReference) getDomainModelReference()).getDomainModelEReferencePath());
 			modelReference.getDomainModelEReferencePath().add(
-				(EReference) getDomainModelReference().getModelFeature());
+				(EReference) ((VFeaturePathDomainModelReference) getDomainModelReference()).getDomainModelEFeature());
 			result.add(modelReference);
 		}
 		return result;

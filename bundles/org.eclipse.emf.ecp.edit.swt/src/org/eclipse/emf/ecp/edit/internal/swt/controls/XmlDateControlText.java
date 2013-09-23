@@ -56,6 +56,8 @@ import org.eclipse.swt.widgets.Text;
  * 
  */
 public class XmlDateControlText extends AbstractTextControl {
+	private Button bDate;
+
 	/**
 	 * This is the default constructor.
 	 * 
@@ -93,21 +95,27 @@ public class XmlDateControlText extends AbstractTextControl {
 	}
 
 	@Override
+	public void setEditable(boolean editable) {
+		super.setEditable(editable);
+		bDate.setEnabled(false);
+	}
+
+	@Override
 	protected void fillControlComposite(Composite composite) {
 		super.fillControlComposite(composite);
 		((GridLayout) composite.getLayout()).numColumns = 2;
-		final Button button = new Button(composite, SWT.PUSH);
-		button.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
-		button.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
-		button.addSelectionListener(new SelectionAdapter() {
+		bDate = new Button(composite, SWT.PUSH);
+		bDate.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
+		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
+		bDate.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				final Shell dialog = new Shell(getText().getShell(), SWT.NONE);
 				dialog.setLayout(new GridLayout(1, false));
 
-				dialog.setLocation(button.getParent().toDisplay(button.getLocation().x,
-					button.getLocation().y + button.getSize().y));
+				dialog.setLocation(bDate.getParent().toDisplay(bDate.getLocation().x,
+					bDate.getLocation().y + bDate.getSize().y));
 
 				final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
 				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) getModelValue().getValue();

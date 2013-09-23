@@ -44,4 +44,10 @@ public interface ECPControl {
 	 */
 	boolean showLabel();
 
+	/**
+	 * Sets the state of the widget to be either editable or not.
+	 * 
+	 * @param isEditable whether to set the widget editable
+	 */
+	void setEditable(boolean isEditable);
 }

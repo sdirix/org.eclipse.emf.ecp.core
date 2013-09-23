@@ -91,6 +91,8 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author Eugen Neufeld
  * 
  */
+// this class is not serialized
+@SuppressWarnings("serial")
 public class TableControl extends SWTControl {
 
 	private TableViewer tableViewer;
@@ -124,6 +126,7 @@ public class TableControl extends SWTControl {
 	 * @param feature the {@link EStructuralFeature} to use
 	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
+	 * @param tableControlConfiguration the {@link TableControlConfiguration} to use when creating the table
 	 */
 	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
 		ECPControlContext modelElementContext, boolean embedded, TableControlConfiguration tableControlConfiguration) {
@@ -404,7 +407,7 @@ public class TableControl extends SWTControl {
 					}
 
 					@Override
-					final protected void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
+					protected final void saveCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
 						editingState.binding.updateTargetToModel();
 					}
 
@@ -528,35 +531,7 @@ public class TableControl extends SWTControl {
 					deletionList.add((EObject) iterator.next());
 				}
 
-				final MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(),
-					ControlMessages.TableControl_Delete, null,
-					ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
-						JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-						JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
-
-				final EObject modelElement = getModelElementContext().getModelElement();
-
-				new ECPDialogExecutor(dialog) {
-
-					@Override
-					public void handleResult(int codeResult) {
-						if (codeResult == IDialogConstants.CANCEL_ID) {
-							return;
-						}
-
-						final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
-						editingDomain.getCommandStack().execute(
-							RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
-
-						final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
-						if (containments.size() < getStructuralFeature().getUpperBound()) {
-							addButton.setEnabled(true);
-						}
-						if (containments.size() <= getStructuralFeature().getLowerBound()) {
-							removeButton.setEnabled(false);
-						}
-					}
-				}.execute();
+				deleteRowUserConfirmDialog(deletionList);
 
 			}
 		});
@@ -567,6 +542,71 @@ public class TableControl extends SWTControl {
 		}
 	}
 
+	/**
+	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
+	 * 
+	 * @param deletionList the list of selected EObjects to delete
+	 */
+	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList) {
+		final MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(),
+			ControlMessages.TableControl_Delete, null,
+			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
+				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+
+		final EObject modelElement = getModelElementContext().getModelElement();
+
+		new ECPDialogExecutor(dialog) {
+
+			@Override
+			public void handleResult(int codeResult) {
+				if (codeResult == IDialogConstants.CANCEL_ID) {
+					return;
+				}
+
+				deleteRows(deletionList);
+
+				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
+				if (containments.size() < getStructuralFeature().getUpperBound()) {
+					addButton.setEnabled(true);
+				}
+				if (containments.size() <= getStructuralFeature().getLowerBound()) {
+					removeButton.setEnabled(false);
+				}
+			}
+		}.execute();
+	}
+
+	/**
+	 * This is called by {@link #deleteRowUserConfirmDialog(List)} after the user confirmed to delete the selected
+	 * elements.
+	 * 
+	 * @param deletionList the list of {@link EObject EObjects} to delete
+	 */
+	protected void deleteRows(List<EObject> deletionList) {
+		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EObject modelElement = getModelElementContext().getModelElement();
+		editingDomain.getCommandStack().execute(
+			RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
+	}
+
+	/**
+	 * This method is called to add a new entry in the domain model and thus to create a new row in the table. The
+	 * element to create is defined by the provided class.
+	 * You can override this method but you have to call super nonetheless.
+	 * 
+	 * @param clazz the {@link EClass} defining the EObject to create
+	 */
+	protected void addRow(EClass clazz) {
+		final EObject modelElement = getModelElementContext().getModelElement();
+		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
+
+		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		editingDomain.getCommandStack().execute(
+			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
+
+	}
+
 	private Button addButton;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
@@ -575,6 +615,7 @@ public class TableControl extends SWTControl {
 		addButton.setImage(image);
 		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
+
 			/*
 			 * (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -645,21 +686,17 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void setEditable(boolean isEditable) {
 		tableViewer.getTable().setEnabled(false);
 	}
 
-	private void addRow(EClass clazz) {
-		final EObject modelElement = getModelElementContext().getModelElement();
-		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
-
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
-		editingDomain.getCommandStack().execute(
-			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
-
-	}
-
+	/**
+	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
+	 * none, up and down.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
 		private static final int NONE = 0;
