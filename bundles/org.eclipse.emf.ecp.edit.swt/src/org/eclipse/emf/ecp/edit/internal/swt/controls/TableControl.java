@@ -687,7 +687,7 @@ public class TableControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void setEditable(boolean isEditable) {
-		tableViewer.getTable().setEnabled(false);
+		tableViewer.getTable().setEnabled(isEditable);
 	}
 
 	/**
