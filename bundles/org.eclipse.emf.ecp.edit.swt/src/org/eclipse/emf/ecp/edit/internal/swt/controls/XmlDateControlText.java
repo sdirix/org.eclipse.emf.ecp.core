@@ -97,7 +97,7 @@ public class XmlDateControlText extends AbstractTextControl {
 	@Override
 	public void setEditable(boolean editable) {
 		super.setEditable(editable);
-		bDate.setEnabled(false);
+		bDate.setEnabled(editable);
 	}
 
 	@Override
