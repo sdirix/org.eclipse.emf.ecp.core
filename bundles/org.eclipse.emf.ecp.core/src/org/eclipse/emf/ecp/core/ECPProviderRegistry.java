@@ -17,9 +17,12 @@ package org.eclipse.emf.ecp.core;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+
 /**
  * Registry class to manage the registered providers.
- * It publishes observable events on the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
+ * It is available as an OSGi service or using {@link ECPUtil} It publishes observable events on the
+ * {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
  * Related ECPObserver types: {@link org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver
  * ECPProvidersChangedObserver}. Use {@link org.eclipse.emf.ecp.core.util.ECPUtil#getECPObserverBus()
  * ECPUtil#getECPObserverBus()} to
@@ -63,17 +66,4 @@ public interface ECPProviderRegistry {
 	 */
 	void removeProvider(String name);
 
-	// /**
-	// * Add an {@link ECPProviderRegistryObserver} to be notified.
-	// *
-	// * @param changeObserver the observer to add
-	// */
-	// void addObserver(ECPProviderRegistryObserver changeObserver);
-	//
-	// /**
-	// * Remove an {@link ECPProviderRegistryObserver} from the list of the providers to be notified.
-	// *
-	// * @param changeObserver the observer to remove
-	// */
-	// void removeObserver(ECPProviderRegistryObserver changeObserver);
 }

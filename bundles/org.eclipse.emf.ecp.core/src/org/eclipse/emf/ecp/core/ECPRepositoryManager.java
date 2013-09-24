@@ -17,10 +17,12 @@ package org.eclipse.emf.ecp.core;
 import java.util.Collection;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 
 /**
  * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
- * It publishes observable events on the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
+ * It is available as an OSGi service or using {@link ECPUtil} It publishes observable events on the
+ * {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
  * Related Observer types: {@link org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver
  * ECPRepositoriesChangedObserver}, {@link org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver
  * ECPRepositoryContentChangedObserver}.
@@ -76,17 +78,4 @@ public interface ECPRepositoryManager {
 	ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties);
 
-	// /**
-	// * Add an {@link ECPRepositoryManagerObserver} to be notified.
-	// *
-	// * @param changeObserver the observer to add
-	// */
-	// void addObserver(ECPRepositoryManagerObserver changeObserver);
-	//
-	// /**
-	// * Remove an {@link ECPRepositoryManagerObserver} from the list of the providers to be notified.
-	// *
-	// * @param changeObserver the observer to remove
-	// */
-	// void removeObserver(ECPRepositoryManagerObserver changeObserver);
 }

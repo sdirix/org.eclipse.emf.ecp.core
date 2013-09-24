@@ -15,10 +15,12 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 
 /**
  * The ECPProjectManager provides access to ECPProjects and manages their lifecycle.
- * It publishes observable events on the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
+ * It is available as an OSGi service or using {@link ECPUtil} It publishes observable events on the
+ * {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
  * Related Observer types: {@link org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver
  * ECPProjectsChangedObserver}, {@link org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver
  * ECPProjectContentChangedObserver}, {@link org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver
@@ -114,19 +116,5 @@ public interface ECPProjectManager {
 	 * @return an array of all known projects
 	 */
 	Collection<ECPProject> getProjects();
-
-	// /**
-	// * This method adds a observer to the observer of the ECPProjectManager.
-	// *
-	// * @param observer the {@link ECPProjectManagerObserver} to add
-	// */
-	// void addObserver(ECPProjectManagerObserver observer);
-
-	// /**
-	// * This method removes a observer from the observer of the ECPProjectManager.
-	// *
-	// * @param observer the {@link ECPProjectManagerObserver} to remove
-	// */
-	// void removeObserver(ECPProjectManagerObserver observer);
 
 }
