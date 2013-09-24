@@ -46,7 +46,6 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;

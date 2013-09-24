@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ILabelProvider;

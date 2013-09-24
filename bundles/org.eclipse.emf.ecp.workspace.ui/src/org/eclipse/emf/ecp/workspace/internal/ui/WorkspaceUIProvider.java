@@ -15,10 +15,9 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
-
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Image;

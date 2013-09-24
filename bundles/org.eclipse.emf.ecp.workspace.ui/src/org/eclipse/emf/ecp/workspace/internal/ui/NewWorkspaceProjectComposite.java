@@ -22,11 +22,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
-
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;

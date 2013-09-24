@@ -17,11 +17,10 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.model.ProvidersLabelProvider;
+import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
-
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

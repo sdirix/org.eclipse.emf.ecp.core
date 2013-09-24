@@ -10,15 +10,15 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.common;
+package org.eclipse.emf.ecp.spi.ui;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * 
  * @author Tobias Verhoeven
+ * @since 1.1
  */
 public interface CompositeStateObserver {
 
