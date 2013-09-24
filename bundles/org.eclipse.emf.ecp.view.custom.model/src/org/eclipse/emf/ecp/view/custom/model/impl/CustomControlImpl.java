@@ -312,6 +312,8 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 		return bundle.loadClass(className);
 	}
 
+	private ECPCustomControl customControl;
+
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -319,11 +321,19 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * @see org.eclipse.emf.ecp.view.custom.model.CustomControl#getECPCustomControl()
 	 */
 	public ECPCustomControl getECPCustomControl() throws ECPCustomControlInitException {
+		if (customControl == null) {
+			loadCustomControl();
+		}
+		return customControl;
+
+	}
+
+	private void loadCustomControl() throws ECPCustomControlInitException {
 		try {
 			final Class<?> clazz = getClass(getBundle(), getClassName());
 			final Constructor<?> constructor = clazz.getConstructor();
 			final Object obj = constructor.newInstance();
-			return (ECPCustomControl) obj;
+			customControl = (ECPCustomControl) obj;
 		} catch (final ClassNotFoundException ex) {
 			throw new ECPCustomControlInitException("Error during initialisation of ECPCustomControl.", ex);
 		} catch (final NoSuchMethodException ex) {
