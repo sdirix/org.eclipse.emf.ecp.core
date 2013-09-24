@@ -38,7 +38,7 @@ public class NodeBuilderCustom implements CustomNodeBuilder {
 
 		final Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> builders = new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
 		builders.put(CustomControl.class,
-			new RenderableNodeBuilder<CustomControl>());
+			new CustomControlNodeBuilder());
 		return builders;
 	}
 

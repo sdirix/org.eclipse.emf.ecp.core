@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.custom.model.impl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
@@ -23,11 +23,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl;
 import org.osgi.framework.Bundle;
 
@@ -89,6 +86,8 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * @ordered
 	 */
 	protected String className = CLASS_NAME_EDEFAULT;
+
+	private Set<VSingleDomainModelReference> domainModelReferences;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -287,25 +286,19 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl#getDomainModelReferences()
 	 */
 	public Set<VSingleDomainModelReference> getDomainModelReferences() {
-		final Set<VSingleDomainModelReference> result = new LinkedHashSet<VSingleDomainModelReference>();
-		if (getBundle() == null || getClassName() == null) {
-			return result;
+		if (domainModelReferences == null) {
+			return Collections.emptySet();
 		}
-		try {
-			final ECPCustomControl categoryComposite = getECPCustomControl();
-			for (final ECPCustomControlFeature editFeature : categoryComposite.getECPCustomControlFeatures()) {
-				final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-					.createVFeaturePathDomainModelReference();
-				domainModelReference.setDomainModelEFeature(editFeature.getTargetFeature());
-				domainModelReference.getDomainModelEReferencePath().addAll(editFeature.geteReferencePath());
-				result.add(domainModelReference);
-			}
-		} catch (final ECPCustomControlInitException ex) {
-			// TODO activate?
-			// Activator.logException(e);
-		}
+		return domainModelReferences;
+	}
 
-		return result;
+	/**
+	 * Internal method for the node builder to call on creation.
+	 * 
+	 * @param domainModelReferences the set of {@link VSingleDomainModelReference VSingleDomainModelReferences} to use
+	 */
+	public void setVSingleDomainModelReferences(Set<VSingleDomainModelReference> domainModelReferences) {
+		this.domainModelReferences = domainModelReferences;
 	}
 
 	private Class<?> getClass(String pluginID, String className)

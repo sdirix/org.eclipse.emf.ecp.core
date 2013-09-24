@@ -87,7 +87,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
-
+		// GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 	}
 
 	/**
