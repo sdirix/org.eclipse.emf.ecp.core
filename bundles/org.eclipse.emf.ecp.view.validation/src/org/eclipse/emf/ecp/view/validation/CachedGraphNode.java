@@ -17,6 +17,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * <p>
@@ -76,6 +77,11 @@ public class CachedGraphNode<T> {
 	 * @return the aggregated value for this node
 	 */
 	public T getValue() {
+
+		if (isLocked()) {
+			return initValue;
+		}
+
 		if (hasChildren()) {
 			return children.element().getValue();
 		}
@@ -84,6 +90,24 @@ public class CachedGraphNode<T> {
 		// alternative: set initValue in setValue and return initValue here;
 		// same as setting value to initValue if there are no more children
 		return value;
+	}
+
+	/**
+	 * Whether this node is locked. If a node is locked, this means that value of children
+	 * will not be considered when calling {@link #getValue()}.
+	 * 
+	 * @return {@code true}, if this node is locked, {@code false otherwise}
+	 */
+	public boolean isLocked() {
+		if (isRenderable()) {
+			final Renderable renderable = (Renderable) getSetting().getEObject();
+
+			if (!renderable.isEnabled() || !renderable.isVisible() || renderable.isReadonly()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -168,11 +192,20 @@ public class CachedGraphNode<T> {
 	/**
 	 * Whether the source object is a domain object.
 	 * 
-	 * @return {@code true}, if the source object is a domain object, {@code false} otherwise
+	 * @return {@code true}, if the object is a domain object, {@code false} otherwise
 	 */
 	// this is useful for remove
 	public boolean isDomainObject() {
 		return isDomainObject;
+	}
+
+	/**
+	 * Whether the source object is a {@link Renderable}.
+	 * 
+	 * @return {@code true}, if the object stored by this node is a {@link Renderable}
+	 */
+	public boolean isRenderable() {
+		return !isDomainObject && Renderable.class.isInstance(getSetting().getEObject());
 	}
 
 	/**

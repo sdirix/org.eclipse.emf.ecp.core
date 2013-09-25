@@ -86,6 +86,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	 */
 	public void validate(EObject eObject) {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
+		final long currentTimeMillis2 = System.currentTimeMillis();
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
 			for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
@@ -97,7 +98,8 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 			}
 		} else {
 
-			final Map<EStructuralFeature, Diagnostic> featureToValidationResult = new LinkedHashMap<EStructuralFeature, Diagnostic>();
+			final Map<EStructuralFeature, Diagnostic> featureToValidationResult = new LinkedHashMap<EStructuralFeature,
+				Diagnostic>();
 			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				if (childDiagnostic.getData().size() != 2) {
 					continue;
@@ -129,6 +131,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 				}
 			}
 		}
+		System.out.println("validation took " + (System.currentTimeMillis() - currentTimeMillis2));
 	}
 
 	/**

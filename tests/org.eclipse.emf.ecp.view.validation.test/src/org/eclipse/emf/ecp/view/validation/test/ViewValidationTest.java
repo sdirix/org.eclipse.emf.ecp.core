@@ -83,6 +83,68 @@ public class ViewValidationTest {
 	}
 
 	@Test
+	public void testValidationInitDisabledControlOk() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		computer.setName("bla");
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		control.setEnabled(false);
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
+		new ViewModelContextImpl(control, computer);
+
+		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationInitHiddenControlError() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		final Control control = ViewFactory.eINSTANCE.createControl();
+		control.setVisible(false);
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
+		new ViewModelContextImpl(control, computer);
+
+		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationDisabledControlOk() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		final Control control = ViewFactory.eINSTANCE.createControl();
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
+		new ViewModelContextImpl(control, computer);
+		control.setEnabled(false);
+
+		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationHiddenControlOk() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		computer.setName("bla");
+		final Control control = ViewFactory.eINSTANCE.createControl();
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
+		new ViewModelContextImpl(control, computer);
+		control.setVisible(false);
+
+		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationInitHiddenControlOk() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		computer.setName("bla");
+		final Control control = ViewFactory.eINSTANCE.createControl();
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
+		new ViewModelContextImpl(control, computer);
+
+		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
 	public void testValidationInitError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		final Control control = ViewFactory.eINSTANCE.createControl();

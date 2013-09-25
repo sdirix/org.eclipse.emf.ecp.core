@@ -29,18 +29,32 @@ import org.eclipse.emf.ecp.common.UniqueSetting;
  */
 public class SettingsNodeMapping<T> {
 
-	private static final EStructuralFeature ALL_SETTINGS = null;
+	private static final EStructuralFeature ALL_FEATURES = null;
 
 	private final Map<UniqueSetting, CachedGraphNode<T>> settings;
 	private final Comparator<T> comparator;
-	private final EObject model;
 
-	public SettingsNodeMapping(EObject domainModel, Comparator<T> comparator) {
-		this.model = domainModel;
+	/**
+	 * Constructor.
+	 * 
+	 * @param comparator
+	 *            the comparator that will be used by the constructed nodes when calling
+	 *            {@link #createNode(EObject, EStructuralFeature, Object, boolean)}
+	 */
+	public SettingsNodeMapping(Comparator<T> comparator) {
 		settings = new LinkedHashMap<UniqueSetting, CachedGraphNode<T>>();
 		this.comparator = comparator;
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param eObject
+	 *            the {@link EObject}
+	 * @param feature
+	 *            a {@link EStructuralFeature} of the {@link EObject}
+	 * @return the node for the given setting
+	 */
 	public CachedGraphNode<T> getNode(EObject eObject, EStructuralFeature feature) {
 		final UniqueSetting setting = UniqueSetting.createSetting(eObject, feature);
 		final CachedGraphNode<T> node = settings.get(setting);
@@ -52,12 +66,27 @@ public class SettingsNodeMapping<T> {
 		return node;
 	}
 
-	public CachedGraphNode<T> createNode(EObject eObject, EStructuralFeature feature, T value) {
+	/**
+	 * Creates a node for the given {@link EObject} and {@link EStructuralFeature} together
+	 * with an initial value.
+	 * 
+	 * @param eObject
+	 *            the {@link EObject}
+	 * @param feature
+	 *            a {@link EStructuralFeature} of the {@link EObject}
+	 * @param value
+	 *            the initial value
+	 * @param isDomainObject
+	 *            whether the object contained by the node is a domain object
+	 * @return the constructed {@link CachedGraphNode} for the given setting
+	 */
+	public CachedGraphNode<T> createNode(EObject eObject, EStructuralFeature feature,
+		T value, boolean isDomainObject) {
 		final UniqueSetting setting = UniqueSetting.createSetting(eObject, feature);
 		CachedGraphNode<T> node = settings.get(setting);
 
 		if (node == null) {
-			node = createNode(setting, value);
+			node = createNode(setting, value, isDomainObject);
 			settings.put(setting, node);
 		} else {
 			node.setValue(value);
@@ -66,26 +95,15 @@ public class SettingsNodeMapping<T> {
 		return node;
 	}
 
-	private CachedGraphNode<T> createNode(UniqueSetting setting, T initValue) {
-		return new CachedGraphNode<T>(setting, initValue, isDomainObject(setting.getEObject()), comparator);
+	private CachedGraphNode<T> createNode(UniqueSetting setting, T initValue, boolean isDomainObject) {
+		return new CachedGraphNode<T>(setting, initValue, isDomainObject, comparator);
 	}
 
 	/**
-	 * Check whether the given {@code child} is part of the domain model.
-	 * Note that this method may returns {@code false} in case {@code child} has been deleted.
-	 * 
-	 * @param object
-	 *            the child to be checked
-	 * @return {@code true} if the child is part of the domain model, {@code false} otherwise
-	 */
-	private boolean isDomainObject(EObject object) {
-		return object != null && isContainedInModel(object);
-	}
-
-	/**
-	 * Removes the given {@link EObject} and all its {@link UniqueSetting}s from the map
+	 * Removes the given {@link EObject} and all its {@link UniqueSetting}s from the map.
 	 * 
 	 * @param eObject
+	 *            the {@link EObject} whose mappings should be removed
 	 */
 	public void removeAll(EObject eObject) {
 		final EList<EStructuralFeature> eAllStructuralFeatures = eObject.eClass().getEAllStructuralFeatures();
@@ -95,28 +113,14 @@ public class SettingsNodeMapping<T> {
 		}
 	}
 
-	private boolean isContainedInModel(EObject possibleChild) {
-
-		if (model == possibleChild) {
-			return true;
-		}
-
-		if (possibleChild == null) {
-			return false;
-		}
-
-		EObject container = possibleChild;
-		while (container != null) {
-			if (container == model) {
-				return true;
-			}
-			container = container.eContainer();
-		}
-
-		return false;
-	}
-
+	/**
+	 * Returns a {@link EStructuralFeature} that is used in case
+	 * a node does not correlate to a any feature of an {@link EObject}.
+	 * 
+	 * @return a unique {@link EStructuralFeature} that is used in case
+	 *         a node does not correlate to a any feature of an {@link EObject}.
+	 */
 	public static EStructuralFeature allFeatures() {
-		return ALL_SETTINGS;
+		return ALL_FEATURES;
 	}
 }

@@ -54,21 +54,25 @@ public abstract class ViewModelGraph<T> {
 	 */
 	public ViewModelGraph(Renderable viewModel, EObject domainModel, Comparator<T> comparator) {
 		this.domainModel = domainModel;
-		viewModelSettings = new SettingsNodeMapping<T>(viewModel, comparator);
-		domainModelSettings = new SettingsNodeMapping<T>(domainModel, comparator);
+		viewModelSettings = new SettingsNodeMapping<T>(comparator);
+		domainModelSettings = new SettingsNodeMapping<T>(comparator);
 		buildRenderableNodes(viewModel);
 	}
 
 	private void buildRenderableNodes(EObject viewModel) {
 		final EList<EObject> eContents = viewModel.eContents();
-		final CachedGraphNode<T> parentNode = viewModelSettings.createNode(viewModel, SettingsNodeMapping.allFeatures(),
-			getDefaultValue());
+		final CachedGraphNode<T> parentNode = viewModelSettings.createNode(viewModel,
+			SettingsNodeMapping.allFeatures(),
+			getDefaultValue(),
+			false);
 		for (final EObject content : eContents) {
 			if (!Renderable.class.isInstance(content)) {
 				continue;
 			}
-			final CachedGraphNode<T> childNode = viewModelSettings.createNode(content, SettingsNodeMapping.allFeatures(),
-				getDefaultValue());
+			final CachedGraphNode<T> childNode = viewModelSettings.createNode(content,
+				SettingsNodeMapping.allFeatures(),
+				getDefaultValue(),
+				false);
 			parentNode.addChild(childNode);
 			buildRenderableNodes(content);
 		}
@@ -215,7 +219,7 @@ public abstract class ViewModelGraph<T> {
 		CachedGraphNode<T> node = domainModelSettings.getNode(domainObject, feature);
 
 		if (node == null) {
-			node = domainModelSettings.createNode(domainObject, feature, value);
+			node = domainModelSettings.createNode(domainObject, feature, value, true);
 		}
 
 		return node;
@@ -241,10 +245,12 @@ public abstract class ViewModelGraph<T> {
 
 		// dynamic registration
 		if (node == null) {
-			node = viewModelSettings.createNode(renderable, SettingsNodeMapping.allFeatures(), getDefaultValue());
+			node = viewModelSettings
+				.createNode(renderable, SettingsNodeMapping.allFeatures(), getDefaultValue(), false);
 			final EObject eContainer = renderable.eContainer();
 			// must have parent
-			CachedGraphNode<T> possibleParent = viewModelSettings.getNode(eContainer, SettingsNodeMapping.allFeatures());
+			CachedGraphNode<T> possibleParent = viewModelSettings
+				.getNode(eContainer, SettingsNodeMapping.allFeatures());
 			if (possibleParent == null) {
 				possibleParent = getNodeForRenderable((Renderable) eContainer);
 			}
