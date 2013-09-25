@@ -10,6 +10,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Library/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/writers"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/books"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/librarian"/>
+      <genOperations ecoreOperation="test.ecore#//Library/validate">
+        <genParameters ecoreParameter="test.ecore#//Library/validate/diagnostic"/>
+        <genParameters ecoreParameter="test.ecore#//Library/validate/context"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="test.ecore#//Writer">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/firstName"/>
@@ -32,6 +37,24 @@
         <genParameters ecoreParameter="test.ecore#//Book/validate/diagnostic"/>
         <genParameters ecoreParameter="test.ecore#//Book/validate/context"/>
       </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//Librarian">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Librarian/name"/>
+      <genOperations ecoreOperation="test.ecore#//Librarian/validate">
+        <genParameters ecoreParameter="test.ecore#//Librarian/validate/diagnostic"/>
+        <genParameters ecoreParameter="test.ecore#//Librarian/validate/context"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//Computer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Computer/mainboard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Computer/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Computer/powerBlock"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//Mainboard">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Mainboard/name"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//PowerBlock">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//PowerBlock/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

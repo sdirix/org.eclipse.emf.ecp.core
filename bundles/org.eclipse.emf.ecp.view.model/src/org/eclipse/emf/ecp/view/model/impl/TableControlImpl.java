@@ -13,13 +13,14 @@ package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -262,17 +263,29 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	public Set<VSingleDomainModelReference> getDomainModelReferences() {
 		final Set<VSingleDomainModelReference> result = new LinkedHashSet<VSingleDomainModelReference>();
 		result.add(getDomainModelReference());
-		for (final TableColumn tc : getColumns()) {
-			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-				.createVFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(tc.getAttribute());
 
-			modelReference.getDomainModelEReferencePath().addAll(
-				((VFeaturePathDomainModelReference) getDomainModelReference()).getDomainModelEReferencePath());
-			modelReference.getDomainModelEReferencePath().add(
-				(EReference) ((VFeaturePathDomainModelReference) getDomainModelReference()).getDomainModelEFeature());
-			result.add(modelReference);
+		if (getDomainModelReference().getDomainModel() != null) {
+			@SuppressWarnings("unchecked")
+			final List<? extends EObject> objects =
+				(List<? extends EObject>) getDomainModelReference().getDomainModel().eGet(
+					getDomainModelReference().getModelFeature());
+
+			for (final EObject object : objects) {
+				for (final TableColumn tc : getColumns()) {
+					final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+						.createVFeaturePathDomainModelReference();
+					modelReference.setDomainModelEFeature(tc.getAttribute());
+
+					final boolean resolve = modelReference.resolve(object);
+					if (!resolve) {
+						// TODO: log
+					}
+
+					result.add(modelReference);
+				}
+			}
 		}
+
 		return result;
 	}
 

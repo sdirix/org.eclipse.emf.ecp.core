@@ -20,8 +20,6 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
@@ -33,10 +31,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class LibrarianImpl extends EObjectImpl implements Librarian {
@@ -44,6 +42,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -54,6 +53,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -63,6 +63,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected LibrarianImpl() {
@@ -72,6 +73,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -82,6 +84,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getName() {
@@ -91,6 +94,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -125,13 +129,14 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TestPackage.LIBRARIAN__NAME:
-				return getName();
+		case TestPackage.LIBRARIAN__NAME:
+			return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -139,14 +144,15 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TestPackage.LIBRARIAN__NAME:
-				setName((String)newValue);
-				return;
+		case TestPackage.LIBRARIAN__NAME:
+			setName((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -154,14 +160,15 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TestPackage.LIBRARIAN__NAME:
-				setName(NAME_EDEFAULT);
-				return;
+		case TestPackage.LIBRARIAN__NAME:
+			setName(NAME_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -169,13 +176,14 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TestPackage.LIBRARIAN__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+		case TestPackage.LIBRARIAN__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -183,11 +191,13 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");

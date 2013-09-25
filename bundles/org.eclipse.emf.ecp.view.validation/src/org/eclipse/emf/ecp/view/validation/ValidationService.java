@@ -25,7 +25,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
@@ -50,7 +49,7 @@ public class ValidationService extends AbstractViewService {
 	private ModelChangeListener domainChangeListener;
 	private ModelChangeListener viewChangeListener;
 
-	private ViewValidationCachedTree viewValidationCachedTree;
+	private ViewValidator viewValidationGraph;
 	private ValidationRegistry validationRegistry;
 
 	private final List<ViewValidationListener> validationListener;
@@ -60,6 +59,156 @@ public class ValidationService extends AbstractViewService {
 	 */
 	public ValidationService() {
 		validationListener = new ArrayList<ViewValidationListener>();
+	}
+
+	/**
+	 * The {@link ModelChangeListener} for the view model.
+	 * 
+	 */
+	class ViewModelChangeListener implements ModelChangeListener {
+
+		private final EObject domainModel;
+
+		/**
+		 * Constructor.
+		 * 
+		 * @param domainModel
+		 *            the domain model
+		 */
+		public ViewModelChangeListener(EObject domainModel) {
+			this.domainModel = domainModel;
+		}
+
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.context.ModelChangeNotification)
+		 */
+		public void notifyChange(ModelChangeNotification notification) {
+			// do nothing for now, not supported
+			if (Renderable.class.isInstance(notification.getRawNotification().getNotifier())) {
+				if (notification.getRawNotification().getFeature() == ViewPackage.eINSTANCE
+					.getRenderable_Diagnostic()) {
+
+				}
+				else if (EReference.class.isInstance(notification.getRawNotification().getFeature())
+					&& Renderable.class.isInstance(notification.getRawNotification().getNewValue())) {
+				}
+				else if (ViewPackage.eINSTANCE.getRenderable_Enabled() == notification.getRawNotification()
+					.getFeature()
+					|| ViewPackage.eINSTANCE.getRenderable_Visible() == notification.getRawNotification()
+						.getFeature()) {
+					if (ViewPackage.eINSTANCE.getControl() == notification.getNotifier().eClass()) {
+						final Control control = (Control) notification.getNotifier();
+						// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
+						// control.getDomainModelReference().());
+						// REFACTORING test
+						viewValidationGraph.validate(control.getDomainModelReference().getDomainModel());
+					}
+				}
+			}
+		}
+
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 */
+		public void notifyAdd(Notifier notifier) {
+			if (Renderable.class.isInstance(notifier)) {
+				final Renderable renderable = (Renderable) notifier;
+				final EObject renderableParent = renderable.eContainer();
+				if (Renderable.class.isInstance(renderableParent)
+					&& validationRegistry.containsRenderable((Renderable) renderableParent)) {
+					validationRegistry.register(domainModel, renderable);
+					final Map<EObject, Set<AbstractControl>> map = validationRegistry.getDomainToControlMapping(
+						domainModel,
+						renderable);
+					viewValidationGraph.validate(map.keySet());
+				}
+			}
+		}
+
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 */
+		public void notifyRemove(Notifier notifier) {
+			if (Renderable.class.isInstance(notifier)) {
+				viewValidationGraph.removeRenderable((Renderable) notifier);
+			}
+		}
+	}
+
+	/**
+	 * The {@link ModelChangeListener} for the domain model.
+	 * 
+	 */
+	class DomainModelChangeListener implements ModelChangeListener {
+
+		private final EObject domainModel;
+
+		/**
+		 * Constructor.
+		 * 
+		 * @param domainModel
+		 *            the domain model
+		 */
+		public DomainModelChangeListener(EObject domainModel) {
+			this.domainModel = domainModel;
+		}
+
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.context.ModelChangeNotification)
+		 */
+		public void notifyChange(ModelChangeNotification notification) {
+			if (viewValidationGraph == null) {
+				return; // ignore notifications during initialization
+			}
+			final Notification rawNotification = notification.getRawNotification();
+			switch (rawNotification.getEventType()) {
+			case Notification.ADD:
+			case Notification.REMOVE:
+				viewValidationGraph.validate(getAllEObjects(notification.getNotifier()));
+				break;
+			case Notification.ADD_MANY:
+			case Notification.REMOVE_MANY:
+				viewValidationGraph.validate(getAllEObjects(domainModel));
+
+				break;
+			default:
+				viewValidationGraph.validate(getAllEObjects(notification.getNotifier()));
+			}
+			notifyListeners();
+		}
+
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 */
+		public void notifyAdd(Notifier notifier) {
+			viewValidationGraph.validate((EObject) notifier);
+		}
+
+		/**
+		 * 
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 */
+		public void notifyRemove(Notifier notifier) {
+			final EObject eObject = (EObject) notifier;
+			viewValidationGraph.removeDomainObject(eObject);
+		}
 	}
 
 	/**
@@ -83,87 +232,15 @@ public class ValidationService extends AbstractViewService {
 			throw new IllegalStateException("Domain model must not be null");
 		}
 
-		domainChangeListener = new ModelChangeListener() {
-			public void notifyChange(ModelChangeNotification notification) {
-				if (viewValidationCachedTree == null) {
-					return; // ignore notifications during initialization
-				}
-				final Notification rawNotification = notification.getRawNotification();
-				switch (rawNotification.getEventType()) {
-				case Notification.ADD:
-				case Notification.REMOVE:
-					viewValidationCachedTree.validate(getAllEObjects(notification.getNotifier()));
-					break;
-				case Notification.ADD_MANY:
-				case Notification.REMOVE_MANY:
-					viewValidationCachedTree.validate(getAllEObjects(domainModel));
+		domainChangeListener = new DomainModelChangeListener(domainModel);
+		viewChangeListener = new ViewModelChangeListener(domainModel);
 
-					break;
-				default:
-					viewValidationCachedTree.validate(getAllEObjects(notification.getNotifier()));
-				}
-				notifyListeners();
-			}
-
-			public void notifyAdd(Notifier notifier) {
-				// TODO Auto-generated method stub
-			}
-
-			public void notifyRemove(Notifier notifier) {
-				// TODO Auto-generated method stub
-			}
-		};
 		context.registerDomainChangeListener(domainChangeListener);
-
-		viewChangeListener = new ModelChangeListener() {
-			public void notifyChange(ModelChangeNotification notification) {
-				// do nothing for now, not supported
-				if (Renderable.class.isInstance(notification.getRawNotification().getNotifier())) {
-					if (notification.getRawNotification().getFeature() == ViewPackage.eINSTANCE
-						.getRenderable_Diagnostic()) {
-
-					}
-					else if (EReference.class.isInstance(notification.getRawNotification().getFeature())
-						&& Renderable.class.isInstance(notification.getRawNotification().getNewValue())) {
-					}
-					else if (ViewPackage.eINSTANCE.getRenderable_Enabled() == notification.getRawNotification()
-						.getFeature()
-						|| ViewPackage.eINSTANCE.getRenderable_Visible() == notification.getRawNotification()
-							.getFeature()) {
-						if (ViewPackage.eINSTANCE.getControl() == notification.getNotifier().eClass()) {
-							final Control control = (Control) notification.getNotifier();
-							// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
-							// control.getDomainModelReference().());
-							// REFACTORING test
-							viewValidationCachedTree.validate(control.getDomainModelReference().getDomainModel());
-						}
-					}
-				}
-			}
-
-			public void notifyAdd(Notifier notifier) {
-				if (Renderable.class.isInstance(notifier)) {
-					final Renderable renderable = (Renderable) notifier;
-					final EObject renderableParent = renderable.eContainer();
-					if (Renderable.class.isInstance(renderableParent)
-						&& validationRegistry.containsRenderable((Renderable) renderableParent)) {
-						validationRegistry.register(domainModel, renderable);
-						final Map<EObject, Set<AbstractControl>> map = validationRegistry.getDomainToControlMapping(
-							domainModel,
-							renderable);
-						viewValidationCachedTree.validate(map.keySet());
-					}
-				}
-			}
-
-			public void notifyRemove(Notifier notifier) {
-			}
-		};
 		context.registerViewChangeListener(viewChangeListener);
 
 		init(renderable, domainModel);
 
-		viewValidationCachedTree.validate(getAllEObjects(domainModel));
+		viewValidationGraph.validate(getAllEObjects(domainModel));
 
 		notifyListeners();
 	}
@@ -171,12 +248,7 @@ public class ValidationService extends AbstractViewService {
 	private void init(Renderable view, EObject domainModel) {
 		validationRegistry = new ValidationRegistry();
 		validationRegistry.register(domainModel, view);
-
-		viewValidationCachedTree = new ViewValidationCachedTree(new IExcludedObjectsCallback() {
-			public boolean isExcluded(Object object) {
-				return false;
-			}
-		}, validationRegistry);
+		viewValidationGraph = new ViewValidator(view, domainModel, validationRegistry);
 	}
 
 	/**
