@@ -115,6 +115,15 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http:///com/xored/tesla/core/ui.ecore");
 		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
 		packages.add("http:///com/xored/q7/workspace.ecore");
+		packages.add("http://com/xored/q7/filesystem.ecore");
+		packages.add("http:///com/xored/q7/preferences.ecore");
+		packages.add("http://com/xored/q7/scenario.ecore");
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
+		packages.add("http://www.eclipse.org/ecl/filesystem.ecore");
+		packages.add("http://www.eclipse.org/ecl/interop.ecore");
+		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore");
+		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore");
+
 	}
 
 	private void addGraphitiModels(Set<String> packages) {
