@@ -86,7 +86,6 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	 */
 	public void validate(EObject eObject) {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
-		final long currentTimeMillis2 = System.currentTimeMillis();
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
 			for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
@@ -131,7 +130,6 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 				}
 			}
 		}
-		System.out.println("validation took " + (System.currentTimeMillis() - currentTimeMillis2));
 	}
 
 	/**
