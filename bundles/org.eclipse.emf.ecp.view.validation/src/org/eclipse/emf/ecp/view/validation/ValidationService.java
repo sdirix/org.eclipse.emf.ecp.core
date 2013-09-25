@@ -196,7 +196,10 @@ public class ValidationService extends AbstractViewService {
 		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyAdd(Notifier notifier) {
-			viewValidationGraph.validate((EObject) notifier);
+			// maybe null while init
+			if (viewValidationGraph != null) {
+				viewValidationGraph.validate((EObject) notifier);
+			}
 		}
 
 		/**
