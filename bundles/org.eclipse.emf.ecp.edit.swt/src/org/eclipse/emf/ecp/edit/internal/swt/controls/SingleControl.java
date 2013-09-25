@@ -17,7 +17,6 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -62,14 +61,17 @@ public abstract class SingleControl extends SWTControl {
 		}
 
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
-			validationLabel.setImage(image);
+			final Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
 			Diagnostic reason = diagnostic;
 			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
 				reason = diagnostic.getChildren().get(0);
 			}
-			validationLabel.setToolTipText(reason.getMessage());
-			updateValidationColor(validationLabel.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+			if (validationLabel != null) {
+				validationLabel.setImage(image);
+				validationLabel.setToolTipText(reason.getMessage());
+
+			}
+			updateValidationColor(getSystemColor(SWT.COLOR_RED));
 		} else {
 			resetValidation();
 		}
@@ -101,6 +103,8 @@ public abstract class SingleControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void dispose() {
-		validationLabel.dispose();
+		if (validationLabel != null) {
+			validationLabel.dispose();
+		}
 	}
 }

@@ -34,9 +34,11 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -95,18 +97,11 @@ public abstract class SWTControl extends ECPAbstractControl {
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
 
-		if (!isEmbedded()) {
-			validationLabel = new Label(composite, SWT.NONE);
-			validationLabel.setBackground(parent.getBackground());
-			// set the size of the label to the size of the image
-			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
-		}
+		createValidationIcon(composite);
+		createDataControl(composite);
+		createHelpIcon(composite);
 
-		final Composite innerComposite = new Composite(composite, SWT.NONE);
-		innerComposite.setBackground(parent.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
-		createContentControl(innerComposite);
+		// init
 		setEditable(isEditable());
 
 		binding = bindValue();
@@ -119,16 +114,37 @@ public abstract class SWTControl extends ECPAbstractControl {
 			}
 		}
 
+		return composite;
+	}
+
+	private void createValidationIcon(Composite composite) {
+		if (!isEmbedded()) {
+			validationLabel = new Label(composite, SWT.NONE);
+			validationLabel.setBackground(composite.getBackground());
+			// set the size of the label to the size of the image
+			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
+		}
+	}
+
+	private void createDataControl(Composite composite) {
+		final Composite innerComposite = new Composite(composite, SWT.NONE);
+		innerComposite.setBackground(composite.getBackground());
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
+		createContentControl(innerComposite);
+	}
+
+	private void createHelpIcon(final Composite composite) {
 		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null
 			&& getHelpText().length() != 0) {
 			final Label l = new Label(composite, SWT.PUSH);
 			l.setImage(Activator.getImage("icons/help.png")); //$NON-NLS-1$
 			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help"); //$NON-NLS-1$
-			l.setBackground(parent.getBackground());
+			l.setBackground(composite.getBackground());
 			l.addMouseListener(new MouseListener() {
 
 				public void mouseUp(MouseEvent e) {
-					final MessageDialog dialog = new MessageDialog(parent.getShell(), UtilMessages.SWTControl_Help,
+					final MessageDialog dialog = new MessageDialog(composite.getShell(), UtilMessages.SWTControl_Help,
 						null, getHelpText(),
 						MessageDialog.INFORMATION, new String[] { JFaceResources
 							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
@@ -182,7 +198,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 			}
 
 		}
-		return composite;
 	}
 
 	/**
@@ -378,4 +393,11 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 * @return The unset button tooltip
 	 */
 	protected abstract String getUnsetButtonTooltip();
+
+	protected final Color getSystemColor(int color) {
+		if (parentComposite == null) {
+			return Display.getDefault().getSystemColor(color);
+		}
+		return parentComposite.getShell().getDisplay().getSystemColor(color);
+	}
 }

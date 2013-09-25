@@ -114,9 +114,6 @@ public class XmlDateControlText extends AbstractTextControl {
 				final Shell dialog = new Shell(getText().getShell(), SWT.NONE);
 				dialog.setLayout(new GridLayout(1, false));
 
-				dialog.setLocation(bDate.getParent().toDisplay(bDate.getLocation().x,
-					bDate.getLocation().y + bDate.getSize().y));
-
 				final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
 				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) getModelValue().getValue();
 				final Calendar cal = Calendar.getInstance(getModelElementContext().getLocale());
@@ -152,6 +149,10 @@ public class XmlDateControlText extends AbstractTextControl {
 					}
 				});
 				dialog.pack();
+				dialog.layout();
+				dialog.setLocation(bDate.getParent().toDisplay(
+					bDate.getLocation().x + bDate.getSize().x - dialog.getSize().x,
+					bDate.getLocation().y + bDate.getSize().y));
 				dialog.open();
 			}
 
