@@ -133,12 +133,11 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 * @generated
 	 */
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled) {
-		final boolean oldAddRemoveDisabled = addRemoveDisabled;
+		boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
-		}
 	}
 
 	/**
@@ -243,11 +242,10 @@ public class TableControlImpl extends ControlImpl implements TableControl {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: ");
 		result.append(addRemoveDisabled);
 		result.append(')');

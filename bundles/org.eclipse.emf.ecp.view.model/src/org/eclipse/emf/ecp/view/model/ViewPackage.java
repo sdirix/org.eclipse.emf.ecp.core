@@ -1625,6 +1625,48 @@ public interface ViewPackage extends EPackage {
 	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VMultiFeaturePathDomainModelReferenceImpl
+	 * <em>VMulti Feature Path Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VMultiFeaturePathDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVMultiFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	int VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 20;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>VMulti Feature Path Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1633,7 +1675,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 20;
+	int ALIGNMENT = 21;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -2005,6 +2047,46 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getColumn();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference
+	 * <em>VMulti Feature Path Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>VMulti Feature Path Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference
+	 * @generated
+	 */
+	EClass getVMultiFeaturePathDomainModelReference();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEFeature
+	 * <em>Domain Model EFeature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference '<em>Domain Model EFeature</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEFeature()
+	 * @see #getVMultiFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	EReference getVMultiFeaturePathDomainModelReference_DomainModelEFeature();
+
+	/**
+	 * Returns the meta object for the reference list '
+	 * {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEReferencePath
+	 * <em>Domain Model EReference Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference list '<em>Domain Model EReference Path</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEReferencePath()
+	 * @see #getVMultiFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	EReference getVMultiFeaturePathDomainModelReference_DomainModelEReferencePath();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
@@ -2595,6 +2677,39 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass COLUMN = eINSTANCE.getColumn();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.model.impl.VMultiFeaturePathDomainModelReferenceImpl
+		 * <em>VMulti Feature Path Domain Model Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.impl.VMultiFeaturePathDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVMultiFeaturePathDomainModelReference()
+		 * @generated
+		 */
+		EClass VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE = eINSTANCE.getVMultiFeaturePathDomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model EFeature</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = eINSTANCE
+			.getVMultiFeaturePathDomainModelReference_DomainModelEFeature();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model EReference Path</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = eINSTANCE
+			.getVMultiFeaturePathDomainModelReference_DomainModelEReferencePath();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl

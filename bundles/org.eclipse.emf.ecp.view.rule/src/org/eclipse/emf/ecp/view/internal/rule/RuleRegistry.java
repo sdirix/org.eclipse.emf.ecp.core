@@ -14,12 +14,14 @@ package org.eclipse.emf.ecp.view.internal.rule;
 import static org.eclipse.emf.ecp.view.internal.rule.UniqueSetting.createSetting;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
@@ -72,18 +74,17 @@ public class RuleRegistry<T extends Rule> {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
 			leafCondition.getDomainModelReference().resolve(domainModel);
-			final EObject target = leafCondition.getDomainModelReference().getDomainModel();
 
-			if (target == null) {
-				return;
+			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
+			while (settingIterator.hasNext()) {
+				final Setting setting = settingIterator.next();
+				// FIXME needed?
+				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
+
+				mapSettingToRule(uniqueSetting, rule);
+
+				ruleToRenderable.put(rule, renderable);
 			}
-
-			final UniqueSetting setting = createSetting(target, leafCondition.getDomainModelReference()
-				.getModelFeature());
-
-			mapSettingToRule(setting, rule);
-
-			ruleToRenderable.put(rule, renderable);
 
 		} else if (condition instanceof OrCondition) {
 			final OrCondition orCondition = (OrCondition) condition;

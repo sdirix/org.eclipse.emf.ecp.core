@@ -50,8 +50,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public static ViewFactory init() {
 		try
 		{
-			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/model");
+			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE.getEFactory(ViewPackage.eNS_URI);
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
@@ -107,6 +106,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createColumnComposite();
 		case ViewPackage.COLUMN:
 			return createColumn();
+		case ViewPackage.VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
+			return createVMultiFeaturePathDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -236,6 +237,18 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Column createColumn() {
 		ColumnImpl column = new ColumnImpl();
 		return column;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VMultiFeaturePathDomainModelReference createVMultiFeaturePathDomainModelReference()
+	{
+		VMultiFeaturePathDomainModelReferenceImpl vMultiFeaturePathDomainModelReference = new VMultiFeaturePathDomainModelReferenceImpl();
+		return vMultiFeaturePathDomainModelReference;
 	}
 
 	/**

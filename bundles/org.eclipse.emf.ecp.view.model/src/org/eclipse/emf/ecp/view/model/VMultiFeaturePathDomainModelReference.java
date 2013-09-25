@@ -13,32 +13,30 @@ package org.eclipse.emf.ecp.view.model;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>VFeature Path Domain Model Reference</b></em>'.
+ * A representation of the model object '<em><b>VMulti Feature Path Domain Model Reference</b></em>'.
  * <!-- end-user-doc -->
  * 
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEFeature <em>Domain Model
- * EFeature</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath <em>Domain
- * Model EReference Path</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEFeature <em>Domain
+ * Model EFeature</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEReferencePath <em>
+ * Domain Model EReference Path</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVFeaturePathDomainModelReference()
+ * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVMultiFeaturePathDomainModelReference()
  * @model
  * @generated
  */
-public interface VFeaturePathDomainModelReference extends VSingleDomainModelReference
+public interface VMultiFeaturePathDomainModelReference extends VDomainModelReference
 {
-
 	/**
 	 * Returns the value of the '<em><b>Domain Model EFeature</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -50,7 +48,7 @@ public interface VFeaturePathDomainModelReference extends VSingleDomainModelRefe
 	 * 
 	 * @return the value of the '<em>Domain Model EFeature</em>' reference.
 	 * @see #setDomainModelEFeature(EStructuralFeature)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVFeaturePathDomainModelReference_DomainModelEFeature()
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVMultiFeaturePathDomainModelReference_DomainModelEFeature()
 	 * @model
 	 * @generated
 	 */
@@ -58,7 +56,7 @@ public interface VFeaturePathDomainModelReference extends VSingleDomainModelRefe
 
 	/**
 	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference#getDomainModelEFeature
+	 * {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference#getDomainModelEFeature
 	 * <em>Domain Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,10 +78,10 @@ public interface VFeaturePathDomainModelReference extends VSingleDomainModelRefe
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Domain Model EReference Path</em>' reference list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVFeaturePathDomainModelReference_DomainModelEReferencePath()
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVMultiFeaturePathDomainModelReference_DomainModelEReferencePath()
 	 * @model
 	 * @generated
 	 */
 	EList<EReference> getDomainModelEReferencePath();
 
-} // VFeaturePathDomainModelReference
+} // VMultiFeaturePathDomainModelReference

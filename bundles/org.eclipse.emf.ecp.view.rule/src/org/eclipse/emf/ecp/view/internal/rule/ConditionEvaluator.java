@@ -11,8 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -113,30 +118,24 @@ public final class ConditionEvaluator {
 	}
 
 	private static boolean doEvaluate(EObject eObject, LeafCondition condition) {
-		final EClass attributeClass = condition.getDomainModelReference().getModelFeature().getEContainingClass();
-		final EObject parent = condition.getDomainModelReference().getDomainModel();
-		// final List<EReference> referencePath = condition.getPathToAttribute();
-		// for (final EReference eReference : referencePath) {
-		// if (eReference.getEReferenceType().isInstance(parent)) {
-		// break;
-		// }
-		// if (!eReference.getEContainingClass().equals(parent.eClass())) {
-		// continue;
-		// }
-		//
-		// final EObject child = (EObject) parent.eGet(eReference);
-		//
-		// if (child == null) {
-		// break;
-		// }
-		//
-		// parent = child;
-		// }
-
-		if (!attributeClass.isInstance(parent)) {
-			return false;
+		final Iterator<Setting> settingIterator = condition.getDomainModelReference().getIterator();
+		boolean result = false;
+		while (settingIterator.hasNext()) {
+			final Setting setting = settingIterator.next();
+			final EObject parent = setting.getEObject();
+			final EStructuralFeature feature = setting.getEStructuralFeature();
+			final EClass attributeClass = feature.getEContainingClass();
+			if (!attributeClass.isInstance(parent)) {
+				continue;
+			}
+			if (!feature.isMany()) {
+				result |= condition.getExpectedValue().equals(parent.eGet(feature));
+			}
+			else {
+				final List<Object> objects = (List<Object>) parent.eGet(feature);
+				result |= objects.contains(condition.getExpectedValue());
+			}
 		}
-
-		return condition.getExpectedValue().equals(parent.eGet(condition.getDomainModelReference().getModelFeature()));
+		return result;
 	}
 }

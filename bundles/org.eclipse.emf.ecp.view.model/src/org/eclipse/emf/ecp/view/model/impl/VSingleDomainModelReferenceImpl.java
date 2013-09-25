@@ -98,14 +98,13 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	{
 		if (domainModel != null && domainModel.eIsProxy())
 		{
-			final InternalEObject oldDomainModel = (InternalEObject) domainModel;
+			InternalEObject oldDomainModel = (InternalEObject) domainModel;
 			domainModel = eResolveProxy(oldDomainModel);
 			if (domainModel != oldDomainModel)
 			{
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL, oldDomainModel, domainModel));
-				}
 			}
 		}
 		return domainModel;
@@ -130,12 +129,11 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	 */
 	public void setDomainModel(EObject newDomainModel)
 	{
-		final EObject oldDomainModel = domainModel;
+		EObject oldDomainModel = domainModel;
 		domainModel = newDomainModel;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL, oldDomainModel, domainModel));
-		}
 	}
 
 	/**
@@ -148,14 +146,13 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	{
 		if (modelFeature != null && modelFeature.eIsProxy())
 		{
-			final InternalEObject oldModelFeature = (InternalEObject) modelFeature;
+			InternalEObject oldModelFeature = (InternalEObject) modelFeature;
 			modelFeature = (EStructuralFeature) eResolveProxy(oldModelFeature);
 			if (modelFeature != oldModelFeature)
 			{
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE, oldModelFeature, modelFeature));
-				}
 			}
 		}
 		return modelFeature;
@@ -180,12 +177,11 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 	 */
 	public void setModelFeature(EStructuralFeature newModelFeature)
 	{
-		final EStructuralFeature oldModelFeature = modelFeature;
+		EStructuralFeature oldModelFeature = modelFeature;
 		modelFeature = newModelFeature;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE, oldModelFeature, modelFeature));
-		}
 	}
 
 	/**
@@ -200,14 +196,12 @@ public abstract class VSingleDomainModelReferenceImpl extends EObjectImpl implem
 		switch (featureID)
 		{
 		case ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL:
-			if (resolve) {
+			if (resolve)
 				return getDomainModel();
-			}
 			return basicGetDomainModel();
 		case ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE__MODEL_FEATURE:
-			if (resolve) {
+			if (resolve)
 				return getModelFeature();
-			}
 			return basicGetModelFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);

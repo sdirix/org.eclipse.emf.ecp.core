@@ -34,8 +34,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	public static RuleFactory init() {
 		try
 		{
-			RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/rule/model");
+			RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE.getEFactory(RulePackage.eNS_URI);
 			if (theRuleFactory != null)
 			{
 				return theRuleFactory;

@@ -395,7 +395,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		initEAttribute(getLeafCondition_ExpectedValue(), theEcorePackage.getEJavaObject(), "expectedValue", null, 1, 1,
 			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getLeafCondition_DomainModelReference(), theViewPackage.getVSingleDomainModelReference(), null,
+		initEReference(getLeafCondition_DomainModelReference(), theViewPackage.getVDomainModelReference(), null,
 			"domainModelReference", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

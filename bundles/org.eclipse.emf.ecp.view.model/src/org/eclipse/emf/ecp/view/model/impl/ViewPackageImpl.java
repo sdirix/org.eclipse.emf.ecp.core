@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -133,6 +134,14 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass columnEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass vMultiFeaturePathDomainModelReferenceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -545,6 +554,39 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getVMultiFeaturePathDomainModelReference()
+	{
+		return vMultiFeaturePathDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getVMultiFeaturePathDomainModelReference_DomainModelEFeature()
+	{
+		return (EReference) vMultiFeaturePathDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getVMultiFeaturePathDomainModelReference_DomainModelEReferencePath()
+	{
+		return (EReference) vMultiFeaturePathDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -868,6 +910,12 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		columnEClass = createEClass(COLUMN);
 
+		vMultiFeaturePathDomainModelReferenceEClass = createEClass(VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
+		createEReference(vMultiFeaturePathDomainModelReferenceEClass,
+			VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE);
+		createEReference(vMultiFeaturePathDomainModelReferenceEClass,
+			VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
+
 		// Create enums
 		alignmentEEnum = createEEnum(ALIGNMENT);
 	}
@@ -918,6 +966,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		compositeCollectionEClass.getESuperTypes().add(this.getComposite());
 		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
 		columnEClass.getESuperTypes().add(this.getCompositeCollection());
+		vMultiFeaturePathDomainModelReferenceEClass.getESuperTypes().add(this.getVDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
@@ -1059,6 +1108,17 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(vMultiFeaturePathDomainModelReferenceEClass, VMultiFeaturePathDomainModelReference.class,
+			"VMultiFeaturePathDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getVMultiFeaturePathDomainModelReference_DomainModelEFeature(),
+			theEcorePackage.getEStructuralFeature(), null, "domainModelEFeature", null, 0, 1,
+			VMultiFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVMultiFeaturePathDomainModelReference_DomainModelEReferencePath(),
+			theEcorePackage.getEReference(), null, "domainModelEReferencePath", null, 0, -1,
+			VMultiFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(alignmentEEnum, Alignment.class, "Alignment");

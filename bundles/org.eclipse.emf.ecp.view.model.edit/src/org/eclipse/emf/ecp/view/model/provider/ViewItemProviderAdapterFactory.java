@@ -329,6 +329,35 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected VMultiFeaturePathDomainModelReferenceItemProvider vMultiFeaturePathDomainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createVMultiFeaturePathDomainModelReferenceAdapter()
+	{
+		if (vMultiFeaturePathDomainModelReferenceItemProvider == null)
+		{
+			vMultiFeaturePathDomainModelReferenceItemProvider = new VMultiFeaturePathDomainModelReferenceItemProvider(
+				this);
+		}
+
+		return vMultiFeaturePathDomainModelReferenceItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Action} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -574,6 +603,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			columnCompositeItemProvider.dispose();
 		if (columnItemProvider != null)
 			columnItemProvider.dispose();
+		if (vMultiFeaturePathDomainModelReferenceItemProvider != null)
+			vMultiFeaturePathDomainModelReferenceItemProvider.dispose();
 	}
 
 }

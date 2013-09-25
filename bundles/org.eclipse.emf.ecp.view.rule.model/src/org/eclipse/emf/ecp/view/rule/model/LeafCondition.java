@@ -6,6 +6,7 @@ import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -65,12 +66,12 @@ public interface LeafCondition extends Condition {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
-	 * @see #setDomainModelReference(VSingleDomainModelReference)
+	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.rule.model.RulePackage#getLeafCondition_DomainModelReference()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	VSingleDomainModelReference getDomainModelReference();
+	VDomainModelReference getDomainModelReference();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.rule.model.LeafCondition#getDomainModelReference
@@ -82,6 +83,6 @@ public interface LeafCondition extends Condition {
 	 * @see #getDomainModelReference()
 	 * @generated
 	 */
-	void setDomainModelReference(VSingleDomainModelReference value);
+	void setDomainModelReference(VDomainModelReference value);
 
 } // LeafCondition

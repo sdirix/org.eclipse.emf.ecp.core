@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 
@@ -65,7 +66,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 * @ordered
 	 */
-	protected VSingleDomainModelReference domainModelReference;
+	protected VDomainModelReference domainModelReference;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -118,7 +119,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
-	public VSingleDomainModelReference getDomainModelReference()
+	public VDomainModelReference getDomainModelReference()
 	{
 		return domainModelReference;
 	}
@@ -129,10 +130,10 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetDomainModelReference(VSingleDomainModelReference newDomainModelReference,
+	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs)
 	{
-		VSingleDomainModelReference oldDomainModelReference = domainModelReference;
+		VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired())
 		{
@@ -152,7 +153,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
-	public void setDomainModelReference(VSingleDomainModelReference newDomainModelReference)
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
 	{
 		if (newDomainModelReference != domainModelReference)
 		{
@@ -222,7 +223,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			setExpectedValue(newValue);
 			return;
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
-			setDomainModelReference((VSingleDomainModelReference) newValue);
+			setDomainModelReference((VDomainModelReference) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -242,7 +243,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			setExpectedValue(EXPECTED_VALUE_EDEFAULT);
 			return;
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
-			setDomainModelReference((VSingleDomainModelReference) null);
+			setDomainModelReference((VDomainModelReference) null);
 			return;
 		}
 		super.eUnset(featureID);

@@ -55,7 +55,6 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 	 * @ordered
 	 */
 	protected EStructuralFeature domainModelEFeature;
-
 	/**
 	 * The cached value of the '{@link #getDomainModelEReferencePath() <em>Domain Model EReference Path</em>}' reference
 	 * list.
@@ -101,15 +100,14 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 	{
 		if (domainModelEFeature != null && domainModelEFeature.eIsProxy())
 		{
-			final InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
+			InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
 			domainModelEFeature = (EStructuralFeature) eResolveProxy(oldDomainModelEFeature);
 			if (domainModelEFeature != oldDomainModelEFeature)
 			{
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
 						oldDomainModelEFeature, domainModelEFeature));
-				}
 			}
 		}
 		return domainModelEFeature;
@@ -134,13 +132,12 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 	 */
 	public void setDomainModelEFeature(EStructuralFeature newDomainModelEFeature)
 	{
-		final EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
+		EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
 		domainModelEFeature = newDomainModelEFeature;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
 				domainModelEFeature));
-		}
 	}
 
 	/**
@@ -171,9 +168,8 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 		switch (featureID)
 		{
 		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
-			if (resolve) {
+			if (resolve)
 				return getDomainModelEFeature();
-			}
 			return basicGetDomainModelEFeature();
 		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return getDomainModelEReferencePath();
