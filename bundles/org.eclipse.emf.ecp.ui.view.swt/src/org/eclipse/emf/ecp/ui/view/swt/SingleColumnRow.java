@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.swt.widgets.Control;
 
@@ -43,8 +46,18 @@ public class SingleColumnRow implements RenderingResultRow<Control> {
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow#getMainControl()
 	 */
+	@Deprecated
 	public Control getMainControl() {
 		return getControl();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow#getControls()
+	 */
+	public Set<Control> getControls() {
+		return Collections.singleton(control);
 	}
 
 }

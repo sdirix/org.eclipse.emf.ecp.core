@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.custom.swt;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -22,11 +24,13 @@ import org.eclipse.emf.ecp.ui.view.swt.DoubleColumnRow;
 import org.eclipse.emf.ecp.ui.view.swt.SingleColumnRow;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
+import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
+ * A Renderer for Custom Controls.
  * 
  * @author eneufeld
  * 
@@ -41,7 +45,6 @@ public class CustomControlSWTRenderer extends
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final CustomControl customControl = node.getRenderable();
 
-		// TODO: handle exceptions
 		try {
 			final ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) customControl
 				.getECPCustomControl();
@@ -63,13 +66,18 @@ public class CustomControlSWTRenderer extends
 					}
 				}
 			}
+
+			final Set<Control> controls = new LinkedHashSet<Control>();
+			for (final RenderingResultRow<Control> row : renderingResultRows) {
+				controls.addAll(row.getControls());
+			}
+
 			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(categoryComposite, customControl,
-				getParentFromInitData(initData)));
+				controls.toArray(new Control[0])));
 
 			return renderingResultRows;
 		} catch (final ECPCustomControlInitException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
+			Activator.log(ex);
 		}
 
 		return null;

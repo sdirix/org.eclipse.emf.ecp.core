@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.view.renderer;
 
+import java.util.Set;
+
 /**
  * This class is used to mark an result row of an renderer. Thus all controls should be displayed in one row.
  * 
@@ -28,4 +30,11 @@ public interface RenderingResultRow<T> {
 	 */
 	@Deprecated
 	T getMainControl();
+
+	/**
+	 * Return all Controls which are held by this RenderingResultRow.
+	 * 
+	 * @return the set of controls
+	 */
+	Set<T> getControls();
 }

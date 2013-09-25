@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.swt.widgets.Control;
 
@@ -53,8 +56,21 @@ public class DoubleColumnRow implements RenderingResultRow<Control> {
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow#getMainControl()
 	 */
+	@Deprecated
 	public Control getMainControl() {
 		return getRightControl();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow#getControls()
+	 */
+	public Set<Control> getControls() {
+		final Set<Control> controls = new LinkedHashSet<Control>(2);
+		controls.add(leftControl);
+		controls.add(rightControl);
+		return controls;
 	}
 
 }

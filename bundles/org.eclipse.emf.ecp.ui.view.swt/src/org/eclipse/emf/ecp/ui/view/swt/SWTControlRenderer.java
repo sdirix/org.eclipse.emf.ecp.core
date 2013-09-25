@@ -30,15 +30,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+/**
+ * Renderer for {@link org.eclipse.swt.widgets.Control Controls}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
+	/**
+	 * Instance field to access this renderer as a singleton.
+	 */
 	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
-
-	// private SWTControl control;
-	//
-	// @Override
-	// protected SWTControl getControl() {
-	// return control;
-	// }
 
 	@Override
 	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<Control> node,
@@ -47,13 +49,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Control modelControl = node.getRenderable();
-		// final EClass dataClass = modelControl.getTargetFeature().getEContainingClass();
 		final ECPControlContext subContext = node.getControlContext();
 
-		// if (dataClass == null) {
-		// return null;
-		// }
-		// REFACTORING test
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
 			.getPropertyDescriptor(subContext.getModelElement(),
 				modelControl.getDomainModelReference().getModelFeature());

@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.internal.swt;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 
@@ -73,5 +75,14 @@ public class Activator extends Plugin {
 	public static Image getImage(String path) {
 		return org.eclipse.emf.ecp.edit.internal.swt.Activator.getImage(path);
 
+	}
+
+	/**
+	 * Helper for logging {@link Throwable Throwables}.
+	 * 
+	 * @param throwable the {@link Throwable} to log
+	 */
+	public static void log(Throwable throwable) {
+		plugin.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, throwable.getMessage(), throwable));
 	}
 }
