@@ -123,6 +123,8 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/ecl/interop.ecore");
 		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore");
 		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore");
+		packages.add("com.xored.q7.scenario");
+		packages.add("com.xored.x5.data.eclipse.workspace");
 
 	}
 
