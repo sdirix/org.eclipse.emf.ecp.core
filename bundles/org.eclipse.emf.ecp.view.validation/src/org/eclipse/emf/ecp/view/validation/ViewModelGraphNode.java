@@ -32,12 +32,12 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * 
  * @author emueller
  */
-public class CachedGraphNode<T> {
+public class ViewModelGraphNode<T> {
 
 	private T initValue;
-	private Set<CachedGraphNode<T>> parents;
+	private Set<ViewModelGraphNode<T>> parents;
 	private final UniqueSetting setting;
-	private final PriorityQueue<CachedGraphNode<T>> children;
+	private final PriorityQueue<ViewModelGraphNode<T>> children;
 	private final boolean isDomainObject;
 	private T value;
 
@@ -53,15 +53,15 @@ public class CachedGraphNode<T> {
 	 * @param comparator
 	 *            the {@link Comparator} that is used to maintain the aggregated values
 	 */
-	public CachedGraphNode(UniqueSetting setting, T value, boolean isDomainObject,
+	public ViewModelGraphNode(UniqueSetting setting, T value, boolean isDomainObject,
 		final Comparator<T> comparator) {
 		this.setting = setting;
 		this.value = value;
 		this.initValue = value;
 		this.isDomainObject = isDomainObject;
-		this.parents = new LinkedHashSet<CachedGraphNode<T>>();
-		this.children = new PriorityQueue<CachedGraphNode<T>>(10, new Comparator<CachedGraphNode<T>>() {
-			public int compare(CachedGraphNode<T> node1, CachedGraphNode<T> node2) {
+		this.parents = new LinkedHashSet<ViewModelGraphNode<T>>();
+		this.children = new PriorityQueue<ViewModelGraphNode<T>>(10, new Comparator<ViewModelGraphNode<T>>() {
+			public int compare(ViewModelGraphNode<T> node1, ViewModelGraphNode<T> node2) {
 				final T node1Value = node1.getValue();
 				final T node2Value = node2.getValue();
 				// inverse result: head of priority queue is the least element
@@ -126,7 +126,7 @@ public class CachedGraphNode<T> {
 	 * @param childNode
 	 *            the child node to be added
 	 */
-	public void addChild(CachedGraphNode<T> childNode) {
+	public void addChild(ViewModelGraphNode<T> childNode) {
 		childNode.addParent(this);
 		addToChildrenQueue(childNode);
 	}
@@ -138,7 +138,7 @@ public class CachedGraphNode<T> {
 	 * @param childNode
 	 *            the child node to be removed
 	 */
-	public void removeChild(CachedGraphNode<T> childNode) {
+	public void removeChild(ViewModelGraphNode<T> childNode) {
 		children.remove(childNode);
 		childNode.getParents().remove(this);
 		if (!hasChildren()) {
@@ -158,7 +158,7 @@ public class CachedGraphNode<T> {
 		// TODO: add doc why we need to update all parents
 		// (corner case: children of a parents node may all validate ok, even
 		// if one child has validation errors)
-		for (final CachedGraphNode<T> parent : getParents()) {
+		for (final ViewModelGraphNode<T> parent : getParents()) {
 			parent.addToChildrenQueue(this);
 			parent.setValue(parent.getValue());
 		}
@@ -169,7 +169,7 @@ public class CachedGraphNode<T> {
 	 * 
 	 * @return the parent nodes
 	 */
-	public Set<CachedGraphNode<T>> getParents() {
+	public Set<ViewModelGraphNode<T>> getParents() {
 		return parents;
 	}
 
@@ -179,11 +179,11 @@ public class CachedGraphNode<T> {
 	 * @param parent
 	 *            the parent node
 	 */
-	private void addParent(CachedGraphNode<T> parent) {
+	private void addParent(ViewModelGraphNode<T> parent) {
 		parents.add(parent);
 	}
 
-	private void addToChildrenQueue(CachedGraphNode<T> childNode) {
+	private void addToChildrenQueue(ViewModelGraphNode<T> childNode) {
 		// remove and add to keep queue sorted
 		children.remove(childNode);
 		children.add(childNode);
@@ -215,7 +215,7 @@ public class CachedGraphNode<T> {
 	 *            the node to be checked whether it is contained in the mapping
 	 * @return {@code true}, if the node is contained, {@code false} otherwise
 	 */
-	public boolean containsChild(CachedGraphNode<T> node) {
+	public boolean containsChild(ViewModelGraphNode<T> node) {
 		return children.contains(node);
 	}
 

@@ -23,10 +23,10 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * The validation graph is a graph like structure where each {@link Renderable} is a represented as
- * {@link CachedGraphNode} with a value of type {@code T}. The graph structure follows the {@link EObject} hierarchy of
+ * {@link ViewModelGraphNode} with a value of type {@code T}. The graph structure follows the {@link EObject} hierarchy of
  * the view model (and in that sense conforms to the containment tree of the Renderable).
  * The actually computed values of the nodes are based on domain objects, which are also represented as
- * {@link CachedGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link Renderable}s,
+ * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link Renderable}s,
  * never
  * have any children.
  * Nodes containing domain objects also can have multiple parent.
@@ -61,7 +61,7 @@ public abstract class ViewModelGraph<T> {
 
 	private void buildRenderableNodes(EObject viewModel) {
 		final EList<EObject> eContents = viewModel.eContents();
-		final CachedGraphNode<T> parentNode = viewModelSettings.createNode(viewModel,
+		final ViewModelGraphNode<T> parentNode = viewModelSettings.createNode(viewModel,
 			SettingsNodeMapping.allFeatures(),
 			getDefaultValue(),
 			false);
@@ -69,7 +69,7 @@ public abstract class ViewModelGraph<T> {
 			if (!Renderable.class.isInstance(content)) {
 				continue;
 			}
-			final CachedGraphNode<T> childNode = viewModelSettings.createNode(content,
+			final ViewModelGraphNode<T> childNode = viewModelSettings.createNode(content,
 				SettingsNodeMapping.allFeatures(),
 				getDefaultValue(),
 				false);
@@ -111,27 +111,27 @@ public abstract class ViewModelGraph<T> {
 	 */
 	public void update(Renderable renderable, EObject domainObject, EStructuralFeature feature, T value) {
 
-		final Set<CachedGraphNode<T>> parentNodes = updateNodes(renderable, domainObject, feature, value);
+		final Set<ViewModelGraphNode<T>> parentNodes = updateNodes(renderable, domainObject, feature, value);
 
-		for (final CachedGraphNode<T> cachedNode : parentNodes) {
+		for (final ViewModelGraphNode<T> cachedNode : parentNodes) {
 			updateParentNodes(cachedNode);
 		}
 	}
 
-	private Set<EObject> updateParentNodes(CachedGraphNode<T> node) {
+	private Set<EObject> updateParentNodes(ViewModelGraphNode<T> node) {
 
 		final Set<EObject> updated = new LinkedHashSet<EObject>();
 
-		final Set<CachedGraphNode<T>> nodes = node.getParents();
+		final Set<ViewModelGraphNode<T>> nodes = node.getParents();
 		updateRenderable((Renderable) node.getSetting().getEObject());
 
-		for (final CachedGraphNode<T> n : nodes) {
+		for (final ViewModelGraphNode<T> n : nodes) {
 			final UniqueSetting setting = n.getSetting();
 			updateRenderable((Renderable) setting.getEObject());
 			updated.add(setting.getEObject());
 		}
 
-		for (final CachedGraphNode<T> cachedNode : node.getParents()) {
+		for (final ViewModelGraphNode<T> cachedNode : node.getParents()) {
 			updated.addAll(updateParentNodes(cachedNode));
 		}
 
@@ -148,13 +148,13 @@ public abstract class ViewModelGraph<T> {
 		final EList<EStructuralFeature> eAllStructuralFeatures = domainObject.eClass().getEAllStructuralFeatures();
 		for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
 
-			final CachedGraphNode<T> node = domainModelSettings.getNode(domainObject, eStructuralFeature);
+			final ViewModelGraphNode<T> node = domainModelSettings.getNode(domainObject, eStructuralFeature);
 			if (node == null) {
 				continue;
 			}
 			// domain nodes are always leaf, no need to take care of their children
-			final Set<CachedGraphNode<T>> parents = node.getParents();
-			for (final CachedGraphNode<T> parentNode : new LinkedHashSet<CachedGraphNode<T>>(parents)) {
+			final Set<ViewModelGraphNode<T>> parents = node.getParents();
+			for (final ViewModelGraphNode<T> parentNode : new LinkedHashSet<ViewModelGraphNode<T>>(parents)) {
 				parentNode.removeChild(node);
 			}
 		}
@@ -168,12 +168,12 @@ public abstract class ViewModelGraph<T> {
 	 *            the {@link Renderable} be removed
 	 */
 	public void removeRenderable(Renderable renderable) {
-		final CachedGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
+		final ViewModelGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
 
 		if (node != null) {
 			// domain nodes are always leaf, no need to take care of their children
-			final Set<CachedGraphNode<T>> parents = node.getParents();
-			for (final CachedGraphNode<T> parentNode : new LinkedHashSet<CachedGraphNode<T>>(parents)) {
+			final Set<ViewModelGraphNode<T>> parents = node.getParents();
+			for (final ViewModelGraphNode<T> parentNode : new LinkedHashSet<ViewModelGraphNode<T>>(parents)) {
 				parentNode.removeChild(node);
 				updateParentNodes(parentNode);
 			}
@@ -191,13 +191,13 @@ public abstract class ViewModelGraph<T> {
 	protected void updateRenderable(Renderable renderable) {
 	}
 
-	private Set<CachedGraphNode<T>> updateNodes(Renderable renderable, EObject domainObject,
+	private Set<ViewModelGraphNode<T>> updateNodes(Renderable renderable, EObject domainObject,
 		EStructuralFeature feature, T value) {
 
-		final Set<CachedGraphNode<T>> affectedParentNodes = new LinkedHashSet<CachedGraphNode<T>>();
+		final Set<ViewModelGraphNode<T>> affectedParentNodes = new LinkedHashSet<ViewModelGraphNode<T>>();
 
-		final CachedGraphNode<T> renderableNode = getNodeForRenderable(renderable);
-		final CachedGraphNode<T> domainNode = getNodeForDomainObject(domainObject, feature, value);
+		final ViewModelGraphNode<T> renderableNode = getNodeForRenderable(renderable);
+		final ViewModelGraphNode<T> domainNode = getNodeForDomainObject(domainObject, feature, value);
 
 		if (!renderableNode.containsChild(domainNode)) {
 			renderableNode.addChild(domainNode);
@@ -215,8 +215,8 @@ public abstract class ViewModelGraph<T> {
 		return affectedParentNodes;
 	}
 
-	private CachedGraphNode<T> getNodeForDomainObject(EObject domainObject, EStructuralFeature feature, T value) {
-		CachedGraphNode<T> node = domainModelSettings.getNode(domainObject, feature);
+	private ViewModelGraphNode<T> getNodeForDomainObject(EObject domainObject, EStructuralFeature feature, T value) {
+		ViewModelGraphNode<T> node = domainModelSettings.getNode(domainObject, feature);
 
 		if (node == null) {
 			node = domainModelSettings.createNode(domainObject, feature, value, true);
@@ -225,23 +225,23 @@ public abstract class ViewModelGraph<T> {
 		return node;
 	}
 
-	private void removeChildFromParents(final CachedGraphNode<T> childNode) {
-		final Set<CachedGraphNode<T>> parentNodes = new LinkedHashSet<CachedGraphNode<T>>(childNode.getParents());
-		for (final CachedGraphNode<T> oldParent : parentNodes) {
+	private void removeChildFromParents(final ViewModelGraphNode<T> childNode) {
+		final Set<ViewModelGraphNode<T>> parentNodes = new LinkedHashSet<ViewModelGraphNode<T>>(childNode.getParents());
+		for (final ViewModelGraphNode<T> oldParent : parentNodes) {
 			oldParent.removeChild(childNode);
 		}
 	}
 
 	private boolean domainObjectHasBeenRemoved(EObject domainObject, EStructuralFeature feature) {
-		final CachedGraphNode<T> node = domainModelSettings.getNode(domainObject, feature);
+		final ViewModelGraphNode<T> node = domainModelSettings.getNode(domainObject, feature);
 		if (node.isDomainObject() && !isDomainModelElement(domainObject)) {
 			return true;
 		}
 		return false;
 	}
 
-	private CachedGraphNode<T> getNodeForRenderable(Renderable renderable) {
-		CachedGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
+	private ViewModelGraphNode<T> getNodeForRenderable(Renderable renderable) {
+		ViewModelGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
 
 		// dynamic registration
 		if (node == null) {
@@ -249,7 +249,7 @@ public abstract class ViewModelGraph<T> {
 				.createNode(renderable, SettingsNodeMapping.allFeatures(), getDefaultValue(), false);
 			final EObject eContainer = renderable.eContainer();
 			// must have parent
-			CachedGraphNode<T> possibleParent = viewModelSettings
+			ViewModelGraphNode<T> possibleParent = viewModelSettings
 				.getNode(eContainer, SettingsNodeMapping.allFeatures());
 			if (possibleParent == null) {
 				possibleParent = getNodeForRenderable((Renderable) eContainer);

@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 
 /**
- * Maps a {@link UniqueSetting} to a {@link CachedGraphNode}.
+ * Maps a {@link UniqueSetting} to a {@link ViewModelGraphNode}.
  * 
  * @author emueller
  * 
@@ -31,7 +31,7 @@ public class SettingsNodeMapping<T> {
 
 	private static final EStructuralFeature ALL_FEATURES = null;
 
-	private final Map<UniqueSetting, CachedGraphNode<T>> settings;
+	private final Map<UniqueSetting, ViewModelGraphNode<T>> settings;
 	private final Comparator<T> comparator;
 
 	/**
@@ -42,7 +42,7 @@ public class SettingsNodeMapping<T> {
 	 *            {@link #createNode(EObject, EStructuralFeature, Object, boolean)}
 	 */
 	public SettingsNodeMapping(Comparator<T> comparator) {
-		settings = new LinkedHashMap<UniqueSetting, CachedGraphNode<T>>();
+		settings = new LinkedHashMap<UniqueSetting, ViewModelGraphNode<T>>();
 		this.comparator = comparator;
 	}
 
@@ -55,9 +55,9 @@ public class SettingsNodeMapping<T> {
 	 *            a {@link EStructuralFeature} of the {@link EObject}
 	 * @return the node for the given setting
 	 */
-	public CachedGraphNode<T> getNode(EObject eObject, EStructuralFeature feature) {
+	public ViewModelGraphNode<T> getNode(EObject eObject, EStructuralFeature feature) {
 		final UniqueSetting setting = UniqueSetting.createSetting(eObject, feature);
-		final CachedGraphNode<T> node = settings.get(setting);
+		final ViewModelGraphNode<T> node = settings.get(setting);
 
 		if (node == null) {
 			return null;
@@ -78,12 +78,12 @@ public class SettingsNodeMapping<T> {
 	 *            the initial value
 	 * @param isDomainObject
 	 *            whether the object contained by the node is a domain object
-	 * @return the constructed {@link CachedGraphNode} for the given setting
+	 * @return the constructed {@link ViewModelGraphNode} for the given setting
 	 */
-	public CachedGraphNode<T> createNode(EObject eObject, EStructuralFeature feature,
+	public ViewModelGraphNode<T> createNode(EObject eObject, EStructuralFeature feature,
 		T value, boolean isDomainObject) {
 		final UniqueSetting setting = UniqueSetting.createSetting(eObject, feature);
-		CachedGraphNode<T> node = settings.get(setting);
+		ViewModelGraphNode<T> node = settings.get(setting);
 
 		if (node == null) {
 			node = createNode(setting, value, isDomainObject);
@@ -95,8 +95,8 @@ public class SettingsNodeMapping<T> {
 		return node;
 	}
 
-	private CachedGraphNode<T> createNode(UniqueSetting setting, T initValue, boolean isDomainObject) {
-		return new CachedGraphNode<T>(setting, initValue, isDomainObject, comparator);
+	private ViewModelGraphNode<T> createNode(UniqueSetting setting, T initValue, boolean isDomainObject) {
+		return new ViewModelGraphNode<T>(setting, initValue, isDomainObject, comparator);
 	}
 
 	/**
