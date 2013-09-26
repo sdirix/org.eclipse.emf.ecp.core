@@ -326,8 +326,7 @@ public class ConditionEvaluator_Test {
 	@Test
 	public void testContainmentConditionEObject_right() {
 		final League league = setupLeague();
-		int i = 1;
-		for (final Player p : league.getPlayers()) {
+		for (int i = 1; i <= league.getPlayers().size(); i++) {
 			final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 				CORRECT_PLAYER_NAME + i++, league,
 				Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
@@ -340,12 +339,11 @@ public class ConditionEvaluator_Test {
 	@Test
 	public void testContainmentConditionEObject_wrong() {
 		final League league = setupLeague();
-		for (final Player p : league.getPlayers()) {
-			final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-				CORRECT_PLAYER_NAME, league, Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
+			CORRECT_PLAYER_NAME, league, Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
 
-			assertFalse(ConditionEvaluator.evaluate(null, leafCondition1));
-		}
+		assertFalse(ConditionEvaluator.evaluate(null, leafCondition1));
+
 	}
 
 	@Test

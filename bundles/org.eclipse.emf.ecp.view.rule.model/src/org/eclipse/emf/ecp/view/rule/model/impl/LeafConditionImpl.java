@@ -1,19 +1,21 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model.impl;
-
-import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
@@ -106,11 +108,12 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	public void setExpectedValue(Object newExpectedValue) {
-		Object oldExpectedValue = expectedValue;
+		final Object oldExpectedValue = expectedValue;
 		expectedValue = newExpectedValue;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__EXPECTED_VALUE,
 				oldExpectedValue, expectedValue));
+		}
 	}
 
 	/**
@@ -133,16 +136,17 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs)
 	{
-		VDomainModelReference oldDomainModelReference = domainModelReference;
+		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -158,19 +162,23 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		if (newDomainModelReference != domainModelReference)
 		{
 			NotificationChain msgs = null;
-			if (domainModelReference != null)
+			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
-			if (newDomainModelReference != null)
+			}
+			if (newDomainModelReference != null) {
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
+			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
+		}
 	}
 
 	/**
@@ -214,7 +222,6 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
@@ -276,10 +283,11 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (expectedValue: ");
 		result.append(expectedValue);
 		result.append(')');

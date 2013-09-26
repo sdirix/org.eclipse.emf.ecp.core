@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
@@ -7,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.rule.model.*;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -34,12 +42,13 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	public static RuleFactory init() {
 		try
 		{
-			RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE.getEFactory(RulePackage.eNS_URI);
+			final RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE
+				.getEFactory(RulePackage.eNS_URI);
 			if (theRuleFactory != null)
 			{
 				return theRuleFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -89,7 +98,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public LeafCondition createLeafCondition() {
-		LeafConditionImpl leafCondition = new LeafConditionImpl();
+		final LeafConditionImpl leafCondition = new LeafConditionImpl();
 		return leafCondition;
 	}
 
@@ -100,7 +109,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public OrCondition createOrCondition() {
-		OrConditionImpl orCondition = new OrConditionImpl();
+		final OrConditionImpl orCondition = new OrConditionImpl();
 		return orCondition;
 	}
 
@@ -111,7 +120,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public AndCondition createAndCondition() {
-		AndConditionImpl andCondition = new AndConditionImpl();
+		final AndConditionImpl andCondition = new AndConditionImpl();
 		return andCondition;
 	}
 
@@ -122,7 +131,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public ShowRule createShowRule() {
-		ShowRuleImpl showRule = new ShowRuleImpl();
+		final ShowRuleImpl showRule = new ShowRuleImpl();
 		return showRule;
 	}
 
@@ -133,7 +142,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public EnableRule createEnableRule() {
-		EnableRuleImpl enableRule = new EnableRuleImpl();
+		final EnableRuleImpl enableRule = new EnableRuleImpl();
 		return enableRule;
 	}
 

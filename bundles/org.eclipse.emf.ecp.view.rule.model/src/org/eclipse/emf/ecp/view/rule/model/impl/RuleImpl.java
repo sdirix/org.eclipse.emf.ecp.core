@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -76,16 +85,18 @@ public abstract class RuleImpl extends AttachmentImpl implements Rule {
 	 */
 	public NotificationChain basicSetCondition(Condition newCondition,
 		NotificationChain msgs) {
-		Condition oldCondition = condition;
+		final Condition oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				RulePackage.RULE__CONDITION,
 				oldCondition, newCondition);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -100,19 +111,23 @@ public abstract class RuleImpl extends AttachmentImpl implements Rule {
 		if (newCondition != condition)
 		{
 			NotificationChain msgs = null;
-			if (condition != null)
+			if (condition != null) {
 				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.RULE__CONDITION, null, msgs);
-			if (newCondition != null)
+			}
+			if (newCondition != null) {
 				msgs = ((InternalEObject) newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.RULE__CONDITION, null, msgs);
+			}
 			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION, newCondition,
 				newCondition));
+		}
 	}
 
 	/**

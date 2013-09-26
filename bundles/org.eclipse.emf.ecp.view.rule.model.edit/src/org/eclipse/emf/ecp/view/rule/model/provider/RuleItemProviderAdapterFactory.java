@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model.provider;
 
 import java.util.ArrayList;
@@ -289,8 +298,8 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -376,16 +385,21 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * @generated
 	 */
 	public void dispose() {
-		if (leafConditionItemProvider != null)
+		if (leafConditionItemProvider != null) {
 			leafConditionItemProvider.dispose();
-		if (orConditionItemProvider != null)
+		}
+		if (orConditionItemProvider != null) {
 			orConditionItemProvider.dispose();
-		if (andConditionItemProvider != null)
+		}
+		if (andConditionItemProvider != null) {
 			andConditionItemProvider.dispose();
-		if (showRuleItemProvider != null)
+		}
+		if (showRuleItemProvider != null) {
 			showRuleItemProvider.dispose();
-		if (enableRuleItemProvider != null)
+		}
+		if (enableRuleItemProvider != null) {
 			enableRuleItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -478,7 +492,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object,
 			EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

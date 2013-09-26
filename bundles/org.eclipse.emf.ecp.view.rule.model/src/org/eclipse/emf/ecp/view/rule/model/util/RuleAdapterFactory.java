@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -7,7 +16,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.rule.model.*;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;

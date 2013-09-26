@@ -120,6 +120,7 @@ public final class ConditionEvaluator {
 	private static boolean doEvaluate(EObject eObject, LeafCondition condition) {
 		final Iterator<Setting> settingIterator = condition.getDomainModelReference().getIterator();
 		boolean result = false;
+		final Object expectedValue = condition.getExpectedValue();
 		while (settingIterator.hasNext()) {
 			final Setting setting = settingIterator.next();
 			final EObject parent = setting.getEObject();
@@ -128,11 +129,18 @@ public final class ConditionEvaluator {
 			if (!attributeClass.isInstance(parent)) {
 				continue;
 			}
+			final Object actualValue = parent.eGet(feature);
 			if (!feature.isMany()) {
-				result |= condition.getExpectedValue().equals(parent.eGet(feature));
+				if (expectedValue == null) {
+					result |= actualValue == null;
+				} else {
+					result |= expectedValue.equals(actualValue);
+				}
 			}
 			else {
-				final List<Object> objects = (List<Object>) parent.eGet(feature);
+				// EMF API
+				@SuppressWarnings("unchecked")
+				final List<Object> objects = (List<Object>) actualValue;
 				result |= objects.contains(condition.getExpectedValue());
 			}
 		}
