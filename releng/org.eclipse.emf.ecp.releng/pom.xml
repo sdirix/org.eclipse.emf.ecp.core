@@ -173,35 +173,36 @@
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
 		
-		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
-		
+		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
 		
-		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
-		
+		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
 		
-		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.swt.test</module>
 		
-		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
 		
 		
 		
