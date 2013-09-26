@@ -211,30 +211,6 @@ public interface ViewPackage extends EPackage {
 	int CONTROL = 13;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl <em>Table Control</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.TableControlImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableControl()
-	 * @generated
-	 */
-	int TABLE_CONTROL = 14;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl <em>Table Column</em>}'
-	 * class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
-	 * @generated
-	 */
-	int TABLE_COLUMN = 15;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
 	 * <em>Custom Composite</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -244,7 +220,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
 	 * @generated
 	 */
-	int CUSTOM_COMPOSITE = 16;
+	int CUSTOM_COMPOSITE = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
@@ -256,7 +232,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
 	 * @generated
 	 */
-	int COMPOSITE_COLLECTION = 17;
+	int COMPOSITE_COLLECTION = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
@@ -268,7 +244,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
 	 * @generated
 	 */
-	int COLUMN_COMPOSITE = 18;
+	int COLUMN_COMPOSITE = 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
@@ -279,7 +255,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
 	 * @generated
 	 */
-	int COLUMN = 19;
+	int COLUMN = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
@@ -1142,166 +1118,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__VISIBLE = CONTROL__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__ENABLED = CONTROL__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__READONLY = CONTROL__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__DIAGNOSTIC = CONTROL__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__ATTACHMENTS = CONTROL__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__NAME = CONTROL__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__HINT = CONTROL__HINT;
-
-	/**
-	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__MANDATORY = CONTROL__MANDATORY;
-
-	/**
-	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__LABEL_ALIGNMENT = CONTROL__LABEL_ALIGNMENT;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = CONTROL__DOMAIN_MODEL_REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Columns</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__COLUMNS = CONTROL_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Add Remove Disabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__ADD_REMOVE_DISABLED = CONTROL_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Table Control</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL_FEATURE_COUNT = CONTROL_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Attribute</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_COLUMN__ATTRIBUTE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Read Only</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_COLUMN__READ_ONLY = 1;
-
-	/**
-	 * The number of structural features of the '<em>Table Column</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_COLUMN_FEATURE_COUNT = 2;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
 	int CUSTOM_COMPOSITE__VISIBLE = COMPOSITE__VISIBLE;
 
 	/**
@@ -1634,7 +1450,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVMultiFeaturePathDomainModelReference()
 	 * @generated
 	 */
-	int VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 20;
+	int VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 18;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
@@ -1675,7 +1491,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 21;
+	int ALIGNMENT = 19;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1887,80 +1703,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getControl_LabelAlignment();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.TableControl <em>Table Control</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Table Control</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TableControl
-	 * @generated
-	 */
-	EClass getTableControl();
-
-	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.TableControl#getColumns <em>Columns</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Columns</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TableControl#getColumns()
-	 * @see #getTableControl()
-	 * @generated
-	 */
-	EReference getTableControl_Columns();
-
-	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.model.TableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Add Remove Disabled</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TableControl#isAddRemoveDisabled()
-	 * @see #getTableControl()
-	 * @generated
-	 */
-	EAttribute getTableControl_AddRemoveDisabled();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.TableColumn <em>Table Column</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Table Column</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TableColumn
-	 * @generated
-	 */
-	EClass getTableColumn();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.model.TableColumn#getAttribute
-	 * <em>Attribute</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference '<em>Attribute</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TableColumn#getAttribute()
-	 * @see #getTableColumn()
-	 * @generated
-	 */
-	EReference getTableColumn_Attribute();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.TableColumn#isReadOnly
-	 * <em>Read Only</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Read Only</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.TableColumn#isReadOnly()
-	 * @see #getTableColumn()
-	 * @generated
-	 */
-	EAttribute getTableColumn_ReadOnly();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.CustomComposite
@@ -2542,66 +2284,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.TableControlImpl
-		 * <em>Table Control</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.TableControlImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableControl()
-		 * @generated
-		 */
-		EClass TABLE_CONTROL = eINSTANCE.getTableControl();
-
-		/**
-		 * The meta object literal for the '<em><b>Columns</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference TABLE_CONTROL__COLUMNS = eINSTANCE.getTableControl_Columns();
-
-		/**
-		 * The meta object literal for the '<em><b>Add Remove Disabled</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute TABLE_CONTROL__ADD_REMOVE_DISABLED = eINSTANCE.getTableControl_AddRemoveDisabled();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
-		 * <em>Table Column</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.TableColumnImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getTableColumn()
-		 * @generated
-		 */
-		EClass TABLE_COLUMN = eINSTANCE.getTableColumn();
-
-		/**
-		 * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference TABLE_COLUMN__ATTRIBUTE = eINSTANCE.getTableColumn_Attribute();
-
-		/**
-		 * The meta object literal for the '<em><b>Read Only</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute TABLE_COLUMN__READ_ONLY = eINSTANCE.getTableColumn_ReadOnly();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl

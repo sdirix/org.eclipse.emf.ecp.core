@@ -91,11 +91,10 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * @generated
 	 */
 	public void setDisable(boolean newDisable) {
-		final boolean oldDisable = disable;
+		boolean oldDisable = disable;
 		disable = newDisable;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.ENABLE_RULE__DISABLE, oldDisable, disable));
-		}
 	}
 
 	/**
@@ -172,11 +171,10 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (disable: ");
 		result.append(disable);
 		result.append(')');

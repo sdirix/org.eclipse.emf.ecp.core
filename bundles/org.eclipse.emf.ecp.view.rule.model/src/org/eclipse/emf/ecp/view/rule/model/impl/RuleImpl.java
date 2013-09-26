@@ -85,18 +85,16 @@ public abstract class RuleImpl extends AttachmentImpl implements Rule {
 	 */
 	public NotificationChain basicSetCondition(Condition newCondition,
 		NotificationChain msgs) {
-		final Condition oldCondition = condition;
+		Condition oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired())
 		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				RulePackage.RULE__CONDITION,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION,
 				oldCondition, newCondition);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -111,23 +109,19 @@ public abstract class RuleImpl extends AttachmentImpl implements Rule {
 		if (newCondition != condition)
 		{
 			NotificationChain msgs = null;
-			if (condition != null) {
+			if (condition != null)
 				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.RULE__CONDITION, null, msgs);
-			}
-			if (newCondition != null) {
+			if (newCondition != null)
 				msgs = ((InternalEObject) newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.RULE__CONDITION, null, msgs);
-			}
 			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION, newCondition,
 				newCondition));
-		}
 	}
 
 	/**

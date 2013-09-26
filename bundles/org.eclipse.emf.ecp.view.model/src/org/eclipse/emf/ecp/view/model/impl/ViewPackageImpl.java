@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.model.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -33,8 +32,6 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -92,20 +89,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass controlEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass tableControlEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass tableColumnEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -434,60 +417,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	public EAttribute getControl_LabelAlignment()
 	{
 		return (EAttribute) controlEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getTableControl() {
-		return tableControlEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getTableControl_Columns() {
-		return (EReference) tableControlEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getTableControl_AddRemoveDisabled() {
-		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getTableColumn() {
-		return tableColumnEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EReference getTableColumn_Attribute() {
-		return (EReference) tableColumnEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getTableColumn_ReadOnly() {
-		return (EAttribute) tableColumnEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -891,14 +820,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
 		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCE);
 
-		tableControlEClass = createEClass(TABLE_CONTROL);
-		createEReference(tableControlEClass, TABLE_CONTROL__COLUMNS);
-		createEAttribute(tableControlEClass, TABLE_CONTROL__ADD_REMOVE_DISABLED);
-
-		tableColumnEClass = createEClass(TABLE_COLUMN);
-		createEReference(tableColumnEClass, TABLE_COLUMN__ATTRIBUTE);
-		createEAttribute(tableColumnEClass, TABLE_COLUMN__READ_ONLY);
-
 		customCompositeEClass = createEClass(CUSTOM_COMPOSITE);
 		createEAttribute(customCompositeEClass, CUSTOM_COMPOSITE__BUNDLE);
 		createEAttribute(customCompositeEClass, CUSTOM_COMPOSITE__CLASS_NAME);
@@ -961,7 +882,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		vSingleDomainModelReferenceEClass.getESuperTypes().add(this.getVDomainModelReference());
 		vFeaturePathDomainModelReferenceEClass.getESuperTypes().add(this.getVSingleDomainModelReference());
 		controlEClass.getESuperTypes().add(this.getAbstractControl());
-		tableControlEClass.getESuperTypes().add(this.getControl());
 		customCompositeEClass.getESuperTypes().add(this.getComposite());
 		compositeCollectionEClass.getESuperTypes().add(this.getComposite());
 		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
@@ -1070,24 +990,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEReference(getControl_DomainModelReference(), this.getVSingleDomainModelReference(), null,
 			"domainModelReference", null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(tableControlEClass, TableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableControl_Columns(), this.getTableColumn(), null, "columns", null, 1, -1,
-			TableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableControl_AddRemoveDisabled(), theEcorePackage.getEBoolean(), "addRemoveDisabled",
-			"false", 1, 1, TableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(tableColumnEClass, TableColumn.class, "TableColumn", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableColumn_Attribute(), theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
-			TableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableColumn_ReadOnly(), ecorePackage.getEBoolean(), "readOnly", "false", 1, 1,
-			TableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(customCompositeEClass, CustomComposite.class, "CustomComposite", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);

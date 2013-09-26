@@ -18,27 +18,18 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
-
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
-
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
-
 import org.eclipse.emf.ecp.view.vertical.model.util.VerticalAdapterFactory;
-
 import org.eclipse.emf.edit.command.CommandParameter;
-
 import org.eclipse.emf.edit.domain.EditingDomain;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;

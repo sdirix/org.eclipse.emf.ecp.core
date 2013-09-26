@@ -132,14 +132,12 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	public static RulePackage init() {
-		if (isInited) {
+		if (isInited)
 			return (RulePackage) EPackage.Registry.INSTANCE.getEPackage(RulePackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final RulePackageImpl theRulePackage = (RulePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof RulePackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new RulePackageImpl());
+		RulePackageImpl theRulePackage = (RulePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof RulePackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new RulePackageImpl());
 
 		isInited = true;
 
@@ -328,9 +326,8 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -373,9 +370,8 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -384,21 +380,20 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
-		final ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		leafConditionEClass.getESuperTypes().add(getCondition());
-		orConditionEClass.getESuperTypes().add(getCondition());
-		andConditionEClass.getESuperTypes().add(getCondition());
+		leafConditionEClass.getESuperTypes().add(this.getCondition());
+		orConditionEClass.getESuperTypes().add(this.getCondition());
+		andConditionEClass.getESuperTypes().add(this.getCondition());
 		ruleEClass.getESuperTypes().add(theViewPackage.getAttachment());
-		showRuleEClass.getESuperTypes().add(getRule());
-		enableRuleEClass.getESuperTypes().add(getRule());
+		showRuleEClass.getESuperTypes().add(this.getRule());
+		enableRuleEClass.getESuperTypes().add(this.getRule());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(conditionEClass, Condition.class, "Condition", IS_ABSTRACT, !IS_INTERFACE,
@@ -415,18 +410,18 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 		initEClass(orConditionEClass, OrCondition.class, "OrCondition", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getOrCondition_Conditions(), getCondition(), null, "conditions", null, 2, -1,
+		initEReference(getOrCondition_Conditions(), this.getCondition(), null, "conditions", null, 2, -1,
 			OrCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(andConditionEClass, AndCondition.class, "AndCondition", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAndCondition_Conditions(), getCondition(), null, "conditions", null, 2, -1,
+		initEReference(getAndCondition_Conditions(), this.getCondition(), null, "conditions", null, 2, -1,
 			AndCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRule_Condition(), getCondition(), null, "condition", null, 1, 1, Rule.class,
+		initEReference(getRule_Condition(), this.getCondition(), null, "condition", null, 1, 1, Rule.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 

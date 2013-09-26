@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.group.model.GroupPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.table.model.VTablePackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.junit.Test;
@@ -49,22 +50,23 @@ public class ChildrenDescriptorExtensionTest {
 
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
 	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
+	// TODO: Should be not -3, span and rules are missing
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1 - 3;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	// TODO: Should be not -3, span and rules are missing
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT - 3;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	// TODO: Should be not -9, labels, custom control, groupedgrid, span, 2 rules, vertical, horizontal and separator
+	// TODO: Should be not -9, labels, custom control, groupedgrid, span, 2 rules, vertical, horizontal, separator,table
 	// are missing
-	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 9;
+	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 10;
 	private static final int ACTION_CHILD_COUNT = 0;
 	// TODO: Should be not -2, rules are missing
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1 - 2;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
-	// TODO: Should be not -6, labels, group, custom composites, vertical, horizontal and separator are missing
-	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 6;
+	// TODO: Should be not -6, labels, group, custom composites, vertical, horizontal, separator ,table are missing
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 7;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
@@ -182,13 +184,13 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testTableControlChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getTableControl());
+		final int size = getChildrenSize(VTablePackage.eINSTANCE.getTableControl());
 		assertEquals(TABLECONTROL_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testTableColumnChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getTableColumn());
+		final int size = getChildrenSize(VTablePackage.eINSTANCE.getTableColumn());
 		assertEquals(TABLECOLUMN_CHILD_COUNT, size);
 	}
 

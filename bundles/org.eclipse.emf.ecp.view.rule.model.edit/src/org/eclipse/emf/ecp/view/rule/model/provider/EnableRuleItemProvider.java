@@ -112,7 +112,7 @@ public class EnableRuleItemProvider extends RuleItemProvider implements
 	 */
 	@Override
 	public String getText(Object object) {
-		final EnableRule enableRule = (EnableRule) object;
+		EnableRule enableRule = (EnableRule) object;
 		return getString("_UI_EnableRule_type") + " " + enableRule.isDisable();
 	}
 

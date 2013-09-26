@@ -42,13 +42,12 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	public static RuleFactory init() {
 		try
 		{
-			final RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE
-				.getEFactory(RulePackage.eNS_URI);
+			RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE.getEFactory(RulePackage.eNS_URI);
 			if (theRuleFactory != null)
 			{
 				return theRuleFactory;
 			}
-		} catch (final Exception exception)
+		} catch (Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -98,7 +97,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public LeafCondition createLeafCondition() {
-		final LeafConditionImpl leafCondition = new LeafConditionImpl();
+		LeafConditionImpl leafCondition = new LeafConditionImpl();
 		return leafCondition;
 	}
 
@@ -109,7 +108,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public OrCondition createOrCondition() {
-		final OrConditionImpl orCondition = new OrConditionImpl();
+		OrConditionImpl orCondition = new OrConditionImpl();
 		return orCondition;
 	}
 
@@ -120,7 +119,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public AndCondition createAndCondition() {
-		final AndConditionImpl andCondition = new AndConditionImpl();
+		AndConditionImpl andCondition = new AndConditionImpl();
 		return andCondition;
 	}
 
@@ -131,7 +130,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public ShowRule createShowRule() {
-		final ShowRuleImpl showRule = new ShowRuleImpl();
+		ShowRuleImpl showRule = new ShowRuleImpl();
 		return showRule;
 	}
 
@@ -142,7 +141,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public EnableRule createEnableRule() {
-		final EnableRuleImpl enableRule = new EnableRuleImpl();
+		EnableRuleImpl enableRule = new EnableRuleImpl();
 		return enableRule;
 	}
 

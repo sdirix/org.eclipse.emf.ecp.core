@@ -42,8 +42,7 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	{
 		try
 		{
-			LabelFactory theLabelFactory = (LabelFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/label/model");
+			LabelFactory theLabelFactory = (LabelFactory) EPackage.Registry.INSTANCE.getEFactory(LabelPackage.eNS_URI);
 			if (theLabelFactory != null)
 			{
 				return theLabelFactory;

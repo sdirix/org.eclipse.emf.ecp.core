@@ -149,8 +149,8 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements
 	 */
 	@Override
 	public String getText(Object object) {
-		final Object labelValue = ((LeafCondition) object).getExpectedValue();
-		final String label = labelValue == null ? null : labelValue.toString();
+		Object labelValue = ((LeafCondition) object).getExpectedValue();
+		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_LeafCondition_type") :
 			getString("_UI_LeafCondition_type") + " " + label;

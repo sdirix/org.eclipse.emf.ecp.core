@@ -77,19 +77,6 @@
     <eLiterals name="Top" value="1"/>
     <eLiterals name="None" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableControl" eSuperTypes="#//Control">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" lowerBound="1"
-        upperBound="-1" eType="#//TableColumn" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="addRemoveDisabled" lowerBound="1"
-        eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
-        defaultValueLiteral="false"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableColumn">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="readOnly" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomComposite" eSuperTypes="#//Composite">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundle" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

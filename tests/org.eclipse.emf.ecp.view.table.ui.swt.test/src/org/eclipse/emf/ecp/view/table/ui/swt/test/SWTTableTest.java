@@ -60,7 +60,7 @@ public class SWTTableTest {
 		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createUninitializedTableWithoutColumns();
-		handle.getTableControl().getDomainModelReference().setDomainModel(domainElement);
+		handle.getTableControl().getDomainModelReference().resolve(domainElement);
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertNull(render);
 

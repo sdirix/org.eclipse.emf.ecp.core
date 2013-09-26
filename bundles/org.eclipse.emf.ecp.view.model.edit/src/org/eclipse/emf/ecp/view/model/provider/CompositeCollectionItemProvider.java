@@ -162,11 +162,6 @@ public class CompositeCollectionItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				ViewFactory.eINSTANCE.createTableControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
 				ViewFactory.eINSTANCE.createCustomComposite()));
 
 		newChildDescriptors.add

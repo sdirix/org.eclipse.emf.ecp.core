@@ -26,7 +26,7 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 */
 	public static SeparatorFactory init() {
 		try {
-			SeparatorFactory theSeparatorFactory = (SeparatorFactory)EPackage.Registry.INSTANCE.getEFactory("http://org/eclipse/emf/ecp/view/separator/model"); 
+			SeparatorFactory theSeparatorFactory = (SeparatorFactory)EPackage.Registry.INSTANCE.getEFactory(SeparatorPackage.eNS_URI);
 			if (theSeparatorFactory != null) {
 				return theSeparatorFactory;
 			}

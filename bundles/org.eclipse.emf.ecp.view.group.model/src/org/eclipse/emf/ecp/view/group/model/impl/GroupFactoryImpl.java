@@ -38,8 +38,7 @@ public class GroupFactoryImpl extends EFactoryImpl implements GroupFactory {
 	public static GroupFactory init() {
 		try
 		{
-			GroupFactory theGroupFactory = (GroupFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/group/model");
+			GroupFactory theGroupFactory = (GroupFactory) EPackage.Registry.INSTANCE.getEFactory(GroupPackage.eNS_URI);
 			if (theGroupFactory != null)
 			{
 				return theGroupFactory;

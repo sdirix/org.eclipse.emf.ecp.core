@@ -298,8 +298,8 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
 			{
 				return adapter;
 			}
@@ -385,21 +385,16 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * @generated
 	 */
 	public void dispose() {
-		if (leafConditionItemProvider != null) {
+		if (leafConditionItemProvider != null)
 			leafConditionItemProvider.dispose();
-		}
-		if (orConditionItemProvider != null) {
+		if (orConditionItemProvider != null)
 			orConditionItemProvider.dispose();
-		}
-		if (andConditionItemProvider != null) {
+		if (andConditionItemProvider != null)
 			andConditionItemProvider.dispose();
-		}
-		if (showRuleItemProvider != null) {
+		if (showRuleItemProvider != null)
 			showRuleItemProvider.dispose();
-		}
-		if (enableRuleItemProvider != null) {
+		if (enableRuleItemProvider != null)
 			enableRuleItemProvider.dispose();
-		}
 	}
 
 	/**
@@ -492,7 +487,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object,
 			EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

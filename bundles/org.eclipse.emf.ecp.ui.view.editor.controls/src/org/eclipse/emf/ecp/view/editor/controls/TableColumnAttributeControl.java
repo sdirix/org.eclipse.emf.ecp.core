@@ -7,9 +7,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -84,7 +84,7 @@ public class TableColumnAttributeControl extends LinkControl {
 
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
 				composedAdapterFactory);
-			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((TableControl) getModelElementContext()
+			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((VTableControl) getModelElementContext()
 				.getModelElement()
 				.eContainer()).getDomainModelReference()).getDomainModelEFeature();
 			final ListDialog ld = new ListDialog(shell);
@@ -98,7 +98,7 @@ public class TableColumnAttributeControl extends LinkControl {
 				if (EAttribute.class.isInstance(selection)) {
 					final EAttribute selectedFeature = (EAttribute) selection;
 
-					((TableColumn) getModelElementContext().getModelElement()).setAttribute(selectedFeature);
+					((VTableColumn) getModelElementContext().getModelElement()).setAttribute(selectedFeature);
 				}
 			}
 			labelProvider.dispose();

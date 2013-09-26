@@ -23,11 +23,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.validation.ValidationService;
 import org.eclipse.emf.ecp.view.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
@@ -344,18 +345,18 @@ public class ViewValidationTest {
 		writer.setLastName("foo");
 
 		final View view = ViewFactory.eINSTANCE.createView();
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
-		final TableControl control2 = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control2 = VTableFactory.eINSTANCE.createTableControl();
 		control2
 			.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc2 = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc2 = VTableFactory.eINSTANCE.createTableColumn();
 		tc2.setAttribute(TestPackage.eINSTANCE.getWriter_LastName());
 		control2.getColumns().add(tc2);
 
@@ -478,10 +479,10 @@ public class ViewValidationTest {
 
 		new ViewModelContextImpl(view, library);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -511,7 +512,7 @@ public class ViewValidationTest {
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
 		lib.setName("bla");
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 
@@ -527,10 +528,10 @@ public class ViewValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		lib.getWriters().add(writer);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -549,10 +550,10 @@ public class ViewValidationTest {
 		writer2.setFirstName("bla");
 		lib.getWriters().add(writer2);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -568,10 +569,10 @@ public class ViewValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		lib.getWriters().add(writer);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -590,10 +591,10 @@ public class ViewValidationTest {
 		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
 		lib.getWriters().add(writer2);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -613,10 +614,10 @@ public class ViewValidationTest {
 		lib.getWriters().add(writer);
 		writer.setFirstName("bla");
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -635,10 +636,10 @@ public class ViewValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		lib.getWriters().add(writer);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -659,10 +660,10 @@ public class ViewValidationTest {
 		writer.setFirstName("H");
 		lib.getWriters().add(writer);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -692,10 +693,10 @@ public class ViewValidationTest {
 		writer2.setFirstName("bla");
 		lib.getWriters().add(writer2);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 		final View view = ViewFactory.eINSTANCE.createView();
@@ -717,10 +718,10 @@ public class ViewValidationTest {
 		lib.getWriters().add(writer);
 		lib.getWriters().add(validWriter);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 		final View view = ViewFactory.eINSTANCE.createView();
@@ -749,10 +750,10 @@ public class ViewValidationTest {
 		writer2.setFirstName("bla");
 		lib.getWriters().add(writer2);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 		final View view = ViewFactory.eINSTANCE.createView();
@@ -776,10 +777,10 @@ public class ViewValidationTest {
 		writer2.setFirstName("bla");
 		lib.getWriters().add(writer2);
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 		final View view = ViewFactory.eINSTANCE.createView();
@@ -801,10 +802,10 @@ public class ViewValidationTest {
 		writer.setFirstName("bar");
 		writer.setLastName("foo"); // error
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 		final View view = ViewFactory.eINSTANCE.createView();
@@ -835,17 +836,17 @@ public class ViewValidationTest {
 		lib.getWriters().add(writer3);
 		writer3.setFirstName("bla");
 
-		final TableControl control1 = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
 		control1.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc1 = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
 		tc1.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control1.getColumns().add(tc1);
 
-		final TableControl control2 = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control2 = VTableFactory.eINSTANCE.createTableControl();
 		control2.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc2 = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc2 = VTableFactory.eINSTANCE.createTableColumn();
 		tc2.setAttribute(TestPackage.eINSTANCE.getWriter_LastName());
 		control2.getColumns().add(tc2);
 
@@ -872,12 +873,12 @@ public class ViewValidationTest {
 		lib.setName("bla");
 		lib.getWriters().add(writer);
 
-		final TableControl control1 = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
 		control1.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc1 = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
 		tc1.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
-		final TableColumn tc2 = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc2 = VTableFactory.eINSTANCE.createTableColumn();
 		tc2.setAttribute(TestPackage.eINSTANCE.getWriter_LastName());
 		control1.getColumns().add(tc1);
 		control1.getColumns().add(tc2);
@@ -907,10 +908,10 @@ public class ViewValidationTest {
 		lib.getWriters().add(writer3);
 		writer3.setFirstName("bla");
 
-		final TableControl control = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
@@ -937,10 +938,10 @@ public class ViewValidationTest {
 
 		// non domain
 		final View view = ViewFactory.eINSTANCE.createView();
-		final TableControl tableControl = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
 		tableControl.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		tableControl.getColumns().add(tc);
 		final Column column = ViewFactory.eINSTANCE.createColumn();
@@ -975,10 +976,10 @@ public class ViewValidationTest {
 
 		final View view = ViewFactory.eINSTANCE.createView();
 
-		final TableControl tableControl = ViewFactory.eINSTANCE.createTableControl();
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
 		tableControl.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE
 			.getLibrary_Writers()));
-		final TableColumn tc = ViewFactory.eINSTANCE.createTableColumn();
+		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		tableControl.getColumns().add(tc);
 		final Column column = ViewFactory.eINSTANCE.createColumn();

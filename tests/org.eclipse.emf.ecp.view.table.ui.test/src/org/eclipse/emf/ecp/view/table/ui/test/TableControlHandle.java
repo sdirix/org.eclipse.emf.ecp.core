@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.test;
 
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.table.model.VTableControl;
 
 /**
  * @author Jonas
@@ -20,18 +20,18 @@ import org.eclipse.emf.ecp.view.model.TableControl;
  */
 public class TableControlHandle {
 
-	public TableControlHandle(TableControl tableControl) {
+	public TableControlHandle(VTableControl tableControl) {
 		setTableControl(tableControl);
 	}
 
-	private TableControl tableControl;
-	private TableColumn tableColumn1;
-	private TableColumn tableColumn2;
+	private VTableControl tableControl;
+	private VTableColumn tableColumn1;
+	private VTableColumn tableColumn2;
 
 	/**
 	 * @param tableColumn1
 	 */
-	public void addFirstTableColumn(TableColumn tableColumn1) {
+	public void addFirstTableColumn(VTableColumn tableColumn1) {
 		setTableColumn1(tableColumn1);
 		getTableControl().getColumns().add(tableColumn1);
 
@@ -40,7 +40,7 @@ public class TableControlHandle {
 	/**
 	 * @param tableColumn2
 	 */
-	public void addSecondTableColumn(TableColumn tableColumn2) {
+	public void addSecondTableColumn(VTableColumn tableColumn2) {
 		setTableColumn2(tableColumn2);
 		getTableControl().getColumns().add(tableColumn2);
 
@@ -49,42 +49,42 @@ public class TableControlHandle {
 	/**
 	 * @return the tableControl
 	 */
-	public TableControl getTableControl() {
+	public VTableControl getTableControl() {
 		return tableControl;
 	}
 
 	/**
 	 * @param tableControl the tableControl to set
 	 */
-	public void setTableControl(TableControl tableControl) {
+	public void setTableControl(VTableControl tableControl) {
 		this.tableControl = tableControl;
 	}
 
 	/**
 	 * @return the tableColumn1
 	 */
-	public TableColumn getTableColumn1() {
+	public VTableColumn getTableColumn1() {
 		return tableColumn1;
 	}
 
 	/**
 	 * @param tableColumn1 the tableColumn1 to set
 	 */
-	public void setTableColumn1(TableColumn tableColumn1) {
+	public void setTableColumn1(VTableColumn tableColumn1) {
 		this.tableColumn1 = tableColumn1;
 	}
 
 	/**
 	 * @return the tableColumn2
 	 */
-	public TableColumn getTableColumn2() {
+	public VTableColumn getTableColumn2() {
 		return tableColumn2;
 	}
 
 	/**
 	 * @param tableColumn2 the tableColumn2 to set
 	 */
-	public void setTableColumn2(TableColumn tableColumn2) {
+	public void setTableColumn2(VTableColumn tableColumn2) {
 		this.tableColumn2 = tableColumn2;
 	}
 

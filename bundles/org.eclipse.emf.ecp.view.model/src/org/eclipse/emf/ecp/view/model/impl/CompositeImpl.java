@@ -91,10 +91,11 @@ public abstract class CompositeImpl extends RenderableImpl implements Composite 
 	 * @generated
 	 */
 	public void setName(String newName) {
-		String oldName = name;
+		final String oldName = name;
 		name = newName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.COMPOSITE__NAME, oldName, name));
+		}
 	}
 
 	/**
@@ -119,7 +120,6 @@ public abstract class CompositeImpl extends RenderableImpl implements Composite 
 	 * 
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
@@ -172,10 +172,11 @@ public abstract class CompositeImpl extends RenderableImpl implements Composite 
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.customNodeBuilders">
+      <builders
+            class="org.eclipse.emf.ecp.view.internal.table.ui.TableNodeBuilder">
+      </builders>
+   </extension>
+<extension
+         point="org.eclipse.emf.ecp.view.validation.validationSubProcessor">
+      <validationSubProcessor
+            associatedRenderable="org.eclipse.emf.ecp.view.table.model.VTableControl"
+            class="org.eclipse.emf.ecp.view.internal.table.ui.TableControlSubProcessor">
+      </validationSubProcessor>
+   </extension>
+</plugin>

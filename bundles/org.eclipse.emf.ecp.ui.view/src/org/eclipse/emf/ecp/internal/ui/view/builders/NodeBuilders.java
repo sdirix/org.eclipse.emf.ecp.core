@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.view.builders;
 
 import java.util.Arrays;
@@ -21,7 +32,6 @@ import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -45,15 +55,13 @@ public class NodeBuilders {
 					new CompositeCollectionNodeBuilder<ColumnComposite>());
 				put(Column.class, new CompositeCollectionNodeBuilder<Column>());
 				// put(Group.class, new CompositeCollectionNodeBuilder<Group>());
-				put(TableControl.class,
-					new RenderableNodeBuilder<TableControl>());
 				put(Control.class, new RenderableNodeBuilder<Control>());
 				put(CustomComposite.class,
 					new RenderableNodeBuilder<CustomComposite>());
 				put(View.class, new ViewNodeBuilder());
 				put(Category.class, new CategoryNodeBuilder());
 				put(Categorization.class, new CategorizationNodeBuilder());
-				put(TableControl.class, new ControlNodeBuilder<TableControl>());
+				// put(TableControl.class, new ControlNodeBuilder<TableControl>());
 				put(Control.class, new ControlNodeBuilder<Control>());
 				// put(TreeCategory.class, new TreeCategoryNodeBuilder());
 			}

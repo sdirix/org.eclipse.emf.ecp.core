@@ -20,7 +20,12 @@ import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeCollectionItemProvider;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout} object.
@@ -30,7 +35,8 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @generated
  */
 public class HorizontalLayoutItemProvider
-	extends CompositeCollectionItemProvider
+	extends CompositeCollectionItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 
 {
 	/**
@@ -86,7 +92,7 @@ public class HorizontalLayoutItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VHorizontalLayout) object).getName();
+		String label = ((VHorizontalLayout) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_HorizontalLayout_type") :
 			getString("_UI_HorizontalLayout_type") + " " + label;

@@ -111,7 +111,7 @@ public class ShowRuleItemProvider extends RuleItemProvider implements
 	 */
 	@Override
 	public String getText(Object object) {
-		final ShowRule showRule = (ShowRule) object;
+		ShowRule showRule = (ShowRule) object;
 		return getString("_UI_ShowRule_type") + " " + showRule.isHide();
 	}
 

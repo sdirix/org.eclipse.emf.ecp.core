@@ -110,6 +110,16 @@ public interface GroupPackage extends EPackage {
 	int GROUP__READONLY = ViewPackage.COMPOSITE_COLLECTION__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__DIAGNOSTIC = ViewPackage.COMPOSITE_COLLECTION__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

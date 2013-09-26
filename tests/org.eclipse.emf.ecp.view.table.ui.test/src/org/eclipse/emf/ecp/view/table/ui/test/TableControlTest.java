@@ -19,10 +19,11 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableColumn;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,10 +59,10 @@ public class TableControlTest {
 
 	public static TableControlHandle createTableWithTwoTableColumns() {
 		final TableControlHandle tableControlHandle = createInitializedTableWithoutTableColumns();
-		final TableColumn tableColumn1 = createTableColumn();
+		final VTableColumn tableColumn1 = createTableColumn();
 		tableColumn1.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addFirstTableColumn(tableColumn1);
-		final TableColumn tableColumn2 = createTableColumn();
+		final VTableColumn tableColumn2 = createTableColumn();
 		tableColumn2.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 		return tableControlHandle;
@@ -70,8 +71,8 @@ public class TableControlTest {
 	/**
 	 * @return
 	 */
-	private static TableColumn createTableColumn() {
-		return ViewFactory.eINSTANCE.createTableColumn();
+	private static VTableColumn createTableColumn() {
+		return VTableFactory.eINSTANCE.createTableColumn();
 	}
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
@@ -85,15 +86,15 @@ public class TableControlTest {
 	}
 
 	public static TableControlHandle createUninitializedTableWithoutColumns() {
-		final TableControl tableControl = createTableControl();
+		final VTableControl tableControl = createTableControl();
 		return new TableControlHandle(tableControl);
 	}
 
 	/**
 	 * @return
 	 */
-	private static TableControl createTableControl() {
-		final TableControl tc = ViewFactory.eINSTANCE.createTableControl();
+	private static VTableControl createTableControl() {
+		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
 		tc.setDomainModelReference(ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference());
 		return tc;
 	}

@@ -197,58 +197,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.TableControl} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected TableControlItemProvider tableControlItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.TableControl}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createTableControlAdapter() {
-		if (tableControlItemProvider == null)
-		{
-			tableControlItemProvider = new TableControlItemProvider(this);
-		}
-
-		return tableControlItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.TableColumn} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected TableColumnItemProvider tableColumnItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.TableColumn}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createTableColumnAdapter() {
-		if (tableColumnItemProvider == null)
-		{
-			tableColumnItemProvider = new TableColumnItemProvider(this);
-		}
-
-		return tableColumnItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.CustomComposite}
 	 * instances.
 	 * <!-- begin-user-doc -->
@@ -593,10 +541,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			vFeaturePathDomainModelReferenceItemProvider.dispose();
 		if (controlItemProvider != null)
 			controlItemProvider.dispose();
-		if (tableControlItemProvider != null)
-			tableControlItemProvider.dispose();
-		if (tableColumnItemProvider != null)
-			tableColumnItemProvider.dispose();
 		if (customCompositeItemProvider != null)
 			customCompositeItemProvider.dispose();
 		if (columnCompositeItemProvider != null)

@@ -319,6 +319,8 @@ public class VMultiFeaturePathDomainModelReferenceImpl extends EObjectImpl imple
 						child = (EObject) current.eGet(eReference);
 					}
 					else {
+						// EMF API
+						@SuppressWarnings("unchecked")
 						final List<EObject> children = (List<EObject>) current.eGet(eReference);
 						child = children.get(referenceCounter.position);
 						if (i + 1 == references.size()) {
@@ -372,6 +374,8 @@ public class VMultiFeaturePathDomainModelReferenceImpl extends EObjectImpl imple
 						child = (EObject) current.eGet(eReference);
 					}
 					else {
+						// EMF API
+						@SuppressWarnings("unchecked")
 						final List<EObject> children = (List<EObject>) current.eGet(eReference);
 						final int id = referenceCounter.position;
 						child = children.get(id);

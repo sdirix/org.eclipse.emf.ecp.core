@@ -42,7 +42,7 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 		try
 		{
 			GroupedGridFactory theGroupedGridFactory = (GroupedGridFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/groupedgrid/model");
+				.getEFactory(GroupedGridPackage.eNS_URI);
 			if (theGroupedGridFactory != null)
 			{
 				return theGroupedGridFactory;

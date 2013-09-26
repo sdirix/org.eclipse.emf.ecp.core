@@ -36,7 +36,6 @@ import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.TableControl;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
@@ -50,19 +49,16 @@ public final class SWTRenderers implements SWTRenderer<Renderable> {
 
 	public SWTRenderers() {
 
-		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer>() {
-			{
-				put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
-				put(Column.class, SWTColumnRenderer.INSTANCE);
-				// put(Group.class, SWTGroupRenderer.INSTANCE);
-				put(TableControl.class, SWTTableControlRenderer.INSTANCE);
-				put(Control.class, SWTControlRenderer.INSTANCE);
-				put(CustomComposite.class, SWTCustomCompositeRenderer.INSTANCE);
-				put(Categorization.class, SWTCategorizationRenderer.INSTANCE);
-				put(View.class, SWTViewRenderer.INSTANCE);
-				put(Category.class, SWTCategoryRenderer.INSTANCE);
-			}
-		};
+		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer>();
+		renderers.put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
+		renderers.put(Column.class, SWTColumnRenderer.INSTANCE);
+		// put(Group.class, SWTGroupRenderer.INSTANCE);
+		// put(TableControl.class, SWTTableControlRenderer.INSTANCE);
+		renderers.put(Control.class, SWTControlRenderer.INSTANCE);
+		renderers.put(CustomComposite.class, SWTCustomCompositeRenderer.INSTANCE);
+		renderers.put(Categorization.class, SWTCategorizationRenderer.INSTANCE);
+		renderers.put(View.class, SWTViewRenderer.INSTANCE);
+		renderers.put(Category.class, SWTCategoryRenderer.INSTANCE);
 
 		for (final CustomSWTRenderer customRenderer : getCustomRenderers()) {
 			for (final Map.Entry<Class<? extends Renderable>, SWTRenderer<?>> renderEntry : customRenderer

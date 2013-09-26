@@ -113,6 +113,16 @@ public interface LabelPackage extends EPackage
 	int LABEL__READONLY = ViewPackage.COMPOSITE__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int LABEL__DIAGNOSTIC = ViewPackage.COMPOSITE__DIAGNOSTIC;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
