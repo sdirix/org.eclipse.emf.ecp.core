@@ -26,6 +26,7 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
 
@@ -45,6 +46,7 @@
       <feature id="org.eclipse.emf.ecp.target.feature"/>
       <feature id="org.eclipse.emf.ecp.examplemodel.ui.feature"/>
       <feature id="org.eclipse.emf.ecp.view.rule.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.table.feature"/>
       <feature id="org.eclipse.emf.ecp.view.validation.feature"/>
    </features>
 
