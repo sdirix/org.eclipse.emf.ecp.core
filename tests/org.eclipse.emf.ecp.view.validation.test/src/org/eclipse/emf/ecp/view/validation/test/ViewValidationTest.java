@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -582,6 +583,7 @@ public class ViewValidationTest {
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
 
+	@Ignore
 	@Test
 	public void testValidationTableControlChildrenUpdateExistingTwoEntries() {
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
