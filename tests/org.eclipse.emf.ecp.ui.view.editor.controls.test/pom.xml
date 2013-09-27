@@ -22,7 +22,7 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<testSuite>org.eclipse.emf.ecp.ui.view.editor.handler</testSuite>
+					<testSuite>org.eclipse.emf.ecp.ui.view.editor.controls.test</testSuite>
 		          	<testClass>org.eclipse.emf.ecp.ui.view.editor.handler.AllTests</testClass>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
