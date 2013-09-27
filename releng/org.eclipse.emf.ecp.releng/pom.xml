@@ -328,6 +328,8 @@
 				<version>2.9.1</version>
 				<configuration>
 					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
+					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+					<suppressionsLocation>http://download.eclipse.org/emfclient/config/suppressions.xml</suppressionsLocation>
 					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
@@ -382,6 +384,8 @@
 				<version>2.9.1</version>
 				<configuration>
 					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
+					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+					<suppressionsLocation>http://download.eclipse.org/emfclient/config/suppressions.xml</suppressionsLocation>
 				</configuration>
 			</plugin>
 		</plugins>
