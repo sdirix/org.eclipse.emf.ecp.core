@@ -15,7 +15,6 @@
 		<javadoc-title>EMF Client Platform 1.1.0 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<config_loc>http://download.eclipse.org/emfclient/config</config_loc>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
 	</properties>
 	<profiles>
@@ -329,8 +328,7 @@
 				<version>2.9.1</version>
 				<configuration>
 					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
-					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-					<suppressionsLocation>http://download.eclipse.org/emfclient/config/suppressions.xml</suppressionsLocation>
+					<propertiesLocation>http://download.eclipse.org/emfclient/config/checkstyle_maven.properties</propertiesLocation>
 					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
@@ -385,8 +383,7 @@
 				<version>2.9.1</version>
 				<configuration>
 					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
-					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-					<suppressionsLocation>http://download.eclipse.org/emfclient/config/suppressions.xml</suppressionsLocation>
+					<propertiesLocation>http://download.eclipse.org/emfclient/config/checkstyle_maven.properties</propertiesLocation>
 				</configuration>
 			</plugin>
 		</plugins>
