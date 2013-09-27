@@ -49,7 +49,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 		if (modelGroup.getName() != null) {
 			group.setText(modelGroup.getName());
 		}
-
+		group.setBackground(parent.getBackground());
 		group.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
 		node.addRenderingResultDelegator(withSWT(group));
