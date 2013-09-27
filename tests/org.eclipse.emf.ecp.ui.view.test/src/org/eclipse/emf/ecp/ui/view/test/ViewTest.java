@@ -25,6 +25,7 @@ import org.junit.Test;
  * @author Jonas
  * 
  */
+
 public class ViewTest {
 
 	@Test

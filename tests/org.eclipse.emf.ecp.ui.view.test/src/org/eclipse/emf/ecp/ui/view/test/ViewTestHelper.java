@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Shell;
  * @author Jonas
  * 
  */
+// APITODO missing API
+@SuppressWarnings("restriction")
 public final class ViewTestHelper {
 
 	private static ECPControlContext context;
@@ -50,7 +52,6 @@ public final class ViewTestHelper {
 	 */
 	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell) {
 		// setup context
-		@SuppressWarnings("restriction")
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
 			org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider.NAME);
 		final Collection<ECPProject> projects = ECPUtil.getECPProjectManager().getProjects();
@@ -85,7 +86,7 @@ public final class ViewTestHelper {
 	 */
 	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell, Renderable view) {
 		// setup context
-		@SuppressWarnings("restriction")
+
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
 			org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider.NAME);
 		final Collection<ECPProject> projects = ECPUtil.getECPProjectManager().getProjects();
@@ -136,7 +137,9 @@ public final class ViewTestHelper {
 	 */
 	public static Node<Renderable> build(Renderable view, EObject domainObject) {
 		final Shell shell = new Shell();
-		context = createECPControlContext(domainObject, shell, view);
+		if (domainObject != null) {
+			context = createECPControlContext(domainObject, shell, view);
+		}
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, context);
 		return node;
 	}
