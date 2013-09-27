@@ -9,27 +9,18 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.editor.handler;
+package org.eclipse.emf.ecp.ui.view.editor.controls.test;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Set;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.ui.view.editor.test.model.test.TestPackage;
-import org.eclipse.emf.ecp.view.editor.controls.Helper;
-import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * @author Eugen Neufeld
  * 
  */
-public class SelectAttributesTest {
+@RunWith(Suite.class)
+@SuiteClasses({ SelectAttributesTest.class })
+public class AllTests {
 
-	@Test
-	public void testFindReferencableClasses() {
-		final Set<EClass> datasegmentSubclasses = Helper.getDatasegmentSubclasses(TestPackage.eINSTANCE.getComponent());
-		assertEquals(3, datasegmentSubclasses.size());
-
-	}
 }
