@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.handler;
 
 import java.util.ArrayList;
@@ -7,12 +19,10 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -38,6 +48,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Dialog for selecting the attributes for which controls should be generated.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class SelectAttributesDialog extends Dialog {
 
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -47,6 +63,13 @@ public class SelectAttributesDialog extends Dialog {
 	private EClass dataSegment;
 	private final EClass rootClass;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param project for identifying the attributes which are not referenced yet
+	 * @param rootClass the rootClass of the view
+	 * @param parentShell the shell for creating the dialog
+	 */
 	public SelectAttributesDialog(ECPProject project, EClass rootClass, Shell parentShell) {
 		super(parentShell);
 		this.project = project;
@@ -159,7 +182,7 @@ public class SelectAttributesDialog extends Dialog {
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(bDeSelectAll);
 
-		final Set<EClass> datasegments = getDatasegmentSubclasses(rootClass);
+		final Set<EClass> datasegments = Helper.getDatasegmentSubclasses(rootClass);
 		cvDatasegment.setInput(datasegments);
 		if (datasegments.size() > 0) {
 			cvDatasegment.setSelection(new StructuredSelection(datasegments.iterator().next()));
@@ -172,32 +195,6 @@ public class SelectAttributesDialog extends Dialog {
 		labelProvider.dispose();
 		composedAdapterFactory.dispose();
 		return super.close();
-	}
-
-	private Set<EClass> getDatasegmentInput() {
-		final EPackage customerPackage = rootClass.getEPackage();
-		final Set<EClass> possibleSegments = new LinkedHashSet<EClass>();
-		for (final EClassifier classifier : customerPackage.getEClassifiers()) {
-			if (!EClass.class.isInstance(classifier)) {
-				continue;
-			}
-			possibleSegments.add((EClass) classifier);
-
-		}
-		return possibleSegments;
-
-	}
-
-	private Set<EClass> getDatasegmentSubclasses(EClass root) {
-		final Set<EClass> possibleSegments = new LinkedHashSet<EClass>();
-		possibleSegments.add(root);
-		for (final EReference eReference : root.getEAllContainments()) {
-			if (eReference.getEReferenceType() != root) {
-				possibleSegments.addAll(getDatasegmentSubclasses(eReference.getEReferenceType()));
-			}
-		}
-		return possibleSegments;
-
 	}
 
 	private List<EStructuralFeature> getUnreferencedSegmentAttributes(EClass eClass) {
