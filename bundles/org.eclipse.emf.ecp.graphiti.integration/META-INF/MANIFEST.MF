@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.graphiti.integration;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.graphiti.internal.integration.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.graphiti.core;bundle-version="1.1.0",
  org.eclipse.graphiti;bundle-version="0.9.1",
  org.eclipse.graphiti.mm;bundle-version="0.9.1",
