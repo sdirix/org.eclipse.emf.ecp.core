@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
-import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -117,8 +116,8 @@ public class ValidationRegistry {
 	 * {@link Renderable} if it was not set before.
 	 * 3 cases are differentiated:
 	 * - there is a subprocessor for the {@link Renderable}.
-	 * - the {@link Renderable} is a {@link Control} - the renderable is searched for containment {@link Renderable
-	 * Renderables}, which are then passed recursively
+	 * - the {@link Renderable} is a {@link AbstractControl}.
+	 * - the renderable is searched for containment {@link Renderable Renderables}, which are then passed recursively
 	 * 
 	 * @param domainModel the {@link EObject} representing the root Domain Element
 	 * @param renderable the {@link Renderable} to check

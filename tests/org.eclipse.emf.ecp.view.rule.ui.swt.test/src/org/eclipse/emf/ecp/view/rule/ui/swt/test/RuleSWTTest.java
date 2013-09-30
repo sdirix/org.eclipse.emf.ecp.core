@@ -58,6 +58,7 @@ public class RuleSWTTest {
 
 		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
+		modelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		control.setDomainModelReference(modelReference);
 
