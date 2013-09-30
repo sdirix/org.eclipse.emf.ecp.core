@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl;
 import org.osgi.framework.Bundle;
 
@@ -87,7 +87,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 */
 	protected String className = CLASS_NAME_EDEFAULT;
 
-	private Set<VSingleDomainModelReference> domainModelReferences;
+	private Set<VDomainModelReference> domainModelReferences;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -285,7 +285,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * 
 	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl#getDomainModelReferences()
 	 */
-	public Set<VSingleDomainModelReference> getDomainModelReferences() {
+	public Set<VDomainModelReference> getDomainModelReferences() {
 		if (domainModelReferences == null) {
 			return Collections.emptySet();
 		}
@@ -297,7 +297,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	 * 
 	 * @param domainModelReferences the set of {@link VSingleDomainModelReference VSingleDomainModelReferences} to use
 	 */
-	public void setVSingleDomainModelReferences(Set<VSingleDomainModelReference> domainModelReferences) {
+	public void setVSingleDomainModelReferences(Set<VDomainModelReference> domainModelReferences) {
 		this.domainModelReferences = domainModelReferences;
 	}
 

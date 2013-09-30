@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal;
 
 import java.util.ArrayList;
@@ -5,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
@@ -25,17 +37,30 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+/**
+ * The AbstractSWTRenderer of an SWTControlRenderer.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
 	private static final int IDENT = 10;
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
+	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 */
 	@Override
 	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<Control> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Control modelControl = node.getRenderable();
-		final EClass dataClass = modelControl.getDomainModelReference().getModelFeature().getEContainingClass();
+		final Setting setting = modelControl.getDomainModelReference().getIterator().next();
+		final EClass dataClass = setting.getEStructuralFeature().getEContainingClass();
 		final ECPControlContext subContext = node.getControlContext();
 
 		if (dataClass == null) {
@@ -43,12 +68,11 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		}
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
-			.getPropertyDescriptor(subContext.getModelElement(),
-				modelControl.getDomainModelReference().getModelFeature());
+			.getPropertyDescriptor(setting.getEObject(),
+				setting.getEStructuralFeature());
 
 		if (itemPropertyDescriptor == null) {
-			throw new NoPropertyDescriptorFoundExeption(subContext.getModelElement(), modelControl
-				.getDomainModelReference().getModelFeature());
+			throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
 		}
 
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();

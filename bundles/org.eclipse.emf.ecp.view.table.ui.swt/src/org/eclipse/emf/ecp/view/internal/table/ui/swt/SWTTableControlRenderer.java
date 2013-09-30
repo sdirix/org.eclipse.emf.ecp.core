@@ -11,10 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.ui.swt;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
@@ -55,19 +57,22 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 
 		final VTableControl modelTableControl = node.getRenderable();
 		final ECPControlContext subContext = node.getControlContext();
-		if (modelTableControl.getDomainModelReference().getModelFeature() == null) {
+		final Iterator<Setting> settings = modelTableControl.getDomainModelReference().getIterator();
+		if (!settings.hasNext()) {
 			return null;
 		}
-		final EClass dataClass = modelTableControl.getDomainModelReference().getModelFeature().getEContainingClass();
+		final Setting setting = settings.next();
+		if (setting.getEStructuralFeature() == null) {
+			return null;
+		}
+		final EClass dataClass = setting.getEStructuralFeature().getEContainingClass();
 
 		if (dataClass == null) {
 			return null;
 		}
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
-			.getPropertyDescriptor(subContext.getModelElement(),
-
-				modelTableControl.getDomainModelReference().getModelFeature());
+			.getPropertyDescriptor(setting.getEObject(), setting.getEStructuralFeature());
 		if (itemPropertyDescriptor == null) {
 			return null;
 		}

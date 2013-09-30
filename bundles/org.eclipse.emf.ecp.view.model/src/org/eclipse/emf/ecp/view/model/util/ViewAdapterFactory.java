@@ -31,8 +31,6 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -164,12 +162,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseVSingleDomainModelReference(VSingleDomainModelReference object)
-		{
-			return createVSingleDomainModelReferenceAdapter();
-		}
-
-		@Override
 		public Adapter caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 		{
 			return createVFeaturePathDomainModelReferenceAdapter();
@@ -203,12 +195,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseColumn(Column object)
 		{
 			return createColumnAdapter();
-		}
-
-		@Override
-		public Adapter caseVMultiFeaturePathDomainModelReference(VMultiFeaturePathDomainModelReference object)
-		{
-			return createVMultiFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
@@ -387,24 +373,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference
-	 * <em>VMulti Feature Path Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference
-	 * @generated
-	 */
-	public Adapter createVMultiFeaturePathDomainModelReferenceAdapter()
-	{
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable
 	 * <em>Renderable</em>}'.
 	 * <!-- begin-user-doc --> This default implementation returns null so that
@@ -463,23 +431,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createVDomainModelReferenceAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VSingleDomainModelReference
-	 * <em>VSingle Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VSingleDomainModelReference
-	 * @generated
-	 */
-	public Adapter createVSingleDomainModelReferenceAdapter()
 	{
 		return null;
 	}

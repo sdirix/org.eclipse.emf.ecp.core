@@ -43,12 +43,12 @@ public interface Control extends AbstractControl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
-	 * @see #setDomainModelReference(VSingleDomainModelReference)
+	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_DomainModelReference()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	VSingleDomainModelReference getDomainModelReference();
+	VDomainModelReference getDomainModelReference();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference
@@ -60,7 +60,7 @@ public interface Control extends AbstractControl {
 	 * @see #getDomainModelReference()
 	 * @generated
 	 */
-	void setDomainModelReference(VSingleDomainModelReference value);
+	void setDomainModelReference(VDomainModelReference value);
 
 	/**
 	 * Returns the value of the '<em><b>Hint</b></em>' attribute list.

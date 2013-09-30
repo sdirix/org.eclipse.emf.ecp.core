@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ */
 package org.eclipse.emf.ecp.view.editor.controls;
 
 import java.util.List;
@@ -18,8 +29,22 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
+/**
+ * A Link Control for creating VFeaturePathDomainReference Objects.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class ControlTargetFeatureControl extends LinkControl {
-
+	/**
+	 * Th default constructor.
+	 * 
+	 * @param showLabel whether to show label
+	 * @param itemPropertyDescriptor the descriptor of the feature
+	 * @param feature the feature
+	 * @param modelElementContext the modelelement context
+	 * @param embedded whether this control is embedded
+	 */
 	public ControlTargetFeatureControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
@@ -44,7 +69,6 @@ public class ControlTargetFeatureControl extends LinkControl {
 					(VFeaturePathDomainModelReference) getModelElementContext().getModelElement();
 				modelReference.getDomainModelEReferencePath().clear();
 				modelReference.setDomainModelEFeature(null);
-				modelReference.setDomainModel(null);
 			}
 
 		}, composite);

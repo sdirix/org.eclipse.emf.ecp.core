@@ -11,7 +11,12 @@
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
@@ -19,8 +24,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -42,7 +49,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * 
  * @generated
  */
-public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelReferenceImpl implements
+public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	VFeaturePathDomainModelReference
 {
 	/**
@@ -100,14 +107,15 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 	{
 		if (domainModelEFeature != null && domainModelEFeature.eIsProxy())
 		{
-			InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
+			final InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
 			domainModelEFeature = (EStructuralFeature) eResolveProxy(oldDomainModelEFeature);
 			if (domainModelEFeature != oldDomainModelEFeature)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
 						oldDomainModelEFeature, domainModelEFeature));
+				}
 			}
 		}
 		return domainModelEFeature;
@@ -132,12 +140,13 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 	 */
 	public void setDomainModelEFeature(EStructuralFeature newDomainModelEFeature)
 	{
-		EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
+		final EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
 		domainModelEFeature = newDomainModelEFeature;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
 				domainModelEFeature));
+		}
 	}
 
 	/**
@@ -168,8 +177,9 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 		switch (featureID)
 		{
 		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
-			if (resolve)
+			if (resolve) {
 				return getDomainModelEFeature();
+			}
 			return basicGetDomainModelEFeature();
 		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return getDomainModelEReferencePath();
@@ -240,34 +250,188 @@ public class VFeaturePathDomainModelReferenceImpl extends VSingleDomainModelRefe
 		return super.eIsSet(featureID);
 	}
 
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
+	// */
+	// public boolean resolve(final EObject domainModel) {
+	// final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
+	// if (domainModel == null || domainModelEFeatureValue == null) {
+	// return false;
+	// }
+	// EObject parent = domainModel;
+	// for (final EReference eReference : getDomainModelEReferencePath()) {
+	// if (eReference.isMany()) {
+	// return false;
+	// }
+	// if (!eReference.eContainer().equals(parent.eClass())) {
+	// return false;
+	// }
+	// EObject child = (EObject) parent.eGet(eReference);
+	// if (child == null) {
+	// child = EcoreUtil.create(eReference.getEReferenceType());
+	// parent.eSet(eReference, child);
+	// }
+	// parent = child;
+	// }
+	// setDomainModel(parent);
+	// setModelFeature(domainModelEFeatureValue);
+	// return true;
+	// }
+
 	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
 	 */
-	public boolean resolve(final EObject domainModel) {
+	public boolean resolve(EObject domainModel) {
 		final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
 		if (domainModel == null || domainModelEFeatureValue == null) {
 			return false;
 		}
-		EObject parent = domainModel;
+		lastResolvedEObject = domainModel;
+		leftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
 			if (eReference.isMany()) {
+				break;
+			}
+			if (!eReference.eContainer().equals(lastResolvedEObject.eClass())) {
 				return false;
 			}
-			if (!eReference.eContainer().equals(parent.eClass())) {
-				return false;
-			}
-			EObject child = (EObject) parent.eGet(eReference);
+			EObject child = (EObject) lastResolvedEObject.eGet(eReference);
 			if (child == null) {
 				child = EcoreUtil.create(eReference.getEReferenceType());
-				parent.eSet(eReference, child);
+				lastResolvedEObject.eSet(eReference, child);
 			}
-			parent = child;
+			lastResolvedEObject = child;
+			leftReferences.remove(eReference);
 		}
-		setDomainModel(parent);
-		setModelFeature(domainModelEFeatureValue);
+
 		return true;
+	}
+
+	private List<EReference> leftReferences;
+	private EObject lastResolvedEObject;
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getIterator()
+	 */
+	public Iterator<Setting> getIterator() {
+		if (lastResolvedEObject == null || leftReferences == null) {
+			final Set<Setting> settings = Collections.emptySet();
+			return settings.iterator();
+		}
+		final List<ReferenceCounter> referenceCounters = new ArrayList<ReferenceCounter>(
+			leftReferences.size());
+		for (final EReference eReference : leftReferences) {
+			final ReferenceCounter rc = new ReferenceCounter();
+			rc.eReference = eReference;
+			rc.position = 0;
+			referenceCounters.add(rc);
+		}
+		return new Iterator<EStructuralFeature.Setting>() {
+
+			private final List<ReferenceCounter> references = referenceCounters;
+			private boolean hasNext = lastResolvedEObject != null;
+
+			public void remove() {
+				// TODO Auto-generated method stub
+
+			}
+
+			public Setting next() {
+				if (lastResolvedEObject == null) {
+					return null;
+				}
+				EObject current = lastResolvedEObject;
+				hasNext = references.size() != 0;
+				for (int i = 0; i < references.size(); i++) {
+					final ReferenceCounter referenceCounter = references.get(i);
+					final EReference eReference = referenceCounter.eReference;
+					EObject child;
+
+					if (!eReference.isMany()) {
+						child = (EObject) current.eGet(eReference);
+					}
+					else {
+						// EMF API
+						@SuppressWarnings("unchecked")
+						final List<EObject> children = (List<EObject>) current.eGet(eReference);
+						child = children.get(referenceCounter.position);
+						if (i + 1 == references.size()) {
+							referenceCounter.position++;
+							if (referenceCounter.position == children.size()) {
+								increaseCounter(i - 1);
+							}
+						}
+					}
+					if (child == null) {
+						throw new IllegalStateException("EObject in reference" + eReference.getName() + " of EObject "
+							+ current.eClass().getName() + " not set!");
+					}
+					current = child;
+
+				}
+				return ((InternalEObject) current).eSetting(getDomainModelEFeature());
+			}
+
+			private void increaseCounter(int currentPosition) {
+				if (currentPosition < 0) {
+					hasNext = false;
+					return;
+				}
+				final ReferenceCounter previousCounter = references.get(currentPosition);
+				if (!previousCounter.eReference.isMany()) {
+					increaseCounter(currentPosition - 1);
+				}
+				else {
+					previousCounter.position++;
+					final int numElements = calculateSizeOfElementsOnPosition(currentPosition);
+					if (previousCounter.position == numElements) {
+						increaseCounter(currentPosition - 1);
+					}
+					else {
+						for (int j = currentPosition + 1; j < references.size(); j++) {
+							references.get(j).position = 0;
+						}
+					}
+				}
+			}
+
+			private int calculateSizeOfElementsOnPosition(int position) {
+				EObject current = lastResolvedEObject;
+				for (int j = 0; j < position; j++) {
+					final ReferenceCounter referenceCounter = references.get(j);
+					final EReference eReference = referenceCounter.eReference;
+					EObject child;
+
+					if (!eReference.isMany()) {
+						child = (EObject) current.eGet(eReference);
+					}
+					else {
+						// EMF API
+						@SuppressWarnings("unchecked")
+						final List<EObject> children = (List<EObject>) current.eGet(eReference);
+						final int id = referenceCounter.position;
+						child = children.get(id);
+					}
+					current = child;
+				}
+				return ((List<?>) current.eGet(references.get(position).eReference)).size();
+			}
+
+			public boolean hasNext() {
+				return hasNext;
+			}
+		};
+	}
+
+	private class ReferenceCounter {
+		EReference eReference;
+		int position;
 	}
 
 } // VFeaturePathDomainModelReferenceImpl

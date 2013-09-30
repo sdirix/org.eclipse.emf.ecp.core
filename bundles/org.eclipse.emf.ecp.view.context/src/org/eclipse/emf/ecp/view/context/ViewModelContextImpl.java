@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 
 /**
@@ -124,10 +124,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 				if (AbstractControl.class.isInstance(notifier)) {
 					final AbstractControl control = (AbstractControl) notifier;
-					for (final VSingleDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-						if (domainModelReference.getDomainModel() == null) {
-							domainModelReference.resolve(domainObject);
-						}
+
+					for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
+						domainModelReference.resolve(domainObject);
 					}
 				}
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {

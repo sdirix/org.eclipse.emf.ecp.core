@@ -44,7 +44,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + CATEGORIZATION_CHILD_COUNT;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
-	private static final int LEAFCONDITION_CHILD_COUNT = 2;
+	private static final int LEAFCONDITION_CHILD_COUNT = 1;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 

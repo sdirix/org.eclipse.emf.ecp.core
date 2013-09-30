@@ -21,8 +21,10 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -209,11 +211,12 @@ public class SelectAttributesDialog extends Dialog {
 					final EObject eObject = eAllContents.next();
 					if (org.eclipse.emf.ecp.view.model.Control.class.isInstance(eObject)) {
 						final org.eclipse.emf.ecp.view.model.Control control = (org.eclipse.emf.ecp.view.model.Control) eObject;
-
-						final EStructuralFeature feature = control.getDomainModelReference().getModelFeature();
+						final VDomainModelReference domainModelReference = control.getDomainModelReference();
+						final Setting setting = domainModelReference.getIterator().next();
+						final EStructuralFeature feature = setting.getEStructuralFeature();
 
 						if (feature != null && feature.getEContainingClass().equals(eClass)) {
-							result.add(control.getDomainModelReference().getModelFeature());
+							result.add(feature);
 						}
 					}
 				}

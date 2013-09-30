@@ -16,11 +16,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
@@ -261,11 +263,12 @@ public class RuleServiceTest {
 		control.getAttachments().add(rule);
 	}
 
-	private LeafCondition createLeafCondition(EAttribute attribute, Object expectedValue) {
+	private LeafCondition createLeafCondition(EAttribute attribute, Object expectedValue, EReference... eReferences) {
 		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
 		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(attribute);
+		modelReference.getDomainModelEReferencePath().addAll(Arrays.asList(eReferences));
 		condition.setDomainModelReference(modelReference);
 		condition.setExpectedValue(expectedValue);
 		return condition;
@@ -632,19 +635,23 @@ public class RuleServiceTest {
 	 */
 	@Test
 	public void testShowRuleWithAndConditionBothConditionsApply() {
-		view.setRootEClass(player.eClass());
 
 		final Control control1 = ViewFactory.eINSTANCE.createControl();
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 		control1.setDomainModelReference(domainModelReference);
 		column.getComposites().add(control1);
 
-		addLeagueShowRuleWithAndCondition(column, true,
-			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo"),
-			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3));
-		instantiateRuleService(player);
+		addLeagueShowRuleWithAndCondition(
+			column,
+			true,
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo",
+				BowlingPackage.eINSTANCE.getLeague_Players()),
+			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3,
+				BowlingPackage.eINSTANCE.getLeague_Players()));
+		instantiateRuleService(league);
 		player.setName("foo");
 		player.setNumberOfVictories(3);
 		assertTrue(column.isVisible());

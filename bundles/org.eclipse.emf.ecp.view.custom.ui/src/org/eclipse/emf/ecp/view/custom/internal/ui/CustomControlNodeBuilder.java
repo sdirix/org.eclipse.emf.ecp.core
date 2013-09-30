@@ -22,8 +22,8 @@ import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
@@ -46,7 +46,7 @@ public class CustomControlNodeBuilder extends RenderableNodeBuilder<CustomContro
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		final CustomControlImpl modelImpl = (CustomControlImpl) model;
 
-		final Set<VSingleDomainModelReference> result = new LinkedHashSet<VSingleDomainModelReference>();
+		final Set<VDomainModelReference> result = new LinkedHashSet<VDomainModelReference>();
 		if (model.getBundle() == null || model.getClassName() == null) {
 
 		}

@@ -25,6 +25,6 @@ import java.util.Set;
  */
 public interface AbstractControl extends Composite {
 
-	Set<VSingleDomainModelReference> getDomainModelReferences();
+	Set<VDomainModelReference> getDomainModelReferences();
 
 } // AbstractControl

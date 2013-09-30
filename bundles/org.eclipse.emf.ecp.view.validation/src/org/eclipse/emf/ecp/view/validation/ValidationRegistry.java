@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -25,10 +26,12 @@ import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.osgi.framework.Bundle;
 
@@ -132,16 +135,19 @@ public class ValidationRegistry {
 			fillMap(subProcessors.get(renderableClass).processRenderable(
 				domainModel, renderable, this), result);
 		}
-		// TODO subprocessor for CustomControl
-		else if (Control.class.isInstance(renderable)) {
-			final Control control = (Control) renderable;
-			// final List<EReference> references = new ArrayList<EReference>(control.getPathToFeature());
-			// final EObject referencedDomainModel = resolveDomainModel(domainModel, references);
-			final EObject referencedDomainModel = control.getDomainModelReference().getDomainModel();
-			if (!result.containsKey(referencedDomainModel)) {
-				result.put(referencedDomainModel, new LinkedHashSet<AbstractControl>());
+		else if (AbstractControl.class.isInstance(renderable)) {
+			final AbstractControl control = (AbstractControl) renderable;
+			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
+				final Iterator<Setting> iterator = domainModelReference.getIterator();
+				while (iterator.hasNext()) {
+					final Setting setting = iterator.next();
+					final EObject referencedDomainModel = setting.getEObject();
+					if (!result.containsKey(referencedDomainModel)) {
+						result.put(referencedDomainModel, new LinkedHashSet<AbstractControl>());
+					}
+					result.get(referencedDomainModel).add(control);
+				}
 			}
-			result.get(referencedDomainModel).add((AbstractControl) renderable);
 		}
 		else {
 			for (final EObject eObject : renderable.eContents()) {

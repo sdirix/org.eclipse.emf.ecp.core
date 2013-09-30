@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.rule;
 import static org.eclipse.emf.ecp.view.internal.rule.UniqueSetting.createSetting;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,9 +28,10 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
@@ -354,29 +356,26 @@ public class RuleService extends AbstractViewService {
 
 	private void unset(Renderable renderable) {
 
-		if (renderable instanceof Control) {
-			final Control control = (Control) renderable;
-			// REFACTORING test
-			final EObject parent = control.getDomainModelReference().getDomainModel();
-			final EStructuralFeature targetFeature = control.getDomainModelReference().getModelFeature();
-			if (targetFeature == null) {
-				return;
-			}
-			final Class<?> containerClass = targetFeature.getContainerClass();
+		if (renderable instanceof AbstractControl) {
+			final AbstractControl control = (AbstractControl) renderable;
+			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
+				final Iterator<Setting> settings = domainModelReference.getIterator();
+				while (settings.hasNext()) {
+					final Setting setting = settings.next();
+					final EObject parent = setting.getEObject();
+					final EStructuralFeature targetFeature = setting.getEStructuralFeature();
+					if (targetFeature == null) {
+						continue;
+					}
+					final Class<?> containerClass = targetFeature.getContainerClass();
 
-			// if (!containerClass.isInstance(parent)) {
-			// for (final EReference eReference : control.getPathToFeature()) {
-			// if (parent.eGet(eReference) instanceof EObject) {
-			// parent = (EObject) parent.eGet(eReference);
-			// }
-			// }
-			// }
-
-			isUnset = true;
-			if (containerClass.isInstance(parent)) {
-				parent.eUnset(targetFeature);
+					isUnset = true;
+					if (containerClass.isInstance(parent)) {
+						parent.eUnset(targetFeature);
+					}
+					isUnset = false;
+				}
 			}
-			isUnset = false;
 		}
 
 	}

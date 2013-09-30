@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.validation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
@@ -104,7 +106,10 @@ public class ValidationService extends AbstractViewService {
 						// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
 						// control.getDomainModelReference().());
 						// REFACTORING test
-						viewValidationGraph.validate(control.getDomainModelReference().getDomainModel());
+						final Iterator<Setting> settings = control.getDomainModelReference().getIterator();
+						while (settings.hasNext()) {
+							viewValidationGraph.validate(settings.next().getEObject());
+						}
 					}
 				}
 			}

@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @model
  * @generated
  */
-public interface VFeaturePathDomainModelReference extends VSingleDomainModelReference
+public interface VFeaturePathDomainModelReference extends VDomainModelReference
 {
 
 	/**
@@ -49,7 +49,7 @@ public interface VFeaturePathDomainModelReference extends VSingleDomainModelRefe
 	 * @return the value of the '<em>Domain Model EFeature</em>' reference.
 	 * @see #setDomainModelEFeature(EStructuralFeature)
 	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVFeaturePathDomainModelReference_DomainModelEFeature()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	EStructuralFeature getDomainModelEFeature();

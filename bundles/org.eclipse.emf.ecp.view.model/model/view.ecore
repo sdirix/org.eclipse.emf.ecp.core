@@ -51,15 +51,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="AbstractControl" abstract="true" eSuperTypes="#//Composite"/>
   <eClassifiers xsi:type="ecore:EClass" name="VDomainModelReference" abstract="true"
       interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="VSingleDomainModelReference" abstract="true"
-      eSuperTypes="#//VDomainModelReference">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModel" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
-        transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="modelFeature" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"
-        transient="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VFeaturePathDomainModelReference" eSuperTypes="#//VSingleDomainModelReference">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEFeature" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VFeaturePathDomainModelReference" eSuperTypes="#//VDomainModelReference">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEFeature" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
         upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
   </eClassifiers>
@@ -70,7 +64,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" eType="#//Alignment"
         defaultValueLiteral="Left"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
-        eType="#//VSingleDomainModelReference" containment="true"/>
+        eType="#//VDomainModelReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Alignment">
     <eLiterals name="Left"/>
@@ -90,10 +84,4 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ColumnComposite" eSuperTypes="#//CompositeCollection"/>
   <eClassifiers xsi:type="ecore:EClass" name="Column" eSuperTypes="#//CompositeCollection"/>
-  <eClassifiers xsi:type="ecore:EClass" name="VMultiFeaturePathDomainModelReference"
-      eSuperTypes="#//VDomainModelReference">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEFeature" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
-        upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
-  </eClassifiers>
 </ecore:EPackage>

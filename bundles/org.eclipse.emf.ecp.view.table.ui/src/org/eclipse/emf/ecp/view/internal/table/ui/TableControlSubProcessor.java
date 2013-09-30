@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.ui;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
@@ -45,13 +47,18 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 		final Map<EObject, Set<AbstractControl>> result = new LinkedHashMap<EObject, Set<AbstractControl>>();
 		// final EObject referencedDomainModel = validationRegistry.resolveDomainModel(domainObject,
 		// tableControl.getPathToFeature());
-		final EObject referencedDomainModel = tableControl.getDomainModelReference().getDomainModel();
+		final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
+		if (!settings.hasNext()) {
+			return result;
+		}
+		final Setting setting = settings.next();
+		final EObject referencedDomainModel = setting.getEObject();
 		if (referencedDomainModel == null) {
 			return result;
 		}
 		@SuppressWarnings("unchecked")
 		final EList<EObject> tableContent = (EList<EObject>) referencedDomainModel
-			.eGet(tableControl.getDomainModelReference().getModelFeature());
+			.eGet(setting.getEStructuralFeature());
 
 		if (!validationRegistry.getRenderablesForEObject(domainObject).contains(parentRenderable)) {
 			referencedDomainModel.eAdapters().add(0, new AdapterImpl() {
@@ -66,7 +73,7 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 					if (msg.isTouch()) {
 						return;
 					}
-					if (msg.getFeature() != tableControl.getDomainModelReference().getModelFeature()) {
+					if (msg.getFeature() != setting.getEStructuralFeature()) {
 						return;
 					}
 					for (final EObject tableChild : tableContent) {

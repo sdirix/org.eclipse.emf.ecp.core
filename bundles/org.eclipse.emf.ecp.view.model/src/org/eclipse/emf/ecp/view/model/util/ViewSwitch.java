@@ -30,8 +30,6 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -194,20 +192,9 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.VSINGLE_DOMAIN_MODEL_REFERENCE: {
-			VSingleDomainModelReference vSingleDomainModelReference = (VSingleDomainModelReference) theEObject;
-			T result = caseVSingleDomainModelReference(vSingleDomainModelReference);
-			if (result == null)
-				result = caseVDomainModelReference(vSingleDomainModelReference);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
 			VFeaturePathDomainModelReference vFeaturePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
 			T result = caseVFeaturePathDomainModelReference(vFeaturePathDomainModelReference);
-			if (result == null)
-				result = caseVSingleDomainModelReference(vFeaturePathDomainModelReference);
 			if (result == null)
 				result = caseVDomainModelReference(vFeaturePathDomainModelReference);
 			if (result == null)
@@ -271,15 +258,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = caseComposite(column);
 			if (result == null)
 				result = caseRenderable(column);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case ViewPackage.VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			VMultiFeaturePathDomainModelReference vMultiFeaturePathDomainModelReference = (VMultiFeaturePathDomainModelReference) theEObject;
-			T result = caseVMultiFeaturePathDomainModelReference(vMultiFeaturePathDomainModelReference);
-			if (result == null)
-				result = caseVDomainModelReference(vMultiFeaturePathDomainModelReference);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -450,25 +428,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '
-	 * <em>VMulti Feature Path Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '
-	 *         <em>VMulti Feature Path Domain Model Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVMultiFeaturePathDomainModelReference(VMultiFeaturePathDomainModelReference object)
-	{
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Renderable</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns
@@ -529,23 +488,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseVDomainModelReference(VDomainModelReference object)
-	{
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VSingle Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VSingle Domain Model Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVSingleDomainModelReference(VSingleDomainModelReference object)
 	{
 		return null;
 	}

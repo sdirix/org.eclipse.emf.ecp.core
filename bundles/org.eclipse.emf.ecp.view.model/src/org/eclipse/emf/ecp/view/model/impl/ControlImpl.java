@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -109,7 +109,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 * @ordered
 	 */
-	protected VSingleDomainModelReference domainModelReference;
+	protected VDomainModelReference domainModelReference;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -138,7 +138,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public VSingleDomainModelReference getDomainModelReference()
+	public VDomainModelReference getDomainModelReference()
 	{
 		return domainModelReference;
 	}
@@ -149,19 +149,20 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetDomainModelReference(VSingleDomainModelReference newDomainModelReference,
+	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs)
 	{
-		VSingleDomainModelReference oldDomainModelReference = domainModelReference;
+		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -172,24 +173,28 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public void setDomainModelReference(VSingleDomainModelReference newDomainModelReference)
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
 	{
 		if (newDomainModelReference != domainModelReference)
 		{
 			NotificationChain msgs = null;
-			if (domainModelReference != null)
+			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			if (newDomainModelReference != null)
+			}
+			if (newDomainModelReference != null) {
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
+			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
+		}
 	}
 
 	/**
@@ -240,11 +245,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public void setMandatory(boolean newMandatory) {
-		boolean oldMandatory = mandatory;
+		final boolean oldMandatory = mandatory;
 		mandatory = newMandatory;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
 				mandatory));
+		}
 	}
 
 	/**
@@ -266,11 +272,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	public void setLabelAlignment(Alignment newLabelAlignment)
 	{
-		Alignment oldLabelAlignment = labelAlignment;
+		final Alignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
+		}
 	}
 
 	/**
@@ -317,7 +324,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			setLabelAlignment((Alignment) newValue);
 			return;
 		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			setDomainModelReference((VSingleDomainModelReference) newValue);
+			setDomainModelReference((VDomainModelReference) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -343,7 +350,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
 			return;
 		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			setDomainModelReference((VSingleDomainModelReference) null);
+			setDomainModelReference((VDomainModelReference) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -379,10 +386,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hint: ");
 		result.append(hint);
 		result.append(", mandatory: ");
@@ -398,7 +406,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.model.AbstractControl#getDomainModelReferences()
 	 */
-	public Set<VSingleDomainModelReference> getDomainModelReferences() {
+	public Set<VDomainModelReference> getDomainModelReferences() {
 		return Collections.singleton(getDomainModelReference());
 	}
 

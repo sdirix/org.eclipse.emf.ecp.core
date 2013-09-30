@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.table.model.impl;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,12 +22,13 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VSingleDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
@@ -274,28 +276,31 @@ public class VTableControlImpl extends ControlImpl implements VTableControl
 	 * @see org.eclipse.emf.ecp.view.model.AbstractControl#getDomainModelReferences()
 	 */
 	@Override
-	public Set<VSingleDomainModelReference> getDomainModelReferences() {
-		final Set<VSingleDomainModelReference> result = new LinkedHashSet<VSingleDomainModelReference>();
+	public Set<VDomainModelReference> getDomainModelReferences() {
+		final Set<VDomainModelReference> result = new LinkedHashSet<VDomainModelReference>();
 		result.add(getDomainModelReference());
+		final Iterator<Setting> settings = getDomainModelReference().getIterator();
+		if (settings.hasNext()) {
+			final Setting setting = settings.next();
+			if (setting != null) {
+				@SuppressWarnings("unchecked")
+				final List<? extends EObject> objects =
+					(List<? extends EObject>) setting.getEObject().eGet(
+						setting.getEStructuralFeature());
 
-		if (getDomainModelReference().getDomainModel() != null) {
-			@SuppressWarnings("unchecked")
-			final List<? extends EObject> objects =
-				(List<? extends EObject>) getDomainModelReference().getDomainModel().eGet(
-					getDomainModelReference().getModelFeature());
+				for (final EObject object : objects) {
+					for (final VTableColumn tc : getColumns()) {
+						final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+							.createVFeaturePathDomainModelReference();
+						modelReference.setDomainModelEFeature(tc.getAttribute());
 
-			for (final EObject object : objects) {
-				for (final VTableColumn tc : getColumns()) {
-					final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-						.createVFeaturePathDomainModelReference();
-					modelReference.setDomainModelEFeature(tc.getAttribute());
+						final boolean resolve = modelReference.resolve(object);
+						if (!resolve) {
+							// TODO: log
+						}
 
-					final boolean resolve = modelReference.resolve(object);
-					if (!resolve) {
-						// TODO: log
+						result.add(modelReference);
 					}
-
-					result.add(modelReference);
 				}
 			}
 		}

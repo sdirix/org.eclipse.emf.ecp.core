@@ -103,16 +103,6 @@ public interface ViewFactory extends EFactory {
 	Column createColumn();
 
 	/**
-	 * Returns a new object of class '<em>VMulti Feature Path Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>VMulti Feature Path Domain Model Reference</em>'.
-	 * @generated
-	 */
-	VMultiFeaturePathDomainModelReference createVMultiFeaturePathDomainModelReference();
-
-	/**
 	 * Returns a new object of class '<em>Action</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

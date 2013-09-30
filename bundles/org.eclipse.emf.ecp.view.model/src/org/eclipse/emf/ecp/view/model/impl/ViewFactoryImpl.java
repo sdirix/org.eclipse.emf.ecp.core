@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
@@ -49,12 +48,13 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public static ViewFactory init() {
 		try
 		{
-			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE.getEFactory(ViewPackage.eNS_URI);
+			final ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
+				.getEFactory(ViewPackage.eNS_URI);
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -101,8 +101,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createColumnComposite();
 		case ViewPackage.COLUMN:
 			return createColumn();
-		case ViewPackage.VMULTI_FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
-			return createVMultiFeaturePathDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -150,7 +148,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public View createView() {
-		ViewImpl view = new ViewImpl();
+		final ViewImpl view = new ViewImpl();
 		return view;
 	}
 
@@ -160,7 +158,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Categorization createCategorization() {
-		CategorizationImpl categorization = new CategorizationImpl();
+		final CategorizationImpl categorization = new CategorizationImpl();
 		return categorization;
 	}
 
@@ -170,7 +168,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Category createCategory() {
-		CategoryImpl category = new CategoryImpl();
+		final CategoryImpl category = new CategoryImpl();
 		return category;
 	}
 
@@ -180,7 +178,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Control createControl() {
-		ControlImpl control = new ControlImpl();
+		final ControlImpl control = new ControlImpl();
 		return control;
 	}
 
@@ -190,7 +188,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public CustomComposite createCustomComposite() {
-		CustomCompositeImpl customComposite = new CustomCompositeImpl();
+		final CustomCompositeImpl customComposite = new CustomCompositeImpl();
 		return customComposite;
 	}
 
@@ -200,7 +198,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public ColumnComposite createColumnComposite() {
-		ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
+		final ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
 		return columnComposite;
 	}
 
@@ -210,20 +208,8 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Column createColumn() {
-		ColumnImpl column = new ColumnImpl();
+		final ColumnImpl column = new ColumnImpl();
 		return column;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public VMultiFeaturePathDomainModelReference createVMultiFeaturePathDomainModelReference()
-	{
-		VMultiFeaturePathDomainModelReferenceImpl vMultiFeaturePathDomainModelReference = new VMultiFeaturePathDomainModelReferenceImpl();
-		return vMultiFeaturePathDomainModelReference;
 	}
 
 	/**
@@ -232,7 +218,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Action createAction() {
-		ActionImpl action = new ActionImpl();
+		final ActionImpl action = new ActionImpl();
 		return action;
 	}
 
@@ -244,7 +230,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public VFeaturePathDomainModelReference createVFeaturePathDomainModelReference()
 	{
-		VFeaturePathDomainModelReferenceImpl vFeaturePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		final VFeaturePathDomainModelReferenceImpl vFeaturePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
 		return vFeaturePathDomainModelReference;
 	}
 
@@ -256,7 +242,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public VDiagnostic createVDiagnostic()
 	{
-		VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
+		final VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
 		return vDiagnostic;
 	}
 
@@ -268,10 +254,11 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public Alignment createAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		Alignment result = Alignment.get(initialValue);
-		if (result == null)
+		final Alignment result = Alignment.get(initialValue);
+		if (result == null) {
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
+		}
 		return result;
 	}
 

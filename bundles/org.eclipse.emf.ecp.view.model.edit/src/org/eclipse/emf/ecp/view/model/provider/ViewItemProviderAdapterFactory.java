@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Muenchen GmbH - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.model.provider;
 
@@ -277,35 +286,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected VMultiFeaturePathDomainModelReferenceItemProvider vMultiFeaturePathDomainModelReferenceItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VMultiFeaturePathDomainModelReference}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createVMultiFeaturePathDomainModelReferenceAdapter()
-	{
-		if (vMultiFeaturePathDomainModelReferenceItemProvider == null)
-		{
-			vMultiFeaturePathDomainModelReferenceItemProvider = new VMultiFeaturePathDomainModelReferenceItemProvider(
-				this);
-		}
-
-		return vMultiFeaturePathDomainModelReferenceItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Action} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -441,8 +421,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -527,28 +507,36 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * @generated
 	 */
 	public void dispose() {
-		if (vDiagnosticItemProvider != null)
+		if (vDiagnosticItemProvider != null) {
 			vDiagnosticItemProvider.dispose();
-		if (viewItemProvider != null)
+		}
+		if (viewItemProvider != null) {
 			viewItemProvider.dispose();
-		if (categorizationItemProvider != null)
+		}
+		if (categorizationItemProvider != null) {
 			categorizationItemProvider.dispose();
-		if (categoryItemProvider != null)
+		}
+		if (categoryItemProvider != null) {
 			categoryItemProvider.dispose();
-		if (actionItemProvider != null)
+		}
+		if (actionItemProvider != null) {
 			actionItemProvider.dispose();
-		if (vFeaturePathDomainModelReferenceItemProvider != null)
+		}
+		if (vFeaturePathDomainModelReferenceItemProvider != null) {
 			vFeaturePathDomainModelReferenceItemProvider.dispose();
-		if (controlItemProvider != null)
+		}
+		if (controlItemProvider != null) {
 			controlItemProvider.dispose();
-		if (customCompositeItemProvider != null)
+		}
+		if (customCompositeItemProvider != null) {
 			customCompositeItemProvider.dispose();
-		if (columnCompositeItemProvider != null)
+		}
+		if (columnCompositeItemProvider != null) {
 			columnCompositeItemProvider.dispose();
-		if (columnItemProvider != null)
+		}
+		if (columnItemProvider != null) {
 			columnItemProvider.dispose();
-		if (vMultiFeaturePathDomainModelReferenceItemProvider != null)
-			vMultiFeaturePathDomainModelReferenceItemProvider.dispose();
+		}
 	}
 
 }
