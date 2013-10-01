@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -46,6 +48,9 @@ import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlCh
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -173,8 +178,13 @@ public class ECPAbstractCustomControlSWTTest {
 			super.showError(TEST_TITEL, TEST_MESSAGE);
 		}
 
-		public SWTCustomControlHelper getStubHelper() {
+		public SWTCustomControlHelper getStubSWTHelper() {
 			return super.getSWTHelper();
+
+		}
+
+		public CustomControlHelper getStubHelper() {
+			return super.getHelper();
 
 		}
 
@@ -453,7 +463,7 @@ public class ECPAbstractCustomControlSWTTest {
 		final Composite composite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 		customControl.createValidationLabelInStub(composite);
 		final Label validationLabel = (Label) composite.getChildren()[0];
-		validationLabel.setImage(customControl.getStubHelper().getImage(
+		validationLabel.setImage(customControl.getStubSWTHelper().getImage(
 			ECPAbstractCustomControlSWT.VALIDATION_ERROR_IMAGE));
 		customControl.resetValidation();
 		assertEquals(null, validationLabel.getImage());
@@ -517,7 +527,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testGetHelper() {
-		final SWTCustomControlHelper stubHelper = customControl.getStubHelper();
+		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
 		assertNotNull(stubHelper);
 	}
 
@@ -533,6 +543,48 @@ public class ECPAbstractCustomControlSWTTest {
 		}
 
 		throw new NoSuchElementException();
+	}
+
+	@Test
+	public void testCustomControlGetHelp() {
+		final ECPCustomControlFeature feature = editableFeaturess.iterator().next();
+		final String help = customControl.getStubHelper().getHelp(feature);
+		final ComposedAdapterFactory caf = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator afid = new AdapterFactoryItemDelegator(caf);
+		final IItemPropertyDescriptor propertyDescriptor = afid.getPropertyDescriptor(feature.getRelevantEObject(),
+			feature.getTargetFeature());
+		final String description = propertyDescriptor.getDescription(null);
+		assertEquals(description, help);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCustomControlGetHelpWrongFeature() {
+		final ECPCustomControlFeature feature = new ECPCustomControlFeature(null,
+			EcorePackage.eINSTANCE.getENamedElement_Name(), false);
+		customControl.getStubHelper().getHelp(feature);
+		fail("No Exception thrown");
+	}
+
+	@Test
+	public void testCustomControlGetLabel() {
+		final ECPCustomControlFeature feature = editableFeaturess.iterator().next();
+		final String label = customControl.getStubHelper().getLabel(feature);
+		final ComposedAdapterFactory caf = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator afid = new AdapterFactoryItemDelegator(caf);
+		final IItemPropertyDescriptor propertyDescriptor = afid.getPropertyDescriptor(feature.getRelevantEObject(),
+			feature.getTargetFeature());
+		final String displayName = propertyDescriptor.getDisplayName(null);
+		assertEquals(displayName, label);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testCustomControlGetLabelWrongFeature() {
+		final ECPCustomControlFeature feature = new ECPCustomControlFeature(null,
+			EcorePackage.eINSTANCE.getENamedElement_Name(), false);
+		customControl.getStubHelper().getLabel(feature);
+		fail("No Exception thrown");
 	}
 
 	/**
