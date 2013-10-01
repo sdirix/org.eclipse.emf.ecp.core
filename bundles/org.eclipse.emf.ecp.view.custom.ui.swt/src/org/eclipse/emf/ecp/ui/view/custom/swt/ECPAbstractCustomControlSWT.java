@@ -176,7 +176,8 @@ public abstract class ECPAbstractCustomControlSWT extends
 			handleCreatedControls(diagnostic);
 
 			handleContentValidation(diagnostic.getSeverity(),
-				(EStructuralFeature) (data.size() > 1 ? data.get(1) : null));
+				(EStructuralFeature) (data.size() > 1 && EStructuralFeature.class.isInstance(data.get(1)) ? data.get(1)
+					: null));
 		} else {
 			resetValidation();
 		}
@@ -186,7 +187,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @param diagnostic
 	 */
 	private void handleCreatedControls(Diagnostic diagnostic) {
-		if (diagnostic.getData().size() < 1) {
+		if (diagnostic.getData().size() < 2) {
 			return;
 		}
 		if (!(diagnostic.getData().get(1) instanceof EStructuralFeature)) {

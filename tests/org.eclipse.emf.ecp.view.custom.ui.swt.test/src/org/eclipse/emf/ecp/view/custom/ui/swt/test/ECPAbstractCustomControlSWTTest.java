@@ -27,6 +27,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -171,11 +172,12 @@ public class ECPAbstractCustomControlSWTTest {
 
 		}
 
-		/**
-		 * 
-		 */
 		public void stubShowError() {
 			super.showError(TEST_TITEL, TEST_MESSAGE);
+		}
+
+		public void stubShowInfo() {
+			super.showInfo(TEST_TITEL, TEST_MESSAGE);
 		}
 
 		public SWTCustomControlHelper getStubSWTHelper() {
@@ -397,7 +399,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 * .
 	 */
 	@Test
-	public void testHandleValidation() {
+	public void testHandleValidationWithoutLabel() {
 		final Diagnostic validate = new Diagnostician().validate(domainObject);
 		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
@@ -406,6 +408,71 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.setValidationReseted(false);
 		customControl.resetValidation();
 		assertTrue(customControl.isValidationReseted());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
+	 * .
+	 */
+	@Test
+	public void testHandleValidationWithLabel() {
+		customControl.createValidationLabelInStub(testComposite);
+		final Diagnostic validate = new Diagnostician().validate(domainObject);
+		customControl.handleValidation(validate.getChildren().get(1));
+		// Check Label, Check Image
+		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
+		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
+		customControl.setValidationReseted(false);
+		customControl.resetValidation();
+		assertTrue(customControl.isValidationReseted());
+	}
+
+	@Test
+	public void testHandleValidationWithLabelOriginalDiagniostic() {
+		customControl.createValidationLabelInStub(testComposite);
+		final Diagnostic validate = new Diagnostician().validate(domainObject);
+		customControl.handleValidation(validate);
+		// Check Label, Check Image
+		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
+		// FIXME should a fitting sub diagnostic have been used?
+		// assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
+		customControl.setValidationReseted(false);
+		customControl.resetValidation();
+		assertTrue(customControl.isValidationReseted());
+	}
+
+	@Test
+	public void testHandleValidationNotErrorWarning() {
+		// FIXME accept diagnostics without eObject?
+		final Diagnostic validate = new BasicDiagnostic(Diagnostic.OK, null, 0, "All right!", null);
+		customControl.handleValidation(validate);
+		// FIXME correct assumption?
+		assertTrue(customControl.isValidationReseted());
+	}
+
+	@Test
+	public void testHandleValidationWarningNoData() {
+		// FIXME accept diagnostics without eObject?
+		final Diagnostic validate = new BasicDiagnostic(Diagnostic.WARNING, null, 0, "Warning!", null);
+		customControl.handleValidation(validate);
+		assertEquals(Diagnostic.WARNING, customControl.getLastValidationSeverity());
+	}
+
+	@Test
+	public void testHandleValidationErrorOnlyEObject() {
+		final Diagnostic validate = new BasicDiagnostic(Diagnostic.ERROR, null, 0, "Error!",
+			new Object[] { domainObject });
+		customControl.handleValidation(validate);
+		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
+	}
+
+	@Test
+	public void testHandleValidationErrorTwoEObject() {
+		final Diagnostic validate = new BasicDiagnostic(Diagnostic.ERROR, null, 0, "Error!",
+			new Object[] { domainObject, domainObject });
+		customControl.handleValidation(validate);
+		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
 	}
 
 	/**
@@ -469,11 +536,6 @@ public class ECPAbstractCustomControlSWTTest {
 		assertEquals(null, validationLabel.getImage());
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#init(org.eclipse.emf.ecp.edit.ECPControlContext)}
-	 * .
-	 */
 	@Test
 	public void testInit() {
 		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
@@ -529,6 +591,39 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testGetHelper() {
 		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
 		assertNotNull(stubHelper);
+	}
+
+	@Test
+	public void testGetAddImage() {
+		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
+		assertNotNull("Add image not loaded.", stubHelper.getImage(ECPAbstractCustomControlSWT.ADD_IMAGE));
+	}
+
+	@Test
+	public void testGetDeleteImage() {
+		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
+		assertNotNull("Delete image not loaded.", stubHelper.getImage(ECPAbstractCustomControlSWT.DELETE_IMAGE));
+	}
+
+	@Test
+	public void testGetHelpImage() {
+		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
+		assertNotNull("Help image not loaded.", stubHelper.getImage(ECPAbstractCustomControlSWT.HELP_IMAGE));
+
+	}
+
+	@Test
+	public void testGetValidationErrorImage() {
+		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
+		assertNotNull("ValidationError image not loaded.",
+			stubHelper.getImage(ECPAbstractCustomControlSWT.VALIDATION_ERROR_IMAGE));
+	}
+
+	@Test
+	public void testGetDefaultImage() {
+		final SWTCustomControlHelper stubHelper = customControl.getStubSWTHelper();
+		assertNull("Found undefined image.",
+			stubHelper.getImage(-1));
 	}
 
 	private ECPCustomControlFeature getFeature(Set<ECPCustomControlFeature> features,
