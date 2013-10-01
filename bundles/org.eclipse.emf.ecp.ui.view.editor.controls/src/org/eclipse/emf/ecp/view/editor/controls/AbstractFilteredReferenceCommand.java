@@ -1,12 +1,21 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.controls;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -17,21 +26,39 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
+/**
+ * A ReferenceCommand allowing to select an {@link EStructuralFeature} using a dialog.
+ * 
+ * @author Eugen Neufeld
+ * 
+ * @param <T> type of the {@link EStructuralFeature} which can be selected
+ */
 public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeature> extends ChangeCommand {
 
-	private Shell shell;
-	private Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
-	private ComposedAdapterFactory composedAdapterFactory;
-	private EClass rootClass;
-	private ISelectionStatusValidator validator;
+	private final Shell shell;
+	private final ComposedAdapterFactory composedAdapterFactory;
+	private final EClass rootClass;
+	private final ISelectionStatusValidator validator;
 
+	/**
+	 * Constructor for the AbstractFilteredReferenceCommand.
+	 * 
+	 * @param notifier the Notifier for the {@link ChangeCommand}
+	 * @param composedAdapterFactory the {@link ComposedAdapterFactory} for the LabelProvider
+	 * @param shell the {@link Shell} to use in the dialog
+	 * @param rootClass the {@link EClass} which is the root of the view
+	 * @param validator the {@link ISelectionStatusValidator} to use when a selection was done
+	 */
 	public AbstractFilteredReferenceCommand(Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
 		Shell shell, EClass rootClass, ISelectionStatusValidator validator) {
 		super(notifier);
@@ -41,37 +68,34 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		this.validator = validator;
 	}
 
-	public Class returnedClass() {
-		ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
-		return (Class) parameterizedType.getActualTypeArguments()[0];
+	private Class<?> returnedClass() {
+		final ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+		return (Class<?>) parameterizedType.getActualTypeArguments()[0];
 	}
 
 	@Override
 	protected void doExecute() {
 
-		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
-		ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(shell, labelProvider,
+		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+		final ECPViewEditorTreeSelectionDialog dialog = new ECPViewEditorTreeSelectionDialog(shell, labelProvider,
 			getContentProvider(rootClass));
 		dialog.setAllowMultiple(false);
 		dialog.setValidator(validator);
 		dialog.setInput(rootClass);
 		dialog.setMessage("Select a " + returnedClass().getSimpleName());
 		dialog.setTitle("Select a " + returnedClass().getSimpleName());
-		int result = dialog.open();
+		final int result = dialog.open();
 		if (Window.OK == result) {
-			Object selection = dialog.getFirstResult();
+			final Object selection = dialog.getFirstResult();
 			if (returnedClass().isInstance(selection)) {
-				T selectedFeature = (T) selection;
+				final T selectedFeature = (T) selection;
 
-				List<EReference> bottomUpPath = new ArrayList<EReference>();
-				EClass selectedClass = selectedFeature.getEContainingClass();
+				final List<EReference> bottomUpPath = new ArrayList<EReference>();
+				final TreePath path = dialog.getTreePath();
 
-				while (childParentReferenceMap.containsKey(selectedClass)) {
-					EReference parentReference = childParentReferenceMap.get(selectedClass);
-					bottomUpPath.add(parentReference);
-					selectedClass = parentReference.getEContainingClass();
+				for (int i = 0; i < path.getSegmentCount() - 1; i++) {
+					bottomUpPath.add((EReference) path.getSegment(i));
 				}
-				Collections.reverse(bottomUpPath);
 
 				setSelectedValues(selectedFeature, bottomUpPath);
 			}
@@ -79,6 +103,12 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		labelProvider.dispose();
 	}
 
+	/**
+	 * Template method which is called so that the selected element can be saved.
+	 * 
+	 * @param selectedFeature the {@link EStructuralFeature} to set
+	 * @param bottomUpPath the path to the feature
+	 */
 	protected abstract void setSelectedValues(T selectedFeature, List<EReference> bottomUpPath);
 
 	private ITreeContentProvider getContentProvider(EClass rootClass) {
@@ -100,11 +130,15 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 					return true;
 				}
 				if (EClass.class.isInstance(element)) {
-					EClass eClass = (EClass) element;
-					boolean hasContainments = !eClass.getEAllContainments().isEmpty();
-					boolean hasAttributes = !eClass.getEAllAttributes().isEmpty();
-					return hasContainments || hasAttributes;
+					final EClass eClass = (EClass) element;
+					final boolean hasReferences = !eClass.getEAllReferences().isEmpty();
+					final boolean hasAttributes = !eClass.getEAllAttributes().isEmpty();
+					return hasReferences || hasAttributes;
 
+				}
+				if (EReference.class.isInstance(element)) {
+					final EReference eReference = (EReference) element;
+					return eReference.isMany() ? false : true;
 				}
 				return false;
 			}
@@ -120,22 +154,65 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 			public Object[] getChildren(Object parentElement) {
 				if (EClass.class.isInstance(parentElement)) {
-					EClass eClass = (EClass) parentElement;
-					Set<Object> result = new LinkedHashSet<Object>();
-					for (EReference eReference : eClass.getEAllContainments()) {
-						EClass child = eReference.getEReferenceType();
-						result.add(child);
-						childParentReferenceMap.put(child, eReference);
-						if (returnedClass().isInstance(eReference) && eReference.isMany()) {
-							result.add(eReference);
-						}
-					}
-					result.addAll(eClass.getEAllAttributes());
+					final EClass eClass = (EClass) parentElement;
+					final Set<Object> result = getElementsForEClass(eClass);
+					return result.toArray();
+				}
+				if (EReference.class.isInstance(parentElement)) {
+					final EReference eReference = (EReference) parentElement;
+					final Set<Object> result = getElementsForEClass(eReference.getEReferenceType());
 					return result.toArray();
 				}
 				return null;
 			}
+
+			private Set<Object> getElementsForEClass(EClass eClass) {
+				final Set<Object> result = new LinkedHashSet<Object>();
+				result.addAll(eClass.getEAllReferences());
+				result.addAll(eClass.getEAllAttributes());
+				return result;
+			}
 		};
+	}
+
+	/**
+	 * ElementTreeSelectionDialog which also stores the selection along the tree.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	private class ECPViewEditorTreeSelectionDialog extends ElementTreeSelectionDialog {
+
+		private TreePath treePath;
+
+		/**
+		 * Default constructor.
+		 * 
+		 * @param parent the {@link Shell} for creating the dialog
+		 * @param labelProvider the {@link ILabelProvider} for the tree
+		 * @param contentProvider the {@link ITreeContentProvider} for the tree
+		 */
+		public ECPViewEditorTreeSelectionDialog(Shell parent, ILabelProvider labelProvider,
+			ITreeContentProvider contentProvider) {
+			super(parent, labelProvider, contentProvider);
+		}
+
+		public TreePath getTreePath() {
+			return treePath;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.ui.dialogs.ElementTreeSelectionDialog#computeResult()
+		 */
+		@Override
+		protected void computeResult() {
+			treePath = ((TreeSelection) getTreeViewer().getSelection()).getPaths()[0];
+
+			super.computeResult();
+		}
+
 	}
 
 }
