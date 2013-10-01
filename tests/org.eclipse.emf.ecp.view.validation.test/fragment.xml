@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.0"?>
-
+<?eclipse version="3.4"?>
 <!--
  /*******************************************************************************
   * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
@@ -16,14 +15,11 @@
   * 
   *******************************************************************************/
 -->
-
-<plugin>
-
+<fragment>
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="htp://www.eclipse.org/emf/ecp/view/validation/test/model"
             class="org.eclipse.emf.ecp.view.validation.test.model.TestPackage"
             genModel="model/test.genmodel"/>
    </extension>
-
-</plugin>
+</fragment>
