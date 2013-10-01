@@ -26,6 +26,6 @@ Import-Package: org.eclipse.jface.action,
  org.eclipse.swt.graphics,
  org.eclipse.swt.layout,
  org.eclipse.swt.widgets,
- org.eclipse.ui.plugin
+ org.eclipse.ui.plugin;version="0.0.0"
 Export-Package: org.eclipse.emf.ecp.view.editor.controls;x-internal:=true,
  org.eclipse.emf.ecp.view.editor.handler;x-internal:=true

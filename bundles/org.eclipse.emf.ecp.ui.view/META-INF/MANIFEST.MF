@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.internal.ui.view;x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.ui.view.test,org.eclipse.emf.ecp.explorereditorbridge",
- org.eclipse.emf.ecp.internal.ui.view.builders;x-friends:="org.eclipse.emf.ecp.ui.view.swt",
+ org.eclipse.emf.ecp.internal.ui.view.builders;x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.view.group.ui,org.eclipse.emf.ecp.view.label.ui",
  org.eclipse.emf.ecp.internal.ui.view.emf,
  org.eclipse.emf.ecp.internal.ui.view.renderer,
  org.eclipse.emf.ecp.ui.view
