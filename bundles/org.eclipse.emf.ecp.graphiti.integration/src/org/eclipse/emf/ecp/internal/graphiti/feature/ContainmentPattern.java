@@ -34,42 +34,42 @@ import org.eclipse.graphiti.util.IColorConstant;
 
 public class ContainmentPattern extends AbstractConnectionPattern {
 	private static final IColorConstant FOREGROUND = new ColorConstant(98, 131,
-			167);
+		167);
 
 	@Override
 	public PictogramElement add(IAddContext context) {
-		IAddConnectionContext addConContext = (IAddConnectionContext) context;
+		final IAddConnectionContext addConContext = (IAddConnectionContext) context;
 
-		IPeCreateService peCreateService = Graphiti.getPeCreateService();
+		final IPeCreateService peCreateService = Graphiti.getPeCreateService();
 
 		// CONNECTION WITH POLYLINE
-		Connection connection = peCreateService
-				.createFreeFormConnection(getDiagram());
+		final Connection connection = peCreateService
+			.createFreeFormConnection(getDiagram());
 
 		connection.setStart(addConContext.getSourceAnchor());
 		connection.setEnd(addConContext.getTargetAnchor());
 
-		IGaService gaService = Graphiti.getGaService();
-		Polyline polyline = gaService.createPolyline(connection);
+		final IGaService gaService = Graphiti.getGaService();
+		final Polyline polyline = gaService.createPolyline(connection);
 		polyline.setLineWidth(2);
 		polyline.setForeground(manageColor(FOREGROUND));
 
 		// add dynamic text decorator for the association name
-		ConnectionDecorator textDecorator = peCreateService
-				.createConnectionDecorator(connection, true, 0.5, true);
-		Text text = gaService.createDefaultText(getDiagram(), textDecorator);
+		final ConnectionDecorator textDecorator = peCreateService
+			.createConnectionDecorator(connection, true, 0.5, true);
+		final Text text = gaService.createDefaultText(getDiagram(), textDecorator);
 		text.setForeground(manageColor(IColorConstant.BLACK));
 		gaService.setLocation(text, 10, 0);
 
 		// set reference name in the text decorator
-		EReference eReference = (EReference) context.getNewObject();
-//		if(eReference==null)
-//			eReference = (EReference) context.getProperty("containment");
+		final EReference eReference = (EReference) context.getNewObject();
+		// if(eReference==null)
+		// eReference = (EReference) context.getProperty("containment");
 		text.setValue(eReference.getName());
 		// create link and wire it
-//		link(connection, eReference);
-		ConnectionDecorator cd = peCreateService.createConnectionDecorator(
-				connection, false, 0.0, true);
+		// link(connection, eReference);
+		final ConnectionDecorator cd = peCreateService.createConnectionDecorator(
+			connection, false, 0.0, true);
 		createArrow(cd);
 
 		return connection;
@@ -77,42 +77,46 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 
 	@Override
 	public void attachedToSource(ICreateConnectionContext context) {
-		// TODO Auto-generated method stub
 		super.attachedToSource(context);
-		PictogramElement sourceElement = context.getSourcePictogramElement();
-		if (sourceElement == getDiagram())
+		final PictogramElement sourceElement = context.getSourcePictogramElement();
+		if (sourceElement == getDiagram()) {
 			return;
-		EObject source = (EObject) getBusinessObjectForPictogramElement(sourceElement);
-		if (source == null)
-			return;
-		for (EReference eReference : source.eClass().getEAllContainments()) {
-			
-		EClass referenceClass=eReference.getEReferenceType();
-		ECPProject project=ECPUtil.getECPProjectManager().getProject(getBusinessObjectForPictogramElement(getDiagram()));
-		InternalProject internalProject=(InternalProject)project;
-		Iterator<EObject> referenceIterator=internalProject.getReferenceCandidates(source, eReference);
-		
-		// Mark the allowed squares using decorators
-		ECPTutorialToolBehaviorProvider toolBehaviorProvider = (ECPTutorialToolBehaviorProvider) getFeatureProvider()
-				.getDiagramTypeProvider().getCurrentToolBehaviorProvider();
-		while(referenceIterator.hasNext()) {
-			EObject eObject=referenceIterator.next();
-			if(eReference.isMany()){
-				List<?> objects=(List<?>) source.eGet(eReference);
-				if(objects.contains(eObject))
-					continue;
-			}
-			else{
-				Object object=source.eGet(eReference);
-				if(eObject.equals(object))
-					continue;
-			}
-			toolBehaviorProvider.allowEObject(eObject);
-			PictogramElement pe = getFeatureProvider()
-					.getPictogramElementForBusinessObject(eObject);
-			getDiagramBehavior().refreshRenderingDecorators(pe);
 		}
-		toolBehaviorProvider.allowEObject(null);
+		final EObject source = (EObject) getBusinessObjectForPictogramElement(sourceElement);
+		if (source == null) {
+			return;
+		}
+		for (final EReference eReference : source.eClass().getEAllContainments()) {
+
+			final EClass referenceClass = eReference.getEReferenceType();
+			final ECPProject project = ECPUtil.getECPProjectManager().getProject(
+				getBusinessObjectForPictogramElement(getDiagram()));
+			final InternalProject internalProject = (InternalProject) project;
+			final Iterator<EObject> referenceIterator = internalProject.getReferenceCandidates(source, eReference);
+
+			// Mark the allowed squares using decorators
+			final ECPTutorialToolBehaviorProvider toolBehaviorProvider = (ECPTutorialToolBehaviorProvider) getFeatureProvider()
+				.getDiagramTypeProvider().getCurrentToolBehaviorProvider();
+			while (referenceIterator.hasNext()) {
+				final EObject eObject = referenceIterator.next();
+				if (eReference.isMany()) {
+					final List<?> objects = (List<?>) source.eGet(eReference);
+					if (objects.contains(eObject)) {
+						continue;
+					}
+				}
+				else {
+					final Object object = source.eGet(eReference);
+					if (eObject.equals(object)) {
+						continue;
+					}
+				}
+				toolBehaviorProvider.allowEObject(eObject);
+				final PictogramElement pe = getFeatureProvider()
+					.getPictogramElementForBusinessObject(eObject);
+				getDiagramBehavior().refreshRenderingDecorators(pe);
+			}
+			toolBehaviorProvider.allowEObject(null);
 		}
 	}
 
@@ -125,36 +129,39 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 
 	@Override
 	public boolean canStartConnection(ICreateConnectionContext context) {
-		PictogramElement sourceElement = context.getSourcePictogramElement();
-		if (sourceElement == getDiagram())
+		final PictogramElement sourceElement = context.getSourcePictogramElement();
+		if (sourceElement == getDiagram()) {
 			return false;
-		EObject source = (EObject) getBusinessObjectForPictogramElement(sourceElement);
-		if (source == null)
+		}
+		final EObject source = (EObject) getBusinessObjectForPictogramElement(sourceElement);
+		if (source == null) {
 			return false;
+		}
 		return !source.eClass().getEAllContainments().isEmpty();
 	}
 
 	@Override
 	public boolean canCreate(ICreateConnectionContext context) {
-		PictogramElement targetPictogramElement = context
-				.getTargetPictogramElement();
-		if (targetPictogramElement == getDiagram())
+		final PictogramElement targetPictogramElement = context
+			.getTargetPictogramElement();
+		if (targetPictogramElement == getDiagram()) {
 			return false;
-		EObject source = (EObject) getBusinessObjectForPictogramElement(context
-				.getSourcePictogramElement());
-		EObject target = (EObject) getBusinessObjectForPictogramElement(targetPictogramElement);
+		}
+		final EObject source = (EObject) getBusinessObjectForPictogramElement(context
+			.getSourcePictogramElement());
+		final EObject target = (EObject) getBusinessObjectForPictogramElement(targetPictogramElement);
 		if (target == null) {
 			return false;
 		}
 		if (target.eContainer() == source) {
 			return false;
 		}
-		for (EReference eReference : source.eClass().getEAllContainments()) {
+		for (final EReference eReference : source.eClass().getEAllContainments()) {
 			if (eReference.getEReferenceType().isInstance(target)) {
 				if (eReference.isMany()
-						&& eReference.getUpperBound() != -1
-						&& eReference.getUpperBound() <= ((List) source
-								.eGet(eReference)).size()) {
+					&& eReference.getUpperBound() != -1
+					&& eReference.getUpperBound() <= ((List) source
+						.eGet(eReference)).size()) {
 					return false;
 				}
 				context.putProperty("containment", eReference);
@@ -166,30 +173,30 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 
 	@Override
 	public Connection create(ICreateConnectionContext context) {
-		EObject source = (EObject) getBusinessObjectForPictogramElement(context
-				.getSourcePictogramElement());
-		EObject target = (EObject) getBusinessObjectForPictogramElement(context
-				.getTargetPictogramElement());
-		EReference eReference = (EReference) context.getProperty("containment");
+		final EObject source = (EObject) getBusinessObjectForPictogramElement(context
+			.getSourcePictogramElement());
+		final EObject target = (EObject) getBusinessObjectForPictogramElement(context
+			.getTargetPictogramElement());
+		final EReference eReference = (EReference) context.getProperty("containment");
 
-		Object o = getBusinessObjectForPictogramElement(getDiagram());
+		final Object o = getBusinessObjectForPictogramElement(getDiagram());
 		final ECPProject project = ECPUtil.getECPProjectManager().getProject(o);
-		EditingDomain editingDomain = project.getEditingDomain();
+		final EditingDomain editingDomain = project.getEditingDomain();
 		Command command = null;
 		if (eReference.isMany()) {
 			command = AddCommand.create(editingDomain, source, eReference,
-					target);
+				target);
 		} else {
 			command = SetCommand.create(editingDomain, source, eReference,
-					target);
+				target);
 		}
 		editingDomain.getCommandStack().execute(command);
 
-		AddConnectionContext addContext = new AddConnectionContext(
-				context.getSourceAnchor(), context.getTargetAnchor());
-		 addContext.setNewObject(eReference);
-		Connection newConnection = (Connection) getFeatureProvider()
-				.addIfPossible(addContext);
+		final AddConnectionContext addContext = new AddConnectionContext(
+			context.getSourceAnchor(), context.getTargetAnchor());
+		addContext.setNewObject(eReference);
+		final Connection newConnection = (Connection) getFeatureProvider()
+			.addIfPossible(addContext);
 
 		return newConnection;
 	}
@@ -205,32 +212,33 @@ public class ContainmentPattern extends AbstractConnectionPattern {
 	}
 
 	private Polyline createArrow(GraphicsAlgorithmContainer gaContainer) {
-		IGaService gaService = Graphiti.getGaService();
-		Polygon polygon = gaService.createPolygon(gaContainer, new int[] { -10,
-				-10, -20, 0, -10, 10, 0, 0 });
+		final IGaService gaService = Graphiti.getGaService();
+		final Polygon polygon = gaService.createPolygon(gaContainer, new int[] { -10,
+			-10, -20, 0, -10, 10, 0, 0 });
 		polygon.setBackground(manageColor(FOREGROUND));
 		polygon.setFilled(true);
 		polygon.setLineVisible(false);
 		return polygon;
 	}
 
+	@Override
 	public boolean canAdd(IAddContext context) {
 		// return true if given business object is an EReference
 		// note, that the context must be an instance of IAddConnectionContext
-		if (!IAddConnectionContext.class.isInstance(context))
+		if (!IAddConnectionContext.class.isInstance(context)) {
 			return false;
-		IAddConnectionContext connectionContext = (IAddConnectionContext) context;
-		EObject sourceObject = (EObject) getFeatureProvider()
-				.getBusinessObjectForPictogramElement(
-						(PictogramElement) connectionContext.getSourceAnchor()
-								.eContainer());
-		EObject targetObject = (EObject) getFeatureProvider()
-				.getBusinessObjectForPictogramElement(
-						(PictogramElement) connectionContext.getTargetAnchor()
-								.eContainer());
+		}
+		final IAddConnectionContext connectionContext = (IAddConnectionContext) context;
+		final EObject sourceObject = (EObject) getFeatureProvider()
+			.getBusinessObjectForPictogramElement(
+				(PictogramElement) connectionContext.getSourceAnchor()
+					.eContainer());
+		final EObject targetObject = (EObject) getFeatureProvider()
+			.getBusinessObjectForPictogramElement(
+				(PictogramElement) connectionContext.getTargetAnchor()
+					.eContainer());
 		return targetObject.eContainer() == sourceObject;
 
 	}
-	
-	
+
 }
