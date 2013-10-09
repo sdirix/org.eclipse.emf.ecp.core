@@ -186,6 +186,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
 		
+		<module>../../tests/org.eclipse.emf.ecp.view.common.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.test</module>

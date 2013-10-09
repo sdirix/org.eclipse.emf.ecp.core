@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Common Test Plugin
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.common.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.emf.ecp.view.common.test
+Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.9.0"
