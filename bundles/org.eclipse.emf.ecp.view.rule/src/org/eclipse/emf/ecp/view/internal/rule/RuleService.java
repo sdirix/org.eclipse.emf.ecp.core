@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
-import static org.eclipse.emf.ecp.view.internal.rule.UniqueSetting.createSetting;
+import static org.eclipse.emf.ecp.common.UniqueSetting.createSetting;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
@@ -100,12 +102,24 @@ public class RuleService extends AbstractViewService {
 
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
-
 			}
 
 			public void notifyRemove(Notifier notifier) {
-				// TODO Auto-generated method stub
-
+				if (Renderable.class.isInstance(notifier)) {
+					final Renderable renderable = Renderable.class.cast(notifier);
+					showRuleRegistry.removeRenderable(renderable);
+					enableRuleRegistry.removeRenderable(renderable);
+				} else if (Condition.class.isInstance(notifier)) {
+					final Condition condition = Condition.class.cast(notifier);
+					showRuleRegistry.removeCondition(condition);
+					enableRuleRegistry.removeCondition(condition);
+				} else if (ShowRule.class.isInstance(notifier)) {
+					final ShowRule showrule = ShowRule.class.cast(notifier);
+					showRuleRegistry.removeRule(showrule);
+				} else if (EnableRule.class.isInstance(notifier)) {
+					final EnableRule enableRule = EnableRule.class.cast(notifier);
+					enableRuleRegistry.removeRule(EnableRule.class.cast(enableRule));
+				}
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);
@@ -409,7 +423,6 @@ public class RuleService extends AbstractViewService {
 	 */
 	@Override
 	public int getPriority() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 }

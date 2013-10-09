@@ -16,13 +16,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
@@ -34,14 +31,8 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.rule.model.AndCondition;
-import org.eclipse.emf.ecp.view.rule.model.Condition;
-import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
-import org.eclipse.emf.ecp.view.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
-import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
-import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
@@ -53,7 +44,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
 /**
  * Things to be tested.
  * 
@@ -88,7 +78,7 @@ import org.junit.Test;
  * no side effects
  */
 
-public class RuleServiceTest {
+public class RuleServiceTest extends CommonRuleTest {
 
 	/**
 	 * @author Jonas
@@ -234,89 +224,6 @@ public class RuleServiceTest {
 		league.setName("League");
 	}
 
-	/**
-	 * Adds the league show rule.
-	 * 
-	 * @param control the control
-	 * @param showOnRightValue the visible on right value
-	 */
-	private void addLeagueShowRule(Renderable control, boolean showOnRightValue) {
-		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(!showOnRightValue);
-		rule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"));
-		control.getAttachments().add(rule);
-	}
-
-	private void addShowRule(Renderable control, boolean showOnRightValue, EAttribute attribute,
-		Object expectedValue) {
-		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(!showOnRightValue);
-		rule.setCondition(createLeafCondition(attribute, expectedValue));
-		control.getAttachments().add(rule);
-	}
-
-	private void addEnableRule(Renderable control, boolean enableOnRightValue, EAttribute attribute,
-		Object expectedValue) {
-		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
-		rule.setDisable(!enableOnRightValue);
-		rule.setCondition(createLeafCondition(attribute, expectedValue));
-		control.getAttachments().add(rule);
-	}
-
-	private LeafCondition createLeafCondition(EAttribute attribute, Object expectedValue, EReference... eReferences) {
-		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
-		modelReference.setDomainModelEFeature(attribute);
-		modelReference.getDomainModelEReferencePath().addAll(Arrays.asList(eReferences));
-		condition.setDomainModelReference(modelReference);
-		condition.setExpectedValue(expectedValue);
-		return condition;
-	}
-
-	private void addLeagueShowRuleWithOrCondition(Renderable control, boolean hideOnRightValue,
-		Condition... childConditions) {
-		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(!hideOnRightValue);
-		final OrCondition condition = RuleFactory.eINSTANCE.createOrCondition();
-		for (final Condition childCondition : childConditions) {
-			condition.getConditions().add(childCondition);
-		}
-		rule.setCondition(condition);
-		control.getAttachments().add(rule);
-	}
-
-	private void addLeagueShowRuleWithAndCondition(Renderable control, boolean hideOnRightValue,
-		Condition... childConditions) {
-		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
-		rule.setHide(!hideOnRightValue);
-		final AndCondition condition = RuleFactory.eINSTANCE.createAndCondition();
-		for (final Condition childCondition : childConditions) {
-			condition.getConditions().add(childCondition);
-		}
-		rule.setCondition(condition);
-		control.getAttachments().add(rule);
-	}
-
-	/**
-	 * Adds the league enable rule.
-	 * 
-	 * @param control the control
-	 * @param enableOnRightValue the enable on right value
-	 */
-	private void addLeagueEnableRule(Renderable control, boolean enableOnRightValue) {
-		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
-		rule.setDisable(!enableOnRightValue);
-		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
-		rule.setCondition(condition);
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
-		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Name());
-		condition.setDomainModelReference(modelReference);
-		condition.setExpectedValue("League");
-		control.getAttachments().add(rule);
-	}
-
 	@Test
 	public void testInitialization() {
 		final RuleService ruleService = new RuleService();
@@ -443,7 +350,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with first condition being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with first condition being true.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -458,7 +365,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with the second condition being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with the second condition being true.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -473,7 +380,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with none of the conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with none of the conditions being true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -488,7 +395,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with first condition being true while initializing the rule service.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with first condition being true while
+	 * initializing the rule service.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -503,7 +411,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with second condition being true while initializing the rule service.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with second condition being true while
+	 * initializing the rule service.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -518,7 +427,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with both conditions being true while initializing the rule service.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with both conditions being true while
+	 * initializing the rule service.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -545,7 +455,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with both conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with both conditions being true.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -570,7 +480,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link OrCondition} with none of the conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.OrCondition OrCondition} with none of the conditions being true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -585,7 +495,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with first condition being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with first condition being true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -600,7 +510,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with second condition being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with second condition being true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -615,7 +525,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with none of the conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with none of the conditions being
+	 * true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -630,7 +541,7 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with both conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with both conditions being true.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -659,7 +570,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with first condition being true while initializing the rule service.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with first condition being true while
+	 * initializing the rule service.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -674,7 +586,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with second condition being true while initializing the rule service.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with second condition being true while
+	 * initializing the rule service.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -689,7 +602,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Test {@link AndCondition} with none of the conditions being true while initializing the rule service.
+	 * Test {@link org.eclipse.emf.ecp.view.rule.model.AndCondition AndCondition} with none of the conditions being true
+	 * while initializing the rule service.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -2187,7 +2101,8 @@ public class RuleServiceTest {
 	}
 
 	/**
-	 * Should return the control because of the {@link EnableRule} on the control.
+	 * Should return the control because of the {@link org.eclipse.emf.ecp.view.rule.model.EnableRule EnableRule} on the
+	 * control.
 	 */
 	@Test
 	public void testGetInvolvedEObjectsHelperEnableRuleAppliesCorrectValue() {

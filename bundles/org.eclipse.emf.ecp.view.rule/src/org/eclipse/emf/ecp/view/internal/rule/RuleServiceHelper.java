@@ -27,8 +27,11 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  */
 public class RuleServiceHelper extends AbstractViewService {
 
+	/**
+	 * A predicate that is used to determine the set of {@link Renderable}s
+	 * if {@link RuleServiceHelper#getInvolvedEObjects(Setting, Object, Class)} is called.
+	 */
 	private interface RenderablePredicate {
-
 		boolean checkCurrentState(Renderable renderable);
 	}
 
@@ -135,7 +138,6 @@ public class RuleServiceHelper extends AbstractViewService {
 	 */
 	@Override
 	public int getPriority() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 }

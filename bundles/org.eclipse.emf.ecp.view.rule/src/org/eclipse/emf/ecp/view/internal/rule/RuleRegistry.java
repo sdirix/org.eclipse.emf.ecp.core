@@ -11,8 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
-import static org.eclipse.emf.ecp.view.internal.rule.UniqueSetting.createSetting;
+import static org.eclipse.emf.ecp.common.UniqueSetting.createSetting;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -22,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
@@ -41,14 +43,14 @@ import org.eclipse.emf.ecp.view.rule.model.Rule;
 public class RuleRegistry<T extends Rule> {
 
 	private final Map<UniqueSetting, Set<T>> settingToRules;
-	private final Map<T, Renderable> ruleToRenderable;
+	private final BidirectionalMap<T, Renderable> ruleAndRenderables;
 
 	/**
 	 * Default constructor.
 	 */
 	public RuleRegistry() {
 		settingToRules = new LinkedHashMap<UniqueSetting, Set<T>>();
-		ruleToRenderable = new LinkedHashMap<T, Renderable>();
+		ruleAndRenderables = new BidirectionalMap<T, Renderable>();
 	}
 
 	/**
@@ -69,7 +71,7 @@ public class RuleRegistry<T extends Rule> {
 
 		if (condition == null) {
 			mapSettingToRule(createSetting(domainModel, AllEAttributes.get()), rule);
-			ruleToRenderable.put(rule, renderable);
+			ruleAndRenderables.put(rule, renderable);
 		} else if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
@@ -79,11 +81,13 @@ public class RuleRegistry<T extends Rule> {
 			while (settingIterator.hasNext()) {
 				final Setting setting = settingIterator.next();
 				// FIXME needed?
+				// yes, because we need to compare settings with each other and the default implementation
+				// does not provide and appropriate equals()/hashCode() implementation
 				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
 				mapSettingToRule(uniqueSetting, rule);
 
-				ruleToRenderable.put(rule, renderable);
+				ruleAndRenderables.put(rule, renderable);
 			}
 
 		} else if (condition instanceof OrCondition) {
@@ -99,29 +103,92 @@ public class RuleRegistry<T extends Rule> {
 		}
 	}
 
+	/**
+	 * Removes the given rule from the registry.
+	 * 
+	 * @param rule
+	 *            the rule to be removed
+	 */
+	public void removeRule(T rule) {
+		final Condition condition = rule.getCondition();
+		if (condition != null) {
+			removeCondition(condition, true);
+		} else {
+			final Collection<Set<T>> values = settingToRules.values();
+			for (final Set<T> set : values) {
+				set.remove(rule);
+			}
+			ruleAndRenderables.removeK(rule);
+		}
+	}
+
+	/**
+	 * Removes the given {@link Renderable} from the registry.
+	 * 
+	 * @param renderable
+	 *            the renderable to be removed
+	 */
+	public void removeRenderable(Renderable renderable) {
+		final T v = ruleAndRenderables.getV(renderable);
+		ruleAndRenderables.removeV(renderable);
+		final Collection<Set<T>> values = settingToRules.values();
+		for (final Set<T> set : values) {
+			set.remove(v);
+		}
+	}
+
+	/**
+	 * Removes the given condition from the registry.
+	 * 
+	 * @param condition
+	 *            the condition to be removed
+	 * @param removeSetting
+	 *            whether the setting should also be removed. The setting has
+	 *            an 1-n relationship with rules
+	 */
+	public void removeCondition(Condition condition, boolean removeSetting) {
+		// we only have to care about leaf conditions since or/and conditions aren't even registered
+		if (LeafCondition.class.isInstance(condition)) {
+			final LeafCondition leafCondition = LeafCondition.class.cast(condition);
+			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
+			while (settingIterator.hasNext()) {
+				final Setting setting = settingIterator.next();
+				// FIXME needed?
+				// yes, because we need to compare settings with each other and the default implementation
+				// does not provide and appropriate equals()/hashCode() implementation
+				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
+
+				final Set<T> set = settingToRules.get(uniqueSetting);
+
+				if (set != null) {
+					for (final T t : set) {
+						ruleAndRenderables.removeK(t);
+					}
+				}
+
+				if (removeSetting) {
+					settingToRules.remove(uniqueSetting);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Removes the condition from the registry.
+	 * 
+	 * @param condition
+	 *            the condition to be removed
+	 */
+	public void removeCondition(Condition condition) {
+		removeCondition(condition, false);
+	}
+
 	private void mapSettingToRule(final UniqueSetting setting, T rule) {
 		if (!settingToRules.containsKey(setting)) {
 			settingToRules.put(setting, new LinkedHashSet<T>());
 		}
 		settingToRules.get(setting).add(rule);
 	}
-
-	// private static EObject getTargetEObject(LeafCondition condition, final EObject parent) {
-	// final EList<EReference> pathToAttribute = condition.getDomainModelReference().getgetPathToAttribute();
-	// EObject result = parent;
-	// for (final EReference eReference : pathToAttribute) {
-	//
-	// EObject child = (EObject) result.eGet(eReference);
-	//
-	// if (child == null) {
-	// child = EcoreUtil.create(eReference.getEReferenceType());
-	// result.eSet(eReference, child);
-	// }
-	// result = child;
-	// }
-	//
-	// return result;
-	// }
 
 	/**
 	 * Returns the settings of this registry.
@@ -153,7 +220,7 @@ public class RuleRegistry<T extends Rule> {
 		}
 
 		for (final T rule : rules) {
-			final Renderable renderable = ruleToRenderable.get(rule);
+			final Renderable renderable = ruleAndRenderables.getK(rule);
 			result.put(rule, renderable);
 		}
 
