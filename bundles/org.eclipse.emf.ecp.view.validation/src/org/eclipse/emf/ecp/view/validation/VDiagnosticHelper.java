@@ -46,9 +46,10 @@ public final class VDiagnosticHelper {
 		if (!vDiagnostic1.getMessage().equals(vDiagnostic2.getMessage())) {
 			return false;
 		}
-		if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
-			return false;
-		}
+		// TODO: this case also never applies since getMessage depends on the size
+		// if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
+		// return false;
+		// }
 
 		for (int i = 0; i < vDiagnostic1.getDiagnostics().size(); i++) {
 			final Diagnostic diagnostic1 = (Diagnostic) vDiagnostic1.getDiagnostics().get(i);
@@ -67,13 +68,15 @@ public final class VDiagnosticHelper {
 	 */
 	private static boolean areUnderlyingDiagnosticsEqual(Diagnostic diagnostic1, Diagnostic diagnostic2) {
 
-		if (diagnostic1.getSeverity() != diagnostic2.getSeverity()) {
-			return false;
-		}
-
-		if (!diagnostic1.getMessage().equals(diagnostic2.getMessage())) {
-			return false;
-		}
+		// TODO: How can these cases ever apply? We already did check these since VDiagnostic#getHighestSeverity()
+		// and VDiagnostic#getMessage() test the underlying diagnostic
+		// if (diagnostic1.getSeverity() != diagnostic2.getSeverity()) {
+		// return false;
+		// }
+		//
+		// if (!diagnostic1.getMessage().equals(diagnostic2.getMessage())) {
+		// return false;
+		// }
 
 		if (diagnostic1.getData().size() != diagnostic2.getData().size()) {
 			return false;
