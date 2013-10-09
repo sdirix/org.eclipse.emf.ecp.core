@@ -8,6 +8,7 @@
  * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Edgar Mueller - adoptions in order to avoid memory leaks
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation;
 
@@ -41,7 +42,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * Renderable.
  * 
  * @author jfaltermeier
- * 
+ * @author emueller
  */
 public class ValidationService extends AbstractViewService {
 
@@ -144,6 +145,7 @@ public class ValidationService extends AbstractViewService {
 		 */
 		public void notifyRemove(Notifier notifier) {
 			if (Renderable.class.isInstance(notifier)) {
+				validationRegistry.removeRenderable((Renderable) notifier);
 				viewValidationGraph.removeRenderable((Renderable) notifier);
 			}
 		}
@@ -216,6 +218,7 @@ public class ValidationService extends AbstractViewService {
 		public void notifyRemove(Notifier notifier) {
 			final EObject eObject = (EObject) notifier;
 			viewValidationGraph.removeDomainObject(eObject);
+			validationRegistry.removeDomainObject(eObject);
 		}
 	}
 

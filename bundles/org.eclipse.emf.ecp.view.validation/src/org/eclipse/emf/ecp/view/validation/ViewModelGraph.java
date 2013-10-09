@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,10 +24,12 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * The validation graph is a graph like structure where each {@link Renderable} is a represented as
- * {@link ViewModelGraphNode} with a value of type {@code T}. The graph structure follows the {@link EObject} hierarchy of
+ * {@link ViewModelGraphNode} with a value of type {@code T}. The graph structure follows the {@link EObject} hierarchy
+ * of
  * the view model (and in that sense conforms to the containment tree of the Renderable).
  * The actually computed values of the nodes are based on domain objects, which are also represented as
- * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link Renderable}s,
+ * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link Renderable}
+ * s,
  * never
  * have any children.
  * Nodes containing domain objects also can have multiple parent.
@@ -177,6 +180,10 @@ public abstract class ViewModelGraph<T> {
 				parentNode.removeChild(node);
 				updateParentNodes(parentNode);
 			}
+			final Iterator<ViewModelGraphNode<T>> children = node.getChildren();
+			while (children.hasNext()) {
+				node.removeChild(children.next());
+			}
 		}
 
 		viewModelSettings.removeAll(renderable);
@@ -280,4 +287,5 @@ public abstract class ViewModelGraph<T> {
 
 		return false;
 	}
+
 }

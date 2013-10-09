@@ -13,17 +13,13 @@ package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
@@ -38,8 +34,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -47,30 +41,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * @author emueller
  */
-public class ViewValidationTest {
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	private VFeaturePathDomainModelReference getVFeaturePathDomainModelReference(EStructuralFeature feature,
-		EReference... eReferences) {
-		final VFeaturePathDomainModelReference result = ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference();
-		result.setDomainModelEFeature(feature);
-		result.getDomainModelEReferencePath().addAll(Arrays.asList(eReferences));
-		return result;
-	}
+public class ViewValidationTest extends CommonValidationTest {
 
 	@Test
 	public void testValidationInitOk() {

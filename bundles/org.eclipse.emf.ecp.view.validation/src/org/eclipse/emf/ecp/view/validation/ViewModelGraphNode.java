@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -226,6 +227,15 @@ public class ViewModelGraphNode<T> {
 	 */
 	public UniqueSetting getSetting() {
 		return setting;
+	}
+
+	/**
+	 * Returns the children of this node.
+	 * 
+	 * @return an iterator over the children of this node.
+	 */
+	public Iterator<ViewModelGraphNode<T>> getChildren() {
+		return children.iterator();
 	}
 
 }

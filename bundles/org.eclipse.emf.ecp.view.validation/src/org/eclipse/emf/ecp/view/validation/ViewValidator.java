@@ -131,7 +131,10 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 									vDiagnostic);
 							} else {
 								// check if feature is not contained in current diagnostics
-								if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())) {
+								if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())
+									&&
+									eObject.eClass().getEAllStructuralFeatures()
+										.contains(setting.getEStructuralFeature())) {
 									update(control, eObject, setting.getEStructuralFeature(),
 										getDefaultValue());
 								}

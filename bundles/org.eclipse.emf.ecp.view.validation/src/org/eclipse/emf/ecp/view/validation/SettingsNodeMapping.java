@@ -111,6 +111,8 @@ public class SettingsNodeMapping<T> {
 			final UniqueSetting setting = UniqueSetting.createSetting(eObject, eStructuralFeature);
 			settings.remove(setting);
 		}
+		final UniqueSetting setting = UniqueSetting.createSetting(eObject, ALL_FEATURES);
+		settings.remove(setting);
 	}
 
 	/**

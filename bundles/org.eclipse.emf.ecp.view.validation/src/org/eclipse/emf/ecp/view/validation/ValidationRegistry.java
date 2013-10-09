@@ -8,6 +8,7 @@
  * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Edgar Mueller - added remove methods to avoid leaks
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation;
 
@@ -39,7 +40,7 @@ import org.osgi.framework.Bundle;
  * 
  * @author jfaltermeier
  * @author Eugen Neufeld
- * 
+ * @author emueller
  */
 public class ValidationRegistry {
 
@@ -50,11 +51,13 @@ public class ValidationRegistry {
 	private final Map<EObject, Set<AbstractControl>> domainObjectToAffectedControls;
 	private final Map<Class<Renderable>, ECPValidationSubProcessor> subProcessors;
 	private final Set<Renderable> processedRenderables = new LinkedHashSet<Renderable>();
+	private Map<Renderable, EObject> controlToDomainMapping;
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationRegistry() {
+		controlToDomainMapping = new LinkedHashMap<Renderable, EObject>();
 		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<AbstractControl>>();
 		subProcessors = new LinkedHashMap<Class<Renderable>, ECPValidationSubProcessor>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
@@ -191,6 +194,9 @@ public class ValidationRegistry {
 
 	private void fillMapEntry(Map<EObject, Set<AbstractControl>> target, final EObject domainSource,
 		Set<AbstractControl> controlSet) {
+		for (final AbstractControl abstractControl : controlSet) {
+			controlToDomainMapping.put(abstractControl, domainSource);
+		}
 		if (!target.containsKey(domainSource)) {
 			target.put(domainSource, controlSet);
 		} else {
@@ -208,6 +214,38 @@ public class ValidationRegistry {
 		final LinkedHashSet<AbstractControl> controlSet = new LinkedHashSet<AbstractControl>();
 		controlSet.add(control);
 		fillMapEntry(domainObjectToAffectedControls, domainObject, controlSet);
+	}
+
+	/**
+	 * Removes the given {@link Renderable} from the mappings of the registry.
+	 * 
+	 * @param renderable
+	 *            the {@link Renderable} to be removed from the registry
+	 */
+	public void removeRenderable(Renderable renderable) {
+		final EObject eObject = controlToDomainMapping.get(renderable);
+		final Set<AbstractControl> set = domainObjectToAffectedControls.get(eObject);
+		if (set != null && set.contains(renderable)) {
+			domainObjectToAffectedControls.get(eObject).remove(renderable);
+		}
+		controlToDomainMapping.remove(renderable);
+		processedRenderables.remove(renderable);
+	}
+
+	/**
+	 * Removes the given domain object from the mappings of the registry.
+	 * 
+	 * @param domainObject
+	 *            the domain object to be removed from the registry
+	 */
+	public void removeDomainObject(EObject domainObject) {
+		final Set<AbstractControl> set = domainObjectToAffectedControls.get(domainObject);
+		if (set != null) {
+			for (final AbstractControl abstractControl : set) {
+				controlToDomainMapping.remove(abstractControl);
+			}
+		}
+		domainObjectToAffectedControls.remove(domainObject);
 	}
 
 	/**

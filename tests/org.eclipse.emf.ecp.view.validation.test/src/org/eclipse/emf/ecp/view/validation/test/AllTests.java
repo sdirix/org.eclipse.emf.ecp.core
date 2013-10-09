@@ -16,7 +16,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ViewValidationTest.class })
+@SuiteClasses({
+	ValidationServiceGCTest.class,
+	ViewValidationTest.class,
+})
 public class AllTests {
 
 }
