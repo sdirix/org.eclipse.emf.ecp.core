@@ -44,9 +44,8 @@ import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlChangeListener;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -298,7 +297,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	public static Set<ECPCustomControlFeature> createFeatures() {
 
-		allFeatures = new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+		allFeatures = new HashSet<ECPCustomControlFeature>();
 		allFeatures.addAll(createEditableFeatures());
 		allFeatures.addAll(createReferencedFeatures());
 
@@ -310,7 +309,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	public static Set<ECPCustomControlFeature> createReferencedFeatures() {
 		if (referencedFeatures == null) {
-			referencedFeatures = new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+			referencedFeatures = new HashSet<ECPCustomControlFeature>();
 			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
@@ -326,7 +325,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	public static Set<ECPCustomControlFeature> createEditableFeatures() {
 		if (editableFeaturess == null) {
-			editableFeaturess = new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+			editableFeaturess = new HashSet<ECPCustomControlFeature>();
 			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {

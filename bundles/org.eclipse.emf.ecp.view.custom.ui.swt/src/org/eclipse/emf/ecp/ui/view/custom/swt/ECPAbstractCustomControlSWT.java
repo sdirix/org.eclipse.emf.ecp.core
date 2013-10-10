@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.ui.view.custom.swt;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControl;
@@ -21,10 +23,15 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
+import org.eclipse.emf.ecp.ui.view.swt.DoubleColumnRow;
+import org.eclipse.emf.ecp.ui.view.swt.SingleColumnRow;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
+import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -76,6 +83,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
 	private Label validationLabel;
 	private Shell shell;
+	private List<RenderingResultRow<Control>> renderingResult;
 
 	/**
 	 * This will create a validation label which will show the validation result of the whole
@@ -142,6 +150,18 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @param composite The composite on which this custom control shall add its controls.
 	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
 	 */
+	public final List<RenderingResultRow<Control>> createControl(Composite composite) {
+		renderingResult = createControls(composite);
+		return renderingResult;
+	}
+
+	/**
+	 * This is called when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
+	 * ECPCustomControl} is about to be rendered.
+	 * 
+	 * @param composite The composite on which this custom control shall add its controls.
+	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
+	 */
 	protected abstract List<RenderingResultRow<Control>> createControls(Composite composite);
 
 	/**
@@ -153,6 +173,17 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	public void setEditable(boolean isEditable) {
 		// Do nothing
+
+		for (final RenderingResultRow<Control> row : renderingResult) {
+			if (SingleColumnRow.class.isInstance(row)) {
+				((SingleColumnRow) row).getControl().setEnabled(false);
+			}
+			else if (DoubleColumnRow.class.isInstance(row)) {
+				((DoubleColumnRow) row).getLeftControl().setEnabled(false);
+				((DoubleColumnRow) row).getRightControl().setEnabled(false);
+
+			}
+		}
 	}
 
 	/**
@@ -277,6 +308,20 @@ public abstract class ECPAbstractCustomControlSWT extends
 			validationLabel = null;
 		}
 		super.dispose();
+	}
+
+	/**
+	 * Creates a binding for a {@link StructuredViewer} based on a {@link ECPCustomControlFeature} and the array of
+	 * {@link IValueProperty IValueProperties} for labels.
+	 * 
+	 * @param customControlFeature the {@link ECPCustomControlFeature} to use
+	 * @param viewer the {@link StructuredViewer} to bind
+	 * @param labelProperties the array if {@link IValueProperty IValueProperties} to use for labels
+	 */
+	protected void createViewerBinding(ECPCustomControlFeature customControlFeature, StructuredViewer viewer,
+		IValueProperty[] labelProperties) {
+		final IObservableList list = customControlFeature.getObservableList();
+		ViewerSupport.bind(viewer, list, labelProperties);
 	}
 
 	/**

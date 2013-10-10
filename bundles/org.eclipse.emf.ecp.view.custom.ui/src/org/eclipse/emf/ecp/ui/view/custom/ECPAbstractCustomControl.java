@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -212,7 +213,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 	/**
 	 * The {@link CustomControlHelper} allows the retrieval of information based on an
-	 * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature ECPCustomControlFeature}.
+	 * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature ECPCustomControlFeature}.
 	 * 
 	 * @author Eugen Neufeld
 	 * 
@@ -223,7 +224,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		 * This return a text providing a long helpful description of the feature. Can be used for example in a ToolTip.
 		 * 
 		 * @param customControlFeature the
-		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature
+		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature
 		 *            ECPCustomControlFeature} to retrieve the help text for
 		 * @return the String containing the helpful description or null if no description is found
 		 */
@@ -236,7 +237,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		 * edit field.
 		 * 
 		 * @param customControlFeature the
-		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature
+		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature
 		 *            ECPCustomControlFeature} to retrieve the text for
 		 * @return the String containing the label null if no label is found
 		 */

@@ -20,8 +20,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.DoubleColumnRow;
-import org.eclipse.emf.ecp.ui.view.swt.SingleColumnRow;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
@@ -46,25 +44,17 @@ public class CustomControlSWTRenderer extends
 		final CustomControl customControl = node.getRenderable();
 
 		try {
-			final ECPAbstractCustomControlSWT categoryComposite = (ECPAbstractCustomControlSWT) customControl
+			final ECPAbstractCustomControlSWT customControlSWT = (ECPAbstractCustomControlSWT) customControl
 				.getECPCustomControl();
-			categoryComposite.init(node.getControlContext());
+			customControlSWT.init(node.getControlContext());
 
 			final Composite parent = getParentFromInitData(initData);
-			categoryComposite.setMessageShell(parent.getShell());
-			final List<RenderingResultRow<Control>> renderingResultRows = categoryComposite
-				.createControls(parent);
+			customControlSWT.setMessageShell(parent.getShell());
+			final List<RenderingResultRow<Control>> renderingResultRows = customControlSWT
+				.createControl(parent);
 			if (customControl.isReadonly()) {
-				for (final RenderingResultRow<Control> row : renderingResultRows) {
-					if (SingleColumnRow.class.isInstance(row)) {
-						((SingleColumnRow) row).getControl().setEnabled(false);
-					}
-					else if (DoubleColumnRow.class.isInstance(row)) {
-						((DoubleColumnRow) row).getLeftControl().setEnabled(false);
-						((DoubleColumnRow) row).getRightControl().setEnabled(false);
+				customControlSWT.setEditable(customControl.isReadonly());
 
-					}
-				}
 			}
 
 			final Set<Control> controls = new LinkedHashSet<Control>();
@@ -72,7 +62,7 @@ public class CustomControlSWTRenderer extends
 				controls.addAll(row.getControls());
 			}
 
-			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(categoryComposite, customControl,
+			node.addRenderingResultDelegator(new SWTRenderingResultCustomControl(customControlSWT, customControl,
 				controls.toArray(new Control[0])));
 
 			return renderingResultRows;

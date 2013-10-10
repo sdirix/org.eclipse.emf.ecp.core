@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -28,18 +28,18 @@ public class ExampleCustomControl extends ECPAbstractCustomControlSWT {
 	}
 
 	private static Set<ECPCustomControlFeature> createFeatures() {
-		HashSet<ECPCustomControlFeature> ret = new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+		HashSet<ECPCustomControlFeature> ret = new HashSet<ECPCustomControlFeature>();
 		ret.addAll(referencedFeatures);
 		ret.addAll(editableFeatures);
 		return ret;
 	}
 
 	private static Set<ECPCustomControlFeature> createReferencedFeatures() {
-		return new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+		return new HashSet<ECPCustomControlFeature>();
 	}
 
 	private static Set<ECPCustomControlFeature> createEditableFeatures() {
-		HashSet<ECPCustomControlFeature> ret = new HashSet<ECPCustomControl.ECPCustomControlFeature>();
+		HashSet<ECPCustomControlFeature> ret = new HashSet<ECPCustomControlFeature>();
 		nameFeature = new ECPCustomControlFeature(null,
 				BowlingPackage.eINSTANCE.getPlayer_Name(), true);
 		ret.add(nameFeature);

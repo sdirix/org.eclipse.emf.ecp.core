@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
