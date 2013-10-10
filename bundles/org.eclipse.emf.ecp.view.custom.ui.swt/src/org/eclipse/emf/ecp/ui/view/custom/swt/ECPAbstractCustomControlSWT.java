@@ -87,6 +87,8 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
+		validationLabel.setImage(getImage(VALIDATION_ERROR_IMAGE));
+		validationLabel.setVisible(false);
 		// GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 	}
 
@@ -161,14 +163,15 @@ public abstract class ECPAbstractCustomControlSWT extends
 	public final void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR
 			|| diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = getImage(VALIDATION_ERROR_IMAGE);
+
 			Diagnostic reason = diagnostic;
 			if (diagnostic.getChildren() != null
 				&& diagnostic.getChildren().size() != 0) {
 				reason = diagnostic.getChildren().get(0);
 			}
 			if (validationLabel != null) {
-				validationLabel.setImage(image);
+				// validationLabel.setImage(image);
+				validationLabel.setVisible(true);
 				validationLabel.setToolTipText(reason.getMessage());
 			}
 			final List<?> data = diagnostic.getData();
@@ -218,7 +221,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	public final void resetValidation() {
 		resetControlValidation();
 		if (validationLabel != null) {
-			validationLabel.setImage(null);
+			validationLabel.setVisible(false);
 		}
 		resetContentValidation();
 	}
