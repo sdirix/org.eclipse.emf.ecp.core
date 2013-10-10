@@ -182,12 +182,17 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	@SuppressWarnings("unchecked")
 	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription,
 		IItemPropertyDescriptor itemPropertyDescriptor, ECPControlContext modelElementContext) {
-		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext
-			.getModelElement());
+		// TODO refactor code
 		try {
-			final Constructor<? extends ECPAbstractControl> controlConstructor = controlDescription.getControlClass()
+			if (controlDescription.getControlClass().getConstructors()[0].getParameterTypes().length == 0) {
+				return (T) controlDescription.getControlClass().getConstructors()[0].newInstance();
+			}
+			final Constructor<? extends ECPControl> controlConstructor = controlDescription.getControlClass()
 				.getConstructor(boolean.class,
 					IItemPropertyDescriptor.class, EStructuralFeature.class, ECPControlContext.class, boolean.class);
+			final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor
+				.getFeature(modelElementContext
+					.getModelElement());
 			return (T) controlConstructor.newInstance(controlDescription.isShowLabel(), itemPropertyDescriptor,
 				feature, modelElementContext, false);
 		} catch (final IllegalArgumentException ex) {

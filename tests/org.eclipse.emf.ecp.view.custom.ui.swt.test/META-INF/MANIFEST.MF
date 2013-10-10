@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for the Custom SWT Renderer
-Bundle-SymbolicName: org.eclipse.emf.ecp.view.custom.ui.swt.test
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.custom.ui.swt.test;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

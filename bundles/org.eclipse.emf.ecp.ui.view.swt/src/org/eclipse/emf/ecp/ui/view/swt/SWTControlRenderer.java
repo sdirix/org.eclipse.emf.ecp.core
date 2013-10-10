@@ -50,7 +50,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Control modelControl = node.getRenderable();
-		final Setting setting = modelControl.getDomainModelReference().getIterator().next();
+		final Setting setting = modelControl.getDomainModelReferences().get(0).getIterator().next();
 		final ECPControlContext subContext = node.getControlContext();
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator

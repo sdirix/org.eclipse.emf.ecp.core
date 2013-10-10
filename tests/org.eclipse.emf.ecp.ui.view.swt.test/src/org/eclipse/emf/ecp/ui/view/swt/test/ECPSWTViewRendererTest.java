@@ -83,7 +83,7 @@ public class ECPSWTViewRendererTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
-		control.setDomainModelReference(domainModelReference);
+		control.getDomainModelReferences().add(domainModelReference);
 		view.getChildren().add(control);
 
 		final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);

@@ -152,7 +152,7 @@ public class AbstractCategorizationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((AbstractCategorization) object).getName();
+		String label = ((AbstractCategorization) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_AbstractCategorization_type") :
 			getString("_UI_AbstractCategorization_type") + " " + label;

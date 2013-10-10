@@ -20,9 +20,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl;
@@ -295,7 +295,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * Internal method for the node builder to call on creation.
 	 * 
-	 * @param domainModelReferences the set of {@link VSingleDomainModelReference VSingleDomainModelReferences} to use
+	 * @param domainModelReferences the set of {@link VDomainModelReference VDomainModelReferences} to use
 	 */
 	public void setVSingleDomainModelReferences(Set<VDomainModelReference> domainModelReferences) {
 		this.domainModelReferences = domainModelReferences;

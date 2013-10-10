@@ -184,7 +184,7 @@ public class RuleServiceTest {
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
-		controlPName.setDomainModelReference(domainModelReference);
+		controlPName.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(controlPName);
 
@@ -530,7 +530,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(control1);
 
@@ -556,7 +556,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		addLeagueShowRuleWithOrCondition(control1, true,
@@ -641,7 +641,7 @@ public class RuleServiceTest {
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		addLeagueShowRuleWithAndCondition(
@@ -711,7 +711,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		final Control control2 = ViewFactory.eINSTANCE.createControl();
@@ -719,7 +719,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control2.setDomainModelReference(domainModelReference2);
+		control2.getDomainModelReferences().add(domainModelReference2);
 
 		column.getComposites().add(control2);
 
@@ -741,7 +741,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(control1);
 
@@ -750,7 +750,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control2.setDomainModelReference(domainModelReference2);
+		control2.getDomainModelReferences().add(domainModelReference2);
 
 		column.getComposites().add(control2);
 
@@ -776,7 +776,7 @@ public class RuleServiceTest {
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(control1);
 
@@ -807,7 +807,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(control1);
 
@@ -816,7 +816,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control2.setDomainModelReference(domainModelReference2);
+		control2.getDomainModelReferences().add(domainModelReference2);
 
 		column.getComposites().add(control2);
 
@@ -838,14 +838,14 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		final Control control2 = ViewFactory.eINSTANCE.createControl();
 		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control2.setDomainModelReference(domainModelReference2);
+		control2.getDomainModelReferences().add(domainModelReference2);
 		column.getComposites().add(control2);
 
 		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
@@ -865,14 +865,14 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		final Control control2 = ViewFactory.eINSTANCE.createControl();
 		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control2.setDomainModelReference(domainModelReference2);
+		control2.getDomainModelReferences().add(domainModelReference2);
 		column.getComposites().add(control2);
 
 		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
@@ -892,14 +892,14 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		final Control control2 = ViewFactory.eINSTANCE.createControl();
 		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		control2.setDomainModelReference(domainModelReference2);
+		control2.getDomainModelReferences().add(domainModelReference2);
 		column.getComposites().add(control2);
 
 		addShowRule(control1, true, BowlingPackage.eINSTANCE.getPlayer_Name(), "foo");
@@ -2333,7 +2333,7 @@ public class RuleServiceTest {
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(control1);
 
@@ -2354,7 +2354,7 @@ public class RuleServiceTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
-		control.setDomainModelReference(domainModelReference);
+		control.getDomainModelReferences().add(domainModelReference);
 
 		column.getComposites().add(control);
 
@@ -2379,7 +2379,7 @@ public class RuleServiceTest {
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
-		control1.setDomainModelReference(domainModelReference);
+		control1.getDomainModelReferences().add(domainModelReference);
 		column.getComposites().add(control1);
 
 		addShowRule(control1, true, BowlingPackage.eINSTANCE.getFan_Name(), "foo");

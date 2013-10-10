@@ -26,7 +26,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
@@ -122,8 +122,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 				if (isDisposing) {
 					return;
 				}
-				if (AbstractControl.class.isInstance(notifier)) {
-					final AbstractControl control = (AbstractControl) notifier;
+				if (Control.class.isInstance(notifier)) {
+					final Control control = (Control) notifier;
 
 					for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
 						domainModelReference.resolve(domainObject);
@@ -131,6 +131,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyAdd(notifier);
+				}
+				if (VDomainModelReference.class.isInstance(notifier)) {
+					ViewModelUtil.resolveDomainReferences((Renderable) ((EObject) notifier).eContainer(),
+						getDomainModel());
 				}
 			}
 

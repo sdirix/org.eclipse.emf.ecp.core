@@ -144,26 +144,6 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL__NAME = ViewPackage.CONTROL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__HINT = ViewPackage.CONTROL__HINT;
-
-	/**
-	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__MANDATORY = ViewPackage.CONTROL__MANDATORY;
-
-	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -174,14 +154,24 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL__LABEL_ALIGNMENT = ViewPackage.CONTROL__LABEL_ALIGNMENT;
 
 	/**
-	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
+	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCES = ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES;
+
+	/**
+	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__CONTROL_ID = ViewPackage.CONTROL__CONTROL_ID;
 
 	/**
 	 * The feature id for the '<em><b>Columns</b></em>' containment reference list.
@@ -256,6 +246,48 @@ public interface VTablePackage extends EPackage
 	int TABLE_COLUMN_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
+	 * <em>Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
+	 * @generated
+	 */
+	int TABLE_DOMAIN_MODEL_REFERENCE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH;
+
+	/**
+	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.table.model.VTableControl <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -328,6 +360,18 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getTableColumn_ReadOnly();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference
+	 * <em>Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference
+	 * @generated
+	 */
+	EClass getTableDomainModelReference();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -413,6 +457,19 @@ public interface VTablePackage extends EPackage
 		 * @generated
 		 */
 		EAttribute TABLE_COLUMN__READ_ONLY = eINSTANCE.getTableColumn_ReadOnly();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
+		 * <em>Domain Model Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
+		 * @generated
+		 */
+		EClass TABLE_DOMAIN_MODEL_REFERENCE = eINSTANCE.getTableDomainModelReference();
 
 	}
 

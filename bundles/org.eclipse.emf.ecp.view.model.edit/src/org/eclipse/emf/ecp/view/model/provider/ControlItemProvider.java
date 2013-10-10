@@ -38,7 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ControlItemProvider
-	extends AbstractControlItemProvider
+	extends CompositeItemProvider
 	implements
 	IEditingDomainItemProvider,
 	IStructuredItemContentProvider,
@@ -69,57 +69,10 @@ public class ControlItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
-			addHintPropertyDescriptor(object);
-			addMandatoryPropertyDescriptor(object);
 			addLabelAlignmentPropertyDescriptor(object);
+			addControlIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Hint feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addHintPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Control_hint_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Control_hint_feature", "_UI_Control_type"),
-				ViewPackage.Literals.CONTROL__HINT,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Mandatory feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addMandatoryPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Control_mandatory_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Control_mandatory_feature", "_UI_Control_type"),
-				ViewPackage.Literals.CONTROL__MANDATORY,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				null,
-				null));
 	}
 
 	/**
@@ -148,6 +101,30 @@ public class ControlItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Control Id feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addControlIdPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Control_controlId_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_controlId_feature", "_UI_Control_type"),
+				ViewPackage.Literals.CONTROL__CONTROL_ID,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -162,7 +139,7 @@ public class ControlItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE);
+			childrenFeatures.add(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES);
 		}
 		return childrenFeatures;
 	}
@@ -221,12 +198,11 @@ public class ControlItemProvider
 
 		switch (notification.getFeatureID(Control.class))
 		{
-		case ViewPackage.CONTROL__HINT:
-		case ViewPackage.CONTROL__MANDATORY:
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
+		case ViewPackage.CONTROL__CONTROL_ID:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -247,7 +223,7 @@ public class ControlItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES,
 				ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference()));
 	}
 

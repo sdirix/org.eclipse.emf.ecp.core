@@ -45,7 +45,7 @@ public class ViewProvider implements IViewProvider {
 			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
 				.createVFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
-			control.setDomainModelReference(modelReference);
+			control.getDomainModelReferences().add(modelReference);
 			column.getComposites().add(control);
 		}
 

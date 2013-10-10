@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.emf.ecp.ui.view.customNodeBuilders">
-      <builders
-            class="org.eclipse.emf.ecp.view.custom.internal.ui.NodeBuilderCustom">
-      </builders>
-   </extension>
-   <extension
-         point="org.eclipse.emf.ecp.view.validation.validationSubProcessor">
-      <validationSubProcessor
-            associatedRenderable="org.eclipse.emf.ecp.view.custom.model.CustomControl"
-            class="org.eclipse.emf.ecp.view.custom.internal.ui.CustomControlSubprocessor">
-      </validationSubProcessor>
-   </extension>
 
 </plugin>

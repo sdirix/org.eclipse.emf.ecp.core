@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
 
@@ -81,6 +82,8 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 			return createTableControl();
 		case VTablePackage.TABLE_COLUMN:
 			return createTableColumn();
+		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE:
+			return createTableDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -108,6 +111,18 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	{
 		VTableColumnImpl tableColumn = new VTableColumnImpl();
 		return tableColumn;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VTableDomainModelReference createTableDomainModelReference()
+	{
+		VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
+		return tableDomainModelReference;
 	}
 
 	/**

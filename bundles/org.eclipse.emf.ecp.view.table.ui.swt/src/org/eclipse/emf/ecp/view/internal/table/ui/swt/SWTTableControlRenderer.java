@@ -49,6 +49,12 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 	 */
 	public static final SWTTableControlRenderer INSTANCE = new SWTTableControlRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
+	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 */
 	@Override
 	public List<RenderingResultRow<Control>> renderSWT(Node<VTableControl> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
@@ -57,7 +63,7 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 
 		final VTableControl modelTableControl = node.getRenderable();
 		final ECPControlContext subContext = node.getControlContext();
-		final Iterator<Setting> settings = modelTableControl.getDomainModelReference().getIterator();
+		final Iterator<Setting> settings = modelTableControl.getDomainModelReferences().get(0).getIterator();
 		if (!settings.hasNext()) {
 			return null;
 		}

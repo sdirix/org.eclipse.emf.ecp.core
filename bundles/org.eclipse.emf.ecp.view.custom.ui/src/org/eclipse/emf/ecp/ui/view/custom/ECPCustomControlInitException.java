@@ -9,7 +9,8 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model;
+package org.eclipse.emf.ecp.ui.view.custom;
+
 
 /**
  * Wrapper for exceptions occuring during the inialisation of {@link ECPCustomControl}s.

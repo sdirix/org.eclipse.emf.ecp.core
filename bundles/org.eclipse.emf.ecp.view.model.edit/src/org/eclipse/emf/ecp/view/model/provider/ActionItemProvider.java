@@ -143,7 +143,7 @@ public class ActionItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((Action) object).getClassName();
+		String label = ((Action) object).getClassName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Action_type") :
 			getString("_UI_Action_type") + " " + label;

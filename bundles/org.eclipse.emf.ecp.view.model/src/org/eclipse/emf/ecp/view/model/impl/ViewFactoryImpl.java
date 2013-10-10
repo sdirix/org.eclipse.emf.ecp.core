@@ -48,13 +48,12 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public static ViewFactory init() {
 		try
 		{
-			final ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE
-				.getEFactory(ViewPackage.eNS_URI);
+			ViewFactory theViewFactory = (ViewFactory) EPackage.Registry.INSTANCE.getEFactory(ViewPackage.eNS_URI);
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
 			}
-		} catch (final Exception exception)
+		} catch (Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -148,7 +147,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public View createView() {
-		final ViewImpl view = new ViewImpl();
+		ViewImpl view = new ViewImpl();
 		return view;
 	}
 
@@ -158,7 +157,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Categorization createCategorization() {
-		final CategorizationImpl categorization = new CategorizationImpl();
+		CategorizationImpl categorization = new CategorizationImpl();
 		return categorization;
 	}
 
@@ -168,7 +167,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Category createCategory() {
-		final CategoryImpl category = new CategoryImpl();
+		CategoryImpl category = new CategoryImpl();
 		return category;
 	}
 
@@ -178,7 +177,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Control createControl() {
-		final ControlImpl control = new ControlImpl();
+		ControlImpl control = new ControlImpl();
 		return control;
 	}
 
@@ -188,7 +187,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public CustomComposite createCustomComposite() {
-		final CustomCompositeImpl customComposite = new CustomCompositeImpl();
+		CustomCompositeImpl customComposite = new CustomCompositeImpl();
 		return customComposite;
 	}
 
@@ -198,7 +197,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public ColumnComposite createColumnComposite() {
-		final ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
+		ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
 		return columnComposite;
 	}
 
@@ -208,7 +207,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Column createColumn() {
-		final ColumnImpl column = new ColumnImpl();
+		ColumnImpl column = new ColumnImpl();
 		return column;
 	}
 
@@ -218,7 +217,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 * @generated
 	 */
 	public Action createAction() {
-		final ActionImpl action = new ActionImpl();
+		ActionImpl action = new ActionImpl();
 		return action;
 	}
 
@@ -230,7 +229,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public VFeaturePathDomainModelReference createVFeaturePathDomainModelReference()
 	{
-		final VFeaturePathDomainModelReferenceImpl vFeaturePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		VFeaturePathDomainModelReferenceImpl vFeaturePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
 		return vFeaturePathDomainModelReference;
 	}
 
@@ -242,7 +241,7 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public VDiagnostic createVDiagnostic()
 	{
-		final VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
+		VDiagnosticImpl vDiagnostic = new VDiagnosticImpl();
 		return vDiagnostic;
 	}
 
@@ -254,11 +253,10 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	 */
 	public Alignment createAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		final Alignment result = Alignment.get(initialValue);
-		if (result == null) {
+		Alignment result = Alignment.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
-		}
 		return result;
 	}
 

@@ -21,10 +21,9 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getHint <em>Hint</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReferences <em>Domain Model References</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Control#getControlId <em>Control Id</em>}</li>
  * </ul>
  * </p>
  * 
@@ -32,81 +31,35 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Control extends AbstractControl {
+public interface Control extends Composite {
 	/**
-	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Control Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
-	 * more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
-	 * @see #setDomainModelReference(VDomainModelReference)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_DomainModelReference()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	VDomainModelReference getDomainModelReference();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference
-	 * <em>Domain Model Reference</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
-	 * @see #getDomainModelReference()
-	 * @generated
-	 */
-	void setDomainModelReference(VDomainModelReference value);
-
-	/**
-	 * Returns the value of the '<em><b>Hint</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Hint</em>' attribute list isn't clear, there really should be more of a description
+	 * If the meaning of the '<em>Control Id</em>' attribute isn't clear, there really should be more of a description
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the value of the '<em>Hint</em>' attribute list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_Hint()
+	 * @return the value of the '<em>Control Id</em>' attribute.
+	 * @see #setControlId(String)
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_ControlId()
 	 * @model
 	 * @generated
 	 */
-	EList<String> getHint();
+	String getControlId();
 
 	/**
-	 * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mandatory</em>' attribute isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Mandatory</em>' attribute.
-	 * @see #setMandatory(boolean)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_Mandatory()
-	 * @model default="false"
-	 * @generated
-	 */
-	boolean isMandatory();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getControlId <em>Control Id</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @param value the new value of the '<em>Mandatory</em>' attribute.
-	 * @see #isMandatory()
+	 * @param value the new value of the '<em>Control Id</em>' attribute.
+	 * @see #getControlId()
 	 * @generated
 	 */
-	void setMandatory(boolean value);
+	void setControlId(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.
@@ -140,5 +93,22 @@ public interface Control extends AbstractControl {
 	 * @generated
 	 */
 	void setLabelAlignment(Alignment value);
+
+	/**
+	 * Returns the value of the '<em><b>Domain Model References</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Domain Model References</em>' containment reference list isn't clear, there really
+	 * should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Domain Model References</em>' containment reference list.
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_DomainModelReferences()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	EList<VDomainModelReference> getDomainModelReferences();
 
 } // Control

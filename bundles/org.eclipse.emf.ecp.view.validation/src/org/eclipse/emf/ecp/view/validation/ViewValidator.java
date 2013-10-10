@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -90,7 +90,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
-			for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
+			for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
 				for (final VDomainModelReference modelReference : control.getDomainModelReferences()) {
 					final Iterator<Setting> settings = modelReference.getIterator();
 					while (settings.hasNext()) {
@@ -118,7 +118,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 			// validation registry should be queryable with a control and a feature
 			// -> merge SettingsMapping and the registry
 			for (final EStructuralFeature invalidFeature : featureToValidationResult.keySet()) {
-				for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
+				for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
 					for (final VDomainModelReference modelReference : control.getDomainModelReferences()) {
 						final Iterator<Setting> settings = modelReference.getIterator();
 						while (settings.hasNext()) {

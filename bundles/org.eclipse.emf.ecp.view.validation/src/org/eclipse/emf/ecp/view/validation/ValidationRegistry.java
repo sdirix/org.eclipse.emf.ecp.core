@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -47,7 +47,7 @@ public class ValidationRegistry {
 	 * The list is ordered so that if two renderables
 	 * are part of the same hierarchy the child will have a lower index than the parent.
 	 */
-	private final Map<EObject, Set<AbstractControl>> domainObjectToAffectedControls;
+	private final Map<EObject, Set<Control>> domainObjectToAffectedControls;
 	private final Map<Class<Renderable>, ECPValidationSubProcessor> subProcessors;
 	private final Set<Renderable> processedRenderables = new LinkedHashSet<Renderable>();
 
@@ -55,7 +55,7 @@ public class ValidationRegistry {
 	 * Default constructor.
 	 */
 	public ValidationRegistry() {
-		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<AbstractControl>>();
+		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<Control>>();
 		subProcessors = new LinkedHashMap<Class<Renderable>, ECPValidationSubProcessor>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
@@ -103,7 +103,7 @@ public class ValidationRegistry {
 	 * @param renderable the view model
 	 */
 	public void register(EObject domainModel, Renderable renderable) {
-		final Map<EObject, Set<AbstractControl>> domainToControlMapping = getDomainToControlMapping(domainModel,
+		final Map<EObject, Set<Control>> domainToControlMapping = getDomainToControlMapping(domainModel,
 			renderable);
 		fillMap(domainToControlMapping, domainObjectToAffectedControls);
 	}
@@ -123,26 +123,26 @@ public class ValidationRegistry {
 	 * @param renderable the {@link Renderable} to check
 	 * @return a Map of EObject to {@link AbstractControl AbstractControls}
 	 */
-	public Map<EObject, Set<AbstractControl>> getDomainToControlMapping(EObject domainModel, Renderable renderable) {
+	public Map<EObject, Set<Control>> getDomainToControlMapping(EObject domainModel, Renderable renderable) {
 		processedRenderables.add(renderable);
 		if (renderable.getDiagnostic() == null) {
 			renderable.setDiagnostic(ViewFactory.eINSTANCE.createVDiagnostic());
 		}
-		final Map<EObject, Set<AbstractControl>> result = new LinkedHashMap<EObject, Set<AbstractControl>>();
+		final Map<EObject, Set<Control>> result = new LinkedHashMap<EObject, Set<Control>>();
 		final Class<?> renderableClass = renderable.getClass().getInterfaces()[0];
 		if (subProcessors.containsKey(renderableClass)) {
 			fillMap(subProcessors.get(renderableClass).processRenderable(
 				domainModel, renderable, this), result);
 		}
-		else if (AbstractControl.class.isInstance(renderable)) {
-			final AbstractControl control = (AbstractControl) renderable;
+		else if (Control.class.isInstance(renderable)) {
+			final Control control = (Control) renderable;
 			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
 				final Iterator<Setting> iterator = domainModelReference.getIterator();
 				while (iterator.hasNext()) {
 					final Setting setting = iterator.next();
 					final EObject referencedDomainModel = setting.getEObject();
 					if (!result.containsKey(referencedDomainModel)) {
-						result.put(referencedDomainModel, new LinkedHashSet<AbstractControl>());
+						result.put(referencedDomainModel, new LinkedHashSet<Control>());
 					}
 					result.get(referencedDomainModel).add(control);
 				}
@@ -182,15 +182,15 @@ public class ValidationRegistry {
 		return referencedDomainModel;
 	}
 
-	private void fillMap(Map<EObject, Set<AbstractControl>> source, Map<EObject, Set<AbstractControl>> target) {
+	private void fillMap(Map<EObject, Set<Control>> source, Map<EObject, Set<Control>> target) {
 		for (final EObject domainSource : source.keySet()) {
-			final Set<AbstractControl> controlSet = source.get(domainSource);
+			final Set<Control> controlSet = source.get(domainSource);
 			fillMapEntry(target, domainSource, controlSet);
 		}
 	}
 
-	private void fillMapEntry(Map<EObject, Set<AbstractControl>> target, final EObject domainSource,
-		Set<AbstractControl> controlSet) {
+	private void fillMapEntry(Map<EObject, Set<Control>> target, final EObject domainSource,
+		Set<Control> controlSet) {
 		if (!target.containsKey(domainSource)) {
 			target.put(domainSource, controlSet);
 		} else {
@@ -204,8 +204,8 @@ public class ValidationRegistry {
 	 * @param domainObject the domain object
 	 * @param control the control to be registered for the domain object
 	 */
-	public void addEObjectControlMapping(EObject domainObject, AbstractControl control) {
-		final LinkedHashSet<AbstractControl> controlSet = new LinkedHashSet<AbstractControl>();
+	public void addEObjectControlMapping(EObject domainObject, Control control) {
+		final LinkedHashSet<Control> controlSet = new LinkedHashSet<Control>();
 		controlSet.add(control);
 		fillMapEntry(domainObjectToAffectedControls, domainObject, controlSet);
 	}
@@ -217,7 +217,7 @@ public class ValidationRegistry {
 	 * @param model the model
 	 * @return list of all renderables
 	 */
-	public Set<AbstractControl> getRenderablesForEObject(EObject model) {
+	public Set<Control> getRenderablesForEObject(EObject model) {
 		if (!domainObjectToAffectedControls.containsKey(model)) {
 			return Collections.emptySet();
 		}

@@ -421,8 +421,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
 			{
 				return adapter;
 			}
@@ -507,36 +507,26 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * @generated
 	 */
 	public void dispose() {
-		if (vDiagnosticItemProvider != null) {
+		if (vDiagnosticItemProvider != null)
 			vDiagnosticItemProvider.dispose();
-		}
-		if (viewItemProvider != null) {
+		if (viewItemProvider != null)
 			viewItemProvider.dispose();
-		}
-		if (categorizationItemProvider != null) {
+		if (categorizationItemProvider != null)
 			categorizationItemProvider.dispose();
-		}
-		if (categoryItemProvider != null) {
+		if (categoryItemProvider != null)
 			categoryItemProvider.dispose();
-		}
-		if (actionItemProvider != null) {
+		if (actionItemProvider != null)
 			actionItemProvider.dispose();
-		}
-		if (vFeaturePathDomainModelReferenceItemProvider != null) {
+		if (vFeaturePathDomainModelReferenceItemProvider != null)
 			vFeaturePathDomainModelReferenceItemProvider.dispose();
-		}
-		if (controlItemProvider != null) {
+		if (controlItemProvider != null)
 			controlItemProvider.dispose();
-		}
-		if (customCompositeItemProvider != null) {
+		if (customCompositeItemProvider != null)
 			customCompositeItemProvider.dispose();
-		}
-		if (columnCompositeItemProvider != null) {
+		if (columnCompositeItemProvider != null)
 			columnCompositeItemProvider.dispose();
-		}
-		if (columnItemProvider != null) {
+		if (columnItemProvider != null)
 			columnItemProvider.dispose();
-		}
 	}
 
 }

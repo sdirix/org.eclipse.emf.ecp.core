@@ -12,14 +12,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.view.context;bundle-version="1.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.edit;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.edit.swt,
-   org.eclipse.emf.ecp.view.custom.ui,
-   org.eclipse.emf.ecp.ui.view,
-   org.eclipse.emf.ecp.ui.view.editor.controls,
-   org.eclipse.emf.ecp.editor.e3,
-   org.eclipse.emf.ecp.editor,
-   org.eclipse.emf.ecp.ui.view.swt",
+Export-Package: org.eclipse.emf.ecp.edit;version="1.1.0",
  org.eclipse.emf.ecp.edit.util;version="1.1.0",
  org.eclipse.emf.ecp.internal.edit;version="1.1.0";x-internal:=true
 Service-Component: OSGI-INF/ecpControlFactory.xml

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.edit.controls">
+      <control
+            class="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub"
+            id="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub"
+            showLabel="false">
+      </control>
+   </extension>
+
+</plugin>

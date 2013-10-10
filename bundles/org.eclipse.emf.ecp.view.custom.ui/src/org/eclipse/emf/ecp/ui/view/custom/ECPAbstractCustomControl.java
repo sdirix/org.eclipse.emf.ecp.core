@@ -12,16 +12,26 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.custom;
 
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -37,7 +47,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 	private final CustomControlHelper helper = new CustomControlHelper();
 
-	private final Set<ECPCustomControlFeature> features;
+	private final Set<VDomainModelReference> features;
 	private ECPControlContext modelElementContext;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
@@ -46,7 +56,9 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	/**
 	 * This map manages the mapping between an {@link EStructuralFeature} and a corresponding {@link ECPControl}.
 	 */
-	private final HashMap<EStructuralFeature, ECPControl> controlMap = new HashMap<EStructuralFeature, ECPControl>();
+	private final Map<EStructuralFeature, ECPControl> controlMap = new LinkedHashMap<EStructuralFeature, ECPControl>();
+
+	private final Map<VDomainModelReference, Adapter> adapterMap = new LinkedHashMap<VDomainModelReference, Adapter>();
 
 	/**
 	 * Constructor for instantiating the {@link ECPAbstractCustomControl}. The constructor maps the features and sets
@@ -55,10 +67,10 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	 * @param features the features which can be used in this {@link ECPAbstractCustomControl}. If the Set is null, an
 	 *            empty set is used instead.
 	 */
-	public ECPAbstractCustomControl(Set<ECPCustomControlFeature> features) {
+	public ECPAbstractCustomControl(Set<VDomainModelReference> features) {
 		super();
 		if (features == null) {
-			features = new LinkedHashSet<ECPCustomControlFeature>();
+			features = new LinkedHashSet<VDomainModelReference>();
 		}
 		this.features = features;
 		controlFactory = Activator.getECPControlFactory();
@@ -97,29 +109,133 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		initFeatures();
-
-		// move to some cleanup service
-		createNecessaryObjects();
+		// initFeatures();
 	}
 
-	private void initFeatures() {
-		for (final ECPCustomControlFeature feature : features) {
-			feature.init(modelElementContext.getModelElement(), modelElementContext.getDataBindingContext(),
-				modelElementContext.getEditingDomain());
+	// private void initFeatures() {
+	// for (final ECPCustomControlFeature feature : features) {
+	// feature.init(modelElementContext.getModelElement(), modelElementContext.getDataBindingContext(),
+	// modelElementContext.getEditingDomain());
+	// }
+	// }
+
+	/**
+	 * Method for enabling databinding on the reference/attribute of the referenced object.
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * 
+	 * @param modelFeature the {@link VDomainModelReference} to bind
+	 * @param targetValue the target observerable
+	 * @param targetToModel update strategy target to model
+	 * @param modelToTarget update strategy model to target
+	 * @return the resulting binding
+	 */
+	protected Binding bindTargetToModel(VDomainModelReference modelFeature, IObservableValue targetValue,
+		UpdateValueStrategy targetToModel,
+		UpdateValueStrategy modelToTarget) {
+		final Setting setting = getSetting(modelFeature);
+		final IObservableValue modelValue = EMFEditObservables.observeValue(modelElementContext.getEditingDomain(),
+			setting.getEObject(), setting.getEStructuralFeature());
+		return modelElementContext.getDataBindingContext().bindValue(targetValue, modelValue, targetToModel,
+			modelToTarget);
+	}
+
+	/**
+	 * Sets the value of the feature to the new value.
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * @param modelReference the {@link VDomainModelReference} to get the value for
+	 * @param newValue the value to be set
+	 */
+	protected void setValue(VDomainModelReference modelReference, Object newValue) {
+		// if (!isEditable) {
+		// throw new UnsupportedOperationException(
+		// "Set value is not supported on ECPCustomControlFeatures that are not editable.");
+		// }
+		final Setting setting = getSetting(modelReference);
+		setting.set(newValue);
+	}
+
+	/**
+	 * Registers a change listener on the referenced object. {@link ECPCustomControlChangeListener#notifyChanged()} will
+	 * be called when a change on the referenced object is noticed.
+	 * 
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * @param modelReference the {@link VDomainModelReference} to register a listener for
+	 * @param changeListener the change listener to register
+	 */
+	protected void registerChangeListener(VDomainModelReference modelReference,
+		final ECPCustomControlChangeListener changeListener) {
+		if (adapterMap.containsKey(modelReference)) {
+			// FIXME handling if an listener already exists
 		}
+		final Setting setting = getSetting(modelReference);
+		final Adapter newAdapter = new AdapterImpl() {
+
+			@Override
+			public void notifyChanged(Notification msg) {
+				if (msg.isTouch()) {
+					return;
+				}
+				if (msg.getFeature().equals(setting.getEStructuralFeature())) {
+					super.notifyChanged(msg);
+					changeListener.notifyChanged();
+				}
+			}
+
+		};
+		setting.getEObject().eAdapters().add(newAdapter);
+		adapterMap.put(modelReference, newAdapter);
 	}
 
-	private void createNecessaryObjects() {
-		// TODO Auto-generated method stub
+	/**
+	 * Returns the current set value of the feature.
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * @param modelReference the {@link VDomainModelReference} to get the value for
+	 * @return the value
+	 */
+	protected Object getValue(VDomainModelReference modelReference) {
+		final Setting setting = getSetting(modelReference);
+		return setting.get(false);
+	}
+
+	/**
+	 * @param modelFeature the {@link VDomainModelReference} to get the Setting for
+	 * @return the setting or throws an {@link IllegalStateException} if too many or too few elements are found.
+	 */
+	private Setting getSetting(VDomainModelReference modelFeature) {
+		final Iterator<Setting> iterator = modelFeature.getIterator();
+		int numElments = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			setting = iterator.next();
+			numElments++;
+		}
+		if (numElments == 0) {
+			throw new IllegalStateException("The VDomainModelReference was not initialised.");
+		}
+		else if (numElments > 1) {
+			throw new IllegalStateException(
+				"The VDomainModelReference is ambigous, please use VDomainModelReference which resolve to exactly one setting.");
+		}
+		// if (!isEditable()) {
+		// throw new IllegalArgumentException("Feature is not registered as editable");
+		// }
+		return setting;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.custom.model.ECPCustomControl#getECPCustomControlFeatures()
+	 * @see org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl#getNeededDomainModelReferences()
 	 */
-	public final Set<ECPCustomControlFeature> getECPCustomControlFeatures() {
+	public final Set<VDomainModelReference> getNeededDomainModelReferences() {
 		return features;
 	}
 
@@ -137,24 +253,28 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	 * 
 	 * @return the {@link IItemPropertyDescriptor}
 	 */
-	private IItemPropertyDescriptor getItemPropertyDescriptor(ECPCustomControlFeature customControlFeature) {
-		return adapterFactoryItemDelegator.getPropertyDescriptor(
-			customControlFeature.getRelevantEObject(),
-			customControlFeature.getTargetFeature());
+	private IItemPropertyDescriptor getItemPropertyDescriptor(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> settings = domainModelReference.getIterator();
+		if (settings.hasNext()) {
+			final Setting setting = settings.next();
+			return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
+				setting.getEStructuralFeature());
+		}
+		return null;
 	}
 
-	private String getHelp(ECPCustomControlFeature customControlFeature) {
-		if (!getECPCustomControlFeatures().contains(customControlFeature)) {
+	private String getHelp(VDomainModelReference domainModelReference) {
+		if (!getNeededDomainModelReferences().contains(domainModelReference)) {
 			throw new IllegalArgumentException("The feature must have been registered before!");
 		}
-		return getItemPropertyDescriptor(customControlFeature).getDescription(null);
+		return getItemPropertyDescriptor(domainModelReference).getDescription(null);
 	}
 
-	private String getLabel(ECPCustomControlFeature customControlFeature) {
-		if (!getECPCustomControlFeatures().contains(customControlFeature)) {
+	private String getLabel(VDomainModelReference domainModelReference) {
+		if (!getNeededDomainModelReferences().contains(domainModelReference)) {
 			throw new IllegalArgumentException("The feature must have been registered before!");
 		}
-		return getItemPropertyDescriptor(customControlFeature).getDisplayName(null);
+		return getItemPropertyDescriptor(domainModelReference).getDisplayName(null);
 	}
 
 	/**
@@ -172,8 +292,9 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
 		}
-		for (final ECPCustomControlFeature feature : features) {
-			feature.dispose();
+		for (final VDomainModelReference domainModelReference : adapterMap.keySet()) {
+			final Setting setting = getSetting(domainModelReference);
+			setting.getEObject().eAdapters().remove(adapterMap.get(domainModelReference));
 		}
 		disposeCustomControl();
 	}
@@ -198,21 +319,26 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	 * Use this method to get an {@link ECPControl} which can be used inside the {@link ECPCustomControl}.
 	 * 
 	 * @param clazz the {@link Class} of the {@link ECPControl} to retrieve
-	 * @param feature the {@link ECPCustomControlFeature} to retrieve a control for
+	 * @param domainModelReference the {@link VDomainModelReference} to retrieve a control for
 	 * @param <T> the type of the control to retrieve
 	 * @return the {@link ECPControl} that is fitting the most for the {@link ECPCustomControlFeature}. Can also be
 	 *         null.
 	 */
-	protected final <T extends ECPControl> T getControl(Class<T> clazz, ECPCustomControlFeature feature) {
-		final T createControl = controlFactory.createControl(clazz, getItemPropertyDescriptor(feature),
+	protected final <T extends ECPControl> T getControl(Class<T> clazz, VDomainModelReference domainModelReference) {
+		final T createControl = controlFactory.createControl(clazz, getItemPropertyDescriptor(domainModelReference),
 			getModelElementContext());
-		controlMap.put(feature.getTargetFeature(), createControl);
-		return createControl;
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		final boolean hasNext = iterator.hasNext();
+		if (hasNext) {
+			controlMap.put(iterator.next().getEStructuralFeature(), createControl);
+			return createControl;
+		}
+		return null;
 	}
 
 	/**
 	 * The {@link CustomControlHelper} allows the retrieval of information based on an
-	 * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature ECPCustomControlFeature}.
+	 * {@link org.eclipse.emf.ecp.ui.view.custom.ECPCustomControlFeature ECPCustomControlFeature}.
 	 * 
 	 * @author Eugen Neufeld
 	 * 
@@ -222,26 +348,22 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		/**
 		 * This return a text providing a long helpful description of the feature. Can be used for example in a ToolTip.
 		 * 
-		 * @param customControlFeature the
-		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature
-		 *            ECPCustomControlFeature} to retrieve the help text for
+		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the help text for
 		 * @return the String containing the helpful description or null if no description is found
 		 */
-		public String getHelp(ECPCustomControlFeature customControlFeature) {
-			return ECPAbstractCustomControl.this.getHelp(customControlFeature);
+		public String getHelp(VDomainModelReference domainModelReference) {
+			return ECPAbstractCustomControl.this.getHelp(domainModelReference);
 		}
 
 		/**
 		 * This return a text providing a short label of the feature. Can be used for example as a label in front of the
 		 * edit field.
 		 * 
-		 * @param customControlFeature the
-		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl.ECPCustomControlFeature
-		 *            ECPCustomControlFeature} to retrieve the text for
+		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the text for
 		 * @return the String containing the label null if no label is found
 		 */
-		public String getLabel(ECPCustomControlFeature customControlFeature) {
-			return ECPAbstractCustomControl.this.getLabel(customControlFeature);
+		public String getLabel(VDomainModelReference domainModelReference) {
+			return ECPAbstractCustomControl.this.getLabel(domainModelReference);
 		}
 	}
 }

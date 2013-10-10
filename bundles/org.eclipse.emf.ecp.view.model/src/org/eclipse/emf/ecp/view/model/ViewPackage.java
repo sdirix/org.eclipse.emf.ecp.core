@@ -208,7 +208,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getControl()
 	 * @generated
 	 */
-	int CONTROL = 12;
+	int CONTROL = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
@@ -220,7 +220,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
 	 * @generated
 	 */
-	int CUSTOM_COMPOSITE = 13;
+	int CUSTOM_COMPOSITE = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
@@ -232,7 +232,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
 	 * @generated
 	 */
-	int COMPOSITE_COLLECTION = 14;
+	int COMPOSITE_COLLECTION = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
@@ -244,7 +244,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
 	 * @generated
 	 */
-	int COLUMN_COMPOSITE = 15;
+	int COLUMN_COMPOSITE = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
@@ -255,7 +255,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
 	 * @generated
 	 */
-	int COLUMN = 16;
+	int COLUMN = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
@@ -269,18 +269,6 @@ public interface ViewPackage extends EPackage {
 	int ACTION = 7;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
-	 * <em>Abstract Control</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
-	 * @generated
-	 */
-	int ABSTRACT_CONTROL = 9;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * <em>VDomain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -290,7 +278,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVDomainModelReference()
 	 * @generated
 	 */
-	int VDOMAIN_MODEL_REFERENCE = 10;
+	int VDOMAIN_MODEL_REFERENCE = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
@@ -302,7 +290,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getVFeaturePathDomainModelReference()
 	 * @generated
 	 */
-	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE = 11;
+	int VFEATURE_PATH_DOMAIN_MODEL_REFERENCE = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.AttachmentImpl <em>Attachment</em>}'
@@ -829,76 +817,6 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_FEATURE_COUNT = RENDERABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__VISIBLE = COMPOSITE__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__ENABLED = COMPOSITE__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__READONLY = COMPOSITE__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__DIAGNOSTIC = COMPOSITE__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL__NAME = COMPOSITE__NAME;
-
-	/**
-	 * The number of structural features of the '<em>Abstract Control</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>VDomain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -946,7 +864,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__VISIBLE = ABSTRACT_CONTROL__VISIBLE;
+	int CONTROL__VISIBLE = COMPOSITE__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -956,7 +874,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__ENABLED = ABSTRACT_CONTROL__ENABLED;
+	int CONTROL__ENABLED = COMPOSITE__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -966,7 +884,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__READONLY = ABSTRACT_CONTROL__READONLY;
+	int CONTROL__READONLY = COMPOSITE__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -976,7 +894,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__DIAGNOSTIC = ABSTRACT_CONTROL__DIAGNOSTIC;
+	int CONTROL__DIAGNOSTIC = COMPOSITE__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -986,7 +904,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__ATTACHMENTS = ABSTRACT_CONTROL__ATTACHMENTS;
+	int CONTROL__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -996,27 +914,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__HINT = ABSTRACT_CONTROL_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
+	int CONTROL__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -1026,17 +924,27 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
+	int CONTROL__LABEL_ALIGNMENT = COMPOSITE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__DOMAIN_MODEL_REFERENCE = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
+	int CONTROL__DOMAIN_MODEL_REFERENCES = COMPOSITE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__CONTROL_ID = COMPOSITE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -1046,7 +954,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
+	int CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1387,7 +1295,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 17;
+	int ALIGNMENT = 16;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1549,43 +1457,17 @@ public interface ViewPackage extends EPackage {
 	EClass getControl();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#getControlId
+	 * <em>Control Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getDomainModelReference()
+	 * @return the meta object for the attribute '<em>Control Id</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Control#getControlId()
 	 * @see #getControl()
 	 * @generated
 	 */
-	EReference getControl_DomainModelReference();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecp.view.model.Control#getHint
-	 * <em>Hint</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute list '<em>Hint</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getHint()
-	 * @see #getControl()
-	 * @generated
-	 */
-	EAttribute getControl_Hint();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#isMandatory
-	 * <em>Mandatory</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Mandatory</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#isMandatory()
-	 * @see #getControl()
-	 * @generated
-	 */
-	EAttribute getControl_Mandatory();
+	EAttribute getControl_ControlId();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment
@@ -1599,6 +1481,19 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getControl_LabelAlignment();
+
+	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReferences <em>Domain Model References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference list '<em>Domain Model References</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Control#getDomainModelReferences()
+	 * @see #getControl()
+	 * @generated
+	 */
+	EReference getControl_DomainModelReferences();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.CustomComposite
@@ -1798,18 +1693,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAction_ClassName();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.AbstractControl
-	 * <em>Abstract Control</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Abstract Control</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
-	 * @generated
-	 */
-	EClass getAbstractControl();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
@@ -2068,31 +1951,13 @@ public interface ViewPackage extends EPackage {
 		EClass CONTROL = eINSTANCE.getControl();
 
 		/**
-		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Control Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
-		EReference CONTROL__DOMAIN_MODEL_REFERENCE = eINSTANCE.getControl_DomainModelReference();
-
-		/**
-		 * The meta object literal for the '<em><b>Hint</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CONTROL__HINT = eINSTANCE.getControl_Hint();
-
-		/**
-		 * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CONTROL__MANDATORY = eINSTANCE.getControl_Mandatory();
+		EAttribute CONTROL__CONTROL_ID = eINSTANCE.getControl_ControlId();
 
 		/**
 		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
@@ -2102,6 +1967,15 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model References</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference CONTROL__DOMAIN_MODEL_REFERENCES = eINSTANCE.getControl_DomainModelReferences();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
@@ -2264,18 +2138,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ACTION__CLASS_NAME = eINSTANCE.getAction_ClassName();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
-		 * <em>Abstract Control</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAbstractControl()
-		 * @generated
-		 */
-		EClass ABSTRACT_CONTROL = eINSTANCE.getAbstractControl();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference

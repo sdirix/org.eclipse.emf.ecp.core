@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.controls;
 
 import java.lang.reflect.Constructor;
@@ -18,6 +30,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
@@ -26,24 +40,40 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.ListDialog;
 
+/**
+ * A control for defining an value in a leaf condition.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+// APITODO no api yet
+@SuppressWarnings("restriction")
 public class ExpectedValueControl extends SingleControl {
 
 	private Label text;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param showLabel whether to show a label
+	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
+	 * @param feature the {@link EStructuralFeature} of this control
+	 * @param modelElementContext the {@link ECPControlContext} of this control
+	 * @param embedded whether this control is embedded
+	 */
 	public ExpectedValueControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
 		// TODO Auto-generated constructor stub
 	}
 
-	protected String getTextVariantID() {
+	private String getTextVariantID() {
 		return "org_eclipse_emf_ecp_view_editor_controls_ruleattribute";
 	}
 
@@ -52,9 +82,16 @@ public class ExpectedValueControl extends SingleControl {
 		text.setBackground(color);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#fillControlComposite(org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
-	protected void fillControlComposite(Composite composite) {
-		((GridLayout) composite.getLayout()).numColumns = 2;
+	protected void fillControlComposite(Composite parent) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 		final Button bSelectObject = new Button(composite, SWT.PUSH);
 		bSelectObject.setText("Select Object");
 
@@ -151,6 +188,11 @@ public class ExpectedValueControl extends SingleControl {
 		});
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.ECPControl#setEditable(boolean)
+	 */
 	public void setEditable(boolean isEditable) {
 		// text.setEditable(isEditable);
 	}
@@ -160,17 +202,6 @@ public class ExpectedValueControl extends SingleControl {
 		if (getModelValue().getValue() != null) {
 			text.setText(getModelValue().getValue().toString());
 		}
-		// IObservableValue value = SWTObservables.observeText(text,
-		// SWT.FocusOut);
-		// getDataBindingContext().bindValue(value, getModelValue());
-		// ,
-		// new EMFUpdateValueStrategy() {
-		// @Override
-		// public Object convert(Object value) {
-		// updateValidationColor(null);
-		// return super.convert(value);
-		// }
-		// },null
 		return null;
 	}
 
@@ -181,19 +212,16 @@ public class ExpectedValueControl extends SingleControl {
 
 	@Override
 	protected Control[] getControlsForTooltip() {
-		// TODO Auto-generated method stub
 		return new Control[] { text };
 	}
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		// TODO Auto-generated method stub
 		return "Unset Button";
 	}
 
 	@Override
 	protected String getUnsetLabelText() {
-		// TODO Auto-generated method stub
 		return "Unset Button";
 	}
 

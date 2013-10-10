@@ -12,8 +12,6 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -21,7 +19,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -34,49 +33,16 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getHint <em>Hint</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getDomainModelReference <em>Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getDomainModelReferences <em>Domain Model References</em>}
+ * </li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getControlId <em>Control Id</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class ControlImpl extends AbstractControlImpl implements Control {
-	/**
-	 * The cached value of the '{@link #getHint() <em>Hint</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getHint()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> hint;
-
-	/**
-	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isMandatory()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean MANDATORY_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isMandatory()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean mandatory = MANDATORY_EDEFAULT;
-
+public class ControlImpl extends CompositeImpl implements Control {
 	/**
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -100,16 +66,38 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	protected Alignment labelAlignment = LABEL_ALIGNMENT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
-	 * reference.
+	 * The cached value of the '{@link #getDomainModelReferences() <em>Domain Model References</em>}' containment
+	 * reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see #getDomainModelReference()
+	 * @see #getDomainModelReferences()
 	 * @generated
 	 * @ordered
 	 */
-	protected VDomainModelReference domainModelReference;
+	protected EList<VDomainModelReference> domainModelReferences;
+
+	/**
+	 * The default value of the '{@link #getControlId() <em>Control Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getControlId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONTROL_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getControlId() <em>Control Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getControlId()
+	 * @generated
+	 * @ordered
+	 */
+	protected String controlId = CONTROL_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -138,9 +126,9 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public VDomainModelReference getDomainModelReference()
+	public String getControlId()
 	{
-		return domainModelReference;
+		return controlId;
 	}
 
 	/**
@@ -149,52 +137,13 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
-		NotificationChain msgs)
+	public void setControlId(String newControlId)
 	{
-		final VDomainModelReference oldDomainModelReference = domainModelReference;
-		domainModelReference = newDomainModelReference;
+		String oldControlId = controlId;
+		controlId = newControlId;
 		if (eNotificationRequired())
-		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null) {
-				msgs = notification;
-			} else {
-				msgs.add(notification);
-			}
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
-	{
-		if (newDomainModelReference != domainModelReference)
-		{
-			NotificationChain msgs = null;
-			if (domainModelReference != null) {
-				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			}
-			if (newDomainModelReference != null) {
-				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			}
-			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null) {
-				msgs.dispatch();
-			}
-		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE,
-				newDomainModelReference, newDomainModelReference));
-		}
+			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__CONTROL_ID, oldControlId,
+				controlId));
 	}
 
 	/**
@@ -208,49 +157,10 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	{
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			return basicSetDomainModelReference(null, msgs);
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
+			return ((InternalEList<?>) getDomainModelReferences()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EList<String> getHint() {
-		if (hint == null)
-		{
-			hint = new EDataTypeUniqueEList<String>(String.class, this, ViewPackage.CONTROL__HINT);
-		}
-		return hint;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public boolean isMandatory() {
-		return mandatory;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setMandatory(boolean newMandatory) {
-		final boolean oldMandatory = mandatory;
-		mandatory = newMandatory;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
-				mandatory));
-		}
 	}
 
 	/**
@@ -272,12 +182,27 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	public void setLabelAlignment(Alignment newLabelAlignment)
 	{
-		final Alignment oldLabelAlignment = labelAlignment;
+		Alignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EList<VDomainModelReference> getDomainModelReferences()
+	{
+		if (domainModelReferences == null)
+		{
+			domainModelReferences = new EObjectContainmentEList<VDomainModelReference>(VDomainModelReference.class,
+				this, ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES);
 		}
+		return domainModelReferences;
 	}
 
 	/**
@@ -290,14 +215,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			return getHint();
-		case ViewPackage.CONTROL__MANDATORY:
-			return isMandatory();
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			return getLabelAlignment();
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			return getDomainModelReference();
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
+			return getDomainModelReferences();
+		case ViewPackage.CONTROL__CONTROL_ID:
+			return getControlId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -313,18 +236,15 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			getHint().clear();
-			getHint().addAll((Collection<? extends String>) newValue);
-			return;
-		case ViewPackage.CONTROL__MANDATORY:
-			setMandatory((Boolean) newValue);
-			return;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			setLabelAlignment((Alignment) newValue);
 			return;
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			setDomainModelReference((VDomainModelReference) newValue);
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
+			getDomainModelReferences().clear();
+			getDomainModelReferences().addAll((Collection<? extends VDomainModelReference>) newValue);
+			return;
+		case ViewPackage.CONTROL__CONTROL_ID:
+			setControlId((String) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -340,17 +260,14 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			getHint().clear();
-			return;
-		case ViewPackage.CONTROL__MANDATORY:
-			setMandatory(MANDATORY_EDEFAULT);
-			return;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
 			return;
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			setDomainModelReference((VDomainModelReference) null);
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
+			getDomainModelReferences().clear();
+			return;
+		case ViewPackage.CONTROL__CONTROL_ID:
+			setControlId(CONTROL_ID_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -366,14 +283,12 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			return hint != null && !hint.isEmpty();
-		case ViewPackage.CONTROL__MANDATORY:
-			return mandatory != MANDATORY_EDEFAULT;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
-			return domainModelReference != null;
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
+			return domainModelReferences != null && !domainModelReferences.isEmpty();
+		case ViewPackage.CONTROL__CONTROL_ID:
+			return CONTROL_ID_EDEFAULT == null ? controlId != null : !CONTROL_ID_EDEFAULT.equals(controlId);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -386,28 +301,16 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (hint: ");
-		result.append(hint);
-		result.append(", mandatory: ");
-		result.append(mandatory);
-		result.append(", labelAlignment: ");
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (labelAlignment: ");
 		result.append(labelAlignment);
+		result.append(", controlId: ");
+		result.append(controlId);
 		result.append(')');
 		return result.toString();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.AbstractControl#getDomainModelReferences()
-	 */
-	public Set<VDomainModelReference> getDomainModelReferences() {
-		return Collections.singleton(getDomainModelReference());
 	}
 
 } // ControlImpl

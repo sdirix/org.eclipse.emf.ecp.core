@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
@@ -161,6 +162,34 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		}
 
 		return tableColumnItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected TableDomainModelReferenceItemProvider tableDomainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createTableDomainModelReferenceAdapter()
+	{
+		if (tableDomainModelReferenceItemProvider == null)
+		{
+			tableDomainModelReferenceItemProvider = new TableDomainModelReferenceItemProvider(this);
+		}
+
+		return tableDomainModelReferenceItemProvider;
 	}
 
 	/**
@@ -308,6 +337,8 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			tableControlItemProvider.dispose();
 		if (tableColumnItemProvider != null)
 			tableColumnItemProvider.dispose();
+		if (tableDomainModelReferenceItemProvider != null)
+			tableDomainModelReferenceItemProvider.dispose();
 	}
 
 	/**
@@ -384,6 +415,23 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 					(createChildParameter
 					(ViewPackage.Literals.CATEGORY__COMPOSITE,
 						VTableFactory.eINSTANCE.createTableControl()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 * 
+			 * @generated
+			 */
+			@Override
+			public Object caseControl(Control object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES,
+						VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 				return null;
 			}

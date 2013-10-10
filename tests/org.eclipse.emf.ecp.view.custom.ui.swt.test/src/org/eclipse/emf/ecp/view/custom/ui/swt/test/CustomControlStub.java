@@ -43,7 +43,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> createControls(Composite composite) {
+	public List<RenderingResultRow<Control>> createControls(Composite composite) {
 		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
 
 		setParent(composite);

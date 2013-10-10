@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
@@ -174,17 +173,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.ABSTRACT_CONTROL: {
-			AbstractControl abstractControl = (AbstractControl) theEObject;
-			T result = caseAbstractControl(abstractControl);
-			if (result == null)
-				result = caseComposite(abstractControl);
-			if (result == null)
-				result = caseRenderable(abstractControl);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		case ViewPackage.VDOMAIN_MODEL_REFERENCE: {
 			VDomainModelReference vDomainModelReference = (VDomainModelReference) theEObject;
 			T result = caseVDomainModelReference(vDomainModelReference);
@@ -204,8 +192,6 @@ public class ViewSwitch<T> extends Switch<T> {
 		case ViewPackage.CONTROL: {
 			Control control = (Control) theEObject;
 			T result = caseControl(control);
-			if (result == null)
-				result = caseAbstractControl(control);
 			if (result == null)
 				result = caseComposite(control);
 			if (result == null)
@@ -456,22 +442,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAction(Action object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Abstract Control</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Abstract Control</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAbstractControl(AbstractControl object) {
 		return null;
 	}
 

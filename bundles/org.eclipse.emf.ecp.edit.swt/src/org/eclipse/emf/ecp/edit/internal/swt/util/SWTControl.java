@@ -35,9 +35,11 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
@@ -218,8 +220,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 		parentComposite.setLayout(sl);
 		controlComposite = new Composite(parentComposite, SWT.NONE);
 		controlComposite.setBackground(parentComposite.getBackground());
-		// 1 column for control, 1 for default unset button
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(controlComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
 		unsetLabel.setBackground(composite.getBackground());
@@ -248,12 +248,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 				// nothing to do
 			}
 		});
-
+		int numControls = 1;
 		fillControlComposite(controlComposite);
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			Button unsetButton = getCustomUnsetButton();
 			if (unsetButton == null) {
+				numControls++;
 				unsetButton = new Button(controlComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
 				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
@@ -273,6 +274,10 @@ public abstract class SWTControl extends ECPAbstractControl {
 			});
 			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset"); //$NON-NLS-1$
 		}
+
+		// 1 column for control, 1 for default unset button
+		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0).extendedMargins(10, 0, 0, 0)
+			.applyTo(controlComposite);
 
 		if (!getStructuralFeature().isUnsettable()
 			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {

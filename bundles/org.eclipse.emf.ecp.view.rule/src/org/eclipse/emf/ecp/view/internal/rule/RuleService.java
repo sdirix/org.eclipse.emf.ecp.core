@@ -28,8 +28,8 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Attachment;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -356,8 +356,8 @@ public class RuleService extends AbstractViewService {
 
 	private void unset(Renderable renderable) {
 
-		if (renderable instanceof AbstractControl) {
-			final AbstractControl control = (AbstractControl) renderable;
+		if (renderable instanceof Control) {
+			final Control control = (Control) renderable;
 			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
 				final Iterator<Setting> settings = domainModelReference.getIterator();
 				while (settings.hasNext()) {
