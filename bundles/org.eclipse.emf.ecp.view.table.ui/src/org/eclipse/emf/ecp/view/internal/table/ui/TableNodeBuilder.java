@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.view.internal.table.ui;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecp.internal.ui.view.builders.ControlNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
-import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 
@@ -40,7 +40,7 @@ public class TableNodeBuilder implements CustomNodeBuilder {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
 		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>();
 
-		builders.put(VTableControl.class, new RenderableNodeBuilder<VTableControl>());
+		builders.put(VTableControl.class, new ControlNodeBuilder<VTableControl>());
 
 		return builders;
 	}

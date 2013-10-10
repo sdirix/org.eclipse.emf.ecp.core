@@ -290,24 +290,33 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		if (domainModel == null || domainModelEFeatureValue == null) {
 			return false;
 		}
-		lastResolvedEObject = domainModel;
-		leftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
+
+		EObject currentResolvedEObject = domainModel;
+		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
 			if (eReference.isMany()) {
 				break;
 			}
-			if (!eReference.eContainer().equals(lastResolvedEObject.eClass())) {
+			if (!eReference.eContainer().equals(currentResolvedEObject.eClass())) {
 				return false;
 			}
-			EObject child = (EObject) lastResolvedEObject.eGet(eReference);
+			EObject child = (EObject) currentResolvedEObject.eGet(eReference);
 			if (child == null) {
 				child = EcoreUtil.create(eReference.getEReferenceType());
-				lastResolvedEObject.eSet(eReference, child);
+				currentResolvedEObject.eSet(eReference, child);
 			}
-			lastResolvedEObject = child;
-			leftReferences.remove(eReference);
+			currentResolvedEObject = child;
+			currentLeftReferences.remove(eReference);
 		}
-
+		// FIXME this check is currently needed to ignore resolve tries with a wrong EObject
+		// workaround block start
+		if (lastResolvedEObject != null && currentLeftReferences.isEmpty()
+			&& !currentResolvedEObject.eClass().getEAllStructuralFeatures().contains(getDomainModelEFeature())) {
+			return false;
+		}
+		// workaround block end
+		lastResolvedEObject = currentResolvedEObject;
+		leftReferences = currentLeftReferences;
 		return true;
 	}
 

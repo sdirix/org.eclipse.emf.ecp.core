@@ -91,7 +91,9 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			final ReferenceCounter referenceCounter = references.get(i);
 			final EReference eReference = referenceCounter.eReference;
 			EObject child;
-
+			if (!current.eClass().getEAllStructuralFeatures().contains(eReference)) {
+				return null;
+			}
 			if (!eReference.isMany()) {
 				child = (EObject) current.eGet(eReference);
 			}
@@ -117,6 +119,9 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			}
 			current = child;
 
+		}
+		if (!current.eClass().getEAllStructuralFeatures().contains(domainModelFeature)) {
+			return null;
 		}
 		return ((InternalEObject) current).eSetting(domainModelFeature);
 	}
