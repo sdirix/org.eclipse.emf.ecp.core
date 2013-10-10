@@ -53,6 +53,9 @@ public final class SWTViewTestHelper {
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(
 			input, shell, renderable);
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(renderable, context);
+		if (node == null) {
+			return null;
+		}
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(

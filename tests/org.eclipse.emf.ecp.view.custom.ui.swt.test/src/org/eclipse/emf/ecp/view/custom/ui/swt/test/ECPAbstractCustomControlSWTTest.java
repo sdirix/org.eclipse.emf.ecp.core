@@ -20,8 +20,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -297,7 +297,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	public static Set<ECPCustomControlFeature> createFeatures() {
 
-		allFeatures = new HashSet<ECPCustomControlFeature>();
+		allFeatures = new LinkedHashSet<ECPCustomControlFeature>();
 		allFeatures.addAll(createEditableFeatures());
 		allFeatures.addAll(createReferencedFeatures());
 
@@ -309,7 +309,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	public static Set<ECPCustomControlFeature> createReferencedFeatures() {
 		if (referencedFeatures == null) {
-			referencedFeatures = new HashSet<ECPCustomControlFeature>();
+			referencedFeatures = new LinkedHashSet<ECPCustomControlFeature>();
 			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
@@ -325,7 +325,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	public static Set<ECPCustomControlFeature> createEditableFeatures() {
 		if (editableFeaturess == null) {
-			editableFeaturess = new HashSet<ECPCustomControlFeature>();
+			editableFeaturess = new LinkedHashSet<ECPCustomControlFeature>();
 			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
@@ -532,7 +532,7 @@ public class ECPAbstractCustomControlSWTTest {
 		validationLabel.setImage(customControl.getStubSWTHelper().getImage(
 			ECPAbstractCustomControlSWT.VALIDATION_ERROR_IMAGE));
 		customControl.resetValidation();
-		assertEquals(null, validationLabel.getImage());
+		assertEquals(false, validationLabel.isVisible());
 	}
 
 	@Test

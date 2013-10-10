@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.internal.ui.view.builders;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Leaf;
@@ -35,9 +37,12 @@ public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
 	 */
 	public Node<C> build(C renderable, ECPControlContext controlContext,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-
-		final Setting setting = renderable.getDomainModelReference().getIterator().next();
-		final ECPControlContext subContext = controlContext.createSubContext(setting.getEObject());
-		return new Leaf<C>(renderable, subContext);
+		final Iterator<Setting> settings = renderable.getDomainModelReference().getIterator();
+		if (settings.hasNext()) {
+			final Setting setting = settings.next();
+			final ECPControlContext subContext = controlContext.createSubContext(setting.getEObject());
+			return new Leaf<C>(renderable, subContext);
+		}
+		return null;
 	}
 }
