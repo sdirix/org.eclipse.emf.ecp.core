@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -102,6 +104,24 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 
 		// move to some cleanup service
 		createNecessaryObjects();
+	}
+
+	/**
+	 * The {@link DataBindingContext} to use by this {@link ECPAbstractCustomControl}.
+	 * 
+	 * @return the {@link DataBindingContext} to use
+	 */
+	protected final DataBindingContext getDataBindingContext() {
+		return modelElementContext.getDataBindingContext();
+	}
+
+	/**
+	 * An {@link EditingDomain} for this {@link ECPAbstractCustomControl}.
+	 * 
+	 * @return the {@link EditingDomain} to use
+	 */
+	protected final EditingDomain getEditingDomain() {
+		return modelElementContext.getEditingDomain();
 	}
 
 	private void initFeatures() {
@@ -223,8 +243,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		/**
 		 * This return a text providing a long helpful description of the feature. Can be used for example in a ToolTip.
 		 * 
-		 * @param customControlFeature the
-		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature
+		 * @param customControlFeature the {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature
 		 *            ECPCustomControlFeature} to retrieve the help text for
 		 * @return the String containing the helpful description or null if no description is found
 		 */
@@ -236,8 +255,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		 * This return a text providing a short label of the feature. Can be used for example as a label in front of the
 		 * edit field.
 		 * 
-		 * @param customControlFeature the
-		 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature
+		 * @param customControlFeature the {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature
 		 *            ECPCustomControlFeature} to retrieve the text for
 		 * @return the String containing the label null if no label is found
 		 */
