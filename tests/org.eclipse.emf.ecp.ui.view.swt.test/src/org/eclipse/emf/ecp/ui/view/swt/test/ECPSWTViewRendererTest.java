@@ -14,10 +14,13 @@ package org.eclipse.emf.ecp.ui.view.swt.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -29,6 +32,7 @@ import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,10 +84,7 @@ public class ECPSWTViewRendererTest {
 	@Test
 	public void testViewWithControls() throws ECPRendererException {
 		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
-		control.setDomainModelReference(domainModelReference);
+		assignPlayerNameFeature(control);
 		view.getChildren().add(control);
 
 		final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
@@ -93,4 +94,81 @@ public class ECPSWTViewRendererTest {
 		final Composite composite = (Composite) swtControl;
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(composite));
 	}
+
+	private void assignPlayerNameFeature(final org.eclipse.emf.ecp.view.model.Control control) {
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		control.setDomainModelReference(domainModelReference);
+	}
+
+	@Test
+	/**
+	 * Adds 2 controls and set them as readonly
+	 */
+	public void testAllReadOnly() throws ECPRendererException {
+		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE.createControl();
+		assignPlayerNameFeature(control);
+		final org.eclipse.emf.ecp.view.model.Control control1 = ViewFactory.eINSTANCE.createControl();
+		assignPlayerNameFeature(control1);
+
+		final Column column = ViewFactory.eINSTANCE.createColumn();
+		view.getChildren().add(column);
+		column.getComposites().add(control);
+		column.getComposites().add(control1);
+
+		view.setAllContentsReadOnly();
+
+		assertTrue(control.isReadonly());
+		assertTrue(control1.isReadonly());
+
+		final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+		final Control swtControl = swtView.getSWTControl();
+		assertTrue(swtControl instanceof Composite);
+
+		final Composite composite = (Composite) swtControl;
+
+		final List<Text> textFields = getTextField(composite);
+
+		assertEquals(2, textFields.size());
+		for (final Text text : textFields) {
+			assertTrue(!text.getEditable());
+		}
+
+	}
+
+	/**
+	 * @param composite
+	 * @return
+	 */
+	private List<Text> getTextField(Composite composite) {
+		return SWTViewTestHelper.getAllTextControls(composite);
+	}
+
+	@Test
+	/**
+	 * set Empty View as ReadOnly
+	 */
+	public void testViewWithOneContainerReadOnly() {
+
+		final Column column = ViewFactory.eINSTANCE.createColumn();
+		view.getChildren().add(column);
+		view.setAllContentsReadOnly();
+		assertTrue(view.isReadonly());
+		assertTrue(column.isReadonly());
+
+	}
+
+	@Test
+	/**
+	 * set Empty View as ReadOnly
+	 */
+	public void testEmptyViewReadOnly() {
+
+		view.setAllContentsReadOnly();
+		// if we reach here, it means there is no error or exception
+		assertTrue(view.isReadonly());
+
+	}
+
 }

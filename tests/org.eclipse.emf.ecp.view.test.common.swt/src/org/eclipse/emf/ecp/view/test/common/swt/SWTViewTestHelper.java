@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.test.common.swt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -105,5 +106,19 @@ public final class SWTViewTestHelper {
 		final Control textControl = controlComposite.getChildren()[0];
 
 		return textControl instanceof Text;
+	}
+
+	public static List<Text> getAllTextControls(Control control) {
+		final Composite controlComposite = (Composite) control;
+		final List<Text> textFields = new ArrayList<Text>();
+		for (final Control textControl : controlComposite.getChildren()) {
+			if (textControl instanceof Text) {
+				textFields.add((Text) textControl);
+			}
+			else if (textControl instanceof Composite) {
+				textFields.addAll(getAllTextControls(textControl));
+			}
+		}
+		return textFields;
 	}
 }

@@ -16,12 +16,15 @@ import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
@@ -92,13 +95,14 @@ public class ViewImpl extends CategorizationImpl implements View {
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy())
 		{
-			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
 			if (rootEClass != oldRootEClass)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
+				}
 			}
 		}
 		return rootEClass;
@@ -121,11 +125,12 @@ public class ViewImpl extends CategorizationImpl implements View {
 	 * @generated
 	 */
 	public void setRootEClass(EClass newRootEClass) {
-		EClass oldRootEClass = rootEClass;
+		final EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.VIEW__ROOT_ECLASS, oldRootEClass,
 				rootEClass));
+		}
 	}
 
 	/**
@@ -169,8 +174,9 @@ public class ViewImpl extends CategorizationImpl implements View {
 		switch (featureID)
 		{
 		case ViewPackage.VIEW__ROOT_ECLASS:
-			if (resolve)
+			if (resolve) {
 				return getRootEClass();
+			}
 			return basicGetRootEClass();
 		case ViewPackage.VIEW__CHILDREN:
 			return getChildren();
@@ -236,6 +242,24 @@ public class ViewImpl extends CategorizationImpl implements View {
 			return children != null && !children.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.View#setAllContentsReadOnly()
+	 */
+	public void setAllContentsReadOnly() {
+		final TreeIterator<EObject> contents = super.eAllContents();
+		setReadonly(true);
+		while (contents.hasNext()) {
+			final EObject object = contents.next();
+			if (object instanceof Renderable) {
+				final Renderable next = (Renderable) object;
+				next.setReadonly(true);
+			}
+		}
+
 	}
 
 } // ViewImpl

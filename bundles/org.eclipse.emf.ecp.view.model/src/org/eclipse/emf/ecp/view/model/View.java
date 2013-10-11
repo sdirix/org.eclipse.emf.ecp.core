@@ -77,4 +77,9 @@ public interface View extends Categorization {
 	 */
 	EList<Composite> getChildren();
 
+	/**
+	 * Sets the view and all its contents readonly.
+	 */
+	void setAllContentsReadOnly();
+
 } // View
