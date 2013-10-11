@@ -18,7 +18,8 @@ import java.lang.ref.ReferenceQueue;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Convenience class for 
+ * Convenience class for expecting objects to be garbage collected.
+ * Because GC is non-deterministic there's no time constrained guarantee, when {@code isCollectable} returns true.
  * 
  * @author emueller
  */
@@ -60,6 +61,7 @@ public class GCCollectable {
 					}
 					if (phantomRef == ref) {
 						result = true;
+						runMe = false;
 					}
 				}
 			}
