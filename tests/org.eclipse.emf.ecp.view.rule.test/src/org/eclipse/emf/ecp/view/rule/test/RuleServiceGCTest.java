@@ -150,20 +150,6 @@ public class RuleServiceGCTest extends CommonRuleTest {
 	}
 
 	@Test
-	public void testRemoveLeafConditionOfShowRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
-		final League league = tuple.second();
-		addShowRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
-		final GCCollectable collectable = new GCCollectable(
-			((ShowRule) view.getChildren().get(0).getAttachments().get(0)).getCondition());
-		instantiateRuleService(view, league);
-		final ShowRule showRule = (ShowRule) view.getChildren().get(0).getAttachments().get(0);
-		showRule.setCondition(null);
-		assertTrue(collectable.isCollectable());
-	}
-
-	@Test
 	public void testRemoveLeafConditionOfShowRuleReevaluate() {
 		final Tuple<View, League> tuple = createView();
 		final View view = tuple.first();
@@ -237,11 +223,23 @@ public class RuleServiceGCTest extends CommonRuleTest {
 		final Tuple<View, League> tuple = createView();
 		final View view = tuple.first();
 		final League league = tuple.second();
-		addEnableRule(view.getChildren().get(0), true, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
-		final GCCollectable collectable = new GCCollectable(
-			((EnableRule) view.getChildren().get(0).getAttachments().get(0)).getCondition());
+		addEnableRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
+		final EnableRule enableRule = (EnableRule) view.getChildren().get(0).getAttachments().get(0);
+		final GCCollectable collectable = new GCCollectable(enableRule.getCondition());
 		instantiateRuleService(view, league);
-		final EnableRule showRule = (EnableRule) view.getChildren().get(0).getAttachments().get(0);
+		enableRule.setCondition(null);
+		assertTrue(collectable.isCollectable());
+	}
+
+	@Test
+	public void testRemoveLeafConditionOfShowRule() {
+		final Tuple<View, League> tuple = createView();
+		final View view = tuple.first();
+		final League league = tuple.second();
+		addShowRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
+		final ShowRule showRule = (ShowRule) view.getChildren().get(0).getAttachments().get(0);
+		final GCCollectable collectable = new GCCollectable(showRule.getCondition());
+		instantiateRuleService(view, league);
 		showRule.setCondition(null);
 		assertTrue(collectable.isCollectable());
 	}
