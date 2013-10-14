@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.BidirectionalMap;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
@@ -43,14 +44,14 @@ import org.eclipse.emf.ecp.view.rule.model.Rule;
 public class RuleRegistry<T extends Rule> {
 
 	private final Map<UniqueSetting, Set<T>> settingToRules;
-	private final BidirectionalMap<T, Renderable> ruleAndRenderables;
+	private final BidirectionalMap<T, Renderable> rulesToRenderables;
 
 	/**
 	 * Default constructor.
 	 */
 	public RuleRegistry() {
 		settingToRules = new LinkedHashMap<UniqueSetting, Set<T>>();
-		ruleAndRenderables = new BidirectionalMap<T, Renderable>();
+		rulesToRenderables = new BidirectionalMap<T, Renderable>();
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class RuleRegistry<T extends Rule> {
 
 		if (condition == null) {
 			mapSettingToRule(createSetting(domainModel, AllEAttributes.get()), rule);
-			ruleAndRenderables.put(rule, renderable);
+			rulesToRenderables.put(rule, renderable);
 		} else if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
@@ -80,14 +81,14 @@ public class RuleRegistry<T extends Rule> {
 			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
 			while (settingIterator.hasNext()) {
 				final Setting setting = settingIterator.next();
-				// FIXME needed?
-				// yes, because we need to compare settings with each other and the default implementation
+				// unique settings are needed to compare settings with each other.
+				// The default implementation of ESettting
 				// does not provide and appropriate equals()/hashCode() implementation
 				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
 				mapSettingToRule(uniqueSetting, rule);
 
-				ruleAndRenderables.put(rule, renderable);
+				rulesToRenderables.put(rule, renderable);
 			}
 
 		} else if (condition instanceof OrCondition) {
@@ -118,7 +119,7 @@ public class RuleRegistry<T extends Rule> {
 			for (final Set<T> set : values) {
 				set.remove(rule);
 			}
-			ruleAndRenderables.removeK(rule);
+			rulesToRenderables.removeByKey(rule);
 		}
 	}
 
@@ -129,8 +130,8 @@ public class RuleRegistry<T extends Rule> {
 	 *            the renderable to be removed
 	 */
 	public void removeRenderable(Renderable renderable) {
-		final T v = ruleAndRenderables.getV(renderable);
-		ruleAndRenderables.removeV(renderable);
+		final T v = rulesToRenderables.getKey(renderable);
+		rulesToRenderables.removeByValue(renderable);
 		final Collection<Set<T>> values = settingToRules.values();
 		for (final Set<T> set : values) {
 			set.remove(v);
@@ -153,16 +154,13 @@ public class RuleRegistry<T extends Rule> {
 			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
 			while (settingIterator.hasNext()) {
 				final Setting setting = settingIterator.next();
-				// FIXME needed?
-				// yes, because we need to compare settings with each other and the default implementation
-				// does not provide and appropriate equals()/hashCode() implementation
 				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
 				final Set<T> set = settingToRules.get(uniqueSetting);
 
 				if (set != null) {
 					for (final T t : set) {
-						ruleAndRenderables.removeK(t);
+						rulesToRenderables.removeByKey(t);
 					}
 				}
 
@@ -220,7 +218,7 @@ public class RuleRegistry<T extends Rule> {
 		}
 
 		for (final T rule : rules) {
-			final Renderable renderable = ruleAndRenderables.getK(rule);
+			final Renderable renderable = rulesToRenderables.getValue(rule);
 			result.put(rule, renderable);
 		}
 
