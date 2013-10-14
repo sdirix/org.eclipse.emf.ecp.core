@@ -29,7 +29,6 @@ import org.eclipse.emf.ecp.view.validation.VDiagnosticHelper;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -79,10 +78,8 @@ public class VDiagnosticHelperTest {
 	}
 
 	@Test
-	@Ignore
-	// TODO: to be true or not to be true?
 	public void testBothArgsNull() {
-		assertFalse(VDiagnosticHelper.isEqual(null, null));
+		assertTrue(VDiagnosticHelper.isEqual(null, null));
 	}
 
 	@Test
