@@ -264,7 +264,6 @@ public class NumericalControl extends AbstractTextControl {
 			if (result == null) {
 				getText().setText(""); //$NON-NLS-1$
 			} else {
-				getText().setText(format.format(result));
 				getDataBindingContext().updateTargets();
 			}
 
