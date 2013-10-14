@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -310,7 +310,7 @@ public class ValidationService extends AbstractViewService {
 	}
 
 	private Set<Diagnostic> getDiagnosticResult() {
-		final Set<Diagnostic> result = new HashSet<Diagnostic>();
+		final Set<Diagnostic> result = new LinkedHashSet<Diagnostic>();
 		if (renderable.getDiagnostic().getHighestSeverity() > Diagnostic.OK) {
 			for (final Object o : renderable.getDiagnostic().getDiagnostics()) {
 				if (((Diagnostic) o).getSeverity() > Diagnostic.OK) {

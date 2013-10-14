@@ -19,7 +19,6 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
@@ -128,13 +127,7 @@ public abstract class ViewModelGraph<T> {
 		final Set<ViewModelGraphNode<T>> nodes = node.getParents();
 		updateRenderable((Renderable) node.getSetting().getEObject());
 
-		for (final ViewModelGraphNode<T> n : nodes) {
-			final UniqueSetting setting = n.getSetting();
-			updateRenderable((Renderable) setting.getEObject());
-			updated.add(setting.getEObject());
-		}
-
-		for (final ViewModelGraphNode<T> cachedNode : node.getParents()) {
+		for (final ViewModelGraphNode<T> cachedNode : nodes) {
 			updated.addAll(updateParentNodes(cachedNode));
 		}
 
@@ -174,12 +167,12 @@ public abstract class ViewModelGraph<T> {
 		final ViewModelGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
 
 		if (node != null) {
-			// domain nodes are always leaf, no need to take care of their children
 			final Set<ViewModelGraphNode<T>> parents = node.getParents();
 			for (final ViewModelGraphNode<T> parentNode : new LinkedHashSet<ViewModelGraphNode<T>>(parents)) {
 				parentNode.removeChild(node);
 				updateParentNodes(parentNode);
 			}
+			// renderable nodes are not leafs
 			final Iterator<ViewModelGraphNode<T>> children = node.getChildren();
 			while (children.hasNext()) {
 				node.removeChild(children.next());
@@ -206,18 +199,19 @@ public abstract class ViewModelGraph<T> {
 		final ViewModelGraphNode<T> renderableNode = getNodeForRenderable(renderable);
 		final ViewModelGraphNode<T> domainNode = getNodeForDomainObject(domainObject, feature, value);
 
-		if (!renderableNode.containsChild(domainNode)) {
-			renderableNode.addChild(domainNode);
-		}
-
 		affectedParentNodes.add(renderableNode);
 
 		if (domainObjectHasBeenRemoved(domainObject, feature)) {
 			removeChildFromParents(domainNode);
-		} else {
-			// we only change a node's value if it contains a domain object
-			domainNode.setValue(value);
+			return affectedParentNodes;
 		}
+
+		if (!renderableNode.containsChild(domainNode)) {
+			renderableNode.addChild(domainNode);
+		}
+
+		// we only change a node's value if it contains a domain object
+		domainNode.setValue(value);
 
 		return affectedParentNodes;
 	}
