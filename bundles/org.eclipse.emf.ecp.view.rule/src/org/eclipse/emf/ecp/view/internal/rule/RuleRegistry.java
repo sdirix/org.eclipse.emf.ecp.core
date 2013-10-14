@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +30,7 @@ import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
+import org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl;
 
 /**
  * Rule registry that maintains which {@link Renderable}s
@@ -43,14 +43,19 @@ import org.eclipse.emf.ecp.view.rule.model.Rule;
  */
 public class RuleRegistry<T extends Rule> {
 
-	private final Map<UniqueSetting, Set<T>> settingToRules;
+	/** Helper class for use with a rule that does not have a condition set. **/
+	static class NoCondition extends LeafConditionImpl {
+	}
+
+	private static NoCondition noCondition = new NoCondition();
+	private final Map<UniqueSetting, BidirectionalMap<LeafCondition, T>> settingToRules;
 	private final BidirectionalMap<T, Renderable> rulesToRenderables;
 
 	/**
 	 * Default constructor.
 	 */
 	public RuleRegistry() {
-		settingToRules = new LinkedHashMap<UniqueSetting, Set<T>>();
+		settingToRules = new LinkedHashMap<UniqueSetting, BidirectionalMap<LeafCondition, T>>();
 		rulesToRenderables = new BidirectionalMap<T, Renderable>();
 	}
 
@@ -71,7 +76,7 @@ public class RuleRegistry<T extends Rule> {
 	public void register(Renderable renderable, T rule, Condition condition, EObject domainModel) {
 
 		if (condition == null) {
-			mapSettingToRule(createSetting(domainModel, AllEAttributes.get()), rule);
+			mapSettingToRule(createSetting(domainModel, AllEAttributes.get()), noCondition, rule);
 			rulesToRenderables.put(rule, renderable);
 		} else if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
@@ -86,7 +91,7 @@ public class RuleRegistry<T extends Rule> {
 				// does not provide and appropriate equals()/hashCode() implementation
 				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
-				mapSettingToRule(uniqueSetting, rule);
+				mapSettingToRule(uniqueSetting, leafCondition, rule);
 
 				rulesToRenderables.put(rule, renderable);
 			}
@@ -109,18 +114,25 @@ public class RuleRegistry<T extends Rule> {
 	 * 
 	 * @param rule
 	 *            the rule to be removed
+	 * @return the {@link Renderable} that belonged to the removed rule
 	 */
-	public void removeRule(T rule) {
+	public Renderable removeRule(T rule) {
 		final Condition condition = rule.getCondition();
 		if (condition != null) {
-			removeCondition(condition, true);
-		} else {
-			final Collection<Set<T>> values = settingToRules.values();
-			for (final Set<T> set : values) {
-				set.remove(rule);
-			}
-			rulesToRenderables.removeByKey(rule);
+			return removeCondition(condition);
 		}
+
+		final Collection<BidirectionalMap<LeafCondition, T>> values = settingToRules.values();
+		for (final BidirectionalMap<LeafCondition, T> bidirectionalMap : values) {
+			if (bidirectionalMap.removeByValue(rule) != null) {
+				break;
+			}
+		}
+
+		final Renderable renderable = rulesToRenderables.getValue(rule);
+		rulesToRenderables.removeByKey(rule);
+		return renderable;
+
 	}
 
 	/**
@@ -130,12 +142,7 @@ public class RuleRegistry<T extends Rule> {
 	 *            the renderable to be removed
 	 */
 	public void removeRenderable(Renderable renderable) {
-		final T v = rulesToRenderables.getKey(renderable);
 		rulesToRenderables.removeByValue(renderable);
-		final Collection<Set<T>> values = settingToRules.values();
-		for (final Set<T> set : values) {
-			set.remove(v);
-		}
 	}
 
 	/**
@@ -143,49 +150,33 @@ public class RuleRegistry<T extends Rule> {
 	 * 
 	 * @param condition
 	 *            the condition to be removed
-	 * @param removeSetting
-	 *            whether the setting should also be removed. The setting has
-	 *            an 1-n relationship with rules
+	 * @return the {@link Renderable} that belonged to the removed condition
 	 */
-	public void removeCondition(Condition condition, boolean removeSetting) {
+	public Renderable removeCondition(Condition condition) {
+		Renderable ret = null;
 		// we only have to care about leaf conditions since or/and conditions aren't even registered
 		if (LeafCondition.class.isInstance(condition)) {
 			final LeafCondition leafCondition = LeafCondition.class.cast(condition);
 			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
-			while (settingIterator.hasNext()) {
-				final Setting setting = settingIterator.next();
-				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
-				final Set<T> set = settingToRules.get(uniqueSetting);
+			final Setting setting = settingIterator.next();
+			final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
-				if (set != null) {
-					for (final T t : set) {
-						rulesToRenderables.removeByKey(t);
-					}
-				}
-
-				if (removeSetting) {
-					settingToRules.remove(uniqueSetting);
-				}
+			final BidirectionalMap<LeafCondition, T> bidirectionalMap = settingToRules.get(uniqueSetting);
+			if (bidirectionalMap != null) {
+				final T removeByKey = bidirectionalMap.removeByKey(leafCondition);
+				ret = rulesToRenderables.removeByKey(removeByKey);
 			}
 		}
+
+		return ret;
 	}
 
-	/**
-	 * Removes the condition from the registry.
-	 * 
-	 * @param condition
-	 *            the condition to be removed
-	 */
-	public void removeCondition(Condition condition) {
-		removeCondition(condition, false);
-	}
-
-	private void mapSettingToRule(final UniqueSetting setting, T rule) {
+	private void mapSettingToRule(final UniqueSetting setting, LeafCondition condition, T rule) {
 		if (!settingToRules.containsKey(setting)) {
-			settingToRules.put(setting, new LinkedHashSet<T>());
+			settingToRules.put(setting, new BidirectionalMap<LeafCondition, T>());
 		}
-		settingToRules.get(setting).add(rule);
+		settingToRules.get(setting).put(condition, rule);
 	}
 
 	/**
@@ -207,17 +198,17 @@ public class RuleRegistry<T extends Rule> {
 	public Map<Rule, Renderable> getAffectedRenderables(final UniqueSetting setting) {
 
 		final Map<Rule, Renderable> result = new LinkedHashMap<Rule, Renderable>();
-		Set<T> rules = settingToRules.get(setting);
+		BidirectionalMap<LeafCondition, T> bidirectionalMap = settingToRules.get(setting);
 
-		if (rules == null) {
-			rules = settingToRules.get(createSetting(setting.getEObject(), AllEAttributes.get()));
+		if (bidirectionalMap == null) {
+			bidirectionalMap = settingToRules.get(createSetting(setting.getEObject(), AllEAttributes.get()));
 		}
 
-		if (rules == null) {
+		if (bidirectionalMap == null) {
 			return Collections.emptyMap();
 		}
 
-		for (final T rule : rules) {
+		for (final T rule : bidirectionalMap.values()) {
 			final Renderable renderable = rulesToRenderables.getValue(rule);
 			result.put(rule, renderable);
 		}

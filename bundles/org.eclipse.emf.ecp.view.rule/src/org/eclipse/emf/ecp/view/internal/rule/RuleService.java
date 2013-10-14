@@ -105,20 +105,21 @@ public class RuleService extends AbstractViewService {
 			}
 
 			public void notifyRemove(Notifier notifier) {
+
 				if (Renderable.class.isInstance(notifier)) {
 					final Renderable renderable = Renderable.class.cast(notifier);
 					showRuleRegistry.removeRenderable(renderable);
 					enableRuleRegistry.removeRenderable(renderable);
 				} else if (Condition.class.isInstance(notifier)) {
 					final Condition condition = Condition.class.cast(notifier);
-					showRuleRegistry.removeCondition(condition);
-					enableRuleRegistry.removeCondition(condition);
+					resetToVisible(showRuleRegistry.removeCondition(condition));
+					resetToEnabled(enableRuleRegistry.removeCondition(condition));
 				} else if (ShowRule.class.isInstance(notifier)) {
-					final ShowRule showrule = ShowRule.class.cast(notifier);
-					showRuleRegistry.removeRule(showrule);
+					final ShowRule showRule = ShowRule.class.cast(notifier);
+					resetToVisible(showRuleRegistry.removeRule(showRule));
 				} else if (EnableRule.class.isInstance(notifier)) {
 					final EnableRule enableRule = EnableRule.class.cast(notifier);
-					enableRuleRegistry.removeRule(EnableRule.class.cast(enableRule));
+					resetToEnabled(enableRuleRegistry.removeRule(enableRule));
 				}
 			}
 		};
@@ -141,6 +142,18 @@ public class RuleService extends AbstractViewService {
 
 		evalEnable(domainModel);
 		evalShow(domainModel);
+	}
+
+	private static void resetToVisible(Renderable renderable) {
+		if (renderable != null) {
+			renderable.setVisible(true);
+		}
+	}
+
+	private static void resetToEnabled(Renderable renderable) {
+		if (renderable != null) {
+			renderable.setEnabled(true);
+		}
 	}
 
 	private static Rule getRule(Renderable renderable) {
