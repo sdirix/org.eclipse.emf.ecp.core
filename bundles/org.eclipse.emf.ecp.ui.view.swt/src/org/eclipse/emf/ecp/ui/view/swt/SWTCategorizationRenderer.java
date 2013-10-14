@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edagr Mueller - initial API and implementation
+ * Edgar Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
@@ -19,14 +19,23 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 
+/**
+ * SWT categorization renderer.
+ * 
+ * @author emueller
+ * @author Eugen Neufeld
+ * 
+ */
 // TODO: do we need to set a custom variant
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorization> {
+
+	/** Singleton renderer instance. **/
 	public static final SWTCategorizationRenderer INSTANCE = new SWTCategorizationRenderer();
 
 	@Override
@@ -39,18 +48,16 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorizatio
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 
-		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
+		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(1, false));
 
 		node.addRenderingResultDelegator(withSWT(categoryComposite));
 
-		final Node<? extends Renderable> childNode = node.getChildren().get(0);
-
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(categoryComposite, childNode,
-			adapterFactoryItemDelegator);
-
-		setLayoutDataForResultRows(resultRows);
+		final Categorization categorization = Categorization.class.cast(node.getRenderable());
+		final Label headingLbl = new Label(categoryComposite, SWT.NONE);
+		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
+		headingLbl.setText(categorization.getName());
+		whatToDoLbl.setText(Messages.Categorization_Selection);
 
 		return createResult(categoryComposite);
 	}
-
 }
