@@ -51,13 +51,13 @@ public class ValidationRegistry {
 	private final Map<EObject, Set<AbstractControl>> domainObjectToAffectedControls;
 	private final Map<Class<Renderable>, ECPValidationSubProcessor> subProcessors;
 	private final Set<Renderable> processedRenderables = new LinkedHashSet<Renderable>();
-	private Map<Renderable, EObject> controlToDomainMapping;
+	private Map<Renderable, Set<EObject>> controlToDomainMapping;
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationRegistry() {
-		controlToDomainMapping = new LinkedHashMap<Renderable, EObject>();
+		controlToDomainMapping = new LinkedHashMap<Renderable, Set<EObject>>();
 		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<AbstractControl>>();
 		subProcessors = new LinkedHashMap<Class<Renderable>, ECPValidationSubProcessor>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
@@ -195,7 +195,11 @@ public class ValidationRegistry {
 	private void fillMapEntry(Map<EObject, Set<AbstractControl>> target, final EObject domainSource,
 		Set<AbstractControl> controlSet) {
 		for (final AbstractControl abstractControl : controlSet) {
-			controlToDomainMapping.put(abstractControl, domainSource);
+			final Set<EObject> set = controlToDomainMapping.get(abstractControl);
+			if (set == null) {
+				controlToDomainMapping.put(abstractControl, new LinkedHashSet<EObject>());
+			}
+			controlToDomainMapping.get(abstractControl).add(domainSource);
 		}
 		if (!target.containsKey(domainSource)) {
 			target.put(domainSource, controlSet);
@@ -223,10 +227,14 @@ public class ValidationRegistry {
 	 *            the {@link Renderable} to be removed from the registry
 	 */
 	public void removeRenderable(Renderable renderable) {
-		final EObject eObject = controlToDomainMapping.get(renderable);
-		final Set<AbstractControl> set = domainObjectToAffectedControls.get(eObject);
-		if (set != null && set.contains(renderable)) {
-			domainObjectToAffectedControls.get(eObject).remove(renderable);
+		final Set<EObject> eObjects = controlToDomainMapping.get(renderable);
+		if (eObjects != null) {
+			for (final EObject eObject : eObjects) {
+				final Set<AbstractControl> set = domainObjectToAffectedControls.get(eObject);
+				if (set != null && set.contains(renderable)) {
+					domainObjectToAffectedControls.get(eObject).remove(renderable);
+				}
+			}
 		}
 		controlToDomainMapping.remove(renderable);
 		processedRenderables.remove(renderable);

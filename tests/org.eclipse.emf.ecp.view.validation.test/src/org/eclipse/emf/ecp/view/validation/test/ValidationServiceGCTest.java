@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.common.test.GCCollectable;
+import org.eclipse.emf.ecp.view.common.test.Tuple;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -38,27 +39,6 @@ import org.junit.Test;
  * @author emueller
  */
 public class ValidationServiceGCTest extends CommonValidationTest {
-
-	/** Convenience class for returning multiple values at once. */
-	class Tuple<T, U> {
-
-		private final T t;
-		private final U u;
-
-		public Tuple(T t, U u) {
-			this.t = t;
-			this.u = u;
-		}
-
-		public T first() {
-			return t;
-		}
-
-		public U second() {
-			return u;
-
-		}
-	}
 
 	/**
 	 * Creates a basic view with an column that contains a control
@@ -149,6 +129,32 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 
 		assertTrue(parentColumnCollectable.isCollectable());
 		assertTrue(columnCollectable.isCollectable());
+		assertTrue(controlCollectable.isCollectable());
+	}
+
+	/**
+	 * Removes the direct column of the view. The nested column as
+	 * well as the control should be removed and thus not referenced
+	 * anymore.
+	 */
+	@Test
+	public void testRemoveControlAndReevaluate() {
+
+		final View view = createWriterWithNestedColumnsView().first();
+
+		final GCCollectable controlCollectable = new GCCollectable(
+			Column.class.cast(Column.class.cast(
+				view.getChildren().get(0)).getComposites().get(0)).getComposites().get(0));
+
+		assertEquals(Diagnostic.ERROR,
+			Column.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
+
+		Column.class.cast(Column.class.cast(
+			view.getChildren().get(0)).getComposites().get(0)).getComposites().remove(0);
+
+		assertEquals(Diagnostic.OK,
+			Column.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
+
 		assertTrue(controlCollectable.isCollectable());
 	}
 

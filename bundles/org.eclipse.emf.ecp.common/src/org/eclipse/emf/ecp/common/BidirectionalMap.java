@@ -12,7 +12,9 @@
 package org.eclipse.emf.ecp.common;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Convenience class for mapping keys to values and vice versa.
@@ -57,11 +59,13 @@ public class BidirectionalMap<K, V> {
 	 * 
 	 * @param key
 	 *            the key to be removed
+	 * @return the value that was associated with the key
 	 */
-	public synchronized void removeByKey(K key) {
+	public synchronized V removeByKey(K key) {
 		final V v = keyToValues.get(key);
 		keyToValues.remove(key);
 		valuesToKeys.remove(v);
+		return v;
 	}
 
 	/**
@@ -69,11 +73,13 @@ public class BidirectionalMap<K, V> {
 	 * 
 	 * @param value
 	 *            the value to be removed
+	 * @return the key that was associated with the value
 	 */
-	public synchronized void removeByValue(V value) {
+	public synchronized K removeByValue(V value) {
 		final K k = valuesToKeys.get(value);
 		valuesToKeys.remove(value);
 		keyToValues.remove(k);
+		return k;
 	}
 
 	/**
@@ -94,8 +100,30 @@ public class BidirectionalMap<K, V> {
 	 *            the key whose value should be looked up
 	 * @return the key belonging to the given value
 	 */
-	public K getKey(V value) {
+	public K getByValue(V value) {
 		return valuesToKeys.get(value);
+	}
+
+	/**
+	 * Returns all keys.
+	 * 
+	 * @return a set of all keys
+	 */
+	public Set<K> keys() {
+		final LinkedHashSet<K> linkedHashSet = new LinkedHashSet<K>();
+		linkedHashSet.addAll(keyToValues.keySet());
+		return linkedHashSet;
+	}
+
+	/**
+	 * Returns all values.
+	 * 
+	 * @return a set of all values
+	 */
+	public Set<V> values() {
+		final LinkedHashSet<V> linkedHashSet = new LinkedHashSet<V>();
+		linkedHashSet.addAll(valuesToKeys.keySet());
+		return linkedHashSet;
 	}
 
 }
