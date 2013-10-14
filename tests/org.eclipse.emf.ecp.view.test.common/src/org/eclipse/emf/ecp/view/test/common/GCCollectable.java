@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.common.test;
+package org.eclipse.emf.ecp.view.test.common;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
