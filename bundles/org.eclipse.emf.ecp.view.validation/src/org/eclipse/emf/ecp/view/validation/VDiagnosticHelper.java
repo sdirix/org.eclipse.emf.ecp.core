@@ -34,6 +34,10 @@ public final class VDiagnosticHelper {
 	 * @return true if both {@link VDiagnostic VDiagnostics} are equal
 	 */
 	public static boolean isEqual(VDiagnostic vDiagnostic1, VDiagnostic vDiagnostic2) {
+
+		if (vDiagnostic1 == null && vDiagnostic2 == null) {
+			return true;
+		}
 		if (vDiagnostic1 == null && vDiagnostic2 != null) {
 			return false;
 		}
@@ -70,13 +74,10 @@ public final class VDiagnosticHelper {
 
 		// TODO: How can these cases ever apply? We already did check these since VDiagnostic#getHighestSeverity()
 		// and VDiagnostic#getMessage() test the underlying diagnostic
-		// if (diagnostic1.getSeverity() != diagnostic2.getSeverity()) {
-		// return false;
-		// }
-		//
-		// if (!diagnostic1.getMessage().equals(diagnostic2.getMessage())) {
-		// return false;
-		// }
+		// FIXME: test order
+		if (diagnostic1.getSeverity() != diagnostic2.getSeverity()) {
+			return false;
+		}
 
 		if (diagnostic1.getData().size() != diagnostic2.getData().size()) {
 			return false;
