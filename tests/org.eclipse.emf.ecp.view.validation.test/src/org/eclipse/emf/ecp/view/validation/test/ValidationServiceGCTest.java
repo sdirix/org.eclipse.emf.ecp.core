@@ -16,14 +16,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.view.common.test.GCCollectable;
-import org.eclipse.emf.ecp.view.common.test.Tuple;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.test.common.GCCollectable;
+import org.eclipse.emf.ecp.view.test.common.Tuple;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
