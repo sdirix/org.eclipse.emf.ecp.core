@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class GCCollectable {
 
-	private static final int DEFAULT_TIMEOUT = 1000;
+	private static final int DEFAULT_TIMEOUT = 3000;
 
 	private final ReferenceQueue<EObject> queue;
 	private final PhantomReference<EObject> phantomRef;
