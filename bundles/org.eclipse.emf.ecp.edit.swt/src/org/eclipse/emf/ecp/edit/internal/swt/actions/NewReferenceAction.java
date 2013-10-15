@@ -72,7 +72,9 @@ public class NewReferenceAction extends ECPSWTAction {
 			}
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
-			image = Activator.getImage(obj == null ? null : (URL) labelProviderImageResult);
+			image = Activator.getImage((URL) labelProviderImageResult);
+		} else {
+			image = Activator.getImage((URL) null);
 		}
 
 		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$

@@ -70,7 +70,9 @@ public class AddReferenceAction extends ECPSWTAction {
 			}
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
-			image = Activator.getImage(obj == null ? null : (URL) labelProviderImageResult);
+			image = Activator.getImage((URL) labelProviderImageResult);
+		} else {
+			image = Activator.getImage((URL) null);
 		}
 		String overlayString = "icons/link_overlay.png";//$NON-NLS-1$
 		if (eReference.isContainment()) {
