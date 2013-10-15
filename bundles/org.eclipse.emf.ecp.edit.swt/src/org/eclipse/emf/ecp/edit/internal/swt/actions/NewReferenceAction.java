@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -25,6 +26,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -56,10 +58,22 @@ public class NewReferenceAction extends ECPSWTAction {
 		IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			modelElementContext.getModelElement());
 		Object labelProviderImageResult = labelProvider.getImage(obj);
+
+		Image image = null;
+
 		if (ComposedImage.class.isInstance(labelProviderImageResult)) {
 			labelProviderImageResult = ((ComposedImage) labelProviderImageResult).getImages().get(0);
 		}
-		Image image = Activator.getImage((URL) labelProviderImageResult);
+		if (URI.class.isInstance(labelProviderImageResult)) {
+			try {
+				labelProviderImageResult = new URL(((URI) labelProviderImageResult).toString());
+			} catch (final MalformedURLException ex) {
+				Activator.logException(ex);
+			}
+		}
+		if (URL.class.isInstance(labelProviderImageResult)) {
+			image = Activator.getImage(obj == null ? null : (URL) labelProviderImageResult);
+		}
 
 		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
 		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
