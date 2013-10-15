@@ -1,14 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Eugen Neufeld - initial API and implementation
- ******************************************************************************/
+/**
+ */
 package org.eclipse.emf.ecp.view.custom.model;
 
 import org.eclipse.emf.ecore.EFactory;
@@ -31,13 +22,13 @@ public interface CustomFactory extends EFactory {
 	CustomFactory eINSTANCE = org.eclipse.emf.ecp.view.custom.model.impl.CustomFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Control</em>'.
+	 * Returns a new object of class '<em>VPredefined Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Control</em>'.
+	 * @return a new object of class '<em>VPredefined Domain Model Reference</em>'.
 	 * @generated
 	 */
-	CustomControl createCustomControl();
+	VPredefinedDomainModelReference createVPredefinedDomainModelReference();
 
 	/**
 	 * Returns the package supported by this factory.
@@ -48,4 +39,4 @@ public interface CustomFactory extends EFactory {
 	 */
 	CustomPackage getCustomPackage();
 
-} // CustomFactory
+} //CustomFactory

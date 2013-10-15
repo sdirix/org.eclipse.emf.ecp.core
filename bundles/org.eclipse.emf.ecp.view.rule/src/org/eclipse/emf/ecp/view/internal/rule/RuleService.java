@@ -358,26 +358,24 @@ public class RuleService extends AbstractViewService {
 
 		if (renderable instanceof Control) {
 			final Control control = (Control) renderable;
-			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-				final Iterator<Setting> settings = domainModelReference.getIterator();
-				while (settings.hasNext()) {
-					final Setting setting = settings.next();
-					final EObject parent = setting.getEObject();
-					final EStructuralFeature targetFeature = setting.getEStructuralFeature();
-					if (targetFeature == null) {
-						continue;
-					}
-					final Class<?> containerClass = targetFeature.getContainerClass();
-
-					isUnset = true;
-					if (containerClass.isInstance(parent)) {
-						parent.eUnset(targetFeature);
-					}
-					isUnset = false;
+			final VDomainModelReference domainModelReference = control.getDomainModelReference();
+			final Iterator<Setting> settings = domainModelReference.getIterator();
+			while (settings.hasNext()) {
+				final Setting setting = settings.next();
+				final EObject parent = setting.getEObject();
+				final EStructuralFeature targetFeature = setting.getEStructuralFeature();
+				if (targetFeature == null) {
+					continue;
 				}
+				final Class<?> containerClass = targetFeature.getContainerClass();
+
+				isUnset = true;
+				if (containerClass.isInstance(parent)) {
+					parent.eUnset(targetFeature);
+				}
+				isUnset = false;
 			}
 		}
-
 	}
 
 	/**

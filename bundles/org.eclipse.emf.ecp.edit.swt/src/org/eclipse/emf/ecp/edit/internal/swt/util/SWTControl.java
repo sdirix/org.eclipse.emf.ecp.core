@@ -12,14 +12,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
@@ -35,11 +38,9 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
@@ -49,7 +50,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTControl extends ECPAbstractControl {
+public abstract class SWTControl extends ECPAbstractControl implements ECPControlSWT {
 
 	/**
 	 * RAP theming variable to set.
@@ -77,15 +78,20 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
-	public SWTControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+	public SWTControl() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
+	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
+		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
+			createControl(parent)));
+	}
+
 	public Composite createControl(final Composite parent) {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -313,15 +319,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 */
 	protected Button getCustomUnsetButton() {
 		return null;
-	}
-
-	/**
-	 * Returns the {@link DataBindingContext} set in the constructor.
-	 * 
-	 * @return the {@link DataBindingContext}
-	 */
-	protected DataBindingContext getDataBindingContext() {
-		return getModelElementContext().getDataBindingContext();
 	}
 
 	/**

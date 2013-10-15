@@ -10,12 +10,11 @@
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
+
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -37,20 +36,6 @@ public abstract class SingleControl extends SWTControl {
 	private ControlDecoration controlDecoration;
 
 	// private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);
-
-	/**
-	 * Constructor for a single control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public SingleControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -121,6 +106,7 @@ public abstract class SingleControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
 		if (validationLabel != null) {
 			validationLabel.dispose();

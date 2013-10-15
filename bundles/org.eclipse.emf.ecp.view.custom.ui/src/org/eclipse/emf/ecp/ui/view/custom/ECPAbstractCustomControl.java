@@ -27,14 +27,12 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * Abstract class implementing {@link ECPCustomControl} providing necessary common access methods.
@@ -43,14 +41,12 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @author eneufeld
  * 
  */
-public abstract class ECPAbstractCustomControl implements ECPCustomControl {
+public abstract class ECPAbstractCustomControl extends ECPAbstractControl {
 
 	private final CustomControlHelper helper = new CustomControlHelper();
 
 	private final Set<VDomainModelReference> features;
 	private ECPControlContext modelElementContext;
-	private ComposedAdapterFactory composedAdapterFactory;
-	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	private final ECPControlFactory controlFactory;
 	/**
@@ -98,20 +94,6 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		}
 	}
 
-	/**
-	 * This method is called by the framework to instantiate the {@link ECPCustomControl}.
-	 * 
-	 * @param modelElementContext the {@link ECPControlContext} to use by this {@link ECPCustomControl}.
-	 */
-	public final void init(ECPControlContext modelElementContext) {
-		this.modelElementContext = modelElementContext;
-
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
-
-		// initFeatures();
-	}
-
 	// private void initFeatures() {
 	// for (final ECPCustomControlFeature feature : features) {
 	// feature.init(modelElementContext.getModelElement(), modelElementContext.getDataBindingContext(),
@@ -135,9 +117,10 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 		UpdateValueStrategy targetToModel,
 		UpdateValueStrategy modelToTarget) {
 		final Setting setting = getSetting(modelFeature);
-		final IObservableValue modelValue = EMFEditObservables.observeValue(modelElementContext.getEditingDomain(),
+		final IObservableValue modelValue = EMFEditObservables.observeValue(
+			getModelElementContext().getEditingDomain(),
 			setting.getEObject(), setting.getEStructuralFeature());
-		return modelElementContext.getDataBindingContext().bindValue(targetValue, modelValue, targetToModel,
+		return getDataBindingContext().bindValue(targetValue, modelValue, targetToModel,
 			modelToTarget);
 	}
 
@@ -233,34 +216,10 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl#getNeededDomainModelReferences()
+	 * @see org.eclipse.emf.ecp.view.custom.model.ECPCustomControl#getNeededDomainModelReferences()
 	 */
 	public final Set<VDomainModelReference> getNeededDomainModelReferences() {
 		return features;
-	}
-
-	/**
-	 * Returns the {@link ECPControlContext} to use.
-	 * 
-	 * @return the {@link ECPControlContext}
-	 */
-	private ECPControlContext getModelElementContext() {
-		return modelElementContext;
-	}
-
-	/**
-	 * Return the {@link IItemPropertyDescriptor} describing this {@link EStructuralFeature}.
-	 * 
-	 * @return the {@link IItemPropertyDescriptor}
-	 */
-	private IItemPropertyDescriptor getItemPropertyDescriptor(VDomainModelReference domainModelReference) {
-		final Iterator<Setting> settings = domainModelReference.getIterator();
-		if (settings.hasNext()) {
-			final Setting setting = settings.next();
-			return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
-				setting.getEStructuralFeature());
-		}
-		return null;
 	}
 
 	private String getHelp(VDomainModelReference domainModelReference) {
@@ -280,6 +239,7 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public final boolean showLabel() {
 		return false;
 	}
@@ -287,11 +247,10 @@ public abstract class ECPAbstractCustomControl implements ECPCustomControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
 		Activator.ungetECPControlFactory();
-		if (composedAdapterFactory != null) {
-			composedAdapterFactory.dispose();
-		}
+
 		for (final VDomainModelReference domainModelReference : adapterMap.keySet()) {
 			final Setting setting = getSetting(domainModelReference);
 			setting.getEObject().eAdapters().remove(adapterMap.get(domainModelReference));

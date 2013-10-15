@@ -181,7 +181,7 @@ public class GroupTest {
 		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
-		control.getDomainModelReferences().add(modelReference);
+		control.setDomainModelReference(modelReference);
 		return control;
 	}
 

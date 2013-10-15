@@ -193,7 +193,7 @@ public class TableControlItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES,
+			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 				VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 		newChildDescriptors.add

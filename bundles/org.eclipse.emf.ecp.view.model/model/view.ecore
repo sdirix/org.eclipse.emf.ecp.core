@@ -59,9 +59,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//Composite">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" eType="#//Alignment"
         defaultValueLiteral="Left"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReferences"
-        lowerBound="1" upperBound="-1" eType="#//VDomainModelReference" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="controlId" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
+        eType="#//VDomainModelReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Alignment">
     <eLiterals name="Left"/>

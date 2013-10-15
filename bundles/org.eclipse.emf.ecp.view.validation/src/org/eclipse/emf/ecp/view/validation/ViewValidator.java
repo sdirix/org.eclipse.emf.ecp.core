@@ -91,15 +91,15 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
 			for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
-				for (final VDomainModelReference modelReference : control.getDomainModelReferences()) {
-					final Iterator<Setting> settings = modelReference.getIterator();
-					while (settings.hasNext()) {
-						final Setting setting = settings.next();
-						if (setting.getEStructuralFeature().getEContainingClass().equals(eObject.eClass())) {
-							update(control, eObject, setting.getEStructuralFeature(), getDefaultValue());
-						}
+				final VDomainModelReference modelReference = control.getDomainModelReference();
+				final Iterator<Setting> settings = modelReference.getIterator();
+				while (settings.hasNext()) {
+					final Setting setting = settings.next();
+					if (setting.getEStructuralFeature().getEContainingClass().equals(eObject.eClass())) {
+						update(control, eObject, setting.getEStructuralFeature(), getDefaultValue());
 					}
 				}
+
 			}
 		} else {
 
@@ -119,22 +119,21 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 			// -> merge SettingsMapping and the registry
 			for (final EStructuralFeature invalidFeature : featureToValidationResult.keySet()) {
 				for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
-					for (final VDomainModelReference modelReference : control.getDomainModelReferences()) {
-						final Iterator<Setting> settings = modelReference.getIterator();
-						while (settings.hasNext()) {
-							final Setting setting = settings.next();
+					final VDomainModelReference modelReference = control.getDomainModelReference();
+					final Iterator<Setting> settings = modelReference.getIterator();
+					while (settings.hasNext()) {
+						final Setting setting = settings.next();
 
-							final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-							if (setting.getEStructuralFeature().equals(invalidFeature)) {
-								vDiagnostic.getDiagnostics().add(featureToValidationResult.get(invalidFeature));
+						final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+						if (setting.getEStructuralFeature().equals(invalidFeature)) {
+							vDiagnostic.getDiagnostics().add(featureToValidationResult.get(invalidFeature));
+							update(control, eObject, setting.getEStructuralFeature(),
+								vDiagnostic);
+						} else {
+							// check if feature is not contained in current diagnostics
+							if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())) {
 								update(control, eObject, setting.getEStructuralFeature(),
-									vDiagnostic);
-							} else {
-								// check if feature is not contained in current diagnostics
-								if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())) {
-									update(control, eObject, setting.getEStructuralFeature(),
-										getDefaultValue());
-								}
+									getDefaultValue());
 							}
 						}
 					}

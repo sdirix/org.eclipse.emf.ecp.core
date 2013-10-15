@@ -18,6 +18,8 @@ import static org.junit.Assert.assertSame;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
@@ -91,7 +93,10 @@ public class SWTCustomControlTest {
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
 		// TODO check id
-		customControl.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
+		final VPredefinedDomainModelReference domainModelReference = CustomFactory.eINSTANCE
+			.createVPredefinedDomainModelReference();
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
+		customControl.setDomainModelReference(domainModelReference);
 		return view;
 	}
 
@@ -103,11 +108,15 @@ public class SWTCustomControlTest {
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
 		// TODO check id
-		customControl.setControlId("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
+		final VPredefinedDomainModelReference domainModelReference = CustomFactory.eINSTANCE
+			.createVPredefinedDomainModelReference();
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
+		customControl.setDomainModelReference(domainModelReference);
 		// setup ui
 		final Shell shell = SWTViewTestHelper.createShell();
 		SWTViewTestHelper.render(view, shell);
 		// TODO: What to expect
+
 	}
 
 	@Test
@@ -117,7 +126,10 @@ public class SWTCustomControlTest {
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
 		// TODO check id
-		customControl.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		final VPredefinedDomainModelReference domainModelReference = CustomFactory.eINSTANCE
+			.createVPredefinedDomainModelReference();
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		customControl.setDomainModelReference(domainModelReference);
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
 		new ViewModelContextImpl(view, domainModel);

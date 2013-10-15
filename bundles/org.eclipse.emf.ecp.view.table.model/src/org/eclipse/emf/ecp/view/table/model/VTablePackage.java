@@ -154,24 +154,14 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL__LABEL_ALIGNMENT = ViewPackage.CONTROL__LABEL_ALIGNMENT;
 
 	/**
-	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCES = ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES;
-
-	/**
-	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__CONTROL_ID = ViewPackage.CONTROL__CONTROL_ID;
+	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
 
 	/**
 	 * The feature id for the '<em><b>Columns</b></em>' containment reference list.

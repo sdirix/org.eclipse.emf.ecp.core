@@ -61,11 +61,10 @@ public class SWTTableTest {
 		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = TableControlTest.createUninitializedTableWithoutColumns();
-		for (final VDomainModelReference domainModelReference : handle.getTableControl().getDomainModelReferences()) {
-			domainModelReference.resolve(domainElement);
-			final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
-			assertNull(render);
-		}
+		final VDomainModelReference domainModelReference = handle.getTableControl().getDomainModelReference();
+		domainModelReference.resolve(domainElement);
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assertNull(render);
 
 	}
 
@@ -98,7 +97,7 @@ public class SWTTableTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(ViewPackage.eINSTANCE.getView_RootEClass());
-		handle.getTableControl().getDomainModelReferences().add(domainModelReference);
+		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
@@ -120,7 +119,7 @@ public class SWTTableTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(ViewPackage.eINSTANCE.getView_RootEClass());
-		handle.getTableControl().getDomainModelReferences().add(domainModelReference);
+		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);

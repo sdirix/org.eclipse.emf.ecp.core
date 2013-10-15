@@ -430,7 +430,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES,
+					(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 						VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 				return null;

@@ -80,7 +80,7 @@ public class TableControlTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
-		tableControlHandle.getTableControl().getDomainModelReferences().add(domainModelReference);
+		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
 
 		return tableControlHandle;
 	}
@@ -95,7 +95,7 @@ public class TableControlTest {
 	 */
 	private static VTableControl createTableControl() {
 		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
-		tc.getDomainModelReferences().add(ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference());
+		tc.setDomainModelReference(ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference());
 		return tc;
 	}
 

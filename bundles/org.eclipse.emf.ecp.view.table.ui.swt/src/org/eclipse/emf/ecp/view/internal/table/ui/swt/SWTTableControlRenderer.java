@@ -63,7 +63,7 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 
 		final VTableControl modelTableControl = node.getRenderable();
 		final ECPControlContext subContext = node.getControlContext();
-		final Iterator<Setting> settings = modelTableControl.getDomainModelReferences().get(0).getIterator();
+		final Iterator<Setting> settings = modelTableControl.getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
 			return null;
 		}
@@ -91,10 +91,9 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 				new TableColumnConfiguration(column.isReadOnly(), column.getAttribute()));
 		}
 
-		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl(
-			false, itemPropertyDescriptor,
-			(EStructuralFeature) itemPropertyDescriptor.getFeature(subContext
-				.getModelElement()), subContext, false, tcc);
+		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl();
+		control.setTableControlConfiguration(tcc);
+		control.init(subContext, modelTableControl.getDomainModelReference());
 
 		final Composite parent = getParentFromInitData(initData);
 		Label label = null;

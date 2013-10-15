@@ -106,12 +106,12 @@ public class ValidationService extends AbstractViewService {
 						// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
 						// control.getDomainModelReference().());
 						// REFACTORING test
-						for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-							final Iterator<Setting> settings = domainModelReference.getIterator();
-							while (settings.hasNext()) {
-								viewValidationGraph.validate(settings.next().getEObject());
-							}
+						final VDomainModelReference domainModelReference = control.getDomainModelReference();
+						final Iterator<Setting> settings = domainModelReference.getIterator();
+						while (settings.hasNext()) {
+							viewValidationGraph.validate(settings.next().getEObject());
 						}
+
 					}
 				}
 			}

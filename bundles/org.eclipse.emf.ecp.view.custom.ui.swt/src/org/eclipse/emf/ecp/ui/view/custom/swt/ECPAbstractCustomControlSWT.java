@@ -17,8 +17,11 @@ import java.util.Set;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
@@ -35,7 +38,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * Extend this class in order to provide an own implementation of an
- * {@link org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl ECPCustomControl}.
+ * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl ECPCustomControl}.
  * 
  * @author Eugen Neufeld
  * 
@@ -43,7 +46,7 @@ import org.eclipse.swt.widgets.Shell;
 // Missing SPI or API definitions
 @SuppressWarnings("restriction")
 public abstract class ECPAbstractCustomControlSWT extends
-	ECPAbstractCustomControl {
+	ECPAbstractCustomControl implements ECPControlSWT {
 	/**
 	 * Constant for an validation error image.
 	 */
@@ -62,11 +65,11 @@ public abstract class ECPAbstractCustomControlSWT extends
 	public static final int HELP_IMAGE = 3;
 
 	/**
-	 * Extend this class for an SWT implementation of the {@link org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl
+	 * Extend this class for an SWT implementation of the {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
 	 * ECPCustomControl}.
 	 * 
 	 * @param features the features which will be used in this
-	 *            {@link org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl
+	 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
 	 *            ECPCustomControl}
 	 */
 	public ECPAbstractCustomControlSWT(
@@ -77,10 +80,11 @@ public abstract class ECPAbstractCustomControlSWT extends
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
 	private Label validationLabel;
 	private Shell shell;
+	private List<RenderingResultRow<Control>> renderingResult;
 
 	/**
 	 * This will create a validation label which will show the validation result of the whole
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl
+	 * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
 	 * ECPCustomControl}.
 	 * 
 	 * @param parent the {@link Composite} to position the validation label on
@@ -135,13 +139,25 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * This is called by the framework when this {@link org.eclipse.emf.ecp.ui.view.custom.ECPCustomControl
+	 * This is called by the framework when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
 	 * ECPCustomControl} is about to be rendered.
 	 * 
 	 * @param composite The composite on which this custom control shall add its controls.
 	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
 	 */
-	public abstract List<RenderingResultRow<Control>> createControls(Composite composite);
+	public final List<RenderingResultRow<Control>> createControls(Composite composite) {
+		renderingResult = createControl(composite);
+		return renderingResult;
+	}
+
+	/**
+	 * This is called when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
+	 * ECPCustomControl} is about to be rendered.
+	 * 
+	 * @param composite The composite on which this custom control shall add its controls.
+	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
+	 */
+	protected abstract List<RenderingResultRow<Control>> createControl(Composite composite);
 
 	/**
 	 * Override this method in order to correctly set the custom control to editable or not editable.
@@ -152,6 +168,17 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	public void setEditable(boolean isEditable) {
 		// Do nothing
+
+		for (final RenderingResultRow<Control> row : renderingResult) {
+			if (SingleColumnRow.class.isInstance(row)) {
+				((SingleColumnRow) row).getControl().setEnabled(false);
+			}
+			else if (DoubleColumnRow.class.isInstance(row)) {
+				((DoubleColumnRow) row).getLeftControl().setEnabled(false);
+				((DoubleColumnRow) row).getRightControl().setEnabled(false);
+
+			}
+		}
 	}
 
 	/**
@@ -262,7 +289,9 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @return the rendered {@link Composite} of the created control
 	 */
 	protected final Composite createControl(VDomainModelReference domainModelReference, Composite parent) {
-		return getControl(SWTControl.class, domainModelReference).createControl(parent);
+		final SWTControl control = getControl(SWTControl.class, domainModelReference);
+		control.init(getModelElementContext(), domainModelReference);
+		return control.createControl(parent);
 	}
 
 	/**

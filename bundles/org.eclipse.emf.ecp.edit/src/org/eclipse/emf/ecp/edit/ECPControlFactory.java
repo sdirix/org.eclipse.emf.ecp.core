@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit;
 
 import java.util.Set;
 
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -24,6 +25,8 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  * @author Eugen Neufeld
  * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ECPControlFactory {
 	/**
@@ -36,6 +39,7 @@ public interface ECPControlFactory {
 	 * @param context the {@link ECPControlContext}
 	 * @return the created {@link ECPControl} or null if nothing fitting could be created
 	 */
+	@Deprecated
 	<T extends ECPControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context);
 
@@ -54,6 +58,16 @@ public interface ECPControlFactory {
 	@Deprecated
 	<T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId);
+
+	/**
+	 * @since 1.1
+	 */
+	<T> T createControl(Class<T> controlTypeClass, VDomainModelReference domainModelReference);
+
+	/**
+	 * @since 1.1
+	 */
+	<T> T createControl(String controlId);
 
 	/**
 	 * A copy of all known {@link ECPControlDescription}.

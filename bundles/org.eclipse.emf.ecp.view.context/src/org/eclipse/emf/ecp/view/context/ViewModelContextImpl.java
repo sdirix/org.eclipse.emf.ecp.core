@@ -124,17 +124,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 				if (Control.class.isInstance(notifier)) {
 					final Control control = (Control) notifier;
-
-					for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-						domainModelReference.resolve(domainObject);
-					}
+					control.getDomainModelReference().resolve(domainObject);
 				}
 				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 					modelChangeListener.notifyAdd(notifier);
 				}
 				if (VDomainModelReference.class.isInstance(notifier)) {
-					ViewModelUtil.resolveDomainReferences((Renderable) ((EObject) notifier).eContainer(),
-						getDomainModel());
+					final EObject container = ((EObject) notifier).eContainer();
+					if (Renderable.class.isInstance(container)) {
+						ViewModelUtil.resolveDomainReferences((Renderable) container, getDomainModel());
+					}
 				}
 			}
 

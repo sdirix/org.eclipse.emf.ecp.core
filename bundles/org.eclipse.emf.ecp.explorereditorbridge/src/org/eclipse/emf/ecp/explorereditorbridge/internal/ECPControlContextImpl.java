@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlHelper;
+import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
@@ -35,7 +35,6 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -54,7 +53,7 @@ import org.eclipse.swt.widgets.Shell;
 public class ECPControlContextImpl implements ECPControlContext {
 
 	private final EObject modelElement;
-	private final ViewModelContext viewContext;
+	// private final ViewModelContext viewContext;
 
 	private final ECPProject ecpProject;
 	private final Shell shell;
@@ -73,7 +72,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		this.shell = shell;
-		viewContext = new ViewModelContextImpl(getView(), getModelElement());
+		// viewContext = new ViewModelContextImpl(getView(), getModelElement());
 	}
 
 	/**
@@ -89,7 +88,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		this.shell = shell;
-		this.viewContext = viewContext;
+		// this.viewContext = viewContext;
 	}
 
 	/**
@@ -105,7 +104,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		modelElement = domainObject;
 		this.ecpProject = ecpProject;
 		this.shell = shell;
-		viewContext = new ViewModelContextImpl(view, getModelElement());
+		// viewContext = new ViewModelContextImpl(view, getModelElement());
 	}
 
 	/** {@inheritDoc} */
@@ -234,7 +233,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	}
 
 	public ECPControlContext createSubContext(EObject eObject) {
-		return new ECPControlContextImpl(eObject, ecpProject, shell, viewContext);
+		return new ECPControlContextImpl(eObject, ecpProject, shell);
 	}
 
 	private View getView() {
@@ -247,7 +246,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getViewContext()
 	 */
 	public ViewModelContext getViewContext() {
-		return viewContext;
+		return null;
 	}
 
 }

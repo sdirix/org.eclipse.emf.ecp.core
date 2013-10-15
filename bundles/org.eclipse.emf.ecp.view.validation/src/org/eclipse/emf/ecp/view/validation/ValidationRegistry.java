@@ -136,17 +136,17 @@ public class ValidationRegistry {
 		}
 		else if (Control.class.isInstance(renderable)) {
 			final Control control = (Control) renderable;
-			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-				final Iterator<Setting> iterator = domainModelReference.getIterator();
-				while (iterator.hasNext()) {
-					final Setting setting = iterator.next();
-					final EObject referencedDomainModel = setting.getEObject();
-					if (!result.containsKey(referencedDomainModel)) {
-						result.put(referencedDomainModel, new LinkedHashSet<Control>());
-					}
-					result.get(referencedDomainModel).add(control);
+			final VDomainModelReference domainModelReference = control.getDomainModelReference();
+			final Iterator<Setting> iterator = domainModelReference.getIterator();
+			while (iterator.hasNext()) {
+				final Setting setting = iterator.next();
+				final EObject referencedDomainModel = setting.getEObject();
+				if (!result.containsKey(referencedDomainModel)) {
+					result.put(referencedDomainModel, new LinkedHashSet<Control>());
 				}
+				result.get(referencedDomainModel).add(control);
 			}
+
 		}
 		else {
 			for (final EObject eObject : renderable.eContents()) {

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt;
+package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import java.util.Collections;
 import java.util.Set;

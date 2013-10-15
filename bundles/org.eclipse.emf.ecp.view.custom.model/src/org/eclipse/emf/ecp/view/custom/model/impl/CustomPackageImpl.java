@@ -1,23 +1,17 @@
-/*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Eugen Neufeld - initial API and implementation
- ******************************************************************************/
+/**
+ */
 package org.eclipse.emf.ecp.view.custom.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
+
 import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
+
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -32,17 +26,18 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass customControlEClass = null;
+	private EClass vPredefinedDomainModelReferenceEClass = null;
 
 	/**
-	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
-	 * EPackage.Registry} by the package
+	 * Creates an instance of the model <b>Package</b>, registered with
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
-	 * <p>
-	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
-	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 * <p>Note: the correct way to create the package is via the static
+	 * factory method {@link #init init()}, which also performs
+	 * initialization of the package, or returns the registered package,
+	 * if one already exists.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.custom.model.CustomPackage#eNS_URI
 	 * @see #init()
@@ -102,8 +97,8 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getCustomControl() {
-		return customControlEClass;
+	public EClass getVPredefinedDomainModelReference() {
+		return vPredefinedDomainModelReferenceEClass;
 	}
 
 	/**
@@ -111,17 +106,8 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getCustomControl_Bundle() {
-		return (EAttribute)customControlEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCustomControl_ClassName() {
-		return (EAttribute)customControlEClass.getEStructuralFeatures().get(1);
+	public EAttribute getVPredefinedDomainModelReference_ControlId() {
+		return (EAttribute)vPredefinedDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -152,9 +138,8 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		customControlEClass = createEClass(CUSTOM_CONTROL);
-		createEAttribute(customControlEClass, CUSTOM_CONTROL__BUNDLE);
-		createEAttribute(customControlEClass, CUSTOM_CONTROL__CLASS_NAME);
+		vPredefinedDomainModelReferenceEClass = createEClass(VPREDEFINED_DOMAIN_MODEL_REFERENCE);
+		createEAttribute(vPredefinedDomainModelReferenceEClass, VPREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
 	}
 
 	/**
@@ -188,15 +173,14 @@ public class CustomPackageImpl extends EPackageImpl implements CustomPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		customControlEClass.getESuperTypes().add(theViewPackage.getAbstractControl());
+		vPredefinedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(customControlEClass, CustomControl.class, "CustomControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCustomControl_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, CustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCustomControl_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, CustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(vPredefinedDomainModelReferenceEClass, VPredefinedDomainModelReference.class, "VPredefinedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVPredefinedDomainModelReference_ControlId(), ecorePackage.getEString(), "controlId", null, 1, 1, VPredefinedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} // CustomPackageImpl
+} //CustomPackageImpl

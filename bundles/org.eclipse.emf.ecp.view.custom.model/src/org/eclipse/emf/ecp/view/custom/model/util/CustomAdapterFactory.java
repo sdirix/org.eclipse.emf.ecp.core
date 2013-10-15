@@ -1,26 +1,17 @@
-/*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- * Eugen Neufeld - initial API and implementation
- ******************************************************************************/
+/**
+ */
 package org.eclipse.emf.ecp.view.custom.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.emf.ecp.view.custom.model.*;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.Renderable;
+
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -54,8 +45,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * Returns whether this factory is applicable for the type of the object.
 	 * <!-- begin-user-doc -->
-	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
-	 * object of the model.
+	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
 	 * <!-- end-user-doc -->
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
@@ -80,20 +70,12 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	protected CustomSwitch<Adapter> modelSwitch =
 		new CustomSwitch<Adapter>() {
 			@Override
-			public Adapter caseCustomControl(CustomControl object) {
-				return createCustomControlAdapter();
+			public Adapter caseVPredefinedDomainModelReference(VPredefinedDomainModelReference object) {
+				return createVPredefinedDomainModelReferenceAdapter();
 			}
 			@Override
-			public Adapter caseRenderable(Renderable object) {
-				return createRenderableAdapter();
-			}
-			@Override
-			public Adapter caseComposite(Composite object) {
-				return createCompositeAdapter();
-			}
-			@Override
-			public Adapter caseAbstractControl(AbstractControl object) {
-				return createAbstractControlAdapter();
+			public Adapter caseVDomainModelReference(VDomainModelReference object) {
+				return createVDomainModelReferenceAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -114,59 +96,32 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
+
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.custom.model.CustomControl <em>Control</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference <em>VPredefined Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.custom.model.CustomControl
+	 * @see org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference
 	 * @generated
 	 */
-	public Adapter createCustomControlAdapter() {
+	public Adapter createVPredefinedDomainModelReferenceAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference <em>VDomain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Renderable
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createRenderableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Composite <em>Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Composite
-	 * @generated
-	 */
-	public Adapter createCompositeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractControl <em>Abstract Control</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
-	 * @generated
-	 */
-	public Adapter createAbstractControlAdapter() {
+	public Adapter createVDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -182,4 +137,4 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} // CustomAdapterFactory
+} //CustomAdapterFactory

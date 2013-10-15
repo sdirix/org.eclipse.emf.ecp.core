@@ -11,7 +11,7 @@
  * Edagr Mueller - initial API and implementation
  * Johannes Faltermeier - ECPCustomControl API changes
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.custom;
+package org.eclipse.emf.ecp.view.custom.model;
 
 import java.util.Set;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
  * @author jfaltermeier
  * 
  */
-public interface ECPCustomControl extends ECPControl {
+public interface ECPPredefinedReferences {
 
 	/**
 	 * Returns all registered {@link ECPCustomControlFeature}s of this {@link ECPCustomControl}.

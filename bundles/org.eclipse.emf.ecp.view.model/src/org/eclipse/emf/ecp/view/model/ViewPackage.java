@@ -927,24 +927,14 @@ public interface ViewPackage extends EPackage {
 	int CONTROL__LABEL_ALIGNMENT = COMPOSITE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__DOMAIN_MODEL_REFERENCES = COMPOSITE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__CONTROL_ID = COMPOSITE_FEATURE_COUNT + 2;
+	int CONTROL__DOMAIN_MODEL_REFERENCE = COMPOSITE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -954,7 +944,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 3;
+	int CONTROL_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1457,19 +1447,6 @@ public interface ViewPackage extends EPackage {
 	EClass getControl();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#getControlId
-	 * <em>Control Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Control Id</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getControlId()
-	 * @see #getControl()
-	 * @generated
-	 */
-	EAttribute getControl_ControlId();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment
 	 * <em>Label Alignment</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1483,17 +1460,17 @@ public interface ViewPackage extends EPackage {
 	EAttribute getControl_LabelAlignment();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReferences <em>Domain Model References</em>}'.
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for the containment reference list '<em>Domain Model References</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getDomainModelReferences()
+	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.Control#getDomainModelReference()
 	 * @see #getControl()
 	 * @generated
 	 */
-	EReference getControl_DomainModelReferences();
+	EReference getControl_DomainModelReference();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.CustomComposite
@@ -1951,15 +1928,6 @@ public interface ViewPackage extends EPackage {
 		EClass CONTROL = eINSTANCE.getControl();
 
 		/**
-		 * The meta object literal for the '<em><b>Control Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CONTROL__CONTROL_ID = eINSTANCE.getControl_ControlId();
-
-		/**
 		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1969,13 +1937,13 @@ public interface ViewPackage extends EPackage {
 		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
 
 		/**
-		 * The meta object literal for the '<em><b>Domain Model References</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
-		EReference CONTROL__DOMAIN_MODEL_REFERENCES = eINSTANCE.getControl_DomainModelReferences();
+		EReference CONTROL__DOMAIN_MODEL_REFERENCE = eINSTANCE.getControl_DomainModelReference();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl

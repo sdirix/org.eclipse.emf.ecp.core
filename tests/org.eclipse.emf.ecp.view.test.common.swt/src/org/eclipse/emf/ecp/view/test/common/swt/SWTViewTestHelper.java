@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -57,7 +58,8 @@ public final class SWTViewTestHelper {
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		context.getViewContext().registerViewChangeListener(node);
+		final ViewModelContextImpl viewContext = new ViewModelContextImpl(renderable, input);
+		viewContext.registerViewChangeListener(node);
 		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, node,
 			adapterFactoryItemDelegator);
 		// TODO return resultRows

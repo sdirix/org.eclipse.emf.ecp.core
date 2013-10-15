@@ -100,7 +100,7 @@ public abstract class AbstractHorizontalTest {
 		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
 			.createVFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
-		control.getDomainModelReferences().add(domainModelReference);
+		control.setDomainModelReference(domainModelReference);
 		return control;
 	}
 

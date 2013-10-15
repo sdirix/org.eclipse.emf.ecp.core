@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.ecp.view.model;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,8 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReferences <em>Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getControlId <em>Control Id</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}</li>
  * </ul>
  * </p>
  * 
@@ -32,35 +30,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Control extends Composite {
-	/**
-	 * Returns the value of the '<em><b>Control Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Control Id</em>' attribute isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Control Id</em>' attribute.
-	 * @see #setControlId(String)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_ControlId()
-	 * @model
-	 * @generated
-	 */
-	String getControlId();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getControlId <em>Control Id</em>}'
-	 * attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param value the new value of the '<em>Control Id</em>' attribute.
-	 * @see #getControlId()
-	 * @generated
-	 */
-	void setControlId(String value);
-
 	/**
 	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.
 	 * The default value is <code>"Left"</code>.
@@ -95,20 +64,32 @@ public interface Control extends Composite {
 	void setLabelAlignment(Alignment value);
 
 	/**
-	 * Returns the value of the '<em><b>Domain Model References</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VDomainModelReference}.
+	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Domain Model References</em>' containment reference list isn't clear, there really
-	 * should be more of a description here...
+	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the value of the '<em>Domain Model References</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_DomainModelReferences()
+	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
+	 * @see #setDomainModelReference(VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_DomainModelReference()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList<VDomainModelReference> getDomainModelReferences();
+	VDomainModelReference getDomainModelReference();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference
+	 * <em>Domain Model Reference</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
+	 * @see #getDomainModelReference()
+	 * @generated
+	 */
+	void setDomainModelReference(VDomainModelReference value);
 
 } // Control

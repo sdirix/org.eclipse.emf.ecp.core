@@ -358,17 +358,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControl_ControlId()
-	{
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EAttribute getControl_LabelAlignment()
 	{
 		return (EAttribute) controlEClass.getEStructuralFeatures().get(0);
@@ -380,7 +369,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EReference getControl_DomainModelReferences()
+	public EReference getControl_DomainModelReference()
 	{
 		return (EReference) controlEClass.getEStructuralFeatures().get(1);
 	}
@@ -701,8 +690,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 
 		controlEClass = createEClass(CONTROL);
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
-		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCES);
-		createEAttribute(controlEClass, CONTROL__CONTROL_ID);
+		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCE);
 
 		customCompositeEClass = createEClass(CUSTOM_COMPOSITE);
 		createEAttribute(customCompositeEClass, CUSTOM_COMPOSITE__BUNDLE);
@@ -845,11 +833,9 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getControl_LabelAlignment(), this.getAlignment(), "labelAlignment", "Left", 0, 1, Control.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getControl_DomainModelReferences(), this.getVDomainModelReference(), null,
-			"domainModelReferences", null, 1, -1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+		initEReference(getControl_DomainModelReference(), this.getVDomainModelReference(), null,
+			"domainModelReference", null, 1, 1, Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControl_ControlId(), theEcorePackage.getEString(), "controlId", null, 0, 1, Control.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(customCompositeEClass, CustomComposite.class, "CustomComposite", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);

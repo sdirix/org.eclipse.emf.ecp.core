@@ -70,7 +70,6 @@ public class ControlItemProvider
 			super.getPropertyDescriptors(object);
 
 			addLabelAlignmentPropertyDescriptor(object);
-			addControlIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -101,30 +100,6 @@ public class ControlItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Control Id feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addControlIdPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Control_controlId_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Control_controlId_feature", "_UI_Control_type"),
-				ViewPackage.Literals.CONTROL__CONTROL_ID,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -139,7 +114,7 @@ public class ControlItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES);
+			childrenFeatures.add(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE);
 		}
 		return childrenFeatures;
 	}
@@ -199,10 +174,9 @@ public class ControlItemProvider
 		switch (notification.getFeatureID(Control.class))
 		{
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
-		case ViewPackage.CONTROL__CONTROL_ID:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCES:
+		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -223,7 +197,7 @@ public class ControlItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCES,
+			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 				ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference()));
 	}
 

@@ -12,15 +12,19 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -34,17 +38,21 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 
 	/** {@inheritDoc} **/
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
+		return check((EStructuralFeature) itemPropertyDescriptor.getFeature(eObject), eObject);
+	}
+
+	public int check(EStructuralFeature feature, EObject eObject) {
 		int bestPriority = NOT_APPLICABLE;
-		ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
 			Activator.getDefault().ungetECPControlFactory();
 			return bestPriority;
 		}
-		for (ECPControlDescription description : controlFactory.getControlDescriptors()) {
-			for (ECPApplicableTester tester : description.getTester()) {
+		for (final ECPControlDescription description : controlFactory.getControlDescriptors()) {
+			for (final ECPApplicableTester tester : description.getTester()) {
 				if (ECPStaticApplicableTester.class.isInstance(tester)) {
-					ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
-					int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
+					final ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
+					final int priority = getTesterPriority(test, feature, eObject);
 					if (bestPriority < priority) {
 						bestPriority = priority;
 					}
@@ -66,28 +74,27 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	 * @return the priority
 	 */
 	public static int getTesterPriority(ECPStaticApplicableTester tester,
-		IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		if (!itemPropertyDescriptor.isMany(eObject)) {
+		EStructuralFeature feature, EObject eObject) {
+		if (!feature.isMany()) {
 			return NOT_APPLICABLE;
 		}
-		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
 
 		if (EAttribute.class.isInstance(feature)) {
-			Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
+			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 			if (instanceClass.isPrimitive()) {
 				try {
-					Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
+					final Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
 					if (!primitive.equals(instanceClass)) {
 						return NOT_APPLICABLE;
 					}
 
-				} catch (IllegalArgumentException e) {
+				} catch (final IllegalArgumentException e) {
 					return NOT_APPLICABLE;
-				} catch (SecurityException e) {
+				} catch (final SecurityException e) {
 					return NOT_APPLICABLE;
-				} catch (IllegalAccessException e) {
+				} catch (final IllegalAccessException e) {
 					return NOT_APPLICABLE;
-				} catch (NoSuchFieldException e) {
+				} catch (final NoSuchFieldException e) {
 					return NOT_APPLICABLE;
 				}
 			} else if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
@@ -105,6 +112,25 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 			return tester.getPriority();
 		}
 		return NOT_APPLICABLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.edit.util.VDomainModelReference)
+	 */
+	public int isApplicable(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			count++;
+			setting = iterator.next();
+		}
+		if (count != 1) {
+			return NOT_APPLICABLE;
+		}
+		return check(setting.getEStructuralFeature(), setting.getEObject());
 	}
 
 }

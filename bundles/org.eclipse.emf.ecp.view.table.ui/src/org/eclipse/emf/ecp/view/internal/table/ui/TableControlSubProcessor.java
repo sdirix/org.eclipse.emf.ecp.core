@@ -47,7 +47,7 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 		final Map<EObject, Set<Control>> result = new LinkedHashMap<EObject, Set<Control>>();
 		// final EObject referencedDomainModel = validationRegistry.resolveDomainModel(domainObject,
 		// tableControl.getPathToFeature());
-		final Iterator<Setting> settings = tableControl.getDomainModelReferences().get(0).getIterator();
+		final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
 			return result;
 		}

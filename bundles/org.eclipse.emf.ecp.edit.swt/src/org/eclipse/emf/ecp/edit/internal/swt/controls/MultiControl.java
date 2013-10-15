@@ -73,7 +73,7 @@ public abstract class MultiControl extends SWTControl {
 	private Composite sectionComposite;
 	private ECPControlDescription controlDescription;
 	private Class<?> supportedClassType;
-	private final ECPSWTAction[] actions;
+	private ECPSWTAction[] actions;
 
 	private Button unsetButton;
 	private Label tooltipLabel;
@@ -87,11 +87,8 @@ public abstract class MultiControl extends SWTControl {
 	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
-	public MultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-		findControlDescription(itemPropertyDescriptor, modelElementContext.getModelElement());
-		actions = instantiateActions();
+	public MultiControl() {
+
 	}
 
 	/**
@@ -139,6 +136,10 @@ public abstract class MultiControl extends SWTControl {
 
 	@Override
 	protected void fillControlComposite(Composite parent) {
+
+		findControlDescription(getItemPropertyDescriptor(), getModelElementContext().getModelElement());
+		actions = instantiateActions();
+
 		mainComposite = new Composite(parent, SWT.BORDER);
 		mainComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
@@ -474,6 +475,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
 
 		model.removeListChangeListener(changeListener);

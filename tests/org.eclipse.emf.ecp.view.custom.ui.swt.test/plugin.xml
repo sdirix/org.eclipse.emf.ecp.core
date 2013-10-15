@@ -7,6 +7,17 @@
             class="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub"
             id="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub"
             showLabel="false">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStubTester">
+         </dynamicTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2"
+            id="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2"
+            showLabel="false">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2Tester">
+         </dynamicTest>
       </control>
    </extension>
 

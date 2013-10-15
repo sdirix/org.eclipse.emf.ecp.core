@@ -2,10 +2,8 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/custom/model"
     nsPrefix="org.eclipse.emf.ecp.view.custom.model">
-  <eClassifiers xsi:type="ecore:EClass" name="CustomControl" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//AbstractControl">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundle" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" lowerBound="1"
+  <eClassifiers xsi:type="ecore:EClass" name="VPredefinedDomainModelReference" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//VDomainModelReference">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="controlId" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

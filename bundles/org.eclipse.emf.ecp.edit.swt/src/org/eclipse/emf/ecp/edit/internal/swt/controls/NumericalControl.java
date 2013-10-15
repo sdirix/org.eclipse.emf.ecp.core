@@ -13,27 +13,23 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
-
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
 
 /**
  * This class is used as a common class for all number controls.
@@ -42,20 +38,6 @@ import java.text.ParsePosition;
  * @author emueller
  */
 public class NumericalControl extends AbstractTextControl {
-
-	/**
-	 * Constructor for a String control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public NumericalControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	@Override
 	protected int getTextWidgetStyle() {
@@ -104,7 +86,7 @@ public class NumericalControl extends AbstractTextControl {
 		// TODO: FocusOut doesn't seem to fire in case the same invalid text is entered twice
 		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
 		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy();
-		NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy();
+		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), targetToModelStrategy,
 			modelToTargetStrategy);
 
@@ -113,14 +95,14 @@ public class NumericalControl extends AbstractTextControl {
 			// use value change listener to get same behavior for control
 			value.addValueChangeListener(new IValueChangeListener() {
 				public void handleValueChange(ValueChangeEvent event) {
-					Object newValue = event.diff.getNewValue();
-					DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
+					final Object newValue = event.diff.getNewValue();
+					final DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
 						getInstanceClass());
 					try {
-						Number number = format.parse((String) newValue);
+						final Number number = format.parse((String) newValue);
 						value.setValue(format.format(number));
 						binding.updateTargetToModel();
-					} catch (ParseException ex) {
+					} catch (final ParseException ex) {
 						targetToModelStrategy.revertToOldValue(value);
 					}
 				}
@@ -162,7 +144,7 @@ public class NumericalControl extends AbstractTextControl {
 
 	private class NumericalTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
-		private DecimalFormat format;
+		private final DecimalFormat format;
 
 		NumericalTargetToModelUpdateStrategy() {
 			super();
@@ -178,14 +160,14 @@ public class NumericalControl extends AbstractTextControl {
 				if (value == null) {
 					number = NumericalHelper.getDefaultValue(getInstanceClass());
 				} else {
-					ParsePosition pp = new ParsePosition(0);
+					final ParsePosition pp = new ParsePosition(0);
 					number = format.parse((String) value, pp);
 					if (pp.getErrorIndex() != -1 || pp.getIndex() != ((String) value).length()) {
 						return revertToOldValue(value);
 					}
 					if (NumericalHelper.isInteger(getInstanceClass())) {
 						boolean maxValue = false;
-						Class<?> instanceClass = getInstanceClass();
+						final Class<?> instanceClass = getInstanceClass();
 						String formatedValue = ""; //$NON-NLS-1$
 						try {
 							if (Integer.class.isAssignableFrom(instanceClass)
@@ -201,13 +183,13 @@ public class NumericalControl extends AbstractTextControl {
 									formatedValue = format.format(Long.MAX_VALUE);
 								}
 							}
-						} catch (IllegalArgumentException ex) {
+						} catch (final IllegalArgumentException ex) {
 							Activator.logException(ex);
-						} catch (SecurityException ex) {
+						} catch (final SecurityException ex) {
 							Activator.logException(ex);
-						} catch (IllegalAccessException ex) {
+						} catch (final IllegalAccessException ex) {
 							Activator.logException(ex);
-						} catch (NoSuchFieldException ex) {
+						} catch (final NoSuchFieldException ex) {
 							Activator.logException(ex);
 						}
 
@@ -232,7 +214,7 @@ public class NumericalControl extends AbstractTextControl {
 					return null;
 				}
 				return NumericalHelper.numberToInstanceClass(format.parse(formatedNumber), getInstanceClass());
-			} catch (ParseException ex) {
+			} catch (final ParseException ex) {
 				return revertToOldValue(value);
 			}
 		}
@@ -243,9 +225,9 @@ public class NumericalControl extends AbstractTextControl {
 				return null;
 			}
 
-			Object result = getModelValue().getValue();
+			final Object result = getModelValue().getValue();
 
-			MessageDialog messageDialog = new MessageDialog(getText().getShell(),
+			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
 				ControlMessages.NumericalControl_InvalidNumber, null,
 				ControlMessages.NumericalControl_InvalidNumberWillBeUnset, MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
