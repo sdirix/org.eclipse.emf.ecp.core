@@ -650,6 +650,12 @@ public class TableControl extends SWTControl {
 		return new Control[] { tableViewer.getControl() };
 	}
 
+	/**
+	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
 	private class ECPTableEditingSupport extends EditingSupport {
 
 		private final CellEditor cellEditor;
