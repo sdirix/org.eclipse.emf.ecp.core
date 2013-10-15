@@ -70,7 +70,6 @@ public class XmlDateControlText extends AbstractTextControl {
 	public XmlDateControlText(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
 		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -97,7 +96,7 @@ public class XmlDateControlText extends AbstractTextControl {
 	@Override
 	public void setEditable(boolean editable) {
 		super.setEditable(editable);
-		bDate.setEnabled(editable);
+		bDate.setVisible(editable);
 	}
 
 	@Override
@@ -134,7 +133,6 @@ public class XmlDateControlText extends AbstractTextControl {
 						dialog.close();
 					}
 				});
-				// dialog.setFocus();
 				calendar.addFocusListener(new FocusListener() {
 
 					public void focusLost(FocusEvent event) {
@@ -144,8 +142,6 @@ public class XmlDateControlText extends AbstractTextControl {
 					}
 
 					public void focusGained(FocusEvent event) {
-						// TODO Auto-generated method stub
-
 					}
 				});
 				dialog.pack();

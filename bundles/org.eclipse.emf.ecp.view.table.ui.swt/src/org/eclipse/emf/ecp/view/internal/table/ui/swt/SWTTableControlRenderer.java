@@ -111,7 +111,7 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 		final Composite controlComposite = control.createControl(parent);
 		controlComposite.setBackground(parent.getBackground());
 
-		controlComposite.setEnabled(!modelTableControl.isReadonly());
+		control.setEditable(!modelTableControl.isReadonly());
 
 		if (label == null) {
 			node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite));
