@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho-version>0.18.0</tycho-version>
 		<tycho-extras-version>0.18.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
-		<javadoc-title>EMF Client Platform 1.0.1 API</javadoc-title>
+		<javadoc-title>EMF Client Platform 1.0.3 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
@@ -26,7 +26,7 @@
 				</property>
 			</activation>
 			<properties>
-				<ecp-version>1.0.0.RC4</ecp-version>
+				<ecp-version>1.0.3</ecp-version>
 			</properties>
 		</profile>
 		<profile>
@@ -35,7 +35,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<ecp-version>1.0.2-SNAPSHOT</ecp-version>
+				<ecp-version>1.0.3-SNAPSHOT</ecp-version>
 			</properties>
 		</profile>
 	</profiles>
@@ -237,16 +237,4 @@
 
 		</plugins>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.9.1</version>
-				<configuration>
-					<configLocation>http://www.eclipse.org/emfclient/checkstyle/emfcpCS.xml</configLocation>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 </project>
