@@ -205,7 +205,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			current = child;
 		}
 
-		return current != null && current.eClass().getEStructuralFeatures().contains(domainModelFeature);
+		return current != null && current.eClass().getEAllStructuralFeatures().contains(domainModelFeature);
 	}
 
 	/**
