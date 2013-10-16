@@ -16,6 +16,10 @@
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
+		<!-- Properties to enable jacoco code coverage analysis with sonar -->
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
 	</properties>
 	<profiles>
 		<profile>
@@ -364,7 +368,7 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.6.2.201302030002</version>
 				<configuration>
-					<destFile>${project.basedir}/target/jacoco.exec</destFile>
+					<destFile>${sonar.jacoco.reportPath}</destFile>
 					<append>true</append> 
 				</configuration>
 				<executions>
