@@ -71,10 +71,11 @@ public class CommonRuleTest {
 	/**
 	 * Adds a {@link ShowRule} to the given {@link Renderable} without a condition.
 	 */
-	protected void addShowRule(Renderable control, boolean isHide) {
+	protected ShowRule addShowRule(Renderable control, boolean isHide) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(isHide);
 		control.getAttachments().add(rule);
+		return rule;
 	}
 
 	/**

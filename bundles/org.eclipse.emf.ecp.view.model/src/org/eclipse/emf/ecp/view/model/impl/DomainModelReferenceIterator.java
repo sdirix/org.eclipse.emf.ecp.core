@@ -54,7 +54,6 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 	public DomainModelReferenceIterator(List<EReference> leftReferences, EObject lastResolvedEObject,
 		EStructuralFeature domainModelFeature) {
 		this.domainModelFeature = domainModelFeature;
-		hasNext = lastResolvedEObject != null;
 		this.lastResolvedEObject = lastResolvedEObject;
 		final List<ReferenceCounter> referenceCounters = new ArrayList<ReferenceCounter>(
 			leftReferences.size());
@@ -65,6 +64,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			referenceCounters.add(rc);
 		}
 		references = referenceCounters;
+		hasNext = resolveRefernces();
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 				// EMF API
 				@SuppressWarnings("unchecked")
 				final List<EObject> children = (List<EObject>) current.eGet(eReference);
-				if (children == null) {
+				if (children == null || children.size() == 0) {
 					throw new IllegalStateException("The EReference " + eReference.getName() + " is wrong for "
 						+ current.eClass().getName() + "!");
 				}
@@ -169,6 +169,43 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			current = child;
 		}
 		return ((List<?>) current.eGet(references.get(position).eReference)).size();
+	}
+
+	// FIXME: looks like duplicate code
+	private boolean resolveRefernces() {
+		EObject current = lastResolvedEObject;
+
+		if (lastResolvedEObject == null) {
+			return false;
+		}
+
+		for (int i = 0; i < references.size(); i++) {
+			final ReferenceCounter referenceCounter = references.get(i);
+			final EReference eReference = referenceCounter.eReference;
+			EObject child;
+			if (!current.eClass().getEAllStructuralFeatures().contains(eReference)) {
+				return false;
+			}
+			if (!eReference.isMany()) {
+				child = (EObject) current.eGet(eReference);
+			}
+			else {
+				// EMF API
+				@SuppressWarnings("unchecked")
+				final List<EObject> children = (List<EObject>) current.eGet(eReference);
+				if (children == null || children.size() == 0) {
+					return false;
+				}
+				// FIXME
+				child = children.get(0);
+			}
+			if (child == null) {
+				return false;
+			}
+			current = child;
+		}
+
+		return current != null && current.eClass().getEStructuralFeatures().contains(domainModelFeature);
 	}
 
 	/**

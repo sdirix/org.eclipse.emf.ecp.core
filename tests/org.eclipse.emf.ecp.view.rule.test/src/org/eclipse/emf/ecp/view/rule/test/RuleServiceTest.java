@@ -16,10 +16,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
@@ -33,6 +37,8 @@ import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
+import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
+import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
@@ -222,6 +228,23 @@ public class RuleServiceTest extends CommonRuleTest {
 	 */
 	private void setLeagueToRight() {
 		league.setName("League");
+	}
+
+	// TODO: move to CommonRuleTest
+	private LeafCondition setupLeafCondition(EStructuralFeature domainFeature, Object expectedValue,
+		EObject resolveObject, List<EReference> eReferences) {
+		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
+		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		modelReference.setDomainModelEFeature(domainFeature);
+		leafCondition.setDomainModelReference(modelReference);
+		leafCondition.setExpectedValue(expectedValue);
+		modelReference.getDomainModelEReferencePath().addAll(eReferences);
+		final boolean result = modelReference.resolve(resolveObject);
+		if (!result) {
+			throw new IllegalStateException("the ModelReference was not resolved.");
+		}
+		return leafCondition;
 	}
 
 	@Test
@@ -1397,6 +1420,46 @@ public class RuleServiceTest extends CommonRuleTest {
 		setLeagueToWrong();
 		instantiateRuleService();
 		setLeagueToWrong();
+		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testContainmentConditionWithShowRule() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
+			"asdf@asdf.com", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+
+		assertFalse(controlPName.isVisible());
+
+		player.getEMails().add("asdf@asdf.com");
+
+		assertTrue(controlPName.isVisible());
+	}
+
+	@Test
+	public void testContainmentConditionWithShowRuleWithClearedMultiref() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
+			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		player.setName("doe");
+		instantiateRuleService();
+		assertTrue(controlPName.isVisible());
+		league.getPlayers().clear();
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testContainmentConditionWithShowRuleFulFillCondition() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
+			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+		assertFalse(controlPName.isVisible());
+		player.setName("doe");
 		assertTrue(controlPName.isVisible());
 	}
 

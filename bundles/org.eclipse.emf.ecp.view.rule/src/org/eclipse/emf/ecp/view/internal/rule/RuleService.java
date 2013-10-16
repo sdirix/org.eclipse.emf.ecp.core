@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
@@ -73,7 +74,6 @@ public class RuleService extends AbstractViewService {
 		domainChangeListener = new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
-
 				if (isAttributeNotification(notification)) {
 					if (isUnset) {
 						return;
@@ -81,6 +81,13 @@ public class RuleService extends AbstractViewService {
 					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
 					evalShow(attribute);
 					evalEnable(attribute);
+				} else if (isMultiRefNotification(notification)) {
+					final EReference reference = (EReference) notification.getStructuralFeature();
+					final EClass eReferenceType = reference.getEReferenceType();
+					for (final EAttribute attribute : eReferenceType.getEAllAttributes()) {
+						evalShow(attribute);
+						evalEnable(attribute);
+					}
 				}
 			}
 
@@ -218,15 +225,7 @@ public class RuleService extends AbstractViewService {
 			if (!ruleType.isInstance(rule)) {
 				continue;
 			}
-			//
-			// if (hasChanged) {
-			// final Object currentValue = domainEObject.eGet(attribute);
-			// if (currentValue == null) {
-			// hasChanged = newValue == null ? false : true;
-			// } else {
-			// hasChanged = !currentValue.equals(newValue);
-			// }
-			// }
+
 			if (dry) {
 
 				final TreeIterator<EObject> eAllContents = rule.eAllContents();
@@ -462,6 +461,15 @@ public class RuleService extends AbstractViewService {
 	private static boolean isAttributeNotification(ModelChangeNotification notification) {
 		if (notification.getStructuralFeature() instanceof EAttribute) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean isMultiRefNotification(ModelChangeNotification notification) {
+		if (EReference.class.isInstance(notification.getStructuralFeature())) {
+			final EReference reference = (EReference) notification.getStructuralFeature();
+			return reference.getUpperBound() < 0 || reference.getUpperBound() > 1;
 		}
 
 		return false;
