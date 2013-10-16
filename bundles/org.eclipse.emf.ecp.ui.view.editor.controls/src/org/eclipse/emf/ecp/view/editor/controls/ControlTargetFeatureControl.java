@@ -77,6 +77,10 @@ public class ControlTargetFeatureControl extends LinkControl {
 		return buttons;
 	}
 
+	protected boolean allowMultiSelection() {
+		return false;
+	}
+
 	private class FilteredReferenceAction extends AbstractFilteredReferenceAction {
 
 		public FilteredReferenceAction(EReference eReference, IItemPropertyDescriptor descriptor, Shell shell) {
@@ -111,21 +115,16 @@ public class ControlTargetFeatureControl extends LinkControl {
 					return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
 						"This is not an " + EStructuralFeature.class.getSimpleName() + ".");
 				}
-			});
+			}, allowMultiSelection());
 		}
 
 		@Override
 		protected void setSelectedValues(EStructuralFeature selectedFeature, List<EReference> bottomUpPath) {
 			final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getModelElementContext()
 				.getModelElement();
-			// final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			// .createVFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(selectedFeature);
+			modelReference.getDomainModelEReferencePath().clear();
 			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
-			// condition.setTargetFeature(selectedFeature);
-			// condition.getPathToFeature().clear();
-			// condition.getPathToFeature().addAll(bottomUpPath);
-			// condition.setDomainModelReference(modelReference);
 		}
 
 	}

@@ -28,18 +28,6 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.view.editor.controls.ControlConditionAttributeControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.conditionAttribute"
-            showLabel="true">
-         <staticTest
-               priority="1"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EAttribute"
-               supportedEObject="org.eclipse.emf.ecp.view.rule.model.LeafCondition"
-               supportedFeature="attribute">
-         </staticTest>
-      </control>
-      <control
             class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl"
             id="org.eclipse.emf.ecp.view.editor.controls.rootEClass"
             showLabel="true">
@@ -75,6 +63,14 @@
                supportedClassType="org.eclipse.emf.ecore.EAttribute"
                supportedEObject="org.eclipse.emf.ecp.view.model.TableColumn">
          </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.view.editor.controls.RuleFeaturePathControl"
+            id="org.eclipse.emf.ecp.ui.view.editor.controls.referencePath.leafcondition"
+            showLabel="true">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.RuleFeaturePathTester">
+         </dynamicTest>
       </control>
    </extension>
    <extension

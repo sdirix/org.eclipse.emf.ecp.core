@@ -49,6 +49,7 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	private final ComposedAdapterFactory composedAdapterFactory;
 	private final EClass rootClass;
 	private final ISelectionStatusValidator validator;
+	private final boolean allowMultiReferences;
 
 	/**
 	 * Constructor for the AbstractFilteredReferenceCommand.
@@ -58,14 +59,16 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	 * @param shell the {@link Shell} to use in the dialog
 	 * @param rootClass the {@link EClass} which is the root of the view
 	 * @param validator the {@link ISelectionStatusValidator} to use when a selection was done
+	 * @param allowMultiReferences whether multi references are allowed during the selection
 	 */
 	public AbstractFilteredReferenceCommand(Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
-		Shell shell, EClass rootClass, ISelectionStatusValidator validator) {
+		Shell shell, EClass rootClass, ISelectionStatusValidator validator, boolean allowMultiReferences) {
 		super(notifier);
 		this.shell = shell;
 		this.composedAdapterFactory = composedAdapterFactory;
 		this.rootClass = rootClass;
 		this.validator = validator;
+		this.allowMultiReferences = allowMultiReferences;
 	}
 
 	private Class<?> returnedClass() {
@@ -138,8 +141,9 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 				}
 				if (EReference.class.isInstance(element)) {
 					final EReference eReference = (EReference) element;
-					// return eReference.isMany() ? false : true;
-					return hasChildren(eReference.getEReferenceType());
+
+					return eReference.isMany() && !allowMultiReferences ? false : hasChildren(eReference
+						.getEReferenceType());
 				}
 				return false;
 			}
