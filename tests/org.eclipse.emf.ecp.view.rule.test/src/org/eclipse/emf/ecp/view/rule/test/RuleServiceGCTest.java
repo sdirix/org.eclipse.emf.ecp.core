@@ -150,6 +150,7 @@ public class RuleServiceGCTest extends CommonRuleTest {
 		assertTrue(view.getChildren().get(0).isEnabled());
 	}
 
+	@Ignore
 	@Test
 	public void testRemoveLeafConditionOfShowRuleReevaluate() {
 		final Tuple<View, League> tuple = createView();
