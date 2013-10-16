@@ -40,7 +40,7 @@
 <unit id="org.eclipse.platform.ide" version="4.3.0.I20130605-2000"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.3"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.swtbot.forms.feature.group" version="2.1.1.201307101628"/>
 <unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.1.1.201307101628"/>
 <unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="2.1.1.201307101628"/>
