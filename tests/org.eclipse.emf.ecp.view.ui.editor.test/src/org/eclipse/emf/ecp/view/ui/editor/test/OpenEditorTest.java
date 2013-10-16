@@ -91,73 +91,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 	public void testViewWithControls() throws ECPRendererException,
 		InterruptedException {
 
-		Realm.runWithDefault(SWTObservables.getRealm(display), new Runnable() {
-
-			public void run() {
-
-				final Control nameCtrl = createControl(BowlingPackage.eINSTANCE
-					.getPlayer_Name());
-				final Control genderCtrl = createControl(BowlingPackage.eINSTANCE
-					.getPlayer_Gender());
-				final Control heightCtrl = createControl(BowlingPackage.eINSTANCE
-					.getPlayer_Height());
-				final Control victoriesCtrl = createControl(BowlingPackage.eINSTANCE
-					.getPlayer_NumberOfVictories());
-
-				view.getCategorizations().add(
-					createCategorizations(nameCtrl, genderCtrl, heightCtrl,
-						victoriesCtrl));
-
-				display.syncExec(new Runnable() {
-
-					public void run() {
-						try {
-							SWTViewTestHelper.render(view, createDomainObject(), shell);
-						} catch (final NoRendererFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (final NoPropertyDescriptorFoundExeption e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						// TODO Auto-generated method stub
-						shell.open();
-					}
-				});
-
-				final SWTBotTree tree = bot.tree();
-				final SWTBotTreeItem select = tree.getTreeItem("parent").getNode("foo").getNode("2").select();
-
-				// display.syncExec(new Runnable() {
-				//
-				// @Override
-				// public void run() {
-				//
-				// while (!shell.isDisposed()) {
-				// if (!Display.getCurrent().readAndDispatch()) {
-				// Display.getCurrent().sleep();
-				// }
-				// }
-				// }
-				// });
-				//
-
-				display.syncExec(new Runnable() {
-
-					public void run() {
-						final TreeItem item = select.widget;
-						final Node<?> node = (Node<?>) item.getData();
-						collectable = new GCCollectable(node.getRenderable());
-					}
-				});
-				tree.getTreeItem("parent").getNode("foo").getNode("1").select();
-
-				// SWTViewTestHelper.dispose();
-				assertTrue(tree.getTreeItem("parent").getNode("foo").getNode("1").isSelected());
-				// assertTrue(collectable.isCollectable());
-				// Thread.sleep(1000);
-			}
-		});
+		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
 	}
 
 	private Control createControl(EStructuralFeature feature) {
@@ -204,6 +138,74 @@ public class OpenEditorTest extends SWTBotTestCase {
 		parentCategorization.getCategorizations().add(fooCategorization);
 		parentCategorization.getCategorizations().add(barCategorization);
 		return parentCategorization;
+	}
+
+	private class TestRunnable implements Runnable {
+
+		public void run() {
+
+			final Control nameCtrl = createControl(BowlingPackage.eINSTANCE
+				.getPlayer_Name());
+			final Control genderCtrl = createControl(BowlingPackage.eINSTANCE
+				.getPlayer_Gender());
+			final Control heightCtrl = createControl(BowlingPackage.eINSTANCE
+				.getPlayer_Height());
+			final Control victoriesCtrl = createControl(BowlingPackage.eINSTANCE
+				.getPlayer_NumberOfVictories());
+
+			view.getCategorizations().add(
+				createCategorizations(nameCtrl, genderCtrl, heightCtrl,
+					victoriesCtrl));
+
+			display.syncExec(new Runnable() {
+
+				public void run() {
+					try {
+						SWTViewTestHelper.render(view, createDomainObject(), shell);
+					} catch (final NoRendererFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (final NoPropertyDescriptorFoundExeption e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// TODO Auto-generated method stub
+					shell.open();
+				}
+			});
+
+			final SWTBotTree tree = bot.tree();
+			final SWTBotTreeItem select = tree.getTreeItem("parent").getNode("foo").getNode("2").select();
+
+			// display.syncExec(new Runnable() {
+			//
+			// @Override
+			// public void run() {
+			//
+			// while (!shell.isDisposed()) {
+			// if (!Display.getCurrent().readAndDispatch()) {
+			// Display.getCurrent().sleep();
+			// }
+			// }
+			// }
+			// });
+			//
+
+			display.syncExec(new Runnable() {
+
+				public void run() {
+					final TreeItem item = select.widget;
+					final Node<?> node = (Node<?>) item.getData();
+					collectable = new GCCollectable(node.getRenderable());
+				}
+			});
+			tree.getTreeItem("parent").getNode("foo").getNode("1").select();
+
+			// SWTViewTestHelper.dispose();
+			assertTrue(tree.getTreeItem("parent").getNode("foo").getNode("1").isSelected());
+			// assertTrue(collectable.isCollectable());
+			// Thread.sleep(1000);
+		}
 	}
 
 }
