@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
-import static org.eclipse.emf.ecp.common.UniqueSetting.createSetting;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -21,9 +19,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.BidirectionalMap;
-import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
@@ -48,14 +46,14 @@ public class RuleRegistry<T extends Rule> {
 	}
 
 	private static NoCondition noCondition = new NoCondition();
-	private final Map<UniqueSetting, BidirectionalMap<LeafCondition, T>> settingToRules;
+	private final Map<EStructuralFeature, BidirectionalMap<LeafCondition, T>> featuresToRules;
 	private final BidirectionalMap<T, Renderable> rulesToRenderables;
 
 	/**
 	 * Default constructor.
 	 */
 	public RuleRegistry() {
-		settingToRules = new LinkedHashMap<UniqueSetting, BidirectionalMap<LeafCondition, T>>();
+		featuresToRules = new LinkedHashMap<EStructuralFeature, BidirectionalMap<LeafCondition, T>>();
 		rulesToRenderables = new BidirectionalMap<T, Renderable>();
 	}
 
@@ -76,7 +74,7 @@ public class RuleRegistry<T extends Rule> {
 	public void register(Renderable renderable, T rule, Condition condition, EObject domainModel) {
 
 		if (condition == null) {
-			mapSettingToRule(createSetting(domainModel, AllEAttributes.get()), noCondition, rule);
+			mapFeatureToRule(AllEAttributes.get(), noCondition, rule);
 			rulesToRenderables.put(rule, renderable);
 		} else if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
@@ -86,13 +84,7 @@ public class RuleRegistry<T extends Rule> {
 			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
 			while (settingIterator.hasNext()) {
 				final Setting setting = settingIterator.next();
-				// unique settings are needed to compare settings with each other.
-				// The default implementation of ESettting
-				// does not provide and appropriate equals()/hashCode() implementation
-				final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
-
-				mapSettingToRule(uniqueSetting, leafCondition, rule);
-
+				mapFeatureToRule(setting.getEStructuralFeature(), leafCondition, rule);
 				rulesToRenderables.put(rule, renderable);
 			}
 
@@ -122,7 +114,7 @@ public class RuleRegistry<T extends Rule> {
 			return removeCondition(condition);
 		}
 
-		final Collection<BidirectionalMap<LeafCondition, T>> values = settingToRules.values();
+		final Collection<BidirectionalMap<LeafCondition, T>> values = featuresToRules.values();
 		for (final BidirectionalMap<LeafCondition, T> bidirectionalMap : values) {
 			if (bidirectionalMap.removeByValue(rule) != null) {
 				break;
@@ -160,9 +152,10 @@ public class RuleRegistry<T extends Rule> {
 			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
 
 			final Setting setting = settingIterator.next();
-			final UniqueSetting uniqueSetting = createSetting(setting.getEObject(), setting.getEStructuralFeature());
 
-			final BidirectionalMap<LeafCondition, T> bidirectionalMap = settingToRules.get(uniqueSetting);
+			final BidirectionalMap<LeafCondition, T> bidirectionalMap = featuresToRules.get(setting
+				.getEStructuralFeature());
+
 			if (bidirectionalMap != null) {
 				final T removeByKey = bidirectionalMap.removeByKey(leafCondition);
 				ret = rulesToRenderables.removeByKey(removeByKey);
@@ -172,11 +165,11 @@ public class RuleRegistry<T extends Rule> {
 		return ret;
 	}
 
-	private void mapSettingToRule(final UniqueSetting setting, LeafCondition condition, T rule) {
-		if (!settingToRules.containsKey(setting)) {
-			settingToRules.put(setting, new BidirectionalMap<LeafCondition, T>());
+	private void mapFeatureToRule(final EStructuralFeature attribute, LeafCondition condition, T rule) {
+		if (!featuresToRules.containsKey(attribute)) {
+			featuresToRules.put(attribute, new BidirectionalMap<LeafCondition, T>());
 		}
-		settingToRules.get(setting).put(condition, rule);
+		featuresToRules.get(attribute).put(condition, rule);
 	}
 
 	/**
@@ -184,24 +177,24 @@ public class RuleRegistry<T extends Rule> {
 	 * 
 	 * @return the settings of this registry.
 	 */
-	public Set<UniqueSetting> getSettings() {
-		return settingToRules.keySet();
+	public Set<EStructuralFeature> getAttributes() {
+		return featuresToRules.keySet();
 	}
 
 	/**
-	 * Returns all rules that would be affected if the value of given setting is changed.
+	 * Returns all rules that would be affected if the value of given feature is changed.
 	 * 
-	 * @param setting
-	 *            the setting
-	 * @return a list of {@link Renderable}s that are affected of the setting changed
+	 * @param feature
+	 *            the feature
+	 * @return a list of {@link Renderable}s that are affected of the feature change
 	 */
-	public Map<Rule, Renderable> getAffectedRenderables(final UniqueSetting setting) {
+	public Map<Rule, Renderable> getAffectedRenderables(final EStructuralFeature feature) {
 
 		final Map<Rule, Renderable> result = new LinkedHashMap<Rule, Renderable>();
-		BidirectionalMap<LeafCondition, T> bidirectionalMap = settingToRules.get(setting);
+		BidirectionalMap<LeafCondition, T> bidirectionalMap = featuresToRules.get(feature);
 
 		if (bidirectionalMap == null) {
-			bidirectionalMap = settingToRules.get(createSetting(setting.getEObject(), AllEAttributes.get()));
+			bidirectionalMap = featuresToRules.get(AllEAttributes.get());
 		}
 
 		if (bidirectionalMap == null) {

@@ -11,20 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
-import static org.eclipse.emf.ecp.common.UniqueSetting.createSetting;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
@@ -35,6 +34,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 
@@ -79,8 +79,8 @@ public class RuleService extends AbstractViewService {
 						return;
 					}
 					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
-					evalShow(notification.getNotifier(), attribute);
-					evalEnable(notification.getNotifier(), attribute);
+					evalShow(attribute);
+					evalEnable(attribute);
 				}
 			}
 
@@ -140,8 +140,8 @@ public class RuleService extends AbstractViewService {
 		init(enableRuleRegistry, EnableRule.class, view, domainModel);
 		init(showRuleRegistry, ShowRule.class, view, domainModel);
 
-		evalEnable(domainModel);
-		evalShow(domainModel);
+		evalEnable();
+		evalShow();
 	}
 
 	private static void resetToVisible(Renderable renderable) {
@@ -203,12 +203,12 @@ public class RuleService extends AbstractViewService {
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EObject domainEObject, EStructuralFeature attribute, boolean dry, Object newValue) {
+		Class<T> ruleType, EStructuralFeature attribute, boolean dry, Object newValue) {
 
 		final Map<Renderable, Boolean> map = new LinkedHashMap<Renderable, Boolean>();
 
 		for (final Map.Entry<Rule, Renderable> ruleAndRenderable : registry.getAffectedRenderables(
-			createSetting(domainEObject, attribute)).entrySet()) {
+			attribute).entrySet()) {
 
 			final Rule rule = ruleAndRenderable.getKey();
 			final Renderable renderable = ruleAndRenderable.getValue();
@@ -218,13 +218,51 @@ public class RuleService extends AbstractViewService {
 			if (!ruleType.isInstance(rule)) {
 				continue;
 			}
-
+			//
+			// if (hasChanged) {
+			// final Object currentValue = domainEObject.eGet(attribute);
+			// if (currentValue == null) {
+			// hasChanged = newValue == null ? false : true;
+			// } else {
+			// hasChanged = !currentValue.equals(newValue);
+			// }
+			// }
 			if (dry) {
-				final Object currentValue = domainEObject.eGet(attribute);
-				if (currentValue == null) {
-					hasChanged = newValue == null ? false : true;
-				} else {
-					hasChanged = !currentValue.equals(newValue);
+
+				final TreeIterator<EObject> eAllContents = rule.eAllContents();
+				while (eAllContents.hasNext()) {
+					final EObject next = eAllContents.next();
+					if (!LeafCondition.class.isInstance(next)) {
+						continue;
+					}
+
+					final LeafCondition leafCondition = (LeafCondition) next;
+
+					final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
+					// FIXME: duplicate code
+					while (settingIterator.hasNext()) {
+						final Setting setting = settingIterator.next();
+						final EObject parent = setting.getEObject();
+						final EStructuralFeature feature = setting.getEStructuralFeature();
+						final EClass attributeClass = feature.getEContainingClass();
+						if (!attributeClass.isInstance(parent)) {
+							continue;
+						}
+						final Object actualValue = parent.eGet(feature);
+						if (!feature.isMany()) {
+							if (newValue == null) {
+								hasChanged |= actualValue == null;
+							} else {
+								hasChanged |= !newValue.equals(actualValue);
+							}
+						}
+						else {
+							// EMF API
+							@SuppressWarnings("unchecked")
+							final List<Object> objects = (List<Object>) actualValue;
+							hasChanged |= !objects.contains(newValue);
+						}
+					}
 				}
 			}
 
@@ -232,7 +270,7 @@ public class RuleService extends AbstractViewService {
 				final boolean result = ConditionEvaluator.evaluate(newValue, rule.getCondition());
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			} else if (!dry) {
-				final boolean result = ConditionEvaluator.evaluate(domainEObject, rule.getCondition());
+				final boolean result = ConditionEvaluator.evaluate(rule.getCondition());
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			}
 		}
@@ -241,13 +279,13 @@ public class RuleService extends AbstractViewService {
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EObject domainEObject, EStructuralFeature attribute, Object newValue) {
-		return evalAffectedRenderables(registry, ruleType, domainEObject, attribute, true, newValue);
+		Class<T> ruleType, EStructuralFeature attribute, Object newValue) {
+		return evalAffectedRenderables(registry, ruleType, attribute, true, newValue);
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EObject domainEObject, EStructuralFeature attribute) {
-		return evalAffectedRenderables(registry, ruleType, domainEObject, attribute, false, null);
+		Class<T> ruleType, EStructuralFeature attribute) {
+		return evalAffectedRenderables(registry, ruleType, attribute, false, null);
 	}
 
 	private static boolean isDisableRule(Rule rule) {
@@ -272,10 +310,10 @@ public class RuleService extends AbstractViewService {
 		return rule instanceof ShowRule;
 	}
 
-	private <T extends Rule> void evalShow(EObject domainEObject, EStructuralFeature attribute) {
+	private <T extends Rule> void evalShow(EStructuralFeature attribute) {
 
 		final Map<Renderable, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
-			domainEObject, attribute);
+			attribute);
 
 		for (final Map.Entry<Renderable, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
@@ -288,25 +326,25 @@ public class RuleService extends AbstractViewService {
 		}
 	}
 
-	private <T extends Rule> void evalEnable(EObject domainEObject, EStructuralFeature attribute) {
+	private <T extends Rule> void evalEnable(EStructuralFeature attribute) {
 
 		final Map<Renderable, Boolean> enabledMap = evalAffectedRenderables(enableRuleRegistry, EnableRule.class,
-			domainEObject, attribute);
+			attribute);
 
 		for (final Map.Entry<Renderable, Boolean> e : enabledMap.entrySet()) {
 			e.getKey().setEnabled(e.getValue());
 		}
 	}
 
-	private <T extends Rule> void evalShow(EObject domainModel) {
-		for (final UniqueSetting setting : showRuleRegistry.getSettings()) {
-			evalShow(setting.getEObject(), setting.getEStructuralFeature());
+	private <T extends Rule> void evalShow() {
+		for (final EStructuralFeature feature : showRuleRegistry.getAttributes()) {
+			evalShow(feature);
 		}
 	}
 
-	private <T extends Rule> void evalEnable(EObject domainModel) {
-		for (final UniqueSetting setting : enableRuleRegistry.getSettings()) {
-			evalEnable(setting.getEObject(), setting.getEStructuralFeature());
+	private <T extends Rule> void evalEnable() {
+		for (final EStructuralFeature feature : enableRuleRegistry.getAttributes()) {
+			evalEnable(feature);
 		}
 	}
 
@@ -351,7 +389,7 @@ public class RuleService extends AbstractViewService {
 			final EAttribute attribute = (EAttribute) feature;
 
 			return evalAffectedRenderables(enableRuleRegistry,
-				EnableRule.class, setting.getEObject(), attribute, newValue);
+				EnableRule.class, attribute, newValue);
 		}
 
 		return Collections.emptyMap();
@@ -375,7 +413,7 @@ public class RuleService extends AbstractViewService {
 			final EAttribute attribute = (EAttribute) feature;
 
 			return evalAffectedRenderables(showRuleRegistry,
-				ShowRule.class, setting.getEObject(), attribute, newValue);
+				ShowRule.class, attribute, newValue);
 		}
 
 		return Collections.emptyMap();

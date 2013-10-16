@@ -38,22 +38,20 @@ public final class ConditionEvaluator {
 	/**
 	 * Evaluates the given condition.
 	 * 
-	 * @param eObject
-	 *            the affected object the condition's attribute is pointing at
 	 * @param condition
 	 *            the condition to be evaluated
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
 	 */
-	public static boolean evaluate(EObject eObject, Condition condition) {
+	public static boolean evaluate(Condition condition) {
 
 		if (AndCondition.class.isInstance(condition)) {
-			return doEvaluate(eObject, (AndCondition) condition);
+			return doEvaluate((AndCondition) condition);
 		}
 		if (OrCondition.class.isInstance(condition)) {
-			return doEvaluate(eObject, (OrCondition) condition);
+			return doEvaluate((OrCondition) condition);
 		}
 		if (LeafCondition.class.isInstance(condition)) {
-			return doEvaluate(eObject, (LeafCondition) condition);
+			return doEvaluate((LeafCondition) condition);
 		}
 		return false;
 	}
@@ -61,63 +59,90 @@ public final class ConditionEvaluator {
 	/**
 	 * Evaluates the given condition.
 	 * 
-	 * @param newValue
+	 * @param possibleNewValue
 	 *            the new value that should be compared against the expected value of the condition
 	 * @param condition
 	 *            the condition to be evaluated
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
 	 */
-	public static boolean evaluate(Object newValue, Condition condition) {
+	public static boolean evaluate(Object possibleNewValue, Condition condition) {
 
 		if (AndCondition.class.isInstance(condition)) {
-			return doEvaluate(newValue, (AndCondition) condition);
+			return doEvaluate(possibleNewValue, (AndCondition) condition);
 		}
 		if (OrCondition.class.isInstance(condition)) {
-			return doEvaluate(newValue, (OrCondition) condition);
+			return doEvaluate(possibleNewValue, (OrCondition) condition);
 		}
 		if (LeafCondition.class.isInstance(condition)) {
-			return doEvaluate(newValue, (LeafCondition) condition);
+			return doEvaluate(possibleNewValue, (LeafCondition) condition);
 		}
 		return false;
 	}
 
-	private static boolean doEvaluate(Object newValue, AndCondition condition) {
+	private static boolean doEvaluate(Object possibleNewValue, AndCondition condition) {
 		boolean result = true;
 		for (final Condition innerCondition : condition.getConditions()) {
-			result &= evaluate(newValue, innerCondition);
+			result &= evaluate(possibleNewValue, innerCondition);
 		}
 		return result;
 	}
 
-	private static boolean doEvaluate(Object newValue, OrCondition condition) {
+	private static boolean doEvaluate(Object possibleNewValue, OrCondition condition) {
 		boolean result = false;
 		for (final Condition innerCondition : condition.getConditions()) {
-			result |= evaluate(newValue, innerCondition);
+			result |= evaluate(possibleNewValue, innerCondition);
 		}
 		return result;
 	}
 
-	private static boolean doEvaluate(EObject eObject, AndCondition condition) {
+	private static boolean doEvaluate(AndCondition condition) {
 		boolean result = true;
 		for (final Condition innerCondition : condition.getConditions()) {
-			result &= evaluate(eObject, innerCondition);
+			result &= evaluate(innerCondition);
 		}
 		return result;
 	}
 
-	private static boolean doEvaluate(EObject eObject, OrCondition condition) {
+	private static boolean doEvaluate(OrCondition condition) {
 		boolean result = false;
 		for (final Condition innerCondition : condition.getConditions()) {
-			result |= evaluate(eObject, innerCondition);
+			result |= evaluate(innerCondition);
 		}
 		return result;
 	}
 
-	private static boolean doEvaluate(Object newValue, LeafCondition condition) {
-		return condition.getExpectedValue().equals(newValue);
+	private static boolean doEvaluate(Object possibleNewValue, LeafCondition condition) {
+		final Iterator<Setting> settingIterator = condition.getDomainModelReference().getIterator();
+		boolean result = false;
+		final Object expectedValue = condition.getExpectedValue();
+
+		// FIXME: duplicate code
+		while (settingIterator.hasNext()) {
+			final Setting setting = settingIterator.next();
+			final EObject parent = setting.getEObject();
+			final EStructuralFeature feature = setting.getEStructuralFeature();
+			final EClass attributeClass = feature.getEContainingClass();
+			if (!attributeClass.isInstance(parent)) {
+				continue;
+			}
+			if (!feature.isMany()) {
+				if (expectedValue == null) {
+					result |= possibleNewValue == null;
+				} else {
+					result |= expectedValue.equals(possibleNewValue);
+				}
+			}
+			else {
+				// EMF API
+				@SuppressWarnings("unchecked")
+				final List<Object> objects = (List<Object>) possibleNewValue;
+				result |= objects.contains(expectedValue);
+			}
+		}
+		return result;
 	}
 
-	private static boolean doEvaluate(EObject eObject, LeafCondition condition) {
+	private static boolean doEvaluate(LeafCondition condition) {
 		final Iterator<Setting> settingIterator = condition.getDomainModelReference().getIterator();
 		boolean result = false;
 		final Object expectedValue = condition.getExpectedValue();
