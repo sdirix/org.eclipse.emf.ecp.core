@@ -138,7 +138,8 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 				}
 				if (EReference.class.isInstance(element)) {
 					final EReference eReference = (EReference) element;
-					return eReference.isMany() ? false : true;
+					// return eReference.isMany() ? false : true;
+					return hasChildren(eReference.getEReferenceType());
 				}
 				return false;
 			}
