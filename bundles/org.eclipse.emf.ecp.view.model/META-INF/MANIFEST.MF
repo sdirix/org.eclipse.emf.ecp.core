@@ -45,7 +45,8 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.model.editor,
    org.eclipse.emf.ecp.view.model.provider.generator,
    org.eclipse.emf.ecp.view.model.provider.xmi,
-   org.eclipse.emf.ecp.view.rule",
+   org.eclipse.emf.ecp.view.rule,
+   org.eclipse.emf.ecp.view.rule.model",
  org.eclipse.emf.ecp.view.model.impl;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.view.custom.model,
    org.eclipse.emf.ecp.view.group.model,
@@ -54,7 +55,8 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.label.model,
    org.eclipse.emf.ecp.view.separator.model,
    org.eclipse.emf.ecp.view.table.model,
-   org.eclipse.emf.ecp.view.vertical.model",
+   org.eclipse.emf.ecp.view.vertical.model,
+   org.eclipse.emf.ecp.view.rule.model",
  org.eclipse.emf.ecp.view.model.util;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.view.context,
    org.eclipse.emf.ecp.view.custom.model.edit,
