@@ -17,7 +17,8 @@ Export-Package: org.eclipse.emf.ecp.ui.view.swt,
   x-friends:="org.eclipse.emf.ecp.editor,
    org.eclipse.emf.ecp.view.custom.ui.swt,
    org.eclipse.emf.ecp.view.group.ui.swt,
-   org.eclipse.emf.ecp.view.groupedgrid.ui.swt"
+   org.eclipse.emf.ecp.view.groupedgrid.ui.swt,
+   org.eclipse.emf.ecp.view.horizontal.ui.swt"
 Import-Package: org.eclipse.core.commands,
  org.eclipse.jface,
  org.eclipse.jface.action,
