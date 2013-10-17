@@ -22,7 +22,10 @@ Export-Package: org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.view.label.ui.swt,
    org.eclipse.emf.ecp.view.separator.ui.swt,
    org.eclipse.emf.ecp.view.table.ui.swt,
-   org.eclipse.emf.ecp.view.vertical.ui.swt"
+   org.eclipse.emf.ecp.view.vertical.ui.swt,
+   org.eclipse.emf.ecp.view.custom.ui.swt.test,
+   org.eclipse.emf.ecp.view.test.common.swt,
+   org.eclipse.emf.ecp.view.custom.ui.swt.example"
 Import-Package: org.eclipse.core.commands,
  org.eclipse.jface,
  org.eclipse.jface.action,

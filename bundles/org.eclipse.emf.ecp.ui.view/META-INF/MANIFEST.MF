@@ -27,7 +27,10 @@ Export-Package: org.eclipse.emf.ecp.internal.ui.view;
    org.eclipse.emf.ecp.view.horizontal.ui,
    org.eclipse.emf.ecp.view.separator.ui,
    org.eclipse.emf.ecp.view.table.ui,
-   org.eclipse.emf.ecp.view.vertical.ui",
+   org.eclipse.emf.ecp.view.vertical.ui,
+   org.eclipse.emf.ecp.view.separator.ui.swt.test,
+   org.eclipse.emf.ecp.view.separator.ui.test,
+   org.eclipse.emf.ecp.view.test.common.swt",
  org.eclipse.emf.ecp.internal.ui.view.emf,
  org.eclipse.emf.ecp.internal.ui.view.renderer,
  org.eclipse.emf.ecp.ui.view

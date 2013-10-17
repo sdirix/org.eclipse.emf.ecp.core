@@ -7,7 +7,13 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.view.table.model;version="1.0.0";x-friends:="org.eclipse.emf.ecp.view.table.model.edit,org.eclipse.emf.ecp.view.table.ui,org.eclipse.emf.ecp.view.table.ui.swt",
+Export-Package: org.eclipse.emf.ecp.view.table.model;version="1.0.0";
+  x-friends:="org.eclipse.emf.ecp.view.table.model.edit,
+   org.eclipse.emf.ecp.view.table.ui,
+   org.eclipse.emf.ecp.view.table.ui.swt,
+   org.eclipse.emf.ecp.view.model.integrationtest,
+   org.eclipse.emf.ecp.view.table.ui.test,
+   org.eclipse.emf.ecp.view.validation.test",
  org.eclipse.emf.ecp.view.table.model.impl;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.view.table.model.util;version="1.0.0";x-friends:="org.eclipse.emf.ecp.view.table.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
