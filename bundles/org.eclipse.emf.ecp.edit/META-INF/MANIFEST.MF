@@ -20,7 +20,8 @@ Export-Package: org.eclipse.emf.ecp.edit;version="1.1.0";
    org.eclipse.emf.ecp.editor.e3,
    org.eclipse.emf.ecp.editor,
    org.eclipse.emf.ecp.ui.view.swt,
-   org.eclipse.emf.ecp.view.custom.model",
+   org.eclipse.emf.ecp.view.custom.model,
+   org.eclipse.emf.ecp.view.groupedgrid.ui",
  org.eclipse.emf.ecp.edit.util;version="1.1.0",
  org.eclipse.emf.ecp.internal.edit;version="1.1.0";x-internal:=true
 Service-Component: OSGI-INF/ecpControlFactory.xml

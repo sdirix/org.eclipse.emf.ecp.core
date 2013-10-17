@@ -16,7 +16,8 @@ Export-Package: org.eclipse.emf.ecp.internal.ui.view;x-friends:="org.eclipse.emf
   x-friends:="org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.view.group.ui,
    org.eclipse.emf.ecp.view.label.ui,
-   org.eclipse.emf.ecp.view.custom.ui",
+   org.eclipse.emf.ecp.view.custom.ui,
+   org.eclipse.emf.ecp.view.groupedgrid.ui",
  org.eclipse.emf.ecp.internal.ui.view.emf,
  org.eclipse.emf.ecp.internal.ui.view.renderer,
  org.eclipse.emf.ecp.ui.view
