@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.view.table.model.VTableControl;
  * 
  */
 // APITODO
-@SuppressWarnings("restriction")
 public class TableNodeBuilder implements CustomNodeBuilder {
 
 	/**
