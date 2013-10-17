@@ -7,10 +7,10 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edagr Mueller - initial API and implementation
+ * Edgar Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt;
+package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import java.util.List;
 
@@ -18,36 +18,47 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 
-// TODO: do we need to set a custom variant?
-public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
-	public static final SWTCategoryRenderer INSTANCE = new SWTCategoryRenderer();
+/**
+ * SWT categorization renderer.
+ * 
+ * @author emueller
+ * @author Eugen Neufeld
+ * 
+ */
+public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorization> {
+
+	/** Singleton renderer instance. **/
+	public static final SWTCategorizationRenderer INSTANCE = new SWTCategorizationRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<Category> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<Categorization> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		Object... initData)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Composite parent = getParentFromInitData(initData);
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
+		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization");
 
-		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
+		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(1, false));
 
 		node.addRenderingResultDelegator(withSWT(categoryComposite));
 
-		final Node<? extends Renderable> childNode = node.getChildren().get(0);
-
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(categoryComposite, childNode,
-			adapterFactoryItemDelegator);
-
-		setLayoutDataForResultRows(resultRows);
+		final Categorization categorization = Categorization.class.cast(node.getRenderable());
+		final Label headingLbl = new Label(categoryComposite, SWT.NONE);
+		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title");
+		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
+		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message");
+		headingLbl.setText(categorization.getName());
+		whatToDoLbl.setText(Messages.Categorization_Selection);
 
 		return createResult(categoryComposite);
 	}

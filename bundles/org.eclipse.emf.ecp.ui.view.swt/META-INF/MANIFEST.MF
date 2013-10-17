@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt;singleton:=true
 Bundle-Version: 1.1.0.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.ui.view.swt.Activator
+Bundle-Activator: org.eclipse.emf.ecp.ui.view.swt.internal.Activator
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.ui.view;bundle-version="[1.1.0,2.0.0)";visibility:=reexport,

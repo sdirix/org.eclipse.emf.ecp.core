@@ -15,8 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecp.ui.view.custom.swt.CustomControlSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.CustomSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.SWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
@@ -31,7 +31,7 @@ public final class SWTRendererCustom implements CustomSWTRenderer {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.CustomSWTRenderer#getCustomRenderers()
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		final Map<Class<? extends Renderable>, SWTRenderer<?>> map = new HashMap<Class<? extends Renderable>, SWTRenderer<?>>();

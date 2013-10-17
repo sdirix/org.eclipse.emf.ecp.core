@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.view.horizontal.ui.swt.internal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.ui.view.swt.CustomSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.SWTColumnCompositeRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.SWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTColumnCompositeRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
@@ -32,7 +32,7 @@ public class HorizontalSWTRenderer implements CustomSWTRenderer {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.CustomSWTRenderer#getCustomRenderers()
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>> renderers;

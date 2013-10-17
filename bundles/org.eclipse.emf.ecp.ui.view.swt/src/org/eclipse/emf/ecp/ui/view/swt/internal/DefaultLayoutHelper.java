@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt;
+package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
 import org.eclipse.jface.layout.GridDataFactory;

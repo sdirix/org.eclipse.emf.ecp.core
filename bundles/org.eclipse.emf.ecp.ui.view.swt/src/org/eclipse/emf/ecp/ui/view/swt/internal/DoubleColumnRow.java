@@ -9,9 +9,9 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt;
+package org.eclipse.emf.ecp.ui.view.swt.internal;
 
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
@@ -21,24 +21,34 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-public class SingleColumnRow implements RenderingResultRow<Control> {
+public class DoubleColumnRow implements RenderingResultRow<Control> {
 
-	private final Control control;
+	private final Control leftControl;
+	private final Control rightControl;
 
 	/**
-	 * A {@link RenderingResultRow} which holds one {@link Control}.
+	 * A {@link RenderingResultRow} which holds two {@link Control Controls}.
 	 * 
-	 * @param control the Control for the Column
+	 * @param leftControl the Control for left Column
+	 * @param rightControl the Control for right Column
 	 */
-	public SingleColumnRow(Control control) {
-		this.control = control;
+	public DoubleColumnRow(Control leftControl, Control rightControl) {
+		this.leftControl = leftControl;
+		this.rightControl = rightControl;
 	}
 
 	/**
-	 * @return the Control
+	 * @return the leftControl
 	 */
-	public Control getControl() {
-		return control;
+	public Control getLeftControl() {
+		return leftControl;
+	}
+
+	/**
+	 * @return the rightControl
+	 */
+	public Control getRightControl() {
+		return rightControl;
 	}
 
 	/**
@@ -48,7 +58,7 @@ public class SingleColumnRow implements RenderingResultRow<Control> {
 	 */
 	@Deprecated
 	public Control getMainControl() {
-		return getControl();
+		return getRightControl();
 	}
 
 	/**
@@ -57,7 +67,10 @@ public class SingleColumnRow implements RenderingResultRow<Control> {
 	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow#getControls()
 	 */
 	public Set<Control> getControls() {
-		return Collections.singleton(control);
+		final Set<Control> controls = new LinkedHashSet<Control>(2);
+		controls.add(leftControl);
+		controls.add(rightControl);
+		return controls;
 	}
 
 }

@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.internal.table.ui.swt;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.ui.view.swt.CustomSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.SWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 
@@ -31,7 +31,7 @@ public class CustomTableSWTRenderer implements CustomSWTRenderer {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.CustomSWTRenderer#getCustomRenderers()
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>> renderers;

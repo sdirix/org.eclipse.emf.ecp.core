@@ -9,7 +9,7 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt;
+package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import java.util.Map;
 import java.util.Set;
