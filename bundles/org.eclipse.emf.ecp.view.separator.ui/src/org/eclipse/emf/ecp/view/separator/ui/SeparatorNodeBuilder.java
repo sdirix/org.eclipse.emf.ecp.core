@@ -30,13 +30,15 @@ public class SeparatorNodeBuilder implements CustomNodeBuilder {
 
 	/**
 	 * 
-	 * {@inheritDoc}
+	 * {@inheritDoc}.
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder#getCustomNodeBuilders()
 	 */
 	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
 		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>() {
+			private static final long serialVersionUID = 6030832571610301712L;
+
 			{
 				put(Separator.class, new RenderableNodeBuilder<Separator>());
 			}
