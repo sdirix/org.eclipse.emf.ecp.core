@@ -33,6 +33,7 @@ public class Activator extends Plugin {
 	public Activator() {
 	}
 
+	// BEGIN SUPRESS CATCH EXCEPTION
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
@@ -52,6 +53,8 @@ public class Activator extends Plugin {
 		plugin = null;
 		super.stop(context);
 	}
+
+	// END SUPRESS CATCH EXCEPTION
 
 	/**
 	 * Returns the shared instance.

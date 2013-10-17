@@ -16,17 +16,16 @@ import java.util.Map;
 
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
-import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
- * This registers the {@link RenderableNodeBuilder} as the NodeBuilder for {@link CustomControl}.
+ * This registers the {@link org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder RenderableNodeBuilder}
+ * as the NodeBuilder for {@link CustomControl}.
  * 
  * @author Eugen Neufeld
  */
 // API or SPI definition missing
-@SuppressWarnings("restriction")
 public class NodeBuilderCustom implements CustomNodeBuilder {
 
 	/**
