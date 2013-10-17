@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.view.custom.model;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.custom.model.edit,org.eclipse.emf.ecp.view.custom.ui",
+Export-Package: org.eclipse.emf.ecp.view.custom.model;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.custom.model.edit,org.eclipse.emf.ecp.view.custom.ui,org.eclipse.emf.ecp.view.custom.ui.swt",
  org.eclipse.emf.ecp.view.custom.model.impl;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.custom.ui",
  org.eclipse.emf.ecp.view.custom.model.util;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.custom.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
