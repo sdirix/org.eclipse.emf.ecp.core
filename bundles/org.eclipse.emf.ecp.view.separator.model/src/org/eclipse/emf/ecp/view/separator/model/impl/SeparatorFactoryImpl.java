@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
@@ -15,6 +24,7 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFactory {
@@ -22,16 +32,17 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static SeparatorFactory init() {
 		try {
-			SeparatorFactory theSeparatorFactory = (SeparatorFactory)EPackage.Registry.INSTANCE.getEFactory(SeparatorPackage.eNS_URI);
+			final SeparatorFactory theSeparatorFactory = (SeparatorFactory) EPackage.Registry.INSTANCE
+				.getEFactory(SeparatorPackage.eNS_URI);
 			if (theSeparatorFactory != null) {
 				return theSeparatorFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new SeparatorFactoryImpl();
@@ -41,6 +52,7 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SeparatorFactoryImpl() {
@@ -50,39 +62,44 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case SeparatorPackage.SEPARATOR: return createSeparator();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case SeparatorPackage.SEPARATOR:
+			return createSeparator();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Separator createSeparator() {
-		SeparatorImpl separator = new SeparatorImpl();
+		final SeparatorImpl separator = new SeparatorImpl();
 		return separator;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public SeparatorPackage getSeparatorPackage() {
-		return (SeparatorPackage)getEPackage();
+		return (SeparatorPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -91,4 +108,4 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 		return SeparatorPackage.eINSTANCE;
 	}
 
-} //SeparatorFactoryImpl
+} // SeparatorFactoryImpl

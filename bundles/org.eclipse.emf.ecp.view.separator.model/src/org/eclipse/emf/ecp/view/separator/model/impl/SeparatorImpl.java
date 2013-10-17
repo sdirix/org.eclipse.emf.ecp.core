@@ -1,5 +1,14 @@
-/**
- */
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
@@ -13,13 +22,14 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public class SeparatorImpl extends CompositeImpl implements Separator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected SeparatorImpl() {
@@ -29,6 +39,7 @@ public class SeparatorImpl extends CompositeImpl implements Separator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -36,4 +47,4 @@ public class SeparatorImpl extends CompositeImpl implements Separator {
 		return SeparatorPackage.Literals.SEPARATOR;
 	}
 
-} //SeparatorImpl
+} // SeparatorImpl
