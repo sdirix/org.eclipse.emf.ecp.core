@@ -29,13 +29,15 @@ public class SeparatorSWTRenderer implements CustomSWTRenderer {
 
 	/**
 	 * 
-	 * {@inheritDoc}
+	 * {@inheritDoc}.
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>> renderers;
 		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>>() {
+			private static final long serialVersionUID = 3710963194739585330L;
+
 			{
 				put(Separator.class, new SWTSeparatorRenderer());
 			}

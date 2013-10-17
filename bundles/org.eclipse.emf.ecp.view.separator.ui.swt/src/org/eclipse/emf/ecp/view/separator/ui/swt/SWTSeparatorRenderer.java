@@ -31,6 +31,9 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public class SWTSeparatorRenderer extends AbstractSWTRenderer<Separator> {
+	/**
+	 * The instance.
+	 */
 	public static final SWTSeparatorRenderer INSTANCE = new SWTSeparatorRenderer();
 
 	@Override
