@@ -81,12 +81,13 @@ public class RuleRegistry<T extends Rule> {
 
 			leafCondition.getDomainModelReference().resolve(domainModel);
 
-			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
-			while (settingIterator.hasNext()) {
-				final Setting setting = settingIterator.next();
-				mapFeatureToRule(setting.getEStructuralFeature(), leafCondition, rule);
-				rulesToRenderables.put(rule, renderable);
+			final Iterator<EStructuralFeature> featureIterator = leafCondition.getDomainModelReference()
+				.getEStructuralFeatureIterator();
+			while (featureIterator.hasNext()) {
+				final EStructuralFeature eStructuralFeature = featureIterator.next();
+				mapFeatureToRule(eStructuralFeature, leafCondition, rule);
 			}
+			rulesToRenderables.put(rule, renderable);
 
 		} else if (condition instanceof OrCondition) {
 			final OrCondition orCondition = (OrCondition) condition;
@@ -188,9 +189,9 @@ public class RuleRegistry<T extends Rule> {
 	 *            the feature
 	 * @return a list of {@link Renderable}s that are affected of the feature change
 	 */
-	public Map<Rule, Renderable> getAffectedRenderables(final EStructuralFeature feature) {
+	public Map<T, Renderable> getAffectedRenderables(final EStructuralFeature feature) {
 
-		final Map<Rule, Renderable> result = new LinkedHashMap<Rule, Renderable>();
+		final Map<T, Renderable> result = new LinkedHashMap<T, Renderable>();
 		BidirectionalMap<LeafCondition, T> bidirectionalMap = featuresToRules.get(feature);
 
 		if (bidirectionalMap == null) {

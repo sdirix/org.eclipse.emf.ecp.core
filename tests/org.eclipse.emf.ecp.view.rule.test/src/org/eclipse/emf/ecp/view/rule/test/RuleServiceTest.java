@@ -1463,6 +1463,31 @@ public class RuleServiceTest extends CommonRuleTest {
 		assertTrue(controlPName.isVisible());
 	}
 
+	@Test
+	public void testContainmentConditionInitEmptyList() {
+		league = BowlingFactory.eINSTANCE.createLeague();
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
+			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+		assertFalse(controlPName.isVisible());
+	}
+
+	@Test
+	public void testContainmentConditionAddToEmptyList() {
+		league = BowlingFactory.eINSTANCE.createLeague();
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
+			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+		assertFalse(controlPName.isVisible());
+		league.getPlayers().add(player);
+		player.setName("doe");
+		assertTrue(controlPName.isVisible());
+	}
+
 	/**
 	 * Test propagation hide rule no child rule right to wrong.
 	 */

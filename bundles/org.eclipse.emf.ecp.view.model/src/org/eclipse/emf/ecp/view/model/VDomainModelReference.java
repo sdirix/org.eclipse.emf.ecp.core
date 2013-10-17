@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.model;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 
 /**
@@ -45,5 +46,14 @@ public interface VDomainModelReference extends EObject
 	 * @return the {@link Iterator} for this domain model reference
 	 */
 	Iterator<Setting> getIterator();
+
+	/**
+	 * Returns an iterator allowing to iterate overall {@link EStructuralFeature EStructuralFeatures} of this domain
+	 * model reference.
+	 * 
+	 * @return the {@link Iterator} over all {@link EStructuralFeature EStructuralFeatures} for this domain model
+	 *         reference
+	 */
+	Iterator<EStructuralFeature> getEStructuralFeatureIterator();
 
 } // VDomainModelReference

@@ -71,6 +71,7 @@ public class RuleService extends AbstractViewService {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
+		final Renderable view = context.getViewModel();
 		domainChangeListener = new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
@@ -92,13 +93,9 @@ public class RuleService extends AbstractViewService {
 			}
 
 			public void notifyAdd(Notifier notifier) {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void notifyRemove(Notifier notifier) {
-				// TODO Auto-generated method stub
-
 			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);
@@ -131,8 +128,6 @@ public class RuleService extends AbstractViewService {
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);
-
-		final Renderable view = context.getViewModel();
 
 		if (view == null) {
 			throw new IllegalStateException("View model must not be null");
@@ -214,7 +209,7 @@ public class RuleService extends AbstractViewService {
 
 		final Map<Renderable, Boolean> map = new LinkedHashMap<Renderable, Boolean>();
 
-		for (final Map.Entry<Rule, Renderable> ruleAndRenderable : registry.getAffectedRenderables(
+		for (final Map.Entry<T, Renderable> ruleAndRenderable : registry.getAffectedRenderables(
 			attribute).entrySet()) {
 
 			final Rule rule = ruleAndRenderable.getKey();
@@ -313,7 +308,6 @@ public class RuleService extends AbstractViewService {
 
 		final Map<Renderable, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
 			attribute);
-
 		for (final Map.Entry<Renderable, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
 			final Renderable renderable = e.getKey();

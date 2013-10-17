@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -335,6 +336,36 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		}
 
 		return new DomainModelReferenceIterator(leftReferences, lastResolvedEObject, getDomainModelEFeature());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getEStructuralFeatureIterator()
+	 */
+	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
+		return new Iterator<EStructuralFeature>() {
+
+			private int counter = 1;
+
+			public boolean hasNext() {
+				return counter == 1;
+			}
+
+			public EStructuralFeature next() {
+				if (counter != 1) {
+					throw new NoSuchElementException(
+						"There is only one EStructuralFeature in this VFeaturePathDomainModelReference.");
+				}
+				counter--;
+				return getDomainModelEFeature();
+			}
+
+			public void remove() {
+				// TODO Auto-generated method stub
+
+			}
+		};
 	}
 
 } // VFeaturePathDomainModelReferenceImpl
