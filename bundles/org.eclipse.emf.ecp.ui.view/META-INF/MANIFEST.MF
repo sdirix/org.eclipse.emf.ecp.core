@@ -21,7 +21,8 @@ Export-Package: org.eclipse.emf.ecp.internal.ui.view;
    org.eclipse.emf.ecp.view.group.ui,
    org.eclipse.emf.ecp.view.label.ui,
    org.eclipse.emf.ecp.view.custom.ui,
-   org.eclipse.emf.ecp.view.groupedgrid.ui",
+   org.eclipse.emf.ecp.view.groupedgrid.ui,
+   org.eclipse.emf.ecp.view.horizontal.ui",
  org.eclipse.emf.ecp.internal.ui.view.emf,
  org.eclipse.emf.ecp.internal.ui.view.renderer,
  org.eclipse.emf.ecp.ui.view
