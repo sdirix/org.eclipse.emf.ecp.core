@@ -38,5 +38,10 @@ public abstract class AbstractViewService {
 	 */
 	public abstract void dispose();
 
+	/**
+	 * Returns the priority for this view service.
+	 * 
+	 * @return the priority
+	 */
 	public abstract int getPriority();
 }

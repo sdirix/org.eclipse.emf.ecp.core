@@ -42,12 +42,12 @@ public interface ViewModelContext {
 		void notifyChange(ModelChangeNotification notification);
 
 		/**
-		 * @param notifier
+		 * @param notifier the notifier
 		 */
 		void notifyAdd(Notifier notifier);
 
 		/**
-		 * @param notifier
+		 * @param notifier the notifier
 		 */
 		void notifyRemove(Notifier notifier);
 	}

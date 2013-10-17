@@ -95,108 +95,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
 
-		viewModelContentAdapter = new EContentAdapter() {
-
-			@Override
-			public void notifyChanged(Notification notification) {
-				super.notifyChanged(notification);
-
-				// do not notify while being disposed
-				if (isDisposing) {
-					return;
-				}
-				if (notification.isTouch()) {
-					return;
-				}
-
-				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
-				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
-					modelChangeListener.notifyChange(modelChangeNotification);
-				}
-			}
-
-			@Override
-			protected void addAdapter(Notifier notifier) {
-				super.addAdapter(notifier);
-				// do not notify while being disposed
-				if (isDisposing) {
-					return;
-				}
-				if (AbstractControl.class.isInstance(notifier)) {
-					final AbstractControl control = (AbstractControl) notifier;
-
-					for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-						domainModelReference.resolve(domainObject);
-					}
-				}
-				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
-					modelChangeListener.notifyAdd(notifier);
-				}
-			}
-
-			@Override
-			protected void removeAdapter(Notifier notifier) {
-				super.removeAdapter(notifier);
-				// do not notify while being disposed
-				if (isDisposing) {
-					return;
-				}
-				for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
-					modelChangeListener.notifyRemove(notifier);
-				}
-			}
-
-		};
+		viewModelContentAdapter = new ViewModelContentAdapter();
 
 		view.eAdapters().add(viewModelContentAdapter);
 
 		// TODO extract contentadapter into shared class for both models
 
-		domainModelContentAdapter = new EContentAdapter() {
-
-			@Override
-			public void notifyChanged(Notification notification) {
-				super.notifyChanged(notification);
-
-				// do not notify while being disposed
-				if (isDisposing) {
-					return;
-				}
-				if (notification.isTouch()) {
-					return;
-				}
-
-				final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
-				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
-					modelChangeListener.notifyChange(modelChangeNotification);
-				}
-			}
-
-			@Override
-			protected void addAdapter(Notifier notifier) {
-				super.addAdapter(notifier);
-				// do not notify while being disposed
-				if (isDisposing) {
-					return;
-				}
-				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
-					modelChangeListener.notifyAdd(notifier);
-				}
-			}
-
-			@Override
-			protected void removeAdapter(Notifier notifier) {
-				super.removeAdapter(notifier);
-				// do not notify while being disposed
-				if (isDisposing) {
-					return;
-				}
-				for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
-					modelChangeListener.notifyRemove(notifier);
-				}
-			}
-
-		};
+		domainModelContentAdapter = new DomainModelContentAdapter();
 		domainObject.eAdapters().add(domainModelContentAdapter);
 
 		readAbstractViewServices();
@@ -353,5 +258,110 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 		throw new RuntimeException("No view service of type " + serviceType.getCanonicalName() + " found");
+	}
+
+	/**
+	 * The content adapter for the view model.
+	 */
+	private class ViewModelContentAdapter extends EContentAdapter {
+
+		@Override
+		public void notifyChanged(Notification notification) {
+			super.notifyChanged(notification);
+
+			// do not notify while being disposed
+			if (isDisposing) {
+				return;
+			}
+			if (notification.isTouch()) {
+				return;
+			}
+
+			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+				modelChangeListener.notifyChange(modelChangeNotification);
+			}
+		}
+
+		@Override
+		protected void addAdapter(Notifier notifier) {
+			super.addAdapter(notifier);
+			// do not notify while being disposed
+			if (isDisposing) {
+				return;
+			}
+			if (AbstractControl.class.isInstance(notifier)) {
+				final AbstractControl control = (AbstractControl) notifier;
+
+				for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
+					domainModelReference.resolve(domainObject);
+				}
+			}
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+				modelChangeListener.notifyAdd(notifier);
+			}
+		}
+
+		@Override
+		protected void removeAdapter(Notifier notifier) {
+			super.removeAdapter(notifier);
+			// do not notify while being disposed
+			if (isDisposing) {
+				return;
+			}
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+				modelChangeListener.notifyRemove(notifier);
+			}
+		}
+
+	}
+
+	/**
+	 * The content adapter for the domain model.
+	 */
+	private class DomainModelContentAdapter extends EContentAdapter {
+
+		@Override
+		public void notifyChanged(Notification notification) {
+			super.notifyChanged(notification);
+
+			// do not notify while being disposed
+			if (isDisposing) {
+				return;
+			}
+			if (notification.isTouch()) {
+				return;
+			}
+
+			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
+			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+				modelChangeListener.notifyChange(modelChangeNotification);
+			}
+		}
+
+		@Override
+		protected void addAdapter(Notifier notifier) {
+			super.addAdapter(notifier);
+			// do not notify while being disposed
+			if (isDisposing) {
+				return;
+			}
+			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+				modelChangeListener.notifyAdd(notifier);
+			}
+		}
+
+		@Override
+		protected void removeAdapter(Notifier notifier) {
+			super.removeAdapter(notifier);
+			// do not notify while being disposed
+			if (isDisposing) {
+				return;
+			}
+			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+				modelChangeListener.notifyRemove(notifier);
+			}
+		}
+
 	}
 }
