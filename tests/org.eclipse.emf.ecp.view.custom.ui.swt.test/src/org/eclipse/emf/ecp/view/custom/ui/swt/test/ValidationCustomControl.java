@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.ui.view.swt.SWTRenderingHelper;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderingHelper;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.widgets.Composite;
