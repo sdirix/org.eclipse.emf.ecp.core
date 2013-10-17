@@ -20,12 +20,7 @@ import org.eclipse.emf.ecp.view.group.model.Group;
 import org.eclipse.emf.ecp.view.group.model.GroupFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeCollectionItemProvider;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.group.model.Group} object.
@@ -35,8 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class GroupItemProvider
-	extends CompositeCollectionItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+	extends CompositeCollectionItemProvider
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -87,7 +81,7 @@ public class GroupItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Group) object).getName();
+		final String label = ((Group) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") :
 			getString("_UI_Group_type") + " " + label;
