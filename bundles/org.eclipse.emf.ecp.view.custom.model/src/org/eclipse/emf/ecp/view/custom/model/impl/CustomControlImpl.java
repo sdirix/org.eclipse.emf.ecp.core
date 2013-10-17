@@ -295,7 +295,7 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * Internal method for the node builder to call on creation.
 	 * 
-	 * @param domainModelReferences the set of {@link VSingleDomainModelReference VSingleDomainModelReferences} to use
+	 * @param domainModelReferences the set of {@link VDomainModelReference VDomainModelReferences} to use
 	 */
 	public void setVSingleDomainModelReferences(Set<VDomainModelReference> domainModelReferences) {
 		this.domainModelReferences = domainModelReferences;
