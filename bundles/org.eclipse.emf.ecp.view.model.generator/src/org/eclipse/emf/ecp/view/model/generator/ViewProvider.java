@@ -22,11 +22,17 @@ import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 
+/**
+ * View Provider.
+ */
 public class ViewProvider implements IViewProvider {
 
-	public ViewProvider() {
-	}
-
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 */
 	public View generate(EObject eObject) {
 		final View view = ViewFactory.eINSTANCE.createView();
 		final Category category = ViewFactory.eINSTANCE.createCategory();
@@ -75,6 +81,12 @@ public class ViewProvider implements IViewProvider {
 		return feature.isVolatile();
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
+	 */
 	public int canRender(EObject eObject) {
 		return 1;
 	}
