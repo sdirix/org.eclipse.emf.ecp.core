@@ -22,12 +22,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeItemProvider;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -38,13 +33,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class GroupedGridItemProvider
-	extends CompositeItemProvider
-	implements
-	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource {
+	extends CompositeItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -127,7 +116,7 @@ public class GroupedGridItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((GroupedGrid) object).getName();
+		final String label = ((GroupedGrid) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_GroupedGrid_type") :
 			getString("_UI_GroupedGrid_type") + " " + label;

@@ -27,7 +27,6 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -44,7 +43,6 @@ public class GroupItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
 	IItemPropertySource {
@@ -154,7 +152,7 @@ public class GroupItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Group) object).getName();
+		final String label = ((Group) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") :
 			getString("_UI_Group_type") + " " + label;
