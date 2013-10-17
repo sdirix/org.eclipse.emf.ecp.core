@@ -44,6 +44,32 @@ import org.junit.Test;
 public class ViewValidationTest extends CommonValidationTest {
 
 	@Test
+	public void testValidationMissingElementOnInit() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		computer.setName("bla");
+		final Control control = ViewFactory.eINSTANCE.createControl();
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
+			TestPackage.eINSTANCE.getComputer_Mainboard()));
+		new ViewModelContextImpl(control, computer);
+
+		assertEquals("Severity must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationMissingElementSetValueAfterInit() {
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		computer.setName("bla");
+		final Control control = ViewFactory.eINSTANCE.createControl();
+
+		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
+			TestPackage.eINSTANCE.getComputer_Mainboard()));
+		new ViewModelContextImpl(control, computer);
+		computer.getMainboard().setName("bla");
+		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
 	public void testValidationInitOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");

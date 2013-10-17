@@ -11,20 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.internal.ui;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
-import org.eclipse.emf.ecp.view.custom.model.impl.CustomControlImpl;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 /**
@@ -44,30 +34,30 @@ public class CustomControlNodeBuilder extends RenderableNodeBuilder<CustomContro
 	@Override
 	public Node<CustomControl> build(CustomControl model, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		final CustomControlImpl modelImpl = (CustomControlImpl) model;
+		// final CustomControlImpl modelImpl = (CustomControlImpl) model;
+		//
+		// final Set<VDomainModelReference> result = new LinkedHashSet<VDomainModelReference>();
+		// if (model.getBundle() == null || model.getClassName() == null) {
+		//
+		// }
+		// else {
+		// try {
+		// final ECPCustomControl categoryComposite = model.getECPCustomControl();
+		// for (final ECPCustomControlFeature editFeature : categoryComposite.getECPCustomControlFeatures()) {
+		// final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+		// .createVFeaturePathDomainModelReference();
+		// domainModelReference.setDomainModelEFeature(editFeature.getTargetFeature());
+		// domainModelReference.getDomainModelEReferencePath().addAll(editFeature.geteReferencePath());
+		// domainModelReference.resolve(context.getModelElement());
+		// result.add(domainModelReference);
+		// }
+		// } catch (final ECPCustomControlInitException ex) {
+		// // TODO activate?
+		// // Activator.logException(e);
+		// }
+		// }
 
-		final Set<VDomainModelReference> result = new LinkedHashSet<VDomainModelReference>();
-		if (model.getBundle() == null || model.getClassName() == null) {
-
-		}
-		else {
-			try {
-				final ECPCustomControl categoryComposite = model.getECPCustomControl();
-				for (final ECPCustomControlFeature editFeature : categoryComposite.getECPCustomControlFeatures()) {
-					final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-						.createVFeaturePathDomainModelReference();
-					domainModelReference.setDomainModelEFeature(editFeature.getTargetFeature());
-					domainModelReference.getDomainModelEReferencePath().addAll(editFeature.geteReferencePath());
-					domainModelReference.resolve(context.getModelElement());
-					result.add(domainModelReference);
-				}
-			} catch (final ECPCustomControlInitException ex) {
-				// TODO activate?
-				// Activator.logException(e);
-			}
-		}
-
-		modelImpl.setVSingleDomainModelReferences(result);
+		// modelImpl.setVSingleDomainModelReferences(result);
 		return new Node<CustomControl>(model, context);
 	}
 }

@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.custom.model.impl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.runtime.Platform;
@@ -23,8 +23,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl;
 import org.osgi.framework.Bundle;
 
@@ -283,22 +286,26 @@ public class CustomControlImpl extends AbstractControlImpl implements CustomCont
 	/**
 	 * {@inheritDoc}
 	 * 
+	 * @throws ECPCustomControlInitException
+	 * 
 	 * @see org.eclipse.emf.ecp.view.model.impl.AbstractControlImpl#getDomainModelReferences()
 	 */
 	public Set<VDomainModelReference> getDomainModelReferences() {
 		if (domainModelReferences == null) {
-			return Collections.emptySet();
+			domainModelReferences = new LinkedHashSet<VDomainModelReference>();
+			try {
+				for (final ECPCustomControlFeature editFeature : getECPCustomControl().getECPCustomControlFeatures()) {
+					final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+						.createVFeaturePathDomainModelReference();
+					domainModelReference.setDomainModelEFeature(editFeature.getTargetFeature());
+					domainModelReference.getDomainModelEReferencePath().addAll(editFeature.geteReferencePath());
+					domainModelReferences.add(domainModelReference);
+				}
+			} catch (final ECPCustomControlInitException ex) {
+				// FIXME log
+			}
 		}
 		return domainModelReferences;
-	}
-
-	/**
-	 * Internal method for the node builder to call on creation.
-	 * 
-	 * @param domainModelReferences the set of {@link VDomainModelReference VDomainModelReferences} to use
-	 */
-	public void setVSingleDomainModelReferences(Set<VDomainModelReference> domainModelReferences) {
-		this.domainModelReferences = domainModelReferences;
 	}
 
 	private Class<?> getClass(String pluginID, String className)
