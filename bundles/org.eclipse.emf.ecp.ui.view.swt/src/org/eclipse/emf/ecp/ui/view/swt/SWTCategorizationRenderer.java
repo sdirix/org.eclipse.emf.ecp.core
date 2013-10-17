@@ -32,7 +32,6 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-// TODO: do we need to set a custom variant
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorization> {
 
 	/** Singleton renderer instance. **/
@@ -47,6 +46,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorizatio
 		final Composite parent = getParentFromInitData(initData);
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
+		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization");
 
 		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(1, false));
 
@@ -54,7 +54,9 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorizatio
 
 		final Categorization categorization = Categorization.class.cast(node.getRenderable());
 		final Label headingLbl = new Label(categoryComposite, SWT.NONE);
+		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title");
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
+		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message");
 		headingLbl.setText(categorization.getName());
 		whatToDoLbl.setText(Messages.Categorization_Selection);
 
