@@ -41,6 +41,9 @@ import org.eclipse.swt.widgets.Label;
  */
 public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 
+	/**
+	 * The instance of the GroupedGridSWTRenderer.
+	 */
 	public static final GroupedGridSWTRenderer INSTANCE = new GroupedGridSWTRenderer();
 
 	@Override

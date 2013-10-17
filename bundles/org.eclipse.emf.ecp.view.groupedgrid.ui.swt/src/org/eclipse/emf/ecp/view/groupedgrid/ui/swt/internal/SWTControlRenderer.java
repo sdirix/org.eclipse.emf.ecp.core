@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -44,6 +43,9 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
+	/**
+	 * The instance of the SWTControlRenderer.
+	 */
 	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
 	private static final int IDENT = 10;
 
@@ -85,6 +87,12 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		final SWTControl control = controlFactory.createControl(SWTControl.class, itemPropertyDescriptor,
 			subContext);
 
+		return doRender(node, modelControl, subContext, itemPropertyDescriptor, control, initData);
+	}
+
+	private List<RenderingResultRow<org.eclipse.swt.widgets.Control>> doRender(Node<Control> node,
+		final Control modelControl, final ECPControlContext subContext,
+		final IItemPropertyDescriptor itemPropertyDescriptor, final SWTControl control, Object... initData) {
 		if (control != null) {
 			Composite parent = getParentFromInitData(initData);
 			int numControl = 2;
@@ -129,8 +137,6 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 			GridDataFactory.fillDefaults().grab(true, false)
 				.align(SWT.FILL, SWT.CENTER).span(numControl, 1)
 				.applyTo(controlComposite);
-
-			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
 
 			if (modelControl.getLabelAlignment() == Alignment.TOP) {
 				return createResult(parent);

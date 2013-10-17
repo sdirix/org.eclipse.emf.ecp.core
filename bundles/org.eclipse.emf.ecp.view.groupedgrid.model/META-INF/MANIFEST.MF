@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.edit.groupedgrid.model;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.groupedgrid.model.edit,org.eclipse.emf.ecp.view.groupedgrid.ui",
+Export-Package: org.eclipse.emf.ecp.edit.groupedgrid.model;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.groupedgrid.model.edit,org.eclipse.emf.ecp.view.groupedgrid.ui,org.eclipse.emf.ecp.view.groupedgrid.ui.swt",
  org.eclipse.emf.ecp.edit.groupedgrid.model.impl;version="1.1.0";x-internal:=true,
  org.eclipse.emf.ecp.edit.groupedgrid.model.util;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.groupedgrid.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
