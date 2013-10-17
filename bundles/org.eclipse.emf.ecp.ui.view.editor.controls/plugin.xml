@@ -61,7 +61,7 @@
                priority="2"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EAttribute"
-               supportedEObject="org.eclipse.emf.ecp.view.model.TableColumn">
+               supportedEObject="org.eclipse.emf.ecp.view.table.model.VTableColumn">
          </staticTest>
       </control>
       <control
