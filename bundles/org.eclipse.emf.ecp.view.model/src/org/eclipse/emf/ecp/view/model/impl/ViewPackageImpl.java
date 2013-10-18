@@ -361,16 +361,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EReference getControl_DomainModelReference()
 	{
-		return (EReference) controlEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getControl_Hint() {
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(0);
+		return (EReference) controlEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -379,7 +370,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	public EAttribute getControl_Mandatory() {
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(1);
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -390,7 +381,7 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 */
 	public EAttribute getControl_LabelAlignment()
 	{
-		return (EAttribute) controlEClass.getEStructuralFeatures().get(2);
+		return (EAttribute) controlEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -692,7 +683,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
 
 		controlEClass = createEClass(CONTROL);
-		createEAttribute(controlEClass, CONTROL__HINT);
 		createEAttribute(controlEClass, CONTROL__MANDATORY);
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
 		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCE);
@@ -835,8 +825,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlEClass, Control.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getControl_Hint(), ecorePackage.getEString(), "hint", null, 0, -1, Control.class, !IS_TRANSIENT,
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControl_Mandatory(), theEcorePackage.getEBoolean(), "mandatory", "false", 0, 1,
 			Control.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);

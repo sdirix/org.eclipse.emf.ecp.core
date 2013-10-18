@@ -50,38 +50,17 @@
     <genClasses ecoreClass="view.ecore#//Composite">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Composite/name"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="view.ecore#//AbstractControl">
-      <genOperations ecoreOperation="view.ecore#//AbstractControl/getDomainModelReferences"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="view.ecore#//VDomainModelReference">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//VDomainModelReference/domainModel"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//VDomainModelReference/modelFeature"/>
-      <genOperations ecoreOperation="view.ecore#//VDomainModelReference/resolve">
-        <genParameters ecoreParameter="view.ecore#//VDomainModelReference/resolve/domainModel"/>
-      </genOperations>
-    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//AbstractControl"/>
+    <genClasses image="false" ecoreClass="view.ecore#//VDomainModelReference"/>
     <genClasses ecoreClass="view.ecore#//VFeaturePathDomainModelReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//VFeaturePathDomainModelReference/domainModelEFeature"/>
       <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
           ecoreFeature="ecore:EReference view.ecore#//VFeaturePathDomainModelReference/domainModelEReferencePath"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//Control">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/hint"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/mandatory"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//TableControl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//TableControl/columns"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//TableControl/addRemoveDisabled"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//TableColumn">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//TableColumn/attribute"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//TableColumn/readOnly"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//CustomComposite">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//CustomComposite/bundle"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//CustomComposite/className"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//CompositeCollection">
       <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"

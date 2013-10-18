@@ -987,16 +987,6 @@ public interface ViewPackage extends EPackage {
 	int CONTROL__NAME = ABSTRACT_CONTROL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__HINT = ABSTRACT_CONTROL_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1004,7 +994,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
+	int CONTROL__MANDATORY = ABSTRACT_CONTROL_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -1014,7 +1004,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
+	int CONTROL__LABEL_ALIGNMENT = ABSTRACT_CONTROL_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
@@ -1024,7 +1014,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__DOMAIN_MODEL_REFERENCE = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
+	int CONTROL__DOMAIN_MODEL_REFERENCE = ABSTRACT_CONTROL_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -1034,7 +1024,7 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 4;
+	int CONTROL_FEATURE_COUNT = ABSTRACT_CONTROL_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -1458,19 +1448,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getControl_DomainModelReference();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecp.view.model.Control#getHint
-	 * <em>Hint</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute list '<em>Hint</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Control#getHint()
-	 * @see #getControl()
-	 * @generated
-	 */
-	EAttribute getControl_Hint();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.Control#isMandatory
@@ -1935,15 +1912,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONTROL__DOMAIN_MODEL_REFERENCE = eINSTANCE.getControl_DomainModelReference();
-
-		/**
-		 * The meta object literal for the '<em><b>Hint</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CONTROL__HINT = eINSTANCE.getControl_Hint();
 
 		/**
 		 * The meta object literal for the '<em><b>Mandatory</b></em>' attribute feature.

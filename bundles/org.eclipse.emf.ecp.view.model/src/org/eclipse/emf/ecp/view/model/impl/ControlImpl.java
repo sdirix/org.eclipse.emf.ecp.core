@@ -11,17 +11,14 @@
  */
 package org.eclipse.emf.ecp.view.model.impl;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -34,7 +31,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getHint <em>Hint</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getDomainModelReference <em>Domain Model Reference</em>}</li>
@@ -44,17 +40,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * @generated
  */
 public class ControlImpl extends AbstractControlImpl implements Control {
-	/**
-	 * The cached value of the '{@link #getHint() <em>Hint</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getHint()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> hint;
-
 	/**
 	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -215,20 +200,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public EList<String> getHint() {
-		if (hint == null)
-		{
-			hint = new EDataTypeUniqueEList<String>(String.class, this, ViewPackage.CONTROL__HINT);
-		}
-		return hint;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public boolean isMandatory() {
 		return mandatory;
 	}
@@ -283,8 +254,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			return getHint();
 		case ViewPackage.CONTROL__MANDATORY:
 			return isMandatory();
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
@@ -301,15 +270,10 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			getHint().clear();
-			getHint().addAll((Collection<? extends String>) newValue);
-			return;
 		case ViewPackage.CONTROL__MANDATORY:
 			setMandatory((Boolean) newValue);
 			return;
@@ -333,9 +297,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			getHint().clear();
-			return;
 		case ViewPackage.CONTROL__MANDATORY:
 			setMandatory(MANDATORY_EDEFAULT);
 			return;
@@ -359,8 +320,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__HINT:
-			return hint != null && !hint.isEmpty();
 		case ViewPackage.CONTROL__MANDATORY:
 			return mandatory != MANDATORY_EDEFAULT;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
@@ -383,9 +342,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (hint: ");
-		result.append(hint);
-		result.append(", mandatory: ");
+		result.append(" (mandatory: ");
 		result.append(mandatory);
 		result.append(", labelAlignment: ");
 		result.append(labelAlignment);

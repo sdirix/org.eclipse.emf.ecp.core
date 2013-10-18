@@ -11,8 +11,6 @@
  */
 package org.eclipse.emf.ecp.view.model;
 
-import org.eclipse.emf.common.util.EList;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Control</b></em>'.
@@ -21,7 +19,6 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#getHint <em>Hint</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}</li>
@@ -61,23 +58,6 @@ public interface Control extends AbstractControl {
 	 * @generated
 	 */
 	void setDomainModelReference(VDomainModelReference value);
-
-	/**
-	 * Returns the value of the '<em><b>Hint</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Hint</em>' attribute list isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Hint</em>' attribute list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_Hint()
-	 * @model
-	 * @generated
-	 */
-	EList<String> getHint();
 
 	/**
 	 * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
