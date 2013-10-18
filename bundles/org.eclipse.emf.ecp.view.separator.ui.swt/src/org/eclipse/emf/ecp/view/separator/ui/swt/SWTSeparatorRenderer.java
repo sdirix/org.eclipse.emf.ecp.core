@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -27,22 +27,22 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * Renders an {@link Separator} to a SWT {@link Label}.
+ * Renders an {@link VSeparator} to a SWT {@link Label}.
  * 
  */
-public class SWTSeparatorRenderer extends AbstractSWTRenderer<Separator> {
+public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 	/**
 	 * The instance.
 	 */
 	public static final SWTSeparatorRenderer INSTANCE = new SWTSeparatorRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<Separator> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<VSeparator> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
-		final Separator separator = node.getRenderable();
+		final VSeparator separator = node.getRenderable();
 		final Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator");

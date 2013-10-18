@@ -28,8 +28,8 @@ import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -55,7 +55,7 @@ public class SWTSeparatorTest {
 
 		// setup model
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Separator separator = SeparatorFactory.eINSTANCE.createSeparator();
+		final VSeparator separator = VSeparatorFactory.eINSTANCE.createSeparator();
 		separator.setName(SEPARATOR_NAME);
 		view.getChildren().add(separator);
 

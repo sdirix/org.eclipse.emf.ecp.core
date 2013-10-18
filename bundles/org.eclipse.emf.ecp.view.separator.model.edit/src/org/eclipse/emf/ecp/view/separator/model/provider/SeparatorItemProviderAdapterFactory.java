@@ -25,8 +25,8 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.separator.model.util.SeparatorAdapterFactory;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -83,7 +83,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		SeparatorEditPlugin.INSTANCE, SeparatorPackage.eNS_URI);
+		SeparatorEditPlugin.INSTANCE, VSeparatorPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -110,7 +110,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.separator.model.Separator}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.separator.model.VSeparator}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,7 +120,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 	protected SeparatorItemProvider separatorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.separator.model.Separator}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.separator.model.VSeparator}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -335,7 +335,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.VIEW__CHILDREN,
-						SeparatorFactory.eINSTANCE.createSeparator()));
+						VSeparatorFactory.eINSTANCE.createSeparator()));
 
 				return null;
 			}
@@ -351,7 +351,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.CATEGORY__COMPOSITE,
-						SeparatorFactory.eINSTANCE.createSeparator()));
+						VSeparatorFactory.eINSTANCE.createSeparator()));
 
 				return null;
 			}
@@ -367,7 +367,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						SeparatorFactory.eINSTANCE.createSeparator()));
+						VSeparatorFactory.eINSTANCE.createSeparator()));
 
 				return null;
 			}

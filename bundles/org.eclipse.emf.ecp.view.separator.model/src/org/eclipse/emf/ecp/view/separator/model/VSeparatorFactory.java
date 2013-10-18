@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.separator.model.SeparatorPackage
+ * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage
  * @generated
  */
-public interface SeparatorFactory extends EFactory {
+public interface VSeparatorFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ public interface SeparatorFactory extends EFactory {
 	 * 
 	 * @generated
 	 */
-	SeparatorFactory eINSTANCE = org.eclipse.emf.ecp.view.separator.model.impl.SeparatorFactoryImpl.init();
+	VSeparatorFactory eINSTANCE = org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Separator</em>'.
@@ -40,7 +40,7 @@ public interface SeparatorFactory extends EFactory {
 	 * @return a new object of class '<em>Separator</em>'.
 	 * @generated
 	 */
-	Separator createSeparator();
+	VSeparator createSeparator();
 
 	/**
 	 * Returns the package supported by this factory.
@@ -50,6 +50,6 @@ public interface SeparatorFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	SeparatorPackage getSeparatorPackage();
+	VSeparatorPackage getSeparatorPackage();
 
-} // SeparatorFactory
+} // VSeparatorFactory

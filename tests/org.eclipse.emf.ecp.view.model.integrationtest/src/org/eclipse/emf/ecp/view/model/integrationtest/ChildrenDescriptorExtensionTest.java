@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -198,7 +198,7 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testSeparatorChildDescriptors() {
-		final int size = getChildrenSize(SeparatorPackage.eINSTANCE.getSeparator());
+		final int size = getChildrenSize(VSeparatorPackage.eINSTANCE.getSeparator());
 		assertEquals(SEPARATOR_CHILD_COUNT, size);
 	}
 

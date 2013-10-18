@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,14 +25,14 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * 
  * @generated
  */
-public class SeparatorImpl extends CompositeImpl implements Separator {
+public class VSeparatorImpl extends CompositeImpl implements VSeparator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected SeparatorImpl() {
+	protected VSeparatorImpl() {
 		super();
 	}
 
@@ -44,7 +44,7 @@ public class SeparatorImpl extends CompositeImpl implements Separator {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SeparatorPackage.Literals.SEPARATOR;
+		return VSeparatorPackage.Literals.SEPARATOR;
 	}
 
-} // SeparatorImpl
+} // VSeparatorImpl

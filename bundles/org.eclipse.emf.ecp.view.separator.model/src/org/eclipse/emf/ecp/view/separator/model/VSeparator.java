@@ -19,9 +19,9 @@ import org.eclipse.emf.ecp.view.model.Composite;
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.separator.model.SeparatorPackage#getSeparator()
+ * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage#getSeparator()
  * @model
  * @generated
  */
-public interface Separator extends Composite {
-} // Separator
+public interface VSeparator extends Composite {
+} // VSeparator

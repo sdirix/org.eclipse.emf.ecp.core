@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * 
  * @generated
  */
-public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPackage {
+public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -45,12 +45,12 @@ public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPacka
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.separator.model.SeparatorPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private SeparatorPackageImpl() {
-		super(eNS_URI, SeparatorFactory.eINSTANCE);
+	private VSeparatorPackageImpl() {
+		super(eNS_URI, VSeparatorFactory.eINSTANCE);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPacka
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link SeparatorPackage#eINSTANCE} when that field is accessed. Clients should
+	 * This method is used to initialize {@link VSeparatorPackage#eINSTANCE} when that field is accessed. Clients should
 	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
 	 * 
@@ -74,15 +74,15 @@ public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPacka
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static SeparatorPackage init() {
+	public static VSeparatorPackage init() {
 		if (isInited) {
-			return (SeparatorPackage) EPackage.Registry.INSTANCE.getEPackage(SeparatorPackage.eNS_URI);
+			return (VSeparatorPackage) EPackage.Registry.INSTANCE.getEPackage(VSeparatorPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final SeparatorPackageImpl theSeparatorPackage = (SeparatorPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof SeparatorPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new SeparatorPackageImpl());
+		final VSeparatorPackageImpl theSeparatorPackage = (VSeparatorPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VSeparatorPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+			: new VSeparatorPackageImpl());
 
 		isInited = true;
 
@@ -99,7 +99,7 @@ public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPacka
 		theSeparatorPackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(SeparatorPackage.eNS_URI, theSeparatorPackage);
+		EPackage.Registry.INSTANCE.put(VSeparatorPackage.eNS_URI, theSeparatorPackage);
 		return theSeparatorPackage;
 	}
 
@@ -119,8 +119,8 @@ public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPacka
 	 * 
 	 * @generated
 	 */
-	public SeparatorFactory getSeparatorFactory() {
-		return (SeparatorFactory) getEFactoryInstance();
+	public VSeparatorFactory getSeparatorFactory() {
+		return (VSeparatorFactory) getEFactoryInstance();
 	}
 
 	/**
@@ -187,11 +187,11 @@ public class SeparatorPackageImpl extends EPackageImpl implements SeparatorPacka
 		separatorEClass.getESuperTypes().add(theViewPackage.getComposite());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(separatorEClass, Separator.class, "Separator", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(separatorEClass, VSeparator.class, "Separator", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} // SeparatorPackageImpl
+} // VSeparatorPackageImpl

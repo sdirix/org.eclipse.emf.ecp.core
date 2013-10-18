@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.separator.model.SeparatorPackage
+ * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage
  * @generated
  */
 public class SeparatorSwitch<T> extends Switch<T> {
@@ -41,7 +41,7 @@ public class SeparatorSwitch<T> extends Switch<T> {
 	 * 
 	 * @generated
 	 */
-	protected static SeparatorPackage modelPackage;
+	protected static VSeparatorPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -52,7 +52,7 @@ public class SeparatorSwitch<T> extends Switch<T> {
 	 */
 	public SeparatorSwitch() {
 		if (modelPackage == null) {
-			modelPackage = SeparatorPackage.eINSTANCE;
+			modelPackage = VSeparatorPackage.eINSTANCE;
 		}
 	}
 
@@ -82,18 +82,15 @@ public class SeparatorSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case SeparatorPackage.SEPARATOR: {
-			final Separator separator = (Separator) theEObject;
+		case VSeparatorPackage.SEPARATOR: {
+			VSeparator separator = (VSeparator) theEObject;
 			T result = caseSeparator(separator);
-			if (result == null) {
+			if (result == null)
 				result = caseComposite(separator);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseRenderable(separator);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		default:
@@ -113,7 +110,7 @@ public class SeparatorSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSeparator(Separator object) {
+	public T caseSeparator(VSeparator object) {
 		return null;
 	}
 

@@ -17,7 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 
 /**
  * The SWT renderer for separator.
@@ -39,7 +39,7 @@ public class SeparatorSWTRenderer implements CustomSWTRenderer {
 			private static final long serialVersionUID = 3710963194739585330L;
 
 			{
-				put(Separator.class, new SWTSeparatorRenderer());
+				put(VSeparator.class, new SWTSeparatorRenderer());
 			}
 		};
 		return renderers;

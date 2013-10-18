@@ -17,11 +17,11 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.model.provider.CompositeItemProvider;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.separator.model.Separator} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.separator.model.VSeparator} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -77,7 +77,7 @@ public class SeparatorItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((Separator) object).getName();
+		final String label = ((VSeparator) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Separator_type") :
 			getString("_UI_Separator_type") + " " + label;

@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorFactory;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * 
  * @generated
  */
-public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFactory {
+public class VSeparatorFactoryImpl extends EFactoryImpl implements VSeparatorFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -35,17 +35,17 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * 
 	 * @generated
 	 */
-	public static SeparatorFactory init() {
+	public static VSeparatorFactory init() {
 		try {
-			final SeparatorFactory theSeparatorFactory = (SeparatorFactory) EPackage.Registry.INSTANCE
-				.getEFactory(SeparatorPackage.eNS_URI);
+			final VSeparatorFactory theSeparatorFactory = (VSeparatorFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VSeparatorPackage.eNS_URI);
 			if (theSeparatorFactory != null) {
 				return theSeparatorFactory;
 			}
 		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new SeparatorFactoryImpl();
+		return new VSeparatorFactoryImpl();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * 
 	 * @generated
 	 */
-	public SeparatorFactoryImpl() {
+	public VSeparatorFactoryImpl() {
 		super();
 	}
 
@@ -68,7 +68,7 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case SeparatorPackage.SEPARATOR:
+		case VSeparatorPackage.SEPARATOR:
 			return createSeparator();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -81,8 +81,8 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * 
 	 * @generated
 	 */
-	public Separator createSeparator() {
-		final SeparatorImpl separator = new SeparatorImpl();
+	public VSeparator createSeparator() {
+		final VSeparatorImpl separator = new VSeparatorImpl();
 		return separator;
 	}
 
@@ -92,8 +92,8 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * 
 	 * @generated
 	 */
-	public SeparatorPackage getSeparatorPackage() {
-		return (SeparatorPackage) getEPackage();
+	public VSeparatorPackage getSeparatorPackage() {
+		return (VSeparatorPackage) getEPackage();
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class SeparatorFactoryImpl extends EFactoryImpl implements SeparatorFacto
 	 * @generated
 	 */
 	@Deprecated
-	public static SeparatorPackage getPackage() {
-		return SeparatorPackage.eINSTANCE;
+	public static VSeparatorPackage getPackage() {
+		return VSeparatorPackage.eINSTANCE;
 	}
 
-} // SeparatorFactoryImpl
+} // VSeparatorFactoryImpl

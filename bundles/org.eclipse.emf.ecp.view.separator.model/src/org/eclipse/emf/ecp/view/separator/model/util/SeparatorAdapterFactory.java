@@ -17,8 +17,8 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
-import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.separator.model.SeparatorPackage
+ * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage
  * @generated
  */
 public class SeparatorAdapterFactory extends AdapterFactoryImpl {
@@ -37,7 +37,7 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static SeparatorPackage modelPackage;
+	protected static VSeparatorPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -48,7 +48,7 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	 */
 	public SeparatorAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = SeparatorPackage.eINSTANCE;
+			modelPackage = VSeparatorPackage.eINSTANCE;
 		}
 	}
 
@@ -83,7 +83,7 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	protected SeparatorSwitch<Adapter> modelSwitch =
 		new SeparatorSwitch<Adapter>() {
 			@Override
-			public Adapter caseSeparator(Separator object) {
+			public Adapter caseSeparator(VSeparator object) {
 				return createSeparatorAdapter();
 			}
 
@@ -118,7 +118,7 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.separator.model.Separator
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.separator.model.VSeparator
 	 * <em>Separator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -126,7 +126,7 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.separator.model.Separator
+	 * @see org.eclipse.emf.ecp.view.separator.model.VSeparator
 	 * @generated
 	 */
 	public Adapter createSeparatorAdapter() {

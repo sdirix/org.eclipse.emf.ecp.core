@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
 import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.separator.model.Separator;
+import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 
 /**
  * NodeBuilder for separator.
@@ -40,7 +40,7 @@ public class SeparatorNodeBuilder implements CustomNodeBuilder {
 			private static final long serialVersionUID = 6030832571610301712L;
 
 			{
-				put(Separator.class, new RenderableNodeBuilder<Separator>());
+				put(VSeparator.class, new RenderableNodeBuilder<VSeparator>());
 			}
 		};
 		return builders;

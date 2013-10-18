@@ -4,7 +4,8 @@
     editDirectory="/org.eclipse.emf.ecp.view.separator.model.edit/src" modelPluginID="org.eclipse.emf.ecp.view.separator.model"
     modelName="Separator" modelPluginClass="" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    editPluginID="org.eclipse.emf.ecp.view.separator.model.edit" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
+    editPluginID="org.eclipse.emf.ecp.view.separator.model.edit" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
   <foreignModel>separator.ecore</foreignModel>
   <genPackages prefix="Separator" basePackage="org.eclipse.emf.ecp.view.separator"
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"

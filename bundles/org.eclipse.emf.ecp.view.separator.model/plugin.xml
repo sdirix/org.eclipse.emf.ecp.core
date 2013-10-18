@@ -10,7 +10,7 @@
       <!-- @generated separator -->
       <package
             uri="http://org/eclipse/emf/ecp/view/separator/model"
-            class="org.eclipse.emf.ecp.view.separator.model.SeparatorPackage"
+            class="org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage"
             genModel="model/separator.genmodel"/>
    </extension>
 
