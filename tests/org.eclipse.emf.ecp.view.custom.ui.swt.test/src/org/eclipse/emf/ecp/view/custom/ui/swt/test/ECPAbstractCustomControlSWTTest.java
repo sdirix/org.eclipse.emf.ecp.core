@@ -41,11 +41,11 @@ import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderingHelper;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -73,7 +73,7 @@ public class ECPAbstractCustomControlSWTTest {
 	private static Set<ECPCustomControlFeature> editableFeaturess;
 	private ECPAbstractCustomControlSWTStub customControl;
 	private Composite testComposite;
-	private CustomControl domainObject;
+	private VCustomControl domainObject;
 
 	/**
 	 * @author Jonas
@@ -119,7 +119,7 @@ public class ECPAbstractCustomControlSWTTest {
 				return result;
 			}
 			for (final ECPCustomControlFeature controlFeature : editableFeaturess) {
-				if (controlFeature.getTargetFeature() == CustomPackage.eINSTANCE.getCustomControl_Bundle()) {
+				if (controlFeature.getTargetFeature() == VCustomPackage.eINSTANCE.getCustomControl_Bundle()) {
 					setTextControl(createControl(controlFeature, composite));
 					result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 						.createRenderingResultRow(label, getTextControl()));
@@ -289,7 +289,7 @@ public class ECPAbstractCustomControlSWTTest {
 		editableFeaturess = null;
 		allFeatures = null;
 		customControl = new ECPAbstractCustomControlSWTStub();
-		domainObject = CustomFactory.eINSTANCE.createCustomControl();
+		domainObject = VCustomFactory.eINSTANCE.createCustomControl();
 		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 			SWTViewTestHelper.createShell()));
 		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
@@ -310,7 +310,7 @@ public class ECPAbstractCustomControlSWTTest {
 	public static Set<ECPCustomControlFeature> createReferencedFeatures() {
 		if (referencedFeatures == null) {
 			referencedFeatures = new LinkedHashSet<ECPCustomControlFeature>();
-			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
+			final EList<EStructuralFeature> eAllStructuralFeatures = VCustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
 				referencedFeatures.add(new ECPCustomControlFeature(null, eStructuralFeature, false));
@@ -326,7 +326,7 @@ public class ECPAbstractCustomControlSWTTest {
 	public static Set<ECPCustomControlFeature> createEditableFeatures() {
 		if (editableFeaturess == null) {
 			editableFeaturess = new LinkedHashSet<ECPCustomControlFeature>();
-			final EList<EStructuralFeature> eAllStructuralFeatures = CustomPackage.eINSTANCE.getCustomControl()
+			final EList<EStructuralFeature> eAllStructuralFeatures = VCustomPackage.eINSTANCE.getCustomControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
 				editableFeaturess.add(new ECPCustomControlFeature(null, eStructuralFeature, true));
@@ -403,7 +403,7 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
-		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
+		assertSame(VCustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
 		customControl.setValidationReseted(false);
 		customControl.resetValidation();
 		assertTrue(customControl.isValidationReseted());
@@ -421,7 +421,7 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
-		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
+		assertSame(VCustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
 		customControl.setValidationReseted(false);
 		customControl.resetValidation();
 		assertTrue(customControl.isValidationReseted());
@@ -482,14 +482,14 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testHandleValidationOfControl() {
 		customControl = new ECPAbstractCustomControlSWTStub(true);
-		domainObject = CustomFactory.eINSTANCE.createCustomControl();
+		domainObject = VCustomFactory.eINSTANCE.createCustomControl();
 		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 			SWTViewTestHelper.createShell()));
 		Diagnostic validate = new Diagnostician().validate(domainObject);
 		customControl.handleValidation(validate.getChildren().get(1));
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
-		assertSame(CustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
+		assertSame(VCustomPackage.eINSTANCE.getCustomControl_Bundle(), customControl.getLastValidationFeature());
 		customControl.createControls(testComposite);
 		customControl.handleValidation(validate.getChildren().get(1));
 		final Composite textControl = customControl.getTextControl();
@@ -513,7 +513,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testHandleContentValidation() {
-		final EAttribute validationFeature = CustomPackage.eINSTANCE.getCustomControl_Bundle();
+		final EAttribute validationFeature = VCustomPackage.eINSTANCE.getCustomControl_Bundle();
 		final int severity = 0;
 		customControl.handleContentValidation(severity, validationFeature);
 		assertEquals(severity, customControl.getLastValidationSeverity());
@@ -687,9 +687,9 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testCustomControlFeatureSet() {
 		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
-			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+			VCustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
 		bundleFeature.setValue("test");
-		assertEquals(domainObject.eGet(CustomPackage.eINSTANCE.getCustomControl_Bundle()), "test");
+		assertEquals(domainObject.eGet(VCustomPackage.eINSTANCE.getCustomControl_Bundle()), "test");
 	}
 
 	/**
@@ -698,7 +698,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test(expected = UnsupportedOperationException.class)
 	public void testCustomControlFeatureSetNotEditable() {
 		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
-			CustomPackage.eINSTANCE.getCustomControl_Bundle(), false);
+			VCustomPackage.eINSTANCE.getCustomControl_Bundle(), false);
 		bundleFeature.setValue("test");
 	}
 
@@ -708,8 +708,8 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testCustomControlFeatureGet() {
 		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
-			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
-		assertEquals(domainObject.eGet(CustomPackage.eINSTANCE.getCustomControl_Bundle()), bundleFeature.getValue());
+			VCustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+		assertEquals(domainObject.eGet(VCustomPackage.eINSTANCE.getCustomControl_Bundle()), bundleFeature.getValue());
 	}
 
 	/**
@@ -718,7 +718,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testCustomControlFeatureListener() {
 		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
-			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+			VCustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
 		final List<Integer> result = new ArrayList<Integer>();
 		bundleFeature.registerChangeListener(new ECPCustomControlChangeListener() {
 			public void notifyChanged() {
@@ -733,7 +733,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testBindTargetToModel() {
 		final ECPCustomControlFeature bundleFeature = getFeature(customControl.getECPCustomControlFeatures(),
-			CustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
+			VCustomPackage.eINSTANCE.getCustomControl_Bundle(), true);
 		customControl.createControls(testComposite);
 		final Label label = (Label) testComposite.getChildren()[0];
 		final IObservableValue obsValue = SWTObservables.observeText(label);
@@ -744,7 +744,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testReadonlyCustomControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		domainObject = CustomFactory.eINSTANCE.createCustomControl();
+		domainObject = VCustomFactory.eINSTANCE.createCustomControl();
 		domainObject.setReadonly(true);
 		domainObject.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");
 		domainObject

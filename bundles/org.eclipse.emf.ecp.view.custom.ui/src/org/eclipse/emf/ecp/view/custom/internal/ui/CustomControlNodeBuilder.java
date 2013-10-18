@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.custom.internal.ui;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 /**
@@ -23,7 +23,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * @author Eugen Neufeld
  * 
  */
-public class CustomControlNodeBuilder extends RenderableNodeBuilder<CustomControl> {
+public class CustomControlNodeBuilder extends RenderableNodeBuilder<VCustomControl> {
 	/**
 	 * 
 	 * {@inheritDoc}
@@ -32,7 +32,7 @@ public class CustomControlNodeBuilder extends RenderableNodeBuilder<CustomContro
 	 *      org.eclipse.emf.ecp.edit.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
 	 */
 	@Override
-	public Node<CustomControl> build(CustomControl model, ECPControlContext context,
+	public Node<VCustomControl> build(VCustomControl model, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		// final CustomControlImpl modelImpl = (CustomControlImpl) model;
 		//
@@ -58,6 +58,6 @@ public class CustomControlNodeBuilder extends RenderableNodeBuilder<CustomContro
 		// }
 
 		// modelImpl.setVSingleDomainModelReferences(result);
-		return new Node<CustomControl>(model, context);
+		return new Node<VCustomControl>(model, context);
 	}
 }

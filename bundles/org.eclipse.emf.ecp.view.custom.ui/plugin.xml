@@ -10,7 +10,7 @@
    <extension
          point="org.eclipse.emf.ecp.view.validation.validationSubProcessor">
       <validationSubProcessor
-            associatedRenderable="org.eclipse.emf.ecp.view.custom.model.CustomControl"
+            associatedRenderable="org.eclipse.emf.ecp.view.custom.model.VCustomControl"
             class="org.eclipse.emf.ecp.view.custom.internal.ui.CustomControlSubprocessor">
       </validationSubProcessor>
    </extension>

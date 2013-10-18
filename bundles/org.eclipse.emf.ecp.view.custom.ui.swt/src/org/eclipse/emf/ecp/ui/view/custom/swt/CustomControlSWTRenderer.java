@@ -20,8 +20,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
@@ -34,14 +34,14 @@ import org.eclipse.swt.widgets.Control;
  * 
  */
 public class CustomControlSWTRenderer extends
-	AbstractSWTRenderer<CustomControl> {
+	AbstractSWTRenderer<VCustomControl> {
 
 	@Override
-	protected List<RenderingResultRow<Control>> renderSWT(Node<CustomControl> node,
+	protected List<RenderingResultRow<Control>> renderSWT(Node<VCustomControl> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final CustomControl customControl = node.getRenderable();
+		final VCustomControl customControl = node.getRenderable();
 
 		try {
 			final ECPAbstractCustomControlSWT customControlSWT = (ECPAbstractCustomControlSWT) customControl

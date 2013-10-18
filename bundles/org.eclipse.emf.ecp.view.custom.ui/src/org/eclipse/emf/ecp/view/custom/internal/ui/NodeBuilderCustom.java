@@ -16,12 +16,12 @@ import java.util.Map;
 
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
  * This registers the {@link org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder RenderableNodeBuilder}
- * as the NodeBuilder for {@link CustomControl}.
+ * as the NodeBuilder for {@link VCustomControl}.
  * 
  * @author Eugen Neufeld
  */
@@ -36,7 +36,7 @@ public class NodeBuilderCustom implements CustomNodeBuilder {
 	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
 
 		final Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> builders = new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
-		builders.put(CustomControl.class,
+		builders.put(VCustomControl.class,
 			new CustomControlNodeBuilder());
 		return builders;
 	}

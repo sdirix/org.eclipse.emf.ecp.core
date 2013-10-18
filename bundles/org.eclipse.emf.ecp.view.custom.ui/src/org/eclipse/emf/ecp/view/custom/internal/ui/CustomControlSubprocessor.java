@@ -17,17 +17,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlInitException;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.validation.ECPValidationSubProcessor;
 import org.eclipse.emf.ecp.view.validation.ValidationRegistry;
 
 /**
- * {@link ECPValidationSubProcessor} to notify a {@link CustomControl} if any of its children has a validation error.
+ * {@link ECPValidationSubProcessor} to notify a {@link VCustomControl} if any of its children has a validation error.
  * 
  * @author jfaltermeier
  * 
@@ -43,7 +43,7 @@ public class CustomControlSubprocessor implements ECPValidationSubProcessor {
 	public Map<EObject, Set<AbstractControl>> processRenderable(EObject domainObject, Renderable parentRenderable,
 		final ValidationRegistry validationRegistry) {
 
-		final CustomControl customControl = (CustomControl) parentRenderable;
+		final VCustomControl customControl = (VCustomControl) parentRenderable;
 		final Map<EObject, Set<AbstractControl>> result = new LinkedHashMap<EObject, Set<AbstractControl>>();
 
 		final Set<ECPCustomControlFeature> allFeatures = new LinkedHashSet<ECPCustomControlFeature>();
@@ -77,7 +77,7 @@ public class CustomControlSubprocessor implements ECPValidationSubProcessor {
 		return result;
 	}
 
-	private void addControlToMap(CustomControl customControl, Map<EObject, Set<AbstractControl>> result,
+	private void addControlToMap(VCustomControl customControl, Map<EObject, Set<AbstractControl>> result,
 		EObject referencedDomainModel) {
 		if (!result.containsKey(referencedDomainModel)) {
 			result.put(referencedDomainModel, new LinkedHashSet<AbstractControl>());

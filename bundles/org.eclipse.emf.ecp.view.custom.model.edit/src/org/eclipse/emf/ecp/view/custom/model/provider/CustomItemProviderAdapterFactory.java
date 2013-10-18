@@ -20,8 +20,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.util.CustomAdapterFactory;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
@@ -83,7 +83,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		CustomEditPlugin.INSTANCE, CustomPackage.eNS_URI);
+		CustomEditPlugin.INSTANCE, VCustomPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -110,7 +110,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.custom.model.CustomControl}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.custom.model.VCustomControl}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,7 +120,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	protected CustomControlItemProvider customControlItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.custom.model.CustomControl}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VCustomControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -335,7 +335,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.VIEW__CHILDREN,
-						CustomFactory.eINSTANCE.createCustomControl()));
+						VCustomFactory.eINSTANCE.createCustomControl()));
 
 				return null;
 			}
@@ -351,7 +351,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.CATEGORY__COMPOSITE,
-						CustomFactory.eINSTANCE.createCustomControl()));
+						VCustomFactory.eINSTANCE.createCustomControl()));
 
 				return null;
 			}
@@ -367,7 +367,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						CustomFactory.eINSTANCE.createCustomControl()));
+						VCustomFactory.eINSTANCE.createCustomControl()));
 
 				return null;
 			}

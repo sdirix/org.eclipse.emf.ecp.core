@@ -18,8 +18,8 @@ import static org.junit.Assert.assertSame;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -42,13 +42,13 @@ public class SWTCustomControlTest {
 	public class TestHandel {
 
 		private final View view;
-		private final CustomControl customControl;
+		private final VCustomControl customControl;
 
 		/**
 		 * @param view
 		 * @param customControl
 		 */
-		public TestHandel(View view, CustomControl customControl) {
+		public TestHandel(View view, VCustomControl customControl) {
 			this.view = view;
 			this.customControl = customControl;
 		}
@@ -63,7 +63,7 @@ public class SWTCustomControlTest {
 		/**
 		 * @return the customControl
 		 */
-		public CustomControl getCustomControl() {
+		public VCustomControl getCustomControl() {
 			return customControl;
 		}
 
@@ -88,7 +88,7 @@ public class SWTCustomControlTest {
 	 */
 	private Renderable createCustomControlInView() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final CustomControl customControl = createCustomControl();
+		final VCustomControl customControl = createCustomControl();
 		view.getChildren().add(customControl);
 		customControl.setBundle(BUNDLE_ID);
 		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
@@ -99,7 +99,7 @@ public class SWTCustomControlTest {
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final CustomControl customControl = createCustomControl();
+		final VCustomControl customControl = createCustomControl();
 		view.getChildren().add(customControl);
 		customControl.setBundle(BUNDLE_ID);
 		customControl.setClassName("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
@@ -112,7 +112,7 @@ public class SWTCustomControlTest {
 	@Test
 	public void testCustomControlInit() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final CustomControl customControl = createCustomControl();
+		final VCustomControl customControl = createCustomControl();
 		view.getChildren().add(customControl);
 		customControl.setBundle(BUNDLE_ID);
 		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
@@ -126,7 +126,7 @@ public class SWTCustomControlTest {
 	/**
 	 * @return
 	 */
-	private CustomControl createCustomControl() {
-		return CustomFactory.eINSTANCE.createCustomControl();
+	private VCustomControl createCustomControl() {
+		return VCustomFactory.eINSTANCE.createCustomControl();
 	}
 }

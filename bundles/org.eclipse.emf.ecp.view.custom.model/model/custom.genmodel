@@ -4,7 +4,8 @@
     editorDirectory="/org.eclipse.emf.ecp.view.custom.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.custom.model"
     modelName="Custom" modelPluginClass="" editPluginClass="org.eclipse.emf.ecp.view.custom.model.provider.CustomEditPlugin"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    editPluginID="org.eclipse.emf.ecp.view.custom.model.edit" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
+    editPluginID="org.eclipse.emf.ecp.view.custom.model.edit" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
   <foreignModel>custom.ecore</foreignModel>
   <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.custom" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="custom.ecore#/">

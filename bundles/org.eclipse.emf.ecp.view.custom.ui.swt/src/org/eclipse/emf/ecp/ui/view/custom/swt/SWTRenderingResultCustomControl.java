@@ -21,7 +21,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderingResultDelegator;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Display;
 public class SWTRenderingResultCustomControl extends SWTRenderingResultDelegator {
 
 	private final ECPAbstractCustomControlSWT swtControl;
-	private final CustomControl model;
+	private final VCustomControl model;
 	private final Adapter adapter;
 
 	/**
@@ -45,7 +45,8 @@ public class SWTRenderingResultCustomControl extends SWTRenderingResultDelegator
 	 * @param model the view model element
 	 * @param results the controls
 	 */
-	public SWTRenderingResultCustomControl(ECPAbstractCustomControlSWT control, CustomControl model, Control... results) {
+	public SWTRenderingResultCustomControl(ECPAbstractCustomControlSWT control, VCustomControl model,
+		Control... results) {
 		super(results);
 		swtControl = control;
 		this.model = model;

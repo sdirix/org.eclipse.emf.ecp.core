@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.custom.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.custom.model.CustomPackage
+ * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage
  * @generated
  */
 public class CustomSwitch<T> extends Switch<T> {
@@ -42,7 +42,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * 
 	 * @generated
 	 */
-	protected static CustomPackage modelPackage;
+	protected static VCustomPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -53,7 +53,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 */
 	public CustomSwitch() {
 		if (modelPackage == null) {
-			modelPackage = CustomPackage.eINSTANCE;
+			modelPackage = VCustomPackage.eINSTANCE;
 		}
 	}
 
@@ -83,21 +83,17 @@ public class CustomSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case CustomPackage.CUSTOM_CONTROL: {
-			final CustomControl customControl = (CustomControl) theEObject;
+		case VCustomPackage.CUSTOM_CONTROL: {
+			VCustomControl customControl = (VCustomControl) theEObject;
 			T result = caseCustomControl(customControl);
-			if (result == null) {
+			if (result == null)
 				result = caseAbstractControl(customControl);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseComposite(customControl);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseRenderable(customControl);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		default:
@@ -117,7 +113,7 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCustomControl(CustomControl object) {
+	public T caseCustomControl(VCustomControl object) {
 		return null;
 	}
 

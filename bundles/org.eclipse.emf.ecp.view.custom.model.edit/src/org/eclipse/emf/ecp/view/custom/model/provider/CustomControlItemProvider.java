@@ -16,8 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.model.provider.AbstractControlItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.custom.model.CustomControl} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VCustomControl} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -77,7 +77,7 @@ public class CustomControlItemProvider
 				getString("_UI_CustomControl_bundle_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_bundle_feature",
 					"_UI_CustomControl_type"),
-				CustomPackage.Literals.CUSTOM_CONTROL__BUNDLE,
+				VCustomPackage.Literals.CUSTOM_CONTROL__BUNDLE,
 				true,
 				false,
 				false,
@@ -101,7 +101,7 @@ public class CustomControlItemProvider
 				getString("_UI_CustomControl_className_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_className_feature",
 					"_UI_CustomControl_type"),
-				CustomPackage.Literals.CUSTOM_CONTROL__CLASS_NAME,
+				VCustomPackage.Literals.CUSTOM_CONTROL__CLASS_NAME,
 				true,
 				false,
 				false,
@@ -131,7 +131,7 @@ public class CustomControlItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((CustomControl) object).getName();
+		final String label = ((VCustomControl) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_CustomControl_type") :
 			getString("_UI_CustomControl_type") + " " + label;
@@ -149,9 +149,9 @@ public class CustomControlItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(CustomControl.class)) {
-		case CustomPackage.CUSTOM_CONTROL__BUNDLE:
-		case CustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+		switch (notification.getFeatureID(VCustomControl.class)) {
+		case VCustomPackage.CUSTOM_CONTROL__BUNDLE:
+		case VCustomPackage.CUSTOM_CONTROL__CLASS_NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

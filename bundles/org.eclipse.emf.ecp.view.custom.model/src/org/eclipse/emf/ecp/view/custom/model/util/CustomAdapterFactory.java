@@ -15,8 +15,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.custom.model.CustomControl;
-import org.eclipse.emf.ecp.view.custom.model.CustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.custom.model.CustomPackage
+ * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage
  * @generated
  */
 public class CustomAdapterFactory extends AdapterFactoryImpl {
@@ -38,7 +38,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static CustomPackage modelPackage;
+	protected static VCustomPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -49,7 +49,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 */
 	public CustomAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = CustomPackage.eINSTANCE;
+			modelPackage = VCustomPackage.eINSTANCE;
 		}
 	}
 
@@ -84,7 +84,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	protected CustomSwitch<Adapter> modelSwitch =
 		new CustomSwitch<Adapter>() {
 			@Override
-			public Adapter caseCustomControl(CustomControl object) {
+			public Adapter caseCustomControl(VCustomControl object) {
 				return createCustomControlAdapter();
 			}
 
@@ -124,7 +124,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.custom.model.CustomControl
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.custom.model.VCustomControl
 	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -132,7 +132,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.custom.model.CustomControl
+	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomControl
 	 * @generated
 	 */
 	public Adapter createCustomControlAdapter() {
