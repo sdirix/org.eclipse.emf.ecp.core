@@ -17,7 +17,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
@@ -76,25 +76,25 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testGroupedGridChildDescriptors() {
-		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getGroupedGrid());
+		final int size = getChildrenSize(VGroupedGridPackage.eINSTANCE.getGroupedGrid());
 		assertEquals(GROUPEDGRID_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testGridedGroupChildDescriptors() {
-		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getGroup());
+		final int size = getChildrenSize(VGroupedGridPackage.eINSTANCE.getGroup());
 		assertEquals(GRIDEDGROUP_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testGridedGroupRowChildDescriptors() {
-		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getRow());
+		final int size = getChildrenSize(VGroupedGridPackage.eINSTANCE.getRow());
 		assertEquals(GRIDEDGROUPROW_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testGridedSpanChildDescriptors() {
-		final int size = getChildrenSize(GroupedGridPackage.eINSTANCE.getSpan());
+		final int size = getChildrenSize(VGroupedGridPackage.eINSTANCE.getSpan());
 		assertEquals(GRIDEDGROUPSPAN_CHILD_COUNT, size);
 	}
 

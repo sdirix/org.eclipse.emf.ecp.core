@@ -19,10 +19,11 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage
  * @generated
  */
-public interface GroupedGridFactory extends EFactory {
+public interface VGroupedGridFactory extends EFactory
+{
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -30,7 +31,7 @@ public interface GroupedGridFactory extends EFactory {
 	 * 
 	 * @generated
 	 */
-	GroupedGridFactory eINSTANCE = org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridFactoryImpl.init();
+	VGroupedGridFactory eINSTANCE = org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Grouped Grid</em>'.
@@ -40,7 +41,7 @@ public interface GroupedGridFactory extends EFactory {
 	 * @return a new object of class '<em>Grouped Grid</em>'.
 	 * @generated
 	 */
-	GroupedGrid createGroupedGrid();
+	VGroupedGrid createGroupedGrid();
 
 	/**
 	 * Returns a new object of class '<em>Group</em>'.
@@ -50,7 +51,7 @@ public interface GroupedGridFactory extends EFactory {
 	 * @return a new object of class '<em>Group</em>'.
 	 * @generated
 	 */
-	Group createGroup();
+	VGroup createGroup();
 
 	/**
 	 * Returns a new object of class '<em>Row</em>'.
@@ -60,7 +61,7 @@ public interface GroupedGridFactory extends EFactory {
 	 * @return a new object of class '<em>Row</em>'.
 	 * @generated
 	 */
-	Row createRow();
+	VRow createRow();
 
 	/**
 	 * Returns a new object of class '<em>Span</em>'.
@@ -70,7 +71,7 @@ public interface GroupedGridFactory extends EFactory {
 	 * @return a new object of class '<em>Span</em>'.
 	 * @generated
 	 */
-	Span createSpan();
+	VSpan createSpan();
 
 	/**
 	 * Returns the package supported by this factory.
@@ -80,6 +81,6 @@ public interface GroupedGridFactory extends EFactory {
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	GroupedGridPackage getGroupedGridPackage();
+	VGroupedGridPackage getGroupedGridPackage();
 
-} // GroupedGridFactory
+} // VGroupedGridFactory

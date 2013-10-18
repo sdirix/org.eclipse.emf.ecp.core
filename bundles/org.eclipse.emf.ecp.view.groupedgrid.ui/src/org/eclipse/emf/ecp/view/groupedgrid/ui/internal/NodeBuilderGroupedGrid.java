@@ -12,9 +12,9 @@
 package org.eclipse.emf.ecp.view.groupedgrid.ui.internal;
 
 import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * 
  */
 public class NodeBuilderGroupedGrid implements
-	NodeBuilder<GroupedGrid> {
+	NodeBuilder<VGroupedGrid> {
 
 	/**
 	 * {@inheritDoc}
@@ -33,12 +33,12 @@ public class NodeBuilderGroupedGrid implements
 	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder#build(org.eclipse.emf.ecp.view.model.Renderable,
 	 *      org.eclipse.emf.ecp.edit.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
 	 */
-	public Node<GroupedGrid> build(GroupedGrid model, ECPControlContext context,
+	public Node<VGroupedGrid> build(VGroupedGrid model, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		final Node<GroupedGrid> node = new Node<GroupedGrid>(model, context);
+		final Node<VGroupedGrid> node = new Node<VGroupedGrid>(model, context);
 
-		for (final Group group : model.getGroups()) {
-			for (final Row row : group.getRows()) {
+		for (final VGroup group : model.getGroups()) {
+			for (final VRow row : group.getRows()) {
 				for (final org.eclipse.emf.ecp.view.model.Composite composite : row.getChildren()) {
 					node.addChild(NodeBuilders.INSTANCE.build(composite, context, adapterFactoryItemDelegator));
 				}

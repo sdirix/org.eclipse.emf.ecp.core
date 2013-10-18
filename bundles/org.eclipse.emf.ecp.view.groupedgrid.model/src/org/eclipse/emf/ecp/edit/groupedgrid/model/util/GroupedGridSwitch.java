@@ -14,11 +14,11 @@ package org.eclipse.emf.ecp.edit.groupedgrid.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage
  * @generated
  */
 public class GroupedGridSwitch<T> extends Switch<T> {
@@ -45,7 +45,7 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	 * 
 	 * @generated
 	 */
-	protected static GroupedGridPackage modelPackage;
+	protected static VGroupedGridPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -57,7 +57,7 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	public GroupedGridSwitch() {
 		if (modelPackage == null)
 		{
-			modelPackage = GroupedGridPackage.eINSTANCE;
+			modelPackage = VGroupedGridPackage.eINSTANCE;
 		}
 	}
 
@@ -88,8 +88,8 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-		case GroupedGridPackage.GROUPED_GRID: {
-			GroupedGrid groupedGrid = (GroupedGrid) theEObject;
+		case VGroupedGridPackage.GROUPED_GRID: {
+			VGroupedGrid groupedGrid = (VGroupedGrid) theEObject;
 			T result = caseGroupedGrid(groupedGrid);
 			if (result == null)
 				result = caseComposite(groupedGrid);
@@ -99,22 +99,22 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case GroupedGridPackage.GROUP: {
-			Group group = (Group) theEObject;
+		case VGroupedGridPackage.GROUP: {
+			VGroup group = (VGroup) theEObject;
 			T result = caseGroup(group);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case GroupedGridPackage.ROW: {
-			Row row = (Row) theEObject;
+		case VGroupedGridPackage.ROW: {
+			VRow row = (VRow) theEObject;
 			T result = caseRow(row);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case GroupedGridPackage.SPAN: {
-			Span span = (Span) theEObject;
+		case VGroupedGridPackage.SPAN: {
+			VSpan span = (VSpan) theEObject;
 			T result = caseSpan(span);
 			if (result == null)
 				result = caseAttachment(span);
@@ -139,7 +139,8 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGroupedGrid(GroupedGrid object) {
+	public T caseGroupedGrid(VGroupedGrid object)
+	{
 		return null;
 	}
 
@@ -155,7 +156,8 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGroup(Group object) {
+	public T caseGroup(VGroup object)
+	{
 		return null;
 	}
 
@@ -171,7 +173,8 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRow(Row object) {
+	public T caseRow(VRow object)
+	{
 		return null;
 	}
 
@@ -187,7 +190,8 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSpan(Span object) {
+	public T caseSpan(VSpan object)
+	{
 		return null;
 	}
 

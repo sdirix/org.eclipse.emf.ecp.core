@@ -21,15 +21,16 @@ import org.eclipse.emf.ecp.view.model.Attachment;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span#getHorizontalSpan <em>Horizontal Span</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan#getHorizontalSpan <em>Horizontal Span</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getSpan()
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getSpan()
  * @model
  * @generated
  */
-public interface Span extends Attachment {
+public interface VSpan extends Attachment
+{
 	/**
 	 * Returns the value of the '<em><b>Horizontal Span</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -41,14 +42,14 @@ public interface Span extends Attachment {
 	 * 
 	 * @return the value of the '<em>Horizontal Span</em>' attribute.
 	 * @see #setHorizontalSpan(int)
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getSpan_HorizontalSpan()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getSpan_HorizontalSpan()
 	 * @model required="true"
 	 * @generated
 	 */
 	int getHorizontalSpan();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span#getHorizontalSpan
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan#getHorizontalSpan
 	 * <em>Horizontal Span</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -59,4 +60,4 @@ public interface Span extends Attachment {
 	 */
 	void setHorizontalSpan(int value);
 
-} // Span
+} // VSpan

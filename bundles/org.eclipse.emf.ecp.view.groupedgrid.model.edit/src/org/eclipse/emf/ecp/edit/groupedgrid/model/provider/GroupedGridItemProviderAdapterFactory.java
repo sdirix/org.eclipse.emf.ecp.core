@@ -20,8 +20,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.util.GroupedGridAdapterFactory;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
@@ -57,7 +57,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFactory implements
-	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender {
+	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
+{
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -84,7 +85,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		GroupedGridEditPlugin.INSTANCE, GroupedGridPackage.eNS_URI);
+		GroupedGridEditPlugin.INSTANCE, VGroupedGridPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -102,7 +103,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public GroupedGridItemProviderAdapterFactory() {
+	public GroupedGridItemProviderAdapterFactory()
+	{
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -111,7 +113,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -121,14 +123,15 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	protected GroupedGridItemProvider groupedGridItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createGroupedGridAdapter() {
+	public Adapter createGroupedGridAdapter()
+	{
 		if (groupedGridItemProvider == null)
 		{
 			groupedGridItemProvider = new GroupedGridItemProvider(this);
@@ -138,7 +141,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -148,14 +151,15 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	protected GroupItemProvider groupItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createGroupAdapter() {
+	public Adapter createGroupAdapter()
+	{
 		if (groupItemProvider == null)
 		{
 			groupItemProvider = new GroupItemProvider(this);
@@ -165,7 +169,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -175,14 +179,15 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	protected RowItemProvider rowItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createRowAdapter() {
+	public Adapter createRowAdapter()
+	{
 		if (rowItemProvider == null)
 		{
 			rowItemProvider = new RowItemProvider(this);
@@ -192,7 +197,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -202,14 +207,15 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	protected SpanItemProvider spanItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createSpanAdapter() {
+	public Adapter createSpanAdapter()
+	{
 		if (spanItemProvider == null)
 		{
 			spanItemProvider = new SpanItemProvider(this);
@@ -225,7 +231,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public ComposeableAdapterFactory getRootAdapterFactory() {
+	public ComposeableAdapterFactory getRootAdapterFactory()
+	{
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
@@ -236,7 +243,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
+	{
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -247,7 +255,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object type) {
+	public boolean isFactoryForType(Object type)
+	{
 		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
@@ -259,7 +268,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(Notifier notifier, Object type) {
+	public Adapter adapt(Notifier notifier, Object type)
+	{
 		return super.adapt(notifier, this);
 	}
 
@@ -270,7 +280,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * @generated
 	 */
 	@Override
-	public Object adapt(Object object, Object type) {
+	public Object adapt(Object object, Object type)
+	{
 		if (isFactoryForType(type))
 		{
 			Object adapter = super.adapt(object, type);
@@ -289,7 +300,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public List<IChildCreationExtender> getChildCreationExtenders() {
+	public List<IChildCreationExtender> getChildCreationExtenders()
+	{
 		return childCreationExtenderManager.getChildCreationExtenders();
 	}
 
@@ -299,7 +311,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
+	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
+	{
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
 
@@ -309,7 +322,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return childCreationExtenderManager;
 	}
 
@@ -320,7 +334,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public void addListener(INotifyChangedListener notifyChangedListener) {
+	public void addListener(INotifyChangedListener notifyChangedListener)
+	{
 		changeNotifier.addListener(notifyChangedListener);
 	}
 
@@ -331,7 +346,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public void removeListener(INotifyChangedListener notifyChangedListener) {
+	public void removeListener(INotifyChangedListener notifyChangedListener)
+	{
 		changeNotifier.removeListener(notifyChangedListener);
 	}
 
@@ -342,7 +358,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public void fireNotifyChanged(Notification notification) {
+	public void fireNotifyChanged(Notification notification)
+	{
 		changeNotifier.fireNotifyChanged(notification);
 
 		if (parentAdapterFactory != null)
@@ -358,7 +375,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public void dispose() {
+	public void dispose()
+	{
 		if (groupedGridItemProvider != null)
 			groupedGridItemProvider.dispose();
 		if (groupItemProvider != null)
@@ -376,7 +394,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 * 
 	 * @generated
 	 */
-	public static class ViewChildCreationExtender implements IChildCreationExtender {
+	public static class ViewChildCreationExtender implements IChildCreationExtender
+	{
 		/**
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
@@ -384,7 +403,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 		 * 
 		 * @generated
 		 */
-		protected static class CreationSwitch extends ViewSwitch<Object> {
+		protected static class CreationSwitch extends ViewSwitch<Object>
+		{
 			/**
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
@@ -410,57 +430,10 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			 * 
 			 * @generated
 			 */
-			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
+			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain)
+			{
 				this.newChildDescriptors = newChildDescriptors;
 				this.editingDomain = editingDomain;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseView(View object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(ViewPackage.Literals.VIEW__CHILDREN,
-						GroupedGridFactory.eINSTANCE.createGroupedGrid()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseCategory(Category object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(ViewPackage.Literals.CATEGORY__COMPOSITE,
-						GroupedGridFactory.eINSTANCE.createGroupedGrid()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseCompositeCollection(CompositeCollection object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						GroupedGridFactory.eINSTANCE.createGroupedGrid()));
-
-				return null;
 			}
 
 			/**
@@ -475,7 +448,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.RENDERABLE__ATTACHMENTS,
-						GroupedGridFactory.eINSTANCE.createSpan()));
+						VGroupedGridFactory.eINSTANCE.createSpan()));
 
 				return null;
 			}
@@ -486,7 +459,59 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			 * 
 			 * @generated
 			 */
-			protected CommandParameter createChildParameter(Object feature, Object child) {
+			@Override
+			public Object caseView(View object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(ViewPackage.Literals.VIEW__CHILDREN,
+						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 * 
+			 * @generated
+			 */
+			@Override
+			public Object caseCategory(Category object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(ViewPackage.Literals.CATEGORY__COMPOSITE,
+						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 * 
+			 * @generated
+			 */
+			@Override
+			public Object caseCompositeCollection(CompositeCollection object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 * 
+			 * @generated
+			 */
+			protected CommandParameter createChildParameter(Object feature, Object child)
+			{
 				return new CommandParameter(null, feature, child);
 			}
 
@@ -498,7 +523,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 		 * 
 		 * @generated
 		 */
-		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
+		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
+		{
 			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
@@ -510,7 +536,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 		 * 
 		 * @generated
 		 */
-		public ResourceLocator getResourceLocator() {
+		public ResourceLocator getResourceLocator()
+		{
 			return GroupedGridEditPlugin.INSTANCE;
 		}
 	}

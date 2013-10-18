@@ -15,11 +15,11 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage
  * @generated
  */
 public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
@@ -41,7 +41,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static GroupedGridPackage modelPackage;
+	protected static VGroupedGridPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -53,7 +53,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	public GroupedGridAdapterFactory() {
 		if (modelPackage == null)
 		{
-			modelPackage = GroupedGridPackage.eINSTANCE;
+			modelPackage = VGroupedGridPackage.eINSTANCE;
 		}
 	}
 
@@ -91,25 +91,25 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 		new GroupedGridSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseGroupedGrid(GroupedGrid object)
+			public Adapter caseGroupedGrid(VGroupedGrid object)
 			{
 				return createGroupedGridAdapter();
 			}
 
 			@Override
-			public Adapter caseGroup(Group object)
+			public Adapter caseGroup(VGroup object)
 			{
 				return createGroupAdapter();
 			}
 
 			@Override
-			public Adapter caseRow(Row object)
+			public Adapter caseRow(VRow object)
 			{
 				return createRowAdapter();
 			}
 
 			@Override
-			public Adapter caseSpan(Span object)
+			public Adapter caseSpan(VSpan object)
 			{
 				return createSpanAdapter();
 			}
@@ -154,7 +154,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid
 	 * <em>Grouped Grid</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -162,7 +162,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid
 	 * @generated
 	 */
 	public Adapter createGroupedGridAdapter() {
@@ -170,7 +170,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup
 	 * <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -178,7 +178,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Group
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup
 	 * @generated
 	 */
 	public Adapter createGroupAdapter() {
@@ -186,15 +186,15 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row <em>Row</em>}
-	 * '.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow
+	 * <em>Row</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Row
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VRow
 	 * @generated
 	 */
 	public Adapter createRowAdapter() {
@@ -202,7 +202,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan
 	 * <em>Span</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -210,7 +210,7 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Span
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan
 	 * @generated
 	 */
 	public Adapter createSpanAdapter() {

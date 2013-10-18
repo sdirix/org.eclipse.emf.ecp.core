@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.groupedgrid.ui.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -38,7 +38,7 @@ public class GroupedGridNodeBuilder implements CustomNodeBuilder {
 	 */
 	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
 		final Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> result = new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
-		result.put(GroupedGrid.class, new NodeBuilderGroupedGrid());
+		result.put(VGroupedGrid.class, new NodeBuilderGroupedGrid());
 		return result;
 	}
 }

@@ -13,10 +13,10 @@ package org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal;
 
 import java.util.List;
 
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
+public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 
 	/**
 	 * The instance of the GroupedGridSWTRenderer.
@@ -47,7 +47,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 	public static final GroupedGridSWTRenderer INSTANCE = new GroupedGridSWTRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<GroupedGrid> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<VGroupedGrid> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -66,7 +66,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 		final List<Node<?>> children = node.getChildren();
 		int currentControl = 0;
 
-		for (final Group group : node.getRenderable().getGroups()) {
+		for (final VGroup group : node.getRenderable().getGroups()) {
 			// Label
 			final Composite labelComposite = new Composite(columnComposite, SWT.NONE);
 			labelComposite.setBackground(parent.getBackground());
@@ -82,7 +82,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER)
 				.applyTo(seperator);
 			// Content
-			for (final Row row : group.getRows()) {
+			for (final VRow row : group.getRows()) {
 				int spanned = 0;
 				for (final org.eclipse.emf.ecp.view.model.Composite child : row.getChildren()) {
 					final Node<? extends Renderable> childNode = children.get(currentControl++);
@@ -129,10 +129,10 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 	 * @param renderable
 	 * @return
 	 */
-	private int calculateColumns(GroupedGrid renderable) {
+	private int calculateColumns(VGroupedGrid renderable) {
 		int maxColumns = 0;
-		for (final Group group : renderable.getGroups()) {
-			for (final Row row : group.getRows()) {
+		for (final VGroup group : renderable.getGroups()) {
+			for (final VRow row : group.getRows()) {
 				int columns = 0;
 				for (final org.eclipse.emf.ecp.view.model.Composite composite : row.getChildren()) {
 					columns += getHSpanOfComposite(composite) + getExtraColumnForLabel(composite);
@@ -151,8 +151,8 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<GroupedGrid> {
 	 */
 	private int getHSpanOfComposite(org.eclipse.emf.ecp.view.model.Composite composite) {
 		for (final Attachment attachment : composite.getAttachments()) {
-			if (Span.class.isInstance(attachment)) {
-				final Span span = (Span) attachment;
+			if (VSpan.class.isInstance(attachment)) {
+				final VSpan span = (VSpan) attachment;
 				return span.getHorizontalSpan();
 			}
 		}

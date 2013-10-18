@@ -22,18 +22,19 @@ import org.eclipse.emf.ecp.view.model.Composite;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid#getGroups <em>Groups</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid#getGroups <em>Groups</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getGroupedGrid()
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getGroupedGrid()
  * @model
  * @generated
  */
-public interface GroupedGrid extends Composite {
+public interface VGroupedGrid extends Composite
+{
 	/**
 	 * Returns the value of the '<em><b>Groups</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group}.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Groups</em>' containment reference list isn't clear, there really should be more of a
@@ -42,10 +43,10 @@ public interface GroupedGrid extends Composite {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Groups</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getGroupedGrid_Groups()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getGroupedGrid_Groups()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Group> getGroups();
+	EList<VGroup> getGroups();
 
-} // GroupedGrid
+} // VGroupedGrid

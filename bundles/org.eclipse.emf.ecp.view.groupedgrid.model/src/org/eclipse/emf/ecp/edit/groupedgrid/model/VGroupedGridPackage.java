@@ -29,11 +29,12 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory
  * @model kind="package"
  * @generated
  */
-public interface GroupedGridPackage extends EPackage {
+public interface VGroupedGridPackage extends EPackage
+{
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -68,16 +69,16 @@ public interface GroupedGridPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	GroupedGridPackage eINSTANCE = org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl.init();
+	VGroupedGridPackage eINSTANCE = org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridImpl
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridImpl
 	 * <em>Grouped Grid</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridImpl
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getGroupedGrid()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridImpl
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroupedGrid()
 	 * @generated
 	 */
 	int GROUPED_GRID = 0;
@@ -163,13 +164,13 @@ public interface GroupedGridPackage extends EPackage {
 	int GROUPED_GRID_FEATURE_COUNT = ViewPackage.COMPOSITE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupImpl <em>Group</em>}'
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl <em>Group</em>}'
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupImpl
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getGroup()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroup()
 	 * @generated
 	 */
 	int GROUP = 1;
@@ -205,12 +206,12 @@ public interface GroupedGridPackage extends EPackage {
 	int GROUP_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.RowImpl <em>Row</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VRowImpl <em>Row</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.RowImpl
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getRow()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VRowImpl
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getRow()
 	 * @generated
 	 */
 	int ROW = 2;
@@ -236,13 +237,13 @@ public interface GroupedGridPackage extends EPackage {
 	int ROW_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.SpanImpl <em>Span</em>}'
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VSpanImpl <em>Span</em>}'
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.SpanImpl
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getSpan()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VSpanImpl
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getSpan()
 	 * @generated
 	 */
 	int SPAN = 3;
@@ -268,110 +269,110 @@ public interface GroupedGridPackage extends EPackage {
 	int SPAN_FEATURE_COUNT = ViewPackage.ATTACHMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid
 	 * <em>Grouped Grid</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Grouped Grid</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid
 	 * @generated
 	 */
 	EClass getGroupedGrid();
 
 	/**
 	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid#getGroups <em>Groups</em>}'.
+	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference list '<em>Groups</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid#getGroups()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid#getGroups()
 	 * @see #getGroupedGrid()
 	 * @generated
 	 */
 	EReference getGroupedGrid_Groups();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group <em>Group</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Group</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Group
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup
 	 * @generated
 	 */
 	EClass getGroup();
 
 	/**
 	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getRows <em>Rows</em>}'.
+	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getRows <em>Rows</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference list '<em>Rows</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getRows()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getRows()
 	 * @see #getGroup()
 	 * @generated
 	 */
 	EReference getGroup_Rows();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getName
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getName
 	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getName()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getName()
 	 * @see #getGroup()
 	 * @generated
 	 */
 	EAttribute getGroup_Name();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row <em>Row</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow <em>Row</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Row</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Row
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VRow
 	 * @generated
 	 */
 	EClass getRow();
 
 	/**
 	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row#getChildren <em>Children</em>}'.
+	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference list '<em>Children</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Row#getChildren()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VRow#getChildren()
 	 * @see #getRow()
 	 * @generated
 	 */
 	EReference getRow_Children();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span <em>Span</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan <em>Span</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Span</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Span
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan
 	 * @generated
 	 */
 	EClass getSpan();
 
 	/**
 	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span#getHorizontalSpan <em>Horizontal Span</em>}'.
+	 * {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan#getHorizontalSpan <em>Horizontal Span</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Horizontal Span</em>'.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.Span#getHorizontalSpan()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan#getHorizontalSpan()
 	 * @see #getSpan()
 	 * @generated
 	 */
@@ -385,7 +386,7 @@ public interface GroupedGridPackage extends EPackage {
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	GroupedGridFactory getGroupedGridFactory();
+	VGroupedGridFactory getGroupedGridFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -400,15 +401,16 @@ public interface GroupedGridPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	interface Literals {
+	interface Literals
+	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridImpl
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridImpl
 		 * <em>Grouped Grid</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridImpl
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getGroupedGrid()
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridImpl
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroupedGrid()
 		 * @generated
 		 */
 		EClass GROUPED_GRID = eINSTANCE.getGroupedGrid();
@@ -423,13 +425,13 @@ public interface GroupedGridPackage extends EPackage {
 		EReference GROUPED_GRID__GROUPS = eINSTANCE.getGroupedGrid_Groups();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupImpl
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl
 		 * <em>Group</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupImpl
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getGroup()
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroup()
 		 * @generated
 		 */
 		EClass GROUP = eINSTANCE.getGroup();
@@ -453,13 +455,13 @@ public interface GroupedGridPackage extends EPackage {
 		EAttribute GROUP__NAME = eINSTANCE.getGroup_Name();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.RowImpl <em>Row</em>}
-		 * ' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VRowImpl
+		 * <em>Row</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.RowImpl
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getRow()
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VRowImpl
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getRow()
 		 * @generated
 		 */
 		EClass ROW = eINSTANCE.getRow();
@@ -474,13 +476,13 @@ public interface GroupedGridPackage extends EPackage {
 		EReference ROW__CHILDREN = eINSTANCE.getRow_Children();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.SpanImpl
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VSpanImpl
 		 * <em>Span</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.SpanImpl
-		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridPackageImpl#getSpan()
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VSpanImpl
+		 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridPackageImpl#getSpan()
 		 * @generated
 		 */
 		EClass SPAN = eINSTANCE.getSpan();
@@ -496,4 +498,4 @@ public interface GroupedGridPackage extends EPackage {
 
 	}
 
-} // GroupedGridPackage
+} // VGroupedGridPackage

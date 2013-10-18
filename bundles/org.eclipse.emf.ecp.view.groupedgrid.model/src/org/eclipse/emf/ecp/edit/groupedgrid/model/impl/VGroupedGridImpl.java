@@ -19,9 +19,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
 
 /**
@@ -31,13 +31,14 @@ import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupedGridImpl#getGroups <em>Groups</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupedGridImpl#getGroups <em>Groups</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
+public class VGroupedGridImpl extends CompositeImpl implements VGroupedGrid
+{
 	/**
 	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -47,7 +48,7 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Group> groups;
+	protected EList<VGroup> groups;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -55,7 +56,8 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * 
 	 * @generated
 	 */
-	protected GroupedGridImpl() {
+	protected VGroupedGridImpl()
+	{
 		super();
 	}
 
@@ -66,8 +68,9 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
-		return GroupedGridPackage.Literals.GROUPED_GRID;
+	protected EClass eStaticClass()
+	{
+		return VGroupedGridPackage.Literals.GROUPED_GRID;
 	}
 
 	/**
@@ -76,10 +79,11 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * 
 	 * @generated
 	 */
-	public EList<Group> getGroups() {
+	public EList<VGroup> getGroups()
+	{
 		if (groups == null)
 		{
-			groups = new EObjectContainmentEList<Group>(Group.class, this, GroupedGridPackage.GROUPED_GRID__GROUPS);
+			groups = new EObjectContainmentEList<VGroup>(VGroup.class, this, VGroupedGridPackage.GROUPED_GRID__GROUPS);
 		}
 		return groups;
 	}
@@ -91,10 +95,11 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUPED_GRID__GROUPS:
+		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			return ((InternalEList<?>) getGroups()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -107,10 +112,11 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUPED_GRID__GROUPS:
+		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			return getGroups();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,12 +130,13 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUPED_GRID__GROUPS:
+		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			getGroups().clear();
-			getGroups().addAll((Collection<? extends Group>) newValue);
+			getGroups().addAll((Collection<? extends VGroup>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -142,10 +149,11 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUPED_GRID__GROUPS:
+		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			getGroups().clear();
 			return;
 		}
@@ -159,13 +167,14 @@ public class GroupedGridImpl extends CompositeImpl implements GroupedGrid {
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUPED_GRID__GROUPS:
+		case VGroupedGridPackage.GROUPED_GRID__GROUPS:
 			return groups != null && !groups.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} // GroupedGridImpl
+} // VGroupedGridImpl

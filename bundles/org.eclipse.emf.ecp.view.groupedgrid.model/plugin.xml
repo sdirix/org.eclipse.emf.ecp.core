@@ -15,10 +15,12 @@
 
 <plugin>
 
+
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated groupedGrid -->
       <package
             uri="http://org/eclipse/emf/ecp/view/groupedgrid/model"
-            class="org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage"
+            class="org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage"
             genModel="model/groupedGrid.genmodel"/>
    </extension>
 

@@ -18,9 +18,9 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -44,7 +44,8 @@ public class RowItemProvider
 	IEditingDomainItemProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource {
+	IItemPropertySource
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -52,7 +53,8 @@ public class RowItemProvider
 	 * 
 	 * @generated
 	 */
-	public RowItemProvider(AdapterFactory adapterFactory) {
+	public RowItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -64,7 +66,8 @@ public class RowItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null)
 		{
 			super.getPropertyDescriptors(object);
@@ -88,7 +91,7 @@ public class RowItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GroupedGridPackage.Literals.ROW__CHILDREN);
+			childrenFeatures.add(VGroupedGridPackage.Literals.ROW__CHILDREN);
 		}
 		return childrenFeatures;
 	}
@@ -116,7 +119,8 @@ public class RowItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Row"));
 	}
 
@@ -128,7 +132,8 @@ public class RowItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
+	public String getText(Object object)
+	{
 		return getString("_UI_Row_type");
 	}
 
@@ -141,12 +146,13 @@ public class RowItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Row.class))
+		switch (notification.getFeatureID(VRow.class))
 		{
-		case GroupedGridPackage.ROW__CHILDREN:
+		case VGroupedGridPackage.ROW__CHILDREN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -162,27 +168,28 @@ public class RowItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-			(GroupedGridPackage.Literals.ROW__CHILDREN,
-				GroupedGridFactory.eINSTANCE.createGroupedGrid()));
+			(VGroupedGridPackage.Literals.ROW__CHILDREN,
+				VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
 
 		newChildDescriptors.add
 			(createChildParameter
-			(GroupedGridPackage.Literals.ROW__CHILDREN,
+			(VGroupedGridPackage.Literals.ROW__CHILDREN,
 				ViewFactory.eINSTANCE.createControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-			(GroupedGridPackage.Literals.ROW__CHILDREN,
+			(VGroupedGridPackage.Literals.ROW__CHILDREN,
 				ViewFactory.eINSTANCE.createColumnComposite()));
 
 		newChildDescriptors.add
 			(createChildParameter
-			(GroupedGridPackage.Literals.ROW__CHILDREN,
+			(VGroupedGridPackage.Literals.ROW__CHILDREN,
 				ViewFactory.eINSTANCE.createColumn()));
 	}
 
@@ -194,7 +201,8 @@ public class RowItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

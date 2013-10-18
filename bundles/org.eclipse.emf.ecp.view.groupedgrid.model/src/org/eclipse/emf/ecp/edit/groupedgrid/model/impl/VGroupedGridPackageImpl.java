@@ -16,12 +16,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -31,7 +31,8 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * 
  * @generated
  */
-public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridPackage {
+public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGridPackage
+{
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -74,12 +75,13 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private GroupedGridPackageImpl() {
-		super(eNS_URI, GroupedGridFactory.eINSTANCE);
+	private VGroupedGridPackageImpl()
+	{
+		super(eNS_URI, VGroupedGridFactory.eINSTANCE);
 	}
 
 	/**
@@ -94,7 +96,7 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link GroupedGridPackage#eINSTANCE} when that field is accessed. Clients
+	 * This method is used to initialize {@link VGroupedGridPackage#eINSTANCE} when that field is accessed. Clients
 	 * should not invoke it directly. Instead, they should simply access that field to obtain the package. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -103,14 +105,15 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static GroupedGridPackage init() {
+	public static VGroupedGridPackage init()
+	{
 		if (isInited)
-			return (GroupedGridPackage) EPackage.Registry.INSTANCE.getEPackage(GroupedGridPackage.eNS_URI);
+			return (VGroupedGridPackage) EPackage.Registry.INSTANCE.getEPackage(VGroupedGridPackage.eNS_URI);
 
 		// Obtain or create and register package
-		GroupedGridPackageImpl theGroupedGridPackage = (GroupedGridPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof GroupedGridPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new GroupedGridPackageImpl());
+		VGroupedGridPackageImpl theGroupedGridPackage = (VGroupedGridPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VGroupedGridPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+			: new VGroupedGridPackageImpl());
 
 		isInited = true;
 
@@ -127,7 +130,7 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 		theGroupedGridPackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(GroupedGridPackage.eNS_URI, theGroupedGridPackage);
+		EPackage.Registry.INSTANCE.put(VGroupedGridPackage.eNS_URI, theGroupedGridPackage);
 		return theGroupedGridPackage;
 	}
 
@@ -137,7 +140,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EClass getGroupedGrid() {
+	public EClass getGroupedGrid()
+	{
 		return groupedGridEClass;
 	}
 
@@ -147,7 +151,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EReference getGroupedGrid_Groups() {
+	public EReference getGroupedGrid_Groups()
+	{
 		return (EReference) groupedGridEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -157,7 +162,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EClass getGroup() {
+	public EClass getGroup()
+	{
 		return groupEClass;
 	}
 
@@ -167,7 +173,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EReference getGroup_Rows() {
+	public EReference getGroup_Rows()
+	{
 		return (EReference) groupEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -177,7 +184,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EAttribute getGroup_Name() {
+	public EAttribute getGroup_Name()
+	{
 		return (EAttribute) groupEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -187,7 +195,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EClass getRow() {
+	public EClass getRow()
+	{
 		return rowEClass;
 	}
 
@@ -197,7 +206,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EReference getRow_Children() {
+	public EReference getRow_Children()
+	{
 		return (EReference) rowEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -207,7 +217,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public EClass getSpan() {
+	public EClass getSpan()
+	{
 		return spanEClass;
 	}
 
@@ -228,8 +239,9 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public GroupedGridFactory getGroupedGridFactory() {
-		return (GroupedGridFactory) getEFactoryInstance();
+	public VGroupedGridFactory getGroupedGridFactory()
+	{
+		return (VGroupedGridFactory) getEFactoryInstance();
 	}
 
 	/**
@@ -248,7 +260,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public void createPackageContents() {
+	public void createPackageContents()
+	{
 		if (isCreated)
 			return;
 		isCreated = true;
@@ -284,7 +297,8 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 	 * 
 	 * @generated
 	 */
-	public void initializePackageContents() {
+	public void initializePackageContents()
+	{
 		if (isInitialized)
 			return;
 		isInitialized = true;
@@ -306,30 +320,30 @@ public class GroupedGridPackageImpl extends EPackageImpl implements GroupedGridP
 		spanEClass.getESuperTypes().add(theViewPackage.getAttachment());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(groupedGridEClass, GroupedGrid.class, "GroupedGrid", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(groupedGridEClass, VGroupedGrid.class, "GroupedGrid", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGroupedGrid_Groups(), this.getGroup(), null, "groups", null, 0, -1, GroupedGrid.class,
+		initEReference(getGroupedGrid_Groups(), this.getGroup(), null, "groups", null, 0, -1, VGroupedGrid.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGroup_Rows(), this.getRow(), null, "rows", null, 0, -1, Group.class, !IS_TRANSIENT,
+		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getGroup_Rows(), this.getRow(), null, "rows", null, 0, -1, VGroup.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEAttribute(getGroup_Name(), ecorePackage.getEString(), "name", null, 1, 1, Group.class, !IS_TRANSIENT,
+		initEAttribute(getGroup_Name(), ecorePackage.getEString(), "name", null, 1, 1, VGroup.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(rowEClass, Row.class, "Row", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRow_Children(), theViewPackage.getComposite(), null, "children", null, 0, -1, Row.class,
+		initEClass(rowEClass, VRow.class, "Row", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRow_Children(), theViewPackage.getComposite(), null, "children", null, 0, -1, VRow.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(spanEClass, Span.class, "Span", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getSpan_HorizontalSpan(), ecorePackage.getEInt(), "horizontalSpan", null, 1, 1, Span.class,
+		initEClass(spanEClass, VSpan.class, "Span", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSpan_HorizontalSpan(), ecorePackage.getEInt(), "horizontalSpan", null, 1, 1, VSpan.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} // GroupedGridPackageImpl
+} // VGroupedGridPackageImpl

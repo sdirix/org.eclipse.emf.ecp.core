@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.edit.groupedgrid.model.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.impl.AttachmentImpl;
 
 /**
@@ -25,13 +25,14 @@ import org.eclipse.emf.ecp.view.model.impl.AttachmentImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.SpanImpl#getHorizontalSpan <em>Horizontal Span</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VSpanImpl#getHorizontalSpan <em>Horizontal Span</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class SpanImpl extends AttachmentImpl implements Span {
+public class VSpanImpl extends AttachmentImpl implements VSpan
+{
 	/**
 	 * The default value of the '{@link #getHorizontalSpan() <em>Horizontal Span</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -42,6 +43,7 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * @ordered
 	 */
 	protected static final int HORIZONTAL_SPAN_EDEFAULT = 0;
+
 	/**
 	 * The cached value of the '{@link #getHorizontalSpan() <em>Horizontal Span</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -59,7 +61,8 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * 
 	 * @generated
 	 */
-	protected SpanImpl() {
+	protected VSpanImpl()
+	{
 		super();
 	}
 
@@ -70,8 +73,9 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
-		return GroupedGridPackage.Literals.SPAN;
+	protected EClass eStaticClass()
+	{
+		return VGroupedGridPackage.Literals.SPAN;
 	}
 
 	/**
@@ -96,7 +100,7 @@ public class SpanImpl extends AttachmentImpl implements Span {
 		int oldHorizontalSpan = horizontalSpan;
 		horizontalSpan = newHorizontalSpan;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GroupedGridPackage.SPAN__HORIZONTAL_SPAN,
+			eNotify(new ENotificationImpl(this, Notification.SET, VGroupedGridPackage.SPAN__HORIZONTAL_SPAN,
 				oldHorizontalSpan, horizontalSpan));
 	}
 
@@ -107,10 +111,11 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.SPAN__HORIZONTAL_SPAN:
+		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			return getHorizontalSpan();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -123,10 +128,11 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.SPAN__HORIZONTAL_SPAN:
+		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			setHorizontalSpan((Integer) newValue);
 			return;
 		}
@@ -140,10 +146,11 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.SPAN__HORIZONTAL_SPAN:
+		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			setHorizontalSpan(HORIZONTAL_SPAN_EDEFAULT);
 			return;
 		}
@@ -157,10 +164,11 @@ public class SpanImpl extends AttachmentImpl implements Span {
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.SPAN__HORIZONTAL_SPAN:
+		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			return horizontalSpan != HORIZONTAL_SPAN_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -185,4 +193,4 @@ public class SpanImpl extends AttachmentImpl implements Span {
 		return result.toString();
 	}
 
-} // SpanImpl
+} // VSpanImpl

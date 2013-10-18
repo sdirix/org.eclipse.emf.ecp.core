@@ -16,12 +16,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,8 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
  * 
  * @generated
  */
-public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridFactory {
+public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGridFactory
+{
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -38,11 +39,12 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public static GroupedGridFactory init() {
+	public static VGroupedGridFactory init()
+	{
 		try
 		{
-			GroupedGridFactory theGroupedGridFactory = (GroupedGridFactory) EPackage.Registry.INSTANCE
-				.getEFactory(GroupedGridPackage.eNS_URI);
+			VGroupedGridFactory theGroupedGridFactory = (VGroupedGridFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VGroupedGridPackage.eNS_URI);
 			if (theGroupedGridFactory != null)
 			{
 				return theGroupedGridFactory;
@@ -51,7 +53,7 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new GroupedGridFactoryImpl();
+		return new VGroupedGridFactoryImpl();
 	}
 
 	/**
@@ -61,7 +63,8 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public GroupedGridFactoryImpl() {
+	public VGroupedGridFactoryImpl()
+	{
 		super();
 	}
 
@@ -72,16 +75,17 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public EObject create(EClass eClass)
+	{
 		switch (eClass.getClassifierID())
 		{
-		case GroupedGridPackage.GROUPED_GRID:
+		case VGroupedGridPackage.GROUPED_GRID:
 			return createGroupedGrid();
-		case GroupedGridPackage.GROUP:
+		case VGroupedGridPackage.GROUP:
 			return createGroup();
-		case GroupedGridPackage.ROW:
+		case VGroupedGridPackage.ROW:
 			return createRow();
-		case GroupedGridPackage.SPAN:
+		case VGroupedGridPackage.SPAN:
 			return createSpan();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -94,8 +98,9 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public GroupedGrid createGroupedGrid() {
-		GroupedGridImpl groupedGrid = new GroupedGridImpl();
+	public VGroupedGrid createGroupedGrid()
+	{
+		VGroupedGridImpl groupedGrid = new VGroupedGridImpl();
 		return groupedGrid;
 	}
 
@@ -105,8 +110,9 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public Group createGroup() {
-		GroupImpl group = new GroupImpl();
+	public VGroup createGroup()
+	{
+		VGroupImpl group = new VGroupImpl();
 		return group;
 	}
 
@@ -116,8 +122,9 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public Row createRow() {
-		RowImpl row = new RowImpl();
+	public VRow createRow()
+	{
+		VRowImpl row = new VRowImpl();
 		return row;
 	}
 
@@ -127,8 +134,9 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public Span createSpan() {
-		SpanImpl span = new SpanImpl();
+	public VSpan createSpan()
+	{
+		VSpanImpl span = new VSpanImpl();
 		return span;
 	}
 
@@ -138,8 +146,9 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * 
 	 * @generated
 	 */
-	public GroupedGridPackage getGroupedGridPackage() {
-		return (GroupedGridPackage) getEPackage();
+	public VGroupedGridPackage getGroupedGridPackage()
+	{
+		return (VGroupedGridPackage) getEPackage();
 	}
 
 	/**
@@ -150,8 +159,9 @@ public class GroupedGridFactoryImpl extends EFactoryImpl implements GroupedGridF
 	 * @generated
 	 */
 	@Deprecated
-	public static GroupedGridPackage getPackage() {
-		return GroupedGridPackage.eINSTANCE;
+	public static VGroupedGridPackage getPackage()
+	{
+		return VGroupedGridPackage.eINSTANCE;
 	}
 
-} // GroupedGridFactoryImpl
+} // VGroupedGridFactoryImpl

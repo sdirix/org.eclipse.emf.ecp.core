@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,14 +33,15 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupImpl#getRows <em>Rows</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.GroupImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl#getRows <em>Rows</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class GroupImpl extends EObjectImpl implements Group {
+public class VGroupImpl extends EObjectImpl implements VGroup
+{
 	/**
 	 * The cached value of the '{@link #getRows() <em>Rows</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -50,7 +51,7 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Row> rows;
+	protected EList<VRow> rows;
 
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -80,7 +81,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * 
 	 * @generated
 	 */
-	protected GroupImpl() {
+	protected VGroupImpl()
+	{
 		super();
 	}
 
@@ -91,8 +93,9 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
-		return GroupedGridPackage.Literals.GROUP;
+	protected EClass eStaticClass()
+	{
+		return VGroupedGridPackage.Literals.GROUP;
 	}
 
 	/**
@@ -101,10 +104,11 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * 
 	 * @generated
 	 */
-	public EList<Row> getRows() {
+	public EList<VRow> getRows()
+	{
 		if (rows == null)
 		{
-			rows = new EObjectContainmentEList<Row>(Row.class, this, GroupedGridPackage.GROUP__ROWS);
+			rows = new EObjectContainmentEList<VRow>(VRow.class, this, VGroupedGridPackage.GROUP__ROWS);
 		}
 		return rows;
 	}
@@ -115,7 +119,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * 
 	 * @generated
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -125,11 +130,12 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * 
 	 * @generated
 	 */
-	public void setName(String newName) {
+	public void setName(String newName)
+	{
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GroupedGridPackage.GROUP__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, VGroupedGridPackage.GROUP__NAME, oldName, name));
 	}
 
 	/**
@@ -139,10 +145,11 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUP__ROWS:
+		case VGroupedGridPackage.GROUP__ROWS:
 			return ((InternalEList<?>) getRows()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -155,12 +162,13 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUP__ROWS:
+		case VGroupedGridPackage.GROUP__ROWS:
 			return getRows();
-		case GroupedGridPackage.GROUP__NAME:
+		case VGroupedGridPackage.GROUP__NAME:
 			return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -174,14 +182,15 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUP__ROWS:
+		case VGroupedGridPackage.GROUP__ROWS:
 			getRows().clear();
-			getRows().addAll((Collection<? extends Row>) newValue);
+			getRows().addAll((Collection<? extends VRow>) newValue);
 			return;
-		case GroupedGridPackage.GROUP__NAME:
+		case VGroupedGridPackage.GROUP__NAME:
 			setName((String) newValue);
 			return;
 		}
@@ -195,13 +204,14 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUP__ROWS:
+		case VGroupedGridPackage.GROUP__ROWS:
 			getRows().clear();
 			return;
-		case GroupedGridPackage.GROUP__NAME:
+		case VGroupedGridPackage.GROUP__NAME:
 			setName(NAME_EDEFAULT);
 			return;
 		}
@@ -215,12 +225,13 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.GROUP__ROWS:
+		case VGroupedGridPackage.GROUP__ROWS:
 			return rows != null && !rows.isEmpty();
-		case GroupedGridPackage.GROUP__NAME:
+		case VGroupedGridPackage.GROUP__NAME:
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
@@ -233,7 +244,8 @@ public class GroupImpl extends EObjectImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		if (eIsProxy())
 			return super.toString();
 
@@ -244,4 +256,4 @@ public class GroupImpl extends EObjectImpl implements Group {
 		return result.toString();
 	}
 
-} // GroupImpl
+} // VGroupImpl

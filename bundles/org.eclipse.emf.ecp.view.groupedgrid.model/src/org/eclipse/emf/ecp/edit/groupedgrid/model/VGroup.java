@@ -22,19 +22,20 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getRows <em>Rows</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getRows <em>Rows</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getGroup()
+ * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getGroup()
  * @model
  * @generated
  */
-public interface Group extends EObject {
+public interface VGroup extends EObject
+{
 	/**
 	 * Returns the value of the '<em><b>Rows</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Row}.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VRow}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Rows</em>' containment reference list isn't clear, there really should be more of a
@@ -43,11 +44,11 @@ public interface Group extends EObject {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Rows</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getGroup_Rows()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getGroup_Rows()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Row> getRows();
+	EList<VRow> getRows();
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -59,14 +60,15 @@ public interface Group extends EObject {
 	 * 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage#getGroup_Name()
+	 * @see org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage#getGroup_Name()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup#getName <em>Name</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -76,4 +78,4 @@ public interface Group extends EObject {
 	 */
 	void setName(String value);
 
-} // Group
+} // VGroup

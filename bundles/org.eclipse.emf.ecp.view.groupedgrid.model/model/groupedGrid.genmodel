@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.groupedgrid.model/src" modelPluginID="org.eclipse.emf.ecp.view.groupedgrid.model"
     modelName="GroupedGrid" codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
-    importOrganizing="true">
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>groupedGrid.ecore</foreignModel>
   <genPackages prefix="GroupedGrid" basePackage="org.eclipse.emf.ecp.edit.groupedgrid"
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"

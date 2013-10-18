@@ -16,8 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Span;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.provider.AttachmentItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -25,14 +25,15 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Span} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
 public class SpanItemProvider
-	extends AttachmentItemProvider {
+	extends AttachmentItemProvider
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -40,7 +41,8 @@ public class SpanItemProvider
 	 * 
 	 * @generated
 	 */
-	public SpanItemProvider(AdapterFactory adapterFactory) {
+	public SpanItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -52,7 +54,8 @@ public class SpanItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null)
 		{
 			super.getPropertyDescriptors(object);
@@ -77,7 +80,7 @@ public class SpanItemProvider
 				getResourceLocator(),
 				getString("_UI_Span_horizontalSpan_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Span_horizontalSpan_feature", "_UI_Span_type"),
-				GroupedGridPackage.Literals.SPAN__HORIZONTAL_SPAN,
+				VGroupedGridPackage.Literals.SPAN__HORIZONTAL_SPAN,
 				true,
 				false,
 				false,
@@ -94,7 +97,8 @@ public class SpanItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Span"));
 	}
 
@@ -106,8 +110,9 @@ public class SpanItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		final Span span = (Span) object;
+	public String getText(Object object)
+	{
+		final VSpan span = (VSpan) object;
 		return getString("_UI_Span_type") + " " + span.getHorizontalSpan();
 	}
 
@@ -120,12 +125,13 @@ public class SpanItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Span.class))
+		switch (notification.getFeatureID(VSpan.class))
 		{
-		case GroupedGridPackage.SPAN__HORIZONTAL_SPAN:
+		case VGroupedGridPackage.SPAN__HORIZONTAL_SPAN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
@@ -141,7 +147,8 @@ public class SpanItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

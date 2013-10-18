@@ -20,8 +20,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Row;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.view.model.Composite;
 
 /**
@@ -31,13 +31,14 @@ import org.eclipse.emf.ecp.view.model.Composite;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.RowImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VRowImpl#getChildren <em>Children</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class RowImpl extends EObjectImpl implements Row {
+public class VRowImpl extends EObjectImpl implements VRow
+{
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -55,7 +56,8 @@ public class RowImpl extends EObjectImpl implements Row {
 	 * 
 	 * @generated
 	 */
-	protected RowImpl() {
+	protected VRowImpl()
+	{
 		super();
 	}
 
@@ -66,8 +68,9 @@ public class RowImpl extends EObjectImpl implements Row {
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
-		return GroupedGridPackage.Literals.ROW;
+	protected EClass eStaticClass()
+	{
+		return VGroupedGridPackage.Literals.ROW;
 	}
 
 	/**
@@ -76,10 +79,11 @@ public class RowImpl extends EObjectImpl implements Row {
 	 * 
 	 * @generated
 	 */
-	public EList<Composite> getChildren() {
+	public EList<Composite> getChildren()
+	{
 		if (children == null)
 		{
-			children = new EObjectContainmentEList<Composite>(Composite.class, this, GroupedGridPackage.ROW__CHILDREN);
+			children = new EObjectContainmentEList<Composite>(Composite.class, this, VGroupedGridPackage.ROW__CHILDREN);
 		}
 		return children;
 	}
@@ -95,7 +99,7 @@ public class RowImpl extends EObjectImpl implements Row {
 	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.ROW__CHILDREN:
+		case VGroupedGridPackage.ROW__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -108,10 +112,11 @@ public class RowImpl extends EObjectImpl implements Row {
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.ROW__CHILDREN:
+		case VGroupedGridPackage.ROW__CHILDREN:
 			return getChildren();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -125,10 +130,11 @@ public class RowImpl extends EObjectImpl implements Row {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.ROW__CHILDREN:
+		case VGroupedGridPackage.ROW__CHILDREN:
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends Composite>) newValue);
 			return;
@@ -143,10 +149,11 @@ public class RowImpl extends EObjectImpl implements Row {
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.ROW__CHILDREN:
+		case VGroupedGridPackage.ROW__CHILDREN:
 			getChildren().clear();
 			return;
 		}
@@ -160,13 +167,14 @@ public class RowImpl extends EObjectImpl implements Row {
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID)
 		{
-		case GroupedGridPackage.ROW__CHILDREN:
+		case VGroupedGridPackage.ROW__CHILDREN:
 			return children != null && !children.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} // RowImpl
+} // VRowImpl

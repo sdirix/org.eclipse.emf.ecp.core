@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGrid;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -40,7 +40,7 @@ public class CustomSWTRendererGroupGrid implements CustomSWTRenderer {
 	 */
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		final Map<Class<? extends Renderable>, SWTRenderer<?>> result = new HashMap<Class<? extends Renderable>, SWTRenderer<?>>();
-		result.put(GroupedGrid.class, GroupedGridSWTRenderer.INSTANCE);
+		result.put(VGroupedGrid.class, GroupedGridSWTRenderer.INSTANCE);
 		result.put(Control.class, SWTControlRenderer.INSTANCE);
 		return result;
 	}

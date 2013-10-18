@@ -18,9 +18,9 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.Group;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridFactory;
-import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
+import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -33,7 +33,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.Group} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -45,7 +45,8 @@ public class GroupItemProvider
 	IEditingDomainItemProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource {
+	IItemPropertySource
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -53,7 +54,8 @@ public class GroupItemProvider
 	 * 
 	 * @generated
 	 */
-	public GroupItemProvider(AdapterFactory adapterFactory) {
+	public GroupItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -65,7 +67,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null)
 		{
 			super.getPropertyDescriptors(object);
@@ -82,14 +85,15 @@ public class GroupItemProvider
 	 * 
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object)
+	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Group_name_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Group_name_feature", "_UI_Group_type"),
-				GroupedGridPackage.Literals.GROUP__NAME,
+				VGroupedGridPackage.Literals.GROUP__NAME,
 				true,
 				false,
 				false,
@@ -108,11 +112,12 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	{
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GroupedGridPackage.Literals.GROUP__ROWS);
+			childrenFeatures.add(VGroupedGridPackage.Literals.GROUP__ROWS);
 		}
 		return childrenFeatures;
 	}
@@ -124,7 +129,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child)
+	{
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -139,7 +145,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Group"));
 	}
 
@@ -151,8 +158,9 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		final String label = ((Group) object).getName();
+	public String getText(Object object)
+	{
+		final String label = ((VGroup) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") :
 			getString("_UI_Group_type") + " " + label;
@@ -167,15 +175,16 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Group.class))
+		switch (notification.getFeatureID(VGroup.class))
 		{
-		case GroupedGridPackage.GROUP__NAME:
+		case VGroupedGridPackage.GROUP__NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case GroupedGridPackage.GROUP__ROWS:
+		case VGroupedGridPackage.GROUP__ROWS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -191,13 +200,14 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-			(GroupedGridPackage.Literals.GROUP__ROWS,
-				GroupedGridFactory.eINSTANCE.createRow()));
+			(VGroupedGridPackage.Literals.GROUP__ROWS,
+				VGroupedGridFactory.eINSTANCE.createRow()));
 	}
 
 	/**
@@ -208,7 +218,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 
