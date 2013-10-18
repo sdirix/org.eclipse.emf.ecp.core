@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.view.label.model.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.label.model.Label;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
-import org.eclipse.emf.ecp.view.label.model.LabelStyle;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
 
 /**
@@ -26,13 +26,13 @@ import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.label.model.impl.LabelImpl#getStyle <em>Style</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl#getStyle <em>Style</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class LabelImpl extends CompositeImpl implements Label
+public class VLabelImpl extends CompositeImpl implements VLabel
 {
 	/**
 	 * The default value of the '{@link #getStyle() <em>Style</em>}' attribute.
@@ -43,7 +43,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	 * @generated
 	 * @ordered
 	 */
-	protected static final LabelStyle STYLE_EDEFAULT = LabelStyle.H0;
+	protected static final VLabelStyle STYLE_EDEFAULT = VLabelStyle.H0;
 
 	/**
 	 * The cached value of the '{@link #getStyle() <em>Style</em>}' attribute.
@@ -54,7 +54,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	 * @generated
 	 * @ordered
 	 */
-	protected LabelStyle style = STYLE_EDEFAULT;
+	protected VLabelStyle style = STYLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -62,7 +62,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	 * 
 	 * @generated
 	 */
-	protected LabelImpl()
+	protected VLabelImpl()
 	{
 		super();
 	}
@@ -76,7 +76,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	@Override
 	protected EClass eStaticClass()
 	{
-		return LabelPackage.Literals.LABEL;
+		return VLabelPackage.Literals.LABEL;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	 * 
 	 * @generated
 	 */
-	public LabelStyle getStyle()
+	public VLabelStyle getStyle()
 	{
 		return style;
 	}
@@ -96,12 +96,12 @@ public class LabelImpl extends CompositeImpl implements Label
 	 * 
 	 * @generated
 	 */
-	public void setStyle(LabelStyle newStyle)
+	public void setStyle(VLabelStyle newStyle)
 	{
-		LabelStyle oldStyle = style;
+		VLabelStyle oldStyle = style;
 		style = newStyle == null ? STYLE_EDEFAULT : newStyle;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, LabelPackage.LABEL__STYLE, oldStyle, style));
+			eNotify(new ENotificationImpl(this, Notification.SET, VLabelPackage.LABEL__STYLE, oldStyle, style));
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	{
 		switch (featureID)
 		{
-		case LabelPackage.LABEL__STYLE:
+		case VLabelPackage.LABEL__STYLE:
 			return getStyle();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -132,8 +132,8 @@ public class LabelImpl extends CompositeImpl implements Label
 	{
 		switch (featureID)
 		{
-		case LabelPackage.LABEL__STYLE:
-			setStyle((LabelStyle) newValue);
+		case VLabelPackage.LABEL__STYLE:
+			setStyle((VLabelStyle) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -150,7 +150,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	{
 		switch (featureID)
 		{
-		case LabelPackage.LABEL__STYLE:
+		case VLabelPackage.LABEL__STYLE:
 			setStyle(STYLE_EDEFAULT);
 			return;
 		}
@@ -168,7 +168,7 @@ public class LabelImpl extends CompositeImpl implements Label
 	{
 		switch (featureID)
 		{
-		case LabelPackage.LABEL__STYLE:
+		case VLabelPackage.LABEL__STYLE:
 			return style != STYLE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -193,4 +193,4 @@ public class LabelImpl extends CompositeImpl implements Label
 		return result.toString();
 	}
 
-} // LabelImpl
+} // VLabelImpl

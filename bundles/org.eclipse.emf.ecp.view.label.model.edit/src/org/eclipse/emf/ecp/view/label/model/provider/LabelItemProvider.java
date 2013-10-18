@@ -16,8 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.label.model.Label;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.label.model.Label} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.label.model.VLabel} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -33,7 +33,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class LabelItemProvider
 	extends CompositeItemProvider
-
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -81,7 +80,7 @@ public class LabelItemProvider
 				getResourceLocator(),
 				getString("_UI_Label_style_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Label_style_feature", "_UI_Label_type"),
-				LabelPackage.Literals.LABEL__STYLE,
+				VLabelPackage.Literals.LABEL__STYLE,
 				true,
 				false,
 				false,
@@ -113,7 +112,7 @@ public class LabelItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((Label) object).getName();
+		final String label = ((VLabel) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Label_type") :
 			getString("_UI_Label_type") + " " + label;
@@ -132,9 +131,9 @@ public class LabelItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Label.class))
+		switch (notification.getFeatureID(VLabel.class))
 		{
-		case LabelPackage.LABEL__STYLE:
+		case VLabelPackage.LABEL__STYLE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

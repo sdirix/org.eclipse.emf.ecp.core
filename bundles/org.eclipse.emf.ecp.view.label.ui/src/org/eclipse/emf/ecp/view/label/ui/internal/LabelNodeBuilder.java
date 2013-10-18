@@ -17,7 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.RenderableNodeBuilder;
-import org.eclipse.emf.ecp.view.label.model.Label;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
@@ -37,7 +37,7 @@ public class LabelNodeBuilder implements CustomNodeBuilder {
 	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
 		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>();
-		builders.put(Label.class, new RenderableNodeBuilder<Label>());
+		builders.put(VLabel.class, new RenderableNodeBuilder<VLabel>());
 		return builders;
 	}
 

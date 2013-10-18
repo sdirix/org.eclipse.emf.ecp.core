@@ -26,22 +26,22 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * Renders an {@link org.eclipse.emf.ecp.view.label.model.Label Label} to a SWT {@link Label}.
+ * Renders an {@link org.eclipse.emf.ecp.view.label.model.VLabel Label} to a SWT {@link Label}.
  * 
  */
-public class SWTLabelRenderer extends AbstractSWTRenderer<org.eclipse.emf.ecp.view.label.model.Label> {
+public class SWTLabelRenderer extends AbstractSWTRenderer<org.eclipse.emf.ecp.view.label.model.VLabel> {
 	/**
 	 * Singleton instance for use by other renderers.
 	 */
 	public static final SWTLabelRenderer INSTANCE = new SWTLabelRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<org.eclipse.emf.ecp.view.label.model.Label> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<org.eclipse.emf.ecp.view.label.model.VLabel> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
-		final org.eclipse.emf.ecp.view.label.model.Label separator = node.getRenderable();
+		final org.eclipse.emf.ecp.view.label.model.VLabel separator = node.getRenderable();
 		final Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_" + separator.getStyle());

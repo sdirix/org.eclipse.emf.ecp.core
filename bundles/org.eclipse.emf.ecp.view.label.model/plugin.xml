@@ -15,10 +15,12 @@
 
 <plugin>
 
+
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated label -->
       <package
             uri="http://org/eclipse/emf/ecp/view/label/model"
-            class="org.eclipse.emf.ecp.view.label.model.LabelPackage"
+            class="org.eclipse.emf.ecp.view.label.model.VLabelPackage"
             genModel="model/label.genmodel"/>
    </extension>
 

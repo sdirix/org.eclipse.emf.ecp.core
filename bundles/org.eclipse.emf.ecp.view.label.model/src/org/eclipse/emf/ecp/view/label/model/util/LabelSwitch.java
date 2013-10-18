@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.label.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.label.model.Label;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.LabelPackage
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage
  * @generated
  */
 public class LabelSwitch<T> extends Switch<T>
@@ -42,7 +42,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * 
 	 * @generated
 	 */
-	protected static LabelPackage modelPackage;
+	protected static VLabelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -55,7 +55,7 @@ public class LabelSwitch<T> extends Switch<T>
 	{
 		if (modelPackage == null)
 		{
-			modelPackage = LabelPackage.eINSTANCE;
+			modelPackage = VLabelPackage.eINSTANCE;
 		}
 	}
 
@@ -88,8 +88,8 @@ public class LabelSwitch<T> extends Switch<T>
 	{
 		switch (classifierID)
 		{
-		case LabelPackage.LABEL: {
-			Label label = (Label) theEObject;
+		case VLabelPackage.LABEL: {
+			VLabel label = (VLabel) theEObject;
 			T result = caseLabel(label);
 			if (result == null)
 				result = caseComposite(label);
@@ -116,7 +116,7 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseLabel(Label object)
+	public T caseLabel(VLabel object)
 	{
 		return null;
 	}

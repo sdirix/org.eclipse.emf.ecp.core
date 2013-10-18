@@ -20,8 +20,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.label.model.LabelFactory;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.label.model.util.LabelAdapterFactory;
 import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
@@ -84,7 +84,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-		LabelEditPlugin.INSTANCE, LabelPackage.eNS_URI);
+		LabelEditPlugin.INSTANCE, VLabelPackage.eNS_URI);
 
 	/**
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -112,7 +112,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.label.model.Label} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.label.model.VLabel} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -121,7 +121,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	protected LabelItemProvider labelItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.label.model.Label}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.label.model.VLabel}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -356,7 +356,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.VIEW__CHILDREN,
-						LabelFactory.eINSTANCE.createLabel()));
+						VLabelFactory.eINSTANCE.createLabel()));
 
 				return null;
 			}
@@ -373,7 +373,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.CATEGORY__COMPOSITE,
-						LabelFactory.eINSTANCE.createLabel()));
+						VLabelFactory.eINSTANCE.createLabel()));
 
 				return null;
 			}
@@ -390,7 +390,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 				newChildDescriptors.add
 					(createChildParameter
 					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-						LabelFactory.eINSTANCE.createLabel()));
+						VLabelFactory.eINSTANCE.createLabel()));
 
 				return null;
 			}

@@ -16,7 +16,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
-import org.eclipse.emf.ecp.view.label.model.Label;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
@@ -36,7 +36,7 @@ public class LabelSWTRenderer implements CustomSWTRenderer {
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>> renderers;
 		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>>();
-		renderers.put(Label.class, new SWTLabelRenderer());
+		renderers.put(VLabel.class, new SWTLabelRenderer());
 		return renderers;
 	}
 

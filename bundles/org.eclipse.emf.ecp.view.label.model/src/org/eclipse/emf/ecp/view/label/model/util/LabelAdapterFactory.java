@@ -15,8 +15,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.label.model.Label;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.LabelPackage
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage
  * @generated
  */
 public class LabelAdapterFactory extends AdapterFactoryImpl
@@ -38,7 +38,7 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 	 * 
 	 * @generated
 	 */
-	protected static LabelPackage modelPackage;
+	protected static VLabelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -51,7 +51,7 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 	{
 		if (modelPackage == null)
 		{
-			modelPackage = LabelPackage.eINSTANCE;
+			modelPackage = VLabelPackage.eINSTANCE;
 		}
 	}
 
@@ -90,7 +90,7 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 		new LabelSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseLabel(Label object)
+			public Adapter caseLabel(VLabel object)
 			{
 				return createLabelAdapter();
 			}
@@ -130,14 +130,15 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.label.model.Label <em>Label</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.label.model.VLabel <em>Label</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.label.model.Label
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabel
 	 * @generated
 	 */
 	public Adapter createLabelAdapter()

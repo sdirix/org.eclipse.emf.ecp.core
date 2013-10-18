@@ -16,10 +16,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.label.model.Label;
-import org.eclipse.emf.ecp.view.label.model.LabelFactory;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
-import org.eclipse.emf.ecp.view.label.model.LabelStyle;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
+import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * 
  * @generated
  */
-public class LabelPackageImpl extends EPackageImpl implements LabelPackage
+public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -57,13 +57,13 @@ public class LabelPackageImpl extends EPackageImpl implements LabelPackage
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.label.model.LabelPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private LabelPackageImpl()
+	private VLabelPackageImpl()
 	{
-		super(eNS_URI, LabelFactory.eINSTANCE);
+		super(eNS_URI, VLabelFactory.eINSTANCE);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class LabelPackageImpl extends EPackageImpl implements LabelPackage
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link LabelPackage#eINSTANCE} when that field is accessed. Clients should not
+	 * This method is used to initialize {@link VLabelPackage#eINSTANCE} when that field is accessed. Clients should not
 	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -87,14 +87,15 @@ public class LabelPackageImpl extends EPackageImpl implements LabelPackage
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static LabelPackage init()
+	public static VLabelPackage init()
 	{
 		if (isInited)
-			return (LabelPackage) EPackage.Registry.INSTANCE.getEPackage(LabelPackage.eNS_URI);
+			return (VLabelPackage) EPackage.Registry.INSTANCE.getEPackage(VLabelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		LabelPackageImpl theLabelPackage = (LabelPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof LabelPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new LabelPackageImpl());
+		VLabelPackageImpl theLabelPackage = (VLabelPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VLabelPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new VLabelPackageImpl());
 
 		isInited = true;
 
@@ -111,7 +112,7 @@ public class LabelPackageImpl extends EPackageImpl implements LabelPackage
 		theLabelPackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(LabelPackage.eNS_URI, theLabelPackage);
+		EPackage.Registry.INSTANCE.put(VLabelPackage.eNS_URI, theLabelPackage);
 		return theLabelPackage;
 	}
 
@@ -154,9 +155,9 @@ public class LabelPackageImpl extends EPackageImpl implements LabelPackage
 	 * 
 	 * @generated
 	 */
-	public LabelFactory getLabelFactory()
+	public VLabelFactory getLabelFactory()
 	{
-		return (LabelFactory) getEFactoryInstance();
+		return (VLabelFactory) getEFactoryInstance();
 	}
 
 	/**
@@ -227,26 +228,26 @@ public class LabelPackageImpl extends EPackageImpl implements LabelPackage
 		labelEClass.getESuperTypes().add(theViewPackage.getComposite());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLabel_Style(), this.getLabelStyle(), "style", null, 0, 1, Label.class, !IS_TRANSIENT,
+		initEClass(labelEClass, VLabel.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLabel_Style(), this.getLabelStyle(), "style", null, 0, 1, VLabel.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
-		initEEnum(labelStyleEEnum, LabelStyle.class, "LabelStyle");
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H0);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H1);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H2);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H3);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H4);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H5);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H6);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H7);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H8);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.H9);
-		addEEnumLiteral(labelStyleEEnum, LabelStyle.SEPARATOR);
+		initEEnum(labelStyleEEnum, VLabelStyle.class, "LabelStyle");
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H0);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H1);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H2);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H3);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H4);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H5);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H6);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H7);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H8);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H9);
+		addEEnumLiteral(labelStyleEEnum, VLabelStyle.SEPARATOR);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} // LabelPackageImpl
+} // VLabelPackageImpl

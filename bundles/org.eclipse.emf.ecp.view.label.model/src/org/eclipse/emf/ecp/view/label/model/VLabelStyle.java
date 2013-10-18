@@ -23,11 +23,11 @@ import org.eclipse.emf.common.util.Enumerator;
  * and utility methods for working with them.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.LabelPackage#getLabelStyle()
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getLabelStyle()
  * @model
  * @generated
  */
-public enum LabelStyle implements Enumerator
+public enum VLabelStyle implements Enumerator
 {
 	/**
 	 * The '<em><b>H0</b></em>' literal object.
@@ -333,8 +333,8 @@ public enum LabelStyle implements Enumerator
 	 * 
 	 * @generated
 	 */
-	private static final LabelStyle[] VALUES_ARRAY =
-		new LabelStyle[]
+	private static final VLabelStyle[] VALUES_ARRAY =
+		new VLabelStyle[]
 		{
 			H0,
 			H1,
@@ -356,7 +356,7 @@ public enum LabelStyle implements Enumerator
 	 * 
 	 * @generated
 	 */
-	public static final List<LabelStyle> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<VLabelStyle> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
 	 * Returns the '<em><b>Style</b></em>' literal with the specified literal value.
@@ -365,11 +365,11 @@ public enum LabelStyle implements Enumerator
 	 * 
 	 * @generated
 	 */
-	public static LabelStyle get(String literal)
+	public static VLabelStyle get(String literal)
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			LabelStyle result = VALUES_ARRAY[i];
+			VLabelStyle result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal))
 			{
 				return result;
@@ -385,11 +385,11 @@ public enum LabelStyle implements Enumerator
 	 * 
 	 * @generated
 	 */
-	public static LabelStyle getByName(String name)
+	public static VLabelStyle getByName(String name)
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			LabelStyle result = VALUES_ARRAY[i];
+			VLabelStyle result = VALUES_ARRAY[i];
 			if (result.getName().equals(name))
 			{
 				return result;
@@ -405,7 +405,7 @@ public enum LabelStyle implements Enumerator
 	 * 
 	 * @generated
 	 */
-	public static LabelStyle get(int value)
+	public static VLabelStyle get(int value)
 	{
 		switch (value)
 		{
@@ -466,7 +466,7 @@ public enum LabelStyle implements Enumerator
 	 * 
 	 * @generated
 	 */
-	private LabelStyle(int value, String name, String literal)
+	private VLabelStyle(int value, String name, String literal)
 	{
 		this.value = value;
 		this.name = name;

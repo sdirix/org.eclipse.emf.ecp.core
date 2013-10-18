@@ -17,10 +17,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.label.model.Label;
-import org.eclipse.emf.ecp.view.label.model.LabelFactory;
-import org.eclipse.emf.ecp.view.label.model.LabelPackage;
-import org.eclipse.emf.ecp.view.label.model.LabelStyle;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
+import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
+import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.label.model.LabelStyle;
  * 
  * @generated
  */
-public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
+public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 {
 	/**
 	 * Creates the default factory implementation.
@@ -38,11 +38,12 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	 * 
 	 * @generated
 	 */
-	public static LabelFactory init()
+	public static VLabelFactory init()
 	{
 		try
 		{
-			LabelFactory theLabelFactory = (LabelFactory) EPackage.Registry.INSTANCE.getEFactory(LabelPackage.eNS_URI);
+			VLabelFactory theLabelFactory = (VLabelFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VLabelPackage.eNS_URI);
 			if (theLabelFactory != null)
 			{
 				return theLabelFactory;
@@ -51,7 +52,7 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new LabelFactoryImpl();
+		return new VLabelFactoryImpl();
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	 * 
 	 * @generated
 	 */
-	public LabelFactoryImpl()
+	public VLabelFactoryImpl()
 	{
 		super();
 	}
@@ -77,7 +78,7 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	{
 		switch (eClass.getClassifierID())
 		{
-		case LabelPackage.LABEL:
+		case VLabelPackage.LABEL:
 			return createLabel();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -95,7 +96,7 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-		case LabelPackage.LABEL_STYLE:
+		case VLabelPackage.LABEL_STYLE:
 			return createLabelStyleFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -113,7 +114,7 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-		case LabelPackage.LABEL_STYLE:
+		case VLabelPackage.LABEL_STYLE:
 			return convertLabelStyleToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -126,9 +127,9 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	 * 
 	 * @generated
 	 */
-	public Label createLabel()
+	public VLabel createLabel()
 	{
-		LabelImpl label = new LabelImpl();
+		VLabelImpl label = new VLabelImpl();
 		return label;
 	}
 
@@ -138,9 +139,9 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	 * 
 	 * @generated
 	 */
-	public LabelStyle createLabelStyleFromString(EDataType eDataType, String initialValue)
+	public VLabelStyle createLabelStyleFromString(EDataType eDataType, String initialValue)
 	{
-		LabelStyle result = LabelStyle.get(initialValue);
+		VLabelStyle result = VLabelStyle.get(initialValue);
 		if (result == null)
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
@@ -164,9 +165,9 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	 * 
 	 * @generated
 	 */
-	public LabelPackage getLabelPackage()
+	public VLabelPackage getLabelPackage()
 	{
-		return (LabelPackage) getEPackage();
+		return (VLabelPackage) getEPackage();
 	}
 
 	/**
@@ -177,9 +178,9 @@ public class LabelFactoryImpl extends EFactoryImpl implements LabelFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static LabelPackage getPackage()
+	public static VLabelPackage getPackage()
 	{
-		return LabelPackage.eINSTANCE;
+		return VLabelPackage.eINSTANCE;
 	}
 
-} // LabelFactoryImpl
+} // VLabelFactoryImpl

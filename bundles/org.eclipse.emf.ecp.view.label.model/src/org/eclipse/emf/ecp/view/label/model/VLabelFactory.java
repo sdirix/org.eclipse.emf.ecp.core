@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.LabelPackage
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage
  * @generated
  */
-public interface LabelFactory extends EFactory
+public interface VLabelFactory extends EFactory
 {
 	/**
 	 * The singleton instance of the factory.
@@ -31,7 +31,7 @@ public interface LabelFactory extends EFactory
 	 * 
 	 * @generated
 	 */
-	LabelFactory eINSTANCE = org.eclipse.emf.ecp.view.label.model.impl.LabelFactoryImpl.init();
+	VLabelFactory eINSTANCE = org.eclipse.emf.ecp.view.label.model.impl.VLabelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Label</em>'.
@@ -41,7 +41,7 @@ public interface LabelFactory extends EFactory
 	 * @return a new object of class '<em>Label</em>'.
 	 * @generated
 	 */
-	Label createLabel();
+	VLabel createLabel();
 
 	/**
 	 * Returns the package supported by this factory.
@@ -51,6 +51,6 @@ public interface LabelFactory extends EFactory
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	LabelPackage getLabelPackage();
+	VLabelPackage getLabelPackage();
 
-} // LabelFactory
+} // VLabelFactory

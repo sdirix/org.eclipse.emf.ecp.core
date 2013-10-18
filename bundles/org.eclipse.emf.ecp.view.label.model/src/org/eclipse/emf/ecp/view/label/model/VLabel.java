@@ -21,19 +21,19 @@ import org.eclipse.emf.ecp.view.model.Composite;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.label.model.Label#getStyle <em>Style</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.label.model.VLabel#getStyle <em>Style</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.view.label.model.LabelPackage#getLabel()
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getLabel()
  * @model
  * @generated
  */
-public interface Label extends Composite
+public interface VLabel extends Composite
 {
 	/**
 	 * Returns the value of the '<em><b>Style</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.label.model.LabelStyle}.
+	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.label.model.VLabelStyle}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Style</em>' attribute isn't clear, there really should be more of a description
@@ -42,24 +42,24 @@ public interface Label extends Composite
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Style</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.label.model.LabelStyle
-	 * @see #setStyle(LabelStyle)
-	 * @see org.eclipse.emf.ecp.view.label.model.LabelPackage#getLabel_Style()
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
+	 * @see #setStyle(VLabelStyle)
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getLabel_Style()
 	 * @model
 	 * @generated
 	 */
-	LabelStyle getStyle();
+	VLabelStyle getStyle();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.label.model.Label#getStyle <em>Style</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.label.model.VLabel#getStyle <em>Style</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param value the new value of the '<em>Style</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.label.model.LabelStyle
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
 	 * @see #getStyle()
 	 * @generated
 	 */
-	void setStyle(LabelStyle value);
+	void setStyle(VLabelStyle value);
 
-} // Label
+} // VLabel

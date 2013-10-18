@@ -29,11 +29,11 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.LabelFactory
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelFactory
  * @model kind="package"
  * @generated
  */
-public interface LabelPackage extends EPackage
+public interface VLabelPackage extends EPackage
 {
 	/**
 	 * The package name.
@@ -69,15 +69,15 @@ public interface LabelPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	LabelPackage eINSTANCE = org.eclipse.emf.ecp.view.label.model.impl.LabelPackageImpl.init();
+	VLabelPackage eINSTANCE = org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.impl.LabelImpl <em>Label</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl <em>Label</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.label.model.impl.LabelImpl
-	 * @see org.eclipse.emf.ecp.view.label.model.impl.LabelPackageImpl#getLabel()
+	 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl
+	 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getLabel()
 	 * @generated
 	 */
 	int LABEL = 0;
@@ -163,47 +163,47 @@ public interface LabelPackage extends EPackage
 	int LABEL_FEATURE_COUNT = ViewPackage.COMPOSITE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.LabelStyle <em>Style</em>}' enum.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>Style</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.label.model.LabelStyle
-	 * @see org.eclipse.emf.ecp.view.label.model.impl.LabelPackageImpl#getLabelStyle()
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
+	 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getLabelStyle()
 	 * @generated
 	 */
 	int LABEL_STYLE = 1;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.label.model.Label <em>Label</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.label.model.VLabel <em>Label</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Label</em>'.
-	 * @see org.eclipse.emf.ecp.view.label.model.Label
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabel
 	 * @generated
 	 */
 	EClass getLabel();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.label.model.Label#getStyle
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.label.model.VLabel#getStyle
 	 * <em>Style</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Style</em>'.
-	 * @see org.eclipse.emf.ecp.view.label.model.Label#getStyle()
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabel#getStyle()
 	 * @see #getLabel()
 	 * @generated
 	 */
 	EAttribute getLabel_Style();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.label.model.LabelStyle <em>Style</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>Style</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for enum '<em>Style</em>'.
-	 * @see org.eclipse.emf.ecp.view.label.model.LabelStyle
+	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
 	 * @generated
 	 */
 	EEnum getLabelStyle();
@@ -216,7 +216,7 @@ public interface LabelPackage extends EPackage
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	LabelFactory getLabelFactory();
+	VLabelFactory getLabelFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -234,13 +234,13 @@ public interface LabelPackage extends EPackage
 	interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.label.model.impl.LabelImpl <em>Label</em>}'
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl <em>Label</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.label.model.impl.LabelImpl
-		 * @see org.eclipse.emf.ecp.view.label.model.impl.LabelPackageImpl#getLabel()
+		 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl
+		 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getLabel()
 		 * @generated
 		 */
 		EClass LABEL = eINSTANCE.getLabel();
@@ -255,17 +255,17 @@ public interface LabelPackage extends EPackage
 		EAttribute LABEL__STYLE = eINSTANCE.getLabel_Style();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.label.model.LabelStyle <em>Style</em>}'
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>Style</em>}'
 		 * enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.label.model.LabelStyle
-		 * @see org.eclipse.emf.ecp.view.label.model.impl.LabelPackageImpl#getLabelStyle()
+		 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
+		 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getLabelStyle()
 		 * @generated
 		 */
 		EEnum LABEL_STYLE = eINSTANCE.getLabelStyle();
 
 	}
 
-} // LabelPackage
+} // VLabelPackage
