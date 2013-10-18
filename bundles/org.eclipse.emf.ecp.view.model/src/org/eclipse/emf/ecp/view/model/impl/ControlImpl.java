@@ -152,17 +152,16 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs)
 	{
-		final VDomainModelReference oldDomainModelReference = domainModelReference;
+		VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired())
 		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -178,23 +177,19 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 		if (newDomainModelReference != domainModelReference)
 		{
 			NotificationChain msgs = null;
-			if (domainModelReference != null) {
+			if (domainModelReference != null)
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			}
-			if (newDomainModelReference != null) {
+			if (newDomainModelReference != null)
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
-		}
 	}
 
 	/**
@@ -245,12 +240,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * @generated
 	 */
 	public void setMandatory(boolean newMandatory) {
-		final boolean oldMandatory = mandatory;
+		boolean oldMandatory = mandatory;
 		mandatory = newMandatory;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
 				mandatory));
-		}
 	}
 
 	/**
@@ -272,12 +266,11 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	public void setLabelAlignment(Alignment newLabelAlignment)
 	{
-		final Alignment oldLabelAlignment = labelAlignment;
+		Alignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
-		}
 	}
 
 	/**
@@ -386,11 +379,10 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hint: ");
 		result.append(hint);
 		result.append(", mandatory: ");

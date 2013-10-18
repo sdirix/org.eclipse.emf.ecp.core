@@ -193,8 +193,6 @@
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.customcomposite.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.test</module>

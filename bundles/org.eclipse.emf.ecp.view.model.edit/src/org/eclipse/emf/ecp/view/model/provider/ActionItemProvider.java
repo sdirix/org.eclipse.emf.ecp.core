@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -40,9 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 public class ActionItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
+	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
 	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -141,7 +140,7 @@ public class ActionItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((Action) object).getClassName();
+		String label = ((Action) object).getClassName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Action_type") :
 			getString("_UI_Action_type") + " " + label;

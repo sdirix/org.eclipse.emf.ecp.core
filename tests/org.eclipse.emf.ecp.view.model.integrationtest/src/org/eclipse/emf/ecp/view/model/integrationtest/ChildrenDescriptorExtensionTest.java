@@ -36,7 +36,10 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int RENDERABLE_CHILD_COUNT = 3;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	private static final int NUMBER_OF_COMPOSITES = 12;
+	private static final int NUMBER_OF_MAIN_COMPOSITES = 3;
+	// label, separator, table, vertical, horizontal, group, groupedgrid, customcontrol
+	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 8;
+	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
 		+ NUMBER_OF_CATEGORIZATIONS;
@@ -53,7 +56,6 @@ public class ChildrenDescriptorExtensionTest {
 	// TODO: Should be not -3, span and rules are missing
 	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1 - 3;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
-	private static final int CUSTOMCOMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	// TODO: Should be not -3, span and rules are missing
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT - 3;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
@@ -192,12 +194,6 @@ public class ChildrenDescriptorExtensionTest {
 	public void testTableColumnChildDescriptors() {
 		final int size = getChildrenSize(VTablePackage.eINSTANCE.getTableColumn());
 		assertEquals(TABLECOLUMN_CHILD_COUNT, size);
-	}
-
-	@Test
-	public void testCustomCompositeColumnChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getCustomComposite());
-		assertEquals(CUSTOMCOMPOSITE_CHILD_COUNT, size);
 	}
 
 	@Test

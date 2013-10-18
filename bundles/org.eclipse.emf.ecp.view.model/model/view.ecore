@@ -71,12 +71,6 @@
     <eLiterals name="Top" value="1"/>
     <eLiterals name="None" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CustomComposite" eSuperTypes="#//Composite">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundle" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompositeCollection" abstract="true"
       eSuperTypes="#//Composite">
     <eStructuralFeatures xsi:type="ecore:EReference" name="composites" upperBound="-1"

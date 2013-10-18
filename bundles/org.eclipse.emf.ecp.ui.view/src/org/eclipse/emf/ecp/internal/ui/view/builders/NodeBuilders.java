@@ -30,7 +30,6 @@ import org.eclipse.emf.ecp.view.model.Category;
 import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -56,8 +55,6 @@ public class NodeBuilders {
 				put(Column.class, new CompositeCollectionNodeBuilder<Column>());
 				// put(Group.class, new CompositeCollectionNodeBuilder<Group>());
 				put(Control.class, new RenderableNodeBuilder<Control>());
-				put(CustomComposite.class,
-					new RenderableNodeBuilder<CustomComposite>());
 				put(View.class, new ViewNodeBuilder());
 				put(Category.class, new CategoryNodeBuilder());
 				put(Categorization.class, new CategorizationNodeBuilder());

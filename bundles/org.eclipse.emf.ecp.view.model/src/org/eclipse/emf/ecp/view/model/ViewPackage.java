@@ -211,18 +211,6 @@ public interface ViewPackage extends EPackage {
 	int CONTROL = 12;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-	 * <em>Custom Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
-	 * @generated
-	 */
-	int CUSTOM_COMPOSITE = 13;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl
 	 * <em>Composite Collection</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -232,7 +220,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCompositeCollection()
 	 * @generated
 	 */
-	int COMPOSITE_COLLECTION = 14;
+	int COMPOSITE_COLLECTION = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
@@ -244,7 +232,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
 	 * @generated
 	 */
-	int COLUMN_COMPOSITE = 15;
+	int COLUMN_COMPOSITE = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
@@ -255,7 +243,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
 	 * @generated
 	 */
-	int COLUMN = 16;
+	int COLUMN = 15;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
@@ -1056,96 +1044,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_COMPOSITE__VISIBLE = COMPOSITE__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__ENABLED = COMPOSITE__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__READONLY = COMPOSITE__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__DIAGNOSTIC = COMPOSITE__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__ATTACHMENTS = COMPOSITE__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__NAME = COMPOSITE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__BUNDLE = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE__CLASS_NAME = COMPOSITE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Custom Composite</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_COMPOSITE_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
 	int COMPOSITE_COLLECTION__VISIBLE = COMPOSITE__VISIBLE;
 
 	/**
@@ -1387,7 +1285,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 17;
+	int ALIGNMENT = 16;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1599,44 +1497,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getControl_LabelAlignment();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.CustomComposite
-	 * <em>Custom Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Custom Composite</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.CustomComposite
-	 * @generated
-	 */
-	EClass getCustomComposite();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.CustomComposite#getBundle
-	 * <em>Bundle</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Bundle</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.CustomComposite#getBundle()
-	 * @see #getCustomComposite()
-	 * @generated
-	 */
-	EAttribute getCustomComposite_Bundle();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.CustomComposite#getClassName
-	 * <em>Class Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Class Name</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.CustomComposite#getClassName()
-	 * @see #getCustomComposite()
-	 * @generated
-	 */
-	EAttribute getCustomComposite_ClassName();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.CompositeCollection
@@ -2102,36 +1962,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-		 * <em>Custom Composite</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.CustomCompositeImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getCustomComposite()
-		 * @generated
-		 */
-		EClass CUSTOM_COMPOSITE = eINSTANCE.getCustomComposite();
-
-		/**
-		 * The meta object literal for the '<em><b>Bundle</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CUSTOM_COMPOSITE__BUNDLE = eINSTANCE.getCustomComposite_Bundle();
-
-		/**
-		 * The meta object literal for the '<em><b>Class Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CUSTOM_COMPOSITE__CLASS_NAME = eINSTANCE.getCustomComposite_ClassName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl

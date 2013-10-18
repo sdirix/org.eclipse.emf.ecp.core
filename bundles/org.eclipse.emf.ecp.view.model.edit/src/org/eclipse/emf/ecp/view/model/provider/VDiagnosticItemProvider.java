@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -40,9 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 public class VDiagnosticItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
+	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
 	IItemPropertySource
 {
 	/**

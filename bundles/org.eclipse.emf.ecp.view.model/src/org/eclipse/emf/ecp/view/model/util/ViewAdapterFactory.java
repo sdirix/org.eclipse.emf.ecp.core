@@ -26,7 +26,6 @@ import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -174,12 +173,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseCustomComposite(CustomComposite object)
-		{
-			return createCustomCompositeAdapter();
-		}
-
-		@Override
 		public Adapter caseCompositeCollection(CompositeCollection object)
 		{
 			return createCompositeCollectionAdapter();
@@ -306,22 +299,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createControlAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.CustomComposite
-	 * <em>Custom Composite</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.CustomComposite
-	 * @generated
-	 */
-	public Adapter createCustomCompositeAdapter() {
 		return null;
 	}
 

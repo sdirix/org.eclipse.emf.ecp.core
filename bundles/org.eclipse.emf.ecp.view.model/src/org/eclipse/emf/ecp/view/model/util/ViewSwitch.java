@@ -25,7 +25,6 @@ import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.CustomComposite;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -214,17 +213,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.CUSTOM_COMPOSITE: {
-			CustomComposite customComposite = (CustomComposite) theEObject;
-			T result = caseCustomComposite(customComposite);
-			if (result == null)
-				result = caseComposite(customComposite);
-			if (result == null)
-				result = caseRenderable(customComposite);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		case ViewPackage.COMPOSITE_COLLECTION: {
 			CompositeCollection compositeCollection = (CompositeCollection) theEObject;
 			T result = caseCompositeCollection(compositeCollection);
@@ -360,22 +348,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseControl(Control object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Custom Composite</em>'.
-	 * <!-- begin-user-doc
-	 * --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Custom Composite</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCustomComposite(CustomComposite object) {
 		return null;
 	}
 
