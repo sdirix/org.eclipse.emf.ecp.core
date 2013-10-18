@@ -82,6 +82,40 @@ public class ViewValidationTest extends CommonValidationTest {
 	}
 
 	@Test
+	public void testValidationSameFeature() {
+		final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
+		final PowerBlock powerBlock = TestFactory.eINSTANCE.createPowerBlock();
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		computer.setMainboard(mainboard);
+		computer.setPowerBlock(powerBlock);
+
+		final View view = ViewFactory.eINSTANCE.createView();
+		final Control powerBlockControl = ViewFactory.eINSTANCE.createControl();
+		final Control mainboardControl = ViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(powerBlockControl);
+		view.getChildren().add(mainboardControl);
+
+		powerBlockControl.setDomainModelReference(
+			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getPowerBlock_Name(),
+				TestPackage.eINSTANCE.getComputer_PowerBlock()));
+
+		mainboardControl.setDomainModelReference(
+			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
+				TestPackage.eINSTANCE.getComputer_Mainboard()));
+
+		new ViewModelContextImpl(view, computer);
+
+		mainboard.setName("foo");
+
+		assertEquals("Severity must be ok", Diagnostic.OK,
+			mainboardControl.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity must be error", Diagnostic.ERROR,
+			powerBlockControl.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity must be error", Diagnostic.ERROR,
+			view.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
 	public void testValidationInitDisabledControlOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
