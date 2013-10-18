@@ -45,7 +45,7 @@ public class SWTGroupTest {
 
 		// setup model
 		final View view = GroupTest.createViewWithOneGroup();
-		final org.eclipse.emf.ecp.view.group.model.Group group = (org.eclipse.emf.ecp.view.group.model.Group) view
+		final org.eclipse.emf.ecp.view.group.model.VGroup group = (org.eclipse.emf.ecp.view.group.model.VGroup) view
 			.getChildren()
 			.get(0);
 		group.setName(GROUP_NAME);
@@ -72,12 +72,12 @@ public class SWTGroupTest {
 
 		// setup model
 		final View view = GroupTest.createViewWithTwoGroups();
-		final org.eclipse.emf.ecp.view.group.model.Group group = (org.eclipse.emf.ecp.view.group.model.Group) view
+		final org.eclipse.emf.ecp.view.group.model.VGroup group = (org.eclipse.emf.ecp.view.group.model.VGroup) view
 			.getChildren()
 			.get(0);
 		group.setName(GROUP_NAME);
 
-		final org.eclipse.emf.ecp.view.group.model.Group group2 = (org.eclipse.emf.ecp.view.group.model.Group) view
+		final org.eclipse.emf.ecp.view.group.model.VGroup group2 = (org.eclipse.emf.ecp.view.group.model.VGroup) view
 			.getChildren()
 			.get(1);
 		group2.setName(GROUP_NAME2);
@@ -112,10 +112,10 @@ public class SWTGroupTest {
 	public void testTwoGroupsHierachicalinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final View view = GroupTest.createViewWithTwoHierachicalGroups();
-		final org.eclipse.emf.ecp.view.group.model.Group group = (org.eclipse.emf.ecp.view.group.model.Group) view
+		final org.eclipse.emf.ecp.view.group.model.VGroup group = (org.eclipse.emf.ecp.view.group.model.VGroup) view
 			.getChildren()
 			.get(0);
-		final org.eclipse.emf.ecp.view.group.model.Group subGroup = (org.eclipse.emf.ecp.view.group.model.Group) group
+		final org.eclipse.emf.ecp.view.group.model.VGroup subGroup = (org.eclipse.emf.ecp.view.group.model.VGroup) group
 			.getComposites().get(0);
 		group.setName(GROUP_NAME);
 
@@ -150,10 +150,10 @@ public class SWTGroupTest {
 	@Test
 	public void testTwoGroupsWithTwoControlsInView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final View view = GroupTest.createViewWithTwoGroupsWithTwoControls();
-		final org.eclipse.emf.ecp.view.group.model.Group group1 = (org.eclipse.emf.ecp.view.group.model.Group) view
+		final org.eclipse.emf.ecp.view.group.model.VGroup group1 = (org.eclipse.emf.ecp.view.group.model.VGroup) view
 			.getChildren()
 			.get(0);
-		final org.eclipse.emf.ecp.view.group.model.Group group2 = (org.eclipse.emf.ecp.view.group.model.Group) view
+		final org.eclipse.emf.ecp.view.group.model.VGroup group2 = (org.eclipse.emf.ecp.view.group.model.VGroup) view
 			.getChildren().get(1);
 		group1.setName(GROUP_NAME);
 

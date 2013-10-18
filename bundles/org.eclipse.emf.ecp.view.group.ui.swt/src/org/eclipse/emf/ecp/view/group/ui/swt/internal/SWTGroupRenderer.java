@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
-import org.eclipse.emf.ecp.view.group.model.Group;
+import org.eclipse.emf.ecp.view.group.model.VGroup;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Control;
  * Renders a SWT group.
  * 
  */
-public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
+public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 	/**
 	 * Singleton instance of the SWT Group renderer.
 	 */
@@ -38,12 +38,12 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<Group> {
 	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group";
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<Group> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<VGroup> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
-		final Group modelGroup = node.getRenderable();
+		final VGroup modelGroup = node.getRenderable();
 		final org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
 		group.setData(CUSTOM_VARIANT, CONTROL_GROUP);
 		if (modelGroup.getName() != null) {

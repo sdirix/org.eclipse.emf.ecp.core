@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.group.model.Group;
-import org.eclipse.emf.ecp.view.group.model.GroupFactory;
+import org.eclipse.emf.ecp.view.group.model.VGroup;
+import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -40,7 +40,7 @@ public class GroupTest {
 	public void testOneGroupinView() {
 		// setup model
 		final View view = createViewWithOneGroup();
-		final Group group = (Group) view.getChildren().get(0);
+		final VGroup group = (VGroup) view.getChildren().get(0);
 		// Test NodeBuidlers
 		final Node<Renderable> node = buildNode(view);
 		assertEquals(2, ViewTestHelper.countNodes(node));
@@ -60,7 +60,7 @@ public class GroupTest {
 	 */
 	public static View createViewWithOneGroup() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Group group = createGroup();
+		final VGroup group = createGroup();
 		view.getChildren().add(group);
 		return view;
 	}
@@ -69,8 +69,8 @@ public class GroupTest {
 	public void testTwoGroupsinView() {
 		// setup model
 		final View view = createViewWithTwoGroups();
-		final Group group = (Group) view.getChildren().get(0);
-		final Group group2 = (Group) view.getChildren().get(1);
+		final VGroup group = (VGroup) view.getChildren().get(0);
+		final VGroup group2 = (VGroup) view.getChildren().get(1);
 
 		// Test NodeBuidlers
 		final Node<Renderable> node = buildNode(view);
@@ -88,9 +88,9 @@ public class GroupTest {
 	 */
 	public static View createViewWithTwoGroups() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Group group = createGroup();
+		final VGroup group = createGroup();
 		view.getChildren().add(group);
-		final Group group2 = createGroup();
+		final VGroup group2 = createGroup();
 		view.getChildren().add(group2);
 		return view;
 	}
@@ -99,8 +99,8 @@ public class GroupTest {
 	public void testTwoGroupsHierachicalinView() {
 		// setup model
 		final View view = createViewWithTwoHierachicalGroups();
-		final Group group = (Group) view.getChildren().get(0);
-		final Group subGroup = (Group) group.getComposites().get(0);
+		final VGroup group = (VGroup) view.getChildren().get(0);
+		final VGroup subGroup = (VGroup) group.getComposites().get(0);
 
 		// Test NodeBuidlers
 		final Node<Renderable> node = buildNode(view);
@@ -117,10 +117,10 @@ public class GroupTest {
 	public void testTwoGroupsWithTwoControlsInView() {
 		// setup model
 		final View view = createViewWithTwoGroupsWithTwoControls();
-		final Group group1 = (Group) view.getChildren().get(0);
+		final VGroup group1 = (VGroup) view.getChildren().get(0);
 		final Control c11 = (Control) group1.getComposites().get(0);
 		final Control c12 = (Control) group1.getComposites().get(1);
-		final Group group2 = (Group) view.getChildren().get(1);
+		final VGroup group2 = (VGroup) view.getChildren().get(1);
 		final Control c21 = (Control) group2.getComposites().get(0);
 		final Control c22 = (Control) group2.getComposites().get(1);
 
@@ -149,20 +149,20 @@ public class GroupTest {
 	 */
 	public static View createViewWithTwoHierachicalGroups() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Group group = createGroup();
+		final VGroup group = createGroup();
 		view.getChildren().add(group);
-		final Group subGroup = createGroup();
+		final VGroup subGroup = createGroup();
 		group.getComposites().add(subGroup);
 		return view;
 	}
 
 	public static View createViewWithTwoGroupsWithTwoControls() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Group group1 = createGroup();
+		final VGroup group1 = createGroup();
 		view.getChildren().add(group1);
 		group1.getComposites().add(createControl());
 		group1.getComposites().add(createControl());
-		final Group group2 = createGroup();
+		final VGroup group2 = createGroup();
 		view.getChildren().add(group2);
 		group2.getComposites().add(createControl());
 		group2.getComposites().add(createControl());
@@ -172,8 +172,8 @@ public class GroupTest {
 	/**
 	 * @return
 	 */
-	private static Group createGroup() {
-		return GroupFactory.eINSTANCE.createGroup();
+	private static VGroup createGroup() {
+		return VGroupFactory.eINSTANCE.createGroup();
 	}
 
 	private static Control createControl() {

@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.group.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.group.model.Group;
-import org.eclipse.emf.ecp.view.group.model.GroupPackage;
+import org.eclipse.emf.ecp.view.group.model.VGroup;
+import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.group.model.GroupPackage
+ * @see org.eclipse.emf.ecp.view.group.model.VGroupPackage
  * @generated
  */
 public class GroupSwitch<T> extends Switch<T> {
@@ -42,7 +42,7 @@ public class GroupSwitch<T> extends Switch<T> {
 	 * 
 	 * @generated
 	 */
-	protected static GroupPackage modelPackage;
+	protected static VGroupPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -54,7 +54,7 @@ public class GroupSwitch<T> extends Switch<T> {
 	public GroupSwitch() {
 		if (modelPackage == null)
 		{
-			modelPackage = GroupPackage.eINSTANCE;
+			modelPackage = VGroupPackage.eINSTANCE;
 		}
 	}
 
@@ -85,8 +85,8 @@ public class GroupSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-		case GroupPackage.GROUP: {
-			Group group = (Group) theEObject;
+		case VGroupPackage.GROUP: {
+			VGroup group = (VGroup) theEObject;
 			T result = caseGroup(group);
 			if (result == null)
 				result = caseCompositeCollection(group);
@@ -115,7 +115,8 @@ public class GroupSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseGroup(Group object) {
+	public T caseGroup(VGroup object)
+	{
 		return null;
 	}
 

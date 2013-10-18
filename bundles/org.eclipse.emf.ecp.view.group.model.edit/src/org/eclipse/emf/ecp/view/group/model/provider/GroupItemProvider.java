@@ -16,14 +16,14 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.group.model.Group;
-import org.eclipse.emf.ecp.view.group.model.GroupFactory;
+import org.eclipse.emf.ecp.view.group.model.VGroup;
+import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.CompositeCollectionItemProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.group.model.Group} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.group.model.VGroup} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -39,7 +39,8 @@ public class GroupItemProvider
 	 * 
 	 * @generated
 	 */
-	public GroupItemProvider(AdapterFactory adapterFactory) {
+	public GroupItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -51,7 +52,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null)
 		{
 			super.getPropertyDescriptors(object);
@@ -68,7 +70,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Group"));
 	}
 
@@ -80,8 +83,9 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		final String label = ((Group) object).getName();
+	public String getText(Object object)
+	{
+		final String label = ((VGroup) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") :
 			getString("_UI_Group_type") + " " + label;
@@ -96,7 +100,8 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -110,13 +115,14 @@ public class GroupItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
 			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				GroupFactory.eINSTANCE.createGroup()));
+				VGroupFactory.eINSTANCE.createGroup()));
 	}
 
 }

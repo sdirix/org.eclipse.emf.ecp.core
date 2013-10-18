@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.GroupedGridPackage;
-import org.eclipse.emf.ecp.view.group.model.GroupPackage;
+import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.separator.model.SeparatorPackage;
@@ -224,7 +224,7 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testGroupDescriptors() {
-		final int size = getChildrenSize(GroupPackage.eINSTANCE.getGroup());
+		final int size = getChildrenSize(VGroupPackage.eINSTANCE.getGroup());
 		assertEquals(GROUP_CHILD_COUNT, size);
 	}
 

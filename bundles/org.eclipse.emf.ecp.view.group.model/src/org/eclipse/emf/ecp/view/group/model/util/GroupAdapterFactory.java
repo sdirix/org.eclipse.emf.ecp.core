@@ -15,8 +15,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.group.model.Group;
-import org.eclipse.emf.ecp.view.group.model.GroupPackage;
+import org.eclipse.emf.ecp.view.group.model.VGroup;
+import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.group.model.GroupPackage
+ * @see org.eclipse.emf.ecp.view.group.model.VGroupPackage
  * @generated
  */
 public class GroupAdapterFactory extends AdapterFactoryImpl {
@@ -38,7 +38,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static GroupPackage modelPackage;
+	protected static VGroupPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -50,7 +50,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	public GroupAdapterFactory() {
 		if (modelPackage == null)
 		{
-			modelPackage = GroupPackage.eINSTANCE;
+			modelPackage = VGroupPackage.eINSTANCE;
 		}
 	}
 
@@ -88,7 +88,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 		new GroupSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseGroup(Group object)
+			public Adapter caseGroup(VGroup object)
 			{
 				return createGroupAdapter();
 			}
@@ -133,14 +133,15 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.group.model.Group <em>Group</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.group.model.VGroup <em>Group</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.group.model.Group
+	 * @see org.eclipse.emf.ecp.view.group.model.VGroup
 	 * @generated
 	 */
 	public Adapter createGroupAdapter() {
