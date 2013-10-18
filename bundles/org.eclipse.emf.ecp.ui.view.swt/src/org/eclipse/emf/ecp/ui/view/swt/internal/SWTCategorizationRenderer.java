@@ -54,9 +54,9 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<Categorizatio
 
 		final Categorization categorization = Categorization.class.cast(node.getRenderable());
 		final Label headingLbl = new Label(categoryComposite, SWT.NONE);
-		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title");
+		headingLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title");
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
-		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message");
+		whatToDoLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message");
 		headingLbl.setText(categorization.getName());
 		whatToDoLbl.setText(Messages.Categorization_Selection);
 
