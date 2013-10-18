@@ -143,12 +143,11 @@ public class VTableControlImpl extends ControlImpl implements VTableControl
 	 */
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled)
 	{
-		final boolean oldAddRemoveDisabled = addRemoveDisabled;
+		boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
-		}
 	}
 
 	/**
@@ -259,11 +258,10 @@ public class VTableControlImpl extends ControlImpl implements VTableControl
 	@Override
 	public String toString()
 	{
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: ");
 		result.append(addRemoveDisabled);
 		result.append(')');

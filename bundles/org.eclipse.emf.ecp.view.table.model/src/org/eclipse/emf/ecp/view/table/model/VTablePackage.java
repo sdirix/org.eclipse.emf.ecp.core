@@ -144,16 +144,6 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL__NAME = ViewPackage.CONTROL__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Hint</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__HINT = ViewPackage.CONTROL__HINT;
-
-	/**
 	 * The feature id for the '<em><b>Mandatory</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
