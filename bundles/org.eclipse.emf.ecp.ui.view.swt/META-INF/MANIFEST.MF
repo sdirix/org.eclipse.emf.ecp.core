@@ -12,8 +12,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecp.edit;bundle-version="1.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.ui.view.swt,
- org.eclipse.emf.ecp.ui.view.swt.internal;
+Export-Package: org.eclipse.emf.ecp.ui.view.swt;version="1.1.0",
+ org.eclipse.emf.ecp.ui.view.swt.internal;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.editor,
    org.eclipse.emf.ecp.view.custom.ui.swt,
    org.eclipse.emf.ecp.view.group.ui.swt,
@@ -26,17 +26,17 @@ Export-Package: org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.view.custom.ui.swt.test,
    org.eclipse.emf.ecp.view.test.common.swt,
    org.eclipse.emf.ecp.view.custom.ui.swt.example"
-Import-Package: org.eclipse.core.commands,
- org.eclipse.jface,
- org.eclipse.jface.action,
- org.eclipse.jface.dialogs,
- org.eclipse.jface.layout,
- org.eclipse.jface.resource,
- org.eclipse.jface.viewers,
- org.eclipse.jface.window,
- org.eclipse.swt,
- org.eclipse.swt.custom,
- org.eclipse.swt.events,
- org.eclipse.swt.graphics,
- org.eclipse.swt.layout,
- org.eclipse.swt.widgets
+Import-Package: org.eclipse.core.commands;version="0.0.0",
+ org.eclipse.jface;version="0.0.0",
+ org.eclipse.jface.action;version="0.0.0",
+ org.eclipse.jface.dialogs;version="0.0.0",
+ org.eclipse.jface.layout;version="0.0.0",
+ org.eclipse.jface.resource;version="0.0.0",
+ org.eclipse.jface.viewers;version="0.0.0",
+ org.eclipse.jface.window;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.custom;version="0.0.0",
+ org.eclipse.swt.events;version="0.0.0",
+ org.eclipse.swt.graphics;version="0.0.0",
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0"
