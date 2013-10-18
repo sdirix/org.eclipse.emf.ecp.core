@@ -267,12 +267,14 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 			try {
 				final File file = getFile(this);
-				stream = new FileInputStream(file);
-				final ObjectInputStream in = new ObjectInputStream(stream);
+				if (file.exists()) {
+					stream = new FileInputStream(file);
+					final ObjectInputStream in = new ObjectInputStream(stream);
 
-				final Properties dynamicProperties = new Properties(in);
-				for (final Entry<String, String> property : dynamicProperties.getProperties()) {
-					properties.addProperty(property.getKey(), property.getValue());
+					final Properties dynamicProperties = new Properties(in);
+					for (final Entry<String, String> property : dynamicProperties.getProperties()) {
+						properties.addProperty(property.getKey(), property.getValue());
+					}
 				}
 			} catch (final IOException ex) {
 				Activator.log(ex);
