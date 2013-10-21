@@ -78,9 +78,14 @@ public class GCCollectable {
 	public boolean isCollectable() {
 		int retry = 0;
 		// FIXME: GC is non-deterministic :(
-		while (retry < 5 && !result) {
+		while (retry < 100 && !result) {
 			System.gc();
 			System.runFinalization();
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// ignore
+			}
 			retry++;
 		}
 		runMe = false;
