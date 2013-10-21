@@ -223,29 +223,6 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_COLLECTION = 13;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-	 * <em>Column Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
-	 * @generated
-	 */
-	int COLUMN_COMPOSITE = 14;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.ColumnImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
-	 * @generated
-	 */
-	int COLUMN = 15;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.ActionImpl <em>Action</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1107,166 +1084,6 @@ public interface ViewPackage extends EPackage {
 	int COMPOSITE_COLLECTION_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__ENABLED = COMPOSITE_COLLECTION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__READONLY = COMPOSITE_COLLECTION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__DIAGNOSTIC = COMPOSITE_COLLECTION__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__NAME = COMPOSITE_COLLECTION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE__COMPOSITES = COMPOSITE_COLLECTION__COMPOSITES;
-
-	/**
-	 * The number of structural features of the '<em>Column Composite</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_COMPOSITE_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__VISIBLE = COMPOSITE_COLLECTION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__ENABLED = COMPOSITE_COLLECTION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__READONLY = COMPOSITE_COLLECTION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__DIAGNOSTIC = COMPOSITE_COLLECTION__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__ATTACHMENTS = COMPOSITE_COLLECTION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__NAME = COMPOSITE_COLLECTION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN__COMPOSITES = COMPOSITE_COLLECTION__COMPOSITES;
-
-	/**
-	 * The number of structural features of the '<em>Column</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int COLUMN_FEATURE_COUNT = COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1275,7 +1092,7 @@ public interface ViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 16;
+	int ALIGNMENT = 14;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'.
@@ -1499,29 +1316,6 @@ public interface ViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCompositeCollection_Composites();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.ColumnComposite
-	 * <em>Column Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Column Composite</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.ColumnComposite
-	 * @generated
-	 */
-	EClass getColumnComposite();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Column <em>Column</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Column</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Column
-	 * @generated
-	 */
-	EClass getColumn();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
@@ -1951,30 +1745,6 @@ public interface ViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPOSITE_COLLECTION__COMPOSITES = eINSTANCE.getCompositeCollection_Composites();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-		 * <em>Column Composite</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.ColumnCompositeImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumnComposite()
-		 * @generated
-		 */
-		EClass COLUMN_COMPOSITE = eINSTANCE.getColumnComposite();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.ColumnImpl <em>Column</em>}'
-		 * class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.ColumnImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.ViewPackageImpl#getColumn()
-		 * @generated
-		 */
-		EClass COLUMN = eINSTANCE.getColumn();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.RenderableImpl

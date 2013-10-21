@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
@@ -28,6 +27,8 @@ import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
@@ -48,10 +49,10 @@ public class RuleServiceGCTest extends CommonRuleTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(league.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(column);
 
 		final Control controlPName = ViewFactory.eINSTANCE.createControl();

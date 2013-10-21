@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.horizontal.ui.swt.internal;
 
 import java.util.List;
 
@@ -18,7 +18,9 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
+import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -26,13 +28,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public class SWTColumnCompositeRenderer extends AbstractSWTRenderer<ColumnComposite> {
+/**
+ * The SWT Renderer for the {@link VHorizontalLayout}. It renders all elements next to each other.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+@SuppressWarnings("restriction")
+// TODO no API
+public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
-	public static final SWTColumnCompositeRenderer INSTANCE = new SWTColumnCompositeRenderer();
-	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_control_column_composite";
+	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal";
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<ColumnComposite> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<VHorizontalLayout> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 

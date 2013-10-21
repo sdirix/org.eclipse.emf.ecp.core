@@ -164,16 +164,6 @@ public class CompositeCollectionItemProvider
 			(createChildParameter
 			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
 				ViewFactory.eINSTANCE.createControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				ViewFactory.eINSTANCE.createColumnComposite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
-				ViewFactory.eINSTANCE.createColumn()));
 	}
 
 }

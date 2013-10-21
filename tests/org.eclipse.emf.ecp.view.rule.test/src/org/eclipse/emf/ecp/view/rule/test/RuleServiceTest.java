@@ -29,7 +29,6 @@ import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
 import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -39,6 +38,8 @@ import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
@@ -147,10 +148,10 @@ public class RuleServiceTest extends CommonRuleTest {
 	private Control controlPName;
 
 	/** The column. */
-	private Column column;
+	private VVerticalLayout column;
 
 	/** The parent column. */
-	private Column parentColumn;
+	private VVerticalLayout parentColumn;
 
 	private ViewModelContext context;
 
@@ -168,10 +169,10 @@ public class RuleServiceTest extends CommonRuleTest {
 		view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(league.eClass());
 
-		parentColumn = ViewFactory.eINSTANCE.createColumn();
+		parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
-		column = ViewFactory.eINSTANCE.createColumn();
+		column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(column);
 
 		controlPName = ViewFactory.eINSTANCE.createControl();
@@ -2147,9 +2148,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Column> involvedEControls = helper.getInvolvedEObjects(
+		final Set<VVerticalLayout> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Column.class);
+			"League2", VVerticalLayout.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2242,9 +2243,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Column> involvedColumns = helper.getInvolvedEObjects(
+		final Set<VVerticalLayout> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Column.class);
+			"League2", VVerticalLayout.class);
 		assertEquals(1, involvedColumns.size());
 	}
 
@@ -2260,9 +2261,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Column> involvedColumns = helper.getInvolvedEObjects(
+		final Set<VVerticalLayout> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Column.class);
+			"League", VVerticalLayout.class);
 		assertEquals(0, involvedColumns.size());
 	}
 

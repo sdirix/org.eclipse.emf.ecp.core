@@ -73,26 +73,6 @@ public interface ViewFactory extends EFactory {
 	Control createControl();
 
 	/**
-	 * Returns a new object of class '<em>Column Composite</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Column Composite</em>'.
-	 * @generated
-	 */
-	ColumnComposite createColumnComposite();
-
-	/**
-	 * Returns a new object of class '<em>Column</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Column</em>'.
-	 * @generated
-	 */
-	Column createColumn();
-
-	/**
 	 * Returns a new object of class '<em>Action</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

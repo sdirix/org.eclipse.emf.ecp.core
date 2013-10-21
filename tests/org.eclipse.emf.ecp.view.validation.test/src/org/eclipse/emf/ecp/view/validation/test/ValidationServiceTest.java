@@ -23,7 +23,6 @@ import java.util.Set;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -36,6 +35,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Test;
 
 /**
@@ -76,10 +77,10 @@ public class ValidationServiceTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(library.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -108,11 +109,11 @@ public class ValidationServiceTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(library.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
 		// Writers //////////////////////////////////////
-		final Column columnWriter = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout columnWriter = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(columnWriter);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -124,7 +125,7 @@ public class ValidationServiceTest {
 		columnWriter.getComposites().add(controlWriter);
 
 		// Books //////////////////////////////////////////
-		final Column columnBooks = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout columnBooks = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(columnBooks);
 
 		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
@@ -184,10 +185,10 @@ public class ValidationServiceTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(library.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -216,10 +217,10 @@ public class ValidationServiceTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(library.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -265,11 +266,11 @@ public class ValidationServiceTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(library.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
 		// Writers //////////////////////////////////////
-		final Column columnWriter = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout columnWriter = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(columnWriter);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -281,7 +282,7 @@ public class ValidationServiceTest {
 		columnWriter.getComposites().add(controlWriter);
 
 		// Books //////////////////////////////////////////
-		final Column columnBooks = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout columnBooks = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(columnBooks);
 
 		final Control controlBooks = ViewFactory.eINSTANCE.createControl();
@@ -1403,11 +1404,11 @@ public class ValidationServiceTest {
 
 		view.setRootEClass(library.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
 		// Writers //////////////////////////////////////
-		final Column columnWriter = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout columnWriter = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(columnWriter);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -1421,7 +1422,7 @@ public class ValidationServiceTest {
 		columnWriter.getComposites().add(controlWriter);
 
 		// Books //////////////////////////////////////////
-		final Column columnBooks = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout columnBooks = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(columnBooks);
 
 		final Control controlBooks = ViewFactory.eINSTANCE.createControl();

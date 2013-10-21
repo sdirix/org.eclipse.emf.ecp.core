@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
@@ -29,6 +28,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -57,7 +58,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		new ViewModelContextImpl(view, computer);
 
 		final Control control = ViewFactory.eINSTANCE.createControl();
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(column);
 
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
@@ -87,10 +88,10 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		final View view = ViewFactory.eINSTANCE.createView();
 		view.setRootEClass(writer.eClass());
 
-		final Column parentColumn = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		parentColumn.getComposites().add(column);
 
 		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
@@ -119,10 +120,10 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		final GCCollectable parentColumnCollectable = new GCCollectable(
 			view.getChildren().get(0));
 		final GCCollectable columnCollectable = new GCCollectable(
-			Column.class.cast(view.getChildren().get(0)).getComposites().get(0));
+			VVerticalLayout.class.cast(view.getChildren().get(0)).getComposites().get(0));
 		final GCCollectable controlCollectable = new GCCollectable(
-			Column.class.cast(
-				Column.class.cast(view.getChildren().get(0))
+			VVerticalLayout.class.cast(
+				VVerticalLayout.class.cast(view.getChildren().get(0))
 					.getComposites().get(0)).getComposites()
 				.get(0));
 
@@ -144,17 +145,17 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		final View view = createWriterWithNestedColumnsView().first();
 
 		final GCCollectable controlCollectable = new GCCollectable(
-			Column.class.cast(Column.class.cast(
+			VVerticalLayout.class.cast(VVerticalLayout.class.cast(
 				view.getChildren().get(0)).getComposites().get(0)).getComposites().get(0));
 
 		assertEquals(Diagnostic.ERROR,
-			Column.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
+			VVerticalLayout.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
 
-		Column.class.cast(Column.class.cast(
+		VVerticalLayout.class.cast(VVerticalLayout.class.cast(
 			view.getChildren().get(0)).getComposites().get(0)).getComposites().remove(0);
 
 		assertEquals(Diagnostic.OK,
-			Column.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
+			VVerticalLayout.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
 
 		assertTrue(controlCollectable.isCollectable());
 	}
@@ -186,7 +187,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		final GCCollectable mainboardCollectable = new GCCollectable(
 			t.second().getMainboard());
 		final GCCollectable controlCollectable = new GCCollectable(
-			Column.class.cast(t.first().getChildren().get(0)).getComposites().get(0));
+			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getComposites().get(0));
 		t.second().setMainboard(null);
 
 		// control for mainboard should be removed from
@@ -209,9 +210,9 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		t.second().setMainboard(null);
 
 		final GCCollectable controlCollectable = new GCCollectable(
-			Column.class.cast(t.first().getChildren().get(0)).getComposites().get(0));
+			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getComposites().get(0));
 
-		Column.class.cast(t.first().getChildren().get(0)).getComposites().clear();
+		VVerticalLayout.class.cast(t.first().getChildren().get(0)).getComposites().clear();
 
 		// control for mainboard shouldn't be referenced anymore by validation registry or service
 		assertTrue(mainboardCollectable.isCollectable());

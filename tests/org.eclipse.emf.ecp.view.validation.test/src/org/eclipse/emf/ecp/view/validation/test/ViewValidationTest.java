@@ -18,7 +18,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -34,6 +33,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -222,7 +223,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitPropagation1LevelOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		final Control control = ViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
@@ -238,7 +239,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitPropagation1LevelError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		final Control control = ViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -256,7 +257,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		final Control control = ViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -276,7 +277,7 @@ public class ViewValidationTest extends CommonValidationTest {
 
 		final View view = ViewFactory.eINSTANCE.createView();
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		final Control control = ViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -518,7 +519,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		column.getComposites().add(control);
 		view.getChildren().add(column);
 
@@ -977,7 +978,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		tableControl.getColumns().add(tc);
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 
 		column.getComposites().add(tableControl);
 		view.getChildren().add(column);
@@ -1015,7 +1016,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		tableControl.getColumns().add(tc);
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 
 		column.getComposites().add(tableControl);
 		view.getChildren().add(column);

@@ -181,16 +181,6 @@ public class RowItemProvider
 			(createChildParameter
 			(VGroupedGridPackage.Literals.ROW__CHILDREN,
 				ViewFactory.eINSTANCE.createControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VGroupedGridPackage.Literals.ROW__CHILDREN,
-				ViewFactory.eINSTANCE.createColumnComposite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VGroupedGridPackage.Literals.ROW__CHILDREN,
-				ViewFactory.eINSTANCE.createColumn()));
 	}
 
 	/**

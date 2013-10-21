@@ -75,6 +75,4 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="composites" upperBound="-1"
         eType="#//Composite" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ColumnComposite" eSuperTypes="#//CompositeCollection"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Column" eSuperTypes="#//CompositeCollection"/>
 </ecore:EPackage>

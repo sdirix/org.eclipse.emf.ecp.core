@@ -25,8 +25,6 @@ import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -93,20 +91,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * @generated
 	 */
 	private EClass compositeCollectionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass columnCompositeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EClass columnEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -407,24 +391,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EClass getColumnComposite() {
-		return columnCompositeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EClass getColumn() {
-		return columnEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EClass getRenderable() {
 		return renderableEClass;
 	}
@@ -690,10 +656,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		compositeCollectionEClass = createEClass(COMPOSITE_COLLECTION);
 		createEReference(compositeCollectionEClass, COMPOSITE_COLLECTION__COMPOSITES);
 
-		columnCompositeEClass = createEClass(COLUMN_COMPOSITE);
-
-		columnEClass = createEClass(COLUMN);
-
 		// Create enums
 		alignmentEEnum = createEEnum(ALIGNMENT);
 	}
@@ -739,8 +701,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		vFeaturePathDomainModelReferenceEClass.getESuperTypes().add(this.getVDomainModelReference());
 		controlEClass.getESuperTypes().add(this.getAbstractControl());
 		compositeCollectionEClass.getESuperTypes().add(this.getComposite());
-		columnCompositeEClass.getESuperTypes().add(this.getCompositeCollection());
-		columnEClass.getESuperTypes().add(this.getCompositeCollection());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(renderableEClass, Renderable.class, "Renderable", IS_ABSTRACT, !IS_INTERFACE,
@@ -839,11 +799,6 @@ public class ViewPackageImpl extends EPackageImpl implements ViewPackage {
 		initEReference(getCompositeCollection_Composites(), this.getComposite(), null, "composites", null, 0, -1,
 			CompositeCollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(columnCompositeEClass, ColumnComposite.class, "ColumnComposite", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(columnEClass, Column.class, "Column", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(alignmentEEnum, Alignment.class, "Alignment");

@@ -27,8 +27,6 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
@@ -50,9 +48,9 @@ public class NodeBuilders {
 
 		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>() {
 			{
-				put(ColumnComposite.class,
-					new CompositeCollectionNodeBuilder<ColumnComposite>());
-				put(Column.class, new CompositeCollectionNodeBuilder<Column>());
+				// put(ColumnComposite.class,
+				// new CompositeCollectionNodeBuilder<ColumnComposite>());
+				// put(Column.class, new CompositeCollectionNodeBuilder<Column>());
 				// put(Group.class, new CompositeCollectionNodeBuilder<Group>());
 				put(Control.class, new RenderableNodeBuilder<Control>());
 				put(View.class, new ViewNodeBuilder());

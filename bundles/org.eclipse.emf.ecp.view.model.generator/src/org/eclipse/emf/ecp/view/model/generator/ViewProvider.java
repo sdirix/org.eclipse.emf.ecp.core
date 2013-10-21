@@ -15,8 +15,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
@@ -35,12 +33,6 @@ public class ViewProvider implements IViewProvider {
 	 */
 	public View generate(EObject eObject) {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Category category = ViewFactory.eINSTANCE.createCategory();
-		view.getCategorizations().add(category);
-
-		final Column column = ViewFactory.eINSTANCE.createColumn();
-		category.setComposite(column);
-
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 
 			if (isInvalidFeature(feature)) {
@@ -52,7 +44,7 @@ public class ViewProvider implements IViewProvider {
 				.createVFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			control.setDomainModelReference(modelReference);
-			column.getComposites().add(control);
+			view.getChildren().add(control);
 		}
 
 		return view;

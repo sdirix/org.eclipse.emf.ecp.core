@@ -206,59 +206,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.ColumnComposite}
-	 * instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected ColumnCompositeItemProvider columnCompositeItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.ColumnComposite}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createColumnCompositeAdapter() {
-		if (columnCompositeItemProvider == null)
-		{
-			columnCompositeItemProvider = new ColumnCompositeItemProvider(this);
-		}
-
-		return columnCompositeItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Column} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected ColumnItemProvider columnItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.Column}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createColumnAdapter() {
-		if (columnItemProvider == null)
-		{
-			columnItemProvider = new ColumnItemProvider(this);
-		}
-
-		return columnItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.Action} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -494,10 +441,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			vFeaturePathDomainModelReferenceItemProvider.dispose();
 		if (controlItemProvider != null)
 			controlItemProvider.dispose();
-		if (columnCompositeItemProvider != null)
-			columnCompositeItemProvider.dispose();
-		if (columnItemProvider != null)
-			columnItemProvider.dispose();
 	}
 
 }

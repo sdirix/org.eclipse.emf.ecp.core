@@ -15,7 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTColumnCompositeRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.model.Renderable;
@@ -37,7 +36,7 @@ public class HorizontalSWTRenderer implements CustomSWTRenderer {
 	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
 		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>> renderers;
 		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>>();
-		renderers.put(VHorizontalLayout.class, new SWTColumnCompositeRenderer());
+		renderers.put(VHorizontalLayout.class, new HorizontalLayoutSWTRenderer());
 		return renderers;
 	}
 

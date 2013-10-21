@@ -40,6 +40,11 @@
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.emf.ecp.view.vertical.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>

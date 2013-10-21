@@ -31,8 +31,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
@@ -49,8 +47,8 @@ public final class SWTRenderers implements SWTRenderer<Renderable> {
 	public SWTRenderers() {
 
 		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer>();
-		renderers.put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
-		renderers.put(Column.class, SWTColumnRenderer.INSTANCE);
+		// renderers.put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
+		// renderers.put(Column.class, SWTColumnRenderer.INSTANCE);
 		// put(Group.class, SWTGroupRenderer.INSTANCE);
 		// put(TableControl.class, SWTTableControlRenderer.INSTANCE);
 		renderers.put(Control.class, SWTControlRenderer.INSTANCE);

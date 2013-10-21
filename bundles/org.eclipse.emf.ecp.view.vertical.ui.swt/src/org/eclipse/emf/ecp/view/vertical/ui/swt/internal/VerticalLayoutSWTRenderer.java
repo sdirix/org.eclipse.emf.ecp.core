@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.vertical.ui.swt.internal;
 
 import java.util.List;
 
@@ -18,19 +18,29 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Column;
+import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public class SWTColumnRenderer extends AbstractSWTRenderer<Column> {
-	public static final SWTColumnRenderer INSTANCE = new SWTColumnRenderer();
-	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_control_column";
+/**
+ * The SWT Renderer for the {@link VVerticalLayout}. It renders all elements under each other.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+@SuppressWarnings("restriction")
+// TODO no API
+public class VerticalLayoutSWTRenderer extends AbstractSWTRenderer<VVerticalLayout> {
+
+	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_layout_vertical";
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<Column> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<VVerticalLayout> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {

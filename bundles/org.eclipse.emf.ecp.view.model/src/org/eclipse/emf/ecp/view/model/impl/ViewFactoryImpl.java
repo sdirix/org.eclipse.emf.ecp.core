@@ -21,8 +21,6 @@ import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Alignment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -94,10 +92,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 			return createVFeaturePathDomainModelReference();
 		case ViewPackage.CONTROL:
 			return createControl();
-		case ViewPackage.COLUMN_COMPOSITE:
-			return createColumnComposite();
-		case ViewPackage.COLUMN:
-			return createColumn();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -177,26 +171,6 @@ public class ViewFactoryImpl extends EFactoryImpl implements ViewFactory {
 	public Control createControl() {
 		ControlImpl control = new ControlImpl();
 		return control;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public ColumnComposite createColumnComposite() {
-		ColumnCompositeImpl columnComposite = new ColumnCompositeImpl();
-		return columnComposite;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public Column createColumn() {
-		ColumnImpl column = new ColumnImpl();
-		return column;
 	}
 
 	/**

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -62,7 +62,7 @@ public class ViewTest {
 	@Test
 	public void testViewWithChildren() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Column control = ViewFactory.eINSTANCE.createColumn();
+		final Control control = ViewFactory.eINSTANCE.createControl();
 		view.getChildren().add(control);
 		final Node<Renderable> node = build(view);
 		assertEquals(2, countNodes(node));
@@ -75,7 +75,7 @@ public class ViewTest {
 	@Test
 	public void testViewWithChildrenAndCategories() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Column control = ViewFactory.eINSTANCE.createColumn();
+		final Control control = ViewFactory.eINSTANCE.createControl();
 		final Category category = ViewFactory.eINSTANCE.createCategory();
 		view.getCategorizations().add(category);
 		view.getChildren().add(control);

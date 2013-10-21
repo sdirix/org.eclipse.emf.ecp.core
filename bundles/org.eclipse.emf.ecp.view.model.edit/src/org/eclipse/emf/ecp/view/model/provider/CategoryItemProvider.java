@@ -188,16 +188,6 @@ public class CategoryItemProvider
 			(createChildParameter
 			(ViewPackage.Literals.CATEGORY__COMPOSITE,
 				ViewFactory.eINSTANCE.createControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				ViewFactory.eINSTANCE.createColumnComposite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				ViewFactory.eINSTANCE.createColumn()));
 	}
 
 }

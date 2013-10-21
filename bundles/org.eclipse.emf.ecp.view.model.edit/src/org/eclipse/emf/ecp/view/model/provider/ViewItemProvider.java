@@ -188,16 +188,6 @@ public class ViewItemProvider
 			(createChildParameter
 			(ViewPackage.Literals.VIEW__CHILDREN,
 				ViewFactory.eINSTANCE.createControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.VIEW__CHILDREN,
-				ViewFactory.eINSTANCE.createColumnComposite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ViewPackage.Literals.VIEW__CHILDREN,
-				ViewFactory.eINSTANCE.createColumn()));
 	}
 
 }

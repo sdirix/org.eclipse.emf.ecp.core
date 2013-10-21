@@ -36,7 +36,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int RENDERABLE_CHILD_COUNT = 3;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	private static final int NUMBER_OF_MAIN_COMPOSITES = 3;
+	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
 	// label, separator, table, vertical, horizontal, group, groupedgrid, customcontrol
 	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 8;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
@@ -208,18 +208,6 @@ public class ChildrenDescriptorExtensionTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testCompositeCollectionDescriptors() {
 		getChildrenSize(ViewPackage.eINSTANCE.getCompositeCollection());
-	}
-
-	@Test
-	public void testColumnCompositeDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getColumnComposite());
-		assertEquals(COLUMNCOMPOSITE_CHILD_COUNT, size);
-	}
-
-	@Test
-	public void testColumnDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getColumn());
-		assertEquals(COLUMN_CHILD_COUNT, size);
 	}
 
 	@Test

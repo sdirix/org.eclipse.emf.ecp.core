@@ -20,12 +20,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.model.Column;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -112,7 +113,7 @@ public class ECPSWTViewRendererTest {
 		final org.eclipse.emf.ecp.view.model.Control control1 = ViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control1);
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(column);
 		column.getComposites().add(control);
 		column.getComposites().add(control1);
@@ -151,7 +152,7 @@ public class ECPSWTViewRendererTest {
 	 */
 	public void testViewWithOneContainerReadOnly() {
 
-		final Column column = ViewFactory.eINSTANCE.createColumn();
+		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(column);
 		view.setAllContentsReadOnly();
 		assertTrue(view.isReadonly());

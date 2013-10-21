@@ -21,8 +21,6 @@ import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -179,18 +177,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseColumnComposite(ColumnComposite object)
-		{
-			return createColumnCompositeAdapter();
-		}
-
-		@Override
-		public Adapter caseColumn(Column object)
-		{
-			return createColumnAdapter();
-		}
-
-		@Override
 		public Adapter defaultCase(EObject object)
 		{
 			return createEObjectAdapter();
@@ -315,37 +301,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCompositeCollectionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.ColumnComposite
-	 * <em>Column Composite</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.ColumnComposite
-	 * @generated
-	 */
-	public Adapter createColumnCompositeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Column <em>Column</em>}'.
-	 * <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Column
-	 * @generated
-	 */
-	public Adapter createColumnAdapter() {
 		return null;
 	}
 

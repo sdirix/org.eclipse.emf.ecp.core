@@ -20,8 +20,6 @@ import org.eclipse.emf.ecp.view.model.Action;
 import org.eclipse.emf.ecp.view.model.Attachment;
 import org.eclipse.emf.ecp.view.model.Categorization;
 import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Column;
-import org.eclipse.emf.ecp.view.model.ColumnComposite;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.CompositeCollection;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -224,32 +222,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.COLUMN_COMPOSITE: {
-			ColumnComposite columnComposite = (ColumnComposite) theEObject;
-			T result = caseColumnComposite(columnComposite);
-			if (result == null)
-				result = caseCompositeCollection(columnComposite);
-			if (result == null)
-				result = caseComposite(columnComposite);
-			if (result == null)
-				result = caseRenderable(columnComposite);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case ViewPackage.COLUMN: {
-			Column column = (Column) theEObject;
-			T result = caseColumn(column);
-			if (result == null)
-				result = caseCompositeCollection(column);
-			if (result == null)
-				result = caseComposite(column);
-			if (result == null)
-				result = caseRenderable(column);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -364,38 +336,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCompositeCollection(CompositeCollection object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Column Composite</em>'.
-	 * <!-- begin-user-doc
-	 * --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Column Composite</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseColumnComposite(ColumnComposite object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Column</em>'.
-	 * <!-- begin-user-doc --> This
-	 * implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Column</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseColumn(Column object) {
 		return null;
 	}
 
