@@ -48,10 +48,10 @@
       <feature id="org.eclipse.emf.ecp.view.table.feature"/>
       <feature id="org.eclipse.emf.ecp.view.validation.feature"/>
       <feature id="org.eclipse.emf.ecp.view.model.editor.test.feature"/>
-      <feature id="org.eclipse.emf.ecp.view.group.feature" version="1.1.0.qualifier"/>
-      <feature id="org.eclipse.emf.ecp.view.horizontal.feature" version="1.1.0.qualifier"/>
-      <feature id="org.eclipse.emf.ecp.view.label.feature" version="1.1.0.qualifier"/>
-      <feature id="org.eclipse.emf.ecp.view.vertical.feature" version="1.1.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.view.group.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.horizontal.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.label.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.vertical.feature"/>
    </features>
 
    <configurations>
