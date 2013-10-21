@@ -213,8 +213,9 @@
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
 		
-		
-		
+		<!-- Modules for View Editor Q7 Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.testplugin</module>
+		<module>../../features/org.eclipse.emf.ecp.view.model.editor.test.feature</module>
 		
 		
 		<!-- Should run on a seperate integration job -->

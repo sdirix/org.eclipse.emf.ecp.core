@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -119,6 +120,7 @@ public final class ViewModelFileExtensionsManager {
 		final List<URI> ret = new ArrayList<URI>();
 		final IConfigurationElement[] files = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			FILE_EXTENSION);
+		final URIConverter converter = new ResourceSetImpl().getURIConverter();
 		for (final IConfigurationElement file : files) {
 			final String filePath = file.getAttribute(FILEPATH_ATTRIBUTE);
 
@@ -126,6 +128,9 @@ public final class ViewModelFileExtensionsManager {
 			final String bundleName = file.getContributor().getName();
 			final String path = bundleName + '/' + filePath;
 			uri = URI.createPlatformPluginURI(path, false);
+			if (!converter.exists(uri, null)) {
+				uri = URI.createPlatformResourceURI(filePath, false);
+			}
 			ret.add(uri);
 		}
 		return ret;
