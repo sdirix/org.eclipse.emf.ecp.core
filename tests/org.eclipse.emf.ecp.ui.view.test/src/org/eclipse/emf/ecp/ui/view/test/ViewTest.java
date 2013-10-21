@@ -19,6 +19,8 @@ import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Test;
 
 /**
@@ -62,7 +64,12 @@ public class ViewTest {
 	@Test
 	public void testViewWithChildren() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		// final Control control = ViewFactory.eINSTANCE.createControl();
+		final VVerticalLayout control = VVerticalFactory.eINSTANCE.createVerticalLayout();
+		// final VFeaturePathDomainModelReference createVFeaturePathDomainModelReference = ViewFactory.eINSTANCE
+		// .createVFeaturePathDomainModelReference();
+		// createVFeaturePathDomainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
+		// control.setDomainModelReference(createVFeaturePathDomainModelReference);
 		view.getChildren().add(control);
 		final Node<Renderable> node = build(view);
 		assertEquals(2, countNodes(node));
