@@ -247,11 +247,19 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	private SWTControl getSingleInstance() {
 		try {
+			// final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
+			// .getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
+			// ECPControlContext.class, boolean.class);
+			//
+			// return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
+			// getStructuralFeature(), getModelElementContext(), true);
 			final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
-				.getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
-					ECPControlContext.class, boolean.class);
-			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
-				getStructuralFeature(), getModelElementContext(), true);
+				.getConstructor();
+
+			final SWTControl control = (SWTControl) widgetConstructor.newInstance();
+			control.init(getModelElementContext(), getDomainModelReference());
+			control.setEmbedded(true);
+			return control;
 		} catch (final IllegalArgumentException ex) {
 			Activator.logException(ex);
 		} catch (final InstantiationException ex) {
@@ -504,6 +512,16 @@ public abstract class MultiControl extends SWTControl {
 	@Override
 	protected Control[] getControlsForTooltip() {
 		return new Control[] { tooltipLabel };
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @deprecated
+	 */
+	@Deprecated
+	public boolean showLabel() {
+		return false;
 	}
 
 }

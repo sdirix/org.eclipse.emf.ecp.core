@@ -629,6 +629,16 @@ public class TableControl extends SWTControl {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * 
+	 * @deprecated
+	 */
+	@Deprecated
+	public boolean showLabel() {
+		return false;
+	}
+
+	/**
 	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
 	 * 
 	 * @author Eugen Neufeld

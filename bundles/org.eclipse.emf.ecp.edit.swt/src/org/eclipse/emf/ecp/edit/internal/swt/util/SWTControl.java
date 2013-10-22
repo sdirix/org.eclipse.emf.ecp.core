@@ -13,16 +13,19 @@
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
@@ -401,5 +404,48 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			return Display.getDefault().getSystemColor(color);
 		}
 		return parentComposite.getShell().getDisplay().getSystemColor(color);
+	}
+
+	private final Setting getSetting(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting lastSetting = null;
+		while (iterator.hasNext()) {
+			count++;
+			if (count == 2) {
+				throw new IllegalArgumentException(
+					"The passed VDomainModelReference resolves to more then one setting.");
+			}
+			lastSetting = iterator.next();
+		}
+		if (count == 0) {
+			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no setting.");
+		}
+		return lastSetting;
+	}
+
+	/**
+	 * Return the {@link EStructuralFeature} of this control.
+	 * 
+	 * @return the {@link EStructuralFeature}
+	 */
+	@Deprecated
+	protected EStructuralFeature getStructuralFeature() {
+		return getSetting(getDomainModelReference()).getEStructuralFeature();
+	}
+
+	/**
+	 * Whether this control should be editable.
+	 * 
+	 * @return true if the {@link IItemPropertyDescriptor#canSetProperty(Object)} returns true, false otherwise
+	 */
+	@Deprecated
+	protected boolean isEditable() {
+		return getItemPropertyDescriptor().canSetProperty(getSetting(getDomainModelReference()).getEObject());
+	}
+
+	@Deprecated
+	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
+		return getItemPropertyDescriptor(getSetting(getDomainModelReference()));
 	}
 }

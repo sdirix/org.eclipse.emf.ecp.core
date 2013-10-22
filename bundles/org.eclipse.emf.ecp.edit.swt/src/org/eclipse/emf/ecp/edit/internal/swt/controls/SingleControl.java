@@ -115,4 +115,14 @@ public abstract class SingleControl extends SWTControl {
 			controlDecoration.dispose();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @deprecated
+	 */
+	@Deprecated
+	public boolean showLabel() {
+		return true;
+	}
 }

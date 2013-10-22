@@ -11,16 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit;
 
-import java.util.Iterator;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -35,27 +29,11 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 public abstract class ECPAbstractControl implements ECPControl {
 
 	private ECPControlContext modelElementContext;
-	private boolean embedded;
+	private boolean embedded = false;
 	private final EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private VDomainModelReference domainModelReference;
-
-	/**
-	 * The Constructor containing all common parameters.
-	 * 
-	 * @param showLabel whether a label should be created for this control
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param feature the {@link EStructuralFeature}
-	 * @param modelElementContext the {@link ECPControlContext}
-	 * @param embedded whether this control will be embedded in another control e.g. multicontrol
-	 */
-	@Deprecated
-	public ECPAbstractControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		this.modelElementContext = modelElementContext;
-		this.embedded = embedded;
-	}
 
 	/**
 	 * @since 1.1
@@ -64,9 +42,10 @@ public abstract class ECPAbstractControl implements ECPControl {
 	}
 
 	/**
-	 * This method is called by the framework to instantiate the {@link ECPCustomControl}.
+	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
 	 * 
-	 * @param modelElementContext the {@link ECPControlContext} to use by this {@link ECPCustomControl}.
+	 * @param controlContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
+	 * @param domainModelReference the {@link VDomainModelReference} of this control
 	 * @since 1.1
 	 */
 	public final void init(ECPControlContext controlContext, VDomainModelReference domainModelReference) {
@@ -76,50 +55,16 @@ public abstract class ECPAbstractControl implements ECPControl {
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 	}
 
-	private final Setting getSetting(VDomainModelReference domainModelReference) {
-		final Iterator<Setting> iterator = domainModelReference.getIterator();
-		int count = 0;
-		Setting lastSetting = null;
-		while (iterator.hasNext()) {
-			count++;
-			if (count == 2) {
-				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to more then one setting.");
-			}
-			lastSetting = iterator.next();
-		}
-		if (count == 0) {
-			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no setting.");
-		}
-		return lastSetting;
-	}
-
 	/**
-	 * @since 1.1
-	 */
-	protected final EditingDomain getEditingDomain(VDomainModelReference domainModelReference) {
-		final Setting setting = getSetting(domainModelReference);
-		return AdapterFactoryEditingDomain.getEditingDomainFor(setting.getEObject());
-	}
-
-	/**
-	 * Return the {@link IItemPropertyDescriptor} describing this {@link EStructuralFeature}.
+	 * Return the {@link IItemPropertyDescriptor} describing this {@link Setting}.
 	 * 
+	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
 	 * @since 1.1
 	 */
-	protected final IItemPropertyDescriptor getItemPropertyDescriptor(VDomainModelReference domainModelReference) {
-		final Setting setting = getSetting(domainModelReference);
+	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
 		return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
 			setting.getEStructuralFeature());
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	protected final boolean isEditable(VDomainModelReference domainModelReference) {
-		final Setting setting = getSetting(domainModelReference);
-		return getItemPropertyDescriptor(domainModelReference).canSetProperty(setting.getEObject());
 	}
 
 	/**
@@ -135,23 +80,6 @@ public abstract class ECPAbstractControl implements ECPControl {
 	/**
 	 * @since 1.1
 	 */
-	protected final EObject getModelElement(VDomainModelReference domainModelReference) {
-		return getSetting(domainModelReference).getEObject();
-	}
-
-	/**
-	 * Return the {@link EStructuralFeature} of this control.
-	 * 
-	 * @return the {@link EStructuralFeature}
-	 * @since 1.1
-	 */
-	protected final EStructuralFeature getStructuralFeature(VDomainModelReference domainModelReference) {
-		return getSetting(domainModelReference).getEStructuralFeature();
-	}
-
-	/**
-	 * @since 1.1
-	 */
 	public void dispose() {
 		composedAdapterFactory.dispose();
 	}
@@ -162,8 +90,17 @@ public abstract class ECPAbstractControl implements ECPControl {
 	 * 
 	 * @return true if the control is embedded in another control
 	 */
-	protected boolean isEmbedded() {
+	protected final boolean isEmbedded() {
 		return embedded;
+	}
+
+	/**
+	 * Sets whether this control is used as an embedded control.
+	 * 
+	 * @param embedded whether the control is used as an embedded control
+	 */
+	public final void setEmbedded(boolean embedded) {
+		this.embedded = embedded;
 	}
 
 	/**
@@ -171,51 +108,28 @@ public abstract class ECPAbstractControl implements ECPControl {
 	 * 
 	 * @return the {@link ECPControlContext}
 	 */
-	protected ECPControlContext getModelElementContext() {
+	protected final ECPControlContext getModelElementContext() {
 		return modelElementContext;
 	}
 
 	/**
-	 * Return the {@link EStructuralFeature} of this control.
+	 * Returns the {@link VDomainModelReference} set for this control.
 	 * 
-	 * @return the {@link EStructuralFeature}
+	 * @return the domainModelReference teh {@link VDomainModelReference} of this control
 	 */
-	@Deprecated
-	protected EStructuralFeature getStructuralFeature() {
-		return getSetting(domainModelReference).getEStructuralFeature();
+	protected final VDomainModelReference getDomainModelReference() {
+		return domainModelReference;
 	}
 
-	/**
-	 * Whether this control should be editable.
-	 * 
-	 * @return true if the {@link IItemPropertyDescriptor#canSetProperty(Object)} returns true, false otherwise
-	 */
-	@Deprecated
-	protected boolean isEditable() {
-		return getItemPropertyDescriptor(domainModelReference).canSetProperty(modelElementContext.getModelElement());
-	}
-
-	/**
-	 * Checks whether this {@link EStructuralFeature} has an explicit unset state.
-	 * 
-	 * @return true if {@link EStructuralFeature#isUnsettable()} is true, false otherwise
-	 */
-	@Deprecated
-	protected boolean hasUnsetState() {
-		return getStructuralFeature().isUnsettable();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Deprecated
-	public boolean showLabel() {
-		return true;
-	}
-
-	@Deprecated
-	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
-		return getItemPropertyDescriptor(domainModelReference);
-	}
+	//
+	// /**
+	// * Checks whether this {@link EStructuralFeature} has an explicit unset state.
+	// *
+	// * @return true if {@link EStructuralFeature#isUnsettable()} is true, false otherwise
+	// */
+	// @Deprecated
+	// protected boolean hasUnsetState() {
+	// return getStructuralFeature().isUnsettable();
+	// }
 
 }

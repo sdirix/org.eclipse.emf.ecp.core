@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.edit.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * Abstract class implementing {@link ECPCustomControl} providing necessary common access methods.
@@ -229,6 +230,16 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl {
 	}
 
 	/**
+	 * Return the {@link IItemPropertyDescriptor} describing this {@link EStructuralFeature}.
+	 * 
+	 * @return the {@link IItemPropertyDescriptor}
+	 * @since 1.1
+	 */
+	protected final IItemPropertyDescriptor getItemPropertyDescriptor(VDomainModelReference domainModelReference) {
+		return getItemPropertyDescriptor(getSetting(domainModelReference));
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.custom.model.ECPCustomControl#getNeededDomainModelReferences()
@@ -253,8 +264,10 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
-	@Override
+	@Deprecated
 	public final boolean showLabel() {
 		return false;
 	}
