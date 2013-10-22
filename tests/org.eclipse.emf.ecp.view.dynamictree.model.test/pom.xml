@@ -22,8 +22,8 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-				<testSuite>org.eclipse.emf.ecp.view.rule.test</testSuite>
-		          	<testClass>org.eclipse.emf.ecp.view.rule.test.AllTests</testClass>
+				<testSuite>org.eclipse.emf.ecp.view.dynamictree.model.test</testSuite>
+		          	<testClass>org.eclipse.emf.ecp.view.dynamictree.model.test.AllTests</testClass>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
 		          	<testFailureIgnore>true</testFailureIgnore>
