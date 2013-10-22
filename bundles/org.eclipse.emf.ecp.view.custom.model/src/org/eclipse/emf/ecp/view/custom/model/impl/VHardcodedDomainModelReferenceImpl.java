@@ -23,9 +23,9 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.view.custom.model.ECPPredefinedReferences;
+import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
@@ -35,19 +35,17 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.VPredefinedDomainModelReferenceImpl#getControlId <em>Control Id
- * </em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl#getControlId <em>Control Id</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
-public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements VPredefinedDomainModelReference {
+public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements VHardcodedDomainModelReference {
 	/**
 	 * The default value of the '{@link #getControlId() <em>Control Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getControlId()
 	 * @generated
 	 * @ordered
@@ -58,7 +56,6 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	 * The cached value of the '{@link #getControlId() <em>Control Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getControlId()
 	 * @generated
 	 * @ordered
@@ -68,28 +65,25 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	protected VPredefinedDomainModelReferenceImpl() {
+	protected VHardcodedDomainModelReferenceImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return VCustomPackage.Literals.PREDEFINED_DOMAIN_MODEL_REFERENCE;
+		return VCustomPackage.Literals.HARDCODED_DOMAIN_MODEL_REFERENCE;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getControlId() {
@@ -99,29 +93,25 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setControlId(String newControlId) {
-		final String oldControlId = controlId;
+		String oldControlId = controlId;
 		controlId = newControlId;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID, oldControlId, controlId));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID, oldControlId, controlId));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			return getControlId();
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				return getControlId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -129,15 +119,14 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			setControlId((String) newValue);
-			return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				setControlId((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -145,15 +134,14 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			setControlId(CONTROL_ID_EDEFAULT);
-			return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				setControlId(CONTROL_ID_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -161,14 +149,13 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			return CONTROL_ID_EDEFAULT == null ? controlId != null : !CONTROL_ID_EDEFAULT.equals(controlId);
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				return CONTROL_ID_EDEFAULT == null ? controlId != null : !CONTROL_ID_EDEFAULT.equals(controlId);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -176,16 +163,13 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (controlId: ");
 		result.append(controlId);
 		result.append(')');
@@ -201,7 +185,7 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 	public boolean resolve(EObject eObject) {
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		// load control
-		final ECPPredefinedReferences customControl = controlFactory.createControl(getControlId());
+		final ECPHardcodedReferences customControl = controlFactory.createControl(getControlId());
 		Activator.getDefault().ungetECPControlFactory();
 		if (customControl == null) {
 			return false;
@@ -282,4 +266,4 @@ public class VPredefinedDomainModelReferenceImpl extends EObjectImpl implements 
 		protected abstract Iterator<T> getSubIterator(VDomainModelReference domainModelReference);
 	}
 
-} // VPredefinedDomainModelReferenceImpl
+} // VHardcodedDomainModelReferenceImpl

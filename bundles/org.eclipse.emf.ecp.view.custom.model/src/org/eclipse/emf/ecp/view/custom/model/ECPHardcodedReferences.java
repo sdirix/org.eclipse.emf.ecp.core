@@ -16,13 +16,13 @@ import java.util.Set;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
- * A class implementing {@link ECPPredefinedReferences} indicates, that it provides the set of the
+ * A class implementing {@link ECPHardcodedReferences} indicates, that it provides the set of the
  * {@link VDomainModelReference VDomainModelReferences} needed for rendering itself.
  * 
  * @author Eugen Neufeld
  * 
  */
-public interface ECPPredefinedReferences {
+public interface ECPHardcodedReferences {
 	/**
 	 * Returns a list of all {@link VDomainModelReference VDomainModelReferences} which will be used by this control.
 	 * 

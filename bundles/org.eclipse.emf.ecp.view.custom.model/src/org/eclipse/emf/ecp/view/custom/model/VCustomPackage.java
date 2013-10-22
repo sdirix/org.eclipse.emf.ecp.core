@@ -65,14 +65,14 @@ public interface VCustomPackage extends EPackage {
 	VCustomPackage eINSTANCE = org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VPredefinedDomainModelReferenceImpl <em>Predefined Domain Model Reference</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VPredefinedDomainModelReferenceImpl
-	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getPredefinedDomainModelReference()
+	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 	 * @generated
 	 */
-	int PREDEFINED_DOMAIN_MODEL_REFERENCE = 0;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
@@ -81,37 +81,37 @@ public interface VCustomPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Predefined Domain Model Reference</em>' class.
+	 * The number of structural features of the '<em>Hardcoded Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PREDEFINED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference <em>Predefined Domain Model Reference</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Predefined Domain Model Reference</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference
+	 * @return the meta object for class '<em>Hardcoded Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference
 	 * @generated
 	 */
-	EClass getPredefinedDomainModelReference();
+	EClass getHardcodedDomainModelReference();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference#getControlId <em>Control Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Control Id</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference#getControlId()
-	 * @see #getPredefinedDomainModelReference()
+	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId()
+	 * @see #getHardcodedDomainModelReference()
 	 * @generated
 	 */
-	EAttribute getPredefinedDomainModelReference_ControlId();
+	EAttribute getHardcodedDomainModelReference_ControlId();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -136,14 +136,14 @@ public interface VCustomPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VPredefinedDomainModelReferenceImpl <em>Predefined Domain Model Reference</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VPredefinedDomainModelReferenceImpl
-		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getPredefinedDomainModelReference()
+		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 		 * @generated
 		 */
-		EClass PREDEFINED_DOMAIN_MODEL_REFERENCE = eINSTANCE.getPredefinedDomainModelReference();
+		EClass HARDCODED_DOMAIN_MODEL_REFERENCE = eINSTANCE.getHardcodedDomainModelReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Control Id</b></em>' attribute feature.
@@ -151,7 +151,7 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = eINSTANCE.getPredefinedDomainModelReference_ControlId();
+		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = eINSTANCE.getHardcodedDomainModelReference_ControlId();
 
 	}
 

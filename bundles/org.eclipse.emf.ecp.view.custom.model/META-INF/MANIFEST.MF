@@ -7,14 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.view.custom.model;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.view.custom.model.edit,
-   org.eclipse.emf.ecp.view.custom.ui,
-   org.eclipse.emf.ecp.view.custom.ui.swt,
-   org.eclipse.emf.ecp.view.custom.ui.swt.test,
-   org.eclipse.emf.ecp.view.custom.ui.swt.example",
- org.eclipse.emf.ecp.view.custom.model.impl;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.custom.ui,org.eclipse.emf.ecp.view.dynamictree.model.test",
- org.eclipse.emf.ecp.view.custom.model.util;version="1.1.0";x-friends:="org.eclipse.emf.ecp.view.custom.model.edit"
+Export-Package: org.eclipse.emf.ecp.view.custom.model;x-friends:="org.eclipse.emf.ecp.view.custom.model.edit,  org.eclipse.emf.ecp.view.custom.ui,  org.eclipse.emf.ecp.view.custom.ui.swt,  org.eclipse.emf.ecp.view.custom.ui.swt.test,  org.eclipse.emf.ecp.view.custom.ui.swt.example";version="1.1.0",
+ org.eclipse.emf.ecp.view.custom.model.impl;x-friends:="org.eclipse.emf.ecp.view.custom.ui,org.eclipse.emf.ecp.view.dynamictree.model.test";version="1.1.0",
+ org.eclipse.emf.ecp.view.custom.model.util;x-friends:=org.eclipse.emf.ecp.view.custom.model.edit;version="1.1.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;visibility:=reexport;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;visibility:=reexport;bundle-version="[1.1.0,2.0.0)",

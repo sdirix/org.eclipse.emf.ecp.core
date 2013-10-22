@@ -31,13 +31,13 @@ public interface VCustomFactory extends EFactory {
 	VCustomFactory eINSTANCE = org.eclipse.emf.ecp.view.custom.model.impl.VCustomFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Predefined Domain Model Reference</em>'.
+	 * Returns a new object of class '<em>Hardcoded Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Predefined Domain Model Reference</em>'.
+	 * @return a new object of class '<em>Hardcoded Domain Model Reference</em>'.
 	 * @generated
 	 */
-	VPredefinedDomainModelReference createPredefinedDomainModelReference();
+	VHardcodedDomainModelReference createHardcodedDomainModelReference();
 
 	/**
 	 * Returns the package supported by this factory.

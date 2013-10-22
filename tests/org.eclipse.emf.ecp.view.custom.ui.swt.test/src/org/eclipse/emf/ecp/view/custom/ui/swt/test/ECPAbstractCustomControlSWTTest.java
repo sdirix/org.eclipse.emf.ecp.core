@@ -46,7 +46,7 @@ import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT.SWTCus
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -318,8 +318,8 @@ public class ECPAbstractCustomControlSWTTest {
 		allFeatures = null;
 		customControl = new ECPAbstractCustomControlSWTStub();
 		domainObject = ViewFactory.eINSTANCE.createControl();
-		final VPredefinedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createPredefinedDomainModelReference();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
 		domainObject.setDomainModelReference(domainModelReference);
 
@@ -826,8 +826,8 @@ public class ECPAbstractCustomControlSWTTest {
 		// domainObject.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");
 		// domainObject
 		// .setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
-		final VPredefinedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createPredefinedDomainModelReference();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
 		domainObject.setDomainModelReference(domainModelReference);
 		final Control control = SWTViewTestHelper.render(domainObject, SWTViewTestHelper.createShell());

@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
@@ -98,8 +98,8 @@ public class SWTCustomControlTest {
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
 		// TODO check id
-		final VPredefinedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createPredefinedDomainModelReference();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
 		customControl.setDomainModelReference(domainModelReference);
 		return view;
@@ -115,8 +115,8 @@ public class SWTCustomControlTest {
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
 		// TODO check id
-		final VPredefinedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createPredefinedDomainModelReference();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
 		customControl.setDomainModelReference(domainModelReference);
 		// setup ui
@@ -135,8 +135,8 @@ public class SWTCustomControlTest {
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
 		// TODO check id
-		final VPredefinedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createPredefinedDomainModelReference();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
 		customControl.setDomainModelReference(domainModelReference);
 

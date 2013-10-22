@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -41,8 +41,8 @@ public class CustomControlValidationTest {
 	public void init() {
 		view = ViewFactory.eINSTANCE.createView();
 		modelControl = ViewFactory.eINSTANCE.createControl();
-		final VPredefinedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createPredefinedDomainModelReference();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
 		modelControl.setDomainModelReference(domainModelReference);
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidatiuonCustomControl");
 		// modelControl.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");

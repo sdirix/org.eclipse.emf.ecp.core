@@ -100,26 +100,26 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PredefinedDomainModelReferenceItemProvider predefinedDomainModelReferenceItemProvider;
+	protected HardcodedDomainModelReferenceItemProvider hardcodedDomainModelReferenceItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createPredefinedDomainModelReferenceAdapter() {
-		if (predefinedDomainModelReferenceItemProvider == null) {
-			predefinedDomainModelReferenceItemProvider = new PredefinedDomainModelReferenceItemProvider(this);
+	public Adapter createHardcodedDomainModelReferenceAdapter() {
+		if (hardcodedDomainModelReferenceItemProvider == null) {
+			hardcodedDomainModelReferenceItemProvider = new HardcodedDomainModelReferenceItemProvider(this);
 		}
 
-		return predefinedDomainModelReferenceItemProvider;
+		return hardcodedDomainModelReferenceItemProvider;
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * @generated
 	 */
 	public void dispose() {
-		if (predefinedDomainModelReferenceItemProvider != null) predefinedDomainModelReferenceItemProvider.dispose();
+		if (hardcodedDomainModelReferenceItemProvider != null) hardcodedDomainModelReferenceItemProvider.dispose();
 	}
 
 	/**
@@ -302,7 +302,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 				newChildDescriptors.add
 					(createChildParameter
 						(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						 VCustomFactory.eINSTANCE.createPredefinedDomainModelReference()));
+						 VCustomFactory.eINSTANCE.createHardcodedDomainModelReference()));
 
 				return null;
 			}
@@ -325,8 +325,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 			ArrayList<Object> result = new ArrayList<Object>();
-		   new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
-		   return result;
+			new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
+			return result;
 		}
 
 		/**

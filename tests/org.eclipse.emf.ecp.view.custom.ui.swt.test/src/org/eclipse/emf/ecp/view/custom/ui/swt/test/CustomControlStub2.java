@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.view.custom.model.ECPPredefinedReferences;
+import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Jonas
  * 
  */
-public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements ECPPredefinedReferences {
+public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 
 	public static final String LABEL_TEXT = "labelText";
 	private static Label label;

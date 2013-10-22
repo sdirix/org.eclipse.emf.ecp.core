@@ -17,25 +17,22 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	private EClass predefinedDomainModelReferenceEClass = null;
-
+	private EClass hardcodedDomainModelReferenceEClass = null;
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the package
@@ -57,7 +54,6 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -65,24 +61,20 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>
-	 * This method is used to initialize {@link VCustomPackage#eINSTANCE} when that field is accessed. Clients should
-	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
+	 * <p>This method is used to initialize {@link VCustomPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static VCustomPackage init() {
-		if (isInited) {
-			return (VCustomPackage) EPackage.Registry.INSTANCE.getEPackage(VCustomPackage.eNS_URI);
-		}
+		if (isInited) return (VCustomPackage)EPackage.Registry.INSTANCE.getEPackage(VCustomPackage.eNS_URI);
 
 		// Obtain or create and register package
-		final VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VCustomPackageImpl());
+		VCustomPackageImpl theCustomPackage = (VCustomPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new VCustomPackageImpl());
 
 		isInited = true;
 
@@ -98,6 +90,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		// Mark meta-data to indicate it can't be changed
 		theCustomPackage.freeze();
 
+  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(VCustomPackage.eNS_URI, theCustomPackage);
 		return theCustomPackage;
@@ -106,80 +99,69 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public EClass getPredefinedDomainModelReference() {
-		return predefinedDomainModelReferenceEClass;
+	public EClass getHardcodedDomainModelReference() {
+		return hardcodedDomainModelReferenceEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public EAttribute getPredefinedDomainModelReference_ControlId() {
-		return (EAttribute) predefinedDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	public EAttribute getHardcodedDomainModelReference_ControlId() {
+		return (EAttribute)hardcodedDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VCustomFactory getCustomFactory() {
-		return (VCustomFactory) getEFactoryInstance();
+		return (VCustomFactory)getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package. This method is
+	 * Creates the meta-model objects for the package.  This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
-			return;
-		}
+		if (isCreated) return;
 		isCreated = true;
 
 		// Create classes and their features
-		predefinedDomainModelReferenceEClass = createEClass(PREDEFINED_DOMAIN_MODEL_REFERENCE);
-		createEAttribute(predefinedDomainModelReferenceEClass, PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
+		hardcodedDomainModelReferenceEClass = createEClass(HARDCODED_DOMAIN_MODEL_REFERENCE);
+		createEAttribute(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model. This
+	 * Complete the initialization of the package and its meta-model.  This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
-			return;
-		}
+		if (isInitialized) return;
 		isInitialized = true;
 
 		// Initialize package
@@ -188,21 +170,18 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		ViewPackage theViewPackage = (ViewPackage)EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		predefinedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVDomainModelReference());
+		hardcodedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(predefinedDomainModelReferenceEClass, VPredefinedDomainModelReference.class,
-			"PredefinedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPredefinedDomainModelReference_ControlId(), ecorePackage.getEString(), "controlId", null, 1,
-			1, VPredefinedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(hardcodedDomainModelReferenceEClass, VHardcodedDomainModelReference.class, "HardcodedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getHardcodedDomainModelReference_ControlId(), ecorePackage.getEString(), "controlId", null, 1, 1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
