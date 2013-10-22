@@ -43,7 +43,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 		try
 		{
 			VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/table/model");
+				.getEFactory(VTablePackage.eNS_URI);
 			if (theTableFactory != null)
 			{
 				return theTableFactory;

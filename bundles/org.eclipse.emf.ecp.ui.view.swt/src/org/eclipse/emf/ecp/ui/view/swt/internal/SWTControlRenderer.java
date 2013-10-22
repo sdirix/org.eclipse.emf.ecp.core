@@ -107,10 +107,13 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 			// return createResult(controlComposite);
 			// }
 			// return createResult(label, controlComposite);
-			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList();
+			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList();
 			if (label != null) {
 				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 					.createRenderingResultRow(label, createControls.iterator().next().getControls().iterator().next()));
+			}
+			else {
+				result = createControls;
 			}
 			// result.addAll(createControls);
 			return result;
