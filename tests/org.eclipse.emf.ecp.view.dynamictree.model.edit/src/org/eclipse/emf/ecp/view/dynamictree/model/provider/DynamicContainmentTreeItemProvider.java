@@ -231,16 +231,6 @@ public class DynamicContainmentTreeItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
-				ViewFactory.eINSTANCE.createColumnComposite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
-				ViewFactory.eINSTANCE.createColumn()));
-
-		newChildDescriptors.add
-			(createChildParameter
 			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__ITEMS,
 				ModelFactory.eINSTANCE.createDynamicContainmentItem()));
 	}

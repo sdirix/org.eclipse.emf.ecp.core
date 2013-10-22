@@ -180,16 +180,6 @@ public class DynamicContainmentItemItemProvider
 			(createChildParameter
 			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
 				ViewFactory.eINSTANCE.createControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
-				ViewFactory.eINSTANCE.createColumnComposite()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
-				ViewFactory.eINSTANCE.createColumn()));
 	}
 
 	/**
