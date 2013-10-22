@@ -8,7 +8,11 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.ui.view.test,
+  x-friends:="org.eclipse.emf.ecp.ui.view,
+   org.eclipse.emf.ecp.ui.view.editor.controls,
+   org.eclipse.emf.ecp.ui.view.swt,
+   org.eclipse.emf.ecp.ui.view.swt.test,
+   org.eclipse.emf.ecp.ui.view.test,
    org.eclipse.emf.ecp.view.context,
    org.eclipse.emf.ecp.view.custom.model,
    org.eclipse.emf.ecp.view.custom.model.edit,
@@ -69,21 +73,22 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.vertical.ui.swt,
    org.eclipse.emf.ecp.view.vertical.ui.swt.test,
    org.eclipse.emf.ecp.view.vertical.ui.test,
-   org.eclipse.emf.ecp.ui.view.swt.test,
-   org.eclipse.emf.ecp.ui.view.swt,
-   org.eclipse.emf.ecp.ui.view,
-   org.eclipse.emf.ecp.ui.view.editor.controls",
+   org.eclipse.emf.ecp.view.dynamictree.model.test,
+   org.eclipse.emf.ecp.view.dynamictree.model,
+   org.eclipse.emf.ecp.view.dynamictree.model.edit",
  org.eclipse.emf.ecp.view.model.impl;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.view.custom.model,
+  x-friends:="org.eclipse.emf.ecp.ui.view.swt,
+   org.eclipse.emf.ecp.view.custom.model,
    org.eclipse.emf.ecp.view.group.model,
    org.eclipse.emf.ecp.view.groupedgrid.model,
    org.eclipse.emf.ecp.view.horizontal.model,
    org.eclipse.emf.ecp.view.label.model,
+   org.eclipse.emf.ecp.view.rule.model,
    org.eclipse.emf.ecp.view.separator.model,
    org.eclipse.emf.ecp.view.table.model,
    org.eclipse.emf.ecp.view.vertical.model,
-   org.eclipse.emf.ecp.view.rule.model,
-   org.eclipse.emf.ecp.ui.view.swt",
+   org.eclipse.emf.ecp.view.dynamictree.model.test,
+   org.eclipse.emf.ecp.view.dynamictree.model",
  org.eclipse.emf.ecp.view.model.util;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.view.context,
    org.eclipse.emf.ecp.view.custom.model.edit,
@@ -91,11 +96,12 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.groupedgrid.model.edit,
    org.eclipse.emf.ecp.view.horizontal.model.edit,
    org.eclipse.emf.ecp.view.label.model.edit,
+   org.eclipse.emf.ecp.view.model.edit,
+   org.eclipse.emf.ecp.view.rule.model.edit,
    org.eclipse.emf.ecp.view.separator.model.edit,
    org.eclipse.emf.ecp.view.table.model.edit,
    org.eclipse.emf.ecp.view.vertical.model.edit,
-   org.eclipse.emf.ecp.view.model.edit,
-   org.eclipse.emf.ecp.view.rule.model.edit"
+   org.eclipse.emf.ecp.view.dynamictree.model.test"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy

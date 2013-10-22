@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.ecp.view.dynamictree.model/src"
+    editDirectory="/org.eclipse.emf.ecp.view.dynamictree.model.edit/src" editorDirectory="/org.eclipse.emf.ecp.view.dynamictree.model.editor/src"
+    modelPluginID="org.eclipse.emf.ecp.view.dynamictree.model" modelName="DynamicTree"
+    editPluginClass="org.eclipse.emf.ecp.view.dynamictree.model.provider.DynamicTreeEditPlugin"
+    editorPluginClass="model.presentation.DynamicTreeEditorPlugin" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.dynamictree.model.edit"
+    editorPluginID="org.eclipse.emf.ecp.view.dynamictree.model.editor" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
+  <foreignModel>dynamictree.ecore</foreignModel>
+  <genPackages prefix="Model" basePackage="org.eclipse.emf.ecp.view.dynamictree" disposableProviderFactory="true"
+      ecorePackage="dynamictree.ecore#/">
+    <genClasses ecoreClass="dynamictree.ecore#//DynamicContainmentTree">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentTree/domainModel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentTree/childReference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentTree/pathToRoot"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentTree/childComposite"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentTree/items"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamictree.ecore#//DynamicContainmentItem">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentItem/domainModel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentItem/items"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DynamicContainmentItem/composite"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamictree.ecore#//TestElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamictree.ecore#//TestElement/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//TestElement/elements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamictree.ecore#//TestElement/parentId"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamictree.ecore#//DomainRoot">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DomainRoot/intermediate"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamictree.ecore#//DomainIntermediate">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DomainIntermediate/testElementContainer"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamictree.ecore#//TestElementContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//TestElementContainer/testElements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamictree.ecore#//TestElementContainer/id"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

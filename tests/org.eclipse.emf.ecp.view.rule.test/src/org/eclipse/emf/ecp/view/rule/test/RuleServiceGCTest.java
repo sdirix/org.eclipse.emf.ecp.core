@@ -34,7 +34,6 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class RuleServiceGCTest extends CommonRuleTest {
@@ -151,7 +150,6 @@ public class RuleServiceGCTest extends CommonRuleTest {
 		assertTrue(view.getChildren().get(0).isEnabled());
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveLeafConditionOfShowRuleReevaluate() {
 		final Tuple<View, League> tuple = createView();
@@ -221,7 +219,6 @@ public class RuleServiceGCTest extends CommonRuleTest {
 		assertTrue(collectable.isCollectable());
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveLeafConditionOfEnableRule() {
 		final Tuple<View, League> tuple = createView();

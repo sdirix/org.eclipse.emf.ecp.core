@@ -1,0 +1,50 @@
+/**
+ */
+package org.eclipse.emf.ecp.view.dynamictree.model;
+
+import org.eclipse.emf.ecore.EObject;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Domain Intermediate</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDomainIntermediate()
+ * @model
+ * @generated
+ */
+public interface DomainIntermediate extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Test Element Container</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Test Element Container</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Test Element Container</em>' reference.
+	 * @see #setTestElementContainer(TestElementContainer)
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDomainIntermediate_TestElementContainer()
+	 * @model
+	 * @generated
+	 */
+	TestElementContainer getTestElementContainer();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Test Element Container</em>' reference.
+	 * @see #getTestElementContainer()
+	 * @generated
+	 */
+	void setTestElementContainer(TestElementContainer value);
+
+} // DomainIntermediate
