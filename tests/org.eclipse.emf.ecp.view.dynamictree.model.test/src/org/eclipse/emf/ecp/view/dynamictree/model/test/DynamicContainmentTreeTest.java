@@ -113,7 +113,7 @@ public class DynamicContainmentTreeTest {
 	}
 
 	@Test
-	public void testUVBNodesNotFiltered() {
+	public void testFilter() {
 
 		final List<Node<?>> filterVisibleNodes = AbstractCategorizationFilterHelper
 			.filterNodes(node);
@@ -122,9 +122,9 @@ public class DynamicContainmentTreeTest {
 	}
 
 	@Test
-	public void testAddNodeToArticle() {
+	public void testAddNodeToDomainNode() {
 		final String id = "123";
-		addPackingItem(id, node);
+		addItem(id, node);
 		final List<Node<?>> children = node.getChildren();
 		final Node<?> childNode = children.get(children.size() - 1);
 		final Object labelObject = childNode.getLabelObject();
@@ -137,12 +137,12 @@ public class DynamicContainmentTreeTest {
 	}
 
 	@Test
-	public void testAddNodeToPackingItem() {
+	public void testAddNodeToTestElement() {
 		final String id = "123456789012";
 		@SuppressWarnings("unchecked")
 		final Node<DynamicContainmentItem> existingPackingItem = (Node<DynamicContainmentItem>) node.getChildren().get(
 			node.getChildren().size() - 1);
-		addPackingItem(id, existingPackingItem);
+		addItem(id, existingPackingItem);
 
 		final List<Node<?>> children = existingPackingItem.getChildren();
 		final Node<?> childNode = children.get(children.size() - 1);
@@ -155,7 +155,7 @@ public class DynamicContainmentTreeTest {
 		assertEquals(elementId, testElement.getParentId());
 	}
 
-	public static Node<?> addPackingItem(String id, Node<?> virtualParentNode) {
+	public static Node<?> addItem(String id, Node<?> virtualParentNode) {
 
 		EObject virtualParent = (EObject) virtualParentNode.getLabelObject();
 		final TestElement newValue = ModelFactory.eINSTANCE.createTestElement();
