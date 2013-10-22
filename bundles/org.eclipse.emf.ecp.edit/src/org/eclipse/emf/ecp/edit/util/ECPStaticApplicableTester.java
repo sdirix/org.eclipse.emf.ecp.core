@@ -12,10 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.util;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -53,12 +57,41 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		// if the feature is a multiValue and the description is a singlevalue continue
-		if (isSingleValue() == itemPropertyDescriptor.isMany(eObject)) {
+		return check(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 * @since 1.1
+	 */
+	public int isApplicable(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			count++;
+			setting = iterator.next();
+		}
+		if (count != 1) {
 			return NOT_APPLICABLE;
 		}
-		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject);
+		return check(setting.getEObject(), setting.getEStructuralFeature());
+	}
+
+	/**
+	 * @param eObject
+	 * @param eStructuralFeature
+	 * @return
+	 */
+	private int check(EObject eObject, EStructuralFeature feature) {
+		// if the feature is a multiValue and the description is a singlevalue continue
+		if (isSingleValue() == feature.isMany()) {
+			return NOT_APPLICABLE;
+		}
 		// if we have an attribute
 		if (EAttribute.class.isInstance(feature)) {
 			if (checkAttributeInvalid((EAttribute) feature)) {
@@ -164,4 +197,5 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 	public Class<?> getSupportedClassType() {
 		return supportedClassType;
 	}
+
 }

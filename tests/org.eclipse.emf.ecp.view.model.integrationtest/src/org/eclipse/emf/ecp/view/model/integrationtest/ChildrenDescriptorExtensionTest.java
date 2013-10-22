@@ -231,14 +231,6 @@ public class ChildrenDescriptorExtensionTest {
 	}
 
 	/**
-	 * Class is abstract, Exception expected
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testAbstractControlDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getAbstractControl());
-	}
-
-	/**
 	 * @param category
 	 * @return
 	 */

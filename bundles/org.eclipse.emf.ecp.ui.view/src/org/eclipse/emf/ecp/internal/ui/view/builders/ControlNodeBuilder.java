@@ -37,12 +37,23 @@ public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
 	 */
 	public Node<C> build(C renderable, ECPControlContext controlContext,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		final Iterator<Setting> settings = renderable.getDomainModelReference().getIterator();
-		if (settings.hasNext()) {
-			final Setting setting = settings.next();
-			final ECPControlContext subContext = controlContext.createSubContext(setting.getEObject());
-			return new Leaf<C>(renderable, subContext);
+
+		ECPControlContext relevantContext = controlContext;
+
+		if (renderable.getDomainModelReference() == null) {
+			return null;
 		}
-		return null;
+		final Iterator<Setting> iterator = renderable.getDomainModelReference().getIterator();
+		int count = 0;
+		Setting lastSetting = null;
+		while (iterator.hasNext()) {
+			count++;
+			lastSetting = iterator.next();
+		}
+		if (count == 1 && lastSetting != null) {
+			relevantContext = controlContext.createSubContext(lastSetting.getEObject());
+		}
+
+		return new Leaf<C>(renderable, relevantContext);
 	}
 }

@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -36,20 +35,6 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
  * 
  */
 public class ControlTargetFeatureControl extends LinkControl {
-	/**
-	 * Th default constructor.
-	 * 
-	 * @param showLabel whether to show label
-	 * @param itemPropertyDescriptor the descriptor of the feature
-	 * @param feature the feature
-	 * @param modelElementContext the modelelement context
-	 * @param embedded whether this control is embedded
-	 */
-	public ControlTargetFeatureControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	protected int getNumButtons() {

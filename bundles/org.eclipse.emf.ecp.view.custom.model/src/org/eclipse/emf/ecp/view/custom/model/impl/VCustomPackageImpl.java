@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -34,7 +34,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	private EClass customControlEClass = null;
+	private EClass predefinedDomainModelReferenceEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -82,8 +82,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 		// Obtain or create and register package
 		final VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VCustomPackageImpl());
+			.get(eNS_URI) : new VCustomPackageImpl());
 
 		isInited = true;
 
@@ -110,8 +109,8 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	public EClass getCustomControl() {
-		return customControlEClass;
+	public EClass getPredefinedDomainModelReference() {
+		return predefinedDomainModelReferenceEClass;
 	}
 
 	/**
@@ -120,18 +119,8 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	public EAttribute getCustomControl_Bundle() {
-		return (EAttribute) customControlEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public EAttribute getCustomControl_ClassName() {
-		return (EAttribute) customControlEClass.getEStructuralFeatures().get(1);
+	public EAttribute getPredefinedDomainModelReference_ControlId() {
+		return (EAttribute) predefinedDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -167,9 +156,8 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		customControlEClass = createEClass(CUSTOM_CONTROL);
-		createEAttribute(customControlEClass, CUSTOM_CONTROL__BUNDLE);
-		createEAttribute(customControlEClass, CUSTOM_CONTROL__CLASS_NAME);
+		predefinedDomainModelReferenceEClass = createEClass(PREDEFINED_DOMAIN_MODEL_REFERENCE);
+		createEAttribute(predefinedDomainModelReferenceEClass, PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
 	}
 
 	/**
@@ -207,17 +195,14 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		customControlEClass.getESuperTypes().add(theViewPackage.getAbstractControl());
+		predefinedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(customControlEClass, VCustomControl.class, "CustomControl", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCustomControl_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1,
-			VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCustomControl_ClassName(), ecorePackage.getEString(), "className", null, 1, 1,
-			VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(predefinedDomainModelReferenceEClass, VPredefinedDomainModelReference.class,
+			"PredefinedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPredefinedDomainModelReference_ControlId(), ecorePackage.getEString(), "controlId", null, 1,
+			1, VPredefinedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

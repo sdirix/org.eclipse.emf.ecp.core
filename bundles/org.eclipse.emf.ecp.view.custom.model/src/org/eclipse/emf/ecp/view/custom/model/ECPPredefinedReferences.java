@@ -8,30 +8,26 @@
  * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * Edagr Mueller - initial API and implementation
- * Johannes Faltermeier - ECPCustomControl API changes
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.model;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.edit.ECPControl;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
- * {@link ECPControl} is the interface describing a custom control.
+ * A class implementing {@link ECPPredefinedReferences} indicates, that it provides the set of the
+ * {@link VDomainModelReference VDomainModelReferences} needed for rendering itself.
  * 
- * @author eneufeld
- * @author emueller
- * @author jfaltermeier
+ * @author Eugen Neufeld
  * 
  */
-public interface ECPCustomControl extends ECPControl {
-
+public interface ECPPredefinedReferences {
 	/**
-	 * Returns all registered {@link ECPCustomControlFeature}s of this {@link ECPCustomControl}.
+	 * Returns a list of all {@link VDomainModelReference VDomainModelReferences} which will be used by this control.
 	 * 
-	 * @return all features
+	 * @return a {@link Set} of {@link VDomainModelReference VDomainModelReferences} to be used by the control
 	 */
-	Set<ECPCustomControlFeature> getECPCustomControlFeatures();
+	Set<VDomainModelReference> getNeededDomainModelReferences();
 
 }

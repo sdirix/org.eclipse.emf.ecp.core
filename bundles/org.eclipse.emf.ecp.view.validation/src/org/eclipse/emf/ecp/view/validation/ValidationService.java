@@ -32,9 +32,9 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 
 /**
@@ -107,10 +107,12 @@ public class ValidationService extends AbstractViewService {
 						// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
 						// control.getDomainModelReference().());
 						// REFACTORING test
-						final Iterator<Setting> settings = control.getDomainModelReference().getIterator();
+						final VDomainModelReference domainModelReference = control.getDomainModelReference();
+						final Iterator<Setting> settings = domainModelReference.getIterator();
 						while (settings.hasNext()) {
 							viewValidationGraph.validate(settings.next().getEObject());
 						}
+
 					}
 				}
 			}
@@ -129,7 +131,7 @@ public class ValidationService extends AbstractViewService {
 				if (Renderable.class.isInstance(renderableParent)
 					&& validationRegistry.containsRenderable((Renderable) renderableParent)) {
 					validationRegistry.register(domainModel, renderable);
-					final Map<EObject, Set<AbstractControl>> map = validationRegistry.getDomainToControlMapping(
+					final Map<EObject, Set<Control>> map = validationRegistry.getDomainToControlMapping(
 						domainModel,
 						renderable);
 					viewValidationGraph.validate(map.keySet());

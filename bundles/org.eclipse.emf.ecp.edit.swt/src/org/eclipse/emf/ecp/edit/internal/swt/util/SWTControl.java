@@ -12,14 +12,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
@@ -47,7 +50,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTControl extends ECPAbstractControl {
+public abstract class SWTControl extends ECPAbstractControl implements ECPControlSWT {
 
 	/**
 	 * RAP theming variable to set.
@@ -75,15 +78,20 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
-	public SWTControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+	public SWTControl() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
+	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
+		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
+			createControl(parent)));
+	}
+
 	public Composite createControl(final Composite parent) {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -218,8 +226,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 		parentComposite.setLayout(sl);
 		controlComposite = new Composite(parentComposite, SWT.NONE);
 		controlComposite.setBackground(parentComposite.getBackground());
-		// 1 column for control, 1 for default unset button
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(controlComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
 		unsetLabel.setBackground(composite.getBackground());
@@ -248,12 +254,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 				// nothing to do
 			}
 		});
-
+		int numControls = 1;
 		fillControlComposite(controlComposite);
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			Button unsetButton = getCustomUnsetButton();
 			if (unsetButton == null) {
+				numControls++;
 				unsetButton = new Button(controlComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
 				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
@@ -273,6 +280,10 @@ public abstract class SWTControl extends ECPAbstractControl {
 			});
 			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset"); //$NON-NLS-1$
 		}
+
+		// 1 column for control, 1 for default unset button
+		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0).extendedMargins(10, 0, 0, 0)
+			.applyTo(controlComposite);
 
 		if (!getStructuralFeature().isUnsettable()
 			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
@@ -308,15 +319,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 */
 	protected Button getCustomUnsetButton() {
 		return null;
-	}
-
-	/**
-	 * Returns the {@link DataBindingContext} set in the constructor.
-	 * 
-	 * @return the {@link DataBindingContext}
-	 */
-	protected DataBindingContext getDataBindingContext() {
-		return getModelElementContext().getDataBindingContext();
 	}
 
 	/**

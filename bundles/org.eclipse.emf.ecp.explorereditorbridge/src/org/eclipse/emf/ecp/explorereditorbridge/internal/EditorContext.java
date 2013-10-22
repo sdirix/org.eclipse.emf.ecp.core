@@ -100,7 +100,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
-		getViewContext().dispose();
+		// getViewContext().dispose();
 	}
 
 }

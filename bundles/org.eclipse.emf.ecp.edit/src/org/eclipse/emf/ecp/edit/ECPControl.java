@@ -17,7 +17,8 @@ import org.eclipse.emf.common.util.Diagnostic;
  * The {@link ECPControl} is the interface describing a control.
  * 
  * @author Eugen Neufeld
- * 
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPControl {
 	/**
@@ -41,7 +42,9 @@ public interface ECPControl {
 	 * Whether a label should be shown for this control.
 	 * 
 	 * @return true if a label should be created, false otherwise
+	 * @deprecated use the labelAlignment of the control model element
 	 */
+	@Deprecated
 	boolean showLabel();
 
 	/**

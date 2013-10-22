@@ -12,14 +12,12 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -40,23 +38,18 @@ public class DateTimeControl extends SingleControl {
 
 	private DateTime timeWidget;
 
-	/**
-	 * Constructor for a dateTime control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public DateTimeControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
-
 	@Override
-	protected void fillControlComposite(Composite dateTimeComposite) {
-		GridLayoutFactory.fillDefaults().spacing(2, 0).numColumns(4).applyTo(dateTimeComposite);
+	protected void fillControlComposite(Composite composite) {
+		final Composite dateTimeComposite = new Composite(composite, SWT.NONE);
+		dateTimeComposite.setBackground(composite.getBackground());
+		int numColumns = 3;
+		if (isEmbedded()) {
+			numColumns = 2;
+		}
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(2, 0).equalWidth(false)
+			.applyTo(dateTimeComposite);
+
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(dateTimeComposite);
 		createDateAndTimeWidget(dateTimeComposite);
 
 	}
@@ -67,11 +60,6 @@ public class DateTimeControl extends SingleControl {
 	 * @param composite the parent {@link Composite}
 	 */
 	private void createDateAndTimeWidget(Composite composite) {
-		int numColumns = 3;
-		if (isEmbedded()) {
-			numColumns = 2;
-		}
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(2, 0).equalWidth(false).applyTo(composite);
 
 		dateWidget = new DateTime(composite, SWT.DATE | SWT.BORDER);
 		dateWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -92,10 +80,10 @@ public class DateTimeControl extends SingleControl {
 
 	@Override
 	public Binding bindValue() {
-		IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
-		IObservableValue timeObserver = SWTObservables.observeSelection(timeWidget);
-		IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		Binding binding = getDataBindingContext().bindValue(target, getModelValue());
+		final IObservableValue dateObserver = SWTObservables.observeSelection(dateWidget);
+		final IObservableValue timeObserver = SWTObservables.observeSelection(timeWidget);
+		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
+		final Binding binding = getDataBindingContext().bindValue(target, getModelValue());
 		return binding;
 	}
 

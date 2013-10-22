@@ -15,7 +15,10 @@ package org.eclipse.emf.ecp.ui.view.swt.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.ECPControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -45,7 +48,7 @@ public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRe
 		return new SWTRenderingResultDelegator(control);
 	}
 
-	public RenderingResultDelegator withSWTControls(SWTControl swtControl, Renderable model, Control... controls) {
+	public RenderingResultDelegator withSWTControls(ECPControl swtControl, Renderable model, Control... controls) {
 		return new SWTRenderingResultDelegatorWithControl(controls, swtControl, model);
 	}
 

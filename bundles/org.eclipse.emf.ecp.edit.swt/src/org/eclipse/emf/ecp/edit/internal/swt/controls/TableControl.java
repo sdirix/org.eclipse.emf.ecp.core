@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
@@ -107,32 +106,10 @@ public class TableControl extends SWTControl {
 	private final Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
 
 	/**
-	 * Constructor for a String control.
 	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
-
-	/**
-	 * Constructor for a String control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
 	 * @param tableControlConfiguration the {@link TableControlConfiguration} to use when creating the table
 	 */
-	public TableControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded, TableControlConfiguration tableControlConfiguration) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+	public final void setTableControlConfiguration(TableControlConfiguration tableControlConfiguration) {
 		this.tableControlConfiguration = tableControlConfiguration;
 	}
 
@@ -506,6 +483,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
 		composedAdapterFactory.dispose();
 	}

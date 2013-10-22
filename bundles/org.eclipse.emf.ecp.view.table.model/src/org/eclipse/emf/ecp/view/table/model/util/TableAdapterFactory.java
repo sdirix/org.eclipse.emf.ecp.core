@@ -15,12 +15,14 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Composite;
 import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
 
 /**
@@ -102,6 +104,12 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
+			public Adapter caseTableDomainModelReference(VTableDomainModelReference object)
+			{
+				return createTableDomainModelReferenceAdapter();
+			}
+
+			@Override
 			public Adapter caseRenderable(Renderable object)
 			{
 				return createRenderableAdapter();
@@ -114,15 +122,21 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
-			public Adapter caseAbstractControl(AbstractControl object)
-			{
-				return createAbstractControlAdapter();
-			}
-
-			@Override
 			public Adapter caseControl(Control object)
 			{
 				return createControlAdapter();
+			}
+
+			@Override
+			public Adapter caseVDomainModelReference(VDomainModelReference object)
+			{
+				return createVDomainModelReferenceAdapter();
+			}
+
+			@Override
+			public Adapter caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+			{
+				return createVFeaturePathDomainModelReferenceAdapter();
 			}
 
 			@Override
@@ -179,6 +193,23 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference <em>Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference
+	 * @generated
+	 */
+	public Adapter createTableDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable
 	 * <em>Renderable</em>}'.
 	 * <!-- begin-user-doc -->
@@ -211,22 +242,6 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractControl
-	 * <em>Abstract Control</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.AbstractControl
-	 * @generated
-	 */
-	public Adapter createAbstractControlAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -238,6 +253,41 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createControlAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * <em>VDomain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * @generated
+	 */
+	public Adapter createVDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * <em>VFeature Path Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * @generated
+	 */
+	public Adapter createVFeaturePathDomainModelReferenceAdapter()
+	{
 		return null;
 	}
 

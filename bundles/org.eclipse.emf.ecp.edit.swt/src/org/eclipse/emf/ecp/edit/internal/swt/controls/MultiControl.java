@@ -11,11 +11,22 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.list.IListChangeListener;
+import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.list.ListChangeEvent;
+import org.eclipse.core.databinding.observable.list.ListDiff;
+import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
@@ -28,13 +39,6 @@ import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.observable.list.IListChangeListener;
-import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.list.ListChangeEvent;
-import org.eclipse.core.databinding.observable.list.ListDiff;
-import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -47,11 +51,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This control provides the necessary common functionality to create a multicontrol that are needed for
@@ -74,7 +73,7 @@ public abstract class MultiControl extends SWTControl {
 	private Composite sectionComposite;
 	private ECPControlDescription controlDescription;
 	private Class<?> supportedClassType;
-	private final ECPSWTAction[] actions;
+	private ECPSWTAction[] actions;
 
 	private Button unsetButton;
 	private Label tooltipLabel;
@@ -88,11 +87,8 @@ public abstract class MultiControl extends SWTControl {
 	 * @param modelElementContext the {@link ECPControlContext} to use
 	 * @param embedded whether this control is embedded in another control
 	 */
-	public MultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-		findControlDescription(itemPropertyDescriptor, modelElementContext.getModelElement());
-		actions = instantiateActions();
+	public MultiControl() {
+
 	}
 
 	/**
@@ -140,6 +136,10 @@ public abstract class MultiControl extends SWTControl {
 
 	@Override
 	protected void fillControlComposite(Composite parent) {
+
+		findControlDescription(getItemPropertyDescriptor(), getModelElementContext().getModelElement());
+		actions = instantiateActions();
+
 		mainComposite = new Composite(parent, SWT.BORDER);
 		mainComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
@@ -247,7 +247,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	private SWTControl getSingleInstance() {
 		try {
-			final Constructor<? extends ECPAbstractControl> widgetConstructor = controlDescription.getControlClass()
+			final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
 				.getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
 					ECPControlContext.class, boolean.class);
 			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
@@ -475,6 +475,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
 
 		model.removeListChangeListener(changeListener);

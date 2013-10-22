@@ -34,8 +34,6 @@ public class ControlGenerator {
 
 		for (final EStructuralFeature feature : features) {
 			final Control control = ViewFactory.eINSTANCE.createControl();
-			// control.setData(datasegment);
-			control.setMandatory(false);
 			control.setName("Control " + feature.getName());
 			control.setReadonly(false);
 

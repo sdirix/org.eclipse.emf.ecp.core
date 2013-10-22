@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
 
@@ -47,6 +48,14 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * @generated
 	 */
 	private EClass tableColumnEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass tableDomainModelReferenceEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -188,6 +197,17 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	public EClass getTableDomainModelReference()
+	{
+		return tableDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public VTableFactory getTableFactory()
 	{
 		return (VTableFactory) getEFactoryInstance();
@@ -223,6 +243,8 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 		tableColumnEClass = createEClass(TABLE_COLUMN);
 		createEReference(tableColumnEClass, TABLE_COLUMN__ATTRIBUTE);
 		createEAttribute(tableColumnEClass, TABLE_COLUMN__READ_ONLY);
+
+		tableDomainModelReferenceEClass = createEClass(TABLE_DOMAIN_MODEL_REFERENCE);
 	}
 
 	/**
@@ -262,6 +284,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 
 		// Add supertypes to classes
 		tableControlEClass.getESuperTypes().add(theViewPackage.getControl());
+		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tableControlEClass, VTableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,
@@ -281,6 +304,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 		initEAttribute(getTableColumn_ReadOnly(), ecorePackage.getEBoolean(), "readOnly", "false", 1, 1,
 			VTableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+
+		initEClass(tableDomainModelReferenceEClass, VTableDomainModelReference.class, "TableDomainModelReference",
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.edit.util;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -38,5 +39,11 @@ public interface ECPApplicableTester {
 	 * @return {@link #NOT_APPLICABLE} if the corresponding control should not be used, a positivie integer value
 	 *         otherwise. The control with the highest priority will be taken.
 	 */
+	@Deprecated
 	int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
+
+	/**
+	 * @since 1.1
+	 */
+	int isApplicable(VDomainModelReference domainModelReference);
 }

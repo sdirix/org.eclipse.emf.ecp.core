@@ -12,13 +12,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -50,16 +51,6 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Control modelControl = node.getRenderable();
-		final Setting setting = modelControl.getDomainModelReference().getIterator().next();
-		final ECPControlContext subContext = node.getControlContext();
-
-		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
-			.getPropertyDescriptor(setting.getEObject(),
-				setting.getEStructuralFeature());
-
-		if (itemPropertyDescriptor == null) {
-			throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-		}
 
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 
@@ -68,41 +59,61 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 			return null;
 		}
 
-		final SWTControl control = controlFactory.createControl(SWTControl.class, itemPropertyDescriptor,
-			subContext);
+		final ECPAbstractControl control = controlFactory.createControl(ECPAbstractControl.class,
+			modelControl.getDomainModelReference());
+
+		control.init(node.getControlContext(), modelControl.getDomainModelReference());
 
 		if (control != null) {
 			final Composite parent = getParentFromInitData(initData);
 			Label label = null;
 			if (control.showLabel()) {
+				final Setting setting = modelControl.getDomainModelReference().getIterator().next();
+				final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
+					.getPropertyDescriptor(setting.getEObject(),
+						setting.getEStructuralFeature());
+
+				if (itemPropertyDescriptor == null) {
+					throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
+				}
+
 				label = new Label(parent, SWT.NONE);
 				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
 				label.setBackground(parent.getBackground());
 				String extra = "";
-				if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
+				if (setting.getEStructuralFeature().getLowerBound() > 0) {
 					extra = "*";
 				}
-				label.setText(itemPropertyDescriptor.getDisplayName(subContext.getModelElement())
+				label.setText(itemPropertyDescriptor.getDisplayName(setting.getEObject())
 					+ extra);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(subContext.getModelElement()));
+				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
 
 			}
 
-			final Composite controlComposite = control.createControl(parent);
+			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> createControls = ((ECPControlSWT) control)
+				.createControls(parent);
+			// final Composite controlComposite = control.createControl(parent);
 			// controlComposite.setEnabled(!modelControl.isReadonly());
 			control.setEditable(!modelControl.isReadonly());
-			controlComposite.setBackground(parent.getBackground());
-
-			if (label == null) {
-				node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite));
-			} else {
-				node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite, label));
+			// controlComposite.setBackground(parent.getBackground());
+			//
+			// if (label == null) {
+			// node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite));
+			// } else {
+			// node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite, label));
+			// }
+			//
+			// if (label == null) {
+			// return createResult(controlComposite);
+			// }
+			// return createResult(label, controlComposite);
+			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList();
+			if (label != null) {
+				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+					.createRenderingResultRow(label, createControls.iterator().next().getControls().iterator().next()));
 			}
-
-			if (label == null) {
-				return createResult(controlComposite);
-			}
-			return createResult(label, controlComposite);
+			// result.addAll(createControls);
+			return result;
 
 		}
 

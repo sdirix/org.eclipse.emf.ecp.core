@@ -9,7 +9,7 @@
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.util;
+package org.eclipse.emf.ecp.internal.edit;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;

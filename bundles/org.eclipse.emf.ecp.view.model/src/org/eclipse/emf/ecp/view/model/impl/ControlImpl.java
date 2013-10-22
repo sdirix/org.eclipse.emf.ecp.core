@@ -31,7 +31,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.ControlImpl#getDomainModelReference <em>Domain Model Reference</em>}</li>
  * </ul>
@@ -39,29 +38,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * 
  * @generated
  */
-public class ControlImpl extends AbstractControlImpl implements Control {
-	/**
-	 * The default value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isMandatory()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean MANDATORY_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isMandatory() <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isMandatory()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean mandatory = MANDATORY_EDEFAULT;
-
+public class ControlImpl extends CompositeImpl implements Control {
 	/**
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -200,30 +177,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	 * 
 	 * @generated
 	 */
-	public boolean isMandatory() {
-		return mandatory;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setMandatory(boolean newMandatory) {
-		boolean oldMandatory = mandatory;
-		mandatory = newMandatory;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ViewPackage.CONTROL__MANDATORY, oldMandatory,
-				mandatory));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public Alignment getLabelAlignment()
 	{
 		return labelAlignment;
@@ -254,8 +207,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__MANDATORY:
-			return isMandatory();
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			return getLabelAlignment();
 		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
@@ -274,9 +225,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__MANDATORY:
-			setMandatory((Boolean) newValue);
-			return;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			setLabelAlignment((Alignment) newValue);
 			return;
@@ -297,9 +245,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__MANDATORY:
-			setMandatory(MANDATORY_EDEFAULT);
-			return;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
 			return;
@@ -320,8 +265,6 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-		case ViewPackage.CONTROL__MANDATORY:
-			return mandatory != MANDATORY_EDEFAULT;
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
 		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
@@ -342,9 +285,7 @@ public class ControlImpl extends AbstractControlImpl implements Control {
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (mandatory: ");
-		result.append(mandatory);
-		result.append(", labelAlignment: ");
+		result.append(" (labelAlignment: ");
 		result.append(labelAlignment);
 		result.append(')');
 		return result.toString();

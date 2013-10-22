@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.ControlItemProvider;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTableFactory;
@@ -189,6 +190,11 @@ public class TableControlItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+				VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 		newChildDescriptors.add
 			(createChildParameter

@@ -11,9 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.controls;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -54,6 +58,25 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 			return NOT_APPLICABLE;
 		}
 		return 3;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 */
+	public int isApplicable(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			count++;
+			setting = iterator.next();
+		}
+		if (count != 1) {
+			return NOT_APPLICABLE;
+		}
+		return check(setting.getEObject(), setting.getEStructuralFeature());
 	}
 
 }

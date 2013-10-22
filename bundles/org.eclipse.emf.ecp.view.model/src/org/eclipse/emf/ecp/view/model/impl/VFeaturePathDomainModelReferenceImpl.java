@@ -318,8 +318,8 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		return true;
 	}
 
-	private List<EReference> leftReferences;
-	private EObject lastResolvedEObject;
+	protected List<EReference> leftReferences;
+	protected EObject lastResolvedEObject;
 
 	/**
 	 * {@inheritDoc}

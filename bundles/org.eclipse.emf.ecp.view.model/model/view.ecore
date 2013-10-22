@@ -48,7 +48,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Composite" abstract="true" eSuperTypes="#//Renderable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractControl" abstract="true" eSuperTypes="#//Composite"/>
   <eClassifiers xsi:type="ecore:EClass" name="VDomainModelReference" abstract="true"
       interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="VFeaturePathDomainModelReference" eSuperTypes="#//VDomainModelReference">
@@ -57,9 +56,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
         upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//AbstractControl">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatory" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
-        defaultValueLiteral="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//Composite">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" eType="#//Alignment"
         defaultValueLiteral="Left"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"

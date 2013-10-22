@@ -12,17 +12,18 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.custom.model.ECPPredefinedReferences;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -31,15 +32,15 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-public class ValidationCustomControl extends ECPAbstractCustomControlSWT {
+public class ValidationCustomControl extends ECPAbstractCustomControlSWT implements ECPPredefinedReferences {
 
-	private static Set<ECPCustomControlFeature> features = new LinkedHashSet<ECPCustomControlFeature>();
+	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	static {
-		final List<EReference> references = Collections.emptyList();
-		final ECPCustomControlFeature feature = new ECPCustomControlFeature(
-			references,
-			BowlingPackage.eINSTANCE.getPlayer_EMails(), true);
+
+		final VFeaturePathDomainModelReference feature = ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference();
+		feature.setDomainModelEFeature(
+			BowlingPackage.eINSTANCE.getPlayer_EMails());
 		features.add(feature);
 	}
 
@@ -57,7 +58,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT {
 	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> createControls(Composite composite) {
+	public List<RenderingResultRow<Control>> createControl(Composite composite) {
 		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
 
 		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()

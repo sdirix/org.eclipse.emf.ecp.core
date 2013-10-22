@@ -16,23 +16,37 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.model.provider.AbstractControlItemProvider;
+import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VCustomControl} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference}
+ * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
-public class CustomControlItemProvider
-	extends AbstractControlItemProvider {
+public class PredefinedDomainModelReferenceItemProvider
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -40,7 +54,7 @@ public class CustomControlItemProvider
 	 * 
 	 * @generated
 	 */
-	public CustomControlItemProvider(AdapterFactory adapterFactory) {
+	public PredefinedDomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,28 +70,27 @@ public class CustomControlItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addBundlePropertyDescriptor(object);
-			addClassNamePropertyDescriptor(object);
+			addControlIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Bundle feature.
+	 * This adds a property descriptor for the Control Id feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected void addBundlePropertyDescriptor(Object object) {
+	protected void addControlIdPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_CustomControl_bundle_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_bundle_feature",
-					"_UI_CustomControl_type"),
-				VCustomPackage.Literals.CUSTOM_CONTROL__BUNDLE,
+				getString("_UI_PredefinedDomainModelReference_controlId_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_PredefinedDomainModelReference_controlId_feature",
+					"_UI_PredefinedDomainModelReference_type"),
+				VCustomPackage.Literals.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID,
 				true,
 				false,
 				false,
@@ -87,31 +100,7 @@ public class CustomControlItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Class Name feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addClassNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CustomControl_className_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_CustomControl_className_feature",
-					"_UI_CustomControl_type"),
-				VCustomPackage.Literals.CUSTOM_CONTROL__CLASS_NAME,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This returns CustomControl.gif.
+	 * This returns PredefinedDomainModelReference.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -119,7 +108,7 @@ public class CustomControlItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CustomControl"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/PredefinedDomainModelReference"));
 	}
 
 	/**
@@ -131,10 +120,10 @@ public class CustomControlItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VCustomControl) object).getName();
+		final String label = ((VPredefinedDomainModelReference) object).getControlId();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CustomControl_type") :
-			getString("_UI_CustomControl_type") + " " + label;
+			getString("_UI_PredefinedDomainModelReference_type") :
+			getString("_UI_PredefinedDomainModelReference_type") + " " + label;
 	}
 
 	/**
@@ -149,9 +138,8 @@ public class CustomControlItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCustomControl.class)) {
-		case VCustomPackage.CUSTOM_CONTROL__BUNDLE:
-		case VCustomPackage.CUSTOM_CONTROL__CLASS_NAME:
+		switch (notification.getFeatureID(VPredefinedDomainModelReference.class)) {
+		case VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
@@ -169,6 +157,18 @@ public class CustomControlItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 
 }

@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VPredefinedDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +38,7 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	public static VCustomFactory init() {
 		try {
 			final VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
-				.getEFactory(VCustomPackage.eNS_URI);
+				.getEFactory("http://org/eclipse/emf/ecp/view/custom/model");
 			if (theCustomFactory != null) {
 				return theCustomFactory;
 			}
@@ -68,8 +68,8 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case VCustomPackage.CUSTOM_CONTROL:
-			return createCustomControl();
+		case VCustomPackage.PREDEFINED_DOMAIN_MODEL_REFERENCE:
+			return createPredefinedDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -81,9 +81,9 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * 
 	 * @generated
 	 */
-	public VCustomControl createCustomControl() {
-		final VCustomControlImpl customControl = new VCustomControlImpl();
-		return customControl;
+	public VPredefinedDomainModelReference createPredefinedDomainModelReference() {
+		final VPredefinedDomainModelReferenceImpl predefinedDomainModelReference = new VPredefinedDomainModelReferenceImpl();
+		return predefinedDomainModelReference;
 	}
 
 	/**

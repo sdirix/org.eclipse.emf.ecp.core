@@ -29,8 +29,8 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
 import org.eclipse.emf.ecp.view.model.Attachment;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
@@ -414,28 +414,26 @@ public class RuleService extends AbstractViewService {
 
 	private void unset(Renderable renderable) {
 
-		if (renderable instanceof AbstractControl) {
-			final AbstractControl control = (AbstractControl) renderable;
-			for (final VDomainModelReference domainModelReference : control.getDomainModelReferences()) {
-				final Iterator<Setting> settings = domainModelReference.getIterator();
-				while (settings.hasNext()) {
-					final Setting setting = settings.next();
-					final EObject parent = setting.getEObject();
-					final EStructuralFeature targetFeature = setting.getEStructuralFeature();
-					if (targetFeature == null) {
-						continue;
-					}
-					final Class<?> containerClass = targetFeature.getContainerClass();
-
-					isUnset = true;
-					if (containerClass.isInstance(parent)) {
-						parent.eUnset(targetFeature);
-					}
-					isUnset = false;
+		if (renderable instanceof Control) {
+			final Control control = (Control) renderable;
+			final VDomainModelReference domainModelReference = control.getDomainModelReference();
+			final Iterator<Setting> settings = domainModelReference.getIterator();
+			while (settings.hasNext()) {
+				final Setting setting = settings.next();
+				final EObject parent = setting.getEObject();
+				final EStructuralFeature targetFeature = setting.getEStructuralFeature();
+				if (targetFeature == null) {
+					continue;
 				}
+				final Class<?> containerClass = targetFeature.getContainerClass();
+
+				isUnset = true;
+				if (containerClass.isInstance(parent)) {
+					parent.eUnset(targetFeature);
+				}
+				isUnset = false;
 			}
 		}
-
 	}
 
 	/**
