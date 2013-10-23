@@ -224,12 +224,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 	@SuppressWarnings("unchecked")
 	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription) {
-		// TODO refactor code
 		try {
-
 			final Constructor<? extends ECPControl> controlConstructor = controlDescription.getControlClass()
 				.getConstructor();
-
 			return (T) controlConstructor.newInstance();
 		} catch (final IllegalArgumentException ex) {
 			Activator.logException(ex);

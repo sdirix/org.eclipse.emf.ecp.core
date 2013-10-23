@@ -62,9 +62,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		final ECPAbstractControl control = controlFactory.createControl(ECPAbstractControl.class,
 			modelControl.getDomainModelReference());
 
-		control.init(node.getControlContext(), modelControl.getDomainModelReference());
-
 		if (control != null) {
+			control.init(node.getControlContext(), modelControl.getDomainModelReference());
 			final Composite parent = getParentFromInitData(initData);
 			Label label = null;
 			if (control.showLabel()) {
@@ -95,22 +94,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 			if (createControls == null) {
 				return null;
 			}
-			// final Composite controlComposite = control.createControl(parent);
-			// controlComposite.setEnabled(!modelControl.isReadonly());
 			control.setEditable(!modelControl.isReadonly());
-			// controlComposite.setBackground(parent.getBackground());
-			//
-			// if (label == null) {
-			// node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite));
-			// } else {
-			// node.addRenderingResultDelegator(withSWTControls(control, modelControl, controlComposite, label));
-			// }
-			//
-			// if (label == null) {
-			// return createResult(controlComposite);
-			// }
-			// return createResult(label, controlComposite);
-			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList();
+			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
 			if (label != null) {
 				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 					.createRenderingResultRow(label, createControls.iterator().next().getControls().iterator().next()));
@@ -118,7 +103,6 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 			else {
 				result = createControls;
 			}
-			// result.addAll(createControls);
 			return result;
 
 		}

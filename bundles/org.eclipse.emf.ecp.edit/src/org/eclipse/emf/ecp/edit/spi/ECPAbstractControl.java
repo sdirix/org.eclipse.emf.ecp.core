@@ -36,12 +36,6 @@ public abstract class ECPAbstractControl implements ECPControl {
 	private VDomainModelReference domainModelReference;
 
 	/**
-	 * @since 1.1
-	 */
-	public ECPAbstractControl() {
-	}
-
-	/**
 	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
 	 * 
 	 * @param controlContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
@@ -77,6 +71,7 @@ public abstract class ECPAbstractControl implements ECPControl {
 		return dataBindingContext;
 	}
 
+	// TODO docu
 	/**
 	 * @since 1.1
 	 */
@@ -115,21 +110,10 @@ public abstract class ECPAbstractControl implements ECPControl {
 	/**
 	 * Returns the {@link VDomainModelReference} set for this control.
 	 * 
-	 * @return the domainModelReference teh {@link VDomainModelReference} of this control
+	 * @return the domainModelReference the {@link VDomainModelReference} of this control
 	 */
 	protected final VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
 	}
-
-	//
-	// /**
-	// * Checks whether this {@link EStructuralFeature} has an explicit unset state.
-	// *
-	// * @return true if {@link EStructuralFeature#isUnsettable()} is true, false otherwise
-	// */
-	// @Deprecated
-	// protected boolean hasUnsetState() {
-	// return getStructuralFeature().isUnsettable();
-	// }
 
 }
