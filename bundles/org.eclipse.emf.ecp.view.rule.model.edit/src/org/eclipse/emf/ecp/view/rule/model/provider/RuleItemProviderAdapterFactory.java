@@ -20,8 +20,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
 import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
@@ -398,7 +398,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	}
 
 	/**
-	 * A child creation extender for the {@link ViewPackage}.
+	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -452,15 +452,16 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			 * @generated
 			 */
 			@Override
-			public Object caseRenderable(Renderable object) {
+			public Object caseElement(VElement object)
+			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.RENDERABLE__ATTACHMENTS,
+					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
 						RuleFactory.eINSTANCE.createShowRule()));
 
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.RENDERABLE__ATTACHMENTS,
+					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
 						RuleFactory.eINSTANCE.createEnableRule()));
 
 				return null;

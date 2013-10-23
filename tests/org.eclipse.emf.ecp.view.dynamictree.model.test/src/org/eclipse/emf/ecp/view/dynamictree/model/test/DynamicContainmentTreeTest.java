@@ -34,12 +34,12 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,13 +74,13 @@ public class DynamicContainmentTreeTest {
 		tree.getPathToRoot().add(ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer());
 		tree.setChildReference(ModelPackage.eINSTANCE.getTestElementContainer_TestElements());
 
-		final Control viewControlChild = ViewFactory.eINSTANCE.createControl();
+		final VControl viewControlChild = VViewFactory.eINSTANCE.createControl();
 
 		viewControlChild.setDomainModelReference(
 			createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Id()));
 		tree.setChildComposite(viewControlChild);
 
-		final Control viewControl = ViewFactory.eINSTANCE.createControl();
+		final VControl viewControl = VViewFactory.eINSTANCE.createControl();
 		final VFeaturePathDomainModelReference modelRef = createFeaturePathDomainModelReference(
 			ModelPackage.eINSTANCE.getTestElementContainer_Id(),
 			ModelPackage.eINSTANCE.getDomainRoot_Intermediate(),
@@ -100,8 +100,8 @@ public class DynamicContainmentTreeTest {
 
 	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(EStructuralFeature feature,
 		EReference... references) {
-		final VFeaturePathDomainModelReference modelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		for (final EReference eReference : references) {
 			modelReference2.getDomainModelEReferencePath().add(eReference);
 		}
@@ -163,7 +163,7 @@ public class DynamicContainmentTreeTest {
 			.eClass().getEStructuralFeature("id")));
 		newValue.setId(id);
 
-		Renderable renderable = null;
+		VElement renderable = null;
 		DynamicContainmentTree tree = null;
 		List<ECPAction> actions = null;
 
@@ -188,7 +188,7 @@ public class DynamicContainmentTreeTest {
 		final ECPControlContext childContext = virtualParentNode.getControlContext()
 			.createSubContext(newValue);
 		final DynamicContainmentItem pi = ModelFactory.eINSTANCE.createDynamicContainmentItem();
-		pi.setComposite((Composite) EcoreUtil.copy(renderable));
+		pi.setComposite((VContainableElement) EcoreUtil.copy(renderable));
 		pi.setDomainModel(newValue);
 		resolveDomainReferences(pi, newValue);
 		if (DynamicContainmentItem.class.isInstance(virtualParentNode.getRenderable())) {
@@ -209,7 +209,7 @@ public class DynamicContainmentTreeTest {
 		return n;
 	}
 
-	private static void resolveDomainReferences(Renderable renderable,
+	private static void resolveDomainReferences(VElement renderable,
 		EObject domainModelRoot) {
 		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {

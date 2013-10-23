@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * and utility methods for working with them.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getLabelStyle()
+ * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getVLabelStyle()
  * @model
  * @generated
  */
@@ -327,7 +327,7 @@ public enum VLabelStyle implements Enumerator
 	public static final int SEPARATOR_VALUE = 10;
 
 	/**
-	 * An array of all the '<em><b>Style</b></em>' enumerators.
+	 * An array of all the '<em><b>VLabel Style</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -350,7 +350,7 @@ public enum VLabelStyle implements Enumerator
 		};
 
 	/**
-	 * A public read-only list of all the '<em><b>Style</b></em>' enumerators.
+	 * A public read-only list of all the '<em><b>VLabel Style</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -359,7 +359,7 @@ public enum VLabelStyle implements Enumerator
 	public static final List<VLabelStyle> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Style</b></em>' literal with the specified literal value.
+	 * Returns the '<em><b>VLabel Style</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -379,7 +379,7 @@ public enum VLabelStyle implements Enumerator
 	}
 
 	/**
-	 * Returns the '<em><b>Style</b></em>' literal with the specified name.
+	 * Returns the '<em><b>VLabel Style</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -399,7 +399,7 @@ public enum VLabelStyle implements Enumerator
 	}
 
 	/**
-	 * Returns the '<em><b>Style</b></em>' literal with the specified integer value.
+	 * Returns the '<em><b>VLabel Style</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

@@ -17,7 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.ecp.internal.ui.view.builders.CompositeCollectionNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 
 /**
@@ -34,9 +34,9 @@ public class VerticalNodeBuilder implements CustomNodeBuilder {
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder#getCustomNodeBuilders()
 	 */
-	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
-		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
-		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>();
+	public Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> getCustomNodeBuilders() {
+		Map<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, NodeBuilder<? extends VElement>> builders;
+		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, NodeBuilder<? extends VElement>>();
 		builders.put(VVerticalLayout.class, new CompositeCollectionNodeBuilder<VVerticalLayout>());
 		return builders;
 	}

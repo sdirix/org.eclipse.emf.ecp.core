@@ -17,9 +17,9 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -34,13 +34,13 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class CustomControlValidationTest {
 
-	private Control modelControl;
-	private View view;
+	private VControl modelControl;
+	private VView view;
 
 	@Before
 	public void init() {
-		view = ViewFactory.eINSTANCE.createView();
-		modelControl = ViewFactory.eINSTANCE.createControl();
+		view = VViewFactory.eINSTANCE.createView();
+		modelControl = VViewFactory.eINSTANCE.createControl();
 		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
 			.createHardcodedDomainModelReference();
 		modelControl.setDomainModelReference(domainModelReference);

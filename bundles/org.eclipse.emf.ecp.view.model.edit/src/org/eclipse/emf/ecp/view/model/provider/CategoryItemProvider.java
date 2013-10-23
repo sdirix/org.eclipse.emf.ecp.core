@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Category} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VCategory} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -82,7 +82,7 @@ public class CategoryItemProvider
 				getResourceLocator(),
 				getString("_UI_Category_composite_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Category_composite_feature", "_UI_Category_type"),
-				ViewPackage.Literals.CATEGORY__COMPOSITE,
+				VViewPackage.Literals.CATEGORY__COMPOSITE,
 				true,
 				false,
 				true,
@@ -105,7 +105,7 @@ public class CategoryItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.CATEGORY__COMPOSITE);
+			childrenFeatures.add(VViewPackage.Literals.CATEGORY__COMPOSITE);
 		}
 		return childrenFeatures;
 	}
@@ -147,7 +147,7 @@ public class CategoryItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((Category) object).getName();
+		final String label = ((VCategory) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_Category_type") : label;
 	}
 
@@ -163,9 +163,9 @@ public class CategoryItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Category.class))
+		switch (notification.getFeatureID(VCategory.class))
 		{
-		case ViewPackage.CATEGORY__COMPOSITE:
+		case VViewPackage.CATEGORY__COMPOSITE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -186,8 +186,8 @@ public class CategoryItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CATEGORY__COMPOSITE,
-				ViewFactory.eINSTANCE.createControl()));
+			(VViewPackage.Literals.CATEGORY__COMPOSITE,
+				VViewFactory.eINSTANCE.createControl()));
 	}
 
 }

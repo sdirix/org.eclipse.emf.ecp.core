@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +67,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	@Override
 	protected EClass eStaticClass()
 	{
-		return ViewPackage.Literals.VDIAGNOSTIC;
+		return VViewPackage.Literals.DIAGNOSTIC;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	{
 		if (diagnostics == null)
 		{
-			diagnostics = new EDataTypeUniqueEList<Object>(Object.class, this, ViewPackage.VDIAGNOSTIC__DIAGNOSTICS);
+			diagnostics = new EDataTypeUniqueEList<Object>(Object.class, this, VViewPackage.DIAGNOSTIC__DIAGNOSTICS);
 		}
 		return diagnostics;
 	}
@@ -96,7 +96,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VDIAGNOSTIC__DIAGNOSTICS:
+		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			return getDiagnostics();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -114,7 +114,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VDIAGNOSTIC__DIAGNOSTICS:
+		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			getDiagnostics().clear();
 			getDiagnostics().addAll((Collection<? extends Object>) newValue);
 			return;
@@ -133,7 +133,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VDIAGNOSTIC__DIAGNOSTICS:
+		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			getDiagnostics().clear();
 			return;
 		}
@@ -151,7 +151,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VDIAGNOSTIC__DIAGNOSTICS:
+		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			return diagnostics != null && !diagnostics.isEmpty();
 		}
 		return super.eIsSet(featureID);

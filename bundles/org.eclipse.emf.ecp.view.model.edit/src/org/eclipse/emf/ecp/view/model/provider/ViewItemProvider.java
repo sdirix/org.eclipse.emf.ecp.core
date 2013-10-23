@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.View} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VView} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -82,7 +82,7 @@ public class ViewItemProvider
 				getResourceLocator(),
 				getString("_UI_View_rootEClass_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_View_rootEClass_feature", "_UI_View_type"),
-				ViewPackage.Literals.VIEW__ROOT_ECLASS,
+				VViewPackage.Literals.VIEW__ROOT_ECLASS,
 				true,
 				false,
 				true,
@@ -105,7 +105,7 @@ public class ViewItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.VIEW__CHILDREN);
+			childrenFeatures.add(VViewPackage.Literals.VIEW__CHILDREN);
 		}
 		return childrenFeatures;
 	}
@@ -147,7 +147,7 @@ public class ViewItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((View) object).getName();
+		final String label = ((VView) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_View_type") : label;
 	}
 
@@ -163,9 +163,9 @@ public class ViewItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(View.class))
+		switch (notification.getFeatureID(VView.class))
 		{
-		case ViewPackage.VIEW__CHILDREN:
+		case VViewPackage.VIEW__CHILDREN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -186,8 +186,8 @@ public class ViewItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.VIEW__CHILDREN,
-				ViewFactory.eINSTANCE.createControl()));
+			(VViewPackage.Literals.VIEW__CHILDREN,
+				VViewFactory.eINSTANCE.createControl()));
 	}
 
 }

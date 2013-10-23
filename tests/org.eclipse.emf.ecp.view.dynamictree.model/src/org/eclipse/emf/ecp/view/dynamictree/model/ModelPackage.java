@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -74,7 +74,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__VISIBLE = ViewPackage.CATEGORY__VISIBLE;
+	int DYNAMIC_CONTAINMENT_TREE__VISIBLE = VViewPackage.CATEGORY__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -83,7 +83,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__ENABLED = ViewPackage.CATEGORY__ENABLED;
+	int DYNAMIC_CONTAINMENT_TREE__ENABLED = VViewPackage.CATEGORY__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -92,7 +92,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__READONLY = ViewPackage.CATEGORY__READONLY;
+	int DYNAMIC_CONTAINMENT_TREE__READONLY = VViewPackage.CATEGORY__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -101,7 +101,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__DIAGNOSTIC = ViewPackage.CATEGORY__DIAGNOSTIC;
+	int DYNAMIC_CONTAINMENT_TREE__DIAGNOSTIC = VViewPackage.CATEGORY__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -110,7 +110,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__ATTACHMENTS = ViewPackage.CATEGORY__ATTACHMENTS;
+	int DYNAMIC_CONTAINMENT_TREE__ATTACHMENTS = VViewPackage.CATEGORY__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -119,7 +119,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__NAME = ViewPackage.CATEGORY__NAME;
+	int DYNAMIC_CONTAINMENT_TREE__NAME = VViewPackage.CATEGORY__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -128,7 +128,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__ACTIONS = ViewPackage.CATEGORY__ACTIONS;
+	int DYNAMIC_CONTAINMENT_TREE__ACTIONS = VViewPackage.CATEGORY__ACTIONS;
 
 	/**
 	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
@@ -137,7 +137,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__COMPOSITE = ViewPackage.CATEGORY__COMPOSITE;
+	int DYNAMIC_CONTAINMENT_TREE__COMPOSITE = VViewPackage.CATEGORY__COMPOSITE;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
@@ -146,7 +146,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL = ViewPackage.CATEGORY_FEATURE_COUNT + 0;
+	int DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL = VViewPackage.CATEGORY_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Child Reference</b></em>' reference.
@@ -155,7 +155,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE = ViewPackage.CATEGORY_FEATURE_COUNT + 1;
+	int DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE = VViewPackage.CATEGORY_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Path To Root</b></em>' reference list.
@@ -164,7 +164,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT = ViewPackage.CATEGORY_FEATURE_COUNT + 2;
+	int DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT = VViewPackage.CATEGORY_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Child Composite</b></em>' containment reference.
@@ -173,7 +173,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE = ViewPackage.CATEGORY_FEATURE_COUNT + 3;
+	int DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE = VViewPackage.CATEGORY_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Items</b></em>' containment reference list.
@@ -182,7 +182,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE__ITEMS = ViewPackage.CATEGORY_FEATURE_COUNT + 4;
+	int DYNAMIC_CONTAINMENT_TREE__ITEMS = VViewPackage.CATEGORY_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Dynamic Containment Tree</em>' class.
@@ -191,7 +191,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_TREE_FEATURE_COUNT = ViewPackage.CATEGORY_FEATURE_COUNT + 5;
+	int DYNAMIC_CONTAINMENT_TREE_FEATURE_COUNT = VViewPackage.CATEGORY_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl <em>Dynamic Containment Item</em>}' class.
@@ -210,7 +210,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__VISIBLE = ViewPackage.RENDERABLE__VISIBLE;
+	int DYNAMIC_CONTAINMENT_ITEM__VISIBLE = VViewPackage.ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -219,7 +219,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__ENABLED = ViewPackage.RENDERABLE__ENABLED;
+	int DYNAMIC_CONTAINMENT_ITEM__ENABLED = VViewPackage.ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -228,7 +228,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__READONLY = ViewPackage.RENDERABLE__READONLY;
+	int DYNAMIC_CONTAINMENT_ITEM__READONLY = VViewPackage.ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -237,7 +237,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__DIAGNOSTIC = ViewPackage.RENDERABLE__DIAGNOSTIC;
+	int DYNAMIC_CONTAINMENT_ITEM__DIAGNOSTIC = VViewPackage.ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -246,7 +246,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__ATTACHMENTS = ViewPackage.RENDERABLE__ATTACHMENTS;
+	int DYNAMIC_CONTAINMENT_ITEM__ATTACHMENTS = VViewPackage.ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
@@ -255,7 +255,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL = ViewPackage.RENDERABLE_FEATURE_COUNT + 0;
+	int DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Items</b></em>' containment reference list.
@@ -264,7 +264,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__ITEMS = ViewPackage.RENDERABLE_FEATURE_COUNT + 1;
+	int DYNAMIC_CONTAINMENT_ITEM__ITEMS = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
@@ -273,7 +273,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = ViewPackage.RENDERABLE_FEATURE_COUNT + 2;
+	int DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Dynamic Containment Item</em>' class.
@@ -282,7 +282,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = ViewPackage.RENDERABLE_FEATURE_COUNT + 3;
+	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl <em>Test Element</em>}' class.

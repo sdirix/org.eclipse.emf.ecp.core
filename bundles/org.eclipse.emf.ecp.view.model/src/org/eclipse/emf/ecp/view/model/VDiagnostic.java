@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVDiagnostic()
+ * @see org.eclipse.emf.ecp.view.model.VViewPackage#getDiagnostic()
  * @model
  * @generated
  */
@@ -43,7 +43,7 @@ public interface VDiagnostic extends EObject
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Diagnostics</em>' attribute list.
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVDiagnostic_Diagnostics()
+	 * @see org.eclipse.emf.ecp.view.model.VViewPackage#getDiagnostic_Diagnostics()
 	 * @model transient="true"
 	 * @generated
 	 */

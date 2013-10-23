@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -40,7 +40,7 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 /**
- * This control is used to select the root {@link EClass} of a {@link View}.
+ * This control is used to select the root {@link EClass} of a {@link VView}.
  * 
  * @author Eugen Neufeld
  * 
@@ -115,7 +115,7 @@ public class ControlRootEClassControl extends LinkControl {
 				if (EClass.class.isInstance(selection)) {
 					final EClass selectedFeature = (EClass) selection;
 
-					((View) getModelElementContext().getModelElement()).setRootEClass(selectedFeature);
+					((VView) getModelElementContext().getModelElement()).setRootEClass(selectedFeature);
 				}
 			}
 			labelProvider.dispose();

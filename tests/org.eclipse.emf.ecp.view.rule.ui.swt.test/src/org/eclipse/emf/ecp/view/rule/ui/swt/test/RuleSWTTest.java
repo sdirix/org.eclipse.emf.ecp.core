@@ -17,11 +17,11 @@ import static org.junit.Assert.assertTrue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.test.RuleHandle;
 import org.eclipse.emf.ecp.view.rule.test.RuleTest;
@@ -44,8 +44,8 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class RuleSWTTest {
 
-	private org.eclipse.emf.ecp.view.model.View view;
-	private org.eclipse.emf.ecp.view.model.Control control;
+	private org.eclipse.emf.ecp.view.model.VView view;
+	private org.eclipse.emf.ecp.view.model.VControl control;
 	private Shell shell;
 	private EObject input;
 	private org.eclipse.swt.widgets.Control renderedControl;
@@ -54,10 +54,10 @@ public class RuleSWTTest {
 	public void init() {
 		view = createView();
 		input = createFan();
-		control = (Control) view.getChildren().get(0);
+		control = (VControl) view.getChildren().get(0);
 
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		control.setDomainModelReference(modelReference);
@@ -249,7 +249,7 @@ public class RuleSWTTest {
 	 * @param enabledEnableRule
 	 * @param control2
 	 */
-	private void addRuleToElement(Rule enabledEnableRule, Renderable renderable) {
+	private void addRuleToElement(Rule enabledEnableRule, VElement renderable) {
 		renderable.getAttachments().add(enabledEnableRule);
 	}
 
@@ -261,9 +261,9 @@ public class RuleSWTTest {
 		return fan;
 	}
 
-	private org.eclipse.emf.ecp.view.model.View createView() {
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+	private org.eclipse.emf.ecp.view.model.VView createView() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		view.getChildren().add(control);
 		return view;
 	}

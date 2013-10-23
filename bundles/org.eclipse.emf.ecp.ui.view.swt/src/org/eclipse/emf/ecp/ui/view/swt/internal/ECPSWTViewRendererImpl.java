@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -53,9 +53,9 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * 
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.model.View)
+	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.model.VView)
 	 */
-	public ECPSWTView render(Composite parent, EObject domainObject, View viewModel) throws ECPRendererException {
+	public ECPSWTView render(Composite parent, EObject domainObject, VView viewModel) throws ECPRendererException {
 		final ECPControlContext modelElementContext = createDefaultContext(domainObject, viewModel);
 		return render(parent, modelElementContext, viewModel);
 	}
@@ -64,7 +64,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @param domainObject
 	 * @return
 	 */
-	private ECPControlContext createDefaultContext(EObject domainObject, View view) {
+	private ECPControlContext createDefaultContext(EObject domainObject, VView view) {
 		return new DefaultControlContext(domainObject, view);
 	}
 
@@ -84,12 +84,12 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	// return render(parent, modelElementContext, view);
 	// }
 
-	private static View getView(EObject domainObject) {
-		final View view = ViewProviderHelper.getView(domainObject);
+	private static VView getView(EObject domainObject) {
+		final VView view = ViewProviderHelper.getView(domainObject);
 		return view;
 	}
 
-	public static ECPSWTView render(Composite parent, ECPControlContext modelElementContext, final View view)
+	public static ECPSWTView render(Composite parent, ECPControlContext modelElementContext, final VView view)
 		throws ECPRendererException {
 		final ModelRenderer<?> renderer = ModelRenderer.INSTANCE.getRenderer();
 

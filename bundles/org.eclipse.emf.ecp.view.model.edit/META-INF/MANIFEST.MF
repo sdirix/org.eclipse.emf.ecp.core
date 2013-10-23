@@ -9,21 +9,20 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.view.model.provider;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.view.model.editor,
-   org.eclipse.emf.ecp.view.custom.model.edit,
+  x-friends:="org.eclipse.emf.ecp.view.custom.model.edit,
+   org.eclipse.emf.ecp.view.dynamictree.model.edit,
    org.eclipse.emf.ecp.view.group.model.edit,
    org.eclipse.emf.ecp.view.groupedgrid.model.edit,
    org.eclipse.emf.ecp.view.horizontal.model.edit,
    org.eclipse.emf.ecp.view.label.model.edit,
+   org.eclipse.emf.ecp.view.model.editor,
+   org.eclipse.emf.ecp.view.rule.model.edit,
    org.eclipse.emf.ecp.view.separator.model.edit,
    org.eclipse.emf.ecp.view.table.model.edit,
-   org.eclipse.emf.ecp.view.vertical.model.edit,
-   org.eclipse.emf.ecp.view.rule.model.edit,
-   org.eclipse.emf.ecp.view.dynamictree.model.test,
-   org.eclipse.emf.ecp.view.dynamictree.model.edit"
+   org.eclipse.emf.ecp.view.vertical.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.1.0,2.0.0)";visibility:=reexport,
- org.eclipse.emf.edit;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecore.edit;bundle-version="[2.7.0,3.0.0)";visibility:=reexport
+ org.eclipse.emf.ecp.view.model;visibility:=reexport;bundle-version="[1.1.0,2.0.0)",
+ org.eclipse.emf.edit;visibility:=reexport;bundle-version="[2.7.0,3.0.0)",
+ org.eclipse.emf.ecore;visibility:=reexport;bundle-version="[2.7.0,3.0.0)",
+ org.eclipse.emf.ecore.edit;visibility:=reexport;bundle-version="[2.7.0,3.0.0)"
 Bundle-ActivationPolicy: lazy

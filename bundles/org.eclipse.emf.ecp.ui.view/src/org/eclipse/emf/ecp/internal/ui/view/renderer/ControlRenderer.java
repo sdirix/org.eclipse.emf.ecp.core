@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.internal.ui.view.renderer;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 /**
@@ -26,10 +26,10 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * @param <C>
  *            the actual type of the control being rendered
  * @param <R>
- *            a subtype of {@link Composite} specifying the view model type to be rendered
+ *            a subtype of {@link VContainableElement} specifying the view model type to be rendered
  * @param <C>
  */
-public interface ControlRenderer<R extends Renderable, C> {
+public interface ControlRenderer<R extends VElement, C> {
 
 	/**
 	 * Renders the given {@link Node}

@@ -26,8 +26,8 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 
@@ -39,7 +39,7 @@ import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 public class ViewModelContextImpl implements ViewModelContext {
 
 	/** The view. */
-	private final Renderable view;
+	private final VElement view;
 
 	/** The domain object. */
 	private final EObject domainObject;
@@ -81,7 +81,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @param view the view
 	 * @param domainObject the domain object
 	 */
-	public ViewModelContextImpl(Renderable view, EObject domainObject) {
+	public ViewModelContextImpl(VElement view, EObject domainObject) {
 		this.view = view;
 		this.domainObject = domainObject;
 
@@ -137,7 +137,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getViewModel()
 	 */
-	public Renderable getViewModel() {
+	public VElement getViewModel() {
 		if (isDisposed) {
 			throw new IllegalStateException("The ViewModelContext was already disposed.");
 		}
@@ -290,8 +290,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			if (Control.class.isInstance(notifier)) {
-				final Control control = (Control) notifier;
+			if (VControl.class.isInstance(notifier)) {
+				final VControl control = (VControl) notifier;
 				control.getDomainModelReference().resolve(domainObject);
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
@@ -299,8 +299,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			if (VDomainModelReference.class.isInstance(notifier)) {
 				final EObject container = ((EObject) notifier).eContainer();
-				if (Renderable.class.isInstance(container)) {
-					ViewModelUtil.resolveDomainReferences((Renderable) container, getDomainModel());
+				if (VElement.class.isInstance(container)) {
+					ViewModelUtil.resolveDomainReferences((VElement) container, getDomainModel());
 				}
 			}
 		}

@@ -22,14 +22,14 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 
 public class ControlGenerator {
 
-	public static void addControls(ECPProject project, CompositeCollection compositeToFill,
+	public static void addControls(ECPProject project, VContainer compositeToFill,
 		EClass datasegment, Set<EStructuralFeature> features) {
 
 		final EClass rootClass = Helper.getRootEClass(project);
@@ -37,7 +37,7 @@ public class ControlGenerator {
 
 	}
 
-	public static void addControls(EClass rootClass, CompositeCollection compositeToFill, EClass datasegment,
+	public static void addControls(EClass rootClass, VContainer compositeToFill, EClass datasegment,
 		Set<EStructuralFeature> features) {
 		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
 		Helper.getReferenceMap(rootClass, childParentReferenceMap);
@@ -45,12 +45,12 @@ public class ControlGenerator {
 			childParentReferenceMap);
 
 		for (final EStructuralFeature feature : features) {
-			final Control control = ViewFactory.eINSTANCE.createControl();
+			final VControl control = VViewFactory.eINSTANCE.createControl();
 			control.setName("Control " + feature.getName());
 			control.setReadonly(false);
 
-			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-				.createVFeaturePathDomainModelReference();
+			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
 			// control.setTargetFeature(feature);
@@ -58,7 +58,7 @@ public class ControlGenerator {
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite
-			compositeToFill.getComposites().add(control);
+			compositeToFill.getChildren().add(control);
 		}
 	}
 

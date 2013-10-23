@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.layout.FillLayout;
@@ -50,11 +50,11 @@ public final class SWTViewTestHelper {
 		return shell;
 	}
 
-	public static Control render(Renderable renderable, EObject input, Shell shell) throws NoRendererFoundException,
+	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(
 			input, shell, renderable);
-		final Node<Renderable> node = NodeBuilders.INSTANCE.build(renderable, context);
+		final Node<VElement> node = NodeBuilders.INSTANCE.build(renderable, context);
 		if (node == null) {
 			return null;
 		}
@@ -76,9 +76,9 @@ public final class SWTViewTestHelper {
 
 	}
 
-	public static Control render(Renderable renderable, Shell shell) throws NoRendererFoundException,
+	public static Control render(VElement renderable, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		return render(renderable, ViewFactory.eINSTANCE.createView(), shell);
+		return render(renderable, VViewFactory.eINSTANCE.createView(), shell);
 	}
 
 	public static int getNumberofColumns(Composite composite) {

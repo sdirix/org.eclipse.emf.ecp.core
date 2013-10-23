@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
@@ -54,7 +54,7 @@ public class VerticalLayoutSWTRenderer extends AbstractSWTRenderer<VVerticalLayo
 
 		columnComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
-		for (final Node<? extends Renderable> child : node.getChildren()) {
+		for (final Node<? extends VElement> child : node.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {

@@ -17,9 +17,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -54,7 +54,7 @@ public class RuleTest {
 
 		final RuleHandle ruleHandle = createDisabledEnableRule();
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isEnabled());
 	}
@@ -64,7 +64,7 @@ public class RuleTest {
 
 		final RuleHandle ruleHandle = createEnabledEnableRule();
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		// no condition defaults to false
 		assertFalse(node.isEnabled());
@@ -75,7 +75,7 @@ public class RuleTest {
 
 		final RuleHandle ruleHandle = createVisibleShowRule();
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		// no condition defaults to false
 		assertFalse(node.isVisible());
@@ -86,7 +86,7 @@ public class RuleTest {
 
 		final RuleHandle ruleHandle = createInvisibleShowRule();
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
@@ -97,7 +97,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createDisabledEnableRule();
 		addTrueLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isEnabled());
 	}
@@ -108,7 +108,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createDisabledEnableRule();
 		addFalseLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isEnabled());
 	}
@@ -119,7 +119,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createEnabledEnableRule();
 		addTrueLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isEnabled());
 	}
@@ -130,7 +130,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createEnabledEnableRule();
 		addFalseLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isEnabled());
 	}
@@ -141,7 +141,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createInvisibleShowRule();
 		addTrueLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
@@ -152,7 +152,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createInvisibleShowRule();
 		addFalseLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
@@ -163,7 +163,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addTrueLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
@@ -174,7 +174,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addFalseLeafCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
@@ -185,7 +185,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addTrueAndCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
@@ -196,7 +196,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addFalseAndCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
@@ -207,7 +207,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addTrueOrCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
@@ -217,7 +217,7 @@ public class RuleTest {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addFalseOrCondition(ruleHandle.getRule());
 
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
@@ -226,7 +226,7 @@ public class RuleTest {
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueComplexOrCondition() {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addComplexTrueOrCondition(ruleHandle.getRule());
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertTrue(node.isVisible());
 	}
@@ -235,7 +235,7 @@ public class RuleTest {
 	public void testVisibleRuleNodeRendererWithVisibleRuleAndTrueComplexAndCondition() {
 		final RuleHandle ruleHandle = createVisibleShowRule();
 		addComplexTrueAndCondition(ruleHandle.getRule());
-		final Node<Renderable> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
+		final Node<VElement> node = ViewTestHelper.build(ruleHandle.getParent(), ruleHandle.getDomainObject());
 		checkNodes(node, ruleHandle);
 		assertFalse(node.isVisible());
 	}
@@ -340,8 +340,8 @@ public class RuleTest {
 
 	private static LeafCondition createLeafCondition() {
 		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		modelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		leafCondition.setDomainModelReference(modelReference);
@@ -349,7 +349,7 @@ public class RuleTest {
 		return leafCondition;
 	}
 
-	private void checkNodes(Node<Renderable> node, RuleHandle ruleHandle) {
+	private void checkNodes(Node<VElement> node, RuleHandle ruleHandle) {
 		// final RuleService ruleService = new RuleService();
 		// ruleService.instantiate(ViewTestHelper.getViewModelContext());
 		// ruleService.dispose();
@@ -372,7 +372,7 @@ public class RuleTest {
 	}
 
 	private static RuleHandle createRuleHandle(Rule enableRule) {
-		final Renderable renderable = createRuleContainerAndAddRule(enableRule);
+		final VElement renderable = createRuleContainerAndAddRule(enableRule);
 		final Fan fan = BowlingFactory.eINSTANCE.createFan();
 		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
 		merchandise.setName("foo");
@@ -380,8 +380,8 @@ public class RuleTest {
 		return new RuleHandle(enableRule, renderable, fan);
 	}
 
-	private static Renderable createRuleContainerAndAddRule(Rule rule) {
-		final Renderable renderable = ViewFactory.eINSTANCE.createView();
+	private static VElement createRuleContainerAndAddRule(Rule rule) {
+		final VElement renderable = VViewFactory.eINSTANCE.createView();
 		renderable.getAttachments().add(rule);
 		return renderable;
 	}

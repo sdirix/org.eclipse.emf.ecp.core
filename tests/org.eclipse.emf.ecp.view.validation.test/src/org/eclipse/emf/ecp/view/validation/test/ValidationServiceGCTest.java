@@ -17,10 +17,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Tests for checking whether the {@link org.eclipse.emf.ecp.view.validation.ValidationRegistry ValidationRegistry} &
  * the {@link org.eclipse.emf.ecp.view.validation.ValidationService ValidationService} correctly behave if domain
- * objects and/or {@link org.eclipse.emf.ecp.view.model.Renderable Renderable}s are removed.
+ * objects and/or {@link org.eclipse.emf.ecp.view.model.VElement Renderable}s are removed.
  * 
  * @author emueller
  */
@@ -50,20 +50,20 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * @return a tuple containing the root of the view model
 	 *         as well as the root of the domain model
 	 */
-	protected Tuple<View, Computer> createComputerView() {
+	protected Tuple<VView, Computer> createComputerView() {
 
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		new ViewModelContextImpl(view, computer);
 
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(column);
 
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
 			TestPackage.eINSTANCE.getComputer_Mainboard()));
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 
 		final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
 		computer.setMainboard(mainboard);
@@ -71,7 +71,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		assertEquals("Severity of mainboard name must be error", Diagnostic.ERROR, control.getDiagnostic()
 			.getHighestSeverity());
 
-		return new Tuple<View, Computer>(view, computer);
+		return new Tuple<VView, Computer>(view, computer);
 	}
 
 	/**
@@ -83,29 +83,29 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * @return a tuple containing the root of the view model
 	 *         as well as the root of the domain model
 	 */
-	protected Tuple<View, Writer> createWriterWithNestedColumnsView() {
+	protected Tuple<VView, Writer> createWriterWithNestedColumnsView() {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(writer.eClass());
 
 		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		parentColumn.getComposites().add(column);
+		parentColumn.getChildren().add(column);
 
-		final Control controlWriter = ViewFactory.eINSTANCE.createControl();
+		final VControl controlWriter = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		controlWriter.setDomainModelReference(domainModelReference);
 
-		column.getComposites().add(controlWriter);
+		column.getChildren().add(controlWriter);
 
 		new ViewModelContextImpl(view, writer);
 
-		return new Tuple<View, Writer>(view, writer);
+		return new Tuple<VView, Writer>(view, writer);
 	}
 
 	/**
@@ -116,15 +116,15 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	@Test
 	public void testRemoveRenderableHierarchy() {
 
-		final View view = createWriterWithNestedColumnsView().first();
+		final VView view = createWriterWithNestedColumnsView().first();
 		final GCCollectable parentColumnCollectable = new GCCollectable(
 			view.getChildren().get(0));
 		final GCCollectable columnCollectable = new GCCollectable(
-			VVerticalLayout.class.cast(view.getChildren().get(0)).getComposites().get(0));
+			VVerticalLayout.class.cast(view.getChildren().get(0)).getChildren().get(0));
 		final GCCollectable controlCollectable = new GCCollectable(
 			VVerticalLayout.class.cast(
 				VVerticalLayout.class.cast(view.getChildren().get(0))
-					.getComposites().get(0)).getComposites()
+					.getChildren().get(0)).getChildren()
 				.get(0));
 
 		view.getChildren().remove(0);
@@ -142,17 +142,17 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	@Test
 	public void testRemoveControlAndReevaluate() {
 
-		final View view = createWriterWithNestedColumnsView().first();
+		final VView view = createWriterWithNestedColumnsView().first();
 
 		final GCCollectable controlCollectable = new GCCollectable(
 			VVerticalLayout.class.cast(VVerticalLayout.class.cast(
-				view.getChildren().get(0)).getComposites().get(0)).getComposites().get(0));
+				view.getChildren().get(0)).getChildren().get(0)).getChildren().get(0));
 
 		assertEquals(Diagnostic.ERROR,
 			VVerticalLayout.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
 
 		VVerticalLayout.class.cast(VVerticalLayout.class.cast(
-			view.getChildren().get(0)).getComposites().get(0)).getComposites().remove(0);
+			view.getChildren().get(0)).getChildren().get(0)).getChildren().remove(0);
 
 		assertEquals(Diagnostic.OK,
 			VVerticalLayout.class.cast(view.getChildren().get(0)).getDiagnostic().getHighestSeverity());
@@ -166,7 +166,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	@Test
 	public void testDomainObjectIsReferenced() {
 
-		final Tuple<View, Computer> t = createComputerView();
+		final Tuple<VView, Computer> t = createComputerView();
 
 		final GCCollectable mainboardCollectable = new GCCollectable(
 			t.second().getMainboard());
@@ -182,12 +182,12 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	@Test
 	public void testRemoveChildOfDomainObject() {
 
-		final Tuple<View, Computer> t = createComputerView();
+		final Tuple<VView, Computer> t = createComputerView();
 
 		final GCCollectable mainboardCollectable = new GCCollectable(
 			t.second().getMainboard());
 		final GCCollectable controlCollectable = new GCCollectable(
-			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getComposites().get(0));
+			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getChildren().get(0));
 		t.second().setMainboard(null);
 
 		// control for mainboard should be removed from
@@ -203,16 +203,16 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	@Test
 	public void testRemoveChildOfDomainObjectWithCutOffControl() {
 
-		final Tuple<View, Computer> t = createComputerView();
+		final Tuple<VView, Computer> t = createComputerView();
 
 		final GCCollectable mainboardCollectable = new GCCollectable(
 			t.second().getMainboard());
 		t.second().setMainboard(null);
 
 		final GCCollectable controlCollectable = new GCCollectable(
-			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getComposites().get(0));
+			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getChildren().get(0));
 
-		VVerticalLayout.class.cast(t.first().getChildren().get(0)).getComposites().clear();
+		VVerticalLayout.class.cast(t.first().getChildren().get(0)).getChildren().clear();
 
 		// control for mainboard shouldn't be referenced anymore by validation registry or service
 		assertTrue(mainboardCollectable.isCollectable());
@@ -225,7 +225,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	@Test
 	public void testRemoveRenderable() {
 
-		final View view = createComputerView().first();
+		final VView view = createComputerView().first();
 		final GCCollectable collectable = new GCCollectable(view.getChildren().get(0));
 		// removes the column
 		view.getChildren().remove(0);

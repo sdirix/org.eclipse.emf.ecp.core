@@ -35,8 +35,8 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -99,7 +99,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	 * @param shell the {@link Shell} to use for UI elements
 	 * @param view the view
 	 */
-	public ECPControlContextImpl(EObject domainObject, ECPProject ecpProject, Shell shell, Renderable view) {
+	public ECPControlContextImpl(EObject domainObject, ECPProject ecpProject, Shell shell, VElement view) {
 		super();
 		modelElement = domainObject;
 		this.ecpProject = ecpProject;
@@ -236,7 +236,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 		return new ECPControlContextImpl(eObject, ecpProject, shell);
 	}
 
-	private View getView() {
+	private VView getView() {
 		return ViewProviderHelper.getView(getModelElement());
 	}
 

@@ -13,5 +13,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="readOnly" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TableDomainModelReference" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//VFeaturePathDomainModelReference"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TableDomainModelReference" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
 </ecore:EPackage>

@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
@@ -33,7 +33,8 @@ public class ChildrenDescriptorExtensionTest {
 	 * Needs to be adapted after refactoring
 	 * These are the counts for a fully integrated model with all elements
 	 */
-	private static final int RENDERABLE_CHILD_COUNT = 3;
+	// diagnostic, showrule, enablerule, span
+	private static final int RENDERABLE_CHILD_COUNT = 1 + 3;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
@@ -101,7 +102,7 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testViewChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getView());
+		final int size = getChildrenSize(VViewPackage.eINSTANCE.getView());
 		assertEquals(VIEW_CHILD_COUNT, size);
 	}
 
@@ -110,7 +111,7 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testAbstractCategorizationChildDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getAbstractCategorization());
+		getChildrenSize(VViewPackage.eINSTANCE.getAbstractCategorization());
 	}
 
 	/**
@@ -161,13 +162,13 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testCategorizationChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getCategorization());
+		final int size = getChildrenSize(VViewPackage.eINSTANCE.getCategorization());
 		assertEquals(CATEGORIZATION_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testCategoryChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getCategory());
+		final int size = getChildrenSize(VViewPackage.eINSTANCE.getCategory());
 		assertEquals(CATEGORY_CHILD_COUNT, size);
 	}
 
@@ -176,12 +177,12 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testCompositeChildDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getComposite());
+		getChildrenSize(VViewPackage.eINSTANCE.getContainableElement());
 	}
 
 	@Test
 	public void testControlChildDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getControl());
+		final int size = getChildrenSize(VViewPackage.eINSTANCE.getControl());
 		assertEquals(CONTROL_CHILD_COUNT, size);
 	}
 
@@ -208,7 +209,7 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testCompositeCollectionDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getCompositeCollection());
+		getChildrenSize(VViewPackage.eINSTANCE.getContainer());
 	}
 
 	@Test
@@ -222,12 +223,12 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testRenderableDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getRenderable());
+		getChildrenSize(VViewPackage.eINSTANCE.getElement());
 	}
 
 	@Test
 	public void testActionDescriptors() {
-		final int size = getChildrenSize(ViewPackage.eINSTANCE.getAction());
+		final int size = getChildrenSize(VViewPackage.eINSTANCE.getAction());
 		assertEquals(ACTION_CHILD_COUNT, size);
 	}
 

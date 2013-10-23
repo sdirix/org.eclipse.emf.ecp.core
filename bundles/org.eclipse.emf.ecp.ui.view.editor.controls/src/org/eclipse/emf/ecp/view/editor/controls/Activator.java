@@ -19,7 +19,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -60,7 +60,7 @@ public class Activator extends AbstractUIPlugin {
 				if (project.getProvider().getName().equals(WorkspaceProvider.NAME)) {
 					final EList<Object> contents = project.getContents();
 					for (final Object object : contents) {
-						if (object instanceof View) {
+						if (object instanceof VView) {
 							ViewModelFileExtensionsManager.dispose();
 						}
 					}

@@ -20,10 +20,10 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -42,16 +42,16 @@ public class SWTCustomControlTest {
 	 */
 	public class TestHandel {
 
-		private final View view;
+		private final VView view;
 
-		private final Control customControl;
+		private final VControl customControl;
 
 		/**
 		 * @param view
 		 * @param customControl
 		 */
 
-		public TestHandel(View view, Control customControl) {
+		public TestHandel(VView view, VControl customControl) {
 			this.view = view;
 			this.customControl = customControl;
 		}
@@ -59,7 +59,7 @@ public class SWTCustomControlTest {
 		/**
 		 * @return the view
 		 */
-		public View getView() {
+		public VView getView() {
 			return view;
 		}
 
@@ -67,7 +67,7 @@ public class SWTCustomControlTest {
 		 * @return the customControl
 		 */
 
-		public Control getCustomControl() {
+		public VControl getCustomControl() {
 			return customControl;
 		}
 
@@ -81,7 +81,7 @@ public class SWTCustomControlTest {
 
 	@Test
 	public void testCustomControlinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Renderable controlInView = createCustomControlInView();
+		final VElement controlInView = createCustomControlInView();
 		final Shell shell = SWTViewTestHelper.createShell();
 		final Composite composite = (Composite) SWTViewTestHelper.render(controlInView, shell);
 		assertSame(composite, CustomControlStub.getParent());
@@ -90,10 +90,10 @@ public class SWTCustomControlTest {
 	/**
 	 * @return
 	 */
-	private Renderable createCustomControlInView() {
-		final View view = ViewFactory.eINSTANCE.createView();
+	private VElement createCustomControlInView() {
+		final VView view = VViewFactory.eINSTANCE.createView();
 
-		final Control customControl = createCustomControl();
+		final VControl customControl = createCustomControl();
 
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
@@ -108,9 +108,9 @@ public class SWTCustomControlTest {
 	@Test
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
-		final Control customControl = createCustomControl();
+		final VControl customControl = createCustomControl();
 
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
@@ -128,9 +128,9 @@ public class SWTCustomControlTest {
 
 	@Test
 	public void testCustomControlInit() {
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
-		final Control customControl = createCustomControl();
+		final VControl customControl = createCustomControl();
 
 		view.getChildren().add(customControl);
 		// customControl.setBundle(BUNDLE_ID);
@@ -150,8 +150,8 @@ public class SWTCustomControlTest {
 	 * @return
 	 */
 
-	private Control createCustomControl() {
-		return ViewFactory.eINSTANCE.createControl();
+	private VControl createCustomControl() {
+		return VViewFactory.eINSTANCE.createControl();
 
 	}
 }

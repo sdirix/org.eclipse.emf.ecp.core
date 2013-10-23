@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * @author emueller
@@ -30,11 +30,11 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 public class RuleServiceHelper extends AbstractViewService {
 
 	/**
-	 * A predicate that is used to determine the set of {@link Renderable}s
+	 * A predicate that is used to determine the set of {@link VElement}s
 	 * if {@link RuleServiceHelper#getInvolvedEObjects(Setting, Object, Class)} is called.
 	 */
 	private interface RenderablePredicate {
-		boolean checkCurrentState(Renderable renderable);
+		boolean checkCurrentState(VElement renderable);
 	}
 
 	private ViewModelContext context;
@@ -52,16 +52,16 @@ public class RuleServiceHelper extends AbstractViewService {
 	 *            the new value
 	 * @param renderableClass
 	 *            the class type that has to be matched. Used for filtering the result set
-	 * @return the involved {@link Renderable}s that match the given type {@code T}
+	 * @return the involved {@link VElement}s that match the given type {@code T}
 	 */
-	public <T extends Renderable> Set<T> getInvolvedEObjects(Setting setting, Object newValue, Class<T> renderableClass) {
+	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, Class<T> renderableClass) {
 
 		final Map<Setting, Object> newValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
 		newValues.put(setting, newValue);
 
-		final Map<Renderable, Boolean> disabledRenderables = context.getService(RuleService.class)
+		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
 			.getDisabledRenderables(newValues);
-		final Map<Renderable, Boolean> hiddenRenderables = context.getService(RuleService.class)
+		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
 			.getHiddenRenderables(newValues);
 
 		final Set<T> result = new LinkedHashSet<T>();
@@ -77,7 +77,7 @@ public class RuleServiceHelper extends AbstractViewService {
 	 */
 	private RenderablePredicate createDisabledRenderablePredicate() {
 		return new RenderablePredicate() {
-			public boolean checkCurrentState(Renderable renderable) {
+			public boolean checkCurrentState(VElement renderable) {
 				return renderable.isEnabled();
 			}
 		};
@@ -88,7 +88,7 @@ public class RuleServiceHelper extends AbstractViewService {
 	 */
 	private RenderablePredicate createHiddenRenderablePredicate() {
 		return new RenderablePredicate() {
-			public boolean checkCurrentState(Renderable renderable) {
+			public boolean checkCurrentState(VElement renderable) {
 				return renderable.isVisible();
 			}
 
@@ -106,16 +106,16 @@ public class RuleServiceHelper extends AbstractViewService {
 	 *            a mapping of settings to their would-be new value
 	 * @param renderableClass
 	 *            the class type that has to be matched. Used for filtering the result set
-	 * @return the involved {@link Renderable}s that match the given type {@code T}
+	 * @return the involved {@link VElement}s that match the given type {@code T}
 	 */
-	public <T extends Renderable> Set<T> getInvolvedEObjects(Map<Setting, Object> possibleNewValues,
+	public <T extends VElement> Set<T> getInvolvedEObjects(Map<Setting, Object> possibleNewValues,
 		Class<T> renderableClass) {
 
 		final Set<T> result = new LinkedHashSet<T>();
 
-		final Map<Renderable, Boolean> hiddenRenderables = context.getService(RuleService.class)
+		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
 			.getHiddenRenderables(possibleNewValues);
-		final Map<Renderable, Boolean> disabledRenderables = context.getService(RuleService.class)
+		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
 			.getHiddenRenderables(possibleNewValues);
 		result
 			.addAll(collectFalseValues(renderableClass, disabledRenderables, createDisabledRenderablePredicate()));
@@ -125,14 +125,14 @@ public class RuleServiceHelper extends AbstractViewService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends Renderable> Set<T> collectFalseValues(Class<T> cls,
-		final Map<Renderable, Boolean> renderableToStateMapping, RenderablePredicate renderablePredicate) {
+	private <T extends VElement> Set<T> collectFalseValues(Class<T> cls,
+		final Map<VElement, Boolean> renderableToStateMapping, RenderablePredicate renderablePredicate) {
 
 		final Set<T> result = new LinkedHashSet<T>();
 
-		for (final Map.Entry<Renderable, Boolean> entry : renderableToStateMapping.entrySet()) {
+		for (final Map.Entry<VElement, Boolean> entry : renderableToStateMapping.entrySet()) {
 
-			final Renderable renderable = entry.getKey();
+			final VElement renderable = entry.getKey();
 			final Boolean newState = entry.getValue();
 			if (newState) {
 				continue;

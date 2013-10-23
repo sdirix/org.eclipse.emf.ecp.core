@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,7 +91,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__VISIBLE = ViewPackage.COMPOSITE__VISIBLE;
+	int GROUPED_GRID__VISIBLE = VViewPackage.CONTAINABLE_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -101,7 +101,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__ENABLED = ViewPackage.COMPOSITE__ENABLED;
+	int GROUPED_GRID__ENABLED = VViewPackage.CONTAINABLE_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -111,7 +111,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__READONLY = ViewPackage.COMPOSITE__READONLY;
+	int GROUPED_GRID__READONLY = VViewPackage.CONTAINABLE_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -121,7 +121,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__DIAGNOSTIC = ViewPackage.COMPOSITE__DIAGNOSTIC;
+	int GROUPED_GRID__DIAGNOSTIC = VViewPackage.CONTAINABLE_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -131,7 +131,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__ATTACHMENTS = ViewPackage.COMPOSITE__ATTACHMENTS;
+	int GROUPED_GRID__ATTACHMENTS = VViewPackage.CONTAINABLE_ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -141,7 +141,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__NAME = ViewPackage.COMPOSITE__NAME;
+	int GROUPED_GRID__NAME = VViewPackage.CONTAINABLE_ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Groups</b></em>' containment reference list.
@@ -151,7 +151,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID__GROUPS = ViewPackage.COMPOSITE_FEATURE_COUNT + 0;
+	int GROUPED_GRID__GROUPS = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Grouped Grid</em>' class.
@@ -161,7 +161,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUPED_GRID_FEATURE_COUNT = ViewPackage.COMPOSITE_FEATURE_COUNT + 1;
+	int GROUPED_GRID_FEATURE_COUNT = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.impl.VGroupImpl <em>Group</em>}'
@@ -256,7 +256,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SPAN__HORIZONTAL_SPAN = ViewPackage.ATTACHMENT_FEATURE_COUNT + 0;
+	int SPAN__HORIZONTAL_SPAN = VViewPackage.ATTACHMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Span</em>' class.
@@ -266,7 +266,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SPAN_FEATURE_COUNT = ViewPackage.ATTACHMENT_FEATURE_COUNT + 1;
+	int SPAN_FEATURE_COUNT = VViewPackage.ATTACHMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid

@@ -18,16 +18,16 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 public class DynamicContainmentTreeNodeBuilder implements CustomNodeBuilder {
 
 	public DynamicContainmentTreeNodeBuilder() {
 	}
 
-	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
-		final Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> builders =
-			new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
+	public Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> getCustomNodeBuilders() {
+		final Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> builders =
+			new HashMap<Class<? extends VElement>, NodeBuilder<? extends VElement>>();
 		builders.put(DynamicContainmentTree.class, new DynamicNodeBuilder());
 		builders.put(DynamicContainmentItem.class, new DynamicContainmentItemNodeBuilder());
 		return builders;

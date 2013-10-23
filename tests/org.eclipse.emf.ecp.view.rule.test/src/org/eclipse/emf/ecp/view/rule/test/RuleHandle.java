@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.rule.test;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 
 /**
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.rule.model.Rule;
 public class RuleHandle {
 
 	private final Rule rule;
-	private final Renderable parent;
+	private final VElement parent;
 	private final EObject domainObject;
 
 	/**
@@ -32,7 +32,7 @@ public class RuleHandle {
 	 * @param renderable renderable
 	 * @param domainObject domainObject.
 	 */
-	public RuleHandle(Rule rule, Renderable renderable, EObject domainObject) {
+	public RuleHandle(Rule rule, VElement renderable, EObject domainObject) {
 		this.rule = rule;
 		parent = renderable;
 		this.domainObject = domainObject;
@@ -48,7 +48,7 @@ public class RuleHandle {
 	/**
 	 * @return the parent
 	 */
-	public Renderable getParent() {
+	public VElement getParent() {
 		return parent;
 	}
 

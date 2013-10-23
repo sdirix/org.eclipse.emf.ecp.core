@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -30,7 +30,7 @@ public class ViewModelEditorComposite implements IEditorCompositeProvider {
 
 	private final ECPControlContext modelElementContext;
 	private ECPSWTView swtView;
-	private final View view;
+	private final VView view;
 
 	/**
 	 * Default Constructor.

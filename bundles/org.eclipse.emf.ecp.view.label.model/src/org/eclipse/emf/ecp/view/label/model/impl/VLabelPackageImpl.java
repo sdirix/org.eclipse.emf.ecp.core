@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,7 +45,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * 
 	 * @generated
 	 */
-	private EEnum labelStyleEEnum = null;
+	private EEnum vLabelStyleEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -94,13 +94,12 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 
 		// Obtain or create and register package
 		VLabelPackageImpl theLabelPackage = (VLabelPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VLabelPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VLabelPackageImpl());
+			.get(eNS_URI) : new VLabelPackageImpl());
 
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theLabelPackage.createPackageContents();
@@ -144,9 +143,9 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * 
 	 * @generated
 	 */
-	public EEnum getLabelStyle()
+	public EEnum getVLabelStyle()
 	{
-		return labelStyleEEnum;
+		return vLabelStyleEEnum;
 	}
 
 	/**
@@ -187,7 +186,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		createEAttribute(labelEClass, LABEL__STYLE);
 
 		// Create enums
-		labelStyleEEnum = createEEnum(LABEL_STYLE);
+		vLabelStyleEEnum = createEEnum(VLABEL_STYLE);
 	}
 
 	/**
@@ -218,33 +217,33 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		labelEClass.getESuperTypes().add(theViewPackage.getComposite());
+		labelEClass.getESuperTypes().add(theViewPackage.getContainableElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(labelEClass, VLabel.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLabel_Style(), this.getLabelStyle(), "style", null, 0, 1, VLabel.class, !IS_TRANSIENT,
+		initEAttribute(getLabel_Style(), this.getVLabelStyle(), "style", null, 0, 1, VLabel.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
-		initEEnum(labelStyleEEnum, VLabelStyle.class, "LabelStyle");
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H0);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H1);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H2);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H3);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H4);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H5);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H6);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H7);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H8);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.H9);
-		addEEnumLiteral(labelStyleEEnum, VLabelStyle.SEPARATOR);
+		initEEnum(vLabelStyleEEnum, VLabelStyle.class, "VLabelStyle");
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H0);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H1);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H2);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H3);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H4);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H5);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H6);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H7);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H8);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H9);
+		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.SEPARATOR);
 
 		// Create resource
 		createResource(eNS_URI);

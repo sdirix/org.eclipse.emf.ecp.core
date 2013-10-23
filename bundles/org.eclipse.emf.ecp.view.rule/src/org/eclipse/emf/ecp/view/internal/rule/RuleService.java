@@ -29,9 +29,9 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 
 /**
  * Rule service that, once instantiated, maintains and synchronizes
- * the state of a rule with its {@link Renderable}.
+ * the state of a rule with its {@link VElement}.
  * 
  * @author emueller
  */
@@ -70,7 +70,7 @@ public class RuleService extends AbstractViewService {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
-		final Renderable view = context.getViewModel();
+		final VElement view = context.getViewModel();
 		domainChangeListener = new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
@@ -106,8 +106,8 @@ public class RuleService extends AbstractViewService {
 
 			public void notifyRemove(Notifier notifier) {
 
-				if (Renderable.class.isInstance(notifier)) {
-					final Renderable renderable = Renderable.class.cast(notifier);
+				if (VElement.class.isInstance(notifier)) {
+					final VElement renderable = VElement.class.cast(notifier);
 					showRuleRegistry.removeRenderable(renderable);
 					enableRuleRegistry.removeRenderable(renderable);
 				} else if (Condition.class.isInstance(notifier)) {
@@ -142,20 +142,20 @@ public class RuleService extends AbstractViewService {
 		evalShow();
 	}
 
-	private static void resetToVisible(Renderable renderable) {
+	private static void resetToVisible(VElement renderable) {
 		if (renderable != null) {
 			renderable.setVisible(true);
 		}
 	}
 
-	private static void resetToEnabled(Renderable renderable) {
+	private static void resetToEnabled(VElement renderable) {
 		if (renderable != null) {
 			renderable.setEnabled(true);
 		}
 	}
 
-	private static Rule getRule(Renderable renderable) {
-		for (final Attachment attachment : renderable.getAttachments()) {
+	private static Rule getRule(VElement renderable) {
+		for (final VAttachment attachment : renderable.getAttachments()) {
 			if (Rule.class.isInstance(attachment)) {
 				final Rule rule = (Rule) attachment;
 				return rule;
@@ -165,7 +165,7 @@ public class RuleService extends AbstractViewService {
 		return null;
 	}
 
-	private static void updateStateMap(Map<Renderable, Boolean> stateMap, Renderable renderable,
+	private static void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
 		boolean isOpposite, boolean evalResult) {
 
 		if (!stateMap.containsKey(renderable)) {
@@ -178,19 +178,19 @@ public class RuleService extends AbstractViewService {
 		}
 
 		for (final EObject childContent : renderable.eContents()) {
-			if (childContent instanceof Renderable) {
-				updateStateMap(stateMap, (Renderable) childContent, isOpposite, evalResult);
+			if (childContent instanceof VElement) {
+				updateStateMap(stateMap, (VElement) childContent, isOpposite, evalResult);
 			}
 		}
 	}
 
 	private static <T extends Rule> boolean hasRule(Class<T> ruleType, EObject eObject) {
 
-		if (!Renderable.class.isInstance(eObject)) {
+		if (!VElement.class.isInstance(eObject)) {
 			return false;
 		}
 
-		final Renderable renderable = (Renderable) eObject;
+		final VElement renderable = (VElement) eObject;
 		final Rule rule = getRule(renderable);
 
 		if (ruleType.isInstance(rule)) {
@@ -200,16 +200,16 @@ public class RuleService extends AbstractViewService {
 		return false;
 	}
 
-	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
+	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, EStructuralFeature attribute, boolean isDryRun, Map<Setting, Object> possibleValues) {
 
-		final Map<Renderable, Boolean> map = new LinkedHashMap<Renderable, Boolean>();
+		final Map<VElement, Boolean> map = new LinkedHashMap<VElement, Boolean>();
 
-		for (final Map.Entry<T, Renderable> ruleAndRenderable : registry.getAffectedRenderables(
+		for (final Map.Entry<T, VElement> ruleAndRenderable : registry.getAffectedRenderables(
 			attribute).entrySet()) {
 
 			final Rule rule = ruleAndRenderable.getKey();
-			final Renderable renderable = ruleAndRenderable.getValue();
+			final VElement renderable = ruleAndRenderable.getValue();
 			// whether the value changed at all, if newValue has been provided
 			boolean hasChanged = false;
 
@@ -257,12 +257,12 @@ public class RuleService extends AbstractViewService {
 		return map;
 	}
 
-	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
+	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, EStructuralFeature attribute, Map<Setting, Object> possibleValues) {
 		return evalAffectedRenderables(registry, ruleType, attribute, true, possibleValues);
 	}
 
-	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
+	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, EStructuralFeature attribute) {
 		return evalAffectedRenderables(registry, ruleType, attribute, false, null);
 	}
@@ -291,11 +291,11 @@ public class RuleService extends AbstractViewService {
 
 	private <T extends Rule> void evalShow(EStructuralFeature attribute) {
 
-		final Map<Renderable, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
+		final Map<VElement, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
 			attribute);
-		for (final Map.Entry<Renderable, Boolean> e : visibleMap.entrySet()) {
+		for (final Map.Entry<VElement, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
-			final Renderable renderable = e.getKey();
+			final VElement renderable = e.getKey();
 			final boolean isCurrentlyVisible = renderable.isVisible();
 			renderable.setVisible(isVisible);
 			if (isCurrentlyVisible && !isVisible) {
@@ -306,10 +306,10 @@ public class RuleService extends AbstractViewService {
 
 	private <T extends Rule> void evalEnable(EStructuralFeature attribute) {
 
-		final Map<Renderable, Boolean> enabledMap = evalAffectedRenderables(enableRuleRegistry, EnableRule.class,
+		final Map<VElement, Boolean> enabledMap = evalAffectedRenderables(enableRuleRegistry, EnableRule.class,
 			attribute);
 
-		for (final Map.Entry<Renderable, Boolean> e : enabledMap.entrySet()) {
+		for (final Map.Entry<VElement, Boolean> e : enabledMap.entrySet()) {
 			e.getKey().setEnabled(e.getValue());
 		}
 	}
@@ -341,7 +341,7 @@ public class RuleService extends AbstractViewService {
 	private <T extends Rule> void register(RuleRegistry<T> registry, Class<T> ruleType, EObject domainObject,
 		final EObject viewModel) {
 		if (hasRule(ruleType, viewModel)) {
-			final Renderable renderable = (Renderable) viewModel;
+			final VElement renderable = (VElement) viewModel;
 			@SuppressWarnings("unchecked")
 			final T rule = (T) getRule(renderable);
 			registry.register(renderable, rule, rule.getCondition(), domainObject);
@@ -349,14 +349,14 @@ public class RuleService extends AbstractViewService {
 	}
 
 	/**
-	 * Returns all {@link Renderable}s, that would we disabled if {@code possibleValues} would be set for the given
+	 * Returns all {@link VElement}s, that would we disabled if {@code possibleValues} would be set for the given
 	 * {@code setting}s.
 	 * 
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
-	 * @return the hidden {@link Renderable}s and their new state if {@code possibleValues} would be set
+	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<Renderable, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues) {
+	public Map<VElement, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues) {
 
 		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
 
@@ -372,14 +372,14 @@ public class RuleService extends AbstractViewService {
 	}
 
 	/**
-	 * Returns all {@link Renderable}s, that would we hidden if {@code possibleValues} would be set for the given
+	 * Returns all {@link VElement}s, that would we hidden if {@code possibleValues} would be set for the given
 	 * {@code setting}s.
 	 * 
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
-	 * @return the hidden {@link Renderable}s and their new state if {@code possibleValues} would be set
+	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<Renderable, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues) {
+	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues) {
 
 		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
 
@@ -394,10 +394,10 @@ public class RuleService extends AbstractViewService {
 		return Collections.emptyMap();
 	}
 
-	private void unset(Renderable renderable) {
+	private void unset(VElement renderable) {
 
-		if (renderable instanceof Control) {
-			final Control control = (Control) renderable;
+		if (renderable instanceof VControl) {
+			final VControl control = (VControl) renderable;
 			final VDomainModelReference domainModelReference = control.getDomainModelReference();
 			final Iterator<Setting> settings = domainModelReference.getIterator();
 			while (settings.hasNext()) {

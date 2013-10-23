@@ -27,9 +27,9 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
 import org.eclipse.emf.ecp.ui.view.SelectedNodeChangedListener;
 import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -52,7 +52,7 @@ public class RendererContextTest {
 
 	private Player player;
 	private Shell shell;
-	private Node<View> root;
+	private Node<VView> root;
 
 	@Before
 	public void before() {
@@ -73,7 +73,7 @@ public class RendererContextTest {
 		final Composite parent = new Composite(shell, SWT.NONE);
 		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		parent.setLayout(new GridLayout());
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final ModelRenderer<org.eclipse.swt.widgets.Control> renderer = ModelRenderer.INSTANCE
 			.getRenderer();
@@ -81,11 +81,11 @@ public class RendererContextTest {
 		final ECPControlContext context = new DefaultControlContext(player, view);
 		root = NodeBuilders.INSTANCE.build(view, context);
 
-		final List<Renderable> result = new ArrayList<Renderable>();
+		final List<VElement> result = new ArrayList<VElement>();
 
 		final RendererContext<org.eclipse.swt.widgets.Control> rendererContext = renderer.render(root, parent);
 		rendererContext.addSelectionChangedListener(new SelectedNodeChangedListener() {
-			public <T extends Renderable> void selectionChanged(T selectedRenderable) {
+			public <T extends VElement> void selectionChanged(T selectedRenderable) {
 				result.add(selectedRenderable);
 			}
 		});

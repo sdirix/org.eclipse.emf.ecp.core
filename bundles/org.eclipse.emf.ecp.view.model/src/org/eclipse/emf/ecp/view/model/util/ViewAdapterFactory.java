@@ -15,27 +15,27 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Action;
-import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VAction;
+import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.model.VCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides
  * an adapter <code>createXXX</code> method for each class of the model. <!--
  * end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.model.ViewPackage
+ * @see org.eclipse.emf.ecp.view.model.VViewPackage
  * @generated
  */
 public class ViewAdapterFactory extends AdapterFactoryImpl {
@@ -45,7 +45,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static ViewPackage modelPackage;
+	protected static VViewPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -57,7 +57,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	public ViewAdapterFactory() {
 		if (modelPackage == null)
 		{
-			modelPackage = ViewPackage.eINSTANCE;
+			modelPackage = VViewPackage.eINSTANCE;
 		}
 	}
 
@@ -92,81 +92,81 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>()
 	{
 		@Override
-		public Adapter caseRenderable(Renderable object)
+		public Adapter caseElement(VElement object)
 		{
-			return createRenderableAdapter();
+			return createElementAdapter();
 		}
 
 		@Override
-		public Adapter caseVDiagnostic(VDiagnostic object)
+		public Adapter caseDiagnostic(VDiagnostic object)
 		{
-			return createVDiagnosticAdapter();
+			return createDiagnosticAdapter();
 		}
 
 		@Override
-		public Adapter caseAttachment(Attachment object)
+		public Adapter caseAttachment(VAttachment object)
 		{
 			return createAttachmentAdapter();
 		}
 
 		@Override
-		public Adapter caseView(View object)
+		public Adapter caseView(VView object)
 		{
 			return createViewAdapter();
 		}
 
 		@Override
-		public Adapter caseAbstractCategorization(AbstractCategorization object)
+		public Adapter caseAbstractCategorization(VAbstractCategorization object)
 		{
 			return createAbstractCategorizationAdapter();
 		}
 
 		@Override
-		public Adapter caseCategorization(Categorization object)
+		public Adapter caseCategorization(VCategorization object)
 		{
 			return createCategorizationAdapter();
 		}
 
 		@Override
-		public Adapter caseCategory(Category object)
+		public Adapter caseCategory(VCategory object)
 		{
 			return createCategoryAdapter();
 		}
 
 		@Override
-		public Adapter caseAction(Action object)
+		public Adapter caseAction(VAction object)
 		{
 			return createActionAdapter();
 		}
 
 		@Override
-		public Adapter caseComposite(Composite object)
+		public Adapter caseContainableElement(VContainableElement object)
 		{
-			return createCompositeAdapter();
+			return createContainableElementAdapter();
 		}
 
 		@Override
-		public Adapter caseVDomainModelReference(VDomainModelReference object)
+		public Adapter caseDomainModelReference(VDomainModelReference object)
 		{
-			return createVDomainModelReferenceAdapter();
+			return createDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 		{
-			return createVFeaturePathDomainModelReferenceAdapter();
+			return createFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter caseControl(Control object)
+		public Adapter caseControl(VControl object)
 		{
 			return createControlAdapter();
 		}
 
 		@Override
-		public Adapter caseCompositeCollection(CompositeCollection object)
+		public Adapter caseContainer(VContainer object)
 		{
-			return createCompositeCollectionAdapter();
+			return createContainerAdapter();
 		}
 
 		@Override
@@ -191,197 +191,24 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.View <em>View</em>}'. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.View
-	 * @generated
-	 */
-	public Adapter createViewAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractCategorization
-	 * <em>Abstract Categorization</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.AbstractCategorization
-	 * @generated
-	 */
-	public Adapter createAbstractCategorizationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Categorization
-	 * <em>Categorization</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Categorization
-	 * @generated
-	 */
-	public Adapter createCategorizationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Category <em>Category</em>}
-	 * '. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Category
-	 * @generated
-	 */
-	public Adapter createCategoryAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Composite <em>Composite</em>}
-	 * '.
-	 * <!-- begin-user-doc --> This default implementation returns null so that
-	 * we can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Composite
-	 * @generated
-	 */
-	public Adapter createCompositeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'.
-	 * <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Control
-	 * @generated
-	 */
-	public Adapter createControlAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.CompositeCollection
-	 * <em>Composite Collection</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.CompositeCollection
-	 * @generated
-	 */
-	public Adapter createCompositeCollectionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable
-	 * <em>Renderable</em>}'.
-	 * <!-- begin-user-doc --> This default implementation returns null so that
-	 * we can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Renderable
-	 * @generated
-	 */
-	public Adapter createRenderableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.Action <em>Action</em>}'.
-	 * <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Action
-	 * @generated
-	 */
-	public Adapter createActionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
-	 * <em>VDomain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.model.VElement
 	 * @generated
 	 */
-	public Adapter createVDomainModelReferenceAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
-	 * <em>VFeature Path Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
-	 * @generated
-	 */
-	public Adapter createVFeaturePathDomainModelReferenceAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Attachment
-	 * <em>Attachment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Attachment
-	 * @generated
-	 */
-	public Adapter createAttachmentAdapter()
+	public Adapter createElementAdapter()
 	{
 		return null;
 	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDiagnostic
-	 * <em>VDiagnostic</em>}'.
+	 * <em>Diagnostic</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -391,7 +218,184 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.model.VDiagnostic
 	 * @generated
 	 */
-	public Adapter createVDiagnosticAdapter()
+	public Adapter createDiagnosticAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VView <em>View</em>}'. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VView
+	 * @generated
+	 */
+	public Adapter createViewAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization
+	 * <em>Abstract Categorization</em>}'.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization
+	 * @generated
+	 */
+	public Adapter createAbstractCategorizationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VCategorization
+	 * <em>Categorization</em>}'.
+	 * <!-- begin-user-doc --> This default
+	 * implementation returns null so that we can easily ignore cases; it's
+	 * useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VCategorization
+	 * @generated
+	 */
+	public Adapter createCategorizationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VCategory <em>Category</em>}
+	 * '. <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VCategory
+	 * @generated
+	 */
+	public Adapter createCategoryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VControl <em>Control</em>}'.
+	 * <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VControl
+	 * @generated
+	 */
+	public Adapter createControlAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainer
+	 * <em>Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VContainer
+	 * @generated
+	 */
+	public Adapter createContainerAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VAction <em>Action</em>}'.
+	 * <!--
+	 * begin-user-doc --> This default implementation returns null so that we
+	 * can easily ignore cases; it's useful to ignore a case when inheritance
+	 * will catch all the cases anyway. <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VAction
+	 * @generated
+	 */
+	public Adapter createActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainableElement
+	 * <em>Containable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VContainableElement
+	 * @generated
+	 */
+	public Adapter createContainableElementAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * <em>Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * @generated
+	 */
+	public Adapter createDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * <em>Feature Path Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
+	 * @generated
+	 */
+	public Adapter createFeaturePathDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAttachment
+	 * <em>Attachment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VAttachment
+	 * @generated
+	 */
+	public Adapter createAttachmentAdapter()
 	{
 		return null;
 	}

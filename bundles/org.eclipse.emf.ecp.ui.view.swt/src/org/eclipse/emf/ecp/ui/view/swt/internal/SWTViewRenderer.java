@@ -33,12 +33,12 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
-import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.model.impl.VControlImpl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
@@ -71,7 +71,7 @@ import org.eclipse.swt.widgets.TreeItem;
 /**
  * The Class SWTViewRenderer.
  */
-public class SWTViewRenderer extends AbstractSWTRenderer<View> {
+public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 
 	/** The Constant INSTANCE. */
 	public static final SWTViewRenderer INSTANCE = new SWTViewRenderer();
@@ -91,7 +91,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		{
 			// add(ColumnCompositeImpl.class);
 			// add(ColumnImpl.class);
-			add(ControlImpl.class);
+			add(VControlImpl.class);
 			// add(TableControlImpl.class);
 			// add(GroupImpl.class);
 		}
@@ -106,12 +106,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(final Node<View> viewNode,
+	public List<RenderingResultRow<Control>> renderSWT(final Node<VView> viewNode,
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
-		final View view = viewNode.getRenderable();
+		final VView view = viewNode.getRenderable();
 		adapter = new EContentAdapter() {
 
 			/**
@@ -125,8 +125,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 				if (treeViewer == null) {
 					return;
 				}
-				if (AbstractCategorization.class.isInstance(msg.getNotifier())
-					&& ViewPackage.eINSTANCE.getRenderable_Diagnostic().equals(msg.getFeature())) {
+				if (VAbstractCategorization.class.isInstance(msg.getNotifier())
+					&& VViewPackage.eINSTANCE.getElement_Diagnostic().equals(msg.getFeature())) {
 					if (msg.getEventType() == Notification.SET) {
 						treeViewer.refresh();
 					}
@@ -141,12 +141,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 				view.eAdapters().remove(adapter);
 			}
 		});
-		final EList<AbstractCategorization> categorizations = view.getCategorizations();
+		final EList<VAbstractCategorization> categorizations = view.getCategorizations();
 
 		if (categorizations.size() == 0) {
 			return renderChildren(parent, viewNode, adapterFactoryItemDelegator);
 		}
-		else if (categorizations.size() == 1 && categorizations.get(0) instanceof Category) {
+		else if (categorizations.size() == 1 && categorizations.get(0) instanceof VCategory) {
 			final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(parent, viewNode
 				.getChildren().get(0),
 				adapterFactoryItemDelegator);
@@ -174,7 +174,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @return the composite
 	 * @throws NoRendererFoundException the no renderer found exception
 	 */
-	private List<RenderingResultRow<Control>> renderChildren(Composite parent, Node<View> node,
+	private List<RenderingResultRow<Control>> renderChildren(Composite parent, Node<VView> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator)
 		throws NoRendererFoundException {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
@@ -184,7 +184,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 
 		node.addRenderingResultDelegator(withSWT(columnComposite));
 
-		for (final Node<? extends Renderable> child : node.getChildren()) {
+		for (final Node<? extends VElement> child : node.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {
@@ -227,7 +227,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @param node the node
 	 * @return the list< node<? extends renderable>>
 	 */
-	protected List<Node<? extends Renderable>> filterVisibleNodes(TreeViewer treeViewer, Node<? extends Renderable> node) {
+	protected List<Node<? extends VElement>> filterVisibleNodes(TreeViewer treeViewer, Node<? extends VElement> node) {
 		final List<Node<?>> result = new ArrayList<Node<?>>();
 		final List<Node<?>> children = node.getChildren();
 		for (final Node<?> child : children) {
@@ -271,7 +271,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @return the tree viewer
 	 */
 	protected TreeViewer createTreeViewer(final Composite composite,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<View> viewNode
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<VView> viewNode
 		) {
 		treeViewer = new TreeViewer(composite);
 
@@ -385,7 +385,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @param treeViewer the tree viewer
 	 * @param viewNode the view node
 	 */
-	protected void initTreeViewer(final TreeViewer treeViewer, Node<View> viewNode) {
+	protected void initTreeViewer(final TreeViewer treeViewer, Node<VView> viewNode) {
 		viewNode.addRenderingResultDelegator(new RenderingResultDelegatorAdapter() {
 			@Override
 			public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
@@ -431,7 +431,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 	 * @param modelElement the model element
 	 * @param view the view
 	 */
-	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, View view) {
+	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, VView view) {
 		// The text column
 		final Tree tree = treeViewer.getTree();
 		final TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
@@ -442,8 +442,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<View> {
 		final Iterator<EObject> viewContents = view.eAllContents();
 		while (viewContents.hasNext()) {
 			final EObject object = viewContents.next();
-			if (AbstractCategorization.class.isInstance(object)) {
-				final AbstractCategorization abstractCategorization = (AbstractCategorization) object;
+			if (VAbstractCategorization.class.isInstance(object)) {
+				final VAbstractCategorization abstractCategorization = (VAbstractCategorization) object;
 				if (maxActions < abstractCategorization.getActions().size()) {
 					maxActions = abstractCategorization.getActions().size();
 				}

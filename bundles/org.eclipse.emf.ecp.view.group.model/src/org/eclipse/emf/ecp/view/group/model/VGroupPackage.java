@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.group.model;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -88,7 +88,7 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__VISIBLE = ViewPackage.COMPOSITE_COLLECTION__VISIBLE;
+	int GROUP__VISIBLE = VViewPackage.CONTAINER__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -98,7 +98,7 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__ENABLED = ViewPackage.COMPOSITE_COLLECTION__ENABLED;
+	int GROUP__ENABLED = VViewPackage.CONTAINER__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -108,7 +108,7 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__READONLY = ViewPackage.COMPOSITE_COLLECTION__READONLY;
+	int GROUP__READONLY = VViewPackage.CONTAINER__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -118,7 +118,7 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__DIAGNOSTIC = ViewPackage.COMPOSITE_COLLECTION__DIAGNOSTIC;
+	int GROUP__DIAGNOSTIC = VViewPackage.CONTAINER__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -128,7 +128,7 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__ATTACHMENTS = ViewPackage.COMPOSITE_COLLECTION__ATTACHMENTS;
+	int GROUP__ATTACHMENTS = VViewPackage.CONTAINER__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -138,17 +138,17 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__NAME = ViewPackage.COMPOSITE_COLLECTION__NAME;
+	int GROUP__NAME = VViewPackage.CONTAINER__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Composites</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__COMPOSITES = ViewPackage.COMPOSITE_COLLECTION__COMPOSITES;
+	int GROUP__CHILDREN = VViewPackage.CONTAINER__CHILDREN;
 
 	/**
 	 * The number of structural features of the '<em>Group</em>' class.
@@ -158,7 +158,7 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP_FEATURE_COUNT = ViewPackage.COMPOSITE_COLLECTION_FEATURE_COUNT + 0;
+	int GROUP_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.group.model.VGroup <em>Group</em>}'.

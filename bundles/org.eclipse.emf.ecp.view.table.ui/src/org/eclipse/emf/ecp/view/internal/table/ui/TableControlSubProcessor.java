@@ -22,8 +22,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.validation.ECPValidationSubProcessor;
 import org.eclipse.emf.ecp.view.validation.ValidationRegistry;
@@ -38,13 +38,13 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.validation.ECPValidationSubProcessor#processRenderable(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.model.Renderable, org.eclipse.emf.ecp.view.validation.ValidationRegistry)
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.validation.ValidationRegistry)
 	 */
-	public Map<EObject, Set<Control>> processRenderable(EObject domainObject,
-		final Renderable parentRenderable,
+	public Map<EObject, Set<VControl>> processRenderable(EObject domainObject,
+		final VElement parentRenderable,
 		final ValidationRegistry validationRegistry) {
 		final VTableControl tableControl = (VTableControl) parentRenderable;
-		final Map<EObject, Set<Control>> result = new LinkedHashMap<EObject, Set<Control>>();
+		final Map<EObject, Set<VControl>> result = new LinkedHashMap<EObject, Set<VControl>>();
 		// final EObject referencedDomainModel = validationRegistry.resolveDomainModel(domainObject,
 		// tableControl.getPathToFeature());
 		final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
@@ -93,10 +93,10 @@ public class TableControlSubProcessor implements ECPValidationSubProcessor {
 		return result;
 	}
 
-	private void addControlToMap(VTableControl tableControl, Map<EObject, Set<Control>> result,
+	private void addControlToMap(VTableControl tableControl, Map<EObject, Set<VControl>> result,
 		EObject referencedDomainModel) {
 		if (!result.containsKey(referencedDomainModel)) {
-			result.put(referencedDomainModel, new LinkedHashSet<Control>());
+			result.put(referencedDomainModel, new LinkedHashSet<VControl>());
 		}
 		result.get(referencedDomainModel).add(tableControl);
 	}

@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -90,7 +90,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__VISIBLE = ViewPackage.COMPOSITE__VISIBLE;
+	int LABEL__VISIBLE = VViewPackage.CONTAINABLE_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -100,7 +100,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__ENABLED = ViewPackage.COMPOSITE__ENABLED;
+	int LABEL__ENABLED = VViewPackage.CONTAINABLE_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -110,7 +110,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__READONLY = ViewPackage.COMPOSITE__READONLY;
+	int LABEL__READONLY = VViewPackage.CONTAINABLE_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -120,7 +120,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__DIAGNOSTIC = ViewPackage.COMPOSITE__DIAGNOSTIC;
+	int LABEL__DIAGNOSTIC = VViewPackage.CONTAINABLE_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -130,7 +130,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__ATTACHMENTS = ViewPackage.COMPOSITE__ATTACHMENTS;
+	int LABEL__ATTACHMENTS = VViewPackage.CONTAINABLE_ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -140,7 +140,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__NAME = ViewPackage.COMPOSITE__NAME;
+	int LABEL__NAME = VViewPackage.CONTAINABLE_ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Style</b></em>' attribute.
@@ -150,7 +150,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__STYLE = ViewPackage.COMPOSITE_FEATURE_COUNT + 0;
+	int LABEL__STYLE = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Label</em>' class.
@@ -160,18 +160,18 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL_FEATURE_COUNT = ViewPackage.COMPOSITE_FEATURE_COUNT + 1;
+	int LABEL_FEATURE_COUNT = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>Style</em>}' enum.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>VLabel Style</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
-	 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getLabelStyle()
+	 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getVLabelStyle()
 	 * @generated
 	 */
-	int LABEL_STYLE = 1;
+	int VLABEL_STYLE = 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.label.model.VLabel <em>Label</em>}'.
@@ -198,15 +198,16 @@ public interface VLabelPackage extends EPackage
 	EAttribute getLabel_Style();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>Style</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>VLabel Style</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for enum '<em>Style</em>'.
+	 * @return the meta object for enum '<em>VLabel Style</em>'.
 	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
 	 * @generated
 	 */
-	EEnum getLabelStyle();
+	EEnum getVLabelStyle();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -255,16 +256,16 @@ public interface VLabelPackage extends EPackage
 		EAttribute LABEL__STYLE = eINSTANCE.getLabel_Style();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>Style</em>}'
-		 * enum.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle
+		 * <em>VLabel Style</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
-		 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getLabelStyle()
+		 * @see org.eclipse.emf.ecp.view.label.model.impl.VLabelPackageImpl#getVLabelStyle()
 		 * @generated
 		 */
-		EEnum LABEL_STYLE = eINSTANCE.getLabelStyle();
+		EEnum VLABEL_STYLE = eINSTANCE.getVLabelStyle();
 
 	}
 

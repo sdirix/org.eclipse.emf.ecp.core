@@ -18,9 +18,9 @@ import static org.junit.Assert.fail;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -36,7 +36,7 @@ import org.junit.Test;
 public class ViewModelContextTest {
 
 	private Player player;
-	private View view;
+	private VView view;
 	private ViewModelContextImpl viewModelContext;
 
 	/**
@@ -45,7 +45,7 @@ public class ViewModelContextTest {
 	@Before
 	public void setUp() throws Exception {
 		player = BowlingFactory.eINSTANCE.createPlayer();
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		numPlayerAdapters = player.eAdapters().size();
 		numViewAdapters = view.eAdapters().size();
 		viewModelContext = new ViewModelContextImpl(view, player);
@@ -229,7 +229,7 @@ public class ViewModelContextTest {
 
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = notification.getNotifier() == view
-					&& notification.getStructuralFeature() == ViewPackage.eINSTANCE.getAbstractCategorization_Name();
+					&& notification.getStructuralFeature() == VViewPackage.eINSTANCE.getAbstractCategorization_Name();
 			}
 
 			public void notifyAdd(Notifier notifier) {

@@ -26,8 +26,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -54,7 +54,7 @@ public class SWTSeparatorTest {
 		ECPProjectWithNameExistsException {
 
 		// setup model
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VSeparator separator = VSeparatorFactory.eINSTANCE.createSeparator();
 		separator.setName(SEPARATOR_NAME);
 		view.getChildren().add(separator);
@@ -71,7 +71,7 @@ public class SWTSeparatorTest {
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(view, shell);
 
 		// test SWTRenderer
-		final Node<View> node = NodeBuilders.INSTANCE.build(view, context);
+		final Node<VView> node = NodeBuilders.INSTANCE.build(view, context);
 		final Node<?> sepNode = node.getChildren().get(0);
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);

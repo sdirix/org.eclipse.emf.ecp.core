@@ -19,8 +19,8 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
 import org.junit.Test;
@@ -31,13 +31,13 @@ public class SeparatorTest {
 	public void testSeparator() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		// setup model
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VSeparator separator = VSeparatorFactory.eINSTANCE.createSeparator();
 		separator.setName("separator");
 		view.getChildren().add(separator);
 
 		// Test NodeBuidlers
-		final Node<View> node = NodeBuilders.INSTANCE.build(view, null);
+		final Node<VView> node = NodeBuilders.INSTANCE.build(view, null);
 		assertEquals("No Node has been instanciated", 1, node.getChildren().size());
 		final Node<?> childNode = node.getChildren().get(0);
 		assertTrue(childNode.getRenderable() instanceof VSeparator);

@@ -78,7 +78,7 @@ public class CustomSwitch<T> extends Switch<T> {
 			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE: {
 				VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference)theEObject;
 				T result = caseHardcodedDomainModelReference(hardcodedDomainModelReference);
-				if (result == null) result = caseVDomainModelReference(hardcodedDomainModelReference);
+				if (result == null) result = caseDomainModelReference(hardcodedDomainModelReference);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -102,17 +102,17 @@ public class CustomSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVDomainModelReference(VDomainModelReference object) {
+	public T caseDomainModelReference(VDomainModelReference object) {
 		return null;
 	}
 

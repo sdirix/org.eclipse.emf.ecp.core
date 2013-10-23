@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Leaf;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 /**
@@ -27,7 +27,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * 
  * @param <C> the Control of this NodeBuilder
  */
-public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
+public class ControlNodeBuilder<C extends VControl> implements NodeBuilder<C> {
 
 	/**
 	 * {@inheritDoc}

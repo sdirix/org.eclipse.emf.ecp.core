@@ -21,10 +21,10 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
@@ -53,7 +53,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationMissingElementOnInit() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
 			TestPackage.eINSTANCE.getComputer_Mainboard()));
@@ -66,7 +66,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationMissingElementSetValueAfterInit() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
 			TestPackage.eINSTANCE.getComputer_Mainboard()));
@@ -87,7 +87,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
@@ -104,9 +104,9 @@ public class ViewValidationTest extends CommonValidationTest {
 		computer.setMainboard(mainboard);
 		computer.setPowerBlock(powerBlock);
 
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control powerBlockControl = ViewFactory.eINSTANCE.createControl();
-		final Control mainboardControl = ViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl powerBlockControl = VViewFactory.eINSTANCE.createControl();
+		final VControl mainboardControl = VViewFactory.eINSTANCE.createControl();
 		view.getChildren().add(powerBlockControl);
 		view.getChildren().add(mainboardControl);
 
@@ -134,7 +134,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitDisabledControlOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setEnabled(false);
 
 		control.setDomainModelReference(
@@ -147,7 +147,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	@Test
 	public void testValidationInitHiddenControlError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setVisible(false);
 
 		control.setDomainModelReference(
@@ -160,7 +160,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	@Test
 	public void testValidationDisabledControlOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
@@ -174,7 +174,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationHiddenControlOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
@@ -188,7 +188,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitHiddenControlOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
@@ -200,7 +200,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	@Test
 	public void testValidationInitError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -219,12 +219,12 @@ public class ViewValidationTest extends CommonValidationTest {
 		computer.setMainboard(board);
 		computer.setPowerBlock(power);
 
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control controlPower = ViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl controlPower = VViewFactory.eINSTANCE.createControl();
 		controlPower.setDomainModelReference(getVFeaturePathDomainModelReference(
 			TestPackage.eINSTANCE.getPowerBlock_Name(), TestPackage.eINSTANCE.getComputer_PowerBlock()));
 
-		final Control controlBoard = ViewFactory.eINSTANCE.createControl();
+		final VControl controlBoard = VViewFactory.eINSTANCE.createControl();
 		controlBoard.setDomainModelReference(getVFeaturePathDomainModelReference(
 			TestPackage.eINSTANCE.getMainboard_Name(), TestPackage.eINSTANCE.getComputer_Mainboard()));
 
@@ -244,11 +244,11 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 
 		new ViewModelContextImpl(column, computer);
 
@@ -261,11 +261,11 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 
 		new ViewModelContextImpl(column, computer);
 
@@ -278,13 +278,13 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitPropagation2LevelOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 		view.getChildren().add(column);
 
 		new ViewModelContextImpl(view, computer);
@@ -298,14 +298,14 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationInitPropagation2LevelError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 		view.getChildren().add(column);
 
 		new ViewModelContextImpl(view, computer);
@@ -320,7 +320,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationChangeOkToError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -334,7 +334,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	@Test
 	public void testValidationChangeErrorToOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -349,8 +349,8 @@ public class ViewValidationTest extends CommonValidationTest {
 	public void testValidationPropagationChangeOkToError() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		view.getChildren().add(control);
@@ -370,9 +370,9 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		writer.setLastName("foo");
 
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control firstNameControl = ViewFactory.eINSTANCE.createControl();
-		final Control lastNameControl = ViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl firstNameControl = VViewFactory.eINSTANCE.createControl();
+		final VControl lastNameControl = VViewFactory.eINSTANCE.createControl();
 		firstNameControl.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
 		lastNameControl.setDomainModelReference(
@@ -404,7 +404,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		lib.getWriters().add(writer);
 		writer.setLastName("foo");
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
@@ -442,8 +442,8 @@ public class ViewValidationTest extends CommonValidationTest {
 	@Test
 	public void testValidationPropagationChangeErrorToOk() {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 
@@ -465,11 +465,11 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		new ViewModelContextImpl(view, computer);
 
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
@@ -488,11 +488,11 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		new ViewModelContextImpl(view, computer);
 
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
@@ -511,11 +511,11 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		computer.setName("bla");
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		new ViewModelContextImpl(view, computer);
 
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getMainboard_Name(),
@@ -540,7 +540,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		library.getWriters().add(writer);
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		new ViewModelContextImpl(view, library);
 
@@ -552,7 +552,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		control.getColumns().add(tc);
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 		view.getChildren().add(column);
 
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic()
@@ -773,7 +773,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.getChildren().add(control);
 
 		new ViewModelContextImpl(view, lib);
@@ -798,7 +798,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.getChildren().add(control);
 
 		new ViewModelContextImpl(view, lib);
@@ -828,7 +828,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.getChildren().add(control);
 
 		new ViewModelContextImpl(view, lib);
@@ -854,7 +854,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.getChildren().add(control);
 
 		new ViewModelContextImpl(view, lib);
@@ -881,7 +881,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.getChildren().add(control);
 
 		new ViewModelContextImpl(view, lib);
@@ -906,7 +906,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableColumn tc = VTableFactory.eINSTANCE.createTableColumn();
 		tc.setAttribute(TestPackage.eINSTANCE.getWriter_FirstName());
 		control.getColumns().add(tc);
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.getChildren().add(control);
 
 		new ViewModelContextImpl(view, lib);
@@ -922,7 +922,7 @@ public class ViewValidationTest extends CommonValidationTest {
 
 	@Test
 	public void testValidationTableControlAggregation() {
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
@@ -964,7 +964,7 @@ public class ViewValidationTest extends CommonValidationTest {
 
 	@Test
 	public void testValidationTableControlTwoColumns() {
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 
@@ -1036,7 +1036,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
 
 		// non domain
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
 		tableControl.setDomainModelReference(
 			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
@@ -1045,7 +1045,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		tableControl.getColumns().add(tc);
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 
-		column.getComposites().add(tableControl);
+		column.getChildren().add(tableControl);
 		view.getChildren().add(column);
 
 		library.getWriters().add(writer);
@@ -1073,7 +1073,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		library.getWriters().add(writer);
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
 		tableControl.setDomainModelReference(getVTableDomainModelReference(TestPackage.eINSTANCE
@@ -1083,7 +1083,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		tableControl.getColumns().add(tc);
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 
-		column.getComposites().add(tableControl);
+		column.getChildren().add(tableControl);
 		view.getChildren().add(column);
 
 		new ViewModelContextImpl(view, library);
@@ -1104,7 +1104,7 @@ public class ViewValidationTest extends CommonValidationTest {
 	@Test
 	public void testRegisterListener() {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
 			.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
@@ -1127,7 +1127,7 @@ public class ViewValidationTest extends CommonValidationTest {
 
 	public void testListenerUponChange() {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
 			.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));

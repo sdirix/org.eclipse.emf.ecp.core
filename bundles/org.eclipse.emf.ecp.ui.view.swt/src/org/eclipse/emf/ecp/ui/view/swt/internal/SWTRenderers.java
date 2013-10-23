@@ -29,35 +29,35 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 
-public final class SWTRenderers implements SWTRenderer<Renderable> {
+public final class SWTRenderers implements SWTRenderer<VElement> {
 
 	public static final SWTRenderers INSTANCE = new SWTRenderers();
 
 	@SuppressWarnings("rawtypes")
-	private final Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer> renderers;
+	private final Map<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, SWTRenderer> renderers;
 
 	public SWTRenderers() {
 
-		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer>();
+		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, SWTRenderer>();
 		// renderers.put(ColumnComposite.class, SWTColumnCompositeRenderer.INSTANCE);
 		// renderers.put(Column.class, SWTColumnRenderer.INSTANCE);
 		// put(Group.class, SWTGroupRenderer.INSTANCE);
 		// put(TableControl.class, SWTTableControlRenderer.INSTANCE);
-		renderers.put(Control.class, SWTControlRenderer.INSTANCE);
-		renderers.put(Categorization.class, SWTCategorizationRenderer.INSTANCE);
-		renderers.put(View.class, SWTViewRenderer.INSTANCE);
-		renderers.put(Category.class, SWTCategoryRenderer.INSTANCE);
+		renderers.put(VControl.class, SWTControlRenderer.INSTANCE);
+		renderers.put(VCategorization.class, SWTCategorizationRenderer.INSTANCE);
+		renderers.put(VView.class, SWTViewRenderer.INSTANCE);
+		renderers.put(VCategory.class, SWTCategoryRenderer.INSTANCE);
 
 		for (final CustomSWTRenderer customRenderer : getCustomRenderers()) {
-			for (final Map.Entry<Class<? extends Renderable>, SWTRenderer<?>> renderEntry : customRenderer
+			for (final Map.Entry<Class<? extends VElement>, SWTRenderer<?>> renderEntry : customRenderer
 				.getCustomRenderers().entrySet()) {
 				renderers.put(renderEntry.getKey(), renderEntry.getValue());
 			}
@@ -127,7 +127,7 @@ public final class SWTRenderers implements SWTRenderer<Renderable> {
 		return renderers;
 	}
 
-	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> render(Node<Renderable> node,
+	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> render(Node<VElement> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {

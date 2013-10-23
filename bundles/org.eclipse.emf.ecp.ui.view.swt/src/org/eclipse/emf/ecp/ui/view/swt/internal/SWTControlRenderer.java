@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.SWT;
@@ -38,19 +38,19 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
+public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	/**
 	 * Instance field to access this renderer as a singleton.
 	 */
 	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
 
 	@Override
-	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<Control> node,
+	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<VControl> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		final Control modelControl = node.getRenderable();
+		final VControl modelControl = node.getRenderable();
 
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 

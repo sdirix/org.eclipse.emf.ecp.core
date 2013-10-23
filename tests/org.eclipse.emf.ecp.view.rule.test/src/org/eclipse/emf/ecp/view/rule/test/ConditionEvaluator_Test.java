@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.rule.ConditionEvaluator;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -134,8 +134,8 @@ public class ConditionEvaluator_Test {
 	private LeafCondition setupLeafCondition(EStructuralFeature domainFeature, Object expectedValue,
 		EObject resolveObject, List<EReference> eReferences) {
 		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(domainFeature);
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);

@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.internal.ui.view.renderer;
 
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * 
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * 
  * @param <T>
  */
-public final class Leaf<T extends Renderable> extends Node<T> {
+public final class Leaf<T extends VElement> extends Node<T> {
 
 	public Leaf(T model, ECPControlContext controlContext) {
 		super(model, controlContext);

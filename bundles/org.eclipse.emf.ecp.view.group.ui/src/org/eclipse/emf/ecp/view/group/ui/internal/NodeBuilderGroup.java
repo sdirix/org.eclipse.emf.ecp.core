@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.CompositeCollectionNodeBuil
 import org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * The Class NodeBuilderGroup.
@@ -36,9 +36,9 @@ public class NodeBuilderGroup implements CustomNodeBuilder {
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder#getCustomNodeBuilders()
 	 */
-	public Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> getCustomNodeBuilders() {
+	public Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> getCustomNodeBuilders() {
 
-		final Map<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> builders = new HashMap<Class<? extends Renderable>, NodeBuilder<? extends Renderable>>();
+		final Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> builders = new HashMap<Class<? extends VElement>, NodeBuilder<? extends VElement>>();
 		builders.put(VGroup.class, new CompositeCollectionNodeBuilder<VGroup>());
 		return builders;
 	}

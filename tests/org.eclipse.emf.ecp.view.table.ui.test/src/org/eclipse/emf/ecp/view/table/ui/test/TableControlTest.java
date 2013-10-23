@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTableFactory;
@@ -41,7 +41,7 @@ public class TableControlTest {
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(handle.getTableControl());
+		final Node<VElement> node = buildNode(handle.getTableControl());
 		assertEquals(1, ViewTestHelper.countNodes(node));
 		assertEquals(handle.getTableControl(), node.getRenderable());
 	}
@@ -52,7 +52,7 @@ public class TableControlTest {
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(handle.getTableControl());
+		final Node<VElement> node = buildNode(handle.getTableControl());
 		assertEquals(1, ViewTestHelper.countNodes(node));
 		assertEquals(handle.getTableControl(), node.getRenderable());
 	}
@@ -77,8 +77,8 @@ public class TableControlTest {
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
 		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
 
@@ -95,11 +95,11 @@ public class TableControlTest {
 	 */
 	private static VTableControl createTableControl() {
 		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
-		tc.setDomainModelReference(ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference());
+		tc.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
 		return tc;
 	}
 
-	private Node<Renderable> buildNode(final Renderable renderable) {
+	private Node<VElement> buildNode(final VElement renderable) {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		return ViewTestHelper.build(renderable, eClass);
 	}

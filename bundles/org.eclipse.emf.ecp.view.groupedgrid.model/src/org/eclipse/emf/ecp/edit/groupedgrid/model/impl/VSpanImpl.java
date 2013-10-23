@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
-import org.eclipse.emf.ecp.view.model.impl.AttachmentImpl;
+import org.eclipse.emf.ecp.view.model.impl.VAttachmentImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.model.impl.AttachmentImpl;
  * 
  * @generated
  */
-public class VSpanImpl extends AttachmentImpl implements VSpan
+public class VSpanImpl extends VAttachmentImpl implements VSpan
 {
 	/**
 	 * The default value of the '{@link #getHorizontalSpan() <em>Horizontal Span</em>}' attribute.

@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
+import org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
@@ -22,14 +22,13 @@ import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
  * <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
-public class VSeparatorImpl extends CompositeImpl implements VSeparator {
+public class VSeparatorImpl extends VContainableElementImpl implements VSeparator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected VSeparatorImpl() {
@@ -39,7 +38,6 @@ public class VSeparatorImpl extends CompositeImpl implements VSeparator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override

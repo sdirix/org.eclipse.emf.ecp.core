@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -91,7 +91,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__VISIBLE = ViewPackage.CONTROL__VISIBLE;
+	int TABLE_CONTROL__VISIBLE = VViewPackage.CONTROL__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -101,7 +101,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__ENABLED = ViewPackage.CONTROL__ENABLED;
+	int TABLE_CONTROL__ENABLED = VViewPackage.CONTROL__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -111,7 +111,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__READONLY = ViewPackage.CONTROL__READONLY;
+	int TABLE_CONTROL__READONLY = VViewPackage.CONTROL__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -121,7 +121,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__DIAGNOSTIC = ViewPackage.CONTROL__DIAGNOSTIC;
+	int TABLE_CONTROL__DIAGNOSTIC = VViewPackage.CONTROL__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -131,7 +131,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__ATTACHMENTS = ViewPackage.CONTROL__ATTACHMENTS;
+	int TABLE_CONTROL__ATTACHMENTS = VViewPackage.CONTROL__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -141,7 +141,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__NAME = ViewPackage.CONTROL__NAME;
+	int TABLE_CONTROL__NAME = VViewPackage.CONTROL__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -151,7 +151,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__LABEL_ALIGNMENT = ViewPackage.CONTROL__LABEL_ALIGNMENT;
+	int TABLE_CONTROL__LABEL_ALIGNMENT = VViewPackage.CONTROL__LABEL_ALIGNMENT;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
@@ -161,7 +161,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
+	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
 
 	/**
 	 * The feature id for the '<em><b>Columns</b></em>' containment reference list.
@@ -171,7 +171,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__COLUMNS = ViewPackage.CONTROL_FEATURE_COUNT + 0;
+	int TABLE_CONTROL__COLUMNS = VViewPackage.CONTROL_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Add Remove Disabled</b></em>' attribute.
@@ -181,7 +181,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL__ADD_REMOVE_DISABLED = ViewPackage.CONTROL_FEATURE_COUNT + 1;
+	int TABLE_CONTROL__ADD_REMOVE_DISABLED = VViewPackage.CONTROL_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -191,7 +191,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL_FEATURE_COUNT = ViewPackage.CONTROL_FEATURE_COUNT + 2;
+	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl <em>Column</em>}'
@@ -255,7 +255,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE;
+	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
@@ -265,7 +265,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH;
+	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH;
 
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
@@ -275,7 +275,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.table.model.VTableControl <em>Control</em>}'.

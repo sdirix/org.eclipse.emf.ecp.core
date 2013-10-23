@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
 import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,13 +83,12 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 		// Obtain or create and register package
 		VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VGroupPackageImpl());
+			.get(eNS_URI) : new VGroupPackageImpl());
 
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theGroupPackage.createPackageContents();
@@ -181,14 +180,14 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		groupEClass.getESuperTypes().add(theViewPackage.getCompositeCollection());
+		groupEClass.getESuperTypes().add(theViewPackage.getContainer());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

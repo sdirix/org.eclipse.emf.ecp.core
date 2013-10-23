@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
-import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
+import org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
  * 
  * @generated
  */
-public class VLabelImpl extends CompositeImpl implements VLabel
+public class VLabelImpl extends VContainableElementImpl implements VLabel
 {
 	/**
 	 * The default value of the '{@link #getStyle() <em>Style</em>}' attribute.

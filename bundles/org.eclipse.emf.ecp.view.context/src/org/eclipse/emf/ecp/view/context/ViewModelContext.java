@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.context;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,7 +57,7 @@ public interface ViewModelContext {
 	 * 
 	 * @return the view model
 	 */
-	Renderable getViewModel();
+	VElement getViewModel();
 
 	/**
 	 * Gets the domain model.

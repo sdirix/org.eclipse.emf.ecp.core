@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model;
 
-import org.eclipse.emf.ecp.view.model.Attachment;
+import org.eclipse.emf.ecp.view.model.VAttachment;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.Attachment;
  * @model abstract="true"
  * @generated
  */
-public interface Rule extends Attachment {
+public interface Rule extends VAttachment {
 	/**
 	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

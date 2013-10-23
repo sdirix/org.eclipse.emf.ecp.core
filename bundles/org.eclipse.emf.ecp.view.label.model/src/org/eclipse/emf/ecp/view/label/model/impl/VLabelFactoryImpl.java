@@ -96,8 +96,8 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-		case VLabelPackage.LABEL_STYLE:
-			return createLabelStyleFromString(eDataType, initialValue);
+		case VLabelPackage.VLABEL_STYLE:
+			return createVLabelStyleFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -114,8 +114,8 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
-		case VLabelPackage.LABEL_STYLE:
-			return convertLabelStyleToString(eDataType, instanceValue);
+		case VLabelPackage.VLABEL_STYLE:
+			return convertVLabelStyleToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -139,7 +139,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * 
 	 * @generated
 	 */
-	public VLabelStyle createLabelStyleFromString(EDataType eDataType, String initialValue)
+	public VLabelStyle createVLabelStyleFromString(EDataType eDataType, String initialValue)
 	{
 		VLabelStyle result = VLabelStyle.get(initialValue);
 		if (result == null)
@@ -154,7 +154,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * 
 	 * @generated
 	 */
-	public String convertLabelStyleToString(EDataType eDataType, Object instanceValue)
+	public String convertVLabelStyleToString(EDataType eDataType, Object instanceValue)
 	{
 		return instanceValue == null ? null : instanceValue.toString();
 	}

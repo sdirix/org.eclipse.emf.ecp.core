@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.rule.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.Attachment;
+import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -283,7 +283,7 @@ public class RuleSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAttachment(Attachment object) {
+	public T caseAttachment(VAttachment object) {
 		return null;
 	}
 

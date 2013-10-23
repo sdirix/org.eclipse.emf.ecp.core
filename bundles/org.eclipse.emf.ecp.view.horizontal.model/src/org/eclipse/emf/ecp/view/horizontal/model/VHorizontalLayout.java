@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.horizontal.model;
 
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
+import org.eclipse.emf.ecp.view.model.VContainer;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +23,6 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
  * @model
  * @generated
  */
-public interface VHorizontalLayout extends CompositeCollection
+public interface VHorizontalLayout extends VContainer
 {
 } // VHorizontalLayout

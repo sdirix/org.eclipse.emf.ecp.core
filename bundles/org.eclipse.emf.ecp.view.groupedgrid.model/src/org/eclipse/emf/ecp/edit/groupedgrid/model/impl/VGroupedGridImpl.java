@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
-import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
+import org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecp.view.model.impl.CompositeImpl;
  * 
  * @generated
  */
-public class VGroupedGridImpl extends CompositeImpl implements VGroupedGrid
+public class VGroupedGridImpl extends VContainableElementImpl implements VGroupedGrid
 {
 	/**
 	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' containment reference list.

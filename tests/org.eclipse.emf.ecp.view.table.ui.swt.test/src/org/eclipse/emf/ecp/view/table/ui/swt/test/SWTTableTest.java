@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.table.ui.test.TableControlHandle;
 import org.eclipse.emf.ecp.view.table.ui.test.TableControlTest;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -90,13 +90,13 @@ public class SWTTableTest {
 	public void testInitializedTableWithoutColumnsSingleReference() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final View view = ViewFactory.eINSTANCE.createView();
-		view.setRootEClass(ViewPackage.eINSTANCE.getView());
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(VViewPackage.eINSTANCE.getView());
 		domainElement = view;
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
 		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
@@ -113,12 +113,12 @@ public class SWTTableTest {
 	public void testInitializedTableWithoutColumnsEmptySingleReference() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
 		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(ViewPackage.eINSTANCE.getView_RootEClass());
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
 		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {

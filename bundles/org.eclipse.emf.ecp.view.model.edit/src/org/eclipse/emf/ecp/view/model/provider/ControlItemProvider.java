@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -31,14 +31,14 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Control} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VControl} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
 public class ControlItemProvider
-	extends CompositeItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends ContainableElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -85,7 +85,7 @@ public class ControlItemProvider
 				getString("_UI_Control_labelAlignment_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Control_labelAlignment_feature",
 					"_UI_Control_type"),
-				ViewPackage.Literals.CONTROL__LABEL_ALIGNMENT,
+				VViewPackage.Literals.CONTROL__LABEL_ALIGNMENT,
 				true,
 				false,
 				false,
@@ -109,7 +109,7 @@ public class ControlItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE);
+			childrenFeatures.add(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE);
 		}
 		return childrenFeatures;
 	}
@@ -152,7 +152,7 @@ public class ControlItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((Control) object).getName();
+		final String label = ((VControl) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_Control_type") : label;
 	}
 
@@ -168,12 +168,12 @@ public class ControlItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Control.class))
+		switch (notification.getFeatureID(VControl.class))
 		{
-		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
+		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case ViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
+		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -194,8 +194,8 @@ public class ControlItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-				ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference()));
+			(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 }

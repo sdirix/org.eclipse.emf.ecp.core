@@ -16,7 +16,7 @@ import java.util.Arrays;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 
 /**
  * Common functionality for validation tests.
@@ -28,7 +28,7 @@ public class CommonValidationTest {
 
 	protected VFeaturePathDomainModelReference getVFeaturePathDomainModelReference(EStructuralFeature feature,
 		EReference... eReferences) {
-		final VFeaturePathDomainModelReference result = ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference result = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		result.setDomainModelEFeature(feature);
 		result.getDomainModelEReferencePath().addAll(Arrays.asList(eReferences));
 		return result;

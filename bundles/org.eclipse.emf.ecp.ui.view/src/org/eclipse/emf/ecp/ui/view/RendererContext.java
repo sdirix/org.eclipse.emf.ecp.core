@@ -27,17 +27,17 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.SelectedChildNodeListener;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
 
 public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 	final private Map<EStructuralFeature, Set<EObject>> categoryValidationMap = new HashMap<EStructuralFeature, Set<EObject>>();
 	final private Map<EObject, Set<Diagnostic>> validationMap = new HashMap<EObject, Set<Diagnostic>>();
 
-	private final Node<? extends Renderable> node;
+	private final Node<? extends VElement> node;
 	private boolean alive = true;
-	private Renderable renderable;
+	private VElement renderable;
 	private ECPControlContext context;
 	private final Set<ValidationListener> listeners = new HashSet<RendererContext.ValidationListener>();
 	private ValidationSeverityModifier validationSeverityHandler;
@@ -46,7 +46,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 	private CONTROL control;
 	private final List<SelectedNodeChangedListener> selectionChangedListeners;
 
-	public RendererContext(final Node<? extends Renderable> node, final ECPControlContext context) {
+	public RendererContext(final Node<? extends VElement> node, final ECPControlContext context) {
 		this.node = node;
 		this.renderable = node.getRenderable();
 		this.selectionChangedListeners = new ArrayList<SelectedNodeChangedListener>();
@@ -54,7 +54,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 
 		// analyseView();
 
-		if (node.getRenderable() instanceof View) {
+		if (node.getRenderable() instanceof VView) {
 			node.addSelectedChildNodeListener(this);
 		}
 	}
@@ -154,7 +154,7 @@ public class RendererContext<CONTROL> implements SelectedChildNodeListener {
 		selectionChangedListeners.remove(listener);
 	}
 
-	private <T extends Renderable> void fireSelectionChanged(T selectedRenderable) {
+	private <T extends VElement> void fireSelectionChanged(T selectedRenderable) {
 		for (final SelectedNodeChangedListener listener : selectionChangedListeners) {
 			listener.selectionChanged(selectedRenderable);
 		}

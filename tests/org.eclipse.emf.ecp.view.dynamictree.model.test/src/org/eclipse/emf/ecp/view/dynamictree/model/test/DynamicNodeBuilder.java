@@ -20,8 +20,8 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.Action;
-import org.eclipse.emf.ecp.view.model.Composite;
+import org.eclipse.emf.ecp.view.model.VAction;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
 import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.osgi.framework.Bundle;
@@ -34,7 +34,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 
 		final Node<DynamicContainmentTree> node = new Node<DynamicContainmentTree>(dynamicTree, controlContext);
 
-		final Node<Composite> compositeNode = NodeBuilders.INSTANCE.build(dynamicTree.getComposite(),
+		final Node<VContainableElement> compositeNode = NodeBuilders.INSTANCE.build(dynamicTree.getComposite(),
 			controlContext);
 
 		node.addChild(compositeNode);
@@ -54,7 +54,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 		node.setLabelObject(type);
 		dynamicTree.setDomainModel(type);
 
-		final Action[] actions = dynamicTree.getActions().toArray(new Action[0]);
+		final VAction[] actions = dynamicTree.getActions().toArray(new VAction[0]);
 		@SuppressWarnings("unchecked")
 		final List<TestElement> testElements = (List<TestElement>) adapterFactoryItemDelegator.getChildren(type);
 		for (final TestElement testElement : testElements) {
@@ -82,9 +82,9 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 		return node;
 	}
 
-	public static void createActions(Node<?> node, Action... actions) {
+	public static void createActions(Node<?> node, VAction... actions) {
 		final List<ECPAction> nodeActions = new ArrayList<ECPAction>();
-		for (final Action action : actions) {
+		for (final VAction action : actions) {
 			try {
 				final Bundle bundle = Platform.getBundle(action.getBundle());
 				if (bundle == null) {
@@ -120,7 +120,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 
 	private void addChildren(Node<?> node, DynamicContainmentItem containmentItem,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		ECPControlContext controlContext, Action[] actions) {
+		ECPControlContext controlContext, VAction[] actions) {
 		@SuppressWarnings("unchecked")
 		final List<TestElement> children = (List<TestElement>) adapterFactoryItemDelegator
 			.getChildren(controlContext.getModelElement());

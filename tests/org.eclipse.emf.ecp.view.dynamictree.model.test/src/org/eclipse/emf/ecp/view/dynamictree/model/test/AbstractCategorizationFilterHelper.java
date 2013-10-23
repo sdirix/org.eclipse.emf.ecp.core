@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.view.group.model.impl.VGroupImpl;
 import org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl;
-import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
+import org.eclipse.emf.ecp.view.model.impl.VControlImpl;
 import org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl;
 
 public class AbstractCategorizationFilterHelper {
@@ -28,7 +28,7 @@ public class AbstractCategorizationFilterHelper {
 	@SuppressWarnings("serial")
 	private static Set<Class<?>> filteredClasses = new LinkedHashSet<Class<?>>() {
 		{
-			add(ControlImpl.class);
+			add(VControlImpl.class);
 			add(VTableControlImpl.class);
 			add(VGroupImpl.class);
 			add(VLabelImpl.class);

@@ -12,19 +12,16 @@
 package org.eclipse.emf.ecp.view.table.model.provider;
 
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.ControlItemProvider;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
-import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -152,7 +149,7 @@ public class TableControlItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VTableControl) object).getName();
+		String label = ((VTableControl) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_TableControl_type") :
 			getString("_UI_TableControl_type") + " " + label;
@@ -194,21 +191,9 @@ public class TableControlItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		// remove normal domain model reference
-		final Set<Object> toRemove = new LinkedHashSet<Object>();
-		for (final Object childDescriptor : newChildDescriptors) {
-			if (CommandParameter.class.isInstance(childDescriptor)) {
-				final CommandParameter cp = (CommandParameter) childDescriptor;
-				if (cp.getEStructuralFeature() == ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE) {
-					toRemove.add(cp);
-				}
-			}
-		}
-		newChildDescriptors.removeAll(toRemove);
-
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+			(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 				VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 		newChildDescriptors.add

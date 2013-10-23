@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 
 /**
  * Helper class for editor controls.
@@ -39,7 +39,7 @@ public final class Helper {
 	}
 
 	public static EClass getRootEClass(ECPProject project) {
-		return ((View) project.getContents().get(0)).getRootEClass();
+		return ((VView) project.getContents().get(0)).getRootEClass();
 	}
 
 	public static EClass getRootEClass(EObject eObject) {
@@ -47,12 +47,12 @@ public final class Helper {
 		// while (!(View.class.isInstance(testObject) || TreeCategory.class.isInstance(testObject)
 		// && ((TreeCategory) testObject).getTargetFeature() != null)
 		// && testObject != null) {
-		while (!View.class.isInstance(testObject)
+		while (!VView.class.isInstance(testObject)
 			&& testObject != null) {
 			testObject = testObject.eContainer();
 		}
-		if (View.class.isInstance(testObject)) {
-			return ((View) testObject).getRootEClass();
+		if (VView.class.isInstance(testObject)) {
+			return ((VView) testObject).getRootEClass();
 			// } else if (TreeCategory.class.isInstance(testObject)) {
 			// return ((EReference) ((TreeCategory) testObject).getTargetFeature())
 			// .getEReferenceType();

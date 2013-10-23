@@ -17,8 +17,8 @@ import java.util.Map;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * @author Eugen Neufeld
@@ -38,10 +38,10 @@ public class CustomSWTRendererGroupGrid implements CustomSWTRenderer {
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
-	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
-		final Map<Class<? extends Renderable>, SWTRenderer<?>> result = new HashMap<Class<? extends Renderable>, SWTRenderer<?>>();
+	public Map<Class<? extends VElement>, SWTRenderer<?>> getCustomRenderers() {
+		final Map<Class<? extends VElement>, SWTRenderer<?>> result = new HashMap<Class<? extends VElement>, SWTRenderer<?>>();
 		result.put(VGroupedGrid.class, GroupedGridSWTRenderer.INSTANCE);
-		result.put(Control.class, SWTControlRenderer.INSTANCE);
+		result.put(VControl.class, SWTControlRenderer.INSTANCE);
 		return result;
 	}
 }

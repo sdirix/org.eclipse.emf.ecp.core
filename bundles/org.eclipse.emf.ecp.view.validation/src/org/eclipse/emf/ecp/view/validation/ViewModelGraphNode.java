@@ -18,7 +18,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.common.UniqueSetting;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * <p>
@@ -101,7 +101,7 @@ public class ViewModelGraphNode<T> {
 	 */
 	public boolean isLocked() {
 		if (isRenderable()) {
-			final Renderable renderable = (Renderable) getSetting().getEObject();
+			final VElement renderable = (VElement) getSetting().getEObject();
 
 			if (!renderable.isEnabled() || !renderable.isVisible() || renderable.isReadonly()) {
 				return true;
@@ -201,12 +201,12 @@ public class ViewModelGraphNode<T> {
 	}
 
 	/**
-	 * Whether the source object is a {@link Renderable}.
+	 * Whether the source object is a {@link VElement}.
 	 * 
-	 * @return {@code true}, if the object stored by this node is a {@link Renderable}
+	 * @return {@code true}, if the object stored by this node is a {@link VElement}
 	 */
 	public boolean isRenderable() {
-		return !isDomainObject && Renderable.class.isInstance(getSetting().getEObject());
+		return !isDomainObject && VElement.class.isInstance(getSetting().getEObject());
 	}
 
 	/**

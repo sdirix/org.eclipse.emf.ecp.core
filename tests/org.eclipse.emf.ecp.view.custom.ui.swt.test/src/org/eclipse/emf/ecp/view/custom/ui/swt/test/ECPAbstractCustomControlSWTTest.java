@@ -49,8 +49,8 @@ import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -62,6 +62,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -78,7 +79,7 @@ public class ECPAbstractCustomControlSWTTest {
 	private static Set<VFeaturePathDomainModelReference> editableFeaturess;
 	private ECPAbstractCustomControlSWTStub customControl;
 	private Composite testComposite;
-	private org.eclipse.emf.ecp.view.model.Control domainObject;
+	private org.eclipse.emf.ecp.view.model.VControl domainObject;
 
 	/**
 	 * @author Jonas
@@ -124,7 +125,7 @@ public class ECPAbstractCustomControlSWTTest {
 				return result;
 			}
 			for (final VFeaturePathDomainModelReference controlFeature : editableFeaturess) {
-				if (controlFeature.getDomainModelEFeature() == ViewPackage.eINSTANCE.getComposite_Name()) {
+				if (controlFeature.getDomainModelEFeature() == VViewPackage.eINSTANCE.getContainableElement_Name()) {
 					setTextControl(createControl(controlFeature, composite));
 					result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 						.createRenderingResultRow(label, getTextControl()));
@@ -317,7 +318,7 @@ public class ECPAbstractCustomControlSWTTest {
 		editableFeaturess = null;
 		allFeatures = null;
 		customControl = new ECPAbstractCustomControlSWTStub();
-		domainObject = ViewFactory.eINSTANCE.createControl();
+		domainObject = VViewFactory.eINSTANCE.createControl();
 		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
 			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
@@ -347,12 +348,12 @@ public class ECPAbstractCustomControlSWTTest {
 	public static Set<VFeaturePathDomainModelReference> createReferencedFeatures() {
 		if (referencedFeatures == null) {
 			referencedFeatures = new LinkedHashSet<VFeaturePathDomainModelReference>();
-			final EList<EStructuralFeature> eAllStructuralFeatures = ViewPackage.eINSTANCE.getControl()
+			final EList<EStructuralFeature> eAllStructuralFeatures = VViewPackage.eINSTANCE.getControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
 				// new ECPCustomControlFeature(null, eStructuralFeature, false);
-				final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-					.createVFeaturePathDomainModelReference();
+				final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+					.createFeaturePathDomainModelReference();
 				domainModelReference.setDomainModelEFeature(eStructuralFeature);
 				referencedFeatures.add(domainModelReference);
 			}
@@ -367,12 +368,12 @@ public class ECPAbstractCustomControlSWTTest {
 	public static Set<VFeaturePathDomainModelReference> createEditableFeatures() {
 		if (editableFeaturess == null) {
 			editableFeaturess = new LinkedHashSet<VFeaturePathDomainModelReference>();
-			final EList<EStructuralFeature> eAllStructuralFeatures = ViewPackage.eINSTANCE.getControl()
+			final EList<EStructuralFeature> eAllStructuralFeatures = VViewPackage.eINSTANCE.getControl()
 				.getEAllStructuralFeatures();
 			for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
 				// new ECPCustomControlFeature(null, eStructuralFeature, true)
-				final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-					.createVFeaturePathDomainModelReference();
+				final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+					.createFeaturePathDomainModelReference();
 				domainModelReference.setDomainModelEFeature(eStructuralFeature);
 				editableFeaturess.add(domainModelReference);
 
@@ -449,7 +450,7 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.handleValidation(validate.getChildren().get(0));
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
-		assertSame(ViewPackage.eINSTANCE.getComposite_Name(), customControl.getLastValidationFeature());
+		assertSame(VViewPackage.eINSTANCE.getContainableElement_Name(), customControl.getLastValidationFeature());
 		customControl.setValidationReseted(false);
 		customControl.resetValidation();
 		assertTrue(customControl.isValidationReseted());
@@ -468,7 +469,7 @@ public class ECPAbstractCustomControlSWTTest {
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
 
-		assertSame(ViewPackage.eINSTANCE.getComposite_Name(), customControl.getLastValidationFeature());
+		assertSame(VViewPackage.eINSTANCE.getContainableElement_Name(), customControl.getLastValidationFeature());
 
 		customControl.setValidationReseted(false);
 		customControl.resetValidation();
@@ -531,7 +532,7 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testHandleValidationOfControl() {
 		customControl = new ECPAbstractCustomControlSWTStub(true);
 
-		domainObject = ViewFactory.eINSTANCE.createControl();
+		domainObject = VViewFactory.eINSTANCE.createControl();
 
 		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 			SWTViewTestHelper.createShell()), null);
@@ -540,7 +541,7 @@ public class ECPAbstractCustomControlSWTTest {
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
 
-		assertSame(ViewPackage.eINSTANCE.getComposite_Name(), customControl.getLastValidationFeature());
+		assertSame(VViewPackage.eINSTANCE.getContainableElement_Name(), customControl.getLastValidationFeature());
 
 		customControl.createControls(testComposite);
 		customControl.handleValidation(validate.getChildren().get(0));
@@ -566,7 +567,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testHandleContentValidation() {
 
-		final EAttribute validationFeature = ViewPackage.eINSTANCE.getRenderable_Readonly();
+		final EAttribute validationFeature = VViewPackage.eINSTANCE.getElement_Readonly();
 
 		final int severity = 0;
 		customControl.handleContentValidation(severity, validationFeature);
@@ -710,8 +711,8 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCustomControlGetHelpWrongFeature() {
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
 		// final ECPCustomControlFeature feature = new ECPCustomControlFeature(null,
 		// EcorePackage.eINSTANCE.getENamedElement_Name(), false);
@@ -737,8 +738,8 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testCustomControlGetLabelWrongFeature() {
 		// final ECPCustomControlFeature feature = new ECPCustomControlFeature(null,
 		// EcorePackage.eINSTANCE.getENamedElement_Name(), false);
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
 		customControl.getStubHelper().getLabel(domainModelReference);
 		fail("No Exception thrown");
@@ -750,9 +751,9 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testCustomControlFeatureSet() {
 		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
-			ViewPackage.eINSTANCE.getComposite_Name(), true);
+			VViewPackage.eINSTANCE.getContainableElement_Name(), true);
 		customControl.setValue(bundleFeature, "test");
-		assertEquals(domainObject.eGet(ViewPackage.eINSTANCE.getComposite_Name()), "test");
+		assertEquals(domainObject.eGet(VViewPackage.eINSTANCE.getContainableElement_Name()), "test");
 
 	}
 
@@ -760,10 +761,12 @@ public class ECPAbstractCustomControlSWTTest {
 	 * Test set value on {@link ECPCustomControlFeature} that is not editable.
 	 */
 	@Test(expected = UnsupportedOperationException.class)
+	// function not supported anymore
+	@Ignore
 	public void testCustomControlFeatureSetNotEditable() {
 
 		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
-			ViewPackage.eINSTANCE.getComposite_Name(), false);
+			VViewPackage.eINSTANCE.getContainableElement_Name(), false);
 		customControl.setValue(bundleFeature, "test");
 
 	}
@@ -775,8 +778,8 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testCustomControlFeatureGet() {
 
 		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
-			ViewPackage.eINSTANCE.getComposite_Name(), true);
-		assertEquals(domainObject.eGet(ViewPackage.eINSTANCE.getComposite_Name()),
+			VViewPackage.eINSTANCE.getContainableElement_Name(), true);
+		assertEquals(domainObject.eGet(VViewPackage.eINSTANCE.getContainableElement_Name()),
 			customControl.getValue(bundleFeature));
 
 	}
@@ -788,7 +791,7 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testCustomControlFeatureListener() {
 
 		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
-			ViewPackage.eINSTANCE.getComposite_Name(), true);
+			VViewPackage.eINSTANCE.getContainableElement_Name(), true);
 
 		final List<Integer> result = new ArrayList<Integer>();
 		customControl.registerChangeListener(bundleFeature, new ECPCustomControlChangeListener() {
@@ -805,7 +808,7 @@ public class ECPAbstractCustomControlSWTTest {
 	public void testBindTargetToModel() {
 
 		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
-			ViewPackage.eINSTANCE.getComposite_Name(), true);
+			VViewPackage.eINSTANCE.getContainableElement_Name(), true);
 
 		customControl.createControls(testComposite);
 		final Label label = (Label) testComposite.getChildren()[0];
@@ -820,7 +823,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testReadonlyCustomControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		domainObject = ViewFactory.eINSTANCE.createControl();
+		domainObject = VViewFactory.eINSTANCE.createControl();
 
 		domainObject.setReadonly(true);
 		// domainObject.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");

@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -49,19 +49,19 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 		// Label l=new Label(getParent(), SWT.NONE);
 		// l.setText(modelColumnComposite.getName());
 		final Composite parent = getParentFromInitData(initData);
-		final CompositeCollection modelColumnComposite = node.getRenderable();
+		final VContainer modelColumnComposite = node.getRenderable();
 
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN_COMPOSITE);
 
-		columnComposite.setLayout(getLayoutHelper().getColumnLayout(modelColumnComposite.getComposites().size(), true));
+		columnComposite.setLayout(getLayoutHelper().getColumnLayout(modelColumnComposite.getChildren().size(), true));
 
 		// SWTLifted node = new SWTLifted(columnComposite, modelColumnComposite, controlContext);
 
 		node.addRenderingResultDelegator(withSWT(columnComposite));
 
-		for (final Node<? extends Renderable> child : node.getChildren()) {
+		for (final Node<? extends VElement> child : node.getChildren()) {
 
 			final Composite column = new Composite(columnComposite, SWT.NONE);
 			column.setBackground(parent.getBackground());

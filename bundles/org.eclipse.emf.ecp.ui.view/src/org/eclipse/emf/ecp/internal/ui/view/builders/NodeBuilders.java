@@ -25,11 +25,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
@@ -37,7 +37,7 @@ public class NodeBuilders {
 
 	public static final NodeBuilders INSTANCE = new NodeBuilders();
 
-	private Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>> builders;
+	private Map<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, NodeBuilder<? extends VElement>> builders;
 	private boolean buildersInitialized;
 
 	private NodeBuilders() {
@@ -46,24 +46,24 @@ public class NodeBuilders {
 	@SuppressWarnings({ "serial" })
 	private void initBuilders() {
 
-		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, NodeBuilder<? extends Renderable>>() {
+		builders = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, NodeBuilder<? extends VElement>>() {
 			{
 				// put(ColumnComposite.class,
 				// new CompositeCollectionNodeBuilder<ColumnComposite>());
 				// put(Column.class, new CompositeCollectionNodeBuilder<Column>());
 				// put(Group.class, new CompositeCollectionNodeBuilder<Group>());
-				put(Control.class, new RenderableNodeBuilder<Control>());
-				put(View.class, new ViewNodeBuilder());
-				put(Category.class, new CategoryNodeBuilder());
-				put(Categorization.class, new CategorizationNodeBuilder());
+				put(VControl.class, new RenderableNodeBuilder<VControl>());
+				put(VView.class, new ViewNodeBuilder());
+				put(VCategory.class, new CategoryNodeBuilder());
+				put(VCategorization.class, new CategorizationNodeBuilder());
 				// put(TableControl.class, new ControlNodeBuilder<TableControl>());
-				put(Control.class, new ControlNodeBuilder<Control>());
+				put(VControl.class, new ControlNodeBuilder<VControl>());
 				// put(TreeCategory.class, new TreeCategoryNodeBuilder());
 			}
 		};
 
 		for (final CustomNodeBuilder customBuilder : getCustomNodeBuilders()) {
-			for (final Map.Entry<Class<? extends Renderable>, NodeBuilder<? extends Renderable>> entry : customBuilder
+			for (final Map.Entry<Class<? extends VElement>, NodeBuilder<? extends VElement>> entry : customBuilder
 				.getCustomNodeBuilders().entrySet()) {
 				builders.put(entry.getKey(), entry.getValue());
 			}
@@ -92,7 +92,7 @@ public class NodeBuilders {
 		return builders;
 	}
 
-	public <R extends Renderable> Node<R> build(R renderable,
+	public <R extends VElement> Node<R> build(R renderable,
 		ECPControlContext controlContext) {
 
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
@@ -106,7 +106,7 @@ public class NodeBuilders {
 		return build;
 	}
 
-	public <R extends Renderable> Node<R> build(R renderable,
+	public <R extends VElement> Node<R> build(R renderable,
 		ECPControlContext controlContext,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 
@@ -115,7 +115,7 @@ public class NodeBuilders {
 		}
 
 		Class<?> c = null;
-		for (final Class<? extends Renderable> cls : builders.keySet()) {
+		for (final Class<? extends VElement> cls : builders.keySet()) {
 			final Class<?>[] interfaces = renderable.getClass().getInterfaces();
 			final int indexOf = Arrays.asList(interfaces).indexOf(cls);
 			if (indexOf != -1) {

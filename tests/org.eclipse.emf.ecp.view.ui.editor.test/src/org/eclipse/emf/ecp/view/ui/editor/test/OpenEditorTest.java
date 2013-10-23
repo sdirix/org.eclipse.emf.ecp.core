@@ -18,12 +18,12 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -56,7 +56,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 	@SuppressWarnings("unused")
 	private static EObject domainObject;
 	private static Shell shell;
-	private static View view;
+	private static VView view;
 	private Display display;
 	@SuppressWarnings("unused")
 	private GCCollectable collectable;
@@ -77,7 +77,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 			}
 		});
 
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
 	}
 
@@ -94,32 +94,32 @@ public class OpenEditorTest extends SWTBotTestCase {
 		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
 	}
 
-	private Control createControl(EStructuralFeature feature) {
-		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE
+	private VControl createControl(EStructuralFeature feature) {
+		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE
 			.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(feature);
 		control.setDomainModelReference(domainModelReference);
 		return control;
 	}
 
-	private Categorization createCategorizations(
-		org.eclipse.emf.ecp.view.model.Composite composite1,
-		org.eclipse.emf.ecp.view.model.Composite composite2,
-		org.eclipse.emf.ecp.view.model.Composite composite3,
-		org.eclipse.emf.ecp.view.model.Composite composite4) {
+	private VCategorization createCategorizations(
+		org.eclipse.emf.ecp.view.model.VContainableElement composite1,
+		org.eclipse.emf.ecp.view.model.VContainableElement composite2,
+		org.eclipse.emf.ecp.view.model.VContainableElement composite3,
+		org.eclipse.emf.ecp.view.model.VContainableElement composite4) {
 
-		final Categorization parentCategorization = ViewFactory.eINSTANCE
+		final VCategorization parentCategorization = VViewFactory.eINSTANCE
 			.createCategorization();
-		final Categorization fooCategorization = ViewFactory.eINSTANCE
+		final VCategorization fooCategorization = VViewFactory.eINSTANCE
 			.createCategorization();
-		final Categorization barCategorization = ViewFactory.eINSTANCE
+		final VCategorization barCategorization = VViewFactory.eINSTANCE
 			.createCategorization();
-		final Category category1 = ViewFactory.eINSTANCE.createCategory();
-		final Category category2 = ViewFactory.eINSTANCE.createCategory();
-		final Category category3 = ViewFactory.eINSTANCE.createCategory();
-		final Category category4 = ViewFactory.eINSTANCE.createCategory();
+		final VCategory category1 = VViewFactory.eINSTANCE.createCategory();
+		final VCategory category2 = VViewFactory.eINSTANCE.createCategory();
+		final VCategory category3 = VViewFactory.eINSTANCE.createCategory();
+		final VCategory category4 = VViewFactory.eINSTANCE.createCategory();
 		parentCategorization.setName("parent");
 		fooCategorization.setName("foo");
 		barCategorization.setName("bar");
@@ -144,13 +144,13 @@ public class OpenEditorTest extends SWTBotTestCase {
 
 		public void run() {
 
-			final Control nameCtrl = createControl(BowlingPackage.eINSTANCE
+			final VControl nameCtrl = createControl(BowlingPackage.eINSTANCE
 				.getPlayer_Name());
-			final Control genderCtrl = createControl(BowlingPackage.eINSTANCE
+			final VControl genderCtrl = createControl(BowlingPackage.eINSTANCE
 				.getPlayer_Gender());
-			final Control heightCtrl = createControl(BowlingPackage.eINSTANCE
+			final VControl heightCtrl = createControl(BowlingPackage.eINSTANCE
 				.getPlayer_Height());
-			final Control victoriesCtrl = createControl(BowlingPackage.eINSTANCE
+			final VControl victoriesCtrl = createControl(BowlingPackage.eINSTANCE
 				.getPlayer_NumberOfVictories());
 
 			view.getCategorizations().add(

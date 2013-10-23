@@ -16,7 +16,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.model.impl.AttachmentImpl;
+import org.eclipse.emf.ecp.view.model.impl.VAttachmentImpl;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.rule.model.RulePackage;
  * 
  * @generated
  */
-public abstract class RuleImpl extends AttachmentImpl implements Rule {
+public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->

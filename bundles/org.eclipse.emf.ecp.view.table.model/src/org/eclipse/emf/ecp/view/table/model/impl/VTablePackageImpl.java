@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
@@ -109,7 +109,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theTablePackage.createPackageContents();
@@ -275,7 +275,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
@@ -284,7 +284,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 
 		// Add supertypes to classes
 		tableControlEClass.getESuperTypes().add(theViewPackage.getControl());
-		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVFeaturePathDomainModelReference());
+		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tableControlEClass, VTableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,

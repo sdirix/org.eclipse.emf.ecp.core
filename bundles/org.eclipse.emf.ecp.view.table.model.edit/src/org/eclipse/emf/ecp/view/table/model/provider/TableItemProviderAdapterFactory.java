@@ -20,11 +20,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
 import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
@@ -342,7 +342,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
-	 * A child creation extender for the {@link ViewPackage}.
+	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -394,10 +394,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseView(View object) {
+			public Object caseView(VView object) {
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.VIEW__CHILDREN,
+					(VViewPackage.Literals.VIEW__CHILDREN,
 						VTableFactory.eINSTANCE.createTableControl()));
 
 				return null;
@@ -410,10 +410,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseCategory(Category object) {
+			public Object caseCategory(VCategory object) {
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.CATEGORY__COMPOSITE,
+					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VTableFactory.eINSTANCE.createTableControl()));
 
 				return null;
@@ -426,11 +426,11 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseControl(Control object)
+			public Object caseControl(VControl object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 						VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 				return null;
@@ -443,10 +443,11 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseCompositeCollection(CompositeCollection object) {
+			public Object caseContainer(VContainer object)
+			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VTableFactory.eINSTANCE.createTableControl()));
 
 				return null;

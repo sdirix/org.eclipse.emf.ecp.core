@@ -20,11 +20,11 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
 import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,10 +39,10 @@ public class GroupTest {
 	@Test
 	public void testOneGroupinView() {
 		// setup model
-		final View view = createViewWithOneGroup();
+		final VView view = createViewWithOneGroup();
 		final VGroup group = (VGroup) view.getChildren().get(0);
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(view);
+		final Node<VElement> node = buildNode(view);
 		assertEquals(2, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
@@ -50,7 +50,7 @@ public class GroupTest {
 		assertEquals(group, childNode.getRenderable());
 	}
 
-	private Node<Renderable> buildNode(final View view) {
+	private Node<VElement> buildNode(final VView view) {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		return ViewTestHelper.build(view, eClass);
 	}
@@ -58,8 +58,8 @@ public class GroupTest {
 	/**
 	 * @return a View with one Group in it
 	 */
-	public static View createViewWithOneGroup() {
-		final View view = ViewFactory.eINSTANCE.createView();
+	public static VView createViewWithOneGroup() {
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VGroup group = createGroup();
 		view.getChildren().add(group);
 		return view;
@@ -68,12 +68,12 @@ public class GroupTest {
 	@Test
 	public void testTwoGroupsinView() {
 		// setup model
-		final View view = createViewWithTwoGroups();
+		final VView view = createViewWithTwoGroups();
 		final VGroup group = (VGroup) view.getChildren().get(0);
 		final VGroup group2 = (VGroup) view.getChildren().get(1);
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(view);
+		final Node<VElement> node = buildNode(view);
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 2, node.getChildren().size());
@@ -86,8 +86,8 @@ public class GroupTest {
 	/**
 	 * @return A view with two groups as children
 	 */
-	public static View createViewWithTwoGroups() {
-		final View view = ViewFactory.eINSTANCE.createView();
+	public static VView createViewWithTwoGroups() {
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VGroup group = createGroup();
 		view.getChildren().add(group);
 		final VGroup group2 = createGroup();
@@ -98,12 +98,12 @@ public class GroupTest {
 	@Test
 	public void testTwoGroupsHierachicalinView() {
 		// setup model
-		final View view = createViewWithTwoHierachicalGroups();
+		final VView view = createViewWithTwoHierachicalGroups();
 		final VGroup group = (VGroup) view.getChildren().get(0);
-		final VGroup subGroup = (VGroup) group.getComposites().get(0);
+		final VGroup subGroup = (VGroup) group.getChildren().get(0);
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(view);
+		final Node<VElement> node = buildNode(view);
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
@@ -116,16 +116,16 @@ public class GroupTest {
 	@Test
 	public void testTwoGroupsWithTwoControlsInView() {
 		// setup model
-		final View view = createViewWithTwoGroupsWithTwoControls();
+		final VView view = createViewWithTwoGroupsWithTwoControls();
 		final VGroup group1 = (VGroup) view.getChildren().get(0);
-		final Control c11 = (Control) group1.getComposites().get(0);
-		final Control c12 = (Control) group1.getComposites().get(1);
+		final VControl c11 = (VControl) group1.getChildren().get(0);
+		final VControl c12 = (VControl) group1.getChildren().get(1);
 		final VGroup group2 = (VGroup) view.getChildren().get(1);
-		final Control c21 = (Control) group2.getComposites().get(0);
-		final Control c22 = (Control) group2.getComposites().get(1);
+		final VControl c21 = (VControl) group2.getChildren().get(0);
+		final VControl c22 = (VControl) group2.getChildren().get(1);
 
 		// Test NodeBuidlers
-		final Node<Renderable> node = buildNode(view);
+		final Node<VElement> node = buildNode(view);
 		assertEquals(7, ViewTestHelper.countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 2, node.getChildren().size());
@@ -147,25 +147,25 @@ public class GroupTest {
 	/**
 	 * @return A View with two groups, one is the subgroup of the first one
 	 */
-	public static View createViewWithTwoHierachicalGroups() {
-		final View view = ViewFactory.eINSTANCE.createView();
+	public static VView createViewWithTwoHierachicalGroups() {
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VGroup group = createGroup();
 		view.getChildren().add(group);
 		final VGroup subGroup = createGroup();
-		group.getComposites().add(subGroup);
+		group.getChildren().add(subGroup);
 		return view;
 	}
 
-	public static View createViewWithTwoGroupsWithTwoControls() {
-		final View view = ViewFactory.eINSTANCE.createView();
+	public static VView createViewWithTwoGroupsWithTwoControls() {
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VGroup group1 = createGroup();
 		view.getChildren().add(group1);
-		group1.getComposites().add(createControl());
-		group1.getComposites().add(createControl());
+		group1.getChildren().add(createControl());
+		group1.getChildren().add(createControl());
 		final VGroup group2 = createGroup();
 		view.getChildren().add(group2);
-		group2.getComposites().add(createControl());
-		group2.getComposites().add(createControl());
+		group2.getChildren().add(createControl());
+		group2.getChildren().add(createControl());
 		return view;
 	}
 
@@ -176,10 +176,10 @@ public class GroupTest {
 		return VGroupFactory.eINSTANCE.createGroup();
 	}
 
-	private static Control createControl() {
-		final Control control = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+	private static VControl createControl() {
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
 		control.setDomainModelReference(modelReference);
 		return control;

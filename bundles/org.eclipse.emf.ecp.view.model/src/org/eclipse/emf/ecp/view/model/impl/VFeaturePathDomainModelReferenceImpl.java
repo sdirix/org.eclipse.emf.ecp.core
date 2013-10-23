@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -95,7 +95,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	protected EClass eStaticClass()
 	{
-		return ViewPackage.Literals.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE;
+		return VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			{
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
+						VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
 						oldDomainModelEFeature, domainModelEFeature));
 			}
 		}
@@ -144,7 +144,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		domainModelEFeature = newDomainModelEFeature;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
+				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
 				domainModelEFeature));
 	}
 
@@ -159,7 +159,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		if (domainModelEReferencePath == null)
 		{
 			domainModelEReferencePath = new EObjectResolvingEList<EReference>(EReference.class, this,
-				ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
+				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
 		}
 		return domainModelEReferencePath;
 	}
@@ -175,11 +175,11 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			if (resolve)
 				return getDomainModelEFeature();
 			return basicGetDomainModelEFeature();
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return getDomainModelEReferencePath();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -197,10 +197,10 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			setDomainModelEFeature((EStructuralFeature) newValue);
 			return;
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			getDomainModelEReferencePath().clear();
 			getDomainModelEReferencePath().addAll((Collection<? extends EReference>) newValue);
 			return;
@@ -219,10 +219,10 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			setDomainModelEFeature((EStructuralFeature) null);
 			return;
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			getDomainModelEReferencePath().clear();
 			return;
 		}
@@ -240,9 +240,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			return domainModelEFeature != null;
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return domainModelEReferencePath != null && !domainModelEReferencePath.isEmpty();
 		}
 		return super.eIsSet(featureID);

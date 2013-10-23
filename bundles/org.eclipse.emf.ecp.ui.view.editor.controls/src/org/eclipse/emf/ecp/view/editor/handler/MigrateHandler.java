@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -50,7 +50,7 @@ public class MigrateHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Object selection = ((IStructuredSelection) HandlerUtil.getCurrentSelection(event)).getFirstElement();
-		final View view = (View) selection;
+		final VView view = (VView) selection;
 
 		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
 		final EClass rootClass = Helper.getRootEClass(view);
@@ -62,10 +62,10 @@ public class MigrateHandler extends AbstractHandler {
 		final TreeIterator<EObject> eAllContents = view.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
-			if (!Control.class.isInstance(eObject)) {
+			if (!VControl.class.isInstance(eObject)) {
 				continue;
 			}
-			final Control control = (Control) eObject;
+			final VControl control = (VControl) eObject;
 			final Setting setting = control.getDomainModelReference().getIterator().next();
 			final List<EReference> bottomUpPath = Helper.getReferencePath(setting.getEStructuralFeature()
 				.getEContainingClass(),
@@ -75,7 +75,7 @@ public class MigrateHandler extends AbstractHandler {
 				.clear();
 			editingDomain.getCommandStack().execute(
 				AddCommand.create(editingDomain, control.getDomainModelReference(),
-					ViewPackage.eINSTANCE.getVFeaturePathDomainModelReference_DomainModelEReferencePath(),
+					VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEReferencePath(),
 					bottomUpPath));
 		}
 		return null;

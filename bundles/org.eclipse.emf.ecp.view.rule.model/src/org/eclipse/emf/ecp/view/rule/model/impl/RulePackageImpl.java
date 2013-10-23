@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -142,7 +142,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theRulePackage.createPackageContents();
@@ -381,7 +381,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 		// Obtain other dependent packages
 		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -404,7 +404,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		initEAttribute(getLeafCondition_ExpectedValue(), theEcorePackage.getEJavaObject(), "expectedValue", null, 1, 1,
 			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getLeafCondition_DomainModelReference(), theViewPackage.getVDomainModelReference(), null,
+		initEReference(getLeafCondition_DomainModelReference(), theViewPackage.getDomainModelReference(), null,
 			"domainModelReference", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

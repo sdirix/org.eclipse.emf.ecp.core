@@ -19,10 +19,10 @@ import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
@@ -40,29 +40,29 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	private ViewModelContext context;
 
-	private Tuple<View, League> createView() {
+	private Tuple<VView, League> createView() {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 		final League league = BowlingFactory.eINSTANCE.createLeague();
 		league.getPlayers().add(player);
 
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(league.eClass());
 
 		final VVerticalLayout parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		parentColumn.getComposites().add(column);
+		parentColumn.getChildren().add(column);
 
-		final Control controlPName = ViewFactory.eINSTANCE.createControl();
+		final VControl controlPName = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 		controlPName.setDomainModelReference(domainModelReference);
 
-		column.getComposites().add(controlPName);
+		column.getChildren().add(controlPName);
 		return Tuple.create(view, league);
 	}
 
@@ -83,7 +83,7 @@ public class RuleServiceGCTest extends CommonRuleTest {
 	 * 
 	 * @return the rule service
 	 */
-	private RuleService instantiateRuleService(View view, final EObject domainModel) {
+	private RuleService instantiateRuleService(VView view, final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
 		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
 		context = new ViewModelContextImpl(view, domainModel);
@@ -94,8 +94,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveShowRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		league.setName("foo");
 		addShowRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
@@ -110,8 +110,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveShowRuleWithoutCondition() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addShowRule(view.getChildren().get(0), false);
 		final GCCollectable collectable = new GCCollectable(
@@ -123,8 +123,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveEnableRuleWithoutCondition() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addEnableRule(view.getChildren().get(0), false);
 		final GCCollectable collectable = new GCCollectable(
@@ -136,8 +136,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveEnableRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		league.setName("foo");
 		addEnableRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
@@ -152,8 +152,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveLeafConditionOfShowRuleReevaluate() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		league.setName("foo");
 		addShowRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
@@ -170,8 +170,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveAndConditionOfShowRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addLeagueShowRuleWithAndCondition(view.getChildren().get(0), false,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
@@ -187,8 +187,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveAndConditionOfEnableRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addLeagueEnableRuleWithAndCondition(view.getChildren().get(0), false,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
@@ -204,8 +204,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveOrConditionOfEnableRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addLeagueShowRuleWithOrCondition(view.getChildren().get(0), false,
 			createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"),
@@ -221,8 +221,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveLeafConditionOfEnableRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addEnableRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
 		final EnableRule enableRule = (EnableRule) view.getChildren().get(0).getAttachments().get(0);
@@ -234,8 +234,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveLeafConditionOfShowRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addShowRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
 		final ShowRule showRule = (ShowRule) view.getChildren().get(0).getAttachments().get(0);
@@ -247,8 +247,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveLeafConditionOfEnableRuleReevaluate() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		league.setName("foo");
 		addEnableRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
@@ -265,8 +265,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveOrConditionOfShowRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 
 		addLeagueShowRuleWithOrCondition(view.getChildren().get(0), false,
@@ -283,8 +283,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveOrConditionBOfEnableRuleReevaluate() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		league.setName("foo");
 
@@ -309,8 +309,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveRenderableWithShowRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addShowRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
 		final GCCollectable collectable = new GCCollectable(
@@ -322,8 +322,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 
 	@Test
 	public void testRemoveRenderableWithEnableRule() {
-		final Tuple<View, League> tuple = createView();
-		final View view = tuple.first();
+		final Tuple<VView, League> tuple = createView();
+		final VView view = tuple.first();
 		final League league = tuple.second();
 		addEnableRule(view.getChildren().get(0), false, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
 		final GCCollectable collectable = new GCCollectable(

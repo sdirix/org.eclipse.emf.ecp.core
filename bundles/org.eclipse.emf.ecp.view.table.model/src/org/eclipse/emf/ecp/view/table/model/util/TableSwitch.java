@@ -14,10 +14,10 @@ package org.eclipse.emf.ecp.view.table.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
@@ -95,9 +95,9 @@ public class TableSwitch<T> extends Switch<T> {
 			if (result == null)
 				result = caseControl(tableControl);
 			if (result == null)
-				result = caseComposite(tableControl);
+				result = caseContainableElement(tableControl);
 			if (result == null)
-				result = caseRenderable(tableControl);
+				result = caseElement(tableControl);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -113,9 +113,9 @@ public class TableSwitch<T> extends Switch<T> {
 			VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) theEObject;
 			T result = caseTableDomainModelReference(tableDomainModelReference);
 			if (result == null)
-				result = caseVFeaturePathDomainModelReference(tableDomainModelReference);
+				result = caseFeaturePathDomainModelReference(tableDomainModelReference);
 			if (result == null)
-				result = caseVDomainModelReference(tableDomainModelReference);
+				result = caseDomainModelReference(tableDomainModelReference);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -177,34 +177,36 @@ public class TableSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRenderable(Renderable object) {
+	public T caseElement(VElement object)
+	{
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Composite</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Composite</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseComposite(Composite object) {
+	public T caseContainableElement(VContainableElement object)
+	{
 		return null;
 	}
 
@@ -220,40 +222,40 @@ public class TableSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseControl(Control object) {
+	public T caseControl(VControl object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVDomainModelReference(VDomainModelReference object)
+	public T caseDomainModelReference(VDomainModelReference object)
 	{
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VFeature Path Domain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VFeature Path Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 	{
 		return null;
 	}

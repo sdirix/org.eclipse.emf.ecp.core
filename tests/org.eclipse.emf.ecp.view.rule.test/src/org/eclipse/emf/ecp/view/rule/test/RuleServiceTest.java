@@ -33,12 +33,12 @@ import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
-import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.RuleFactory;
@@ -119,7 +119,7 @@ public class RuleServiceTest extends CommonRuleTest {
 			hasRegisteredDomainListener = true;
 		}
 
-		public Renderable getViewModel() {
+		public VElement getViewModel() {
 			return view;
 		}
 
@@ -149,10 +149,10 @@ public class RuleServiceTest extends CommonRuleTest {
 	private League league;
 
 	/** The view. */
-	private View view;
+	private VView view;
 
 	/** The control p name. */
-	private Control controlPName;
+	private VControl controlPName;
 
 	/** The column. */
 	private VVerticalLayout column;
@@ -173,24 +173,24 @@ public class RuleServiceTest extends CommonRuleTest {
 		league = BowlingFactory.eINSTANCE.createLeague();
 		league.getPlayers().add(player);
 
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(league.eClass());
 
 		parentColumn = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(parentColumn);
 
 		column = VVerticalFactory.eINSTANCE.createVerticalLayout();
-		parentColumn.getComposites().add(column);
+		parentColumn.getChildren().add(column);
 
-		controlPName = ViewFactory.eINSTANCE.createControl();
+		controlPName = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 		controlPName.setDomainModelReference(domainModelReference);
 
-		column.getComposites().add(controlPName);
+		column.getChildren().add(controlPName);
 
 	}
 
@@ -242,8 +242,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	private LeafCondition setupLeafCondition(EStructuralFeature domainFeature, Object expectedValue,
 		EObject resolveObject, List<EReference> eReferences) {
 		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(domainFeature);
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
@@ -464,13 +464,13 @@ public class RuleServiceTest extends CommonRuleTest {
 	 */
 	@Test
 	public void testInitShowRuleWithOrConditionBothConditionsApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 
@@ -492,12 +492,12 @@ public class RuleServiceTest extends CommonRuleTest {
 	 */
 	@Test
 	public void testShowRuleWithOrConditionBothConditionsApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control1);
@@ -580,13 +580,13 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testShowRuleWithAndConditionBothConditionsApply() {
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 		control1.setDomainModelReference(domainModelReference);
-		column.getComposites().add(control1);
+		column.getChildren().add(control1);
 
 		addLeagueShowRuleWithAndCondition(
 			column,
@@ -652,20 +652,20 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testShowRuleWithTwoPossibleTargetsWhereOnlyOneSettingShouldApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control1);
 
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control2.setDomainModelReference(domainModelReference2);
 
@@ -682,22 +682,22 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testShowRuleWithTwoPossibleTargetsWhereTheOtherSettingShouldApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 
 		view.getChildren().add(control1);
 
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control2.setDomainModelReference(domainModelReference2);
 
@@ -716,14 +716,14 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testShowRuleWhereConditionReferencesAnotherTarget() {
 		final Fan fan = BowlingFactory.eINSTANCE.createFan();
 		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(fan.eClass());
 		fan.setFavouriteMerchandise(merchandise);
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		control1.setDomainModelReference(domainModelReference);
@@ -733,7 +733,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		addShowRule(control1, true, BowlingPackage.eINSTANCE.getMerchandise_Name(), "foo");
 
 		Rule rule = null;
-		for (final Attachment attachment : control1.getAttachments()) {
+		for (final VAttachment attachment : control1.getAttachments()) {
 			if (Rule.class.isInstance(attachment)) {
 				rule = (Rule) attachment;
 			}
@@ -750,22 +750,22 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testShowRuleWithTwoPossibleTargetsWhereBothSettingShouldApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 
 		view.getChildren().add(control1);
 
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control2.setDomainModelReference(domainModelReference2);
 
@@ -783,19 +783,19 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testInitShowRuleWithTwoPossibleTargetsWhereOnlyOneSettingShouldApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control1);
 
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control2.setDomainModelReference(domainModelReference2);
 		view.getChildren().add(control2);
@@ -811,19 +811,19 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testInitShowRuleWithTwoPossibleTargetsWhereTheOtherSettingShouldApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control1);
 
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control2.setDomainModelReference(domainModelReference2);
 		view.getChildren().add(control2);
@@ -839,19 +839,19 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testInitShowRuleWithTwoPossibleTargetsWhereBothSettingShouldApply() {
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(player.eClass());
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control1.setDomainModelReference(domainModelReference);
 		view.getChildren().add(control1);
 
-		final Control control2 = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference2 = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
 		control2.setDomainModelReference(domainModelReference2);
 		view.getChildren().add(control2);
@@ -1478,7 +1478,7 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			newPlayer.getEMails());
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1502,7 +1502,7 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			emails);
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1529,7 +1529,7 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			newPlayer.getEMails());
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
 
 		assertEquals(1, involvedEObjects.size());
 	}
@@ -1551,7 +1551,7 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			new ArrayList<String>());
 
-		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
 
 		assertEquals(1, involvedEObjects.size());
 	}
@@ -2149,7 +2149,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Map<Renderable, Boolean> involvedEObjects = ruleService.getDisabledRenderables(
+		final Map<VElement, Boolean> involvedEObjects = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"));
 		assertTrue(involvedEObjects.isEmpty());
 	}
@@ -2187,10 +2187,10 @@ public class RuleServiceTest extends CommonRuleTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Map<Renderable, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
+		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 				"League_Wrong"));
-		final Map<Renderable, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
+		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 				"League_Wrong"));
 
@@ -2213,10 +2213,10 @@ public class RuleServiceTest extends CommonRuleTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		final Map<Renderable, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
+		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 				"League"));
-		final Map<Renderable, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
+		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
 				"League"));
 
@@ -2237,9 +2237,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Control.class);
+			"League", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2256,9 +2256,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Control.class);
+			"League2", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2292,9 +2292,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Control.class);
+			"League", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2310,9 +2310,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Control.class);
+			"League2", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2328,9 +2328,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> hiddenOrDisabledControls = helper.getInvolvedEObjects(
+		final Set<VControl> hiddenOrDisabledControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Control.class);
+			"League", VControl.class);
 
 		assertEquals(1, hiddenOrDisabledControls.size());
 	}
@@ -2352,9 +2352,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedEControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", Control.class);
+			"League", VControl.class);
 		assertEquals(1, involvedEControls.size());
 	}
 
@@ -2406,9 +2406,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Control.class);
+			"League2", VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2424,9 +2424,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Control.class);
+			"League2", VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2444,9 +2444,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		instantiateRuleService();
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
 
-		final Set<Control> involvedControls = helper.getInvolvedEObjects(
+		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", Control.class);
+			"League2", VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2455,14 +2455,14 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testUnset() {
 		final Fan fan = BowlingFactory.eINSTANCE.createFan();
 		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(fan.eClass());
 		fan.setFavouriteMerchandise(merchandise);
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		control1.setDomainModelReference(domainModelReference);
@@ -2481,14 +2481,14 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	@Test
 	public void testMultiUnset() {
-		final Control control = ViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		control.setDomainModelReference(domainModelReference);
 
-		column.getComposites().add(control);
+		column.getChildren().add(control);
 
 		addShowRule(control, true, BowlingPackage.eINSTANCE.getLeague_Name(), "League");
 		setLeagueToRight();
@@ -2502,14 +2502,14 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testInitUnset() {
 		final Fan fan = BowlingFactory.eINSTANCE.createFan();
 		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(fan.eClass());
 		fan.setFavouriteMerchandise(merchandise);
 
-		final Control control1 = ViewFactory.eINSTANCE.createControl();
+		final VControl control1 = VViewFactory.eINSTANCE.createControl();
 
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		control1.setDomainModelReference(domainModelReference);

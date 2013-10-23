@@ -37,8 +37,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.viewers.ISelection;
@@ -97,7 +97,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 * 
 	 * @generated
 	 */
-	protected ViewPackage viewPackage = ViewPackage.eINSTANCE;
+	protected VViewPackage viewPackage = VViewPackage.eINSTANCE;
 
 	/**
 	 * This caches an instance of the model factory. <!-- begin-user-doc -->
@@ -105,7 +105,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 * 
 	 * @generated
 	 */
-	protected ViewFactory viewFactory = viewPackage.getViewFactory();
+	protected VViewFactory viewFactory = viewPackage.getViewFactory();
 
 	/**
 	 * This is the file creation page. <!-- begin-user-doc --> <!-- end-user-doc

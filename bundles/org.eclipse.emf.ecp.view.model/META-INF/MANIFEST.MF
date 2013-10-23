@@ -8,7 +8,9 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.ui.view,
+  x-friends:="org.eclipse.emf.ecp.edit,
+   org.eclipse.emf.ecp.edit.swt,
+   org.eclipse.emf.ecp.ui.view,
    org.eclipse.emf.ecp.ui.view.editor.controls,
    org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.ui.view.swt.test,
@@ -21,6 +23,9 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.custom.ui.swt.test,
    org.eclipse.emf.ecp.view.customcomposite.ui.swt.test,
    org.eclipse.emf.ecp.view.customcomposite.ui.test,
+   org.eclipse.emf.ecp.view.dynamictree.model,
+   org.eclipse.emf.ecp.view.dynamictree.model.edit,
+   org.eclipse.emf.ecp.view.dynamictree.model.test,
    org.eclipse.emf.ecp.view.group.model,
    org.eclipse.emf.ecp.view.group.model.edit,
    org.eclipse.emf.ecp.view.group.ui,
@@ -43,7 +48,6 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.label.ui.swt,
    org.eclipse.emf.ecp.view.model.edit,
    org.eclipse.emf.ecp.view.model.editor,
-   org.eclipse.emf.ecp.view.model.integrationtest,
    org.eclipse.emf.ecp.view.model.provider.generator,
    org.eclipse.emf.ecp.view.model.provider.xmi,
    org.eclipse.emf.ecp.view.rule,
@@ -55,8 +59,6 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.separator.model.edit,
    org.eclipse.emf.ecp.view.separator.ui,
    org.eclipse.emf.ecp.view.separator.ui.swt,
-   org.eclipse.emf.ecp.view.separator.ui.swt.test,
-   org.eclipse.emf.ecp.view.separator.ui.test,
    org.eclipse.emf.ecp.view.table.model,
    org.eclipse.emf.ecp.view.table.model.edit,
    org.eclipse.emf.ecp.view.table.ui,
@@ -70,14 +72,7 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.vertical.model,
    org.eclipse.emf.ecp.view.vertical.model.edit,
    org.eclipse.emf.ecp.view.vertical.ui,
-   org.eclipse.emf.ecp.view.vertical.ui.swt,
-   org.eclipse.emf.ecp.view.vertical.ui.swt.test,
-   org.eclipse.emf.ecp.view.vertical.ui.test,
-   org.eclipse.emf.ecp.view.dynamictree.model.test,
-   org.eclipse.emf.ecp.view.dynamictree.model,
-   org.eclipse.emf.ecp.view.dynamictree.model.edit,
-   org.eclipse.emf.ecp.edit,
-   org.eclipse.emf.ecp.edit.swt",
+   org.eclipse.emf.ecp.view.vertical.ui.swt",
  org.eclipse.emf.ecp.view.model.impl;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.view.custom.model,
@@ -105,5 +100,5 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.vertical.model.edit,
    org.eclipse.emf.ecp.view.dynamictree.model.test"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport
+ org.eclipse.emf.ecore;visibility:=reexport;bundle-version="[2.7.0,3.0.0)"
 Bundle-ActivationPolicy: lazy

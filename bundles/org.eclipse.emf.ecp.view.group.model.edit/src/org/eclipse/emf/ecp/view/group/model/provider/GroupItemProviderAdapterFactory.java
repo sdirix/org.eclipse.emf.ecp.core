@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.group.model.util.GroupAdapterFactory;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -296,7 +296,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	}
 
 	/**
-	 * A child creation extender for the {@link ViewPackage}.
+	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -351,11 +351,11 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseView(View object)
+			public Object caseView(VView object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.VIEW__CHILDREN,
+					(VViewPackage.Literals.VIEW__CHILDREN,
 						VGroupFactory.eINSTANCE.createGroup()));
 
 				return null;
@@ -368,11 +368,11 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseCategory(Category object)
+			public Object caseCategory(VCategory object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.CATEGORY__COMPOSITE,
+					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VGroupFactory.eINSTANCE.createGroup()));
 
 				return null;
@@ -385,11 +385,11 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseCompositeCollection(CompositeCollection object)
+			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VGroupFactory.eINSTANCE.createGroup()));
 
 				return null;

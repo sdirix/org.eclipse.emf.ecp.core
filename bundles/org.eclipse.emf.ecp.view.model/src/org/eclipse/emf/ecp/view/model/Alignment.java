@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * and utility methods for working with them.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.model.ViewPackage#getAlignment()
+ * @see org.eclipse.emf.ecp.view.model.VViewPackage#getAlignment()
  * @model
  * @generated
  */

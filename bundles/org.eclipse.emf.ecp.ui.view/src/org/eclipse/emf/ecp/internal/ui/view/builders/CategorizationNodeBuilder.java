@@ -14,16 +14,16 @@ package org.eclipse.emf.ecp.internal.ui.view.builders;
 
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Categorization;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
-public class CategorizationNodeBuilder implements NodeBuilder<Categorization> {
+public class CategorizationNodeBuilder implements NodeBuilder<VCategorization> {
 
-	public Node<Categorization> build(Categorization categorization, ECPControlContext context,
+	public Node<VCategorization> build(VCategorization categorization, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		final Node<Categorization> node = new Node<Categorization>(categorization, context);
-		for (final AbstractCategorization childCategorization : categorization.getCategorizations()) {
+		final Node<VCategorization> node = new Node<VCategorization>(categorization, context);
+		for (final VAbstractCategorization childCategorization : categorization.getCategorizations()) {
 			node.addChild(NodeBuilders.INSTANCE.build(childCategorization, context, adapterFactoryItemDelegator));
 		}
 		return node;

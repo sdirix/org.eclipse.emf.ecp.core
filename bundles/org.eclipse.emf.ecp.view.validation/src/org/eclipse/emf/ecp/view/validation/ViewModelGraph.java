@@ -19,15 +19,15 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
- * The validation graph is a graph like structure where each {@link Renderable} is a represented as
+ * The validation graph is a graph like structure where each {@link VElement} is a represented as
  * {@link ViewModelGraphNode} with a value of type {@code T}. The graph structure follows the {@link EObject} hierarchy
  * of
  * the view model (and in that sense conforms to the containment tree of the Renderable).
  * The actually computed values of the nodes are based on domain objects, which are also represented as
- * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link Renderable}
+ * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link VElement}
  * s,
  * never
  * have any children.
@@ -54,7 +54,7 @@ public abstract class ViewModelGraph<T> {
 	 * @param comparator
 	 *            the comparator that is used to compute the most distinctive value
 	 */
-	public ViewModelGraph(Renderable viewModel, EObject domainModel, Comparator<T> comparator) {
+	public ViewModelGraph(VElement viewModel, EObject domainModel, Comparator<T> comparator) {
 		this.domainModel = domainModel;
 		viewModelSettings = new SettingsNodeMapping<T>(comparator);
 		domainModelSettings = new SettingsNodeMapping<T>(comparator);
@@ -68,7 +68,7 @@ public abstract class ViewModelGraph<T> {
 			getDefaultValue(),
 			false);
 		for (final EObject content : eContents) {
-			if (!Renderable.class.isInstance(content)) {
+			if (!VElement.class.isInstance(content)) {
 				continue;
 			}
 			final ViewModelGraphNode<T> childNode = viewModelSettings.createNode(content,
@@ -88,13 +88,13 @@ public abstract class ViewModelGraph<T> {
 	public abstract T getDefaultValue();
 
 	/**
-	 * Returns the computed value for the given {@link Renderable}.
+	 * Returns the computed value for the given {@link VElement}.
 	 * 
 	 * @param renderable
-	 *            the {@link Renderable} to fetch the value for
-	 * @return the value for the given {@link Renderable}
+	 *            the {@link VElement} to fetch the value for
+	 * @return the value for the given {@link VElement}
 	 */
-	public T getValue(Renderable renderable) {
+	public T getValue(VElement renderable) {
 		return viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures()).getValue();
 	}
 
@@ -103,7 +103,7 @@ public abstract class ViewModelGraph<T> {
 	 * If the cached entry does not yet exist, it will be created.
 	 * 
 	 * @param renderable
-	 *            the {@link Renderable} that is referencing the {@code feature} of the {@code domainObject}
+	 *            the {@link VElement} that is referencing the {@code feature} of the {@code domainObject}
 	 * @param domainObject
 	 *            the domain object that caused the {@code value} to be computed
 	 * @param feature
@@ -111,7 +111,7 @@ public abstract class ViewModelGraph<T> {
 	 * @param value
 	 *            the actual value
 	 */
-	public void update(Renderable renderable, EObject domainObject, EStructuralFeature feature, T value) {
+	public void update(VElement renderable, EObject domainObject, EStructuralFeature feature, T value) {
 
 		final Set<ViewModelGraphNode<T>> parentNodes = updateNodes(renderable, domainObject, feature, value);
 
@@ -125,7 +125,7 @@ public abstract class ViewModelGraph<T> {
 		final Set<EObject> updated = new LinkedHashSet<EObject>();
 
 		final Set<ViewModelGraphNode<T>> nodes = node.getParents();
-		updateRenderable((Renderable) node.getSetting().getEObject());
+		updateRenderable((VElement) node.getSetting().getEObject());
 
 		for (final ViewModelGraphNode<T> cachedNode : nodes) {
 			updated.addAll(updateParentNodes(cachedNode));
@@ -158,12 +158,12 @@ public abstract class ViewModelGraph<T> {
 	}
 
 	/**
-	 * Removes the given {@link Renderable} from the graph.
+	 * Removes the given {@link VElement} from the graph.
 	 * 
 	 * @param renderable
-	 *            the {@link Renderable} be removed
+	 *            the {@link VElement} be removed
 	 */
-	public void removeRenderable(Renderable renderable) {
+	public void removeRenderable(VElement renderable) {
 		final ViewModelGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
 
 		if (node != null) {
@@ -186,12 +186,12 @@ public abstract class ViewModelGraph<T> {
 	 * Allows clients to hook into the update call.
 	 * 
 	 * @param renderable
-	 *            the {@link Renderable} being updated
+	 *            the {@link VElement} being updated
 	 */
-	protected void updateRenderable(Renderable renderable) {
+	protected void updateRenderable(VElement renderable) {
 	}
 
-	private Set<ViewModelGraphNode<T>> updateNodes(Renderable renderable, EObject domainObject,
+	private Set<ViewModelGraphNode<T>> updateNodes(VElement renderable, EObject domainObject,
 		EStructuralFeature feature, T value) {
 
 		final Set<ViewModelGraphNode<T>> affectedParentNodes = new LinkedHashSet<ViewModelGraphNode<T>>();
@@ -241,7 +241,7 @@ public abstract class ViewModelGraph<T> {
 		return false;
 	}
 
-	private ViewModelGraphNode<T> getNodeForRenderable(Renderable renderable) {
+	private ViewModelGraphNode<T> getNodeForRenderable(VElement renderable) {
 		ViewModelGraphNode<T> node = viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures());
 
 		// dynamic registration
@@ -253,7 +253,7 @@ public abstract class ViewModelGraph<T> {
 			ViewModelGraphNode<T> possibleParent = viewModelSettings
 				.getNode(eContainer, SettingsNodeMapping.allFeatures());
 			if (possibleParent == null) {
-				possibleParent = getNodeForRenderable((Renderable) eContainer);
+				possibleParent = getNodeForRenderable((VElement) eContainer);
 			}
 			possibleParent.addChild(node);
 		}

@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VCategorization;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Categorization} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VCategorization} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -83,7 +83,7 @@ public class CategorizationItemProvider
 				getString("_UI_Categorization_categorizations_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Categorization_categorizations_feature",
 					"_UI_Categorization_type"),
-				ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
 				true,
 				false,
 				true,
@@ -106,7 +106,7 @@ public class CategorizationItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS);
+			childrenFeatures.add(VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -148,7 +148,7 @@ public class CategorizationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((Categorization) object).getName();
+		final String label = ((VCategorization) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_Categorization_type") : label;
 	}
 
@@ -164,9 +164,9 @@ public class CategorizationItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Categorization.class))
+		switch (notification.getFeatureID(VCategorization.class))
 		{
-		case ViewPackage.CATEGORIZATION__CATEGORIZATIONS:
+		case VViewPackage.CATEGORIZATION__CATEGORIZATIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -187,18 +187,18 @@ public class CategorizationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				ViewFactory.eINSTANCE.createCategorization()));
+			(VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				VViewFactory.eINSTANCE.createCategorization()));
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				ViewFactory.eINSTANCE.createView()));
+			(VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				VViewFactory.eINSTANCE.createView()));
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				ViewFactory.eINSTANCE.createCategory()));
+			(VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
+				VViewFactory.eINSTANCE.createCategory()));
 	}
 
 }

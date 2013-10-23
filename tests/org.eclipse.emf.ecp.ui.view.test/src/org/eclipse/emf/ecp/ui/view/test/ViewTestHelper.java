@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -85,7 +85,7 @@ public final class ViewTestHelper {
 	 *            the view that is used to create the {@link ViewModelContext} of the ECP control context
 	 * @return an {@link ECPControlContext} for the given domain object
 	 */
-	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell, Renderable view) {
+	public static ECPControlContext createECPControlContext(EObject domainObject, Shell shell, VElement view) {
 		// setup context
 
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(
@@ -128,21 +128,21 @@ public final class ViewTestHelper {
 	}
 
 	/**
-	 * Creates a {@link Node} containing the the given {@link Renderable}.
+	 * Creates a {@link Node} containing the the given {@link VElement}.
 	 * 
 	 * @param view
-	 *            the {@link Renderable} for which to create a node tree
+	 *            the {@link VElement} for which to create a node tree
 	 * @param domainObject
 	 *            the domain object belonging to the given renderable
 	 * @return the created node tree
 	 */
-	public static Node<Renderable> build(Renderable view, EObject domainObject) {
+	public static Node<VElement> build(VElement view, EObject domainObject) {
 		final Shell shell = new Shell();
 		if (domainObject != null) {
 			context = createECPControlContext(domainObject, shell, view);
 			new ViewModelContextImpl(view, domainObject);
 		}
-		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, context);
+		final Node<VElement> node = NodeBuilders.INSTANCE.build(view, context);
 		return node;
 	}
 

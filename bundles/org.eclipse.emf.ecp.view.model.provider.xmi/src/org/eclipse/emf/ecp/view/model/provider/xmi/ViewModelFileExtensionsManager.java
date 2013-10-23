@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * @author Jonas
@@ -42,7 +42,7 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file";
 	private static final String FILEPATH_ATTRIBUTE = "filePath";
 
-	private final Map<EClass, View> map = new HashMap<EClass, View>();
+	private final Map<EClass, VView> map = new HashMap<EClass, VView>();
 
 	private ViewModelFileExtensionsManager() {
 	}
@@ -68,11 +68,11 @@ public final class ViewModelFileExtensionsManager {
 		for (final URI uri : extensionURIS) {
 			final Resource resource = loadResource(uri);
 			final EObject eObject = resource.getContents().get(0);
-			if (!(eObject instanceof View)) {
+			if (!(eObject instanceof VView)) {
 				// TODO:log
 				continue;
 			}
-			final View view = (View) eObject;
+			final VView view = (VView) eObject;
 			if (view.getRootEClass() == null) {
 				// TODO:log
 				continue;
@@ -94,8 +94,8 @@ public final class ViewModelFileExtensionsManager {
 			.getResourceFactoryRegistry().getExtensionToFactoryMap();
 		extensionToFactoryMap.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
 			new XMIResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put(ViewPackage.eNS_URI,
-			ViewPackage.eINSTANCE);
+		resourceSet.getPackageRegistry().put(VViewPackage.eNS_URI,
+			VViewPackage.eINSTANCE);
 		final Resource resource = resourceSet.createResource(uri);
 		try {
 			resource.load(null);
@@ -148,7 +148,7 @@ public final class ViewModelFileExtensionsManager {
 	 * @param eObject The {@link EObject} to create a view for
 	 * @return a view model for the given eObject
 	 */
-	public View createView(EObject eObject) {
+	public VView createView(EObject eObject) {
 		return EcoreUtil.copy(map.get(eObject.eClass()));
 	}
 

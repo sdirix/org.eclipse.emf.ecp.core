@@ -23,11 +23,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.util.GroupedGridAdapterFactory;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -388,7 +388,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	}
 
 	/**
-	 * A child creation extender for the {@link ViewPackage}.
+	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -443,11 +443,11 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			 * @generated
 			 */
 			@Override
-			public Object caseRenderable(Renderable object)
+			public Object caseElement(VElement object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.RENDERABLE__ATTACHMENTS,
+					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
 						VGroupedGridFactory.eINSTANCE.createSpan()));
 
 				return null;
@@ -460,11 +460,11 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			 * @generated
 			 */
 			@Override
-			public Object caseView(View object)
+			public Object caseView(VView object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.VIEW__CHILDREN,
+					(VViewPackage.Literals.VIEW__CHILDREN,
 						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
 
 				return null;
@@ -477,11 +477,11 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			 * @generated
 			 */
 			@Override
-			public Object caseCategory(Category object)
+			public Object caseCategory(VCategory object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.CATEGORY__COMPOSITE,
+					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
 
 				return null;
@@ -494,11 +494,11 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 			 * @generated
 			 */
 			@Override
-			public Object caseCompositeCollection(CompositeCollection object)
+			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(ViewPackage.Literals.COMPOSITE_COLLECTION__COMPOSITES,
+					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
 
 				return null;

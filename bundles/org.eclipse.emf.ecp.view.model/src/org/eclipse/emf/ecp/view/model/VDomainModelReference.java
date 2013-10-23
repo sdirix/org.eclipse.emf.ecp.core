@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.model.ViewPackage#getVDomainModelReference()
+ * @see org.eclipse.emf.ecp.view.model.VViewPackage#getDomainModelReference()
  * @model interface="true" abstract="true"
  * @generated
  */

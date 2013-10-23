@@ -11,10 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.test;
 
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * @author Jonas
@@ -22,150 +22,150 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  */
 public class HierarchyViewModelHandle {
 
-	private final Renderable root;
-	private Renderable firstChild;
-	private Renderable secondChild;
+	private final VElement root;
+	private VElement firstChild;
+	private VElement secondChild;
 
-	private Renderable firstFirstChild;
-	private Renderable firstSecondChild;
-	private Renderable secondFirstChild;
-	private Renderable secondSecondChild;
+	private VElement firstFirstChild;
+	private VElement firstSecondChild;
+	private VElement secondFirstChild;
+	private VElement secondSecondChild;
 
 	/**
 	 * @param root
 	 */
-	public HierarchyViewModelHandle(Renderable root) {
+	public HierarchyViewModelHandle(VElement root) {
 		this.root = root;
 	}
 
 	/**
 	 * @return the horizontal
 	 */
-	public Renderable getRoot() {
+	public VElement getRoot() {
 		return root;
 	}
 
 	/**
 	 * @param renderable
 	 */
-	public void addFirstChildToRoot(Renderable renderable) {
+	public void addFirstChildToRoot(VElement renderable) {
 		firstChild = renderable;
-		final CompositeCollection collection = (CompositeCollection) root;
-		collection.getComposites().add((Composite) renderable);
+		final VContainer collection = (VContainer) root;
+		collection.getChildren().add((VContainableElement) renderable);
 
 	}
 
 	/**
 	 * @param renderable
 	 */
-	public void addSecondChildToRoot(Renderable renderable) {
+	public void addSecondChildToRoot(VElement renderable) {
 		setSecondChild(renderable);
-		final CompositeCollection collection = (CompositeCollection) root;
-		collection.getComposites().add((Composite) renderable);
+		final VContainer collection = (VContainer) root;
+		collection.getChildren().add((VContainableElement) renderable);
 
 	}
 
 	/**
 	 * @return the first child
 	 */
-	public Renderable getFirstChild() {
+	public VElement getFirstChild() {
 		return firstChild;
 	}
 
 	/**
 	 * @return the secondChild
 	 */
-	public Renderable getSecondChild() {
+	public VElement getSecondChild() {
 		return secondChild;
 	}
 
 	/**
 	 * @param secondChild the secondChild to set
 	 */
-	public void setSecondChild(Renderable secondChild) {
+	public void setSecondChild(VElement secondChild) {
 		this.secondChild = secondChild;
 	}
 
 	/**
 	 * 
 	 */
-	public void addFirstChildToFirstChild(Composite composite) {
-		final CompositeCollection collection = (CompositeCollection) getFirstChild();
-		collection.getComposites().add(composite);
+	public void addFirstChildToFirstChild(VContainableElement composite) {
+		final VContainer collection = (VContainer) getFirstChild();
+		collection.getChildren().add(composite);
 		setFirstFirstChild(composite);
 	}
 
 	/**
 	 * @return the firstFirstChild
 	 */
-	public Renderable getFirstFirstChild() {
+	public VElement getFirstFirstChild() {
 		return firstFirstChild;
 	}
 
 	/**
 	 * @param firstFirstChild the firstFirstChild to set
 	 */
-	public void setFirstFirstChild(Renderable firstFirstChild) {
+	public void setFirstFirstChild(VElement firstFirstChild) {
 		this.firstFirstChild = firstFirstChild;
 	}
 
 	/**
 	 * @return the firstSecondChild
 	 */
-	public Renderable getFirstSecondChild() {
+	public VElement getFirstSecondChild() {
 		return firstSecondChild;
 	}
 
 	/**
 	 * @param firstSecondChild the firstSecondChild to set
 	 */
-	public void setFirstSecondChild(Renderable firstSecondChild) {
+	public void setFirstSecondChild(VElement firstSecondChild) {
 		this.firstSecondChild = firstSecondChild;
 	}
 
 	/**
 	 * @return the secondFirstChild
 	 */
-	public Renderable getSecondFirstChild() {
+	public VElement getSecondFirstChild() {
 		return secondFirstChild;
 	}
 
 	/**
 	 * @param secondFirstChild the secondFirstChild to set
 	 */
-	public void setSecondFirstChild(Renderable secondFirstChild) {
+	public void setSecondFirstChild(VElement secondFirstChild) {
 		this.secondFirstChild = secondFirstChild;
 	}
 
 	/**
 	 * @return the secondSecondChild
 	 */
-	public Renderable getSecondSecondChild() {
+	public VElement getSecondSecondChild() {
 		return secondSecondChild;
 	}
 
 	/**
 	 * @param secondSecondChild the secondSecondChild to set
 	 */
-	public void setSecondSecondChild(Renderable secondSecondChild) {
+	public void setSecondSecondChild(VElement secondSecondChild) {
 		this.secondSecondChild = secondSecondChild;
 	}
 
 	/**
 	 * @param composite
 	 */
-	public void addSecondChildToFirstChild(Control composite) {
-		final CompositeCollection collection = (CompositeCollection) getFirstChild();
-		collection.getComposites().add(composite);
+	public void addSecondChildToFirstChild(VControl composite) {
+		final VContainer collection = (VContainer) getFirstChild();
+		collection.getChildren().add(composite);
 		setFirstSecondChild(composite);
 	}
 
 	/**
 	 * @param composite
 	 */
-	public void addFirstChildToSecondChild(Control composite) {
-		final CompositeCollection collection = (CompositeCollection) getSecondChild();
-		collection.getComposites().add(composite);
+	public void addFirstChildToSecondChild(VControl composite) {
+		final VContainer collection = (VContainer) getSecondChild();
+		collection.getChildren().add(composite);
 		setSecondFirstChild(composite);
 
 	}
@@ -173,9 +173,9 @@ public class HierarchyViewModelHandle {
 	/**
 	 * @param composite
 	 */
-	public void addSecondChildToSecondChild(Control composite) {
-		final CompositeCollection collection = (CompositeCollection) getSecondChild();
-		collection.getComposites().add(composite);
+	public void addSecondChildToSecondChild(VControl composite) {
+		final VContainer collection = (VContainer) getSecondChild();
+		collection.getChildren().add(composite);
 		setSecondSecondChild(composite);
 	}
 

@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -217,7 +217,7 @@ public interface RulePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE__CONDITION = ViewPackage.ATTACHMENT_FEATURE_COUNT + 0;
+	int RULE__CONDITION = VViewPackage.ATTACHMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Rule</em>' class.
@@ -227,7 +227,7 @@ public interface RulePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_FEATURE_COUNT = ViewPackage.ATTACHMENT_FEATURE_COUNT + 1;
+	int RULE_FEATURE_COUNT = VViewPackage.ATTACHMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.rule.model.impl.ShowRuleImpl <em>Show Rule</em>}'

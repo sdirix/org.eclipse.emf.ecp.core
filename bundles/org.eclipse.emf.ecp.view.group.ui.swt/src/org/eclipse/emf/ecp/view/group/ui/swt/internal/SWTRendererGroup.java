@@ -17,7 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * The Class SWTRendererGroup.
@@ -35,8 +35,8 @@ public class SWTRendererGroup implements CustomSWTRenderer {
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
-	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
-		final Map<Class<? extends Renderable>, SWTRenderer<?>> map = new HashMap<Class<? extends Renderable>, SWTRenderer<?>>();
+	public Map<Class<? extends VElement>, SWTRenderer<?>> getCustomRenderers() {
+		final Map<Class<? extends VElement>, SWTRenderer<?>> map = new HashMap<Class<? extends VElement>, SWTRenderer<?>>();
 		map.put(VGroup.class, SWTGroupRenderer.INSTANCE);
 		return map;
 	}

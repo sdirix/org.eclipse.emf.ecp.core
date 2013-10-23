@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * 
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  *            the type of the actual control
  */
 // FIXME:
-public class Node<T extends Renderable> implements ValidationListener, ModelChangeListener {
+public class Node<T extends VElement> implements ValidationListener, ModelChangeListener {
 
 	protected List<RenderingResultDelegator> delegators;
 	protected int severity;
@@ -80,7 +80,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * @param node
 	 *            child to be added as a child to this node
 	 */
-	public void addChild(Node<? extends Renderable> node) {
+	public void addChild(Node<? extends VElement> node) {
 		if (node == null) {
 			throw new IllegalArgumentException("Invalid child node: null");
 		}
@@ -109,7 +109,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 			return;
 		}
 		// isEnabled = shouldBeEnabled;
-		for (final Node<? extends Renderable> child : getChildren()) {
+		for (final Node<? extends VElement> child : getChildren()) {
 			child.enable(isEnabled);
 		}
 		for (final RenderingResultDelegator delegator : delegators) {
@@ -127,7 +127,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 */
 	public void show(final boolean isVisible) {
 		// this.isVisible = isVisible;
-		for (final Node<? extends Renderable> child : getChildren()) {
+		for (final Node<? extends VElement> child : getChildren()) {
 			child.show(isVisible);
 		}
 		for (final RenderingResultDelegator delegator : delegators) {
@@ -155,7 +155,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 			delegator.cleanup();
 		}
 		delegators.clear();
-		for (final Node<? extends Renderable> child : getChildren()) {
+		for (final Node<? extends VElement> child : getChildren()) {
 			child.cleanup();
 		}
 	}
@@ -226,7 +226,7 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 * Disposes this node.
 	 */
 	public void dispose() {
-		for (final Node<? extends Renderable> child : getChildren()) {
+		for (final Node<? extends VElement> child : getChildren()) {
 			child.dispose();
 		}
 		children.clear();
@@ -383,10 +383,10 @@ public class Node<T extends Renderable> implements ValidationListener, ModelChan
 	 */
 	public void notifyChange(ModelChangeNotification notification) {
 		if (notification.getNotifier() == viewModelElement) {
-			if (notification.getStructuralFeature() == ViewPackage.eINSTANCE.getRenderable_Enabled()) {
+			if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
 				enable(viewModelElement.isEnabled());
 			}
-			if (notification.getStructuralFeature() == ViewPackage.eINSTANCE.getRenderable_Visible()) {
+			if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
 				show(viewModelElement.isVisible());
 			}
 		} else {

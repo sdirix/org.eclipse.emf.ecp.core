@@ -16,7 +16,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderer;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 
 /**
@@ -33,9 +33,9 @@ public class SeparatorSWTRenderer implements CustomSWTRenderer {
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.CustomSWTRenderer#getCustomRenderers()
 	 */
-	public Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers() {
-		Map<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>> renderers;
-		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.Renderable>, SWTRenderer<?>>() {
+	public Map<Class<? extends VElement>, SWTRenderer<?>> getCustomRenderers() {
+		Map<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, SWTRenderer<?>> renderers;
+		renderers = new LinkedHashMap<Class<? extends org.eclipse.emf.ecp.view.model.VElement>, SWTRenderer<?>>() {
 			private static final long serialVersionUID = 3710963194739585330L;
 
 			{

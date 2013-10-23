@@ -20,7 +20,6 @@ import org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin;
  * This is the central singleton for the Separator edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public final class SeparatorEditPlugin extends EMFPlugin {
@@ -28,7 +27,6 @@ public final class SeparatorEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static final SeparatorEditPlugin INSTANCE = new SeparatorEditPlugin();
@@ -37,7 +35,6 @@ public final class SeparatorEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	private static Implementation plugin;
@@ -46,21 +43,20 @@ public final class SeparatorEditPlugin extends EMFPlugin {
 	 * Create the instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public SeparatorEditPlugin() {
-		super(new ResourceLocator[] {
-			EcoreEditPlugin.INSTANCE,
-			ViewEditPlugin.INSTANCE,
-		});
+		super
+		  (new ResourceLocator [] {
+		     EcoreEditPlugin.INSTANCE,
+		     ViewEditPlugin.INSTANCE,
+		   });
 	}
 
 	/**
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -73,7 +69,6 @@ public final class SeparatorEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -85,7 +80,6 @@ public final class SeparatorEditPlugin extends EMFPlugin {
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static class Implementation extends EclipsePlugin {
@@ -93,7 +87,6 @@ public final class SeparatorEditPlugin extends EMFPlugin {
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
 		 * @generated
 		 */
 		public Implementation() {

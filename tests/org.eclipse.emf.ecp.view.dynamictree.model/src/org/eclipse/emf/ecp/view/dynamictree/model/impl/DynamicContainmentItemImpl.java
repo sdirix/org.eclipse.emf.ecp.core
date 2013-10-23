@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.impl.RenderableImpl;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecp.view.model.impl.RenderableImpl;
  *
  * @generated
  */
-public class DynamicContainmentItemImpl extends RenderableImpl implements DynamicContainmentItem {
+public class DynamicContainmentItemImpl extends VElementImpl implements DynamicContainmentItem {
 	/**
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -62,7 +62,7 @@ public class DynamicContainmentItemImpl extends RenderableImpl implements Dynami
 	 * @generated
 	 * @ordered
 	 */
-	protected Composite composite;
+	protected VContainableElement composite;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -138,7 +138,7 @@ public class DynamicContainmentItemImpl extends RenderableImpl implements Dynami
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Composite getComposite() {
+	public VContainableElement getComposite() {
 		return composite;
 	}
 
@@ -147,8 +147,8 @@ public class DynamicContainmentItemImpl extends RenderableImpl implements Dynami
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComposite(Composite newComposite, NotificationChain msgs) {
-		Composite oldComposite = composite;
+	public NotificationChain basicSetComposite(VContainableElement newComposite, NotificationChain msgs) {
+		VContainableElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, oldComposite, newComposite);
@@ -162,7 +162,7 @@ public class DynamicContainmentItemImpl extends RenderableImpl implements Dynami
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setComposite(Composite newComposite) {
+	public void setComposite(VContainableElement newComposite) {
 		if (newComposite != composite) {
 			NotificationChain msgs = null;
 			if (composite != null)
@@ -228,7 +228,7 @@ public class DynamicContainmentItemImpl extends RenderableImpl implements Dynami
 				getItems().addAll((Collection<? extends DynamicContainmentItem>)newValue);
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-				setComposite((Composite)newValue);
+				setComposite((VContainableElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -249,7 +249,7 @@ public class DynamicContainmentItemImpl extends RenderableImpl implements Dynami
 				getItems().clear();
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-				setComposite((Composite)null);
+				setComposite((VContainableElement)null);
 				return;
 		}
 		super.eUnset(featureID);

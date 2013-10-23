@@ -20,7 +20,12 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.provider.AttachmentItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -32,7 +37,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class SpanItemProvider
-	extends AttachmentItemProvider
+	extends AttachmentItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -112,7 +118,7 @@ public class SpanItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final VSpan span = (VSpan) object;
+		VSpan span = (VSpan) object;
 		return getString("_UI_Span_type") + " " + span.getHorizontalSpan();
 	}
 

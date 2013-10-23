@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.table.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.model.Control;
  * @model
  * @generated
  */
-public interface VTableControl extends Control
+public interface VTableControl extends VControl
 {
 	/**
 	 * Returns the value of the '<em><b>Columns</b></em>' containment reference list.

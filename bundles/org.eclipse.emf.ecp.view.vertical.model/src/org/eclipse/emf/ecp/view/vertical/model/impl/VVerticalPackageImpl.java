@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.vertical.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
@@ -88,7 +88,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theVerticalPackage.createPackageContents();
@@ -180,14 +180,14 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		verticalLayoutEClass.getESuperTypes().add(theViewPackage.getCompositeCollection());
+		verticalLayoutEClass.getESuperTypes().add(theViewPackage.getContainer());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(verticalLayoutEClass, VVerticalLayout.class, "VerticalLayout", !IS_ABSTRACT, !IS_INTERFACE,

@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.custom.model;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -81,7 +81,7 @@ public interface VCustomPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Hardcoded Domain Model Reference</em>' class.
@@ -90,7 +90,7 @@ public interface VCustomPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.

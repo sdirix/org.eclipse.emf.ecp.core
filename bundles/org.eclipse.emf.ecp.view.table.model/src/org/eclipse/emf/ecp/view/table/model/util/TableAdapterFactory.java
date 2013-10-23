@@ -15,10 +15,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
@@ -110,33 +110,33 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
-			public Adapter caseRenderable(Renderable object)
+			public Adapter caseElement(VElement object)
 			{
-				return createRenderableAdapter();
+				return createElementAdapter();
 			}
 
 			@Override
-			public Adapter caseComposite(Composite object)
+			public Adapter caseContainableElement(VContainableElement object)
 			{
-				return createCompositeAdapter();
+				return createContainableElementAdapter();
 			}
 
 			@Override
-			public Adapter caseControl(Control object)
+			public Adapter caseControl(VControl object)
 			{
 				return createControlAdapter();
 			}
 
 			@Override
-			public Adapter caseVDomainModelReference(VDomainModelReference object)
+			public Adapter caseDomainModelReference(VDomainModelReference object)
 			{
-				return createVDomainModelReferenceAdapter();
+				return createDomainModelReferenceAdapter();
 			}
 
 			@Override
-			public Adapter caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+			public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 			{
-				return createVFeaturePathDomainModelReferenceAdapter();
+				return createFeaturePathDomainModelReferenceAdapter();
 			}
 
 			@Override
@@ -210,46 +210,47 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable
-	 * <em>Renderable</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Renderable
+	 * @see org.eclipse.emf.ecp.view.model.VElement
 	 * @generated
 	 */
-	public Adapter createRenderableAdapter() {
+	public Adapter createElementAdapter()
+	{
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Composite <em>Composite</em>}
-	 * '.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainableElement
+	 * <em>Containable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Composite
+	 * @see org.eclipse.emf.ecp.view.model.VContainableElement
 	 * @generated
 	 */
-	public Adapter createCompositeAdapter() {
+	public Adapter createContainableElementAdapter()
+	{
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Control <em>Control</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VControl <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Control
+	 * @see org.eclipse.emf.ecp.view.model.VControl
 	 * @generated
 	 */
 	public Adapter createControlAdapter() {
@@ -258,7 +259,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
-	 * <em>VDomain Model Reference</em>}'.
+	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -268,7 +269,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createVDomainModelReferenceAdapter()
+	public Adapter createDomainModelReferenceAdapter()
 	{
 		return null;
 	}
@@ -276,7 +277,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * Creates a new adapter for an object of class '
 	 * {@link org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
-	 * <em>VFeature Path Domain Model Reference</em>}'.
+	 * <em>Feature Path Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -286,7 +287,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference
 	 * @generated
 	 */
-	public Adapter createVFeaturePathDomainModelReferenceAdapter()
+	public Adapter createFeaturePathDomainModelReferenceAdapter()
 	{
 		return null;
 	}

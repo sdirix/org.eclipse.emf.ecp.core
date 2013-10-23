@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -36,9 +36,9 @@ import org.eclipse.swt.widgets.Layout;
  * 
  * @author emueller
  * 
- * @param <R> the actual type of the {@link Renderable} to be drawn
+ * @param <R> the actual type of the {@link VElement} to be drawn
  */
-public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRenderer<R> {
+public abstract class AbstractSWTRenderer<R extends VElement> implements SWTRenderer<R> {
 
 	protected org.eclipse.swt.widgets.Composite getParentFromInitData(Object[] initData) {
 		return (Composite) initData[0];
@@ -48,7 +48,7 @@ public abstract class AbstractSWTRenderer<R extends Renderable> implements SWTRe
 		return new SWTRenderingResultDelegator(control);
 	}
 
-	public RenderingResultDelegator withSWTControls(ECPControl swtControl, Renderable model, Control... controls) {
+	public RenderingResultDelegator withSWTControls(ECPControl swtControl, VElement model, Control... controls) {
 		return new SWTRenderingResultDelegatorWithControl(controls, swtControl, model);
 	}
 

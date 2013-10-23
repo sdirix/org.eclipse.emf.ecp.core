@@ -81,8 +81,8 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 				return createHardcodedDomainModelReferenceAdapter();
 			}
 			@Override
-			public Adapter caseVDomainModelReference(VDomainModelReference object) {
-				return createVDomainModelReferenceAdapter();
+			public Adapter caseDomainModelReference(VDomainModelReference object) {
+				return createDomainModelReferenceAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -118,7 +118,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference <em>VDomain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -127,7 +127,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createVDomainModelReferenceAdapter() {
+	public Adapter createDomainModelReferenceAdapter() {
 		return null;
 	}
 

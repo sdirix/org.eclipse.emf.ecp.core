@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.validation.VDiagnosticHelper;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
@@ -61,7 +61,7 @@ public class VDiagnosticHelperTest {
 	public void testFirstArgIsNull() {
 		final Library library = TestFactory.eINSTANCE.createLibrary();
 		library.setName("warning");
-		final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 		final Diagnostic diagnostic = getDiagnosticForEObject(library);
 		vDiagnostic.getDiagnostics().add(diagnostic);
 		assertFalse(VDiagnosticHelper.isEqual(null, vDiagnostic));
@@ -71,7 +71,7 @@ public class VDiagnosticHelperTest {
 	public void testSecondArgIsNull() {
 		final Library library = TestFactory.eINSTANCE.createLibrary();
 		library.setName("warning");
-		final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 		final Diagnostic diagnostic = getDiagnosticForEObject(library);
 		vDiagnostic.getDiagnostics().add(diagnostic);
 		assertFalse(VDiagnosticHelper.isEqual(vDiagnostic, null));
@@ -90,8 +90,8 @@ public class VDiagnosticHelperTest {
 		library.getWriters().add(writer);
 		final Diagnostic libDiagnostic = getDiagnosticForEObject(library);
 		final Diagnostic writerDiagnostic = getDiagnosticForEObject(writer);
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 		vDiagnostic1.getDiagnostics().add(libDiagnostic);
 		vDiagnostic2.getDiagnostics().add(writerDiagnostic);
 
@@ -106,8 +106,8 @@ public class VDiagnosticHelperTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final Diagnostic libDiagnostic = getDiagnosticForEObject(library);
 		final Diagnostic writerDiagnostic = getDiagnosticForEObject(writer);
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 		vDiagnostic1.getDiagnostics().add(libDiagnostic);
 		vDiagnostic2.getDiagnostics().add(libDiagnostic);
 		vDiagnostic2.getDiagnostics().add(writerDiagnostic);
@@ -119,8 +119,8 @@ public class VDiagnosticHelperTest {
 	public void testEqual() {
 		final Library library = TestFactory.eINSTANCE.createLibrary();
 		library.setName("warning");
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 		final Diagnostic diagnostic = getDiagnosticForEObject(library);
 		vDiagnostic1.getDiagnostics().add(diagnostic);
 		vDiagnostic2.getDiagnostics().add(diagnostic);
@@ -131,8 +131,8 @@ public class VDiagnosticHelperTest {
 	public void testEqualDifferentDiagnosticsSameResult() {
 		final Library library = TestFactory.eINSTANCE.createLibrary();
 		library.setName("warning");
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 		final Diagnostic diagnostic = getDiagnosticForEObject(library);
 		final Diagnostic diagnostic2 = getDiagnosticForEObject(library);
 		vDiagnostic1.getDiagnostics().add(diagnostic);
@@ -148,8 +148,8 @@ public class VDiagnosticHelperTest {
 		library.setName("warningWithouFeature");
 		final Diagnostic diagnostic2 = getDiagnosticForEObject(library);
 
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 		vDiagnostic1.getDiagnostics().add(diagnostic);
 		vDiagnostic2.getDiagnostics().add(diagnostic2);
 
@@ -169,8 +169,8 @@ public class VDiagnosticHelperTest {
 		final Diagnostic libDiagnostic2 = getDiagnosticForEObject(library);
 		final Diagnostic writerDiagnostic2 = getDiagnosticForEObject(writer);
 
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 		vDiagnostic1.getDiagnostics().add(libDiagnostic);
 		vDiagnostic1.getDiagnostics().add(writerDiagnostic);
 		vDiagnostic2.getDiagnostics().add(libDiagnostic2);
@@ -185,8 +185,8 @@ public class VDiagnosticHelperTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final Diagnostic libDiagnostic = getDiagnosticForEObject(library);
 		final Diagnostic writerDiagnostic = getDiagnosticForEObject(writer);
-		final VDiagnostic vDiagnostic1 = ViewFactory.eINSTANCE.createVDiagnostic();
-		final VDiagnostic vDiagnostic2 = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
 
 		vDiagnostic1.getDiagnostics().add(libDiagnostic);
 		vDiagnostic1.getDiagnostics().add(writerDiagnostic);

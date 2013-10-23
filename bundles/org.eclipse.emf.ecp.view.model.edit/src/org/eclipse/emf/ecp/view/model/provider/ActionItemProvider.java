@@ -17,8 +17,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecp.view.model.Action;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VAction;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.Action} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VAction} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -87,7 +87,7 @@ public class ActionItemProvider
 				getResourceLocator(),
 				getString("_UI_Action_bundle_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Action_bundle_feature", "_UI_Action_type"),
-				ViewPackage.Literals.ACTION__BUNDLE,
+				VViewPackage.Literals.ACTION__BUNDLE,
 				true,
 				false,
 				false,
@@ -110,7 +110,7 @@ public class ActionItemProvider
 				getResourceLocator(),
 				getString("_UI_Action_className_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_Action_className_feature", "_UI_Action_type"),
-				ViewPackage.Literals.ACTION__CLASS_NAME,
+				VViewPackage.Literals.ACTION__CLASS_NAME,
 				true,
 				false,
 				false,
@@ -140,7 +140,7 @@ public class ActionItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Action) object).getClassName();
+		String label = ((VAction) object).getClassName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Action_type") :
 			getString("_UI_Action_type") + " " + label;
@@ -158,10 +158,10 @@ public class ActionItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Action.class))
+		switch (notification.getFeatureID(VAction.class))
 		{
-		case ViewPackage.ACTION__BUNDLE:
-		case ViewPackage.ACTION__CLASS_NAME:
+		case VViewPackage.ACTION__BUNDLE:
+		case VViewPackage.ACTION__CLASS_NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

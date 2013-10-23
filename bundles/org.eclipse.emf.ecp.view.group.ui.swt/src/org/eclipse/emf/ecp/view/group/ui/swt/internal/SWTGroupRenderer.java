@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -54,7 +54,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 
 		node.addRenderingResultDelegator(withSWT(group));
 
-		for (final Node<? extends Renderable> child : node.getChildren()) {
+		for (final Node<? extends VElement> child : node.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {

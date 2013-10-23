@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
@@ -29,7 +29,7 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 	public ModelRendererImpl() {
 	}
 
-	public <R extends Renderable> RendererContext<C> render(Node<R> node,
+	public <R extends VElement> RendererContext<C> render(Node<R> node,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
@@ -54,7 +54,7 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 		return rendererContext;
 	}
 
-	private <R extends Renderable> ControlRenderer<R, C> getControlRenderer() {
+	private <R extends VElement> ControlRenderer<R, C> getControlRenderer() {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.ui.view.renderer");
 		for (final IExtension extension : extensionPoint.getExtensions()) {

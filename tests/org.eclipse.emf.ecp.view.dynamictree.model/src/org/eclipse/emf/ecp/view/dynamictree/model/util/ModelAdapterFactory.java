@@ -13,9 +13,9 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,15 +98,15 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 				return createTestElementContainerAdapter();
 			}
 			@Override
-			public Adapter caseRenderable(Renderable object) {
-				return createRenderableAdapter();
+			public Adapter caseElement(VElement object) {
+				return createElementAdapter();
 			}
 			@Override
-			public Adapter caseAbstractCategorization(AbstractCategorization object) {
+			public Adapter caseAbstractCategorization(VAbstractCategorization object) {
 				return createAbstractCategorizationAdapter();
 			}
 			@Override
-			public Adapter caseCategory(Category object) {
+			public Adapter caseCategory(VCategory object) {
 				return createCategoryAdapter();
 			}
 			@Override
@@ -214,27 +214,27 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Renderable <em>Renderable</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Renderable
+	 * @see org.eclipse.emf.ecp.view.model.VElement
 	 * @generated
 	 */
-	public Adapter createRenderableAdapter() {
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.AbstractCategorization <em>Abstract Categorization</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization <em>Abstract Categorization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.AbstractCategorization
+	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization
 	 * @generated
 	 */
 	public Adapter createAbstractCategorizationAdapter() {
@@ -242,13 +242,13 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Category <em>Category</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VCategory <em>Category</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Category
+	 * @see org.eclipse.emf.ecp.view.model.VCategory
 	 * @generated
 	 */
 	public Adapter createCategoryAdapter() {

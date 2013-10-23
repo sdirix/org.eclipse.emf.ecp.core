@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.edit.groupedgrid.model;
 
-import org.eclipse.emf.ecp.view.model.Attachment;
+import org.eclipse.emf.ecp.view.model.VAttachment;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.Attachment;
  * @model
  * @generated
  */
-public interface VSpan extends Attachment
+public interface VSpan extends VAttachment
 {
 	/**
 	 * Returns the value of the '<em><b>Horizontal Span</b></em>' attribute.

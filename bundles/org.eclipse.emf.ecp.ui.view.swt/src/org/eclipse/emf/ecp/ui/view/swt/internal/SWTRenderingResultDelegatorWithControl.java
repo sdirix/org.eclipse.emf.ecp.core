@@ -20,18 +20,18 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPControl;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 public class SWTRenderingResultDelegatorWithControl extends SWTRenderingResultDelegator {
 
-	private final Renderable model;
+	private final VElement model;
 	private final ECPControl swtControl;
 	private final Adapter adapter;
 
-	public SWTRenderingResultDelegatorWithControl(Control[] results, ECPControl swtControl, Renderable model) {
+	public SWTRenderingResultDelegatorWithControl(Control[] results, ECPControl swtControl, VElement model) {
 		super(results);
 		this.swtControl = swtControl;
 		this.model = model;
@@ -45,7 +45,7 @@ public class SWTRenderingResultDelegatorWithControl extends SWTRenderingResultDe
 			@Override
 			public void notifyChanged(Notification msg) {
 				super.notifyChanged(msg);
-				if (ViewPackage.eINSTANCE.getRenderable_Diagnostic().equals(msg.getFeature())) {
+				if (VViewPackage.eINSTANCE.getElement_Diagnostic().equals(msg.getFeature())) {
 					if (msg.getEventType() == Notification.SET) {
 						updateValidation();
 					}

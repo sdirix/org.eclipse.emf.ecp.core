@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -31,14 +31,14 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.AbstractCategorization} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.model.VAbstractCategorization} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
 public class AbstractCategorizationItemProvider
-	extends RenderableItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends ElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -84,7 +84,7 @@ public class AbstractCategorizationItemProvider
 				getString("_UI_AbstractCategorization_name_feature"),
 				getString("_UI_PropertyDescriptor_description", "_UI_AbstractCategorization_name_feature",
 					"_UI_AbstractCategorization_type"),
-				ViewPackage.Literals.ABSTRACT_CATEGORIZATION__NAME,
+				VViewPackage.Literals.ABSTRACT_CATEGORIZATION__NAME,
 				true,
 				false,
 				false,
@@ -107,7 +107,7 @@ public class AbstractCategorizationItemProvider
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS);
+			childrenFeatures.add(VViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS);
 		}
 		return childrenFeatures;
 	}
@@ -147,7 +147,7 @@ public class AbstractCategorizationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((AbstractCategorization) object).getName();
+		String label = ((VAbstractCategorization) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_AbstractCategorization_type") :
 			getString("_UI_AbstractCategorization_type") + " " + label;
@@ -165,12 +165,12 @@ public class AbstractCategorizationItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(AbstractCategorization.class))
+		switch (notification.getFeatureID(VAbstractCategorization.class))
 		{
-		case ViewPackage.ABSTRACT_CATEGORIZATION__NAME:
+		case VViewPackage.ABSTRACT_CATEGORIZATION__NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case ViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
+		case VViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -191,8 +191,8 @@ public class AbstractCategorizationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS,
-				ViewFactory.eINSTANCE.createAction()));
+			(VViewPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS,
+				VViewFactory.eINSTANCE.createAction()));
 	}
 
 }

@@ -20,10 +20,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ public abstract class AbstractVerticalTest {
 	@Test
 	public void testVerticalWithoutChildren() {
 		final HierarchyViewModelHandle verticalHandle = createVerticalWithoutChildren();
-		final Node<Renderable> node = buildNode(verticalHandle.getRoot());
+		final Node<VElement> node = buildNode(verticalHandle.getRoot());
 		assertEquals(1, ViewTestHelper.countNodes(node));
 		assertEquals(verticalHandle.getRoot(), node.getRenderable());
 	}
@@ -49,7 +49,7 @@ public abstract class AbstractVerticalTest {
 	public void testVerticalWithTwoControlsAsChildren() {
 		final HierarchyViewModelHandle verticalHandle = createVerticalWithTwoControlsAsChildren();
 
-		final Node<Renderable> node = buildNode(verticalHandle.getRoot());
+		final Node<VElement> node = buildNode(verticalHandle.getRoot());
 		assertEquals(3, ViewTestHelper.countNodes(node));
 		assertEquals(verticalHandle.getRoot(), node.getRenderable());
 		assertEquals(verticalHandle.getFirstChild(), node.getChildren().get(0).getRenderable());
@@ -60,7 +60,7 @@ public abstract class AbstractVerticalTest {
 	public void testVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() {
 		final HierarchyViewModelHandle verticalHandle = createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();
 
-		final Node<Renderable> node = buildNode(verticalHandle.getRoot());
+		final Node<VElement> node = buildNode(verticalHandle.getRoot());
 		assertEquals(7, ViewTestHelper.countNodes(node));
 		assertEquals(verticalHandle.getRoot(), node.getRenderable());
 		assertEquals(verticalHandle.getFirstChild(), node.getChildren().get(0).getRenderable());
@@ -88,24 +88,24 @@ public abstract class AbstractVerticalTest {
 
 	public static HierarchyViewModelHandle createVerticalWithTwoControlsAsChildren() {
 		final HierarchyViewModelHandle verticalHandle = createVerticalWithoutChildren();
-		final Control control1 = createControl();
+		final VControl control1 = createControl();
 		verticalHandle.addFirstChildToRoot(control1);
-		final Control control2 = createControl();
+		final VControl control2 = createControl();
 		verticalHandle.addSecondChildToRoot(control2);
 		return verticalHandle;
 	}
 
-	private static Control createControl() {
-		final Control control = ViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+	private static VControl createControl() {
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
 		control.setDomainModelReference(domainModelReference);
 		return control;
 	}
 
 	public static HierarchyViewModelHandle createVerticalWithoutChildren() {
-		final Renderable vertical = createVertical();
+		final VElement vertical = createVertical();
 		return new HierarchyViewModelHandle(vertical);
 	}
 
@@ -114,11 +114,11 @@ public abstract class AbstractVerticalTest {
 
 	}
 
-	public static Renderable createVertical() {
-		return (Renderable) EcoreUtil.create(verticalClass);
+	public static VElement createVertical() {
+		return (VElement) EcoreUtil.create(verticalClass);
 	}
 
-	private Node<Renderable> buildNode(final Renderable renderable) {
+	private Node<VElement> buildNode(final VElement renderable) {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		return ViewTestHelper.build(renderable, eClass);
 	}

@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ControlRenderer;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Control;
  * 
  * the type of the SWT control
  */
-public interface SWTRenderer<R extends Renderable> extends ControlRenderer<R, Control> {
+public interface SWTRenderer<R extends VElement> extends ControlRenderer<R, Control> {
 
 	/**
 	 * Variant constant for indicating RAP controls.

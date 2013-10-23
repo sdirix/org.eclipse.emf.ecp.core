@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -79,7 +79,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theCustomPackage.createPackageContents();
@@ -170,14 +170,14 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ViewPackage theViewPackage = (ViewPackage)EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage)EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		hardcodedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getVDomainModelReference());
+		hardcodedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(hardcodedDomainModelReferenceEClass, VHardcodedDomainModelReference.class, "HardcodedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

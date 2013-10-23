@@ -13,9 +13,9 @@ package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 public interface CustomSWTRenderer {
 
-	Map<Class<? extends Renderable>, SWTRenderer<?>> getCustomRenderers();
+	Map<Class<? extends VElement>, SWTRenderer<?>> getCustomRenderers();
 }

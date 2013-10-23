@@ -12,9 +12,9 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -78,14 +78,14 @@ public class ModelSwitch<T> extends Switch<T> {
 				T result = caseDynamicContainmentTree(dynamicContainmentTree);
 				if (result == null) result = caseCategory(dynamicContainmentTree);
 				if (result == null) result = caseAbstractCategorization(dynamicContainmentTree);
-				if (result == null) result = caseRenderable(dynamicContainmentTree);
+				if (result == null) result = caseElement(dynamicContainmentTree);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM: {
 				DynamicContainmentItem dynamicContainmentItem = (DynamicContainmentItem)theEObject;
 				T result = caseDynamicContainmentItem(dynamicContainmentItem);
-				if (result == null) result = caseRenderable(dynamicContainmentItem);
+				if (result == null) result = caseElement(dynamicContainmentItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -208,17 +208,17 @@ public class ModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRenderable(Renderable object) {
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -233,7 +233,7 @@ public class ModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAbstractCategorization(AbstractCategorization object) {
+	public T caseAbstractCategorization(VAbstractCategorization object) {
 		return null;
 	}
 
@@ -248,7 +248,7 @@ public class ModelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategory(Category object) {
+	public T caseCategory(VCategory object) {
 		return null;
 	}
 

@@ -32,10 +32,10 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -47,7 +47,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
 public class ValidationService extends AbstractViewService {
 
 	private ViewModelContext context;
-	private Renderable renderable;
+	private VElement renderable;
 
 	private ModelChangeListener domainChangeListener;
 	private ModelChangeListener viewChangeListener;
@@ -90,20 +90,20 @@ public class ValidationService extends AbstractViewService {
 		 */
 		public void notifyChange(ModelChangeNotification notification) {
 			// do nothing for now, not supported
-			if (Renderable.class.isInstance(notification.getRawNotification().getNotifier())) {
-				if (notification.getRawNotification().getFeature() == ViewPackage.eINSTANCE
-					.getRenderable_Diagnostic()) {
+			if (VElement.class.isInstance(notification.getRawNotification().getNotifier())) {
+				if (notification.getRawNotification().getFeature() == VViewPackage.eINSTANCE
+					.getElement_Diagnostic()) {
 
 				}
 				else if (EReference.class.isInstance(notification.getRawNotification().getFeature())
-					&& Renderable.class.isInstance(notification.getRawNotification().getNewValue())) {
+					&& VElement.class.isInstance(notification.getRawNotification().getNewValue())) {
 				}
-				else if (ViewPackage.eINSTANCE.getRenderable_Enabled() == notification.getRawNotification()
+				else if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification()
 					.getFeature()
-					|| ViewPackage.eINSTANCE.getRenderable_Visible() == notification.getRawNotification()
+					|| VViewPackage.eINSTANCE.getElement_Visible() == notification.getRawNotification()
 						.getFeature()) {
-					if (ViewPackage.eINSTANCE.getControl() == notification.getNotifier().eClass()) {
-						final Control control = (Control) notification.getNotifier();
+					if (VViewPackage.eINSTANCE.getControl() == notification.getNotifier().eClass()) {
+						final VControl control = (VControl) notification.getNotifier();
 						// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
 						// control.getDomainModelReference().());
 						// REFACTORING test
@@ -125,13 +125,13 @@ public class ValidationService extends AbstractViewService {
 		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyAdd(Notifier notifier) {
-			if (Renderable.class.isInstance(notifier)) {
-				final Renderable renderable = (Renderable) notifier;
+			if (VElement.class.isInstance(notifier)) {
+				final VElement renderable = (VElement) notifier;
 				final EObject renderableParent = renderable.eContainer();
-				if (Renderable.class.isInstance(renderableParent)
-					&& validationRegistry.containsRenderable((Renderable) renderableParent)) {
+				if (VElement.class.isInstance(renderableParent)
+					&& validationRegistry.containsRenderable((VElement) renderableParent)) {
 					validationRegistry.register(domainModel, renderable);
-					final Map<EObject, Set<Control>> map = validationRegistry.getDomainToControlMapping(
+					final Map<EObject, Set<VControl>> map = validationRegistry.getDomainToControlMapping(
 						domainModel,
 						renderable);
 					viewValidationGraph.validate(map.keySet());
@@ -146,9 +146,9 @@ public class ValidationService extends AbstractViewService {
 		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyRemove(Notifier notifier) {
-			if (Renderable.class.isInstance(notifier)) {
-				validationRegistry.removeRenderable((Renderable) notifier);
-				viewValidationGraph.removeRenderable((Renderable) notifier);
+			if (VElement.class.isInstance(notifier)) {
+				validationRegistry.removeRenderable((VElement) notifier);
+				viewValidationGraph.removeRenderable((VElement) notifier);
 			}
 		}
 	}
@@ -258,7 +258,7 @@ public class ValidationService extends AbstractViewService {
 		notifyListeners();
 	}
 
-	private void init(Renderable view, EObject domainModel) {
+	private void init(VElement view, EObject domainModel) {
 		validationRegistry = new ValidationRegistry();
 		validationRegistry.register(domainModel, view);
 		viewValidationGraph = new ViewValidator(view, domainModel, validationRegistry);

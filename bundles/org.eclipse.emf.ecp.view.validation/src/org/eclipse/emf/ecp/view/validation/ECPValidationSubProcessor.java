@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * An ECPValidationSubProcessor can be registered in order to handle special cases in the view model.
@@ -29,14 +29,14 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 public interface ECPValidationSubProcessor {
 
 	/**
-	 * Process the passed {@link Renderable}.
+	 * Process the passed {@link VElement}.
 	 * 
 	 * @param domainObject the domain {@link EObject}
-	 * @param parentRenderable the {@link Renderable} to process
+	 * @param parentRenderable the {@link VElement} to process
 	 * @param validationRegistry callback to the {@link ValidationRegistry} to be able to use the
-	 *            {@link ValidationRegistry#getDomainToControlMapping(EObject, Renderable)} method
-	 * @return a map from {@link EObject} to its {@link org.eclipse.emf.ecp.view.model.Control Controls}
+	 *            {@link ValidationRegistry#getDomainToControlMapping(EObject, VElement)} method
+	 * @return a map from {@link EObject} to its {@link org.eclipse.emf.ecp.view.model.VControl Controls}
 	 */
-	Map<EObject, Set<Control>> processRenderable(EObject domainObject, Renderable parentRenderable,
+	Map<EObject, Set<VControl>> processRenderable(EObject domainObject, VElement parentRenderable,
 		ValidationRegistry validationRegistry);
 }

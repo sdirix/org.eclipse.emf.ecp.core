@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -38,7 +38,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 
 	static {
 
-		final VFeaturePathDomainModelReference feature = ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference feature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		feature.setDomainModelEFeature(
 			BowlingPackage.eINSTANCE.getPlayer_EMails());
 		features.add(feature);

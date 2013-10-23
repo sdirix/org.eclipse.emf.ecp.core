@@ -15,7 +15,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Attachment;
+import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -133,7 +133,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseAttachment(Attachment object)
+		public Adapter caseAttachment(VAttachment object)
 		{
 			return createAttachmentAdapter();
 		}
@@ -271,7 +271,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.Attachment
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAttachment
 	 * <em>Attachment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -279,7 +279,7 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.Attachment
+	 * @see org.eclipse.emf.ecp.view.model.VAttachment
 	 * @generated
 	 */
 	public Adapter createAttachmentAdapter() {

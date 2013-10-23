@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.group.model;
 
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
+import org.eclipse.emf.ecp.view.model.VContainer;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +23,6 @@ import org.eclipse.emf.ecp.view.model.CompositeCollection;
  * @model
  * @generated
  */
-public interface VGroup extends CompositeCollection
+public interface VGroup extends VContainer
 {
 } // VGroup

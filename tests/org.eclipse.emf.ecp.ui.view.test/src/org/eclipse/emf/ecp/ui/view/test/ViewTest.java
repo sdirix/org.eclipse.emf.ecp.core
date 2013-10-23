@@ -14,11 +14,11 @@ package org.eclipse.emf.ecp.ui.view.test;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Test;
@@ -33,19 +33,19 @@ public class ViewTest {
 	@Test
 	public void testEmptyView() {
 		// setup model
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		// Test NodeBuidlers
-		final Node<Renderable> node = build(view);
+		final Node<VElement> node = build(view);
 		assertEquals(1, countNodes(node));
 		assertEquals("Unknown Node has been instanciated", 0, node.getChildren().size());
 	}
 
 	@Test
 	public void testViewWithCategories() {
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Category category = ViewFactory.eINSTANCE.createCategory();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VCategory category = VViewFactory.eINSTANCE.createCategory();
 		view.getCategorizations().add(category);
-		final Node<Renderable> node = build(view);
+		final Node<VElement> node = build(view);
 		assertEquals(2, countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
@@ -63,7 +63,7 @@ public class ViewTest {
 
 	@Test
 	public void testViewWithChildren() {
-		final View view = ViewFactory.eINSTANCE.createView();
+		final VView view = VViewFactory.eINSTANCE.createView();
 		// final Control control = ViewFactory.eINSTANCE.createControl();
 		final VVerticalLayout control = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		// final VFeaturePathDomainModelReference createVFeaturePathDomainModelReference = ViewFactory.eINSTANCE
@@ -71,7 +71,7 @@ public class ViewTest {
 		// createVFeaturePathDomainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
 		// control.setDomainModelReference(createVFeaturePathDomainModelReference);
 		view.getChildren().add(control);
-		final Node<Renderable> node = build(view);
+		final Node<VElement> node = build(view);
 		assertEquals(2, countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
@@ -81,12 +81,12 @@ public class ViewTest {
 
 	@Test
 	public void testViewWithChildrenAndCategories() {
-		final View view = ViewFactory.eINSTANCE.createView();
-		final Control control = ViewFactory.eINSTANCE.createControl();
-		final Category category = ViewFactory.eINSTANCE.createCategory();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final VCategory category = VViewFactory.eINSTANCE.createCategory();
 		view.getCategorizations().add(category);
 		view.getChildren().add(control);
-		final Node<Renderable> node = build(view);
+		final Node<VElement> node = build(view);
 		assertEquals(2, countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
@@ -98,7 +98,7 @@ public class ViewTest {
 	 * @param view
 	 * @return
 	 */
-	private Node<Renderable> build(View view) {
+	private Node<VElement> build(VView view) {
 		return ViewTestHelper.build(view, null);
 	}
 

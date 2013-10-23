@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.ui.view.swt;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -49,6 +49,6 @@ public interface ECPSWTViewRenderer {
 	 * @return an ECPSWTView providing an interface to the rendered view
 	 * @throws ECPRendererException if there is an exception during rendering
 	 */
-	ECPSWTView render(Composite parent, EObject domainObject, View viewModel) throws ECPRendererException;
+	ECPSWTView render(Composite parent, EObject domainObject, VView viewModel) throws ECPRendererException;
 
 }

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -118,7 +118,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 		isInited = true;
 
 		// Initialize simple dependencies
-		ViewPackage.eINSTANCE.eClass();
+		VViewPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theGroupedGridPackage.createPackageContents();
@@ -309,14 +309,14 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		ViewPackage theViewPackage = (ViewPackage) EPackage.Registry.INSTANCE.getEPackage(ViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		groupedGridEClass.getESuperTypes().add(theViewPackage.getComposite());
+		groupedGridEClass.getESuperTypes().add(theViewPackage.getContainableElement());
 		spanEClass.getESuperTypes().add(theViewPackage.getAttachment());
 
 		// Initialize classes and features; add operations and parameters
@@ -334,9 +334,9 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(rowEClass, VRow.class, "Row", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRow_Children(), theViewPackage.getComposite(), null, "children", null, 0, -1, VRow.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEReference(getRow_Children(), theViewPackage.getContainableElement(), null, "children", null, 0, -1,
+			VRow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(spanEClass, VSpan.class, "Span", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSpan_HorizontalSpan(), ecorePackage.getEInt(), "horizontalSpan", null, 1, 1, VSpan.class,

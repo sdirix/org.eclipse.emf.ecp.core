@@ -15,9 +15,9 @@ import java.util.Arrays;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -39,7 +39,7 @@ public class CommonRuleTest {
 	 * @param control the control
 	 * @param showOnRightValue the visible on right value
 	 */
-	protected void addLeagueShowRule(Renderable control, boolean showOnRightValue) {
+	protected void addLeagueShowRule(VElement control, boolean showOnRightValue) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(!showOnRightValue);
 		rule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getLeague_Name(), "League"));
@@ -47,20 +47,20 @@ public class CommonRuleTest {
 	}
 
 	/**
-	 * Adds a {@link ShowRule} to the given {@link Renderable} and allows specifying
+	 * Adds a {@link ShowRule} to the given {@link VElement} and allows specifying
 	 * the condition to be fulfilled.
 	 * 
 	 * @param control
-	 *            the {@link Renderable} to which the show rule should be attached
+	 *            the {@link VElement} to which the show rule should be attached
 	 * @param showOnRightValue
-	 *            whether the show rule should cause the {@link Renderable} to be
+	 *            whether the show rule should cause the {@link VElement} to be
 	 *            hidden or show if the condition is fulfilled
 	 * @param attribute
 	 *            the attribute the condition is pointing to
 	 * @param expectedValue
 	 *            the expected value of the attribute
 	 */
-	protected void addShowRule(Renderable control, boolean showOnRightValue, EAttribute attribute,
+	protected void addShowRule(VElement control, boolean showOnRightValue, EAttribute attribute,
 		Object expectedValue) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(!showOnRightValue);
@@ -69,9 +69,9 @@ public class CommonRuleTest {
 	}
 
 	/**
-	 * Adds a {@link ShowRule} to the given {@link Renderable} without a condition.
+	 * Adds a {@link ShowRule} to the given {@link VElement} without a condition.
 	 */
-	protected ShowRule addShowRule(Renderable control, boolean isHide) {
+	protected ShowRule addShowRule(VElement control, boolean isHide) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(isHide);
 		control.getAttachments().add(rule);
@@ -79,15 +79,15 @@ public class CommonRuleTest {
 	}
 
 	/**
-	 * Adds a {@link EnableRule} to the given {@link Renderable} without a condition.
+	 * Adds a {@link EnableRule} to the given {@link VElement} without a condition.
 	 */
-	protected void addEnableRule(Renderable control, boolean isDisabled) {
+	protected void addEnableRule(VElement control, boolean isDisabled) {
 		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
 		rule.setDisable(isDisabled);
 		control.getAttachments().add(rule);
 	}
 
-	protected void addEnableRule(Renderable control, boolean enableOnRightValue, EAttribute attribute,
+	protected void addEnableRule(VElement control, boolean enableOnRightValue, EAttribute attribute,
 		Object expectedValue) {
 		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
 		rule.setDisable(!enableOnRightValue);
@@ -97,8 +97,8 @@ public class CommonRuleTest {
 
 	protected LeafCondition createLeafCondition(EAttribute attribute, Object expectedValue, EReference... eReferences) {
 		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(attribute);
 		modelReference.getDomainModelEReferencePath().addAll(Arrays.asList(eReferences));
 		condition.setDomainModelReference(modelReference);
@@ -106,7 +106,7 @@ public class CommonRuleTest {
 		return condition;
 	}
 
-	protected void addLeagueShowRuleWithOrCondition(Renderable control, boolean hideOnRightValue,
+	protected void addLeagueShowRuleWithOrCondition(VElement control, boolean hideOnRightValue,
 		Condition... childConditions) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(!hideOnRightValue);
@@ -118,7 +118,7 @@ public class CommonRuleTest {
 		control.getAttachments().add(rule);
 	}
 
-	protected void addLeagueEnableRuleWithOrCondition(Renderable control, boolean disableOnRightValue,
+	protected void addLeagueEnableRuleWithOrCondition(VElement control, boolean disableOnRightValue,
 		Condition... childConditions) {
 		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
 		rule.setDisable(!disableOnRightValue);
@@ -130,7 +130,7 @@ public class CommonRuleTest {
 		control.getAttachments().add(rule);
 	}
 
-	protected void addLeagueShowRuleWithAndCondition(Renderable control, boolean hideOnRightValue,
+	protected void addLeagueShowRuleWithAndCondition(VElement control, boolean hideOnRightValue,
 		Condition... childConditions) {
 		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
 		rule.setHide(!hideOnRightValue);
@@ -142,7 +142,7 @@ public class CommonRuleTest {
 		control.getAttachments().add(rule);
 	}
 
-	protected void addLeagueEnableRuleWithAndCondition(Renderable control, boolean disableOnRightValue,
+	protected void addLeagueEnableRuleWithAndCondition(VElement control, boolean disableOnRightValue,
 		Condition... childConditions) {
 		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
 		rule.setDisable(!disableOnRightValue);
@@ -160,13 +160,13 @@ public class CommonRuleTest {
 	 * @param control the control
 	 * @param enableOnRightValue the enable on right value
 	 */
-	protected void addLeagueEnableRule(Renderable control, boolean enableOnRightValue) {
+	protected void addLeagueEnableRule(VElement control, boolean enableOnRightValue) {
 		final EnableRule rule = RuleFactory.eINSTANCE.createEnableRule();
 		rule.setDisable(!enableOnRightValue);
 		final LeafCondition condition = RuleFactory.eINSTANCE.createLeafCondition();
 		rule.setCondition(condition);
-		final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		modelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Name());
 		condition.setDomainModelReference(modelReference);
 		condition.setExpectedValue("League");

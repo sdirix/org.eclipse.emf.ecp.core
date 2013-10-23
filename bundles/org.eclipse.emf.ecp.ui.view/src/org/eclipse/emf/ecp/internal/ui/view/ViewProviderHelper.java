@@ -20,7 +20,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.osgi.framework.Bundle;
 
 public class ViewProviderHelper {
@@ -84,7 +84,7 @@ public class ViewProviderHelper {
 	/**
 	 * @return a view model for the given {@link EObject}
 	 */
-	public static View getView(EObject eObject) {
+	public static VView getView(EObject eObject) {
 		int highestPrio = IViewProvider.NOT_APPLICABLE;
 		IViewProvider selectedProvider = null;
 		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {

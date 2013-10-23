@@ -14,20 +14,20 @@ package org.eclipse.emf.ecp.view.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Action;
-import org.eclipse.emf.ecp.view.model.Attachment;
-import org.eclipse.emf.ecp.view.model.Categorization;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.CompositeCollection;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VAction;
+import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.model.VCategorization;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * inheritance hierarchy until a non-null result is returned, which is the
  * result of the switch. <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.model.ViewPackage
+ * @see org.eclipse.emf.ecp.view.model.VViewPackage
  * @generated
  */
 public class ViewSwitch<T> extends Switch<T> {
@@ -47,7 +47,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * 
 	 * @generated
 	 */
-	protected static ViewPackage modelPackage;
+	protected static VViewPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -59,7 +59,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	public ViewSwitch() {
 		if (modelPackage == null)
 		{
-			modelPackage = ViewPackage.eINSTANCE;
+			modelPackage = VViewPackage.eINSTANCE;
 		}
 	}
 
@@ -89,121 +89,121 @@ public class ViewSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-		case ViewPackage.RENDERABLE: {
-			Renderable renderable = (Renderable) theEObject;
-			T result = caseRenderable(renderable);
+		case VViewPackage.ELEMENT: {
+			VElement element = (VElement) theEObject;
+			T result = caseElement(element);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.VDIAGNOSTIC: {
-			VDiagnostic vDiagnostic = (VDiagnostic) theEObject;
-			T result = caseVDiagnostic(vDiagnostic);
+		case VViewPackage.DIAGNOSTIC: {
+			VDiagnostic diagnostic = (VDiagnostic) theEObject;
+			T result = caseDiagnostic(diagnostic);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.ATTACHMENT: {
-			Attachment attachment = (Attachment) theEObject;
+		case VViewPackage.ATTACHMENT: {
+			VAttachment attachment = (VAttachment) theEObject;
 			T result = caseAttachment(attachment);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.VIEW: {
-			View view = (View) theEObject;
+		case VViewPackage.VIEW: {
+			VView view = (VView) theEObject;
 			T result = caseView(view);
 			if (result == null)
 				result = caseCategorization(view);
 			if (result == null)
 				result = caseAbstractCategorization(view);
 			if (result == null)
-				result = caseRenderable(view);
+				result = caseElement(view);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.ABSTRACT_CATEGORIZATION: {
-			AbstractCategorization abstractCategorization = (AbstractCategorization) theEObject;
+		case VViewPackage.ABSTRACT_CATEGORIZATION: {
+			VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
 			T result = caseAbstractCategorization(abstractCategorization);
 			if (result == null)
-				result = caseRenderable(abstractCategorization);
+				result = caseElement(abstractCategorization);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.CATEGORIZATION: {
-			Categorization categorization = (Categorization) theEObject;
+		case VViewPackage.CATEGORIZATION: {
+			VCategorization categorization = (VCategorization) theEObject;
 			T result = caseCategorization(categorization);
 			if (result == null)
 				result = caseAbstractCategorization(categorization);
 			if (result == null)
-				result = caseRenderable(categorization);
+				result = caseElement(categorization);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.CATEGORY: {
-			Category category = (Category) theEObject;
+		case VViewPackage.CATEGORY: {
+			VCategory category = (VCategory) theEObject;
 			T result = caseCategory(category);
 			if (result == null)
 				result = caseAbstractCategorization(category);
 			if (result == null)
-				result = caseRenderable(category);
+				result = caseElement(category);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.ACTION: {
-			Action action = (Action) theEObject;
+		case VViewPackage.ACTION: {
+			VAction action = (VAction) theEObject;
 			T result = caseAction(action);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.COMPOSITE: {
-			Composite composite = (Composite) theEObject;
-			T result = caseComposite(composite);
+		case VViewPackage.CONTAINABLE_ELEMENT: {
+			VContainableElement containableElement = (VContainableElement) theEObject;
+			T result = caseContainableElement(containableElement);
 			if (result == null)
-				result = caseRenderable(composite);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case ViewPackage.VDOMAIN_MODEL_REFERENCE: {
-			VDomainModelReference vDomainModelReference = (VDomainModelReference) theEObject;
-			T result = caseVDomainModelReference(vDomainModelReference);
+				result = caseElement(containableElement);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.VFEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			VFeaturePathDomainModelReference vFeaturePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
-			T result = caseVFeaturePathDomainModelReference(vFeaturePathDomainModelReference);
-			if (result == null)
-				result = caseVDomainModelReference(vFeaturePathDomainModelReference);
+		case VViewPackage.DOMAIN_MODEL_REFERENCE: {
+			VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
+			T result = caseDomainModelReference(domainModelReference);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.CONTROL: {
-			Control control = (Control) theEObject;
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
+			VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
+			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
+			if (result == null)
+				result = caseDomainModelReference(featurePathDomainModelReference);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.CONTROL: {
+			VControl control = (VControl) theEObject;
 			T result = caseControl(control);
 			if (result == null)
-				result = caseComposite(control);
+				result = caseContainableElement(control);
 			if (result == null)
-				result = caseRenderable(control);
+				result = caseElement(control);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case ViewPackage.COMPOSITE_COLLECTION: {
-			CompositeCollection compositeCollection = (CompositeCollection) theEObject;
-			T result = caseCompositeCollection(compositeCollection);
+		case VViewPackage.CONTAINER: {
+			VContainer container = (VContainer) theEObject;
+			T result = caseContainer(container);
 			if (result == null)
-				result = caseComposite(compositeCollection);
+				result = caseContainableElement(container);
 			if (result == null)
-				result = caseRenderable(compositeCollection);
+				result = caseElement(container);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -211,6 +211,40 @@ public class ViewSwitch<T> extends Switch<T> {
 		default:
 			return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseElement(VElement object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Diagnostic</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Diagnostic</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDiagnostic(VDiagnostic object)
+	{
+		return null;
 	}
 
 	/**
@@ -225,7 +259,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseView(View object) {
+	public T caseView(VView object) {
 		return null;
 	}
 
@@ -241,7 +275,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAbstractCategorization(AbstractCategorization object) {
+	public T caseAbstractCategorization(VAbstractCategorization object) {
 		return null;
 	}
 
@@ -257,7 +291,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategorization(Categorization object) {
+	public T caseCategorization(VCategorization object) {
 		return null;
 	}
 
@@ -273,23 +307,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategory(Category object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Composite</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Composite</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseComposite(Composite object) {
+	public T caseCategory(VCategory object) {
 		return null;
 	}
 
@@ -305,39 +323,24 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseControl(Control object) {
+	public T caseControl(VControl object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of ' <em>Composite Collection</em>'. <!--
-	 * begin-user-doc --> This
-	 * implementation returns null; returning a non-null result will terminate
-	 * the switch. <!-- end-user-doc -->
-	 * 
-	 * @param object
-	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of ' <em>Composite Collection</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCompositeCollection(CompositeCollection object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Container</em>'.
 	 * <!-- begin-user-doc -->
-	 * This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRenderable(Renderable object) {
+	public T caseContainer(VContainer object)
+	{
 		return null;
 	}
 
@@ -353,40 +356,57 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAction(Action object) {
+	public T caseAction(VAction object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVDomainModelReference(VDomainModelReference object)
+	public T caseContainableElement(VContainableElement object)
 	{
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VFeature Path Domain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VFeature Path Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseVFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+	public T caseDomainModelReference(VDomainModelReference object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 	{
 		return null;
 	}
@@ -403,24 +423,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAttachment(Attachment object)
-	{
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>VDiagnostic</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>VDiagnostic</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseVDiagnostic(VDiagnostic object)
+	public T caseAttachment(VAttachment object)
 	{
 		return null;
 	}

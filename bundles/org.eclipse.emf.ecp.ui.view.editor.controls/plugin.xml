@@ -35,7 +35,7 @@
                priority="2"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EClass"
-               supportedEObject="org.eclipse.emf.ecp.view.model.View"
+               supportedEObject="org.eclipse.emf.ecp.view.model.VView"
                supportedFeature="rootEClass">
          </staticTest>
       </control>
@@ -92,7 +92,7 @@
                      </count>
                      <iterate>
                         <instanceof
-                              value="org.eclipse.emf.ecp.view.model.CompositeCollection">
+                              value="org.eclipse.emf.ecp.view.model.VContainer">
                         </instanceof>
                      </iterate>
                   </and>

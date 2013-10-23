@@ -23,8 +23,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.util.CustomAdapterFactory;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.model.util.ViewSwitch;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -252,7 +252,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	}
 
 	/**
-	 * A child creation extender for the {@link ViewPackage}.
+	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -298,10 +298,10 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * @generated
 			 */
 			@Override
-			public Object caseControl(Control object) {
+			public Object caseControl(VControl object) {
 				newChildDescriptors.add
 					(createChildParameter
-						(ViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+						(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 						 VCustomFactory.eINSTANCE.createHardcodedDomainModelReference()));
 
 				return null;

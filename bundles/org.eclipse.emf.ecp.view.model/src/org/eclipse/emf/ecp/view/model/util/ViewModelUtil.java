@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.view.model.util;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * This Util class provides common methods used often when working with the view model.
@@ -35,7 +35,7 @@ public final class ViewModelUtil {
 	 * @param renderable the renderable to analyze for {@link VDomainModelReference VDomainModelReferences}
 	 * @param domainModelRoot the domain model to use for resolving
 	 */
-	public static void resolveDomainReferences(Renderable renderable, EObject domainModelRoot) {
+	public static void resolveDomainReferences(VElement renderable, EObject domainModelRoot) {
 		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();

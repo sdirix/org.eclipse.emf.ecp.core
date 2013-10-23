@@ -27,11 +27,11 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.model.Control;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 
 /**
  * Validation for view validation.
@@ -53,7 +53,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	 * @param validationRegistry
 	 *            the validation registry for the view validation
 	 */
-	public ViewValidator(Renderable viewModel, EObject domainModel, ValidationRegistry validationRegistry) {
+	public ViewValidator(VElement viewModel, EObject domainModel, ValidationRegistry validationRegistry) {
 		super(viewModel, domainModel, new Comparator<VDiagnostic>() {
 			public int compare(VDiagnostic vDiagnostic1, VDiagnostic vDiagnostic2) {
 				if (vDiagnostic1.getHighestSeverity() > vDiagnostic2.getHighestSeverity()) {
@@ -76,7 +76,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	 */
 	@Override
 	public VDiagnostic getDefaultValue() {
-		final VDiagnostic result = ViewFactory.eINSTANCE.createVDiagnostic();
+		final VDiagnostic result = VViewFactory.eINSTANCE.createDiagnostic();
 		result.getDiagnostics().add(Diagnostic.OK_INSTANCE);
 		return result;
 	}
@@ -90,7 +90,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
-			for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
+			for (final VControl control : validationRegistry.getRenderablesForEObject(eObject)) {
 				final VDomainModelReference modelReference = control.getDomainModelReference();
 				final Iterator<Setting> settings = modelReference.getIterator();
 				while (settings.hasNext()) {
@@ -118,13 +118,13 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 			// validation registry should be queryable with a control and a feature
 			// -> merge SettingsMapping and the registry
 			for (final EStructuralFeature invalidFeature : featureToValidationResult.keySet()) {
-				for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
+				for (final VControl control : validationRegistry.getRenderablesForEObject(eObject)) {
 					final VDomainModelReference modelReference = control.getDomainModelReference();
 					final Iterator<Setting> settings = modelReference.getIterator();
 					while (settings.hasNext()) {
 						final Setting setting = settings.next();
 
-						final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+						final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 						if (setting.getEStructuralFeature().equals(invalidFeature)) {
 							vDiagnostic.getDiagnostics().add(featureToValidationResult.get(invalidFeature));
 							update(control, eObject, setting.getEStructuralFeature(),
@@ -165,7 +165,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	}
 
 	@Override
-	protected void updateRenderable(Renderable renderable) {
+	protected void updateRenderable(VElement renderable) {
 
 		final VDiagnostic val = getValue(renderable);
 

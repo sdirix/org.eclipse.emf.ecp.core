@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
+import org.eclipse.emf.ecp.view.model.impl.VControlImpl;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
@@ -41,7 +41,7 @@ import org.eclipse.emf.ecp.view.table.model.VTablePackage;
  * 
  * @generated
  */
-public class VTableControlImpl extends ControlImpl implements VTableControl
+public class VTableControlImpl extends VControlImpl implements VTableControl
 {
 	/**
 	 * The cached value of the '{@link #getColumns() <em>Columns</em>}' containment reference list.

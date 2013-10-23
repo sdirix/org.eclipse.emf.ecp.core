@@ -16,13 +16,13 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
-public class CompositeCollectionNodeBuilder<T extends org.eclipse.emf.ecp.view.model.CompositeCollection> implements
+public class CompositeCollectionNodeBuilder<T extends org.eclipse.emf.ecp.view.model.VContainer> implements
 	NodeBuilder<T> {
 
 	public Node<T> build(T model, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		final Node<T> node = new Node<T>(model, context);
 
-		for (final org.eclipse.emf.ecp.view.model.Composite composite : model.getComposites()) {
+		for (final org.eclipse.emf.ecp.view.model.VContainableElement composite : model.getChildren()) {
 			node.addChild(NodeBuilders.INSTANCE.build(composite, context, adapterFactoryItemDelegator));
 		}
 

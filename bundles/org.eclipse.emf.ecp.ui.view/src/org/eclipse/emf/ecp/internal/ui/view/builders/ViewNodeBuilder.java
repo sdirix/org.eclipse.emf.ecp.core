@@ -14,24 +14,24 @@ package org.eclipse.emf.ecp.internal.ui.view.builders;
 
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.AbstractCategorization;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
-public class ViewNodeBuilder implements NodeBuilder<View> {
+public class ViewNodeBuilder implements NodeBuilder<VView> {
 
-	public Node<View> build(View view, ECPControlContext context,
+	public Node<VView> build(VView view, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
-		final Node<View> node = new Node<View>(view, context);
+		final Node<VView> node = new Node<VView>(view, context);
 
 		if (view.getCategorizations().isEmpty()) {
-			for (final Composite composite : view.getChildren()) {
+			for (final VContainableElement composite : view.getChildren()) {
 				node.addChild(NodeBuilders.INSTANCE.build(composite, context, adapterFactoryItemDelegator));
 			}
 		}
 		else {
-			for (final AbstractCategorization categorization : view.getCategorizations()) {
+			for (final VAbstractCategorization categorization : view.getCategorizations()) {
 				node.addChild(NodeBuilders.INSTANCE.build(categorization, context, adapterFactoryItemDelegator));
 			}
 		}

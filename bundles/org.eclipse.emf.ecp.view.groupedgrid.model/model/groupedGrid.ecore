@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/groupedgrid/model"
     nsPrefix="org.eclipse.emf.ecp.view.groupedgrid.model">
-  <eClassifiers xsi:type="ecore:EClass" name="GroupedGrid" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Composite">
+  <eClassifiers xsi:type="ecore:EClass" name="GroupedGrid" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainableElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="groups" upperBound="-1"
         eType="#//Group" containment="true"/>
   </eClassifiers>
@@ -13,7 +13,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Row">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Composite"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainableElement"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Span" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment">

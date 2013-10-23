@@ -20,9 +20,14 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
-import org.eclipse.emf.ecp.view.model.provider.CompositeItemProvider;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.model.provider.ContainableElementItemProvider;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -33,7 +38,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class GroupedGridItemProvider
-	extends CompositeItemProvider
+	extends ContainableElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -123,7 +129,7 @@ public class GroupedGridItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VGroupedGrid) object).getName();
+		String label = ((VGroupedGrid) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_GroupedGrid_type") :
 			getString("_UI_GroupedGrid_type") + " " + label;
@@ -166,7 +172,7 @@ public class GroupedGridItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(ViewPackage.Literals.RENDERABLE__ATTACHMENTS,
+			(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
 				VGroupedGridFactory.eINSTANCE.createSpan()));
 
 		newChildDescriptors.add

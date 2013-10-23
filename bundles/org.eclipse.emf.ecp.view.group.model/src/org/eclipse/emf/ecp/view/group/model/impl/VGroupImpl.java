@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.group.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
-import org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl;
+import org.eclipse.emf.ecp.view.model.impl.VContainerImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.model.impl.CompositeCollectionImpl;
  * 
  * @generated
  */
-public class VGroupImpl extends CompositeCollectionImpl implements VGroup
+public class VGroupImpl extends VContainerImpl implements VGroup
 {
 	/**
 	 * <!-- begin-user-doc -->

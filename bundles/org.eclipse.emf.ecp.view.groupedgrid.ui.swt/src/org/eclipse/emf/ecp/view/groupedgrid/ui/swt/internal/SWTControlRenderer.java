@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.model.Alignment;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
+public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	/**
 	 * The instance of the SWTControlRenderer.
 	 */
@@ -56,11 +56,11 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
 	 */
 	@Override
-	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<Control> node,
+	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> renderSWT(Node<VControl> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		final Control modelControl = node.getRenderable();
+		final VControl modelControl = node.getRenderable();
 		final Setting setting = modelControl.getDomainModelReference().getIterator().next();
 		final EClass dataClass = setting.getEStructuralFeature().getEContainingClass();
 		final ECPControlContext subContext = node.getControlContext();
@@ -90,8 +90,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 		return doRender(node, modelControl, subContext, itemPropertyDescriptor, control, initData);
 	}
 
-	private List<RenderingResultRow<org.eclipse.swt.widgets.Control>> doRender(Node<Control> node,
-		final Control modelControl, final ECPControlContext subContext,
+	private List<RenderingResultRow<org.eclipse.swt.widgets.Control>> doRender(Node<VControl> node,
+		final VControl modelControl, final ECPControlContext subContext,
 		final IItemPropertyDescriptor itemPropertyDescriptor, final SWTControl control, Object... initData) {
 		if (control != null) {
 			Composite parent = getParentFromInitData(initData);

@@ -18,19 +18,19 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.Category;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 // TODO: do we need to set a custom variant?
-public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
+public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {
 	public static final SWTCategoryRenderer INSTANCE = new SWTCategoryRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<Category> node,
+	public List<RenderingResultRow<Control>> renderSWT(Node<VCategory> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
@@ -42,7 +42,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<Category> {
 
 		node.addRenderingResultDelegator(withSWT(categoryComposite));
 
-		final Node<? extends Renderable> childNode = node.getChildren().get(0);
+		final Node<? extends VElement> childNode = node.getChildren().get(0);
 
 		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(categoryComposite, childNode,
 			adapterFactoryItemDelegator);

@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
@@ -47,14 +47,14 @@ public class ECPSWTViewRendererTest {
 
 	private static EObject domainObject;
 	private static Shell shell;
-	private static View view;
+	private static VView view;
 
 	@Before
 	public void init() {
 		// setup model
 		domainObject = createDomainObject();
 		shell = SWTViewTestHelper.createShell();
-		view = ViewFactory.eINSTANCE.createView();
+		view = VViewFactory.eINSTANCE.createView();
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class ECPSWTViewRendererTest {
 
 	@Test
 	public void testViewWithControls() throws ECPRendererException {
-		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE.createControl();
+		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control);
 		view.getChildren().add(control);
 
@@ -96,9 +96,9 @@ public class ECPSWTViewRendererTest {
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(composite));
 	}
 
-	private void assignPlayerNameFeature(final org.eclipse.emf.ecp.view.model.Control control) {
-		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
-			.createVFeaturePathDomainModelReference();
+	private void assignPlayerNameFeature(final org.eclipse.emf.ecp.view.model.VControl control) {
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		control.setDomainModelReference(domainModelReference);
 	}
@@ -108,15 +108,15 @@ public class ECPSWTViewRendererTest {
 	 * Adds 2 controls and set them as readonly
 	 */
 	public void testAllReadOnly() throws ECPRendererException {
-		final org.eclipse.emf.ecp.view.model.Control control = ViewFactory.eINSTANCE.createControl();
+		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control);
-		final org.eclipse.emf.ecp.view.model.Control control1 = ViewFactory.eINSTANCE.createControl();
+		final org.eclipse.emf.ecp.view.model.VControl control1 = VViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control1);
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
 		view.getChildren().add(column);
-		column.getComposites().add(control);
-		column.getComposites().add(control1);
+		column.getChildren().add(control);
+		column.getChildren().add(control1);
 
 		view.setAllContentsReadOnly();
 

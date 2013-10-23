@@ -15,10 +15,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.View;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 
 /**
  * View Provider.
@@ -31,17 +31,17 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
-	public View generate(EObject eObject) {
-		final View view = ViewFactory.eINSTANCE.createView();
+	public VView generate(EObject eObject) {
+		final VView view = VViewFactory.eINSTANCE.createView();
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 
 			if (isInvalidFeature(feature)) {
 				continue;
 			}
 
-			final Control control = ViewFactory.eINSTANCE.createControl();
-			final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-				.createVFeaturePathDomainModelReference();
+			final VControl control = VViewFactory.eINSTANCE.createControl();
+			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			control.setDomainModelReference(modelReference);
 			view.getChildren().add(control);

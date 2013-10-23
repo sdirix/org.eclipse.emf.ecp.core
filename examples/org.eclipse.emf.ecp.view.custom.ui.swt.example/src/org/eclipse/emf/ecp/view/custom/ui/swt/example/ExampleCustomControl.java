@@ -11,7 +11,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewFactory;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -55,11 +55,11 @@ public class ExampleCustomControl extends ECPAbstractCustomControlSWT {
 	
 	private static Set<VDomainModelReference> createReferences(){
 		Set<VDomainModelReference> result=new LinkedHashSet<VDomainModelReference>();
-		nameFeature=ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference();
+		nameFeature=VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		nameFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		result.add(nameFeature);
 		
-		eMailFeature=ViewFactory.eINSTANCE.createVFeaturePathDomainModelReference();
+		eMailFeature=VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		eMailFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		result.add(eMailFeature);
 		

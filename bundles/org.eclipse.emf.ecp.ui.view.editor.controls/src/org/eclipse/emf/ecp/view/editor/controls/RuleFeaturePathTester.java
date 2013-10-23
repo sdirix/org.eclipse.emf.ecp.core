@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.ViewPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
@@ -51,7 +51,7 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 		if (!VFeaturePathDomainModelReference.class.isInstance(eObject)) {
 			return NOT_APPLICABLE;
 		}
-		if (ViewPackage.eINSTANCE.getVFeaturePathDomainModelReference_DomainModelEFeature() != feature) {
+		if (VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature() != feature) {
 			return NOT_APPLICABLE;
 		}
 		if (!LeafCondition.class.isInstance(eObject.eContainer())) {

@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.View;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -34,13 +34,13 @@ public class DefaultControlContext implements ECPControlContext {
 	private final EObject eObject;
 	private final EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
 	private final ViewModelContextImpl viewContext;
-	private final View view;
+	private final VView view;
 
 	/**
 	 * @param eObject the domain object
 	 * @param view the view model
 	 */
-	public DefaultControlContext(EObject eObject, View view) {
+	public DefaultControlContext(EObject eObject, VView view) {
 		this.eObject = eObject;
 		this.view = view;
 		viewContext = new ViewModelContextImpl(view, getModelElement());
