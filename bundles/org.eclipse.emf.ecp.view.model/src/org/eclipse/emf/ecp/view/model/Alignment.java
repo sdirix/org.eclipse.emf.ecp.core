@@ -41,17 +41,6 @@ public enum Alignment implements Enumerator
 	LEFT(0, "Left", "Left"),
 
 	/**
-	 * The '<em><b>Top</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #TOP_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	TOP(1, "Top", "Top"),
-
-	/**
 	 * The '<em><b>None</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -60,7 +49,7 @@ public enum Alignment implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	NONE(2, "None", "None");
+	NONE(1, "None", "None");
 
 	/**
 	 * The '<em><b>Left</b></em>' literal value.
@@ -79,22 +68,6 @@ public enum Alignment implements Enumerator
 	public static final int LEFT_VALUE = 0;
 
 	/**
-	 * The '<em><b>Top</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Top</b></em>' literal object isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #TOP
-	 * @model name="Top"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int TOP_VALUE = 1;
-
-	/**
 	 * The '<em><b>None</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -108,7 +81,7 @@ public enum Alignment implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	public static final int NONE_VALUE = 2;
+	public static final int NONE_VALUE = 1;
 
 	/**
 	 * An array of all the '<em><b>Alignment</b></em>' enumerators.
@@ -121,7 +94,6 @@ public enum Alignment implements Enumerator
 		new Alignment[]
 		{
 			LEFT,
-			TOP,
 			NONE,
 		};
 
@@ -187,8 +159,6 @@ public enum Alignment implements Enumerator
 		{
 		case LEFT_VALUE:
 			return LEFT;
-		case TOP_VALUE:
-			return TOP;
 		case NONE_VALUE:
 			return NONE;
 		}

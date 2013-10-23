@@ -89,13 +89,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID)
 		{
-		case VViewPackage.ELEMENT: {
-			VElement element = (VElement) theEObject;
-			T result = caseElement(element);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		case VViewPackage.DIAGNOSTIC: {
 			VDiagnostic diagnostic = (VDiagnostic) theEObject;
 			T result = caseDiagnostic(diagnostic);
@@ -110,15 +103,65 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case VViewPackage.DOMAIN_MODEL_REFERENCE: {
+			VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
+			T result = caseDomainModelReference(domainModelReference);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
+			VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
+			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
+			if (result == null)
+				result = caseDomainModelReference(featurePathDomainModelReference);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.ELEMENT: {
+			VElement element = (VElement) theEObject;
+			T result = caseElement(element);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		case VViewPackage.VIEW: {
 			VView view = (VView) theEObject;
 			T result = caseView(view);
 			if (result == null)
-				result = caseCategorization(view);
-			if (result == null)
-				result = caseAbstractCategorization(view);
-			if (result == null)
 				result = caseElement(view);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.CONTAINABLE_ELEMENT: {
+			VContainableElement containableElement = (VContainableElement) theEObject;
+			T result = caseContainableElement(containableElement);
+			if (result == null)
+				result = caseElement(containableElement);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.CONTAINER: {
+			VContainer container = (VContainer) theEObject;
+			T result = caseContainer(container);
+			if (result == null)
+				result = caseContainableElement(container);
+			if (result == null)
+				result = caseElement(container);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.CONTROL: {
+			VControl control = (VControl) theEObject;
+			T result = caseControl(control);
+			if (result == null)
+				result = caseContainableElement(control);
+			if (result == null)
+				result = caseElement(control);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -157,53 +200,6 @@ public class ViewSwitch<T> extends Switch<T> {
 		case VViewPackage.ACTION: {
 			VAction action = (VAction) theEObject;
 			T result = caseAction(action);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.CONTAINABLE_ELEMENT: {
-			VContainableElement containableElement = (VContainableElement) theEObject;
-			T result = caseContainableElement(containableElement);
-			if (result == null)
-				result = caseElement(containableElement);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.DOMAIN_MODEL_REFERENCE: {
-			VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
-			T result = caseDomainModelReference(domainModelReference);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
-			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
-			if (result == null)
-				result = caseDomainModelReference(featurePathDomainModelReference);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.CONTROL: {
-			VControl control = (VControl) theEObject;
-			T result = caseControl(control);
-			if (result == null)
-				result = caseContainableElement(control);
-			if (result == null)
-				result = caseElement(control);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.CONTAINER: {
-			VContainer container = (VContainer) theEObject;
-			T result = caseContainer(container);
-			if (result == null)
-				result = caseContainableElement(container);
-			if (result == null)
-				result = caseElement(container);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;

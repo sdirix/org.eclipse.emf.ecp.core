@@ -79,67 +79,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getElement()
 	 * @generated
 	 */
-	int ELEMENT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT__VISIBLE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT__ENABLED = 1;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT__READONLY = 2;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT__DIAGNOSTIC = 3;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT__ATTACHMENTS = 4;
-
-	/**
-	 * The number of structural features of the '<em>Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ELEMENT_FEATURE_COUNT = 5;
+	int ELEMENT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VDiagnosticImpl <em>Diagnostic</em>}'
@@ -151,7 +91,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getDiagnostic()
 	 * @generated
 	 */
-	int DIAGNOSTIC = 1;
+	int DIAGNOSTIC = 0;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostics</b></em>' attribute list.
@@ -183,7 +123,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAbstractCategorization()
 	 * @generated
 	 */
-	int ABSTRACT_CATEGORIZATION = 4;
+	int ABSTRACT_CATEGORIZATION = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VCategorizationImpl
@@ -195,7 +135,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getCategorization()
 	 * @generated
 	 */
-	int CATEGORIZATION = 5;
+	int CATEGORIZATION = 10;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VViewImpl <em>View</em>}' class.
@@ -206,7 +146,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getView()
 	 * @generated
 	 */
-	int VIEW = 3;
+	int VIEW = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VCategoryImpl <em>Category</em>}' class.
@@ -217,7 +157,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getCategory()
 	 * @generated
 	 */
-	int CATEGORY = 6;
+	int CATEGORY = 11;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VControlImpl <em>Control</em>}' class.
@@ -228,7 +168,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getControl()
 	 * @generated
 	 */
-	int CONTROL = 11;
+	int CONTROL = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VActionImpl <em>Action</em>}' class.
@@ -239,7 +179,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 7;
+	int ACTION = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VAttachmentImpl <em>Attachment</em>}'
@@ -251,7 +191,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAttachment()
 	 * @generated
 	 */
-	int ATTACHMENT = 2;
+	int ATTACHMENT = 1;
 
 	/**
 	 * The number of structural features of the '<em>Attachment</em>' class.
@@ -262,6 +202,513 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int ATTACHMENT_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
+	 * <em>Containable Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainableElement()
+	 * @generated
+	 */
+	int CONTAINABLE_ELEMENT = 6;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * <em>Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getDomainModelReference()
+	 * @generated
+	 */
+	int DOMAIN_MODEL_REFERENCE = 2;
+
+	/**
+	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
+	 * <em>Feature Path Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getFeaturePathDomainModelReference()
+	 * @generated
+	 */
+	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Feature Path Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__VISIBLE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__ENABLED = 2;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__READONLY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__DIAGNOSTIC = 4;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__ATTACHMENTS = 5;
+
+	/**
+	 * The number of structural features of the '<em>Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT_FEATURE_COUNT = 6;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__NAME = ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__VISIBLE = ELEMENT__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ENABLED = ELEMENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__READONLY = ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__DIAGNOSTIC = ELEMENT__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ATTACHMENTS = ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Root EClass</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ROOT_ECLASS = ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__CHILDREN = ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__CATEGORIZATIONS = ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>View</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT__NAME = ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT__VISIBLE = ELEMENT__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT__ENABLED = ELEMENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT__READONLY = ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT__DIAGNOSTIC = ELEMENT__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT__ATTACHMENTS = ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The number of structural features of the '<em>Containable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINABLE_ELEMENT_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainerImpl <em>Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VContainerImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainer()
+	 * @generated
+	 */
+	int CONTAINER = 7;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__NAME = CONTAINABLE_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__VISIBLE = CONTAINABLE_ELEMENT__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__ENABLED = CONTAINABLE_ELEMENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__READONLY = CONTAINABLE_ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__DIAGNOSTIC = CONTAINABLE_ELEMENT__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__ATTACHMENTS = CONTAINABLE_ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__CHILDREN = CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER_FEATURE_COUNT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__NAME = CONTAINABLE_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__VISIBLE = CONTAINABLE_ELEMENT__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__ENABLED = CONTAINABLE_ELEMENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__READONLY = CONTAINABLE_ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__DIAGNOSTIC = CONTAINABLE_ELEMENT__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__ATTACHMENTS = CONTAINABLE_ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__LABEL_ALIGNMENT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__DOMAIN_MODEL_REFERENCE = CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Control</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_FEATURE_COUNT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__NAME = ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -314,16 +761,6 @@ public interface VViewPackage extends EPackage {
 	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = ELEMENT__ATTACHMENTS;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__NAME = ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -331,7 +768,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CATEGORIZATION__ACTIONS = ELEMENT_FEATURE_COUNT + 1;
+	int ABSTRACT_CATEGORIZATION__ACTIONS = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Abstract Categorization</em>' class.
@@ -341,7 +778,17 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 2;
+	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__NAME = ABSTRACT_CATEGORIZATION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -394,16 +841,6 @@ public interface VViewPackage extends EPackage {
 	int CATEGORIZATION__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__NAME = ABSTRACT_CATEGORIZATION__NAME;
-
-	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -434,56 +871,6 @@ public interface VViewPackage extends EPackage {
 	int CATEGORIZATION_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__VISIBLE = CATEGORIZATION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__ENABLED = CATEGORIZATION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__READONLY = CATEGORIZATION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__DIAGNOSTIC = CATEGORIZATION__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__ATTACHMENTS = CATEGORIZATION__ATTACHMENTS;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -491,57 +878,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW__NAME = CATEGORIZATION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__ACTIONS = CATEGORIZATION__ACTIONS;
-
-	/**
-	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__CATEGORIZATIONS = CATEGORIZATION__CATEGORIZATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Root EClass</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__ROOT_ECLASS = CATEGORIZATION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__CHILDREN = CATEGORIZATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>View</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW_FEATURE_COUNT = CATEGORIZATION_FEATURE_COUNT + 2;
+	int CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -592,16 +929,6 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -664,333 +991,6 @@ public interface VViewPackage extends EPackage {
 	int ACTION_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
-	 * <em>Containable Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainableElement()
-	 * @generated
-	 */
-	int CONTAINABLE_ELEMENT = 8;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT__VISIBLE = ELEMENT__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT__ENABLED = ELEMENT__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT__READONLY = ELEMENT__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT__DIAGNOSTIC = ELEMENT__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT__ATTACHMENTS = ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT__NAME = ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Containable Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINABLE_ELEMENT_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
-	 * <em>Domain Model Reference</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getDomainModelReference()
-	 * @generated
-	 */
-	int DOMAIN_MODEL_REFERENCE = 9;
-
-	/**
-	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
-	 * <em>Feature Path Domain Model Reference</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getFeaturePathDomainModelReference()
-	 * @generated
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 10;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Feature Path Domain Model Reference</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__VISIBLE = CONTAINABLE_ELEMENT__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__ENABLED = CONTAINABLE_ELEMENT__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__READONLY = CONTAINABLE_ELEMENT__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__DIAGNOSTIC = CONTAINABLE_ELEMENT__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__ATTACHMENTS = CONTAINABLE_ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__NAME = CONTAINABLE_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__LABEL_ALIGNMENT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL__DOMAIN_MODEL_REFERENCE = CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Control</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTROL_FEATURE_COUNT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainerImpl <em>Container</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VContainerImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainer()
-	 * @generated
-	 */
-	int CONTAINER = 12;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__VISIBLE = CONTAINABLE_ELEMENT__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__ENABLED = CONTAINABLE_ELEMENT__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__READONLY = CONTAINABLE_ELEMENT__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__DIAGNOSTIC = CONTAINABLE_ELEMENT__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__ATTACHMENTS = CONTAINABLE_ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__NAME = CONTAINABLE_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER__CHILDREN = CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Container</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CONTAINER_FEATURE_COUNT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1011,6 +1011,19 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.VElement#getName <em>Name</em>}
+	 * '.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VElement#getName()
+	 * @see #getElement()
+	 * @generated
+	 */
+	EAttribute getElement_Name();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.VElement#isVisible
@@ -1139,6 +1152,19 @@ public interface VViewPackage extends EPackage {
 	EReference getView_Children();
 
 	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.model.VView#getCategorizations <em>Categorizations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference list '<em>Categorizations</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VView#getCategorizations()
+	 * @see #getView()
+	 * @generated
+	 */
+	EReference getView_Categorizations();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization
 	 * <em>Abstract Categorization</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1149,19 +1175,6 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getAbstractCategorization();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization#getName
-	 * <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization#getName()
-	 * @see #getAbstractCategorization()
-	 * @generated
-	 */
-	EAttribute getAbstractCategorization_Name();
 
 	/**
 	 * Returns the meta object for the containment reference list '
@@ -1336,19 +1349,6 @@ public interface VViewPackage extends EPackage {
 	EClass getContainableElement();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.VContainableElement#getName
-	 * <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VContainableElement#getName()
-	 * @see #getContainableElement()
-	 * @generated
-	 */
-	EAttribute getContainableElement_Name();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1459,6 +1459,15 @@ public interface VViewPackage extends EPackage {
 		EClass ELEMENT = eINSTANCE.getElement();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute ELEMENT__NAME = eINSTANCE.getElement_Name();
+
+		/**
 		 * The meta object literal for the '<em><b>Visible</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1554,6 +1563,15 @@ public interface VViewPackage extends EPackage {
 		EReference VIEW__CHILDREN = eINSTANCE.getView_Children();
 
 		/**
+		 * The meta object literal for the '<em><b>Categorizations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VIEW__CATEGORIZATIONS = eINSTANCE.getView_Categorizations();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl
 		 * <em>Abstract Categorization</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1564,15 +1582,6 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ABSTRACT_CATEGORIZATION = eINSTANCE.getAbstractCategorization();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute ABSTRACT_CATEGORIZATION__NAME = eINSTANCE.getAbstractCategorization_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
@@ -1717,15 +1726,6 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONTAINABLE_ELEMENT = eINSTANCE.getContainableElement();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CONTAINABLE_ELEMENT__NAME = eINSTANCE.getContainableElement_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference

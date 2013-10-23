@@ -37,7 +37,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ViewItemProvider
-	extends CategorizationItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends ElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -106,6 +106,7 @@ public class ViewItemProvider
 		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VViewPackage.Literals.VIEW__CHILDREN);
+			childrenFeatures.add(VViewPackage.Literals.VIEW__CATEGORIZATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -166,6 +167,7 @@ public class ViewItemProvider
 		switch (notification.getFeatureID(VView.class))
 		{
 		case VViewPackage.VIEW__CHILDREN:
+		case VViewPackage.VIEW__CATEGORIZATIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -188,6 +190,16 @@ public class ViewItemProvider
 			(createChildParameter
 			(VViewPackage.Literals.VIEW__CHILDREN,
 				VViewFactory.eINSTANCE.createControl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VViewPackage.Literals.VIEW__CATEGORIZATIONS,
+				VViewFactory.eINSTANCE.createCategorization()));
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VViewPackage.Literals.VIEW__CATEGORIZATIONS,
+				VViewFactory.eINSTANCE.createCategory()));
 	}
 
 }

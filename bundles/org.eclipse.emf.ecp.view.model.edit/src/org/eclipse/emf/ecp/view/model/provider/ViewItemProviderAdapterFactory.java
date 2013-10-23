@@ -430,18 +430,18 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public void dispose() {
 		if (diagnosticItemProvider != null)
 			diagnosticItemProvider.dispose();
+		if (featurePathDomainModelReferenceItemProvider != null)
+			featurePathDomainModelReferenceItemProvider.dispose();
 		if (viewItemProvider != null)
 			viewItemProvider.dispose();
+		if (controlItemProvider != null)
+			controlItemProvider.dispose();
 		if (categorizationItemProvider != null)
 			categorizationItemProvider.dispose();
 		if (categoryItemProvider != null)
 			categoryItemProvider.dispose();
 		if (actionItemProvider != null)
 			actionItemProvider.dispose();
-		if (featurePathDomainModelReferenceItemProvider != null)
-			featurePathDomainModelReferenceItemProvider.dispose();
-		if (controlItemProvider != null)
-			controlItemProvider.dispose();
 	}
 
 }

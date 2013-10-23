@@ -73,7 +73,7 @@ public interface VControl extends VContainableElement {
 	 * @see org.eclipse.emf.ecp.view.model.Alignment
 	 * @see #setLabelAlignment(Alignment)
 	 * @see org.eclipse.emf.ecp.view.model.VViewPackage#getControl_LabelAlignment()
-	 * @model default="Left"
+	 * @model default="Left" required="true"
 	 * @generated
 	 */
 	Alignment getLabelAlignment();

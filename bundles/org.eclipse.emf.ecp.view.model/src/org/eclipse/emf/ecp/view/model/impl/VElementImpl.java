@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.VElementImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.VElementImpl#isVisible <em>Visible</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.VElementImpl#isEnabled <em>Enabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.VElementImpl#isReadonly <em>Readonly</em>}</li>
@@ -46,6 +47,28 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  */
 public abstract class VElementImpl extends EObjectImpl implements VElement
 {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -155,6 +178,31 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	protected EClass eStaticClass()
 	{
 		return VViewPackage.Literals.ELEMENT;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String getName()
+	{
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setName(String newName)
+	{
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__NAME, oldName, name));
 	}
 
 	/**
@@ -337,6 +385,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	{
 		switch (featureID)
 		{
+		case VViewPackage.ELEMENT__NAME:
+			return getName();
 		case VViewPackage.ELEMENT__VISIBLE:
 			return isVisible();
 		case VViewPackage.ELEMENT__ENABLED:
@@ -363,6 +413,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	{
 		switch (featureID)
 		{
+		case VViewPackage.ELEMENT__NAME:
+			setName((String) newValue);
+			return;
 		case VViewPackage.ELEMENT__VISIBLE:
 			setVisible((Boolean) newValue);
 			return;
@@ -394,6 +447,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	{
 		switch (featureID)
 		{
+		case VViewPackage.ELEMENT__NAME:
+			setName(NAME_EDEFAULT);
+			return;
 		case VViewPackage.ELEMENT__VISIBLE:
 			setVisible(VISIBLE_EDEFAULT);
 			return;
@@ -424,6 +480,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	{
 		switch (featureID)
 		{
+		case VViewPackage.ELEMENT__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case VViewPackage.ELEMENT__VISIBLE:
 			return visible != VISIBLE_EDEFAULT;
 		case VViewPackage.ELEMENT__ENABLED:
@@ -451,7 +509,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (visible: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", visible: ");
 		result.append(visible);
 		result.append(", enabled: ");
 		result.append(enabled);

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.model.VView#getRootEClass <em>Root EClass</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.VView#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.VView#getCategorizations <em>Categorizations</em>}</li>
  * </ul>
  * </p>
  * 
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecore.EClass;
  * @model
  * @generated
  */
-public interface VView extends VCategorization {
+public interface VView extends VElement {
 	/**
 	 * Returns the value of the '<em><b>Root EClass</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -77,6 +78,23 @@ public interface VView extends VCategorization {
 	 * @generated
 	 */
 	EList<VContainableElement> getChildren();
+
+	/**
+	 * Returns the value of the '<em><b>Categorizations</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VAbstractCategorization}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Categorizations</em>' containment reference list isn't clear, there really should be
+	 * more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Categorizations</em>' containment reference list.
+	 * @see org.eclipse.emf.ecp.view.model.VViewPackage#getView_Categorizations()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<VAbstractCategorization> getCategorizations();
 
 	/**
 	 * Sets the view and all its contents readonly.

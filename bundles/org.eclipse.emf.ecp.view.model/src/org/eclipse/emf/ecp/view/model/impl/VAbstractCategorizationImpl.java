@@ -13,12 +13,10 @@ package org.eclipse.emf.ecp.view.model.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
@@ -32,7 +30,6 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl#getActions <em>Actions</em>}</li>
  * </ul>
  * </p>
@@ -40,28 +37,6 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * @generated
  */
 public abstract class VAbstractCategorizationImpl extends VElementImpl implements VAbstractCategorization {
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
 	/**
 	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -92,30 +67,6 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 	@Override
 	protected EClass eStaticClass() {
 		return VViewPackage.Literals.ABSTRACT_CATEGORIZATION;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ABSTRACT_CATEGORIZATION__NAME, oldName,
-				name));
 	}
 
 	/**
@@ -159,8 +110,6 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID)
 		{
-		case VViewPackage.ABSTRACT_CATEGORIZATION__NAME:
-			return getName();
 		case VViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			return getActions();
 		}
@@ -178,9 +127,6 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID)
 		{
-		case VViewPackage.ABSTRACT_CATEGORIZATION__NAME:
-			setName((String) newValue);
-			return;
 		case VViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			getActions().clear();
 			getActions().addAll((Collection<? extends VAction>) newValue);
@@ -199,9 +145,6 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 	public void eUnset(int featureID) {
 		switch (featureID)
 		{
-		case VViewPackage.ABSTRACT_CATEGORIZATION__NAME:
-			setName(NAME_EDEFAULT);
-			return;
 		case VViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			getActions().clear();
 			return;
@@ -219,30 +162,10 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 	public boolean eIsSet(int featureID) {
 		switch (featureID)
 		{
-		case VViewPackage.ABSTRACT_CATEGORIZATION__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case VViewPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			return actions != null && !actions.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy())
-			return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
 	}
 
 } // AbstractCategorizationImpl

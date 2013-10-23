@@ -229,7 +229,7 @@ public class ViewModelContextTest {
 
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = notification.getNotifier() == view
-					&& notification.getStructuralFeature() == VViewPackage.eINSTANCE.getAbstractCategorization_Name();
+					&& notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Name();
 			}
 
 			public void notifyAdd(Notifier notifier) {

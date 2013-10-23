@@ -193,11 +193,6 @@ public class CategorizationItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 			(VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
-				VViewFactory.eINSTANCE.createView()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CATEGORIZATION__CATEGORIZATIONS,
 				VViewFactory.eINSTANCE.createCategory()));
 	}
 

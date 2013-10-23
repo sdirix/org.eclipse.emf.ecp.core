@@ -92,12 +92,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>()
 	{
 		@Override
-		public Adapter caseElement(VElement object)
-		{
-			return createElementAdapter();
-		}
-
-		@Override
 		public Adapter caseDiagnostic(VDiagnostic object)
 		{
 			return createDiagnosticAdapter();
@@ -110,9 +104,45 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object)
+		{
+			return createDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
+		{
+			return createFeaturePathDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseElement(VElement object)
+		{
+			return createElementAdapter();
+		}
+
+		@Override
 		public Adapter caseView(VView object)
 		{
 			return createViewAdapter();
+		}
+
+		@Override
+		public Adapter caseContainableElement(VContainableElement object)
+		{
+			return createContainableElementAdapter();
+		}
+
+		@Override
+		public Adapter caseContainer(VContainer object)
+		{
+			return createContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseControl(VControl object)
+		{
+			return createControlAdapter();
 		}
 
 		@Override
@@ -137,36 +167,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseAction(VAction object)
 		{
 			return createActionAdapter();
-		}
-
-		@Override
-		public Adapter caseContainableElement(VContainableElement object)
-		{
-			return createContainableElementAdapter();
-		}
-
-		@Override
-		public Adapter caseDomainModelReference(VDomainModelReference object)
-		{
-			return createDomainModelReferenceAdapter();
-		}
-
-		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-		{
-			return createFeaturePathDomainModelReferenceAdapter();
-		}
-
-		@Override
-		public Adapter caseControl(VControl object)
-		{
-			return createControlAdapter();
-		}
-
-		@Override
-		public Adapter caseContainer(VContainer object)
-		{
-			return createContainerAdapter();
 		}
 
 		@Override

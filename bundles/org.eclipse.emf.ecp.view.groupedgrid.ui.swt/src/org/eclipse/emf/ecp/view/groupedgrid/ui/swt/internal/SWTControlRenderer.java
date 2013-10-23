@@ -30,7 +30,6 @@ import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -94,16 +93,16 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 		final VControl modelControl, final ECPControlContext subContext,
 		final IItemPropertyDescriptor itemPropertyDescriptor, final SWTControl control, Object... initData) {
 		if (control != null) {
-			Composite parent = getParentFromInitData(initData);
+			final Composite parent = getParentFromInitData(initData);
 			int numControl = 2;
 			Label label = null;
-			if (modelControl.getLabelAlignment() == Alignment.TOP) {
-				final Composite newParent = new Composite(parent, SWT.NONE);
-				newParent.setBackground(parent.getBackground());
-				parent = newParent;
-				GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(parent);
-			}
-			if (modelControl.getLabelAlignment() == Alignment.LEFT || modelControl.getLabelAlignment() == Alignment.TOP) {
+			// if (modelControl.getLabelAlignment() == Alignment.TOP) {
+			// final Composite newParent = new Composite(parent, SWT.NONE);
+			// newParent.setBackground(parent.getBackground());
+			// parent = newParent;
+			// GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(parent);
+			// }
+			if (modelControl.getLabelAlignment() == Alignment.LEFT) {
 				numControl = 1;
 				label = new Label(parent, SWT.NONE);
 				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
@@ -138,10 +137,11 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 				.align(SWT.FILL, SWT.CENTER).span(numControl, 1)
 				.applyTo(controlComposite);
 
-			if (modelControl.getLabelAlignment() == Alignment.TOP) {
-				return createResult(parent);
-			}
-			else if (label == null) {
+			// if (modelControl.getLabelAlignment() == Alignment.TOP) {
+			// return createResult(parent);
+			// }
+			// else
+			if (label == null) {
 				return createResult(controlComposite);
 			}
 			return createResult(label, controlComposite);

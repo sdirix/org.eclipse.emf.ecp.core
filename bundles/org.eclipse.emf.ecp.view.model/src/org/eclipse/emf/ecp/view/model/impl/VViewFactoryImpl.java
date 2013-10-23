@@ -79,18 +79,18 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		{
 		case VViewPackage.DIAGNOSTIC:
 			return createDiagnostic();
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
+			return createFeaturePathDomainModelReference();
 		case VViewPackage.VIEW:
 			return createView();
+		case VViewPackage.CONTROL:
+			return createControl();
 		case VViewPackage.CATEGORIZATION:
 			return createCategorization();
 		case VViewPackage.CATEGORY:
 			return createCategory();
 		case VViewPackage.ACTION:
 			return createAction();
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
-			return createFeaturePathDomainModelReference();
-		case VViewPackage.CONTROL:
-			return createControl();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}

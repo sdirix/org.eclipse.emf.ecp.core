@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.model.VContainableElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
@@ -37,12 +38,13 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.model.impl.VViewImpl#getCategorizations <em>Categorizations</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class VViewImpl extends VCategorizationImpl implements VView {
+public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * The cached value of the '{@link #getRootEClass() <em>Root EClass</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -64,6 +66,17 @@ public class VViewImpl extends VCategorizationImpl implements VView {
 	 * @ordered
 	 */
 	protected EList<VContainableElement> children;
+
+	/**
+	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getCategorizations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VAbstractCategorization> categorizations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -152,12 +165,30 @@ public class VViewImpl extends VCategorizationImpl implements VView {
 	 * 
 	 * @generated
 	 */
+	public EList<VAbstractCategorization> getCategorizations()
+	{
+		if (categorizations == null)
+		{
+			categorizations = new EObjectContainmentEList<VAbstractCategorization>(VAbstractCategorization.class, this,
+				VViewPackage.VIEW__CATEGORIZATIONS);
+		}
+		return categorizations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID)
 		{
 		case VViewPackage.VIEW__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
+		case VViewPackage.VIEW__CATEGORIZATIONS:
+			return ((InternalEList<?>) getCategorizations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -178,6 +209,8 @@ public class VViewImpl extends VCategorizationImpl implements VView {
 			return basicGetRootEClass();
 		case VViewPackage.VIEW__CHILDREN:
 			return getChildren();
+		case VViewPackage.VIEW__CATEGORIZATIONS:
+			return getCategorizations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -200,6 +233,10 @@ public class VViewImpl extends VCategorizationImpl implements VView {
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends VContainableElement>) newValue);
 			return;
+		case VViewPackage.VIEW__CATEGORIZATIONS:
+			getCategorizations().clear();
+			getCategorizations().addAll((Collection<? extends VAbstractCategorization>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -220,6 +257,9 @@ public class VViewImpl extends VCategorizationImpl implements VView {
 		case VViewPackage.VIEW__CHILDREN:
 			getChildren().clear();
 			return;
+		case VViewPackage.VIEW__CATEGORIZATIONS:
+			getCategorizations().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -238,6 +278,8 @@ public class VViewImpl extends VCategorizationImpl implements VView {
 			return rootEClass != null;
 		case VViewPackage.VIEW__CHILDREN:
 			return children != null && !children.isEmpty();
+		case VViewPackage.VIEW__CATEGORIZATIONS:
+			return categorizations != null && !categorizations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
