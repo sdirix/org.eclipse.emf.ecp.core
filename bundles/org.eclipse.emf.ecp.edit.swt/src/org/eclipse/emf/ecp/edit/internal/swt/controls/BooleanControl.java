@@ -12,10 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -25,7 +21,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * This class defines a BooleanControl which is used for displaying {@link EStructuralFeature}s which have a Boolean
+ * This class defines a BooleanControl which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
+ * EStructuralFeature}s which have a Boolean
  * value.
  * 
  * @author Eugen Neufeld
@@ -34,20 +31,6 @@ import org.eclipse.swt.widgets.Control;
 public class BooleanControl extends SingleControl {
 
 	private Button check;
-
-	/**
-	 * Constructor for a boolean control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public BooleanControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	@Override
 	protected void fillControlComposite(Composite composite) {
@@ -70,7 +53,7 @@ public class BooleanControl extends SingleControl {
 
 	@Override
 	public Binding bindValue() {
-		IObservableValue targetValue = SWTObservables.observeSelection(check);
+		final IObservableValue targetValue = SWTObservables.observeSelection(check);
 		return getDataBindingContext().bindValue(targetValue, getModelValue());
 	}
 

@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.ViewPackage;
 import org.eclipse.swt.widgets.Control;
@@ -28,10 +28,10 @@ import org.eclipse.swt.widgets.Display;
 public class SWTRenderingResultDelegatorWithControl extends SWTRenderingResultDelegator {
 
 	private final Renderable model;
-	private final SWTControl swtControl;
+	private final ECPControl swtControl;
 	private final Adapter adapter;
 
-	public SWTRenderingResultDelegatorWithControl(Control[] results, SWTControl swtControl, Renderable model) {
+	public SWTRenderingResultDelegatorWithControl(Control[] results, ECPControl swtControl, Renderable model) {
 		super(results);
 		this.swtControl = swtControl;
 		this.model = model;

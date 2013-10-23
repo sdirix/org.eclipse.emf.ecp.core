@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.view.model.ViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.ecp.view.custom.model.VCustomFactory
  * @model kind="package"
  * @generated
@@ -37,7 +36,6 @@ public interface VCustomPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	String eNAME = "model";
@@ -46,7 +44,6 @@ public interface VCustomPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/custom/model";
@@ -55,7 +52,6 @@ public interface VCustomPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.custom.model";
@@ -64,156 +60,63 @@ public interface VCustomPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	VCustomPackage eINSTANCE = org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VCustomControlImpl
-	 * <em>Control</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomControlImpl
-	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getCustomControl()
+	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 	 * @generated
 	 */
-	int CUSTOM_CONTROL = 0;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_CONTROL__VISIBLE = ViewPackage.ABSTRACT_CONTROL__VISIBLE;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * The number of structural features of the '<em>Hardcoded Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CUSTOM_CONTROL__ENABLED = ViewPackage.ABSTRACT_CONTROL__ENABLED;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = ViewPackage.VDOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 * @return the meta object for class '<em>Hardcoded Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference
 	 * @generated
-	 * @ordered
 	 */
-	int CUSTOM_CONTROL__READONLY = ViewPackage.ABSTRACT_CONTROL__READONLY;
+	EClass getHardcodedDomainModelReference();
 
 	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CONTROL__DIAGNOSTIC = ViewPackage.ABSTRACT_CONTROL__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CONTROL__ATTACHMENTS = ViewPackage.ABSTRACT_CONTROL__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CONTROL__NAME = ViewPackage.ABSTRACT_CONTROL__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CONTROL__BUNDLE = ViewPackage.ABSTRACT_CONTROL_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CONTROL__CLASS_NAME = ViewPackage.ABSTRACT_CONTROL_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Control</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CONTROL_FEATURE_COUNT = ViewPackage.ABSTRACT_CONTROL_FEATURE_COUNT + 2;
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VCustomControl <em>Control</em>}
-	 * '.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Control</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomControl
+	 * @return the meta object for the attribute '<em>Control Id</em>'.
+	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId()
+	 * @see #getHardcodedDomainModelReference()
 	 * @generated
 	 */
-	EClass getCustomControl();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VCustomControl#getBundle
-	 * <em>Bundle</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Bundle</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomControl#getBundle()
-	 * @see #getCustomControl()
-	 * @generated
-	 */
-	EAttribute getCustomControl_Bundle();
-
-	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.custom.model.VCustomControl#getClassName <em>Class Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Class Name</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomControl#getClassName()
-	 * @see #getCustomControl()
-	 * @generated
-	 */
-	EAttribute getCustomControl_ClassName();
+	EAttribute getHardcodedDomainModelReference_ControlId();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -229,39 +132,26 @@ public interface VCustomPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VCustomControlImpl
-		 * <em>Control</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomControlImpl
-		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getCustomControl()
+		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 		 * @generated
 		 */
-		EClass CUSTOM_CONTROL = eINSTANCE.getCustomControl();
+		EClass HARDCODED_DOMAIN_MODEL_REFERENCE = eINSTANCE.getHardcodedDomainModelReference();
 
 		/**
-		 * The meta object literal for the '<em><b>Bundle</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Control Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
 		 * @generated
 		 */
-		EAttribute CUSTOM_CONTROL__BUNDLE = eINSTANCE.getCustomControl_Bundle();
-
-		/**
-		 * The meta object literal for the '<em><b>Class Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute CUSTOM_CONTROL__CLASS_NAME = eINSTANCE.getCustomControl_ClassName();
+		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = eINSTANCE.getHardcodedDomainModelReference_ControlId();
 
 	}
 

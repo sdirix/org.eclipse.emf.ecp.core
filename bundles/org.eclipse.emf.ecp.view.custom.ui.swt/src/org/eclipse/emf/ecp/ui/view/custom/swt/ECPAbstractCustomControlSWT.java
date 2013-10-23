@@ -18,15 +18,16 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
+import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
-import org.eclipse.emf.ecp.ui.view.swt.internal.DoubleColumnRow;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SingleColumnRow;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -40,8 +41,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * Extend this class in order to provide an own implementation of an
- * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl ECPCustomControl}.
+ * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControl}.
  * 
  * @author Eugen Neufeld
  * 
@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.Shell;
 // Missing SPI or API definitions
 @SuppressWarnings("restriction")
 public abstract class ECPAbstractCustomControlSWT extends
-	ECPAbstractCustomControl {
+	ECPAbstractCustomControl implements ECPControlSWT {
 	/**
 	 * Constant for an validation error image.
 	 */
@@ -68,15 +68,12 @@ public abstract class ECPAbstractCustomControlSWT extends
 	public static final int HELP_IMAGE = 3;
 
 	/**
-	 * Extend this class for an SWT implementation of the {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 * ECPCustomControl}.
+	 * Extend this class for an SWT implementation of the {@link ECPAbstractCustomControl}.
 	 * 
-	 * @param features the features which will be used in this
-	 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 *            ECPCustomControl}
+	 * @param features the features which will be used in this Control.
 	 */
 	public ECPAbstractCustomControlSWT(
-		Set<ECPCustomControlFeature> features) {
+		Set<VDomainModelReference> features) {
 		super(features);
 	}
 
@@ -144,14 +141,13 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * This is called by the framework when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 * ECPCustomControl} is about to be rendered.
+	 * This is called by the framework when this control is about to be rendered.
 	 * 
 	 * @param composite The composite on which this custom control shall add its controls.
 	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
 	 */
-	public final List<RenderingResultRow<Control>> createControl(Composite composite) {
-		renderingResult = createControls(composite);
+	public final List<RenderingResultRow<Control>> createControls(Composite composite) {
+		renderingResult = createControl(composite);
 		return renderingResult;
 	}
 
@@ -162,14 +158,14 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @param composite The composite on which this custom control shall add its controls.
 	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
 	 */
-	protected abstract List<RenderingResultRow<Control>> createControls(Composite composite);
+	protected abstract List<RenderingResultRow<Control>> createControl(Composite composite);
 
 	/**
 	 * Override this method in order to correctly set the custom control to editable or not editable.
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#setEditable(boolean)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
 	 */
 	public void setEditable(boolean isEditable) {
 		// Do nothing
@@ -189,7 +185,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	public final void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR
@@ -247,7 +243,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#resetValidation()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#resetValidation()
 	 */
 	public final void resetValidation() {
 		resetControlValidation();
@@ -288,14 +284,16 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * Allows to create a framework control based on an {@link ECPCustomControlFeature}.
+	 * Allows to create a framework control based on an {@link VDomainModelReference}.
 	 * 
-	 * @param feature the {@link ECPCustomControlFeature} to create the control for
+	 * @param domainModelReference the {@link VDomainModelReference} to create the control for
 	 * @param parent the {@link Composite} to create the control on
 	 * @return the rendered {@link Composite} of the created control
 	 */
-	protected final Composite createControl(ECPCustomControlFeature feature, Composite parent) {
-		return getControl(SWTControl.class, feature).createControl(parent);
+	protected final Composite createControl(VDomainModelReference domainModelReference, Composite parent) {
+		final SWTControl control = getControl(SWTControl.class, domainModelReference);
+		control.init(getModelElementContext(), domainModelReference);
+		return control.createControl(parent);
 	}
 
 	/**
@@ -318,9 +316,10 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @param viewer the {@link StructuredViewer} to bind
 	 * @param labelProperties the array if {@link IValueProperty IValueProperties} to use for labels
 	 */
-	protected void createViewerBinding(ECPCustomControlFeature customControlFeature, StructuredViewer viewer,
+	protected void createViewerBinding(VDomainModelReference customControlFeature, StructuredViewer viewer,
 		IValueProperty[] labelProperties) {
-		final IObservableList list = customControlFeature.getObservableList();
+
+		final IObservableList list = getObservableList(customControlFeature);
 		ViewerSupport.bind(viewer, list, labelProperties);
 	}
 

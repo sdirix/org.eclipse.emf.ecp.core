@@ -9,24 +9,12 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.6.0,3.0.0)",
  org.eclipse.core.databinding;bundle-version="[1.2.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.databinding.edit;bundle-version="[1.2.0,2.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.context;bundle-version="1.1.0"
+ org.eclipse.emf.ecp.view.context;bundle-version="1.1.0",
+ org.eclipse.emf.ecp.view.model;bundle-version="1.1.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.edit;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.edit.swt,
-   org.eclipse.emf.ecp.editor,
-   org.eclipse.emf.ecp.editor.e3,
-   org.eclipse.emf.ecp.ui.view,
-   org.eclipse.emf.ecp.ui.view.editor.controls,
-   org.eclipse.emf.ecp.ui.view.swt,
-   org.eclipse.emf.ecp.view.custom.model,
-   org.eclipse.emf.ecp.view.custom.ui,
-   org.eclipse.emf.ecp.view.groupedgrid.ui,
-   org.eclipse.emf.ecp.view.groupedgrid.ui.swt,
-   org.eclipse.emf.ecp.view.separator.ui.swt.test,
-   org.eclipse.emf.ecp.view.test.common.swt,
-   org.eclipse.emf.ecp.view.dynamictree.model.test",
- org.eclipse.emf.ecp.edit.util;version="1.1.0",
+Export-Package: org.eclipse.emf.ecp.edit.spi;version="1.1.0",
+ org.eclipse.emf.ecp.edit.spi.util;version="1.1.0",
  org.eclipse.emf.ecp.internal.edit;version="1.1.0";x-internal:=true
 Service-Component: OSGI-INF/ecpControlFactory.xml
 Bundle-Vendor: %Bundle-Vendor

@@ -14,10 +14,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
-import org.eclipse.emf.ecp.core.util.ECPProperties;
-
 import java.util.Collection;
 import java.util.Map.Entry;
+
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 
 /**
  * This Observer is called to notify listeners about changes of properties.

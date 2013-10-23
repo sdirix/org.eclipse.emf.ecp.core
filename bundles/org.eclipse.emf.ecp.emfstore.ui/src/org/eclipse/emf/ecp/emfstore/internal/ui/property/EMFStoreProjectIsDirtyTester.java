@@ -12,11 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
+import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
-
-import org.eclipse.core.expressions.PropertyTester;
 
 /**
  * Tests weather a project is dirty.

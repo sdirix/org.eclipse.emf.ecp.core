@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.Categorization;

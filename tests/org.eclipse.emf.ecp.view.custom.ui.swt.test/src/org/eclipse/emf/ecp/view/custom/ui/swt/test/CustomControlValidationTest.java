@@ -15,8 +15,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -33,16 +34,20 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class CustomControlValidationTest {
 
-	private VCustomControl modelControl;
+	private Control modelControl;
 	private View view;
 
 	@Before
 	public void init() {
 		view = ViewFactory.eINSTANCE.createView();
-		modelControl = VCustomFactory.eINSTANCE.createCustomControl();
-		modelControl.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");
-		modelControl
-			.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidationCustomControl");
+		modelControl = ViewFactory.eINSTANCE.createControl();
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
+		modelControl.setDomainModelReference(domainModelReference);
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidatiuonCustomControl");
+		// modelControl.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		// modelControl
+		// .setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidationCustomControl");
 
 		view.getChildren().add(modelControl);
 	}

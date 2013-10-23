@@ -18,12 +18,13 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.swt.widgets.Shell;
 
@@ -139,13 +140,14 @@ public final class ViewTestHelper {
 		final Shell shell = new Shell();
 		if (domainObject != null) {
 			context = createECPControlContext(domainObject, shell, view);
+			new ViewModelContextImpl(view, domainObject);
 		}
 		final Node<Renderable> node = NodeBuilders.INSTANCE.build(view, context);
 		return node;
 	}
 
-	public static ViewModelContext getViewModelContext() {
-		return context.getViewContext();
-	}
+	// public static ViewModelContext getViewModelContext() {
+	// return context.getViewContext();
+	// }
 
 }

@@ -11,12 +11,12 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Locale;
+
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 
 /**
  * @author Eugen Neufeld

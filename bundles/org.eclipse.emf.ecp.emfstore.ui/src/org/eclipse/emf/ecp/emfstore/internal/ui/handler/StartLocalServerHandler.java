@@ -11,13 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
-import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
-import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
+import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
+import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
 
 public class StartLocalServerHandler extends AbstractHandler {
 

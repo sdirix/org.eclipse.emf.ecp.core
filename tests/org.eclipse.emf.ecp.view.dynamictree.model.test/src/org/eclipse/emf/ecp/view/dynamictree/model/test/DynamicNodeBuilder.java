@@ -9,7 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;

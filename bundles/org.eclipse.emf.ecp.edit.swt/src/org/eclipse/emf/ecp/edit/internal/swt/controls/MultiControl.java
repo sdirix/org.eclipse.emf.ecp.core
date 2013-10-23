@@ -11,23 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.ECPControlDescription;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
-import org.eclipse.emf.edit.command.MoveCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
@@ -35,6 +22,21 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emf.edit.command.MoveCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -48,14 +50,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This control provides the necessary common functionality to create a multicontrol that are needed for
- * {@link EStructuralFeature}s that have multiple values.
+ * {@link org.eclipse.emf.ecore.EStructuralFeature EStructuralFeature}s that have multiple values.
  * 
  * @author Eugen Neufeld
  * 
@@ -74,26 +71,10 @@ public abstract class MultiControl extends SWTControl {
 	private Composite sectionComposite;
 	private ECPControlDescription controlDescription;
 	private Class<?> supportedClassType;
-	private final ECPSWTAction[] actions;
+	private ECPSWTAction[] actions;
 
 	private Button unsetButton;
 	private Label tooltipLabel;
-
-	/**
-	 * Constructor for a multi control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public MultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-		findControlDescription(itemPropertyDescriptor, modelElementContext.getModelElement());
-		actions = instantiateActions();
-	}
 
 	/**
 	 * This returns the array of actions to display in the multi control.
@@ -140,6 +121,10 @@ public abstract class MultiControl extends SWTControl {
 
 	@Override
 	protected void fillControlComposite(Composite parent) {
+
+		findControlDescription(getItemPropertyDescriptor(), getModelElementContext().getModelElement());
+		actions = instantiateActions();
+
 		mainComposite = new Composite(parent, SWT.BORDER);
 		mainComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(mainComposite);
@@ -247,11 +232,19 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	private SWTControl getSingleInstance() {
 		try {
-			final Constructor<? extends ECPAbstractControl> widgetConstructor = controlDescription.getControlClass()
-				.getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
-					ECPControlContext.class, boolean.class);
-			return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
-				getStructuralFeature(), getModelElementContext(), true);
+			// final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
+			// .getConstructor(boolean.class, IItemPropertyDescriptor.class, EStructuralFeature.class,
+			// ECPControlContext.class, boolean.class);
+			//
+			// return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
+			// getStructuralFeature(), getModelElementContext(), true);
+			final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
+				.getConstructor();
+
+			final SWTControl control = (SWTControl) widgetConstructor.newInstance();
+			control.init(getModelElementContext(), getDomainModelReference());
+			control.setEmbedded(true);
+			return control;
 		} catch (final IllegalArgumentException ex) {
 			Activator.logException(ex);
 		} catch (final InstantiationException ex) {
@@ -475,6 +468,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
 
 		model.removeListChangeListener(changeListener);
@@ -503,6 +497,16 @@ public abstract class MultiControl extends SWTControl {
 	@Override
 	protected Control[] getControlsForTooltip() {
 		return new Control[] { tooltipLabel };
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @deprecated
+	 */
+	@Deprecated
+	public boolean showLabel() {
+		return false;
 	}
 
 }

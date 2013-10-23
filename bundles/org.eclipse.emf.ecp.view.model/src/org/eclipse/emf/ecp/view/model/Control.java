@@ -19,7 +19,6 @@ package org.eclipse.emf.ecp.view.model;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getLabelAlignment <em>Label Alignment</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.model.Control#getDomainModelReference <em>Domain Model Reference</em>}</li>
  * </ul>
@@ -29,7 +28,7 @@ package org.eclipse.emf.ecp.view.model;
  * @model
  * @generated
  */
-public interface Control extends AbstractControl {
+public interface Control extends Composite {
 	/**
 	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -58,35 +57,6 @@ public interface Control extends AbstractControl {
 	 * @generated
 	 */
 	void setDomainModelReference(VDomainModelReference value);
-
-	/**
-	 * Returns the value of the '<em><b>Mandatory</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mandatory</em>' attribute isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Mandatory</em>' attribute.
-	 * @see #setMandatory(boolean)
-	 * @see org.eclipse.emf.ecp.view.model.ViewPackage#getControl_Mandatory()
-	 * @model default="false"
-	 * @generated
-	 */
-	boolean isMandatory();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.Control#isMandatory <em>Mandatory</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param value the new value of the '<em>Mandatory</em>' attribute.
-	 * @see #isMandatory()
-	 * @generated
-	 */
-	void setMandatory(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.

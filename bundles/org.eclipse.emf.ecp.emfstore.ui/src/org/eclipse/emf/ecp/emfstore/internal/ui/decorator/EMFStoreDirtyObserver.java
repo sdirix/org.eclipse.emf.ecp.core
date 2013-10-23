@@ -12,6 +12,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
@@ -20,15 +25,9 @@ import org.eclipse.emf.emfstore.internal.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.CreateDeleteOperation;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Project change observer that marks elements as dirty.

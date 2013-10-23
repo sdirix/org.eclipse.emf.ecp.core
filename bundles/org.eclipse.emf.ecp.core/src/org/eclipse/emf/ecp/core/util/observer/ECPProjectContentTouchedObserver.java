@@ -11,9 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
-import org.eclipse.emf.ecp.core.ECPProject;
-
 import java.util.Collection;
+
+import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
  * This Observer is called when objects of an project are touched. Touching means changed or affected indirectly by the

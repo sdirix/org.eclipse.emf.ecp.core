@@ -12,14 +12,19 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
@@ -47,13 +52,15 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTControl extends ECPAbstractControl {
+public abstract class SWTControl extends ECPAbstractControl implements ECPControlSWT {
 
 	/**
 	 * RAP theming variable to set.
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";//$NON-NLS-1$
-
+	/**
+	 * The icon for a validation error.
+	 */
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 
 	protected Label validationLabel;
@@ -67,22 +74,25 @@ public abstract class SWTControl extends ECPAbstractControl {
 	private Label unsetLabel;
 
 	/**
-	 * Constructor for a swt control.
 	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
-	public SWTControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
+	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
+		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor();
+		if (itemPropertyDescriptor == null) {
+			return null;
+		}
+		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
+			createControl(parent)));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.internal.edit.controls.AbstractControl#createControl(org.eclipse.swt.widgets.Composite)
+	/**
+	 * This method is called to render the control on a parent.
+	 * 
+	 * @param parent the {@link Composite} which is the parent
+	 * @return the created {@link Composite}
 	 */
 	public Composite createControl(final Composite parent) {
 
@@ -201,7 +211,9 @@ public abstract class SWTControl extends ECPAbstractControl {
 	}
 
 	/**
-	 * @return
+	 * Method for retrieving all controls which should have the help text as their tooltip.
+	 * 
+	 * @return the array of the controls to set a tooltip to
 	 */
 	protected abstract Control[] getControlsForTooltip();
 
@@ -218,8 +230,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 		parentComposite.setLayout(sl);
 		controlComposite = new Composite(parentComposite, SWT.NONE);
 		controlComposite.setBackground(parentComposite.getBackground());
-		// 1 column for control, 1 for default unset button
-		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).applyTo(controlComposite);
 
 		unsetLabel = new Label(parentComposite, SWT.NONE);
 		unsetLabel.setBackground(composite.getBackground());
@@ -248,12 +258,13 @@ public abstract class SWTControl extends ECPAbstractControl {
 				// nothing to do
 			}
 		});
-
+		int numControls = 1;
 		fillControlComposite(controlComposite);
 
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			Button unsetButton = getCustomUnsetButton();
 			if (unsetButton == null) {
+				numControls++;
 				unsetButton = new Button(controlComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
 				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
@@ -273,6 +284,10 @@ public abstract class SWTControl extends ECPAbstractControl {
 			});
 			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset"); //$NON-NLS-1$
 		}
+
+		// 1 column for control, 1 for default unset button
+		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0).extendedMargins(10, 0, 0, 0)
+			.applyTo(controlComposite);
 
 		if (!getStructuralFeature().isUnsettable()
 			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
@@ -308,15 +323,6 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 */
 	protected Button getCustomUnsetButton() {
 		return null;
-	}
-
-	/**
-	 * Returns the {@link DataBindingContext} set in the constructor.
-	 * 
-	 * @return the {@link DataBindingContext}
-	 */
-	protected DataBindingContext getDataBindingContext() {
-		return getModelElementContext().getDataBindingContext();
 	}
 
 	/**
@@ -394,10 +400,64 @@ public abstract class SWTControl extends ECPAbstractControl {
 	 */
 	protected abstract String getUnsetButtonTooltip();
 
+	/**
+	 * Method for retrieving a {@link Color} based on the predefined SWT id.
+	 * 
+	 * @param color the SWT id of the color
+	 * @return the Color or black if the id was incorrect
+	 */
 	protected final Color getSystemColor(int color) {
 		if (parentComposite == null) {
 			return Display.getDefault().getSystemColor(color);
 		}
 		return parentComposite.getShell().getDisplay().getSystemColor(color);
+	}
+
+	private Setting getSetting(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting lastSetting = null;
+		while (iterator.hasNext()) {
+			count++;
+			if (count == 2) {
+				throw new IllegalArgumentException(
+					"The passed VDomainModelReference resolves to more then one setting.");
+			}
+			lastSetting = iterator.next();
+		}
+		if (count == 0) {
+			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no setting.");
+		}
+		return lastSetting;
+	}
+
+	/**
+	 * Return the {@link EStructuralFeature} of this control.
+	 * 
+	 * @return the {@link EStructuralFeature}
+	 */
+	@Deprecated
+	protected EStructuralFeature getStructuralFeature() {
+		return getSetting(getDomainModelReference()).getEStructuralFeature();
+	}
+
+	/**
+	 * Whether this control should be editable.
+	 * 
+	 * @return true if the {@link IItemPropertyDescriptor#canSetProperty(Object)} returns true, false otherwise
+	 */
+	@Deprecated
+	protected boolean isEditable() {
+		return getItemPropertyDescriptor().canSetProperty(getSetting(getDomainModelReference()).getEObject());
+	}
+
+	/**
+	 * Convenience Method for retrieving an {@link IItemPropertyDescriptor}.
+	 * 
+	 * @return the {@link IItemPropertyDescriptor}
+	 */
+	@Deprecated
+	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
+		return getItemPropertyDescriptor(getSetting(getDomainModelReference()));
 	}
 }

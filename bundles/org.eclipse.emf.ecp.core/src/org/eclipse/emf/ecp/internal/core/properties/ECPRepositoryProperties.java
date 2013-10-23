@@ -12,13 +12,12 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core.properties;
 
+import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
 import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
-
-import org.eclipse.emf.ecp.core.ECPProvider;
-import org.eclipse.emf.ecp.core.ECPRepository;
 
 /**
  * @author Eike Stepper

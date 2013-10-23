@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -66,6 +67,7 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		super(notifier);
 		this.shell = shell;
 		this.composedAdapterFactory = composedAdapterFactory;
+
 		this.rootClass = rootClass;
 		this.validator = validator;
 		this.allowMultiReferences = allowMultiReferences;
@@ -78,7 +80,9 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 	@Override
 	protected void doExecute() {
-
+		if (rootClass == null) {
+			return;
+		}
 		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		final ECPViewEditorTreeSelectionDialog dialog = new ECPViewEditorTreeSelectionDialog(shell, labelProvider,
 			getContentProvider(rootClass));
@@ -97,7 +101,10 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 				final TreePath path = dialog.getTreePath();
 
 				for (int i = 0; i < path.getSegmentCount() - 1; i++) {
-					bottomUpPath.add((EReference) path.getSegment(i));
+					final Object o = path.getSegment(i);
+					if (EReference.class.isInstance(o)) {
+						bottomUpPath.add((EReference) o);
+					}
 				}
 
 				setSelectedValues(selectedFeature, bottomUpPath);
@@ -173,8 +180,25 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 			private Set<Object> getElementsForEClass(EClass eClass) {
 				final Set<Object> result = new LinkedHashSet<Object>();
-				result.addAll(eClass.getEAllReferences());
-				result.addAll(eClass.getEAllAttributes());
+				if (eClass.isAbstract() || eClass.isInterface()) {
+					// find eClasses which are not abstract
+					for (final EClassifier eClassifier : eClass.getEPackage().getEClassifiers()) {
+						if (eClass != eClassifier && EClass.class.isInstance(eClassifier)
+							&& eClass.isSuperTypeOf((EClass) eClassifier)) {
+							result.add(eClassifier);
+						}
+					}
+				}
+				else {
+
+					// get all propertyDescriptors, get features from descriptors
+					// final List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
+					// .getPropertyDescriptors(modelElementContext.getModelElement());
+
+					// TODO workaround for the moment, solution see above
+					result.addAll(eClass.getEAllReferences());
+					result.addAll(eClass.getEAllAttributes());
+				}
 				return result;
 			}
 		};

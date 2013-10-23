@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
 import org.eclipse.emf.ecp.view.model.View;
@@ -48,12 +46,6 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
  * 
  */
 public class ControlRootEClassControl extends LinkControl {
-
-	public ControlRootEClassControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	protected int getNumButtons() {

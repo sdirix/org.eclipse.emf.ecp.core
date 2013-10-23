@@ -38,7 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ControlItemProvider
-	extends AbstractControlItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends CompositeItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -64,33 +64,9 @@ public class ControlItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
-			addMandatoryPropertyDescriptor(object);
 			addLabelAlignmentPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Mandatory feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addMandatoryPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Control_mandatory_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Control_mandatory_feature", "_UI_Control_type"),
-				ViewPackage.Literals.CONTROL__MANDATORY,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				null,
-				null));
 	}
 
 	/**
@@ -194,7 +170,6 @@ public class ControlItemProvider
 
 		switch (notification.getFeatureID(Control.class))
 		{
-		case ViewPackage.CONTROL__MANDATORY:
 		case ViewPackage.CONTROL__LABEL_ALIGNMENT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

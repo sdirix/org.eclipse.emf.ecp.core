@@ -12,16 +12,17 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlFeature;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -38,12 +39,13 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT {
 	private static Label label;
 	private static Composite parent;
 
-	private static Set<ECPCustomControlFeature> features = new LinkedHashSet<ECPCustomControlFeature>();
+	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 	static {
-		final ECPCustomControlFeature feature = new ECPCustomControlFeature(
-			Collections.singletonList(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()),
-			BowlingPackage.eINSTANCE.getMerchandise_Name(), true);
-		features.add(feature);
+		final VFeaturePathDomainModelReference domainModelReference = ViewFactory.eINSTANCE
+			.createVFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+		features.add(domainModelReference);
 	}
 
 	public CustomControlStub2() {
@@ -56,7 +58,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT {
 	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> createControls(Composite composite) {
+	public List<RenderingResultRow<Control>> createControl(Composite composite) {
 		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
 
 		setParent(composite);

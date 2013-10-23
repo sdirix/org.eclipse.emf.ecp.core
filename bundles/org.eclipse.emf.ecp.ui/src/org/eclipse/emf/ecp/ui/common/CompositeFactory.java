@@ -11,6 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.common;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -22,13 +26,8 @@ import org.eclipse.emf.ecp.internal.ui.composites.CheckoutProjectCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.CreateProjectCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.SelectModelClassCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.SelectModelElementCompositeImpl;
-
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * @author Eugen Neufeld

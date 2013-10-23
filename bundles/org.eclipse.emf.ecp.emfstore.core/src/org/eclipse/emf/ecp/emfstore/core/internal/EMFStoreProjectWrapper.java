@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
@@ -20,8 +21,6 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * This is the EMFStore implementation of a {@link ECPCheckoutSource}.

@@ -18,8 +18,9 @@ import static org.junit.Assert.assertSame;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
@@ -42,13 +43,15 @@ public class SWTCustomControlTest {
 	public class TestHandel {
 
 		private final View view;
-		private final VCustomControl customControl;
+
+		private final Control customControl;
 
 		/**
 		 * @param view
 		 * @param customControl
 		 */
-		public TestHandel(View view, VCustomControl customControl) {
+
+		public TestHandel(View view, Control customControl) {
 			this.view = view;
 			this.customControl = customControl;
 		}
@@ -63,7 +66,8 @@ public class SWTCustomControlTest {
 		/**
 		 * @return the customControl
 		 */
-		public VCustomControl getCustomControl() {
+
+		public Control getCustomControl() {
 			return customControl;
 		}
 
@@ -88,10 +92,16 @@ public class SWTCustomControlTest {
 	 */
 	private Renderable createCustomControlInView() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final VCustomControl customControl = createCustomControl();
+
+		final Control customControl = createCustomControl();
+
 		view.getChildren().add(customControl);
-		customControl.setBundle(BUNDLE_ID);
-		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
+		// customControl.setBundle(BUNDLE_ID);
+		// TODO check id
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
+		customControl.setDomainModelReference(domainModelReference);
 		return view;
 	}
 
@@ -99,23 +109,36 @@ public class SWTCustomControlTest {
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final VCustomControl customControl = createCustomControl();
+
+		final Control customControl = createCustomControl();
+
 		view.getChildren().add(customControl);
-		customControl.setBundle(BUNDLE_ID);
-		customControl.setClassName("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
+		// customControl.setBundle(BUNDLE_ID);
+		// TODO check id
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.customcomposite.ui.swt.test.NoExisting");
+		customControl.setDomainModelReference(domainModelReference);
 		// setup ui
 		final Shell shell = SWTViewTestHelper.createShell();
 		SWTViewTestHelper.render(view, shell);
 		// TODO: What to expect
+
 	}
 
 	@Test
 	public void testCustomControlInit() {
 		final View view = ViewFactory.eINSTANCE.createView();
-		final VCustomControl customControl = createCustomControl();
+
+		final Control customControl = createCustomControl();
+
 		view.getChildren().add(customControl);
-		customControl.setBundle(BUNDLE_ID);
-		customControl.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		// customControl.setBundle(BUNDLE_ID);
+		// TODO check id
+		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
+		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		customControl.setDomainModelReference(domainModelReference);
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
 		new ViewModelContextImpl(view, domainModel);
@@ -126,7 +149,9 @@ public class SWTCustomControlTest {
 	/**
 	 * @return
 	 */
-	private VCustomControl createCustomControl() {
-		return VCustomFactory.eINSTANCE.createCustomControl();
+
+	private Control createCustomControl() {
+		return ViewFactory.eINSTANCE.createControl();
+
 	}
 }

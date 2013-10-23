@@ -54,6 +54,16 @@ public interface VTableFactory extends EFactory
 	VTableColumn createTableColumn();
 
 	/**
+	 * Returns a new object of class '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Domain Model Reference</em>'.
+	 * @generated
+	 */
+	VTableDomainModelReference createTableDomainModelReference();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

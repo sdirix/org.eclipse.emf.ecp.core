@@ -11,9 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.ECPElement;
-
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.ecp.core.util.ECPElement;
 
 /**
  * @author Eike Stepper

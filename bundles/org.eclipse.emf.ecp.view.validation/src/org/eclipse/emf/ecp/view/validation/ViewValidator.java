@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -90,16 +90,16 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
-			for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
-				for (final VDomainModelReference modelReference : control.getDomainModelReferences()) {
-					final Iterator<Setting> settings = modelReference.getIterator();
-					while (settings.hasNext()) {
-						final Setting setting = settings.next();
-						if (setting.getEStructuralFeature().getEContainingClass().equals(eObject.eClass())) {
-							update(control, eObject, setting.getEStructuralFeature(), getDefaultValue());
-						}
+			for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
+				final VDomainModelReference modelReference = control.getDomainModelReference();
+				final Iterator<Setting> settings = modelReference.getIterator();
+				while (settings.hasNext()) {
+					final Setting setting = settings.next();
+					if (setting.getEStructuralFeature().getEContainingClass().equals(eObject.eClass())) {
+						update(control, eObject, setting.getEStructuralFeature(), getDefaultValue());
 					}
 				}
+
 			}
 		} else {
 
@@ -118,15 +118,20 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 			// validation registry should be queryable with a control and a feature
 			// -> merge SettingsMapping and the registry
 			for (final EStructuralFeature invalidFeature : featureToValidationResult.keySet()) {
-				for (final AbstractControl control : validationRegistry.getRenderablesForEObject(eObject)) {
-					for (final VDomainModelReference modelReference : control.getDomainModelReferences()) {
-						final Iterator<Setting> settings = modelReference.getIterator();
-						while (settings.hasNext()) {
-							final Setting setting = settings.next();
+				for (final Control control : validationRegistry.getRenderablesForEObject(eObject)) {
+					final VDomainModelReference modelReference = control.getDomainModelReference();
+					final Iterator<Setting> settings = modelReference.getIterator();
+					while (settings.hasNext()) {
+						final Setting setting = settings.next();
 
-							final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
-							if (setting.getEStructuralFeature().equals(invalidFeature)) {
-								vDiagnostic.getDiagnostics().add(featureToValidationResult.get(invalidFeature));
+						final VDiagnostic vDiagnostic = ViewFactory.eINSTANCE.createVDiagnostic();
+						if (setting.getEStructuralFeature().equals(invalidFeature)) {
+							vDiagnostic.getDiagnostics().add(featureToValidationResult.get(invalidFeature));
+							update(control, eObject, setting.getEStructuralFeature(),
+								vDiagnostic);
+						} else {
+							// check if feature is not contained in current diagnostics
+							if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())) {
 								update(control, eObject, setting.getEStructuralFeature(),
 									vDiagnostic);
 							} else {

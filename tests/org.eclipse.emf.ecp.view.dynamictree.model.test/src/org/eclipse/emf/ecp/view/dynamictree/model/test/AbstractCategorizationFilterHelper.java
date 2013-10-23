@@ -18,7 +18,6 @@ import java.util.Set;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
-import org.eclipse.emf.ecp.view.custom.model.impl.VCustomControlImpl;
 import org.eclipse.emf.ecp.view.group.model.impl.VGroupImpl;
 import org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl;
 import org.eclipse.emf.ecp.view.model.impl.ControlImpl;
@@ -33,7 +32,6 @@ public class AbstractCategorizationFilterHelper {
 			add(VTableControlImpl.class);
 			add(VGroupImpl.class);
 			add(VLabelImpl.class);
-			add(VCustomControlImpl.class);
 		}
 	};
 

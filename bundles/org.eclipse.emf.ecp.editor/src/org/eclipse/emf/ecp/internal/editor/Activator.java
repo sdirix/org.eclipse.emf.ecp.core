@@ -16,7 +16,7 @@ package org.eclipse.emf.ecp.internal.editor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 

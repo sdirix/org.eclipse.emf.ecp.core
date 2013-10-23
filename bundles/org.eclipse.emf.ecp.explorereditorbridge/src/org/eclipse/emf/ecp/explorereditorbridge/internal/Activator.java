@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.explorereditorbridge.internal;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-
 import org.osgi.framework.BundleContext;
 
 /**

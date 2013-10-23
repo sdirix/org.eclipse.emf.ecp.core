@@ -13,35 +13,6 @@
 
 package org.eclipse.emf.ecp.internal.editor;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecp.edit.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
-import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
-import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationHiddenDescriptor;
-import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPositionDescriptor;
-import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPriorityDescriptor;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,6 +22,34 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
+import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
+import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationHiddenDescriptor;
+import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPositionDescriptor;
+import org.eclipse.emf.ecp.internal.editor.descriptor.AnnotationPriorityDescriptor;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Eugen Neufeld

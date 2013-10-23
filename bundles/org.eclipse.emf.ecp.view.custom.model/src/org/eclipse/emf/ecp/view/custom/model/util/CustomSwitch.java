@@ -14,11 +14,9 @@ package org.eclipse.emf.ecp.view.custom.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
-import org.eclipse.emf.ecp.view.model.Composite;
-import org.eclipse.emf.ecp.view.model.Renderable;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +28,6 @@ import org.eclipse.emf.ecp.view.model.Renderable;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage
  * @generated
  */
@@ -39,7 +36,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected static VCustomPackage modelPackage;
@@ -48,7 +44,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public CustomSwitch() {
@@ -61,7 +56,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -72,96 +66,53 @@ public class CustomSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-	 * result.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case VCustomPackage.CUSTOM_CONTROL: {
-			VCustomControl customControl = (VCustomControl) theEObject;
-			T result = caseCustomControl(customControl);
-			if (result == null)
-				result = caseAbstractControl(customControl);
-			if (result == null)
-				result = caseComposite(customControl);
-			if (result == null)
-				result = caseRenderable(customControl);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		default:
-			return defaultCase(theEObject);
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE: {
+				VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference)theEObject;
+				T result = caseHardcodedDomainModelReference(hardcodedDomainModelReference);
+				if (result == null) result = caseVDomainModelReference(hardcodedDomainModelReference);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			default: return defaultCase(theEObject);
 		}
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Hardcoded Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Hardcoded Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCustomControl(VCustomControl object) {
+	public T caseHardcodedDomainModelReference(VHardcodedDomainModelReference object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Renderable</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>VDomain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseRenderable(Renderable object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Composite</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Composite</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseComposite(Composite object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Abstract Control</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Abstract Control</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAbstractControl(AbstractControl object) {
+	public T caseVDomainModelReference(VDomainModelReference object) {
 		return null;
 	}
 
@@ -171,7 +122,6 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

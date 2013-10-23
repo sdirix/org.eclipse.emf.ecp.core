@@ -12,19 +12,18 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.Viewer;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.Viewer;
 
 /**
  * @author Eugen Neufeld

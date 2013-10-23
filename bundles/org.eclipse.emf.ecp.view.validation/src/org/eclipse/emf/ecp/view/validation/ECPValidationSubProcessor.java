@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.AbstractControl;
+import org.eclipse.emf.ecp.view.model.Control;
 import org.eclipse.emf.ecp.view.model.Renderable;
 
 /**
@@ -37,6 +37,6 @@ public interface ECPValidationSubProcessor {
 	 *            {@link ValidationRegistry#getDomainToControlMapping(EObject, Renderable)} method
 	 * @return a map from {@link EObject} to its {@link org.eclipse.emf.ecp.view.model.Control Controls}
 	 */
-	Map<EObject, Set<AbstractControl>> processRenderable(EObject domainObject, Renderable parentRenderable,
+	Map<EObject, Set<Control>> processRenderable(EObject domainObject, Renderable parentRenderable,
 		ValidationRegistry validationRegistry);
 }

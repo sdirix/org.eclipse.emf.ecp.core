@@ -12,10 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
+import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-
-import org.eclipse.core.expressions.PropertyTester;
 
 /**
  * Tests weather a project is dirty.

@@ -14,10 +14,9 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -27,24 +26,10 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  */
 public class AttributeMultiControl extends MultiControl {
-	/**
-	 * Constructor for a multi attribute control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public AttributeMultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-
-	}
 
 	@Override
 	protected ECPSWTAction[] instantiateActions() {
-		ECPSWTAction[] actions = new ECPSWTAction[1];
+		final ECPSWTAction[] actions = new ECPSWTAction[1];
 		actions[0] = new AddAttributeAction(getModelElementContext(), getItemPropertyDescriptor(),
 			getStructuralFeature());
 		return actions;
@@ -53,7 +38,8 @@ public class AttributeMultiControl extends MultiControl {
 	@Override
 	protected int getTesterPriority(ECPStaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject eObject) {
-		return AttributeMultiControlTester.getTesterPriority(tester, itemPropertyDescriptor, eObject);
+		return AttributeMultiControlTester.getTesterPriority(tester,
+			(EStructuralFeature) itemPropertyDescriptor.getFeature(eObject), eObject);
 	}
 
 	/*

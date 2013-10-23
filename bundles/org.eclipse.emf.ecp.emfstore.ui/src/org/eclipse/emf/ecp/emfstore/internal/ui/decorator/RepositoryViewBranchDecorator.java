@@ -11,18 +11,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
+import java.util.List;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 import org.eclipse.emf.emfstore.server.model.ESBranchInfo;
 import org.eclipse.emf.emfstore.server.model.versionspec.ESPrimaryVersionSpec;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
-
-import java.util.List;
 
 /**
  * Optional decorator. Not used in extension point

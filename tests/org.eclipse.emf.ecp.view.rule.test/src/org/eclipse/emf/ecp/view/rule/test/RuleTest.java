@@ -46,7 +46,7 @@ public class RuleTest {
 
 	@After
 	public void after() {
-		ViewTestHelper.getViewModelContext().dispose();
+		// ViewTestHelper.getViewModelContext().dispose();
 	}
 
 	@Test

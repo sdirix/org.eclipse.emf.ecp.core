@@ -14,8 +14,6 @@ package org.eclipse.emf.ecp.view.editor.controls;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -32,14 +30,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListDialog;
 
 public class TableColumnAttributeControl extends LinkControl {
-
-	public TableColumnAttributeControl(boolean showLabel,
-		IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext,
-		boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext,
-			embedded);
-	}
 
 	@Override
 	protected int getNumButtons() {

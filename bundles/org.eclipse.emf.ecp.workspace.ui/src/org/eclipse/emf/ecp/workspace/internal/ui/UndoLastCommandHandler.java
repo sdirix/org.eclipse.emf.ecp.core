@@ -12,11 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.workspace.internal.ui;
 
-import org.eclipse.emf.ecp.spi.core.InternalProject;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 

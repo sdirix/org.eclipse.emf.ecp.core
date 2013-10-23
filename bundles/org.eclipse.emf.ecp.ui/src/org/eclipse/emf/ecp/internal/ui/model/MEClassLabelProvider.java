@@ -10,15 +10,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
+import java.util.MissingResourceException;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
 import org.eclipse.swt.graphics.Image;
-
-import java.util.MissingResourceException;
 
 /**
  * @author Hodaie LabelProvider for TreeViewer that is shown on ModelTreePage

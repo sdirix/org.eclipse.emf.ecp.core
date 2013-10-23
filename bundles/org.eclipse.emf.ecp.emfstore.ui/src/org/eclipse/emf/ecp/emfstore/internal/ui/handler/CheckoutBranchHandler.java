@@ -12,12 +12,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
-import org.eclipse.emf.emfstore.internal.client.ui.controller.UICheckoutController;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
+import org.eclipse.emf.emfstore.internal.client.ui.controller.UICheckoutController;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;

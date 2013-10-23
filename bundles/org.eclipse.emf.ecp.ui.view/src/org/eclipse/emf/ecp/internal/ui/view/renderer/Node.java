@@ -19,7 +19,7 @@ import java.util.Set;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;

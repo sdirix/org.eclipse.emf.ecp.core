@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider.ErrorElement;
 import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider.SlowElement;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
-
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Image;

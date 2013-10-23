@@ -11,10 +11,11 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.dialogs;
 
+import java.util.List;
+
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
-
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -23,8 +24,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-
-import java.util.List;
 
 /**
  * @author Eike Stepper

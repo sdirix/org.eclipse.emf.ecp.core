@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -49,6 +49,12 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 	 */
 	public static final SWTTableControlRenderer INSTANCE = new SWTTableControlRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
+	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 */
 	@Override
 	public List<RenderingResultRow<Control>> renderSWT(Node<VTableControl> node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
@@ -85,10 +91,9 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 				new TableColumnConfiguration(column.isReadOnly(), column.getAttribute()));
 		}
 
-		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl(
-			false, itemPropertyDescriptor,
-			(EStructuralFeature) itemPropertyDescriptor.getFeature(subContext
-				.getModelElement()), subContext, false, tcc);
+		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl();
+		control.setTableControlConfiguration(tcc);
+		control.init(subContext, modelTableControl.getDomainModelReference());
 
 		final Composite parent = getParentFromInitData(initData);
 		Label label = null;

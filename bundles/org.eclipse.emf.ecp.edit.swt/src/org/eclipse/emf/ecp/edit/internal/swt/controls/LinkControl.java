@@ -12,24 +12,22 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
-import org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import java.net.URL;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
+import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
+import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
+import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -45,29 +43,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 
-import java.net.URL;
-
 /**
- * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a reference.
+ * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
+ * EStructuralFeature}s which have a reference.
  * 
  * @author Eugen Neufeld
  * 
  */
 public class LinkControl extends SingleControl {
-
-	/**
-	 * Constructor for a eenum control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public LinkControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	private Composite linkComposite;
 
@@ -102,10 +85,12 @@ public class LinkControl extends SingleControl {
 		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
 			numColumns++;
 		}
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(composite);
-
-		mainComposite = new Composite(composite, SWT.NONE);
-		mainComposite.setBackground(composite.getBackground());
+		final Composite parent = new Composite(composite, SWT.NONE);
+		parent.setBackground(composite.getBackground());
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(0, 0).equalWidth(false).applyTo(parent);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(parent);
+		mainComposite = new Composite(parent, SWT.NONE);
+		mainComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(mainComposite);
 
 		stackLayout = new StackLayout();
@@ -113,13 +98,13 @@ public class LinkControl extends SingleControl {
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
 		unsetLabel.setText(ControlMessages.LinkControl_NotSet);
-		unsetLabel.setBackground(composite.getBackground());
-		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+		unsetLabel.setBackground(mainComposite.getBackground());
+		unsetLabel.setForeground(getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
 
 		linkComposite = new Composite(mainComposite, SWT.NONE);
 		linkComposite.setLayout(new GridLayout(2, false));
-		linkComposite.setBackground(composite.getBackground());
+		linkComposite.setBackground(mainComposite.getBackground());
 
 		createHyperlink();
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(linkComposite);
@@ -129,7 +114,7 @@ public class LinkControl extends SingleControl {
 			stackLayout.topControl = unsetLabel;
 		}
 		if (!isEmbedded()) {
-			buttons = createButtons(composite);
+			buttons = createButtons(parent);
 		}
 	}
 
@@ -138,7 +123,7 @@ public class LinkControl extends SingleControl {
 	}
 
 	protected Button[] createButtons(Composite composite) {
-		Button[] buttons = new Button[3];
+		final Button[] buttons = new Button[3];
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
 			getItemPropertyDescriptor(), getStructuralFeature()), composite);
 		buttons[1] = createButtonForAction(new AddReferenceAction(getModelElementContext(),
@@ -196,7 +181,7 @@ public class LinkControl extends SingleControl {
 	 */
 	public void setEditable(boolean isEditable) {
 		if (!isEmbedded()) {
-			for (Button button : buttons) {
+			for (final Button button : buttons) {
 				button.setVisible(isEditable);
 			}
 		}
@@ -206,9 +191,9 @@ public class LinkControl extends SingleControl {
 	@Override
 	public Binding bindValue() {
 
-		IObservableValue value = SWTObservables.observeText(hyperlink);
+		final IObservableValue value = SWTObservables.observeText(hyperlink);
 
-		Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
@@ -221,7 +206,7 @@ public class LinkControl extends SingleControl {
 				return "<a>" + getLinkText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
-		IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
+		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
 		getDataBindingContext().bindValue(tooltipValue, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
@@ -235,7 +220,7 @@ public class LinkControl extends SingleControl {
 			}
 		});
 
-		IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
+		final IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
 		getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
@@ -257,7 +242,7 @@ public class LinkControl extends SingleControl {
 	}
 
 	protected Object getLinkText(Object value) {
-		String linkName = adapterFactoryItemDelegator.getText(value);
+		final String linkName = adapterFactoryItemDelegator.getText(value);
 		return linkName == null ? "" : linkName; //$NON-NLS-1$
 	}
 

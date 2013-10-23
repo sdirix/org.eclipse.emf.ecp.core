@@ -11,10 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.groupedgrid.ui.internal;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
@@ -31,7 +31,7 @@ public class NodeBuilderGroupedGrid implements
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder#build(org.eclipse.emf.ecp.view.model.Renderable,
-	 *      org.eclipse.emf.ecp.edit.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
+	 *      org.eclipse.emf.ecp.edit.spi.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
 	 */
 	public Node<VGroupedGrid> build(VGroupedGrid model, ECPControlContext context,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {

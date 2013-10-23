@@ -11,12 +11,14 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.dialogs.PropertyDialog;
 import org.eclipse.emf.ecp.internal.ui.model.PropertiesContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.PropertiesLabelProvider;
-
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -30,9 +32,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper

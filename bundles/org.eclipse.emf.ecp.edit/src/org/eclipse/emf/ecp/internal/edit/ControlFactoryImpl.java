@@ -20,14 +20,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.ECPControl;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.ECPControlDescription;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.osgi.framework.Bundle;
 
@@ -39,6 +39,7 @@ import org.osgi.framework.Bundle;
  * @author Eugen Neufeld
  * 
  */
+
 public final class ControlFactoryImpl implements ECPControlFactory {
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
@@ -135,6 +136,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Deprecated
 	public <T extends ECPControl> T createControl(Class<T> controlType, IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context) {
 
@@ -143,7 +145,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		if (controlDescription == null) {
 			return null;
 		}
-		final T control = getControlInstance(controlDescription, itemPropertyDescriptor, context);
+		final T control = getControlInstance(controlDescription);
 
 		return control;
 	}
@@ -167,7 +169,46 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		if (controlDescription == null) {
 			return null;
 		}
-		final T control = getControlInstance(controlDescription, itemPropertyDescriptor, context);
+		final T control = getControlInstance(controlDescription);
+
+		return control;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
+	 *      org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 */
+	public <T> T createControl(Class<T> controlType, VDomainModelReference domainModelReference) {
+
+		final ECPControlDescription controlDescription = getControlCandidate(controlType, domainModelReference);
+		if (controlDescription == null) {
+			return null;
+		}
+		final T control = getControlInstance(controlDescription);
+
+		return control;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.String)
+	 */
+	public <T> T createControl(String controlId) {
+
+		ECPControlDescription controlDescription = null;
+		for (final ECPControlDescription desc : controlDescriptors) {
+			if (desc.getId().equals(controlId)) {
+				controlDescription = desc;
+				break;
+			}
+		}
+		if (controlDescription == null) {
+			return null;
+		}
+		final T control = getControlInstance(controlDescription);
 
 		return control;
 	}
@@ -180,16 +221,11 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription,
-		IItemPropertyDescriptor itemPropertyDescriptor, ECPControlContext modelElementContext) {
-		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(modelElementContext
-			.getModelElement());
+	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription) {
 		try {
-			final Constructor<? extends ECPAbstractControl> controlConstructor = controlDescription.getControlClass()
-				.getConstructor(boolean.class,
-					IItemPropertyDescriptor.class, EStructuralFeature.class, ECPControlContext.class, boolean.class);
-			return (T) controlConstructor.newInstance(controlDescription.isShowLabel(), itemPropertyDescriptor,
-				feature, modelElementContext, false);
+			final Constructor<? extends ECPControl> controlConstructor = controlDescription.getControlClass()
+				.getConstructor();
+			return (T) controlConstructor.newInstance();
 		} catch (final IllegalArgumentException ex) {
 			Activator.logException(ex);
 		} catch (final InstantiationException ex) {
@@ -207,8 +243,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	}
 
 	private ECPControlDescription getControlCandidate(Class<?> controlClass,
-		IItemPropertyDescriptor itemPropertyDescriptor,
-		EObject modelElement) {
+		VDomainModelReference domainModelReference) {
 		int highestPriority = -1;
 		ECPControlDescription bestCandidate = null;
 		for (final ECPControlDescription description : controlDescriptors) {
@@ -219,7 +254,35 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 			int currentPriority = -1;
 
 			for (final ECPApplicableTester tester : description.getTester()) {
-				final int testerPriority = tester.isApplicable(itemPropertyDescriptor, modelElement);
+				final int testerPriority = tester.isApplicable(domainModelReference);
+				if (testerPriority > currentPriority) {
+					currentPriority = testerPriority;
+				}
+
+			}
+
+			if (currentPriority > highestPriority) {
+				highestPriority = currentPriority;
+				bestCandidate = description;
+			}
+		}
+		return bestCandidate;
+	}
+
+	@Deprecated
+	private ECPControlDescription getControlCandidate(Class<?> controlClass,
+		IItemPropertyDescriptor iItemPropertyDescriptor, EObject modelElement) {
+		int highestPriority = -1;
+		ECPControlDescription bestCandidate = null;
+		for (final ECPControlDescription description : controlDescriptors) {
+
+			if (!controlClass.isAssignableFrom(description.getControlClass())) {
+				continue;
+			}
+			int currentPriority = -1;
+
+			for (final ECPApplicableTester tester : description.getTester()) {
+				final int testerPriority = tester.isApplicable(iItemPropertyDescriptor, modelElement);
 				if (testerPriority > currentPriority) {
 					currentPriority = testerPriority;
 				}

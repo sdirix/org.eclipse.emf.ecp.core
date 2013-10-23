@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.workspace.internal.ui;
 
+import java.lang.reflect.Field;
+
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -26,8 +28,6 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.internal.ide.misc.ContainerSelectionGroup;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
-
-import java.lang.reflect.Field;
 
 /**
  * The Class NewXMIFileWizardPage.

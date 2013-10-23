@@ -21,6 +21,13 @@
  */
 package org.eclipse.emf.ecp.workspace.internal.core;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
@@ -46,13 +53,6 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper

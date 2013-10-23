@@ -16,15 +16,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
@@ -32,17 +31,16 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static VCustomFactory init() {
 		try {
-			final VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
-				.getEFactory(VCustomPackage.eNS_URI);
+			VCustomFactory theCustomFactory = (VCustomFactory)EPackage.Registry.INSTANCE.getEFactory(VCustomPackage.eNS_URI);
 			if (theCustomFactory != null) {
 				return theCustomFactory;
 			}
-		} catch (final Exception exception) {
+		}
+		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VCustomFactoryImpl();
@@ -52,7 +50,6 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VCustomFactoryImpl() {
@@ -62,44 +59,39 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case VCustomPackage.CUSTOM_CONTROL:
-			return createCustomControl();
-		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE: return createHardcodedDomainModelReference();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public VCustomControl createCustomControl() {
-		final VCustomControlImpl customControl = new VCustomControlImpl();
-		return customControl;
+	public VHardcodedDomainModelReference createHardcodedDomainModelReference() {
+		VHardcodedDomainModelReferenceImpl hardcodedDomainModelReference = new VHardcodedDomainModelReferenceImpl();
+		return hardcodedDomainModelReference;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VCustomPackage getCustomPackage() {
-		return (VCustomPackage) getEPackage();
+		return (VCustomPackage)getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @deprecated
 	 * @generated
 	 */

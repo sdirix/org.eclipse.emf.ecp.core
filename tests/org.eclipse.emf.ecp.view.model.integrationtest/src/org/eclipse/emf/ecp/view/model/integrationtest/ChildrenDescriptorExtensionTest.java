@@ -37,8 +37,8 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
-	// label, separator, table, vertical, horizontal, group, groupedgrid, customcontrol
-	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 8;
+	// label, separator, table, vertical, horizontal, group, groupedgrid
+	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 7;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
@@ -52,23 +52,24 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
-	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-	// TODO: Should be not -3, span and rules are missing
-	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1 - 3;
+	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
+	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
+	// TODO: Should be not -4, span and rules are missing, VPredefinedDR missing
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1 - 4;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	// TODO: Should be not -3, span and rules are missing
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT - 3;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	// TODO: Should be not -9, labels, custom control, groupedgrid, span, 2 rules, vertical, horizontal, separator,table
+	// TODO: Should be not -9, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table
 	// are missing
-	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 10;
+	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 9;
 	private static final int ACTION_CHILD_COUNT = 0;
 	// TODO: Should be not -2, rules are missing
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1 - 2;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
-	// TODO: Should be not -6, labels, group, custom composites, vertical, horizontal, separator ,table are missing
-	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 7;
+	// TODO: Should be not -6, labels, group, vertical, horizontal, separator ,table are missing
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 6;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
@@ -228,14 +229,6 @@ public class ChildrenDescriptorExtensionTest {
 	public void testActionDescriptors() {
 		final int size = getChildrenSize(ViewPackage.eINSTANCE.getAction());
 		assertEquals(ACTION_CHILD_COUNT, size);
-	}
-
-	/**
-	 * Class is abstract, Exception expected
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testAbstractControlDescriptors() {
-		getChildrenSize(ViewPackage.eINSTANCE.getAbstractControl());
 	}
 
 	/**

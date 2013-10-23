@@ -22,8 +22,8 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentTouchedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
-import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
-import org.eclipse.emf.ecp.edit.ECPEditorContext;
+import org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener;
+import org.eclipse.emf.ecp.edit.spi.ECPEditorContext;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.swt.widgets.Shell;
 
@@ -100,7 +100,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
-		getViewContext().dispose();
+		// getViewContext().dispose();
 	}
 
 }

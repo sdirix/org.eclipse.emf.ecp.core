@@ -21,12 +21,9 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -41,20 +38,6 @@ import org.eclipse.swt.widgets.Text;
  * @author emueller
  */
 public class NumericalControl extends AbstractTextControl {
-
-	/**
-	 * Constructor for a String control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public NumericalControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	@Override
 	protected int getTextWidgetStyle() {

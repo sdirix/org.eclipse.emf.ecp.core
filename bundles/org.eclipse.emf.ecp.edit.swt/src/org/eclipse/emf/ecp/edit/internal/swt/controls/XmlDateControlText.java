@@ -26,15 +26,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -54,23 +53,10 @@ import org.eclipse.swt.widgets.Text;
  * 
  * @author Eugen Neufeld
  * 
+ *         private Button bDate;
  */
 public class XmlDateControlText extends AbstractTextControl {
 	private Button bDate;
-
-	/**
-	 * This is the default constructor.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} of the binding
-	 * @param modelElementContext the {@link ECPControlContext}
-	 * @param embedded whether this control is used embedded (e.g in another control)
-	 */
-	public XmlDateControlText(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	@Override
 	protected String getTextVariantID() {
@@ -101,9 +87,12 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	@Override
 	protected void fillControlComposite(Composite composite) {
-		super.fillControlComposite(composite);
-		((GridLayout) composite.getLayout()).numColumns = 2;
-		bDate = new Button(composite, SWT.PUSH);
+		final Composite main = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
+		super.fillControlComposite(main);
+		// ((GridLayout) composite.getLayout()).numColumns = 2;
+		bDate = new Button(main, SWT.PUSH);
 		bDate.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		bDate.addSelectionListener(new SelectionAdapter() {

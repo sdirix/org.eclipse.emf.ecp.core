@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.observer;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
@@ -19,14 +22,10 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver;
-
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 public class CheckoutObserver implements ESCheckoutObserver {
 

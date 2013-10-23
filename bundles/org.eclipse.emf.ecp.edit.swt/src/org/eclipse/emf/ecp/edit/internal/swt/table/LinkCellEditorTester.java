@@ -11,20 +11,54 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 public class LinkCellEditorTester implements ECPApplicableTester {
 
-	public LinkCellEditorTester() {
-		// TODO Auto-generated constructor stub
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
+		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
+		return check(eObject, feature);
 	}
 
-	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 */
+	public int isApplicable(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			count++;
+			setting = iterator.next();
+		}
+		if (count != 1) {
+			return NOT_APPLICABLE;
+		}
+		return check(setting.getEObject(), setting.getEStructuralFeature());
+	}
+
+	/**
+	 * @param eObject
+	 * @param eStructuralFeature
+	 * @return
+	 */
+	private int check(EObject eObject, EStructuralFeature feature) {
 		if (EReference.class.isInstance(feature)) {
 			return 1;
 		}

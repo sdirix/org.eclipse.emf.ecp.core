@@ -12,6 +12,9 @@ package org.eclipse.emf.ecp.internal.ui.view.emf;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -19,10 +22,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.ENamedElement;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * This class calls optimized refresh APIs for all the standard Viewer subclasses.

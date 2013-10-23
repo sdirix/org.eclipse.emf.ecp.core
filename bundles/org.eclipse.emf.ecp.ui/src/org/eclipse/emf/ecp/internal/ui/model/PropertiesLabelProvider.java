@@ -11,13 +11,12 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
-import org.eclipse.emf.ecp.internal.ui.Activator;
+import java.util.Map;
 
+import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
