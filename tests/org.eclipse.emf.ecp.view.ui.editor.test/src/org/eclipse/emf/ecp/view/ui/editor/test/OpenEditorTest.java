@@ -14,10 +14,13 @@ package org.eclipse.emf.ecp.view.ui.editor.test;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
+import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VControl;
@@ -25,7 +28,6 @@ import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
-import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -44,14 +46,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-// import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
-
 @RunWith(SWTBotJunit4ClassRunner.class)
-// @RunWith(SWTBotDatabindingClassRunner.class)
-// @RunWith(DatabindingClassRunner.class)
 public class OpenEditorTest extends SWTBotTestCase {
-
-	// private SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
 	@SuppressWarnings("unused")
 	private static EObject domainObject;
@@ -63,10 +59,8 @@ public class OpenEditorTest extends SWTBotTestCase {
 
 	@Before
 	public void init() {
-		// setup model
 		domainObject = createDomainObject();
-		//
-		display = Display.getDefault();// /new Display();
+		display = Display.getDefault();
 
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
 
@@ -161,35 +155,22 @@ public class OpenEditorTest extends SWTBotTestCase {
 
 				public void run() {
 					try {
-						SWTViewTestHelper.render(view, createDomainObject(), shell);
+						final ECPControlContext context = ViewTestHelper.createECPControlContext(
+							createDomainObject(), shell, view);
+						ECPSWTViewRendererImpl.render(shell, context, view);
 					} catch (final NoRendererFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						fail(e.getMessage());
 					} catch (final NoPropertyDescriptorFoundExeption e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						fail(e.getMessage());
+					} catch (final ECPRendererException ex) {
+						fail(ex.getMessage());
 					}
-					// TODO Auto-generated method stub
 					shell.open();
 				}
 			});
 
 			final SWTBotTree tree = bot.tree();
 			final SWTBotTreeItem select = tree.getTreeItem("parent").getNode("foo").getNode("2").select();
-
-			// display.syncExec(new Runnable() {
-			//
-			// @Override
-			// public void run() {
-			//
-			// while (!shell.isDisposed()) {
-			// if (!Display.getCurrent().readAndDispatch()) {
-			// Display.getCurrent().sleep();
-			// }
-			// }
-			// }
-			// });
-			//
 
 			display.syncExec(new Runnable() {
 
@@ -201,10 +182,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 			});
 			tree.getTreeItem("parent").getNode("foo").getNode("1").select();
 
-			// SWTViewTestHelper.dispose();
 			assertTrue(tree.getTreeItem("parent").getNode("foo").getNode("1").isSelected());
-			// assertTrue(collectable.isCollectable());
-			// Thread.sleep(1000);
 		}
 	}
 

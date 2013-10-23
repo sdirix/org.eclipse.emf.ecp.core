@@ -20,7 +20,9 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	OpenEditorTest.class })
+	// OpenEditorTest.class
+	ModifyNavigatorTest.class
+})
 public class AllUITests {
 
 }
