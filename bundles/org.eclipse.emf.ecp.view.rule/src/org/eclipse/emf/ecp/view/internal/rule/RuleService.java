@@ -35,7 +35,6 @@ import org.eclipse.emf.ecp.view.model.Renderable;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
-import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
 
@@ -75,10 +74,7 @@ public class RuleService extends AbstractViewService {
 		domainChangeListener = new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
-				if (isAttributeNotification(notification)) {
-					if (isUnset) {
-						return;
-					}
+				if (isAttributeNotification(notification) && !isUnset) {
 					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
 					evalShow(attribute);
 					evalEnable(attribute);
@@ -205,7 +201,7 @@ public class RuleService extends AbstractViewService {
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EStructuralFeature attribute, boolean dry, Object newValue) {
+		Class<T> ruleType, EStructuralFeature attribute, boolean isDryRun, Map<Setting, Object> possibleValues) {
 
 		final Map<Renderable, Boolean> map = new LinkedHashMap<Renderable, Boolean>();
 
@@ -221,49 +217,38 @@ public class RuleService extends AbstractViewService {
 				continue;
 			}
 
-			if (dry) {
+			if (isDryRun) {
 
-				final TreeIterator<EObject> eAllContents = rule.eAllContents();
-				while (eAllContents.hasNext()) {
-					final EObject next = eAllContents.next();
-					if (!LeafCondition.class.isInstance(next)) {
+				for (final Setting setting : possibleValues.keySet()) {
+					final EObject parent = setting.getEObject();
+					final EStructuralFeature feature = setting.getEStructuralFeature();
+					final EClass attributeClass = feature.getEContainingClass();
+					if (!attributeClass.isInstance(parent)) {
 						continue;
 					}
-
-					final LeafCondition leafCondition = (LeafCondition) next;
-
-					final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
-					// FIXME: duplicate code
-					while (settingIterator.hasNext()) {
-						final Setting setting = settingIterator.next();
-						final EObject parent = setting.getEObject();
-						final EStructuralFeature feature = setting.getEStructuralFeature();
-						final EClass attributeClass = feature.getEContainingClass();
-						if (!attributeClass.isInstance(parent)) {
-							continue;
-						}
-						final Object actualValue = parent.eGet(feature);
-						if (!feature.isMany()) {
-							if (newValue == null) {
-								hasChanged |= actualValue == null;
-							} else {
-								hasChanged |= !newValue.equals(actualValue);
-							}
-						}
-						else {
-							// EMF API
-							@SuppressWarnings("unchecked")
-							final List<Object> objects = (List<Object>) actualValue;
-							hasChanged |= !objects.contains(newValue);
+					final Object actualValue = parent.eGet(feature);
+					final Object newValue = possibleValues.get(setting);
+					if (!feature.isMany()) {
+						if (newValue == null) {
+							hasChanged |= actualValue == null;
+						} else {
+							hasChanged |= !newValue.equals(actualValue);
 						}
 					}
+					else {
+						// EMF API
+						@SuppressWarnings("unchecked")
+						final List<Object> objects = (List<Object>) actualValue;
+						hasChanged |= !objects.contains(newValue);
+					}
 				}
+
 			}
 
 			if (hasChanged) {
-				final boolean result = ConditionEvaluator.evaluate(newValue, rule.getCondition());
+				final boolean result = ConditionEvaluator.evaluate(possibleValues, rule.getCondition());
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
-			} else if (!dry) {
+			} else if (!isDryRun) {
 				final boolean result = ConditionEvaluator.evaluate(rule.getCondition());
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			}
@@ -273,8 +258,8 @@ public class RuleService extends AbstractViewService {
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EStructuralFeature attribute, Object newValue) {
-		return evalAffectedRenderables(registry, ruleType, attribute, true, newValue);
+		Class<T> ruleType, EStructuralFeature attribute, Map<Setting, Object> possibleValues) {
+		return evalAffectedRenderables(registry, ruleType, attribute, true, possibleValues);
 	}
 
 	private static <T extends Rule> Map<Renderable, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
@@ -364,49 +349,46 @@ public class RuleService extends AbstractViewService {
 	}
 
 	/**
-	 * Returns all {@link Renderable}s, that would we disabled if {@code newValue} would be set for the given
-	 * {@code setting}.
+	 * Returns all {@link Renderable}s, that would we disabled if {@code possibleValues} would be set for the given
+	 * {@code setting}s.
 	 * 
-	 * @param setting
-	 *            the setting
-	 * @param newValue
-	 *            the new value of the setting
-	 * @return the disabled {@link Renderable}s and their new state if newValue would be set
+	 * @param possibleValues
+	 *            a mapping of settings to their would-be new value
+	 * @return the hidden {@link Renderable}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<Renderable, Boolean> getDisabledRenderables(Setting setting, Object newValue) {
+	public Map<Renderable, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues) {
 
-		final EStructuralFeature feature = setting.getEStructuralFeature();
+		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
 
 		if (feature instanceof EAttribute) {
 
 			final EAttribute attribute = (EAttribute) feature;
 
 			return evalAffectedRenderables(enableRuleRegistry,
-				EnableRule.class, attribute, newValue);
+				EnableRule.class, attribute, possibleValues);
 		}
 
 		return Collections.emptyMap();
 	}
 
 	/**
-	 * Returns all {@link Renderable}s, that would we hidden if {@code newValue} would be set for the given
-	 * {@code setting}.
+	 * Returns all {@link Renderable}s, that would we hidden if {@code possibleValues} would be set for the given
+	 * {@code setting}s.
 	 * 
-	 * @param setting
-	 *            the setting
-	 * @param newValue
-	 *            the new value of the setting
-	 * @return the hidden {@link Renderable}s and their new state if newValue would be set
+	 * @param possibleValues
+	 *            a mapping of settings to their would-be new value
+	 * @return the hidden {@link Renderable}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<Renderable, Boolean> getHiddenRenderables(Setting setting, Object newValue) {
-		final EStructuralFeature feature = setting.getEStructuralFeature();
+	public Map<Renderable, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues) {
+
+		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
 
 		if (feature instanceof EAttribute) {
 
 			final EAttribute attribute = (EAttribute) feature;
 
 			return evalAffectedRenderables(showRuleRegistry,
-				ShowRule.class, attribute, newValue);
+				ShowRule.class, attribute, possibleValues);
 		}
 
 		return Collections.emptyMap();

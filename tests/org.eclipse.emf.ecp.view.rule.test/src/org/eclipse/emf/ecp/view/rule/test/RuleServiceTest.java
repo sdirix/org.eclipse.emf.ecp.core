@@ -9,6 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Edgar Mueller - additional test cases
+ * Edgar Mueller - more test cases
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.test;
 
@@ -16,7 +17,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +27,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
@@ -83,8 +88,10 @@ import org.junit.Test;
  * objects if no change -> none, empty list
  * objects if change -> only container of rule
  * no side effects
+ * 
+ * @author Eugen Neufeld
+ * @author emueller
  */
-
 public class RuleServiceTest extends CommonRuleTest {
 
 	/**
@@ -1437,7 +1444,7 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testContainmentConditionWithShowRule() {
 		final ShowRule showRule = addShowRule(controlPName, false);
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
@@ -1449,10 +1456,111 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	@Test
+	public void testGetInvolvedEObjetsContainedMultiAttributeNoMatch() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
+			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+
+		player.getEMails().add("foo@bar.com");
+		final Player newPlayer = BowlingFactory.eINSTANCE.createPlayer();
+		newPlayer.getEMails().add("asdf@asdf.com");
+
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+
+		final List<String> emails = new ArrayList<String>();
+		expectedValues.put(
+			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
+			emails);
+		expectedValues.put(
+			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
+			newPlayer.getEMails());
+
+		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+
+		assertEquals(0, involvedEObjects.size());
+	}
+
+	@Test
+	public void testGetInvolvedEObjetsContainedMultiAttributeNoMatchViaUpdatePlayer() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
+			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+
+		player.getEMails().add("foo@bar.com");
+
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+
+		final List<String> emails = new ArrayList<String>();
+		emails.add("asdf@asdf.com");
+		expectedValues.put(
+			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
+			emails);
+
+		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+
+		assertEquals(0, involvedEObjects.size());
+	}
+
+	@Test
+	public void testGetInvolvedEObjetsContainedMultiAttributeMatch() {
+		final ShowRule showRule = addShowRule(controlPName, true);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
+			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+
+		player.getEMails().add("foo@bar.com");
+		final Player newPlayer = BowlingFactory.eINSTANCE.createPlayer();
+		newPlayer.getEMails().add("asdf@asdf.com");
+
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+
+		expectedValues.put(
+			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
+			player.getEMails());
+		expectedValues.put(
+			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
+			newPlayer.getEMails());
+
+		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+
+		assertEquals(1, involvedEObjects.size());
+	}
+
+	@Test
+	public void testGetInvolvedEObjetsContainedMultiAttributeMatchViaNewEmptyListValue() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
+			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+
+		player.getEMails().add("asdf@asdf.com");
+
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+
+		expectedValues.put(
+			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
+			new ArrayList<String>());
+
+		final Set<Control> involvedEObjects = helper.getInvolvedEObjects(expectedValues, Control.class);
+
+		assertEquals(1, involvedEObjects.size());
+	}
+
+	@Test
 	public void testContainmentConditionWithShowRuleWithClearedMultiref() {
 		final ShowRule showRule = addShowRule(controlPName, false);
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
 		showRule.setCondition(leafCondition1);
 		player.setName("doe");
 		instantiateRuleService();
@@ -1465,7 +1573,7 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testContainmentConditionWithShowRuleFulFillCondition() {
 		final ShowRule showRule = addShowRule(controlPName, false);
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 		assertFalse(controlPName.isVisible());
@@ -1478,7 +1586,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		league = BowlingFactory.eINSTANCE.createLeague();
 		final ShowRule showRule = addShowRule(controlPName, false);
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 		assertFalse(controlPName.isVisible());
@@ -1489,7 +1597,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		league = BowlingFactory.eINSTANCE.createLeague();
 		final ShowRule showRule = addShowRule(controlPName, false);
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", player, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 		assertFalse(controlPName.isVisible());
@@ -2042,7 +2150,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		final RuleService ruleService = instantiateRuleService();
 
 		final Map<Renderable, Boolean> involvedEObjects = ruleService.getDisabledRenderables(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"));
 		assertTrue(involvedEObjects.isEmpty());
 	}
 
@@ -2057,9 +2165,15 @@ public class RuleServiceTest extends CommonRuleTest {
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
 
-		ruleService.getDisabledRenderables(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League");
+		ruleService.getDisabledRenderables(
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"));
 		assertTrue(controlPName.isEnabled());
+	}
+
+	private static Map<Setting, Object> createSettingsMapping(Setting setting, Object newValue) {
+		final Map<Setting, Object> result = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+		result.put(setting, newValue);
+		return result;
 	}
 
 	/**
@@ -2074,9 +2188,11 @@ public class RuleServiceTest extends CommonRuleTest {
 		final RuleService ruleService = instantiateRuleService();
 
 		final Map<Renderable, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League_Wrong");
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+				"League_Wrong"));
 		final Map<Renderable, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League_Wrong");
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+				"League_Wrong"));
 
 		assertEquals(3, hiddenRenderables.size());
 		assertTrue(hiddenRenderables.containsKey(parentColumn));
@@ -2098,9 +2214,11 @@ public class RuleServiceTest extends CommonRuleTest {
 		final RuleService ruleService = instantiateRuleService();
 
 		final Map<Renderable, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+				"League"));
 		final Map<Renderable, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
-			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League");
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
+				"League"));
 
 		assertEquals(0, disabledRenderables.size());
 		assertEquals(0, hiddenRenderables.size());

@@ -8,11 +8,13 @@
  * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Edgar Mueller - support for handling multiple possible new values
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -27,7 +29,7 @@ import org.eclipse.emf.ecp.view.rule.model.OrCondition;
  * Evaluates a given condition.
  * 
  * @author Eugen Neufeld
- * 
+ * @author emueller
  */
 public final class ConditionEvaluator {
 
@@ -59,38 +61,38 @@ public final class ConditionEvaluator {
 	/**
 	 * Evaluates the given condition.
 	 * 
-	 * @param possibleNewValue
+	 * @param possibleNewValues
 	 *            the new value that should be compared against the expected value of the condition
 	 * @param condition
 	 *            the condition to be evaluated
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
 	 */
-	public static boolean evaluate(Object possibleNewValue, Condition condition) {
+	public static boolean evaluate(Map<Setting, Object> possibleNewValues, Condition condition) {
 
 		if (AndCondition.class.isInstance(condition)) {
-			return doEvaluate(possibleNewValue, (AndCondition) condition);
+			return doEvaluate(possibleNewValues, (AndCondition) condition);
 		}
 		if (OrCondition.class.isInstance(condition)) {
-			return doEvaluate(possibleNewValue, (OrCondition) condition);
+			return doEvaluate(possibleNewValues, (OrCondition) condition);
 		}
 		if (LeafCondition.class.isInstance(condition)) {
-			return doEvaluate(possibleNewValue, (LeafCondition) condition);
+			return doEvaluate(possibleNewValues, (LeafCondition) condition);
 		}
 		return false;
 	}
 
-	private static boolean doEvaluate(Object possibleNewValue, AndCondition condition) {
+	private static boolean doEvaluate(Map<Setting, Object> possibleNewValues, AndCondition condition) {
 		boolean result = true;
 		for (final Condition innerCondition : condition.getConditions()) {
-			result &= evaluate(possibleNewValue, innerCondition);
+			result &= evaluate(possibleNewValues, innerCondition);
 		}
 		return result;
 	}
 
-	private static boolean doEvaluate(Object possibleNewValue, OrCondition condition) {
+	private static boolean doEvaluate(Map<Setting, Object> possibleNewValues, OrCondition condition) {
 		boolean result = false;
 		for (final Condition innerCondition : condition.getConditions()) {
-			result |= evaluate(possibleNewValue, innerCondition);
+			result |= evaluate(possibleNewValues, innerCondition);
 		}
 		return result;
 	}
@@ -111,34 +113,19 @@ public final class ConditionEvaluator {
 		return result;
 	}
 
-	private static boolean doEvaluate(Object possibleNewValue, LeafCondition condition) {
-		final Iterator<Setting> settingIterator = condition.getDomainModelReference().getIterator();
+	private static boolean doEvaluate(Map<Setting, Object> possibleNewValues, LeafCondition condition) {
+
 		boolean result = false;
 		final Object expectedValue = condition.getExpectedValue();
 
-		// FIXME: duplicate code
-		while (settingIterator.hasNext()) {
-			final Setting setting = settingIterator.next();
-			final EObject parent = setting.getEObject();
-			final EStructuralFeature feature = setting.getEStructuralFeature();
-			final EClass attributeClass = feature.getEContainingClass();
-			if (!attributeClass.isInstance(parent)) {
+		for (final Setting setting : possibleNewValues.keySet()) {
+			try {
+				result |= doEvaluate(setting, expectedValue, true, possibleNewValues.get(setting));
+			} catch (final NotApplicableForEvaluationException e) {
 				continue;
 			}
-			if (!feature.isMany()) {
-				if (expectedValue == null) {
-					result |= possibleNewValue == null;
-				} else {
-					result |= expectedValue.equals(possibleNewValue);
-				}
-			}
-			else {
-				// EMF API
-				@SuppressWarnings("unchecked")
-				final List<Object> objects = (List<Object>) possibleNewValue;
-				result |= objects.contains(expectedValue);
-			}
 		}
+
 		return result;
 	}
 
@@ -147,28 +134,42 @@ public final class ConditionEvaluator {
 		boolean result = false;
 		final Object expectedValue = condition.getExpectedValue();
 		while (settingIterator.hasNext()) {
-			final Setting setting = settingIterator.next();
-			final EObject parent = setting.getEObject();
-			final EStructuralFeature feature = setting.getEStructuralFeature();
-			final EClass attributeClass = feature.getEContainingClass();
-			if (!attributeClass.isInstance(parent)) {
+			try {
+				result |= doEvaluate(settingIterator.next(), expectedValue, false, null);
+			} catch (final NotApplicableForEvaluationException e) {
 				continue;
-			}
-			final Object actualValue = parent.eGet(feature);
-			if (!feature.isMany()) {
-				if (expectedValue == null) {
-					result |= actualValue == null;
-				} else {
-					result |= expectedValue.equals(actualValue);
-				}
-			}
-			else {
-				// EMF API
-				@SuppressWarnings("unchecked")
-				final List<Object> objects = (List<Object>) actualValue;
-				result |= objects.contains(condition.getExpectedValue());
 			}
 		}
 		return result;
 	}
+
+	private static boolean doEvaluate(Setting setting, Object expectedValue, boolean useNewValue, Object newValue)
+		throws NotApplicableForEvaluationException {
+
+		final EObject parent = setting.getEObject();
+		final EStructuralFeature feature = setting.getEStructuralFeature();
+		final EClass attributeClass = feature.getEContainingClass();
+		if (!attributeClass.isInstance(parent)) {
+			throw new NotApplicableForEvaluationException();
+		}
+		Object value;
+		if (!useNewValue) {
+			value = parent.eGet(feature);
+		} else {
+			value = newValue;
+		}
+		if (!feature.isMany()) {
+			if (expectedValue == null) {
+				return value == null;
+			}
+
+			return expectedValue.equals(value);
+		}
+
+		// EMF API
+		@SuppressWarnings("unchecked")
+		final List<Object> objects = (List<Object>) value;
+		return objects.contains(expectedValue);
+	}
+
 }
