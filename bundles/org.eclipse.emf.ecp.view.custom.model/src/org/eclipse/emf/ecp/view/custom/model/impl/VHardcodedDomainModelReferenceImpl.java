@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;

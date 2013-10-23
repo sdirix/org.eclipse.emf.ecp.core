@@ -20,13 +20,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.ECPControl;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.ECPControlDescription;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.osgi.framework.Bundle;
@@ -39,6 +39,9 @@ import org.osgi.framework.Bundle;
  * @author Eugen Neufeld
  * 
  */
+
+@SuppressWarnings("restriction")
+// TODO VDomainModelReference is not API
 public final class ControlFactoryImpl implements ECPControlFactory {
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
@@ -176,7 +179,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlFactory#createControl(java.lang.Class,
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
 	 *      org.eclipse.emf.ecp.view.model.VDomainModelReference)
 	 */
 	public <T> T createControl(Class<T> controlType, VDomainModelReference domainModelReference) {
@@ -193,7 +196,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlFactory#createControl(java.lang.String)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.String)
 	 */
 	public <T> T createControl(String controlId) {
 

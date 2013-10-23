@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.custom.internal.ui;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 

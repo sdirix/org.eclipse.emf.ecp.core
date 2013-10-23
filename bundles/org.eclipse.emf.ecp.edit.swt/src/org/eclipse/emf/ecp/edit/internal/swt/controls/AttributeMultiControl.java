@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit;
+package org.eclipse.emf.ecp.edit.spi;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.databinding.EMFDataBindingContext;

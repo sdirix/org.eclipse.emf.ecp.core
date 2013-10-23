@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit;
+package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Locale;
 

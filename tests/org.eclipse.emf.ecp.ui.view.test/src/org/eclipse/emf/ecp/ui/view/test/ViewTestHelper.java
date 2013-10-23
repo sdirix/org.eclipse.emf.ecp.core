@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.explorereditorbridge.internal.ECPControlContextImpl;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;

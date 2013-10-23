@@ -10,11 +10,11 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit;
+package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 
 /**
  * This class describes the control extensionpoint. It is used to provide the possibility to access all known controls

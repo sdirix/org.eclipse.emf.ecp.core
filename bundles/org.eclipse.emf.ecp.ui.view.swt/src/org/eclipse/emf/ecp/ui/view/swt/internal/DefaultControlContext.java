@@ -17,7 +17,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
@@ -49,7 +49,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#createSubContext(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#createSubContext(org.eclipse.emf.ecore.EObject)
 	 */
 	public ECPControlContext createSubContext(EObject eObject) {
 		return new DefaultControlContext(eObject, view);
@@ -58,7 +58,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getDataBindingContext()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getDataBindingContext()
 	 */
 	public DataBindingContext getDataBindingContext() {
 		return dataBindingContext;
@@ -67,7 +67,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getEditingDomain()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getEditingDomain()
 	 */
 	public EditingDomain getEditingDomain() {
 		return AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
@@ -76,7 +76,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getModelElement()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getModelElement()
 	 */
 	public EObject getModelElement() {
 		return eObject;
@@ -85,7 +85,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#addModelElement(org.eclipse.emf.ecore.EObject,
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#addModelElement(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EReference)
 	 */
 	public void addModelElement(EObject eObject, EReference eReference) {
@@ -96,7 +96,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getNewElementFor(org.eclipse.emf.ecore.EReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getNewElementFor(org.eclipse.emf.ecore.EReference)
 	 */
 	public EObject getNewElementFor(EReference eReference) {
 		// TODO Auto-generated method stub
@@ -106,7 +106,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getExistingElementFor(org.eclipse.emf.ecore.EReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getExistingElementFor(org.eclipse.emf.ecore.EReference)
 	 */
 	public EObject getExistingElementFor(EReference eReference) {
 		// TODO Auto-generated method stub
@@ -116,7 +116,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#openInNewContext(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#openInNewContext(org.eclipse.emf.ecore.EObject)
 	 */
 	public void openInNewContext(EObject eObject) {
 		// TODO Auto-generated method stub
@@ -126,7 +126,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#isRunningAsWebApplication()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#isRunningAsWebApplication()
 	 */
 	public boolean isRunningAsWebApplication() {
 		return false;
@@ -135,7 +135,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getLocale()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getLocale()
 	 */
 	public Locale getLocale() {
 		return Locale.getDefault();
@@ -144,7 +144,7 @@ public class DefaultControlContext implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getViewContext()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getViewContext()
 	 */
 	public ViewModelContext getViewContext() {
 		return viewContext;

@@ -15,8 +15,8 @@ package org.eclipse.emf.ecp.editor.e3;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.ECPEditorContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPEditorContext;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;

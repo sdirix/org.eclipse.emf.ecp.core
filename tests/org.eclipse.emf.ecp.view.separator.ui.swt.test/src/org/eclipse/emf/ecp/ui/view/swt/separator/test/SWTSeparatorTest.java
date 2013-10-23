@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;

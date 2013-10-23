@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit.util;
+package org.eclipse.emf.ecp.edit.spi.util;
 
 import java.util.Iterator;
 
@@ -65,7 +65,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
 	 * @since 1.1
 	 */
 	public int isApplicable(VDomainModelReference domainModelReference) {

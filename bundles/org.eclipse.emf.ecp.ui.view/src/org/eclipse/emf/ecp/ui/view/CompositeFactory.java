@@ -1,6 +1,6 @@
 package org.eclipse.emf.ecp.ui.view;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
 import org.eclipse.swt.widgets.Composite;
 

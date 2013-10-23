@@ -10,18 +10,26 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit;
-
+package org.eclipse.emf.ecp.edit.spi;
 
 /**
- * Listens to the changes of a context. 
- * 
+ * This Context adds methods that are specifically needed by an editor.
  * @author Eugen Neufeld
+ *
  */
-public interface ECPContextDisposedListener {
-	/**
-	 * Called when the context is disposed. 
-	 */
-	void contextDisposed();
+public interface ECPEditorContext extends ECPControlContext{
 
+	
+	/**
+	 * Called if the context is not used anymore. Use for cleanup.
+	 */
+	void dispose();
+	
+	/**
+	 * Adds a {@link ECPContextDisposedListener}.
+	 * 
+	 * @param ecpContextDisposedListener
+	 *            the {@link ECPContextDisposedListener}
+	 */
+	void addECPContextDisposeListener(ECPContextDisposedListener ecpContextDisposedListener);
 }

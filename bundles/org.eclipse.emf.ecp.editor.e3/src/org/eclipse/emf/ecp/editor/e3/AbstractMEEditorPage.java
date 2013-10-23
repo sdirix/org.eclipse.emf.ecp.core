@@ -12,8 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.editor.e3;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 

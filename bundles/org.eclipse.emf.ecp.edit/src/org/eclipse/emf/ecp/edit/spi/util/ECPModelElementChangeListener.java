@@ -11,7 +11,7 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.edit.util;
+package org.eclipse.emf.ecp.edit.spi.util;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;

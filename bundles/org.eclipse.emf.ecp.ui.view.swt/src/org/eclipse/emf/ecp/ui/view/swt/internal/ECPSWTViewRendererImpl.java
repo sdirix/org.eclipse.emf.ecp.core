@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;

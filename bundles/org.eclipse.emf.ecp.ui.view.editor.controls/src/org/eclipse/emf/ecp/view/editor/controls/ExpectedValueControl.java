@@ -174,7 +174,7 @@ public class ExpectedValueControl extends SingleControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#setEditable(boolean)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
 	 */
 	public void setEditable(boolean isEditable) {
 		// text.setEditable(isEditable);

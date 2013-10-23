@@ -12,11 +12,10 @@
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -24,7 +23,6 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
-
 import org.osgi.framework.Bundle;
 
 import java.lang.reflect.Constructor;

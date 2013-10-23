@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit.util;
+package org.eclipse.emf.ecp.edit.spi.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;

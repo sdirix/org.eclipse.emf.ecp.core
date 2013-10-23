@@ -18,12 +18,12 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
+import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
@@ -170,7 +170,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#setEditable(boolean)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
 	 */
 	public void setEditable(boolean isEditable) {
 		// Do nothing
@@ -190,7 +190,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	public final void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getSeverity() == Diagnostic.ERROR
@@ -248,7 +248,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControl#resetValidation()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#resetValidation()
 	 */
 	public final void resetValidation() {
 		resetControlValidation();

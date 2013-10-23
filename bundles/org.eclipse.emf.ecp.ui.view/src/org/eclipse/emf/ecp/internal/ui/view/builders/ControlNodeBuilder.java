@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.internal.ui.view.builders;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Leaf;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.Control;
@@ -33,7 +33,7 @@ public class ControlNodeBuilder<C extends Control> implements NodeBuilder<C> {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder#build(org.eclipse.emf.ecp.view.model.Renderable,
-	 *      org.eclipse.emf.ecp.edit.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
+	 *      org.eclipse.emf.ecp.edit.spi.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
 	 */
 	public Node<C> build(C renderable, ECPControlContext controlContext,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {

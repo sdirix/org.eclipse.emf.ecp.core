@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
@@ -243,7 +243,7 @@ public class ECPControlContextImpl implements ECPControlContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.ECPControlContext#getViewContext()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlContext#getViewContext()
 	 */
 	public ViewModelContext getViewContext() {
 		return null;
