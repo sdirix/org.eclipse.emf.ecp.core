@@ -15,8 +15,6 @@ import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * Convenience class for expecting objects to be garbage collected.
  * Because GC is non-deterministic there's no time constrained guarantee, when {@code isCollectable} returns true.
@@ -27,8 +25,8 @@ public class GCCollectable {
 
 	private static final int DEFAULT_TIMEOUT = 1000;
 
-	private final ReferenceQueue<EObject> queue;
-	private final PhantomReference<EObject> phantomRef;
+	private final ReferenceQueue<Object> queue;
+	private final PhantomReference<Object> phantomRef;
 
 	private boolean result;
 
@@ -41,10 +39,10 @@ public class GCCollectable {
 	 * @param obj
 	 * 			the object that is supposed to be finalized
 	 */
-	public GCCollectable(EObject obj) {
-		queue = new ReferenceQueue<EObject>();
+	public GCCollectable(Object obj) {
+		queue = new ReferenceQueue<Object>();
 		runMe = true;
-		phantomRef = new PhantomReference<EObject>(obj, queue);
+		phantomRef = new PhantomReference<Object>(obj, queue);
 		result = false;
 		t = new Thread() {
 			@Override
