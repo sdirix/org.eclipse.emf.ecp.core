@@ -324,12 +324,14 @@ public abstract class MultiControl extends SWTControl {
 			composite = new Composite(parent, style);
 			composite.setBackgroundMode(SWT.INHERIT_FORCE);
 			composite.setBackground(parent.getBackground());
-			GridLayoutFactory.fillDefaults().numColumns(5).spacing(2, 0).applyTo(composite);
-			GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
+			GridLayoutFactory.fillDefaults().numColumns(4).spacing(2, 0).applyTo(composite);
+			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 
 			final SWTControl widget = getSingleInstance();
 			widget.setObservableValue(modelValue);
-			widget.createControl(composite);
+			final Composite createControl = widget.createControl(composite);
+
+			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(createControl);
 
 			createDeleteButton(composite);
 			if (getStructuralFeature().isOrdered()) {
