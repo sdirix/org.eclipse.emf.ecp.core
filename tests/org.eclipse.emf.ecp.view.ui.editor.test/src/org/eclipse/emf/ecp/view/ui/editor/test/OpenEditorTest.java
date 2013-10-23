@@ -105,10 +105,10 @@ public class OpenEditorTest extends SWTBotTestCase {
 	}
 
 	private VCategorization createCategorizations(
-		org.eclipse.emf.ecp.view.model.VContainableElement composite1,
-		org.eclipse.emf.ecp.view.model.VContainableElement composite2,
-		org.eclipse.emf.ecp.view.model.VContainableElement composite3,
-		org.eclipse.emf.ecp.view.model.VContainableElement composite4) {
+		org.eclipse.emf.ecp.view.model.VContainedElement composite1,
+		org.eclipse.emf.ecp.view.model.VContainedElement composite2,
+		org.eclipse.emf.ecp.view.model.VContainedElement composite3,
+		org.eclipse.emf.ecp.view.model.VContainedElement composite4) {
 
 		final VCategorization parentCategorization = VViewFactory.eINSTANCE
 			.createCategorization();

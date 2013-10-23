@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.internal.ui.view.renderer;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * @param <C>
  *            the actual type of the control being rendered
  * @param <R>
- *            a subtype of {@link VContainableElement} specifying the view model type to be rendered
+ *            a subtype of {@link VContainedElement} specifying the view model type to be rendered
  * @param <C>
  */
 public interface ControlRenderer<R extends VElement, C> {

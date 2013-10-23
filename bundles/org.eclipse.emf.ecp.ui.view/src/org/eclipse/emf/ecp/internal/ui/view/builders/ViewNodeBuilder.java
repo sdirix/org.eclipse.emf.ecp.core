@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.internal.ui.view.builders;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
@@ -26,7 +26,7 @@ public class ViewNodeBuilder implements NodeBuilder<VView> {
 		final Node<VView> node = new Node<VView>(view, context);
 
 		if (view.getCategorizations().isEmpty()) {
-			for (final VContainableElement composite : view.getChildren()) {
+			for (final VContainedElement composite : view.getChildren()) {
 				node.addChild(NodeBuilders.INSTANCE.build(composite, context, adapterFactoryItemDelegator));
 			}
 		}

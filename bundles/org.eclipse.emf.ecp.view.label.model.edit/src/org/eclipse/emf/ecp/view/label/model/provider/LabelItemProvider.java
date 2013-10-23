@@ -18,7 +18,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
-import org.eclipse.emf.ecp.view.model.provider.ContainableElementItemProvider;
+import org.eclipse.emf.ecp.view.model.provider.ContainedElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -37,7 +37,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class LabelItemProvider
-	extends ContainableElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**

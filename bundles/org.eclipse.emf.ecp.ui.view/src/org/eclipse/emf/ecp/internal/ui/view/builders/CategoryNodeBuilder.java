@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.internal.ui.view.builders;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
 public class CategoryNodeBuilder implements NodeBuilder<VCategory> {
@@ -26,7 +26,7 @@ public class CategoryNodeBuilder implements NodeBuilder<VCategory> {
 		if (category.getComposite() == null) {
 			return node;
 		}
-		final Node<VContainableElement> child = NodeBuilders.INSTANCE.build(category.getComposite(), context,
+		final Node<VContainedElement> child = NodeBuilders.INSTANCE.build(category.getComposite(), context,
 			adapterFactoryItemDelegator);
 		node.addChild(child);
 		return node;

@@ -17,10 +17,10 @@ package org.eclipse.emf.ecp.view.model;
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.model.VViewPackage#getContainableElement()
+ * @see org.eclipse.emf.ecp.view.model.VViewPackage#getContainedElement()
  * @model abstract="true"
  * @generated
  */
-public interface VContainableElement extends VElement {
+public interface VContainedElement extends VElement {
 
 } // Composite

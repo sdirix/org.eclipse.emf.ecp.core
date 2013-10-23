@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.label.model;
 
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.VContainableElement;
  * @model
  * @generated
  */
-public interface VLabel extends VContainableElement
+public interface VLabel extends VContainedElement
 {
 	/**
 	 * Returns the value of the '<em><b>Style</b></em>' attribute.

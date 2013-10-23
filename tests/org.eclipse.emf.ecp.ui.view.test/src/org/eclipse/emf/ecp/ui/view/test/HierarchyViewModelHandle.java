@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.test;
 
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VElement;
@@ -51,7 +51,7 @@ public class HierarchyViewModelHandle {
 	public void addFirstChildToRoot(VElement renderable) {
 		firstChild = renderable;
 		final VContainer collection = (VContainer) root;
-		collection.getChildren().add((VContainableElement) renderable);
+		collection.getChildren().add((VContainedElement) renderable);
 
 	}
 
@@ -61,7 +61,7 @@ public class HierarchyViewModelHandle {
 	public void addSecondChildToRoot(VElement renderable) {
 		setSecondChild(renderable);
 		final VContainer collection = (VContainer) root;
-		collection.getChildren().add((VContainableElement) renderable);
+		collection.getChildren().add((VContainedElement) renderable);
 
 	}
 
@@ -89,7 +89,7 @@ public class HierarchyViewModelHandle {
 	/**
 	 * 
 	 */
-	public void addFirstChildToFirstChild(VContainableElement composite) {
+	public void addFirstChildToFirstChild(VContainedElement composite) {
 		final VContainer collection = (VContainer) getFirstChild();
 		collection.getChildren().add(composite);
 		setFirstFirstChild(composite);

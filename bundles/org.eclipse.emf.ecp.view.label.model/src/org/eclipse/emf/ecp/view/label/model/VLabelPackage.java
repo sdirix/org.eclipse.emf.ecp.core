@@ -83,6 +83,16 @@ public interface VLabelPackage extends EPackage
 	int LABEL = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int LABEL__NAME = VViewPackage.CONTAINED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,7 +100,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__VISIBLE = VViewPackage.CONTAINABLE_ELEMENT__VISIBLE;
+	int LABEL__VISIBLE = VViewPackage.CONTAINED_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -100,7 +110,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__ENABLED = VViewPackage.CONTAINABLE_ELEMENT__ENABLED;
+	int LABEL__ENABLED = VViewPackage.CONTAINED_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -110,7 +120,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__READONLY = VViewPackage.CONTAINABLE_ELEMENT__READONLY;
+	int LABEL__READONLY = VViewPackage.CONTAINED_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -120,7 +130,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__DIAGNOSTIC = VViewPackage.CONTAINABLE_ELEMENT__DIAGNOSTIC;
+	int LABEL__DIAGNOSTIC = VViewPackage.CONTAINED_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -130,17 +140,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__ATTACHMENTS = VViewPackage.CONTAINABLE_ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int LABEL__NAME = VViewPackage.CONTAINABLE_ELEMENT__NAME;
+	int LABEL__ATTACHMENTS = VViewPackage.CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Style</b></em>' attribute.
@@ -150,7 +150,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL__STYLE = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
+	int LABEL__STYLE = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Label</em>' class.
@@ -160,7 +160,7 @@ public interface VLabelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int LABEL_FEATURE_COUNT = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
+	int LABEL_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.label.model.VLabelStyle <em>VLabel Style</em>}' enum.

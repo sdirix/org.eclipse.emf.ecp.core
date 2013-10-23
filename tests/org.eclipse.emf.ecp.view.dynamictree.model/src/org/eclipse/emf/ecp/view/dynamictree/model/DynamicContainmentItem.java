@@ -4,7 +4,7 @@ package org.eclipse.emf.ecp.view.dynamictree.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
@@ -77,12 +77,12 @@ public interface DynamicContainmentItem extends VElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Composite</em>' containment reference.
-	 * @see #setComposite(VContainableElement)
+	 * @see #setComposite(VContainedElement)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentItem_Composite()
 	 * @model containment="true"
 	 * @generated
 	 */
-	VContainableElement getComposite();
+	VContainedElement getComposite();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}' containment reference.
@@ -92,6 +92,6 @@ public interface DynamicContainmentItem extends VElement {
 	 * @see #getComposite()
 	 * @generated
 	 */
-	void setComposite(VContainableElement value);
+	void setComposite(VContainedElement value);
 
 } // DynamicContainmentItem

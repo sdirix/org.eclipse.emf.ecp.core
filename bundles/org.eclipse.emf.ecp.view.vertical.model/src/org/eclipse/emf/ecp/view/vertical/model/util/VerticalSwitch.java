@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.vertical.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
@@ -153,7 +153,7 @@ public class VerticalSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainableElement(VContainableElement object)
+	public T caseContainableElement(VContainedElement object)
 	{
 		return null;
 	}

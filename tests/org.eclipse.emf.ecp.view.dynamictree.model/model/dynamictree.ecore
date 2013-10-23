@@ -9,7 +9,7 @@
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pathToRoot" upperBound="-1"
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="childComposite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainableElement"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="childComposite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
         eType="#//DynamicContainmentItem" containment="true"/>
@@ -19,7 +19,7 @@
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
         eType="#//DynamicContainmentItem" transient="true" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainableElement"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestElement" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">

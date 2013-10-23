@@ -28,7 +28,7 @@ package org.eclipse.emf.ecp.view.model;
  * @model
  * @generated
  */
-public interface VControl extends VContainableElement {
+public interface VControl extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -61,7 +61,7 @@ public interface VControl extends VContainableElement {
 	/**
 	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.
 	 * The default value is <code>"Left"</code>.
-	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.model.Alignment}.
+	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.model.LabelAlignment}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Label Alignment</em>' attribute isn't clear, there really should be more of a
@@ -70,13 +70,13 @@ public interface VControl extends VContainableElement {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Label Alignment</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.model.Alignment
-	 * @see #setLabelAlignment(Alignment)
+	 * @see org.eclipse.emf.ecp.view.model.LabelAlignment
+	 * @see #setLabelAlignment(LabelAlignment)
 	 * @see org.eclipse.emf.ecp.view.model.VViewPackage#getControl_LabelAlignment()
 	 * @model default="Left" required="true"
 	 * @generated
 	 */
-	Alignment getLabelAlignment();
+	LabelAlignment getLabelAlignment();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.VControl#getLabelAlignment <em>Label Alignment</em>}
@@ -85,10 +85,10 @@ public interface VControl extends VContainableElement {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param value the new value of the '<em>Label Alignment</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.model.Alignment
+	 * @see org.eclipse.emf.ecp.view.model.LabelAlignment
 	 * @see #getLabelAlignment()
 	 * @generated
 	 */
-	void setLabelAlignment(Alignment value);
+	void setLabelAlignment(LabelAlignment value);
 
 } // Control

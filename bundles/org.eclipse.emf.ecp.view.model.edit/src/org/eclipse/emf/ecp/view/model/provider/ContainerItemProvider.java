@@ -36,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ContainerItemProvider
-	extends ContainableElementItemProvider
+	extends ContainedElementItemProvider
 	implements
 	IEditingDomainItemProvider,
 	IStructuredItemContentProvider,

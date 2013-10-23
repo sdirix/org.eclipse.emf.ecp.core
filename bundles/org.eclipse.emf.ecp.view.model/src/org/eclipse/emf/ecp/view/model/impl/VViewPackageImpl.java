@@ -20,13 +20,13 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.model.Alignment;
+import org.eclipse.emf.ecp.view.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
@@ -66,6 +66,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EClass viewEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass containedElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -116,7 +124,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
-	private EClass containableElementEClass = null;
+	private EEnum labelAlignmentEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -141,14 +149,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EClass attachmentEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	private EEnum alignmentEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -354,6 +354,17 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getContainedElement()
+	{
+		return containedElementEClass;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -493,9 +504,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EClass getContainableElement()
+	public EEnum getLabelAlignment()
 	{
-		return containableElementEClass;
+		return labelAlignmentEEnum;
 	}
 
 	/**
@@ -559,17 +570,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
-	public EEnum getAlignment()
-	{
-		return alignmentEEnum;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public VViewFactory getViewFactory() {
 		return (VViewFactory) getEFactoryInstance();
 	}
@@ -621,7 +621,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		createEReference(viewEClass, VIEW__CHILDREN);
 		createEReference(viewEClass, VIEW__CATEGORIZATIONS);
 
-		containableElementEClass = createEClass(CONTAINABLE_ELEMENT);
+		containedElementEClass = createEClass(CONTAINED_ELEMENT);
 
 		containerEClass = createEClass(CONTAINER);
 		createEReference(containerEClass, CONTAINER__CHILDREN);
@@ -644,7 +644,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		createEAttribute(actionEClass, ACTION__CLASS_NAME);
 
 		// Create enums
-		alignmentEEnum = createEEnum(ALIGNMENT);
+		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
 	}
 
 	/**
@@ -681,9 +681,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		// Add supertypes to classes
 		featurePathDomainModelReferenceEClass.getESuperTypes().add(this.getDomainModelReference());
 		viewEClass.getESuperTypes().add(this.getElement());
-		containableElementEClass.getESuperTypes().add(this.getElement());
-		containerEClass.getESuperTypes().add(this.getContainableElement());
-		controlEClass.getESuperTypes().add(this.getContainableElement());
+		containedElementEClass.getESuperTypes().add(this.getElement());
+		containerEClass.getESuperTypes().add(this.getContainedElement());
+		controlEClass.getESuperTypes().add(this.getContainedElement());
 		abstractCategorizationEClass.getESuperTypes().add(this.getElement());
 		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
@@ -732,24 +732,24 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", null, 1, 1, VView.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getView_Children(), this.getContainableElement(), null, "children", null, 0, -1, VView.class,
+		initEReference(getView_Children(), this.getContainedElement(), null, "children", null, 0, -1, VView.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEReference(getView_Categorizations(), this.getAbstractCategorization(), null, "categorizations", null, 0,
 			-1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(containableElementEClass, VContainableElement.class, "ContainableElement", IS_ABSTRACT,
-			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(containedElementEClass, VContainedElement.class, "ContainedElement", IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(containerEClass, VContainer.class, "Container", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getContainer_Children(), this.getContainableElement(), null, "children", null, 0, -1,
+		initEReference(getContainer_Children(), this.getContainedElement(), null, "children", null, 0, -1,
 			VContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getControl_LabelAlignment(), this.getAlignment(), "labelAlignment", "Left", 1, 1,
+		initEAttribute(getControl_LabelAlignment(), this.getLabelAlignment(), "labelAlignment", "Left", 1, 1,
 			VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
 		initEReference(getControl_DomainModelReference(), this.getDomainModelReference(), null, "domainModelReference",
@@ -770,7 +770,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(categoryEClass, VCategory.class, "Category", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCategory_Composite(), this.getContainableElement(), null, "composite", null, 0, 1,
+		initEReference(getCategory_Composite(), this.getContainedElement(), null, "composite", null, 0, 1,
 			VCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -781,9 +781,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
-		initEEnum(alignmentEEnum, Alignment.class, "Alignment");
-		addEEnumLiteral(alignmentEEnum, Alignment.LEFT);
-		addEEnumLiteral(alignmentEEnum, Alignment.NONE);
+		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment");
+		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.LEFT);
+		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.NONE);
 
 		// Create resource
 		createResource(eNS_URI);

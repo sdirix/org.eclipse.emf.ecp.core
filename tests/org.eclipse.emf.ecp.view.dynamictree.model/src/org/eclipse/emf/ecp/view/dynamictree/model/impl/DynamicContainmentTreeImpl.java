@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.impl.VCategoryImpl;
 
 /**
@@ -77,7 +77,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * @generated
 	 * @ordered
 	 */
-	protected VContainableElement childComposite;
+	protected VContainedElement childComposite;
 
 	/**
 	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
@@ -201,7 +201,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public VContainableElement getChildComposite() {
+	public VContainedElement getChildComposite() {
 		return childComposite;
 	}
 
@@ -210,8 +210,8 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetChildComposite(VContainableElement newChildComposite, NotificationChain msgs) {
-		VContainableElement oldChildComposite = childComposite;
+	public NotificationChain basicSetChildComposite(VContainedElement newChildComposite, NotificationChain msgs) {
+		VContainedElement oldChildComposite = childComposite;
 		childComposite = newChildComposite;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, oldChildComposite, newChildComposite);
@@ -225,7 +225,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setChildComposite(VContainableElement newChildComposite) {
+	public void setChildComposite(VContainedElement newChildComposite) {
 		if (newChildComposite != childComposite) {
 			NotificationChain msgs = null;
 			if (childComposite != null)
@@ -311,7 +311,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 				getPathToRoot().addAll((Collection<? extends EReference>)newValue);
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				setChildComposite((VContainableElement)newValue);
+				setChildComposite((VContainedElement)newValue);
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
 				getItems().clear();
@@ -339,7 +339,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 				getPathToRoot().clear();
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				setChildComposite((VContainableElement)null);
+				setChildComposite((VContainedElement)null);
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
 				getItems().clear();

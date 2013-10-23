@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * 
  * @generated
  */
-public abstract class VContainerImpl extends VContainableElementImpl implements VContainer {
+public abstract class VContainerImpl extends VContainedElementImpl implements VContainer {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -46,7 +46,7 @@ public abstract class VContainerImpl extends VContainableElementImpl implements 
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<VContainableElement> children;
+	protected EList<VContainedElement> children;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,10 +75,10 @@ public abstract class VContainerImpl extends VContainableElementImpl implements 
 	 * 
 	 * @generated
 	 */
-	public EList<VContainableElement> getChildren() {
+	public EList<VContainedElement> getChildren() {
 		if (children == null)
 		{
-			children = new EObjectContainmentEList<VContainableElement>(VContainableElement.class, this,
+			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
 				VViewPackage.CONTAINER__CHILDREN);
 		}
 		return children;
@@ -129,7 +129,7 @@ public abstract class VContainerImpl extends VContainableElementImpl implements 
 		{
 		case VViewPackage.CONTAINER__CHILDREN:
 			getChildren().clear();
-			getChildren().addAll((Collection<? extends VContainableElement>) newValue);
+			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.model.Alignment;
+import org.eclipse.emf.ecp.view.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
@@ -107,8 +107,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-		case VViewPackage.ALIGNMENT:
-			return createAlignmentFromString(eDataType, initialValue);
+		case VViewPackage.LABEL_ALIGNMENT:
+			return createLabelAlignmentFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -125,8 +125,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	{
 		switch (eDataType.getClassifierID())
 		{
-		case VViewPackage.ALIGNMENT:
-			return convertAlignmentToString(eDataType, instanceValue);
+		case VViewPackage.LABEL_ALIGNMENT:
+			return convertLabelAlignmentToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -200,21 +200,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
-	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
+	public LabelAlignment createLabelAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
-		return featurePathDomainModelReference;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public Alignment createAlignmentFromString(EDataType eDataType, String initialValue)
-	{
-		Alignment result = Alignment.get(initialValue);
+		LabelAlignment result = LabelAlignment.get(initialValue);
 		if (result == null)
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
@@ -227,9 +215,21 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
-	public String convertAlignmentToString(EDataType eDataType, Object instanceValue)
+	public String convertLabelAlignmentToString(EDataType eDataType, Object instanceValue)
 	{
 		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
+	{
+		VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		return featurePathDomainModelReference;
 	}
 
 	/**

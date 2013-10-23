@@ -21,7 +21,7 @@ public interface CompositeFactory extends ValidationListener {
 	// CompositeFactory INSTANCE=CompositeFactoryImpl.INSTANCE;
 
 	Composite getComposite(Composite composite,
-		org.eclipse.emf.ecp.view.model.VContainableElement modelComposite,
+		org.eclipse.emf.ecp.view.model.VContainedElement modelComposite,
 		ECPControlContext context);
 
 	void dispose();

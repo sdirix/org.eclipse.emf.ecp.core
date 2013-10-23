@@ -16,7 +16,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.model.Alignment;
+import org.eclipse.emf.ecp.view.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * 
  * @generated
  */
-public class VControlImpl extends VContainableElementImpl implements VControl {
+public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -45,7 +45,7 @@ public class VControlImpl extends VContainableElementImpl implements VControl {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Alignment LABEL_ALIGNMENT_EDEFAULT = Alignment.LEFT;
+	protected static final LabelAlignment LABEL_ALIGNMENT_EDEFAULT = LabelAlignment.LEFT;
 
 	/**
 	 * The cached value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
@@ -56,7 +56,7 @@ public class VControlImpl extends VContainableElementImpl implements VControl {
 	 * @generated
 	 * @ordered
 	 */
-	protected Alignment labelAlignment = LABEL_ALIGNMENT_EDEFAULT;
+	protected LabelAlignment labelAlignment = LABEL_ALIGNMENT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
@@ -174,7 +174,7 @@ public class VControlImpl extends VContainableElementImpl implements VControl {
 	 * 
 	 * @generated
 	 */
-	public Alignment getLabelAlignment()
+	public LabelAlignment getLabelAlignment()
 	{
 		return labelAlignment;
 	}
@@ -185,9 +185,9 @@ public class VControlImpl extends VContainableElementImpl implements VControl {
 	 * 
 	 * @generated
 	 */
-	public void setLabelAlignment(Alignment newLabelAlignment)
+	public void setLabelAlignment(LabelAlignment newLabelAlignment)
 	{
-		Alignment oldLabelAlignment = labelAlignment;
+		LabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.CONTROL__LABEL_ALIGNMENT,
@@ -223,7 +223,7 @@ public class VControlImpl extends VContainableElementImpl implements VControl {
 		switch (featureID)
 		{
 		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
-			setLabelAlignment((Alignment) newValue);
+			setLabelAlignment((LabelAlignment) newValue);
 			return;
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) newValue);

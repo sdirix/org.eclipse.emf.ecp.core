@@ -38,7 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ControlItemProvider
-	extends ContainableElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.

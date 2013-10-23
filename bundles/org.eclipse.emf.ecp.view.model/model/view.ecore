@@ -32,23 +32,23 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rootEClass" lowerBound="1"
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//ContainableElement" containment="true"/>
+        eType="#//ContainedElement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
         eType="#//AbstractCategorization" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ContainableElement" abstract="true"
+  <eClassifiers xsi:type="ecore:EClass" name="ContainedElement" abstract="true"
       eSuperTypes="#//Element"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Container" abstract="true" eSuperTypes="#//ContainableElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Container" abstract="true" eSuperTypes="#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//ContainableElement" containment="true"/>
+        eType="#//ContainedElement" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//ContainableElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" lowerBound="1"
-        eType="#//Alignment" defaultValueLiteral="Left"/>
+        eType="#//LabelAlignment" defaultValueLiteral="Left"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
         eType="#//DomainModelReference" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="Alignment">
+  <eClassifiers xsi:type="ecore:EEnum" name="LabelAlignment">
     <eLiterals name="Left"/>
     <eLiterals name="None" value="1"/>
   </eClassifiers>
@@ -62,7 +62,7 @@
         eType="#//AbstractCategorization" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//AbstractCategorization">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="#//ContainableElement"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="#//ContainedElement"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action">

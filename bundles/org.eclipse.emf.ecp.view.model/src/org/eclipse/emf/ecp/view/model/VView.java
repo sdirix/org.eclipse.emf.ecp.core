@@ -64,7 +64,7 @@ public interface VView extends VElement {
 
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VContainableElement}.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VContainedElement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear, there really should be more of
@@ -77,7 +77,7 @@ public interface VView extends VElement {
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<VContainableElement> getChildren();
+	EList<VContainedElement> getChildren();
 
 	/**
 	 * Returns the value of the '<em><b>Categorizations</b></em>' containment reference list.

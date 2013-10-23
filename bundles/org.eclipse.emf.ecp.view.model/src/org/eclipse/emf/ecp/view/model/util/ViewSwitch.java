@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
@@ -135,11 +135,11 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case VViewPackage.CONTAINABLE_ELEMENT: {
-			VContainableElement containableElement = (VContainableElement) theEObject;
-			T result = caseContainableElement(containableElement);
+		case VViewPackage.CONTAINED_ELEMENT: {
+			VContainedElement containedElement = (VContainedElement) theEObject;
+			T result = caseContainedElement(containedElement);
 			if (result == null)
-				result = caseElement(containableElement);
+				result = caseElement(containedElement);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -148,7 +148,7 @@ public class ViewSwitch<T> extends Switch<T> {
 			VContainer container = (VContainer) theEObject;
 			T result = caseContainer(container);
 			if (result == null)
-				result = caseContainableElement(container);
+				result = caseContainedElement(container);
 			if (result == null)
 				result = caseElement(container);
 			if (result == null)
@@ -159,7 +159,7 @@ public class ViewSwitch<T> extends Switch<T> {
 			VControl control = (VControl) theEObject;
 			T result = caseControl(control);
 			if (result == null)
-				result = caseContainableElement(control);
+				result = caseContainedElement(control);
 			if (result == null)
 				result = caseElement(control);
 			if (result == null)
@@ -260,6 +260,23 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseContainedElement(VContainedElement object)
+	{
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of ' <em>Abstract Categorization</em>'. <!--
 	 * begin-user-doc --> This
 	 * implementation returns null; returning a non-null result will terminate
@@ -353,23 +370,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAction(VAction object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseContainableElement(VContainableElement object)
-	{
 		return null;
 	}
 

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
@@ -43,7 +43,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 * @generated
 	 * @ordered
 	 */
-	protected VContainableElement composite;
+	protected VContainedElement composite;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -72,7 +72,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 * 
 	 * @generated
 	 */
-	public VContainableElement getComposite() {
+	public VContainedElement getComposite() {
 		return composite;
 	}
 
@@ -82,8 +82,8 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetComposite(VContainableElement newComposite, NotificationChain msgs) {
-		VContainableElement oldComposite = composite;
+	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs) {
+		VContainedElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired())
 		{
@@ -103,7 +103,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 * 
 	 * @generated
 	 */
-	public void setComposite(VContainableElement newComposite) {
+	public void setComposite(VContainedElement newComposite) {
 		if (newComposite != composite)
 		{
 			NotificationChain msgs = null;
@@ -165,7 +165,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 		switch (featureID)
 		{
 		case VViewPackage.CATEGORY__COMPOSITE:
-			setComposite((VContainableElement) newValue);
+			setComposite((VContainedElement) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -182,7 +182,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 		switch (featureID)
 		{
 		case VViewPackage.CATEGORY__COMPOSITE:
-			setComposite((VContainableElement) null);
+			setComposite((VContainedElement) null);
 			return;
 		}
 		super.eUnset(featureID);

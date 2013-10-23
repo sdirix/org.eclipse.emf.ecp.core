@@ -15,7 +15,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
@@ -116,7 +116,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
-			public Adapter caseContainableElement(VContainableElement object)
+			public Adapter caseContainableElement(VContainedElement object)
 			{
 				return createContainableElementAdapter();
 			}
@@ -226,7 +226,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainableElement
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainedElement
 	 * <em>Containable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -234,7 +234,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VContainableElement
+	 * @see org.eclipse.emf.ecp.view.model.VContainedElement
 	 * @generated
 	 */
 	public Adapter createContainableElementAdapter()

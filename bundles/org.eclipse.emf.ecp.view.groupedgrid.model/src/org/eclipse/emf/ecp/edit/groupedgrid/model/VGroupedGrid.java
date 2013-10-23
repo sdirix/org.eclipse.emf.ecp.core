@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.edit.groupedgrid.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.model.VContainableElement;
  * @model
  * @generated
  */
-public interface VGroupedGrid extends VContainableElement
+public interface VGroupedGrid extends VContainedElement
 {
 	/**
 	 * Returns the value of the '<em><b>Groups</b></em>' containment reference list.

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -48,7 +48,7 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<VContainableElement> children;
+	protected EList<VContainedElement> children;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -79,11 +79,11 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * 
 	 * @generated
 	 */
-	public EList<VContainableElement> getChildren()
+	public EList<VContainedElement> getChildren()
 	{
 		if (children == null)
 		{
-			children = new EObjectContainmentEList<VContainableElement>(VContainableElement.class, this,
+			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
 				VGroupedGridPackage.ROW__CHILDREN);
 		}
 		return children;
@@ -137,7 +137,7 @@ public class VRowImpl extends EObjectImpl implements VRow
 		{
 		case VGroupedGridPackage.ROW__CHILDREN:
 			getChildren().clear();
-			getChildren().addAll((Collection<? extends VContainableElement>) newValue);
+			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);

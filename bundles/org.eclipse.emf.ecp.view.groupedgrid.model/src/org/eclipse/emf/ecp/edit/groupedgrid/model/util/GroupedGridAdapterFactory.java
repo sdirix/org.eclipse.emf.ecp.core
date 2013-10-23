@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
@@ -121,9 +121,9 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
-			public Adapter caseContainableElement(VContainableElement object)
+			public Adapter caseContainedElement(VContainedElement object)
 			{
-				return createContainableElementAdapter();
+				return createContainedElementAdapter();
 			}
 
 			@Override
@@ -234,18 +234,18 @@ public class GroupedGridAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainableElement
-	 * <em>Containable Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainedElement
+	 * <em>Contained Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VContainableElement
+	 * @see org.eclipse.emf.ecp.view.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainableElementAdapter()
+	public Adapter createContainedElementAdapter()
 	{
 		return null;
 	}

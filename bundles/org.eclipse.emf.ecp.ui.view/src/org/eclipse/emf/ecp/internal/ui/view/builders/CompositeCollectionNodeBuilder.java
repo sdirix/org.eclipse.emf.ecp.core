@@ -22,7 +22,7 @@ public class CompositeCollectionNodeBuilder<T extends org.eclipse.emf.ecp.view.m
 	public Node<T> build(T model, ECPControlContext context, AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
 		final Node<T> node = new Node<T>(model, context);
 
-		for (final org.eclipse.emf.ecp.view.model.VContainableElement composite : model.getChildren()) {
+		for (final org.eclipse.emf.ecp.view.model.VContainedElement composite : model.getChildren()) {
 			node.addChild(NodeBuilders.INSTANCE.build(composite, context, adapterFactoryItemDelegator));
 		}
 

@@ -74,13 +74,22 @@ public interface VSeparatorPackage extends EPackage {
 	int SEPARATOR = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEPARATOR__NAME = VViewPackage.CONTAINED_ELEMENT__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SEPARATOR__VISIBLE = VViewPackage.CONTAINABLE_ELEMENT__VISIBLE;
+	int SEPARATOR__VISIBLE = VViewPackage.CONTAINED_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -89,7 +98,7 @@ public interface VSeparatorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEPARATOR__ENABLED = VViewPackage.CONTAINABLE_ELEMENT__ENABLED;
+	int SEPARATOR__ENABLED = VViewPackage.CONTAINED_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -98,7 +107,7 @@ public interface VSeparatorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEPARATOR__READONLY = VViewPackage.CONTAINABLE_ELEMENT__READONLY;
+	int SEPARATOR__READONLY = VViewPackage.CONTAINED_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -107,7 +116,7 @@ public interface VSeparatorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEPARATOR__DIAGNOSTIC = VViewPackage.CONTAINABLE_ELEMENT__DIAGNOSTIC;
+	int SEPARATOR__DIAGNOSTIC = VViewPackage.CONTAINED_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -116,16 +125,7 @@ public interface VSeparatorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEPARATOR__ATTACHMENTS = VViewPackage.CONTAINABLE_ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEPARATOR__NAME = VViewPackage.CONTAINABLE_ELEMENT__NAME;
+	int SEPARATOR__ATTACHMENTS = VViewPackage.CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The number of structural features of the '<em>Separator</em>' class.
@@ -134,7 +134,7 @@ public interface VSeparatorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEPARATOR_FEATURE_COUNT = VViewPackage.CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
+	int SEPARATOR_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.separator.model.VSeparator <em>Separator</em>}'.

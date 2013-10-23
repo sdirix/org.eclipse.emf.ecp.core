@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
 
 /**
@@ -62,7 +62,7 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 	 * @generated
 	 * @ordered
 	 */
-	protected VContainableElement composite;
+	protected VContainedElement composite;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -138,7 +138,7 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public VContainableElement getComposite() {
+	public VContainedElement getComposite() {
 		return composite;
 	}
 
@@ -147,8 +147,8 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComposite(VContainableElement newComposite, NotificationChain msgs) {
-		VContainableElement oldComposite = composite;
+	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs) {
+		VContainedElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, oldComposite, newComposite);
@@ -162,7 +162,7 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setComposite(VContainableElement newComposite) {
+	public void setComposite(VContainedElement newComposite) {
 		if (newComposite != composite) {
 			NotificationChain msgs = null;
 			if (composite != null)
@@ -228,7 +228,7 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 				getItems().addAll((Collection<? extends DynamicContainmentItem>)newValue);
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-				setComposite((VContainableElement)newValue);
+				setComposite((VContainedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -249,7 +249,7 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 				getItems().clear();
 				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-				setComposite((VContainableElement)null);
+				setComposite((VContainedElement)null);
 				return;
 		}
 		super.eUnset(featureID);

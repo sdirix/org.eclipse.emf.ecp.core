@@ -204,18 +204,6 @@ public interface VViewPackage extends EPackage {
 	int ATTACHMENT_FEATURE_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
-	 * <em>Containable Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainableElement()
-	 * @generated
-	 */
-	int CONTAINABLE_ELEMENT = 6;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
 	 * <em>Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -450,6 +438,18 @@ public interface VViewPackage extends EPackage {
 	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl
+	 * <em>Contained Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl
+	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainedElement()
+	 * @generated
+	 */
+	int CONTAINED_ELEMENT = 6;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -457,7 +457,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT__NAME = ELEMENT__NAME;
+	int CONTAINED_ELEMENT__NAME = ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -467,7 +467,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT__VISIBLE = ELEMENT__VISIBLE;
+	int CONTAINED_ELEMENT__VISIBLE = ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -477,7 +477,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT__ENABLED = ELEMENT__ENABLED;
+	int CONTAINED_ELEMENT__ENABLED = ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -487,7 +487,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT__READONLY = ELEMENT__READONLY;
+	int CONTAINED_ELEMENT__READONLY = ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -497,7 +497,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT__DIAGNOSTIC = ELEMENT__DIAGNOSTIC;
+	int CONTAINED_ELEMENT__DIAGNOSTIC = ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -507,17 +507,17 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT__ATTACHMENTS = ELEMENT__ATTACHMENTS;
+	int CONTAINED_ELEMENT__ATTACHMENTS = ELEMENT__ATTACHMENTS;
 
 	/**
-	 * The number of structural features of the '<em>Containable Element</em>' class.
+	 * The number of structural features of the '<em>Contained Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINABLE_ELEMENT_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 0;
+	int CONTAINED_ELEMENT_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainerImpl <em>Container</em>}' class.
@@ -538,7 +538,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__NAME = CONTAINABLE_ELEMENT__NAME;
+	int CONTAINER__NAME = CONTAINED_ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -548,7 +548,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__VISIBLE = CONTAINABLE_ELEMENT__VISIBLE;
+	int CONTAINER__VISIBLE = CONTAINED_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -558,7 +558,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__ENABLED = CONTAINABLE_ELEMENT__ENABLED;
+	int CONTAINER__ENABLED = CONTAINED_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -568,7 +568,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__READONLY = CONTAINABLE_ELEMENT__READONLY;
+	int CONTAINER__READONLY = CONTAINED_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -578,7 +578,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__DIAGNOSTIC = CONTAINABLE_ELEMENT__DIAGNOSTIC;
+	int CONTAINER__DIAGNOSTIC = CONTAINED_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -588,7 +588,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__ATTACHMENTS = CONTAINABLE_ELEMENT__ATTACHMENTS;
+	int CONTAINER__ATTACHMENTS = CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -598,7 +598,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER__CHILDREN = CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
+	int CONTAINER__CHILDREN = CONTAINED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Container</em>' class.
@@ -608,7 +608,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTAINER_FEATURE_COUNT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
+	int CONTAINER_FEATURE_COUNT = CONTAINED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -618,7 +618,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__NAME = CONTAINABLE_ELEMENT__NAME;
+	int CONTROL__NAME = CONTAINED_ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -628,7 +628,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__VISIBLE = CONTAINABLE_ELEMENT__VISIBLE;
+	int CONTROL__VISIBLE = CONTAINED_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -638,7 +638,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__ENABLED = CONTAINABLE_ELEMENT__ENABLED;
+	int CONTROL__ENABLED = CONTAINED_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -648,7 +648,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__READONLY = CONTAINABLE_ELEMENT__READONLY;
+	int CONTROL__READONLY = CONTAINED_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -658,7 +658,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__DIAGNOSTIC = CONTAINABLE_ELEMENT__DIAGNOSTIC;
+	int CONTROL__DIAGNOSTIC = CONTAINED_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -668,7 +668,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__ATTACHMENTS = CONTAINABLE_ELEMENT__ATTACHMENTS;
+	int CONTROL__ATTACHMENTS = CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -678,7 +678,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__LABEL_ALIGNMENT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 0;
+	int CONTROL__LABEL_ALIGNMENT = CONTAINED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
@@ -688,7 +688,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL__DOMAIN_MODEL_REFERENCE = CONTAINABLE_ELEMENT_FEATURE_COUNT + 1;
+	int CONTROL__DOMAIN_MODEL_REFERENCE = CONTAINED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
@@ -698,7 +698,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_FEATURE_COUNT = CONTAINABLE_ELEMENT_FEATURE_COUNT + 2;
+	int CONTROL_FEATURE_COUNT = CONTAINED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -991,15 +991,15 @@ public interface VViewPackage extends EPackage {
 	int ACTION_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.LabelAlignment <em>Label Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.Alignment
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAlignment()
+	 * @see org.eclipse.emf.ecp.view.model.LabelAlignment
+	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
 	 */
-	int ALIGNMENT = 13;
+	int LABEL_ALIGNMENT = 13;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VElement <em>Element</em>}'.
@@ -1163,6 +1163,18 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getView_Categorizations();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VContainedElement
+	 * <em>Contained Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Contained Element</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.VContainedElement
+	 * @generated
+	 */
+	EClass getContainedElement();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization
@@ -1337,16 +1349,16 @@ public interface VViewPackage extends EPackage {
 	EAttribute getAction_ClassName();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VContainableElement
-	 * <em>Containable Element</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.model.LabelAlignment <em>Label Alignment</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for class '<em>Containable Element</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VContainableElement
+	 * @return the meta object for enum '<em>Label Alignment</em>'.
+	 * @see org.eclipse.emf.ecp.view.model.LabelAlignment
 	 * @generated
 	 */
-	EClass getContainableElement();
+	EEnum getLabelAlignment();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
@@ -1410,17 +1422,6 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getAttachment();
-
-	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for enum '<em>Alignment</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.Alignment
-	 * @generated
-	 */
-	EEnum getAlignment();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1572,6 +1573,18 @@ public interface VViewPackage extends EPackage {
 		EReference VIEW__CATEGORIZATIONS = eINSTANCE.getView_Categorizations();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl
+		 * <em>Contained Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl
+		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainedElement()
+		 * @generated
+		 */
+		EClass CONTAINED_ELEMENT = eINSTANCE.getContainedElement();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl
 		 * <em>Abstract Categorization</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1716,16 +1729,16 @@ public interface VViewPackage extends EPackage {
 		EAttribute ACTION__CLASS_NAME = eINSTANCE.getAction_ClassName();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
-		 * <em>Containable Element</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.LabelAlignment
+		 * <em>Label Alignment</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getContainableElement()
+		 * @see org.eclipse.emf.ecp.view.model.LabelAlignment
+		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getLabelAlignment()
 		 * @generated
 		 */
-		EClass CONTAINABLE_ELEMENT = eINSTANCE.getContainableElement();
+		EEnum LABEL_ALIGNMENT = eINSTANCE.getLabelAlignment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.VDomainModelReference
@@ -1783,17 +1796,6 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ATTACHMENT = eINSTANCE.getAttachment();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.Alignment <em>Alignment</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.Alignment
-		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAlignment()
-		 * @generated
-		 */
-		EEnum ALIGNMENT = eINSTANCE.getAlignment();
 
 	}
 

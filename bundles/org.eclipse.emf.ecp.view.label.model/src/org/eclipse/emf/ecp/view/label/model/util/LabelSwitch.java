@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
@@ -92,7 +92,7 @@ public class LabelSwitch<T> extends Switch<T>
 			VLabel label = (VLabel) theEObject;
 			T result = caseLabel(label);
 			if (result == null)
-				result = caseContainableElement(label);
+				result = caseContainedElement(label);
 			if (result == null)
 				result = caseElement(label);
 			if (result == null)
@@ -139,18 +139,18 @@ public class LabelSwitch<T> extends Switch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainableElement(VContainableElement object)
+	public T caseContainedElement(VContainedElement object)
 	{
 		return null;
 	}

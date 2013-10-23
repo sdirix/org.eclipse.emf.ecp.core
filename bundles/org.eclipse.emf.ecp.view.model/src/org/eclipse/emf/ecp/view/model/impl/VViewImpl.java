@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -65,7 +65,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<VContainableElement> children;
+	protected EList<VContainedElement> children;
 
 	/**
 	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
@@ -150,10 +150,10 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * 
 	 * @generated
 	 */
-	public EList<VContainableElement> getChildren() {
+	public EList<VContainedElement> getChildren() {
 		if (children == null)
 		{
-			children = new EObjectContainmentEList<VContainableElement>(VContainableElement.class, this,
+			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
 				VViewPackage.VIEW__CHILDREN);
 		}
 		return children;
@@ -231,7 +231,7 @@ public class VViewImpl extends VElementImpl implements VView {
 			return;
 		case VViewPackage.VIEW__CHILDREN:
 			getChildren().clear();
-			getChildren().addAll((Collection<? extends VContainableElement>) newValue);
+			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
 			return;
 		case VViewPackage.VIEW__CATEGORIZATIONS:
 			getCategorizations().clear();

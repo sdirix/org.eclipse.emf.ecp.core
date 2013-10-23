@@ -6,7 +6,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -106,12 +106,12 @@ public interface DynamicContainmentTree extends VCategory {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Child Composite</em>' containment reference.
-	 * @see #setChildComposite(VContainableElement)
+	 * @see #setChildComposite(VContainedElement)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTree_ChildComposite()
 	 * @model containment="true"
 	 * @generated
 	 */
-	VContainableElement getChildComposite();
+	VContainedElement getChildComposite();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite</em>}' containment reference.
@@ -121,7 +121,7 @@ public interface DynamicContainmentTree extends VCategory {
 	 * @see #getChildComposite()
 	 * @generated
 	 */
-	void setChildComposite(VContainableElement value);
+	void setChildComposite(VContainedElement value);
 
 	/**
 	 * Returns the value of the '<em><b>Items</b></em>' containment reference list.

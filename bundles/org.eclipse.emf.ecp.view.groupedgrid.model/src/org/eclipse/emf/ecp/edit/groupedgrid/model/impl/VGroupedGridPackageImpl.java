@@ -316,7 +316,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		groupedGridEClass.getESuperTypes().add(theViewPackage.getContainableElement());
+		groupedGridEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 		spanEClass.getESuperTypes().add(theViewPackage.getAttachment());
 
 		// Initialize classes and features; add operations and parameters
@@ -334,7 +334,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(rowEClass, VRow.class, "Row", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRow_Children(), theViewPackage.getContainableElement(), null, "children", null, 0, -1,
+		initEReference(getRow_Children(), theViewPackage.getContainedElement(), null, "children", null, 0, -1,
 			VRow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

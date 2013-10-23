@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridFactory;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
-import org.eclipse.emf.ecp.view.model.provider.ContainableElementItemProvider;
+import org.eclipse.emf.ecp.view.model.provider.ContainedElementItemProvider;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -38,7 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class GroupedGridItemProvider
-	extends ContainableElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**

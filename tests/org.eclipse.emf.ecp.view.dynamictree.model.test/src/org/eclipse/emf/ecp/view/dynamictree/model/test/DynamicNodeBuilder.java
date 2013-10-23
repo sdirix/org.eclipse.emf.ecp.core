@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.model.VAction;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.osgi.framework.Bundle;
@@ -34,7 +34,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 
 		final Node<DynamicContainmentTree> node = new Node<DynamicContainmentTree>(dynamicTree, controlContext);
 
-		final Node<VContainableElement> compositeNode = NodeBuilders.INSTANCE.build(dynamicTree.getComposite(),
+		final Node<VContainedElement> compositeNode = NodeBuilders.INSTANCE.build(dynamicTree.getComposite(),
 			controlContext);
 
 		node.addChild(compositeNode);

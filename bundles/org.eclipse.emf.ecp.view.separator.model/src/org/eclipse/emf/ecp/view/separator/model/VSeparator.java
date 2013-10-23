@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.separator.model;
 
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,5 +23,5 @@ import org.eclipse.emf.ecp.view.model.VContainableElement;
  * @model
  * @generated
  */
-public interface VSeparator extends VContainableElement {
+public interface VSeparator extends VContainedElement {
 } // VSeparator

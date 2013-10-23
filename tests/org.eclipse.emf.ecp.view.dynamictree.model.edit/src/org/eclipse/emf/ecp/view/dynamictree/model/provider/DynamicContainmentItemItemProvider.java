@@ -129,8 +129,10 @@ public class DynamicContainmentItemItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		DynamicContainmentItem dynamicContainmentItem = (DynamicContainmentItem)object;
-		return getString("_UI_DynamicContainmentItem_type") + " " + dynamicContainmentItem.isVisible();
+		String label = ((DynamicContainmentItem)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_DynamicContainmentItem_type") :
+			getString("_UI_DynamicContainmentItem_type") + " " + label;
 	}
 
 	/**

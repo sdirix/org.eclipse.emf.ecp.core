@@ -38,12 +38,12 @@ public interface VCategory extends VAbstractCategorization {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Composite</em>' containment reference.
-	 * @see #setComposite(VContainableElement)
+	 * @see #setComposite(VContainedElement)
 	 * @see org.eclipse.emf.ecp.view.model.VViewPackage#getCategory_Composite()
 	 * @model containment="true"
 	 * @generated
 	 */
-	VContainableElement getComposite();
+	VContainedElement getComposite();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.model.VCategory#getComposite <em>Composite</em>}'
@@ -55,6 +55,6 @@ public interface VCategory extends VAbstractCategorization {
 	 * @see #getComposite()
 	 * @generated
 	 */
-	void setComposite(VContainableElement value);
+	void setComposite(VContainedElement value);
 
 } // Category

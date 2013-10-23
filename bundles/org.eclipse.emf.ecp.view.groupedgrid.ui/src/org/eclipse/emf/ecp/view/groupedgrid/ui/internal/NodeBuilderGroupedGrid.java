@@ -39,7 +39,7 @@ public class NodeBuilderGroupedGrid implements
 
 		for (final VGroup group : model.getGroups()) {
 			for (final VRow row : group.getRows()) {
-				for (final org.eclipse.emf.ecp.view.model.VContainableElement composite : row.getChildren()) {
+				for (final org.eclipse.emf.ecp.view.model.VContainedElement composite : row.getChildren()) {
 					node.addChild(NodeBuilders.INSTANCE.build(composite, context, adapterFactoryItemDelegator));
 				}
 			}

@@ -79,7 +79,7 @@ public class ChildrenDescriptorTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testCompositeChildDescriptors() {
-		getChildrenSize(VViewPackage.eINSTANCE.getContainableElement());
+		getChildrenSize(VViewPackage.eINSTANCE.getContainedElement());
 	}
 
 	@Test

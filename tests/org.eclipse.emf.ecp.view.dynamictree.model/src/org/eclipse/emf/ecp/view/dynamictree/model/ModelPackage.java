@@ -68,6 +68,15 @@ public interface ModelPackage extends EPackage {
 	int DYNAMIC_CONTAINMENT_TREE = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE__NAME = VViewPackage.CATEGORY__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,15 +120,6 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int DYNAMIC_CONTAINMENT_TREE__ATTACHMENTS = VViewPackage.CATEGORY__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DYNAMIC_CONTAINMENT_TREE__NAME = VViewPackage.CATEGORY__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -202,6 +202,15 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	int DYNAMIC_CONTAINMENT_ITEM = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_ITEM__NAME = VViewPackage.ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.

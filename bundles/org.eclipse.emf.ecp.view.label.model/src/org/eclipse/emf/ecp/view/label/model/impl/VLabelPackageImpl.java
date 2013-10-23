@@ -224,7 +224,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		labelEClass.getESuperTypes().add(theViewPackage.getContainableElement());
+		labelEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(labelEClass, VLabel.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

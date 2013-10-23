@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.model.Alignment;
+import org.eclipse.emf.ecp.view.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -102,7 +102,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			// parent = newParent;
 			// GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(parent);
 			// }
-			if (modelControl.getLabelAlignment() == Alignment.LEFT) {
+			if (modelControl.getLabelAlignment() == LabelAlignment.LEFT) {
 				numControl = 1;
 				label = new Label(parent, SWT.NONE);
 				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");

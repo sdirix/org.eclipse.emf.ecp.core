@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
@@ -128,9 +128,9 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseContainableElement(VContainableElement object)
+		public Adapter caseContainedElement(VContainedElement object)
 		{
-			return createContainableElementAdapter();
+			return createContainedElementAdapter();
 		}
 
 		@Override
@@ -238,6 +238,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainedElement
+	 * <em>Contained Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.model.VContainedElement
+	 * @generated
+	 */
+	public Adapter createContainedElementAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization
 	 * <em>Abstract Categorization</em>}'.
 	 * <!-- begin-user-doc --> This default
@@ -328,23 +345,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createActionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainableElement
-	 * <em>Containable Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VContainableElement
-	 * @generated
-	 */
-	public Adapter createContainableElementAdapter()
-	{
 		return null;
 	}
 

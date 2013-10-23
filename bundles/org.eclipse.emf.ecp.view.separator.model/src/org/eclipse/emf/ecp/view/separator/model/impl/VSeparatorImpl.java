@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.model.impl.VContainableElementImpl;
+import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
  *
  * @generated
  */
-public class VSeparatorImpl extends VContainableElementImpl implements VSeparator {
+public class VSeparatorImpl extends VContainedElementImpl implements VSeparator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

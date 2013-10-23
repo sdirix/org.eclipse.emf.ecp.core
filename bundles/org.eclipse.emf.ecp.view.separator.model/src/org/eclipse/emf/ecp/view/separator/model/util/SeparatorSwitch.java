@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.separator.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
@@ -79,7 +79,7 @@ public class SeparatorSwitch<T> extends Switch<T> {
 			case VSeparatorPackage.SEPARATOR: {
 				VSeparator separator = (VSeparator)theEObject;
 				T result = caseSeparator(separator);
-				if (result == null) result = caseContainableElement(separator);
+				if (result == null) result = caseContainedElement(separator);
 				if (result == null) result = caseElement(separator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -119,17 +119,17 @@ public class SeparatorSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainableElement(VContainableElement object) {
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 

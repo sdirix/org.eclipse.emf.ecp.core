@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
@@ -24,14 +24,14 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * 
  * @generated
  */
-public abstract class VContainableElementImpl extends VElementImpl implements VContainableElement {
+public abstract class VContainedElementImpl extends VElementImpl implements VContainedElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected VContainableElementImpl() {
+	protected VContainedElementImpl() {
 		super();
 	}
 
@@ -43,7 +43,7 @@ public abstract class VContainableElementImpl extends VElementImpl implements VC
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return VViewPackage.Literals.CONTAINABLE_ELEMENT;
+		return VViewPackage.Literals.CONTAINED_ELEMENT;
 	}
 
 } // CompositeImpl

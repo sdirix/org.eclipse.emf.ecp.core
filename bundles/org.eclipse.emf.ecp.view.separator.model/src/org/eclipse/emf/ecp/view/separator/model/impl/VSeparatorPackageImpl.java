@@ -167,7 +167,7 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		separatorEClass.getESuperTypes().add(theViewPackage.getContainableElement());
+		separatorEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(separatorEClass, VSeparator.class, "Separator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
@@ -188,7 +188,7 @@ public class DynamicContainmentTreeTest {
 		final ECPControlContext childContext = virtualParentNode.getControlContext()
 			.createSubContext(newValue);
 		final DynamicContainmentItem pi = ModelFactory.eINSTANCE.createDynamicContainmentItem();
-		pi.setComposite((VContainableElement) EcoreUtil.copy(renderable));
+		pi.setComposite((VContainedElement) EcoreUtil.copy(renderable));
 		pi.setDomainModel(newValue);
 		resolveDomainReferences(pi, newValue);
 		if (DynamicContainmentItem.class.isInstance(virtualParentNode.getRenderable())) {

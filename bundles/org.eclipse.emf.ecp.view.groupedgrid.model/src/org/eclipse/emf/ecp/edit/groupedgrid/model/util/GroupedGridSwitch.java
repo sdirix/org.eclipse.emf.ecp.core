@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VContainableElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
@@ -92,7 +92,7 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 			VGroupedGrid groupedGrid = (VGroupedGrid) theEObject;
 			T result = caseGroupedGrid(groupedGrid);
 			if (result == null)
-				result = caseContainableElement(groupedGrid);
+				result = caseContainedElement(groupedGrid);
 			if (result == null)
 				result = caseElement(groupedGrid);
 			if (result == null)
@@ -213,18 +213,18 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainableElement(VContainableElement object)
+	public T caseContainedElement(VContainedElement object)
 	{
 		return null;
 	}
