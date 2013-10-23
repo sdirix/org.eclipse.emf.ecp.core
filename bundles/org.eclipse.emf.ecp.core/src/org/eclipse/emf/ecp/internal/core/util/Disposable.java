@@ -11,12 +11,12 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.spi.core.util.DisposeException;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Eike Stepper

@@ -12,11 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.jface.dialogs.Dialog;
 
 /**

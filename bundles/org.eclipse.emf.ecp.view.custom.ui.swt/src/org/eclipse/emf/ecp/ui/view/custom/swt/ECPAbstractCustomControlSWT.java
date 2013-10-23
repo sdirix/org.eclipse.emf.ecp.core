@@ -41,8 +41,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * Extend this class in order to provide an own implementation of an
- * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl ECPCustomControl}.
+ * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControl}.
  * 
  * @author Eugen Neufeld
  * 
@@ -69,12 +68,9 @@ public abstract class ECPAbstractCustomControlSWT extends
 	public static final int HELP_IMAGE = 3;
 
 	/**
-	 * Extend this class for an SWT implementation of the {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 * ECPCustomControl}.
+	 * Extend this class for an SWT implementation of the {@link ECPAbstractCustomControl}.
 	 * 
-	 * @param features the features which will be used in this
-	 *            {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 *            ECPCustomControl}
+	 * @param features the features which will be used in this Control.
 	 */
 	public ECPAbstractCustomControlSWT(
 		Set<VDomainModelReference> features) {
@@ -145,8 +141,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * This is called by the framework when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 * ECPCustomControl} is about to be rendered.
+	 * This is called by the framework when this control is about to be rendered.
 	 * 
 	 * @param composite The composite on which this custom control shall add its controls.
 	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.

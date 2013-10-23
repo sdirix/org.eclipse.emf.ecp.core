@@ -23,10 +23,12 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 public class LinkCellEditorTester implements ECPApplicableTester {
 
-	public LinkCellEditorTester() {
-		// TODO Auto-generated constructor stub
-	}
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
 		return check(eObject, feature);

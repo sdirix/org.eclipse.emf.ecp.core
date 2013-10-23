@@ -16,18 +16,15 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
-
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.DefaultPropertySource;
-import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
-
 import org.eclipse.emf.ecp.cdo.internal.core.CDOBranchWrapper;
 import org.eclipse.emf.ecp.cdo.internal.core.CDOProvider;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.DefaultPropertySource;
+import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

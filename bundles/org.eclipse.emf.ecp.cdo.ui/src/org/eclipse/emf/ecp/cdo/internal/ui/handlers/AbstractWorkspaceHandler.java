@@ -11,11 +11,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.ui.handlers;
 
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-
-import org.eclipse.net4j.util.AdapterUtil;
-
-import org.eclipse.emf.ecp.cdo.internal.ui.Activator;
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -24,15 +20,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.ecp.cdo.internal.ui.Activator;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.services.IEvaluationService;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Abstract Handler for executing commands.

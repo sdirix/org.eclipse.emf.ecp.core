@@ -64,7 +64,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.internal.swt.util.RenderingResultRowFactory"/>
                </appinfo>
             </annotation>
          </attribute>

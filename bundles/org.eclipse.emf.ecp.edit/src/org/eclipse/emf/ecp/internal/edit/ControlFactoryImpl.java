@@ -40,8 +40,6 @@ import org.osgi.framework.Bundle;
  * 
  */
 
-@SuppressWarnings("restriction")
-// TODO VDomainModelReference is not API
 public final class ControlFactoryImpl implements ECPControlFactory {
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$

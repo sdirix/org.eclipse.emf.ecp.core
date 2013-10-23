@@ -11,12 +11,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.core;
 
+import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-
-import org.eclipse.core.runtime.IAdapterFactory;
 
 /**
  * @author Eike Stepper

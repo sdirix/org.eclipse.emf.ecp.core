@@ -21,12 +21,22 @@ import org.eclipse.swt.graphics.Image;
 public class ImageDescriptorToImage {
 	private final ImageDescriptor imageDescriptor;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param imageDescriptor the {@link ImageDescriptor}
+	 */
 	public ImageDescriptorToImage(ImageDescriptor imageDescriptor) {
 		this.imageDescriptor = imageDescriptor;
 	}
 
 	private Image image;
 
+	/**
+	 * Returns the image of this {@link ImageDescriptor}. The image is only created once.
+	 * 
+	 * @return the {@link Image}
+	 */
 	public Image getImage() {
 		if (image == null) {
 			image = imageDescriptor.createImage();
@@ -34,6 +44,11 @@ public class ImageDescriptorToImage {
 		return image;
 	}
 
+	/**
+	 * The {@link ImageDescriptor}.
+	 * 
+	 * @return the {@link ImageDescriptor}
+	 */
 	public ImageDescriptor getImageDescriptor() {
 		return imageDescriptor;
 	}

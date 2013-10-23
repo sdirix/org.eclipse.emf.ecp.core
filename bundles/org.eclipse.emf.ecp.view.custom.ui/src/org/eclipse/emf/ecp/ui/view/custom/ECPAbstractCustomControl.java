@@ -33,17 +33,18 @@ import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
+import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * Abstract class implementing {@link ECPCustomControl} providing necessary common access methods.
+ * Abstract class extending {@link ECPAbstractControl} providing necessary common access methods.
  * 
  * @author emueller
  * @author eneufeld
  * 
  */
-public abstract class ECPAbstractCustomControl extends ECPAbstractControl {
+public abstract class ECPAbstractCustomControl extends ECPAbstractControl implements ECPHardcodedReferences {
 
 	private final CustomControlHelper helper = new CustomControlHelper();
 
@@ -232,6 +233,8 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl {
 	/**
 	 * Return the {@link IItemPropertyDescriptor} describing this {@link EStructuralFeature}.
 	 * 
+	 * @param domainModelReference the {@link VDomainModelReference} to use for identifying the correct
+	 *            {@link EStructuralFeature}.
 	 * @return the {@link IItemPropertyDescriptor}
 	 * @since 1.1
 	 */
@@ -241,8 +244,6 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.custom.model.ECPCustomControl#getNeededDomainModelReferences()
 	 */
 	public final Set<VDomainModelReference> getNeededDomainModelReferences() {
 		return features;

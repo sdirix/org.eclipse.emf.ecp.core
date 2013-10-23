@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.provider.ComposedImage;
@@ -30,7 +29,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * An Action for adding reference links to a model element. It is mainly used in the {@link ReferenceMultiControl}
+ * An Action for adding reference links to a model element. It is mainly used in the
+ * {@link org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl ReferenceMultiControl}
  * 
  * @author shterev
  * @author Eugen Neufeld

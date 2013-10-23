@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.ECPViewerFilter;
@@ -18,15 +21,11 @@ import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Composite;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This class provides a composite which displays available EObejcts to the user. The user can

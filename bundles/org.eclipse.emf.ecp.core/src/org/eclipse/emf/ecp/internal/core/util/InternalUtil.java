@@ -11,11 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPElement;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.eclipse.emf.ecp.core.util.ECPElement;
 
 /**
  * @author Eugen Neufeld

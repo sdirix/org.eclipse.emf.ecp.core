@@ -25,13 +25,11 @@ import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
@@ -54,7 +52,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * This control provides the necessary common functionality to create a multicontrol that are needed for
- * {@link EStructuralFeature}s that have multiple values.
+ * {@link org.eclipse.emf.ecore.EStructuralFeature EStructuralFeature}s that have multiple values.
  * 
  * @author Eugen Neufeld
  * 
@@ -77,19 +75,6 @@ public abstract class MultiControl extends SWTControl {
 
 	private Button unsetButton;
 	private Label tooltipLabel;
-
-	/**
-	 * Constructor for a multi control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public MultiControl() {
-
-	}
 
 	/**
 	 * This returns the array of actions to display in the multi control.

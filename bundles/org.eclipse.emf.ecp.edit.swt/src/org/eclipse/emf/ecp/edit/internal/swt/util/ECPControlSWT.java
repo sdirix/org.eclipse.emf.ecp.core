@@ -18,9 +18,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
+ * Interface describing a control which can be renderer with SWT.
+ * 
  * @author Eugen Neufeld
  * 
  */
 public interface ECPControlSWT {
+	/**
+	 * Renders a control on the provided parent and returning a list of {@link RenderingResultRow RenderingResultRows}.
+	 * 
+	 * @param parent the {@link Composite} to render onto
+	 * @return the list of {@link RenderingResultRow RenderingResultRows}
+	 */
 	List<RenderingResultRow<Control>> createControls(final Composite parent);
 }

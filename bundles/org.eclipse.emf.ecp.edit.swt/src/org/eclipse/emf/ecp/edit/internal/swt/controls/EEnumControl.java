@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -24,7 +23,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a enum
+ * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
+ * EStructuralFeature}s which have a enum
  * value.
  * 
  * @author Eugen Neufeld

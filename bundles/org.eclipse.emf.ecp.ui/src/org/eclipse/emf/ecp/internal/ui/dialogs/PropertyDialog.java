@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.internal.ui.dialogs;
 
 import org.eclipse.emf.ecp.internal.ui.Messages;
-
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

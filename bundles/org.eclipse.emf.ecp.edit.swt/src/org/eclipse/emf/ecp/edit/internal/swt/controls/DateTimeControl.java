@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -26,7 +25,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
 /**
- * This class defines a DateTimeControl which is used for displaying {@link EStructuralFeature}s which have a date
+ * This class defines a DateTimeControl which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
+ * EStructuralFeature}s which have a date
  * value.
  * 
  * @author Eugen Neufeld

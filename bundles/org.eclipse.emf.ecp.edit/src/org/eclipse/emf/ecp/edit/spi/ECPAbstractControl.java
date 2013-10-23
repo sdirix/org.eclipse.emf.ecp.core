@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 public abstract class ECPAbstractControl implements ECPControl {
 
 	private ECPControlContext modelElementContext;
-	private boolean embedded = false;
+	private boolean embedded;
 	private final EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
@@ -71,8 +71,10 @@ public abstract class ECPAbstractControl implements ECPControl {
 		return dataBindingContext;
 	}
 
-	// TODO docu
 	/**
+	 * Disposes the control.
+	 * A control which needs specific dispose handling must still call super.dispose.
+	 * 
 	 * @since 1.1
 	 */
 	public void dispose() {

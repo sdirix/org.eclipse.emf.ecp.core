@@ -11,6 +11,8 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
@@ -20,8 +22,6 @@ import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-
-import java.util.Collection;
 
 /**
  * @author Eike Stepper

@@ -12,10 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.localserver.internal;
 
-import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
-
 import org.eclipse.core.runtime.Plugin;
-
+import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
 import org.osgi.framework.BundleContext;
 
 /**

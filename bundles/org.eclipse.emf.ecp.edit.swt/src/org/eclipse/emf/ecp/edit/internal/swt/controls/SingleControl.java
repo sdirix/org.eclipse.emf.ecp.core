@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -24,7 +23,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * This class defines a SingleControl which is used for displaying {@link EStructuralFeature}s which have maximum 1
+ * This class defines a SingleControl which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
+ * EStructuralFeature}s which have maximum 1
  * value.
  * 
  * @author Eugen Neufeld

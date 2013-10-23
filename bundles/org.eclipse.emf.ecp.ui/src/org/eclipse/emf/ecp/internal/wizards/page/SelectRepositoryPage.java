@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesLabelProvider;
 import org.eclipse.emf.ecp.internal.wizards.ShareWizard;
-
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;

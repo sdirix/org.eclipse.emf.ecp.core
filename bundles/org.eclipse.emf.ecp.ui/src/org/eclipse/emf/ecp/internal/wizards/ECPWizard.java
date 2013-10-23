@@ -14,7 +14,6 @@
 package org.eclipse.emf.ecp.internal.wizards;
 
 import org.eclipse.emf.ecp.ui.common.CompositeProvider;
-
 import org.eclipse.jface.wizard.Wizard;
 
 /**

@@ -14,9 +14,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
-import org.eclipse.emf.ecp.core.ECPRepository;
-
 import java.util.Collection;
+
+import org.eclipse.emf.ecp.core.ECPRepository;
 
 /**
  * This Observer is called to notify listeners about changes of the objects in a repository.

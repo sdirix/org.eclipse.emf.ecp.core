@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IViewerNotification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider.ViewerRefresh;
-
 import org.eclipse.jface.viewers.TreeViewer;
 
 /**

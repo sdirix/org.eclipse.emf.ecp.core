@@ -11,12 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPRepositoryAware;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-
-import java.util.Collection;
 
 /**
  * This class describes a Project. A project has a name, a label. It has zero or one {@link ECPRepository} and one

@@ -18,8 +18,8 @@ import org.eclipse.swt.widgets.Control;
 /**
  * Common interface for all SWT renderers.
  * 
- * @param T
- *            the type of the SWT control
+ * 
+ * the type of the SWT control
  */
 public interface SWTRenderer<R extends Renderable> extends ControlRenderer<R, Control> {
 

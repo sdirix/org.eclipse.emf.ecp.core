@@ -14,13 +14,11 @@ package org.eclipse.emf.ecp.cdo.internal.core;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-
+import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IPluginContainer;
-
-import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 /**
  * Provider-specific wrapper for an ECO {@link InternalRepository}.

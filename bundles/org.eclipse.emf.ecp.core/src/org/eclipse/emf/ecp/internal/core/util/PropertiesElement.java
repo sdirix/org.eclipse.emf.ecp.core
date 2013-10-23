@@ -11,16 +11,16 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
-import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
-import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
-
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.Collection;
 import java.util.Map.Entry;
+
+import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPPropertiesAware;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
+import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 
 /**
  * @author Eike Stepper

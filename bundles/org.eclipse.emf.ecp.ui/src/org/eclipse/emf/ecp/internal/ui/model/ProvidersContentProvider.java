@@ -11,13 +11,13 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-
-import java.util.Collection;
 
 /**
  * @author Eike Stepper

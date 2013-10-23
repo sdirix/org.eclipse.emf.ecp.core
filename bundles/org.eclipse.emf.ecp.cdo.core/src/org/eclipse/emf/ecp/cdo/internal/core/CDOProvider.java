@@ -11,6 +11,11 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.core;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Collection;
+
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
@@ -23,14 +28,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
-
-import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.util.UUIDGenerator;
-import org.eclipse.net4j.util.io.IOUtil;
-
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -40,13 +37,13 @@ import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.UUIDGenerator;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.h2.jdbcx.JdbcDataSource;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.Collection;
 
 /**
  * @author Eike Stepper

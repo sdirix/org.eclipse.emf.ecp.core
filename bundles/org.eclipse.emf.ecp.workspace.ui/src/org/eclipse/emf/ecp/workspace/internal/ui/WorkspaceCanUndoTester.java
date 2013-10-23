@@ -12,9 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.workspace.internal.ui;
 
-import org.eclipse.emf.ecp.spi.core.InternalProject;
-
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 /**
  * Test weather an undo is possible on a project.

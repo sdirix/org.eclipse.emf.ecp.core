@@ -61,7 +61,9 @@ Export-Package: org.eclipse.emf.ecp.internal.ui.view;version="1.1.0";
    org.eclipse.emf.ecp.view.ui.editor.test,
    org.eclipse.emf.ecp.view.vertical.ui.swt.test,
    org.eclipse.emf.ecp.view.vertical.ui.test,
-   org.eclipse.emf.ecp.view.dynamictree.model.test",
+   org.eclipse.emf.ecp.view.dynamictree.model.test,
+   org.eclipse.emf.ecp.view.custom.ui.swt.example,
+   org.eclipse.emf.ecp.edit.swt",
  org.eclipse.emf.ecp.ui.view;version="1.1.0"
 Import-Package: org.eclipse.jface.action;version="0.0.0",
  org.eclipse.jface.databinding.swt;version="0.0.0",

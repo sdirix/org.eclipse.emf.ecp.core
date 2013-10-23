@@ -60,11 +60,24 @@ public interface ECPControlFactory {
 		ECPControlContext context, String controlId);
 
 	/**
+	 * Creates an {@link ECPAbstractControl} based on a {@link Class} and the {@link VDomainModelReference}.
+	 * 
+	 * @param controlTypeClass the type of the control to return
+	 * @param domainModelReference the {@link VDomainModelReference} to use to identify the control
+	 * @param <T> the type of the control to return
+	 * @return the found control or null
+	 * 
 	 * @since 1.1
 	 */
 	<T> T createControl(Class<T> controlTypeClass, VDomainModelReference domainModelReference);
 
 	/**
+	 * Creates an {@link ECPAbstractControl} based on an id.
+	 * 
+	 * @param controlId the if of the control to return
+	 * @param <T> the type of the control to return
+	 * @return the found control or null
+	 * 
 	 * @since 1.1
 	 */
 	<T> T createControl(String controlId);

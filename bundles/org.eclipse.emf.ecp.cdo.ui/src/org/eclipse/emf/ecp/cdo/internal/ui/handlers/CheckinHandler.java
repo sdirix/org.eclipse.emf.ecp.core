@@ -11,13 +11,12 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.ui.handlers;
 
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 /**
  * Handles Checkins.

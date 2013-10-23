@@ -11,9 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.workspace.internal.ui;
 
-import org.eclipse.emf.common.util.URI;
-
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;

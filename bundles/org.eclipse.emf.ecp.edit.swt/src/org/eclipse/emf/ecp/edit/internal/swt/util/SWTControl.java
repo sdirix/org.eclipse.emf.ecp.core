@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -59,7 +58,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * RAP theming variable to set.
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant";//$NON-NLS-1$
-
+	/**
+	 * The icon for a validation error.
+	 */
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 
 	protected Label validationLabel;
@@ -71,18 +72,6 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	private Composite parentComposite;
 	private StackLayout sl;
 	private Label unsetLabel;
-
-	/**
-	 * Constructor for a swt control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public SWTControl() {
-	}
 
 	/**
 	 * 
@@ -99,6 +88,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			createControl(parent)));
 	}
 
+	/**
+	 * This method is called to render the control on a parent.
+	 * 
+	 * @param parent the {@link Composite} which is the parent
+	 * @return the created {@link Composite}
+	 */
 	public Composite createControl(final Composite parent) {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -216,7 +211,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	}
 
 	/**
-	 * @return
+	 * Method for retrieving all controls which should have the help text as their tooltip.
+	 * 
+	 * @return the array of the controls to set a tooltip to
 	 */
 	protected abstract Control[] getControlsForTooltip();
 
@@ -403,6 +400,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected abstract String getUnsetButtonTooltip();
 
+	/**
+	 * Method for retrieving a {@link Color} based on the predefined SWT id.
+	 * 
+	 * @param color the SWT id of the color
+	 * @return the Color or black if the id was incorrect
+	 */
 	protected final Color getSystemColor(int color) {
 		if (parentComposite == null) {
 			return Display.getDefault().getSystemColor(color);
@@ -410,7 +413,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		return parentComposite.getShell().getDisplay().getSystemColor(color);
 	}
 
-	private final Setting getSetting(VDomainModelReference domainModelReference) {
+	private Setting getSetting(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;
 		Setting lastSetting = null;
@@ -448,6 +451,11 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		return getItemPropertyDescriptor().canSetProperty(getSetting(getDomainModelReference()).getEObject());
 	}
 
+	/**
+	 * Convenience Method for retrieving an {@link IItemPropertyDescriptor}.
+	 * 
+	 * @return the {@link IItemPropertyDescriptor}
+	 */
 	@Deprecated
 	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
 		return getItemPropertyDescriptor(getSetting(getDomainModelReference()));

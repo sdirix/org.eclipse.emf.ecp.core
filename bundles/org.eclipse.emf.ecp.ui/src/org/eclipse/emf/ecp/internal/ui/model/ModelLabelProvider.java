@@ -15,7 +15,6 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
-
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 
 /**

@@ -13,9 +13,6 @@
 
 package org.eclipse.emf.ecp.internal.core.util.observer;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,6 +26,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 
 /**
  * This is a universal observer bus. This class follows the publish/subscribe pattern, it is a central dispatcher for
