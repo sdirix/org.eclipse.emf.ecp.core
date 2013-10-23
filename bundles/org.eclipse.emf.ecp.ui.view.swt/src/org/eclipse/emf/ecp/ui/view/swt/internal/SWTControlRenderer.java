@@ -92,6 +92,9 @@ public class SWTControlRenderer extends AbstractSWTRenderer<Control> {
 
 			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> createControls = ((ECPControlSWT) control)
 				.createControls(parent);
+			if (createControls == null) {
+				return null;
+			}
 			// final Composite controlComposite = control.createControl(parent);
 			// controlComposite.setEnabled(!modelControl.isReadonly());
 			control.setEditable(!modelControl.isReadonly());

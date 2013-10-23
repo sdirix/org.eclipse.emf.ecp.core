@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.Control;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.View;
 import org.eclipse.emf.ecp.view.model.ViewFactory;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
@@ -74,7 +75,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
 
-	private VTableDomainModelReference getVTableDomainModelReference(EStructuralFeature feature,
+	private VDomainModelReference getVTableDomainModelReference(EStructuralFeature feature,
 		EReference... eReferences) {
 		final VTableDomainModelReference result = VTableFactory.eINSTANCE.createTableDomainModelReference();
 		result.setDomainModelEFeature(feature);

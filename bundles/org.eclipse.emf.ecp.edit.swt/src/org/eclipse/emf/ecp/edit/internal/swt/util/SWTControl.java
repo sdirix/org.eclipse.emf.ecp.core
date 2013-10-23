@@ -91,6 +91,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
+		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor();
+		if (itemPropertyDescriptor == null) {
+			return null;
+		}
 		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
 			createControl(parent)));
 	}

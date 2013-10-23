@@ -80,7 +80,9 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 	@Override
 	protected void doExecute() {
-
+		if (rootClass == null) {
+			return;
+		}
 		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		final ECPViewEditorTreeSelectionDialog dialog = new ECPViewEditorTreeSelectionDialog(shell, labelProvider,
 			getContentProvider(rootClass));
