@@ -105,7 +105,8 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		if (getModelElementContext().isRunningAsWebApplication()) {
 			numColumns++;
 		}
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).spacing(10, 0).applyTo(composite);
+		// TODO needed .spacing(10, 0) ?
+		GridLayoutFactory.fillDefaults().numColumns(numColumns).applyTo(composite);
 
 		createValidationIcon(composite);
 		createDataControl(composite);
@@ -286,8 +287,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		}
 
 		// 1 column for control, 1 for default unset button
-		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0).extendedMargins(10, 0, 0, 0)
+		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0)
 			.applyTo(controlComposite);
+		// INFO margin needed for controlDecorator
+		// .extendedMargins(10, 0, 0, 0)
 
 		if (!getStructuralFeature().isUnsettable()
 			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {

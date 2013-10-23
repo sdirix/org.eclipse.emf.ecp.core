@@ -508,7 +508,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	@Deprecated
 	public boolean showLabel() {
-		return false;
+		return true;
 	}
 
 }

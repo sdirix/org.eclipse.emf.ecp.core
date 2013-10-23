@@ -79,8 +79,12 @@ Controls are used to render features of an EObejct in the editor or some other v
          <attribute name="showLabel" type="boolean" use="default" value="true">
             <annotation>
                <documentation>
-                  If a label naming the attribut should be displayd. The default is true.
+                  If a label naming the attribut should be displayd. The default is true. 
+This is deprecated, please use the possibilities provided by the view model.
                </documentation>
+               <appinfo>
+                  <meta.attribute deprecated="true"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>
