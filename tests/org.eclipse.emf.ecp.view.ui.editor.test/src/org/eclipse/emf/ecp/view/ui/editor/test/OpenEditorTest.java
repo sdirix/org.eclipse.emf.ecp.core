@@ -12,13 +12,12 @@
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
 import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.VCategorization;
@@ -35,31 +34,33 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swtbot.swt.finder.SWTBotTestCase;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.Result;
+import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * Test case that renders a view, disposes it and checks whether the view
+ * is garbage collectable.
+ * 
+ * @author emueller
+ * 
+ */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class OpenEditorTest extends SWTBotTestCase {
 
-	@SuppressWarnings("unused")
-	private static EObject domainObject;
 	private static Shell shell;
-	private static VView view;
 	private Display display;
-	@SuppressWarnings("unused")
 	private GCCollectable collectable;
+	private GCCollectable contextCollectable;
 
 	@Before
 	public void init() {
-		domainObject = createDomainObject();
 		display = Display.getDefault();
 
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
@@ -71,8 +72,6 @@ public class OpenEditorTest extends SWTBotTestCase {
 			}
 		});
 
-		view = VViewFactory.eINSTANCE.createView();
-		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
 	}
 
 	private static Player createDomainObject() {
@@ -134,30 +133,40 @@ public class OpenEditorTest extends SWTBotTestCase {
 		return parentCategorization;
 	}
 
+	private VView createView() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
+
+		final VControl nameControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_Name());
+		final VControl genderControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_Gender());
+		final VControl heightControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_Height());
+		final VControl victoriesControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_NumberOfVictories());
+
+		view.getCategorizations().add(
+			createCategorizations(nameControl, genderControl, heightControl,
+				victoriesControl));
+
+		return view;
+	}
+
 	private class TestRunnable implements Runnable {
 
 		public void run() {
-
-			final VControl nameCtrl = createControl(BowlingPackage.eINSTANCE
-				.getPlayer_Name());
-			final VControl genderCtrl = createControl(BowlingPackage.eINSTANCE
-				.getPlayer_Gender());
-			final VControl heightCtrl = createControl(BowlingPackage.eINSTANCE
-				.getPlayer_Height());
-			final VControl victoriesCtrl = createControl(BowlingPackage.eINSTANCE
-				.getPlayer_NumberOfVictories());
-
-			view.getCategorizations().add(
-				createCategorizations(nameCtrl, genderCtrl, heightCtrl,
-					victoriesCtrl));
-
-			display.syncExec(new Runnable() {
-
-				public void run() {
+			final ECPSWTView ecpView = UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
+				public ECPSWTView run() {
 					try {
+						final VView view = createView();
+						collectable = new GCCollectable(view);
 						final ECPControlContext context = ViewTestHelper.createECPControlContext(
 							createDomainObject(), shell, view);
-						ECPSWTViewRendererImpl.render(shell, context, view);
+						contextCollectable = new GCCollectable(context);
+						final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
+						shell.open();
+						return renderedView;
 					} catch (final NoRendererFoundException e) {
 						fail(e.getMessage());
 					} catch (final NoPropertyDescriptorFoundExeption e) {
@@ -165,24 +174,23 @@ public class OpenEditorTest extends SWTBotTestCase {
 					} catch (final ECPRendererException ex) {
 						fail(ex.getMessage());
 					}
-					shell.open();
+					return null;
 				}
 			});
 
 			final SWTBotTree tree = bot.tree();
-			final SWTBotTreeItem select = tree.getTreeItem("parent").getNode("foo").getNode("2").select();
+			tree.getTreeItem("parent").getNode("foo").getNode("2").select();
 
-			display.syncExec(new Runnable() {
-
+			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
-					final TreeItem item = select.widget;
-					final Node<?> node = (Node<?>) item.getData();
-					collectable = new GCCollectable(node.getRenderable());
+					shell.close();
+					ecpView.dispose();
+					shell.dispose();
 				}
 			});
-			tree.getTreeItem("parent").getNode("foo").getNode("1").select();
 
-			assertTrue(tree.getTreeItem("parent").getNode("foo").getNode("1").isSelected());
+			assertTrue(contextCollectable.isCollectable());
+			assertTrue(collectable.isCollectable());
 		}
 	}
 
