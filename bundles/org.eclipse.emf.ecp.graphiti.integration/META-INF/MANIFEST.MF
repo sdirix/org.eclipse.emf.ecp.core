@@ -19,3 +19,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.1.0",
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emf.ecp.graphiti.internal.integration;x-internal:=true,
+ org.eclipse.emf.ecp.internal.graphiti.feature;x-internal:=true
