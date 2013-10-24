@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.editor" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="package has inccorectly not been declared as SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.1.0"/>
+                <message_argument value="1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPAbstractControl">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPAbstractControl"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPContextDisposedListener">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPContextDisposedListener"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControl">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPControl"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControlContext">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPControlContext"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControlDescription">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPControlDescription"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControlFactory">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPControlFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPEditorContext">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.ECPEditorContext"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.util.ECPApplicableTester">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.util.ECPApplicableTester"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester">
+        <filter comment="package has inccorectly not been declared as SPI" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester"/>
+                <message_argument value="org.eclipse.emf.ecp.editor_1.0.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
