@@ -72,7 +72,6 @@ public class FeaturePathDomainModelReferenceItemProvider
 			super.getPropertyDescriptors(object);
 
 			addDomainModelEFeaturePropertyDescriptor(object);
-			addDomainModelEReferencePathPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -95,32 +94,6 @@ public class FeaturePathDomainModelReferenceItemProvider
 					"_UI_FeaturePathDomainModelReference_domainModelEFeature_feature",
 					"_UI_FeaturePathDomainModelReference_type"),
 				VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
-				true,
-				false,
-				true,
-				null,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Domain Model EReference Path feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addDomainModelEReferencePathPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_FeaturePathDomainModelReference_domainModelEReferencePath_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_FeaturePathDomainModelReference_domainModelEReferencePath_feature",
-					"_UI_FeaturePathDomainModelReference_type"),
-				VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH,
 				true,
 				false,
 				true,
