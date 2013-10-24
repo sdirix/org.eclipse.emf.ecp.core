@@ -99,6 +99,27 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
+               label="Generate Controls"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.view.model.VView">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
          <!--
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.migrate"
@@ -135,6 +156,11 @@
             defaultHandler="org.eclipse.emf.ecp.view.editor.handler.MigrateHandler"
             id="org.eclipse.emf.ecp.view.editor.controls.migrate"
             name="Migrate">
+      </command>
+      <command
+            defaultHandler="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsOnViewHandler"
+            id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
+            name="Generate Controls">
       </command>
    </extension>
    <extension

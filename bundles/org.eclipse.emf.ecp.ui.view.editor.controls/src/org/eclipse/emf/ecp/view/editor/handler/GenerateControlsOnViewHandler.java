@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -31,12 +31,12 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Handler for generating controls on a {@link VContainer}.
+ * Handler for generating controls on a view.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class GenerateControlsHandler extends AbstractHandler {
+public class GenerateControlsOnViewHandler extends AbstractHandler {
 
 	/**
 	 * {@inheritDoc}
@@ -56,7 +56,7 @@ public class GenerateControlsHandler extends AbstractHandler {
 		if (result == Window.OK) {
 			final EClass datasegment = sad.getDataSegment();
 			final Set<EStructuralFeature> features = sad.getSelectedFeatures();
-			final VContainer compositeCollection = (VContainer) selection;
+			final VView compositeCollection = (VView) selection;
 			AdapterFactoryEditingDomain.getEditingDomainFor(compositeCollection).getCommandStack()
 				.execute(new ChangeCommand(compositeCollection) {
 
