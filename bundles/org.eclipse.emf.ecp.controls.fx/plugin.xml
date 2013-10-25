@@ -19,6 +19,17 @@
                supportedEObject="org.eclipse.emf.ecore.EObject">
          </staticTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.controls.internal.fx.ECPFXBoolean"
+            id="org.eclipse.emf.ecp.controls.fx.boolean"
+            showLabel="true">
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Boolean"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+      </control>
    </extension>
 
 </plugin>
