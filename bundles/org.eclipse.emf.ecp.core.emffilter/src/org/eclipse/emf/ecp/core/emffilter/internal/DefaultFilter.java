@@ -60,6 +60,12 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/acceleo/profiler/3.0"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/acceleo/mtl/3.0"); //$NON-NLS-1$
 
+		// ecl
+		packages.add("http://www.eclipse.org/ecl/filesystem.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/interop.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore"); //$NON-NLS-1$
+
 		return packages;
 	}
 
@@ -125,6 +131,10 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore");
 		packages.add("com.xored.q7.scenario");
 		packages.add("com.xored.x5.data.eclipse.workspace");
+		packages.add("http://com/xored/q7/filesystem.ecore");
+		packages.add("http:///com/xored/q7/preferences.ecore");
+		packages.add("http://com/xored/q7/scenario.ecore");
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
 
 	}
 
@@ -232,6 +242,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://eclipse.org/emf/emfstore/server/model/versioning/operations/semantic"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/emf/emfstore/server/model/url"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/emf/emfstore/server/model/accesscontrol"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/emf/emfstore/common/model"); //$NON-NLS-1$
 	}
 
 	/**
