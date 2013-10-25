@@ -127,7 +127,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 		if (instanceClass == null) {
 			return true;
 		}
-		if (Object.class.isInstance(getSupportedClassType())) {
+		if (Object.class.equals(getSupportedClassType())) {
 			return false;
 		}
 		// if the attribute class is an primitive test the primitive types
