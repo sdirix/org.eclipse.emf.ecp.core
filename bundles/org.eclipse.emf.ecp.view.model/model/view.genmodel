@@ -32,7 +32,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/enabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/attachments"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//View">
