@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.edit.controls">
+      <control
+            class="org.eclipse.emf.ecp.controls.internal.fx.ECPFXText"
+            id="org.eclipse.emf.ecp.controls.fx.text">
+         <staticTest
+               priority="1"
+               singleValue="true"
+               supportedClassType="java.lang.Object"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+         <staticTest
+               priority="1"
+               singleValue="false"
+               supportedClassType="java.lang.Object"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+      </control>
+   </extension>
+
+</plugin>
