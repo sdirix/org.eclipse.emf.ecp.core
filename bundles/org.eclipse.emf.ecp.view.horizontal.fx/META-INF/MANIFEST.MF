@@ -11,4 +11,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: javafx.scene;version="2.2.0",
  javafx.scene.control;version="2.2.0",
+ javafx.scene.layout;version="2.2.0",
  javafx.util;version="2.2.0"

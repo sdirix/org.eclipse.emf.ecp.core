@@ -5,7 +5,7 @@
          point="org.eclipse.emf.ecp.view.model.renderer">
       <renderer
             renderable="org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout"
-            renderer="org.eclipse.emf.ecp.view.horizontal.fx.HorizontalLayoutPageRendererFX">
+            renderer="org.eclipse.emf.ecp.view.horizontal.fx.HorizontalLayoutRendererFX">
       </renderer>
    </extension>
 
