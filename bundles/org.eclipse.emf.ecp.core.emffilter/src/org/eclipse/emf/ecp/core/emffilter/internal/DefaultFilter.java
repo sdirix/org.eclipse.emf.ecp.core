@@ -74,15 +74,16 @@ public class DefaultFilter implements ECPFilterProvider {
 	 */
 	private void addViewModels(Set<String> packages) {
 		packages.add("http://org/eclipse/emf/ecp/view/model");
-		packages.add("http://org/eclipse/emf/ecp/view/separator/model");
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model");
-		packages.add("http://org/eclipse/emf/ecp/view/groupedgrid/model");
-		packages.add("http://org/eclipse/emf/ecp/view/label/model");
+		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model");
 		packages.add("http://org/eclipse/emf/ecp/view/group/model");
+		packages.add("http://org/eclipse/emf/ecp/view/groupedgrid/model");
 		packages.add("http://org/eclipse/emf/ecp/view/horizontal/model");
-		packages.add("http://org/eclipse/emf/ecp/view/vertical/model");
+		packages.add("http://org/eclipse/emf/ecp/view/label/model");
 		packages.add("http://org/eclipse/emf/ecp/view/rule/model");
-
+		packages.add("http://org/eclipse/emf/ecp/view/separator/model");
+		packages.add("http://org/eclipse/emf/ecp/view/table/model");
+		packages.add("http://org/eclipse/emf/ecp/view/vertical/model");
 	}
 
 	private void addQ7Models(Set<String> packages) {
