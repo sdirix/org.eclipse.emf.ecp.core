@@ -288,5 +288,14 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		public boolean contains(InternalProject project, Object object) {
 			return getResolvedElement().contains(project, object);
 		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
+		 */
+		public boolean isThreadSafe() {
+			return getResolvedElement().isThreadSafe();
+		}
 	}
 }

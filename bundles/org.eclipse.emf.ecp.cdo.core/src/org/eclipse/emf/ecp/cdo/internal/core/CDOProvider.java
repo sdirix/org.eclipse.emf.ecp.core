@@ -117,7 +117,7 @@ public class CDOProvider extends DefaultProvider {
 
 	@Override
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
-		T adapter = ECPProjectAdapterFactory.adapt(adaptable, adapterType);
+		final T adapter = ECPProjectAdapterFactory.adapt(adaptable, adapterType);
 		if (adapter != null) {
 			return adapter;
 		}
@@ -141,28 +141,28 @@ public class CDOProvider extends DefaultProvider {
 	@Override
 	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
-			InternalProject project = (InternalProject) parent;
-			CDOProjectData projectData = getProjectData(project);
+			final InternalProject project = (InternalProject) parent;
+			final CDOProjectData projectData = getProjectData(project);
 			childrenList.addChildren(projectData.getRootResource().getContents());
 		} else if (parent instanceof InternalRepository) {
-			InternalRepository repository = (InternalRepository) parent;
-			CDOBranchWrapper wrapper = new CDOBranchWrapper(repository, CDOBranch.MAIN_BRANCH_NAME);
+			final InternalRepository repository = (InternalRepository) parent;
+			final CDOBranchWrapper wrapper = new CDOBranchWrapper(repository, CDOBranch.MAIN_BRANCH_NAME);
 			childrenList.addChild(wrapper);
 		} else if (parent instanceof CDOBranchWrapper) {
-			CDOBranchWrapper parentWrapper = (CDOBranchWrapper) parent;
-			InternalRepository repository = parentWrapper.getRepository();
-			String branchPath = parentWrapper.getBranchPath();
+			final CDOBranchWrapper parentWrapper = (CDOBranchWrapper) parent;
+			final InternalRepository repository = parentWrapper.getRepository();
+			final String branchPath = parentWrapper.getBranchPath();
 
 			CDONet4jSession session = null;
 
 			try {
-				CDORepositoryData repositoryData = getRepositoryData(repository);
-				CDONet4jSessionConfiguration sessionConfiguration = repositoryData.createSessionConfiguration();
+				final CDORepositoryData repositoryData = getRepositoryData(repository);
+				final CDONet4jSessionConfiguration sessionConfiguration = repositoryData.createSessionConfiguration();
 				session = sessionConfiguration.openNet4jSession();
 
-				CDOBranch branch = session.getBranchManager().getBranch(branchPath);
-				for (CDOBranch child : branch.getBranches()) {
-					CDOBranchWrapper wrapper = new CDOBranchWrapper(repository, child.getPathName());
+				final CDOBranch branch = session.getBranchManager().getBranch(branchPath);
+				for (final CDOBranch child : branch.getBranches()) {
+					final CDOBranchWrapper wrapper = new CDOBranchWrapper(repository, child.getPathName());
 					childrenList.addChild(wrapper);
 				}
 			} finally {
@@ -176,7 +176,7 @@ public class CDOProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	public EList<Object> getElements(InternalProject project) {
-		CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
+		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		return (EList<Object>) (EList<?>) data.getTransaction().getResourceSet().getResources();
 		// TODO: implement CDOProvider.addRootElement(project, rootElement)
 		// throw new UnsupportedOperationException();
@@ -188,7 +188,7 @@ public class CDOProvider extends DefaultProvider {
 		super.handleLifecycle(context, event);
 
 		if (context instanceof InternalProject) {
-			InternalProject project = (InternalProject) context;
+			final InternalProject project = (InternalProject) context;
 			switch (event) {
 			case CREATE:
 				createProject(project);
@@ -217,19 +217,19 @@ public class CDOProvider extends DefaultProvider {
 	 * @param project the internal project
 	 */
 	protected void createProject(InternalProject project) {
-		String workspaceID = UUIDGenerator.DEFAULT.generate();
+		final String workspaceID = UUIDGenerator.DEFAULT.generate();
 		project.getProperties().addProperty(PROP_WORKSPACE_ID, workspaceID);
 
-		CDOProjectData projectData = getProjectData(project);
+		final CDOProjectData projectData = getProjectData(project);
 		projectData.checkoutWorkspace();
-		File folder = getProjectFolder(project);
+		final File folder = getProjectFolder(project);
 		PrintStream stream = null;
 
 		try {
 			stream = new PrintStream(new File(folder, "ecp.properties"));
 			stream.println("project.name = " + project.getName());
 
-		} catch (FileNotFoundException ex) {
+		} catch (final FileNotFoundException ex) {
 			Activator.log(ex);
 			throw new IllegalStateException("Retrieving project folder failed!", ex);
 		} finally {
@@ -244,18 +244,18 @@ public class CDOProvider extends DefaultProvider {
 	 * @return the {@link CDOWorkspaceConfiguration}
 	 */
 	protected CDOWorkspaceConfiguration createWorkspaceConfiguration(InternalProject project) {
-		File folder = getProjectFolder(project);
+		final File folder = getProjectFolder(project);
 		folder.mkdirs();
 
-		IDBStore localStore = createLocalStore(project, folder);
-		CDOWorkspaceBase base = createWorkspaceBase(project, folder);
-		CDOSessionConfigurationFactory remote = getRepositoryData(project.getRepository());
+		final IDBStore localStore = createLocalStore(project, folder);
+		final CDOWorkspaceBase base = createWorkspaceBase(project, folder);
+		final CDOSessionConfigurationFactory remote = getRepositoryData(project.getRepository());
 
-		ECPProperties properties = project.getProperties();
-		String branchPath = properties.getValue(PROP_BRANCH_PATH);
-		String timeStamp = properties.getValue(PROP_TIME_STAMP);
+		final ECPProperties properties = project.getProperties();
+		final String branchPath = properties.getValue(PROP_BRANCH_PATH);
+		final String timeStamp = properties.getValue(PROP_TIME_STAMP);
 
-		CDOWorkspaceConfiguration config = CDOWorkspaceUtil.createWorkspaceConfiguration();
+		final CDOWorkspaceConfiguration config = CDOWorkspaceUtil.createWorkspaceConfiguration();
 		config.setLocalRepositoryName(folder.getName()); // workspaceID
 		config.setStore(localStore);
 		config.setBase(base);
@@ -274,7 +274,7 @@ public class CDOProvider extends DefaultProvider {
 	 * @return the {@link CDOWorkspaceBase}
 	 */
 	protected CDOWorkspaceBase createWorkspaceBase(InternalProject project, File folder) {
-		File base = new File(folder, "base");
+		final File base = new File(folder, "base");
 		base.mkdirs();
 
 		return CDOWorkspaceUtil.createFolderWorkspaceBase(base);
@@ -288,15 +288,15 @@ public class CDOProvider extends DefaultProvider {
 	 * @return the {@link IDBStore}
 	 */
 	protected IDBStore createLocalStore(InternalProject project, File folder) {
-		File local = new File(folder, "local");
+		final File local = new File(folder, "local");
 		local.mkdirs();
 
-		JdbcDataSource dataSource = new JdbcDataSource();
+		final JdbcDataSource dataSource = new JdbcDataSource();
 		dataSource.setURL("jdbc:h2:" + new File(local, "local").getAbsolutePath());
 
-		IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false, false);
-		IDBAdapter dbAdapter = new H2Adapter();
-		IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
+		final IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false, false);
+		final IDBAdapter dbAdapter = new H2Adapter();
+		final IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
 
 		return CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 	}
@@ -307,7 +307,7 @@ public class CDOProvider extends DefaultProvider {
 	 * @param project the internal project
 	 */
 	protected void disposeProject(InternalProject project) {
-		CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
+		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		data.dispose();
 	}
 
@@ -317,7 +317,7 @@ public class CDOProvider extends DefaultProvider {
 	 * @param project the internal project
 	 */
 	protected void removeProject(InternalProject project) {
-		File folder = getProjectFolder(project);
+		final File folder = getProjectFolder(project);
 		if (folder.exists()) {
 			if (!folder.delete()) {
 				folder.deleteOnExit();
@@ -368,7 +368,7 @@ public class CDOProvider extends DefaultProvider {
 	 * @return the {@link File}
 	 */
 	public static File getProjectFolder(InternalProject project) {
-		String workspaceID = project.getProperties().getValue(PROP_WORKSPACE_ID);
+		final String workspaceID = project.getProperties().getValue(PROP_WORKSPACE_ID);
 		return new File(Activator.getInstance().getStateLocation().toFile(), workspaceID);
 	}
 
@@ -387,10 +387,19 @@ public class CDOProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	public Notifier getRoot(InternalProject project) {
-		CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
+		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		if (data != null) {
 			return data.getRootResource();
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
+	 */
+	public boolean isThreadSafe() {
+		return true;
 	}
 }

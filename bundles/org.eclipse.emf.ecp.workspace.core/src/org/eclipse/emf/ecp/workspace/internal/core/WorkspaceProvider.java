@@ -102,7 +102,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	private void handleInit(ECPContainer context) {
 		if (context instanceof InternalProject) {
 			final InternalProject project = (InternalProject) context;
-			EditingDomain editingDomain = project.getEditingDomain();
+			final EditingDomain editingDomain = project.getEditingDomain();
 			editingDomain.getResourceSet().eAdapters().add(new WorkspaceProjectObserver(project));
 		}
 
@@ -142,17 +142,17 @@ public class WorkspaceProvider extends DefaultProvider {
 	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof ECPRepository) {
 		} else if (parent instanceof ECPProject) {
-			ECPProject project = (ECPProject) parent;
-			String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
+			final ECPProject project = (ECPProject) parent;
+			final String rootURI = project.getProperties().getValue(PROP_ROOT_URI);
 
-			ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+			final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
 
-			URI uri = URI.createURI(rootURI);
+			final URI uri = URI.createURI(rootURI);
 			if (uri.hasFragment()) {
-				EObject eObject = resourceSet.getEObject(uri, true);
+				final EObject eObject = resourceSet.getEObject(uri, true);
 				super.fillChildren(context, eObject, childrenList);
 			} else {
-				Resource resource = resourceSet.getResource(uri, true);
+				final Resource resource = resourceSet.getResource(uri, true);
 				childrenList.addChildren(resource.getContents());
 			}
 
@@ -163,7 +163,7 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	public EList<? extends Object> getElements(InternalProject project) {
-		ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+		final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
 		return ECollections.unmodifiableEList(resourceSet.getResource(
 			URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true).getContents());
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
@@ -173,8 +173,8 @@ public class WorkspaceProvider extends DefaultProvider {
 	public boolean contains(InternalProject project, Object object) {
 		// TODO: optimize
 		if (object instanceof EObject) {
-			EObject eObject = (EObject) object;
-			EObject root = EcoreUtil.getRootContainer(eObject);
+			final EObject eObject = (EObject) object;
+			final EObject root = EcoreUtil.getRootContainer(eObject);
 			if (root == null || root.eResource() == null) {
 				return false;
 			}
@@ -190,14 +190,14 @@ public class WorkspaceProvider extends DefaultProvider {
 	 * @param project the project to be reloaded.
 	 */
 	public void reload(InternalProject project) {
-		List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
-		for (Resource resource : resources) {
+		final List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
+		for (final Resource resource : resources) {
 			if (resource.equals(getRoot(project)) && resource.isLoaded()) {
 				resource.unload();
 
 				try {
 					resource.load(Collections.EMPTY_MAP);
-				} catch (IOException ex) {
+				} catch (final IOException ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
@@ -227,12 +227,12 @@ public class WorkspaceProvider extends DefaultProvider {
 		try {
 			final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
 			saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-			List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
-			for (Resource resource : resources) {
+			final List<Resource> resources = project.getEditingDomain().getResourceSet().getResources();
+			for (final Resource resource : resources) {
 				resource.save(saveOptions);
 			}
 			((BasicCommandStack) project.getEditingDomain().getCommandStack()).saveIsDone();
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
@@ -247,15 +247,15 @@ public class WorkspaceProvider extends DefaultProvider {
 	@Override
 	public EditingDomain createEditingDomain(final InternalProject project) {
 
-		CommandStack commandStack = new BasicCommandStack();
-		EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
+		final CommandStack commandStack = new BasicCommandStack();
+		final EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
 			commandStack);
 
 		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
-		URI uri = URI.createURI(project.getProperties().getValue(PROP_ROOT_URI));
+		final URI uri = URI.createURI(project.getProperties().getValue(PROP_ROOT_URI));
 		try {
 			editingDomain.getResourceSet().getResource(uri, true);
-		} catch (WrappedException we) {
+		} catch (final WrappedException we) {
 			project.close();
 		}
 
@@ -277,7 +277,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	 */
 	private static class WorkspaceProjectObserver extends EContentAdapter {
 
-		private InternalProject project;
+		private final InternalProject project;
 
 		public WorkspaceProjectObserver(InternalProject project) {
 			this.project = project;
@@ -288,12 +288,12 @@ public class WorkspaceProvider extends DefaultProvider {
 			super.notifyChanged(notification);
 
 			if (notification.getNotifier() instanceof EObject) {
-				EObject eObject = (EObject) notification.getNotifier();
+				final EObject eObject = (EObject) notification.getNotifier();
 				project.notifyObjectsChanged((Collection) Collections.singleton(eObject), false);
 
-				Object feature = notification.getFeature();
+				final Object feature = notification.getFeature();
 				if (feature instanceof EReference) {
-					EReference eReference = (EReference) feature;
+					final EReference eReference = (EReference) feature;
 
 					if (eReference.isContainment() && notification.getNewValue() instanceof EObject) {
 						project.notifyObjectsChanged(Collections.singleton(notification.getNewValue()), true);
@@ -303,5 +303,14 @@ public class WorkspaceProvider extends DefaultProvider {
 
 			}
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
+	 */
+	public boolean isThreadSafe() {
+		return false;
 	}
 }

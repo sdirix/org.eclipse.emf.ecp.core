@@ -111,19 +111,22 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 				public void run() {
 					for (int i = 0; i < 1000; i++) {
 						project[0].getContents().add(createPlayer("Player " + i));
-						UIThreadRunnable.syncExec(new VoidResult() {
-							public void run() {
-								if (project[0].getContents().size() != viewer.getTree().getItems().length) {
-									failed = true;
-								}
-							}
-						});
 					}
 					synchronized (monitor) {
 						monitor.notify();
 					}
 				}
 			}.start();
+
+			UIThreadRunnable.syncExec(new VoidResult() {
+				public void run() {
+					bot.tree().getTreeItem("test").expand();
+					if (project[0].getContents().size() != viewer.getTree().getItems()[0].getItems().length) {
+						failed = true;
+					}
+				}
+			});
+
 			synchronized (monitor) {
 				try {
 					monitor.wait();
@@ -131,11 +134,13 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 					fail(ex.getMessage());
 				}
 			}
+
 			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
 					shell.close();
 				}
 			});
+
 			assertFalse(failed);
 		}
 	}

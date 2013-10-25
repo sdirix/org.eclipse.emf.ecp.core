@@ -103,6 +103,14 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	boolean isSlow(Object parent);
 
 	/**
+	 * Whether it is safe to modify the {@link EList} of model elements
+	 * ot this provider.
+	 * 
+	 * @return true, if the provider is thread-safe, false otherwise
+	 */
+	boolean isThreadSafe();
+
+	/**
 	 * Fills the elements of a certain parent object, depending on the context into the childrenList.
 	 * 
 	 * @param context the context to use
