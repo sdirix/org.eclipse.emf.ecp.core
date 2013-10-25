@@ -85,7 +85,10 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 
 		final SWTControl control = controlFactory.createControl(SWTControl.class, itemPropertyDescriptor,
 			subContext);
-
+		if (control == null) {
+			return null;
+		}
+		control.init(node.getControlContext(), modelControl.getDomainModelReference());
 		return doRender(node, modelControl, subContext, itemPropertyDescriptor, control, initData);
 	}
 
