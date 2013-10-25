@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class ModifyNavigatorTest extends SWTBotTestCase {
 
+	private static final String PROJECTNAME = ModifyNavigatorTest.class.getName() + "Project";
 	private Display display;
 	private Shell shell;
 	private TreeViewer viewer;
@@ -60,6 +61,10 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 				return shell;
 			}
 		});
+		final ECPProject project = ECPUtil.getECPProjectManager().getProject(PROJECTNAME);
+		if (project != null) {
+			project.delete();
+		}
 		provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 	}
 
@@ -70,6 +75,10 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 				shell.dispose();
 			}
 		});
+		final ECPProject project = ECPUtil.getECPProjectManager().getProject(PROJECTNAME);
+		if (project != null) {
+			project.delete();
+		}
 	}
 
 	@Test
@@ -94,7 +103,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			final ECPProject[] project = new ECPProject[1];
 			final Object monitor = new Object();
 			try {
-				project[0] = ECPUtil.getECPProjectManager().createProject(provider, "test");
+				project[0] = ECPUtil.getECPProjectManager().createProject(provider, PROJECTNAME);
 			} catch (final ECPProjectWithNameExistsException ex) {
 				fail(ex.getMessage());
 			}
@@ -120,7 +129,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 
 			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
-					bot.tree().getTreeItem("test").expand();
+					bot.tree().getTreeItem(PROJECTNAME).expand();
 					if (project[0].getContents().size() != viewer.getTree().getItems()[0].getItems().length) {
 						failed = true;
 					}
