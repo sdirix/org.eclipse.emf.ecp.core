@@ -10,7 +10,7 @@
  * EclipseSource Muenchen - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.view;
+package org.eclipse.emf.ecp.internal.ui.view;
 
 import org.eclipse.emf.ecp.view.model.VElement;
 

@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
-import org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener;
+import org.eclipse.emf.ecp.internal.ui.view.RendererContext.ValidationListener;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.VElement;
@@ -164,7 +164,7 @@ public class Node<T extends VElement> implements ValidationListener, ModelChange
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.RendererContext.ValidationListener#validationChanged(java.util.Map)
+	 * @see org.eclipse.emf.ecp.internal.ui.view.RendererContext.ValidationListener#validationChanged(java.util.Map)
 	 */
 	public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
 

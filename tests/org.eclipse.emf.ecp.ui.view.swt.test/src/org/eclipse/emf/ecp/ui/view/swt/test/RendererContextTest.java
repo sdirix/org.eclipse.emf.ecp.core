@@ -19,13 +19,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.RendererContext;
+import org.eclipse.emf.ecp.internal.ui.view.SelectedNodeChangedListener;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.ui.view.RendererContext;
-import org.eclipse.emf.ecp.ui.view.SelectedNodeChangedListener;
 import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
