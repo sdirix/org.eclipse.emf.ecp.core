@@ -33,19 +33,22 @@ public class ChildrenDescriptorExtensionTest {
 	 * Needs to be adapted after refactoring
 	 * These are the counts for a fully integrated model with all elements
 	 */
-	// diagnostic, showrule, enablerule, span
-	private static final int RENDERABLE_CHILD_COUNT = 1 + 3;
+	// showrule, enablerule, span
+	private static final int ATTACHMENT_CHILD_COUNT = 3;
+	private static final int RENDERABLE_CHILD_COUNT = 0 + ATTACHMENT_CHILD_COUNT;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
 	// label, separator, table, vertical, horizontal, group, groupedgrid
 	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 7;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
-	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
+	// categorization, category
+	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
 		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
-	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + CATEGORIZATION_CHILD_COUNT;
+	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT
+		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 1;

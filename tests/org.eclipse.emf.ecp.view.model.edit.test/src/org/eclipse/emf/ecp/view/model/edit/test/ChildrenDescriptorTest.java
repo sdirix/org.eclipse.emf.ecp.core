@@ -29,16 +29,18 @@ public class ChildrenDescriptorTest {
 	 * These are the counts for the core model only
 	 * If a model elements is moved out, the respective test can be removed here
 	 */
-	// diagnostic
-	private static final int RENDERABLE_CHILD_COUNT = 1;
+	private static final int RENDERABLE_CHILD_COUNT = 0;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
+	// renderable + action
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_COMPOSITES = 1;
-	private static final int NUMBER_OF_CATEGORIZATIONS = 3;
+	// categorization + category
+	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
 		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
-	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + CATEGORIZATION_CHILD_COUNT;
+	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT
+		+ NUMBER_OF_CATEGORIZATIONS;
 
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
 	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
