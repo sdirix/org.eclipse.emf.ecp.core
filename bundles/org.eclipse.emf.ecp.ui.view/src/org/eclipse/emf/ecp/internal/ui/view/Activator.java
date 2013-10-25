@@ -12,14 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.view;
 
-import java.io.File;
-import java.net.MalformedURLException;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -84,18 +80,6 @@ public class Activator extends Plugin {
 		getDefault().getLog().log(
 			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
 				.getMessage(), e));
-	}
-
-	public static ImageDescriptor getImageDescriptor(String path) {
-		if (getDefault() == null) {
-			try {
-				return ImageDescriptor.createFromURL(new File(path).toURI().toURL());
-			} catch (final MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return ImageDescriptor.createFromURL(getDefault().getBundle().getResource(path));
 	}
 
 	private ServiceReference<ECPControlFactory> controlFactoryReference;
