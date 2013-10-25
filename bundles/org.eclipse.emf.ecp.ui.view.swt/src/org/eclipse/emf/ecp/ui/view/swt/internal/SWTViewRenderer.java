@@ -9,6 +9,7 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
+ * Johannes Falterimeier - Refactoring
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
@@ -21,7 +22,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -77,10 +77,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	public static final SWTViewRenderer INSTANCE = new SWTViewRenderer();
 
 	/** The error descriptor. */
-	private static ImageDescriptor ERROR_DESCRIPTOR = Activator.getImageDescriptor("icons/error_decorate.png");
+	private static ImageDescriptor errorDescriptor = Activator.getImageDescriptor("icons/error_decorate.png");
 
 	/** The warning descriptor. */
-	private static ImageDescriptor WARNING_DESCRIPTOR = Activator.getImageDescriptor("icons/warning_decorate.png");
+	private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png");
 
 	// protected TreeViewer treeViewer;
 
@@ -97,8 +97,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		}
 	};
 
-	private AdapterImpl adapter;
-
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -112,28 +110,9 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 		final VView view = viewNode.getRenderable();
-		adapter = new EContentAdapter() {
+		final TreeViewer treeViewer;
 
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-			 */
-			@Override
-			public void notifyChanged(Notification msg) {
-				super.notifyChanged(msg);
-				if (treeViewer == null) {
-					return;
-				}
-				if (VAbstractCategorization.class.isInstance(msg.getNotifier())
-					&& VViewPackage.eINSTANCE.getElement_Diagnostic().equals(msg.getFeature())) {
-					if (msg.getEventType() == Notification.SET) {
-						treeViewer.refresh();
-					}
-				}
-			}
-
-		};
+		final RefreshTreeViewerAdapter adapter = new RefreshTreeViewerAdapter();
 		view.eAdapters().add(adapter);
 		parent.addDisposeListener(new DisposeListener() {
 
@@ -154,8 +133,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			return resultRows;
 		} else {
 			final Composite composite = createComposite(parent);
-			final TreeViewer treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode);
-			createdEditorPane(composite);
+			final ScrolledComposite editorComposite = createdEditorPane(composite);
+			treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode,
+				editorComposite);
+			adapter.setTreeViewer(treeViewer);
 
 			viewNode.addRenderingResultDelegator(withSWT(composite));
 
@@ -209,15 +190,17 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	 * Created editor pane.
 	 * 
 	 * @param composite the composite
+	 * @return the created editor composite
 	 */
-	protected void createdEditorPane(Composite composite) {
-		editorComposite = createScrolledComposite(composite);
+	protected ScrolledComposite createdEditorPane(Composite composite) {
+		final ScrolledComposite editorComposite = createScrolledComposite(composite);
 		editorComposite.setExpandHorizontal(true);
 		editorComposite.setExpandVertical(true);
 		editorComposite.setShowFocusedControl(true);
 
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(editorComposite);
 
+		return editorComposite;
 	}
 
 	/**
@@ -268,15 +251,18 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	 * @param composite the composite
 	 * @param adapterFactoryItemDelegator the adapter factory item delegator
 	 * @param viewNode the view node
+	 * @param editorComposite the composite of the editor
 	 * @return the tree viewer
 	 */
 	protected TreeViewer createTreeViewer(final Composite composite,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<VView> viewNode
-		) {
-		treeViewer = new TreeViewer(composite);
+		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<VView> viewNode,
+		final ScrolledComposite editorComposite) {
+		final TreeViewer treeViewer = new TreeViewer(composite);
 
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
+
+		final List<TreeEditor> editors = new ArrayList<TreeEditor>();
 
 		treeViewer.setContentProvider(new ITreeContentProvider() {
 
@@ -331,7 +317,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 				try {
 					final TreeSelection treeSelection = (TreeSelection) event.getSelection();
 					final Object selection = treeSelection.getFirstElement();
-					addButtons(treeViewer, treeSelection, viewNode.getControlContext().getModelElement());
+					addButtons(treeViewer, treeSelection, viewNode.getControlContext().getModelElement(), editors);
 
 					if (selection == null) {
 						return;
@@ -373,7 +359,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			}
 		});
 
-		addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), viewNode.getRenderable());
+		addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), viewNode.getRenderable(), editors);
 
 		return treeViewer;
 
@@ -413,25 +399,16 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		return composite;
 	}
 
-	/** The editors. */
-	private final List<TreeEditor> editors = new ArrayList<TreeEditor>();
-
-	/** The editor composite. */
-	private ScrolledComposite editorComposite;
-
-	/**
-	 * The {@link TreeViewer} rendered by this renderer.
-	 */
-	protected TreeViewer treeViewer;
-
 	/**
 	 * Adds the tree editor.
 	 * 
 	 * @param treeViewer the tree viewer
 	 * @param modelElement the model element
 	 * @param view the view
+	 * @param editors the list of tree editors
 	 */
-	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, VView view) {
+	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, VView view,
+		final List<TreeEditor> editors) {
 		// The text column
 		final Tree tree = treeViewer.getTree();
 		final TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
@@ -471,7 +448,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			}
 
 			public void treeCollapsed(TreeEvent e) {
-				cleanUpTreeEditors();
+				cleanUpTreeEditors(editors);
 			}
 		});
 
@@ -481,7 +458,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	/**
 	 * Clean up tree editors.
 	 */
-	private void cleanUpTreeEditors() {
+	private void cleanUpTreeEditors(List<TreeEditor> editors) {
 		for (final TreeEditor editor : editors) {
 			final Control oldEditor = editor.getEditor();
 			if (oldEditor != null) {
@@ -496,10 +473,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	 * @param treeViewer the tree viewer
 	 * @param treeSelection the tree selection
 	 * @param modelElement the model element
+	 * @param editors the list of tree editors
 	 */
-	protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection, EObject modelElement) {
+	protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection, EObject modelElement,
+		List<TreeEditor> editors) {
 
-		cleanUpTreeEditors();
+		cleanUpTreeEditors(editors);
 
 		if (treeSelection.getPaths().length == 0) {
 			return;
@@ -562,10 +541,10 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			switch (node.getSeverity()) {
 
 			case Diagnostic.ERROR:
-				overlay = ERROR_DESCRIPTOR;
+				overlay = errorDescriptor;
 				break;
 			case Diagnostic.WARNING:
-				overlay = WARNING_DESCRIPTOR;
+				overlay = warningDescriptor;
 				break;
 			default:
 				break;
@@ -597,6 +576,41 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			final Node<?> node = (Node<?>) object;
 
 			return super.getText(node.getLabelObject());
+		}
+
+	}
+
+	/**
+	 * Adapter implementation that refreshes a tree viewer if a diagnostic on a categorization changes.
+	 * 
+	 * @author jfaltermeier
+	 * 
+	 */
+	private class RefreshTreeViewerAdapter extends EContentAdapter {
+
+		private TreeViewer treeViewer;
+
+		public void setTreeViewer(TreeViewer treeViewer) {
+			this.treeViewer = treeViewer;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+		 */
+		@Override
+		public void notifyChanged(Notification msg) {
+			super.notifyChanged(msg);
+			if (treeViewer == null) {
+				return;
+			}
+			if (VAbstractCategorization.class.isInstance(msg.getNotifier())
+				&& VViewPackage.eINSTANCE.getElement_Diagnostic().equals(msg.getFeature())) {
+				if (msg.getEventType() == Notification.SET) {
+					treeViewer.refresh();
+				}
+			}
 		}
 
 	}

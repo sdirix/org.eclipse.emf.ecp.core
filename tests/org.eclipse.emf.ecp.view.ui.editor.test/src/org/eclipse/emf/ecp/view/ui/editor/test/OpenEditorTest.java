@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
@@ -58,6 +61,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 	private Display display;
 	private GCCollectable collectable;
 	private GCCollectable contextCollectable;
+	private GCCollectable viewCollectable;
 
 	@Before
 	public void init() {
@@ -156,7 +160,8 @@ public class OpenEditorTest extends SWTBotTestCase {
 	private class TestRunnable implements Runnable {
 
 		public void run() {
-			final ECPSWTView ecpView = UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
+			final List<ECPSWTView> holdingList = new ArrayList<ECPSWTView>();
+			holdingList.add(UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
 				public ECPSWTView run() {
 					try {
 						final VView view = createView();
@@ -165,6 +170,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 							createDomainObject(), shell, view);
 						contextCollectable = new GCCollectable(context);
 						final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
+						viewCollectable = new GCCollectable(renderedView);
 						shell.open();
 						return renderedView;
 					} catch (final NoRendererFoundException e) {
@@ -176,7 +182,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 					}
 					return null;
 				}
-			});
+			}));
 
 			final SWTBotTree tree = bot.tree();
 			tree.getTreeItem("parent").getNode("foo").getNode("2").select();
@@ -184,11 +190,12 @@ public class OpenEditorTest extends SWTBotTestCase {
 			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
 					shell.close();
-					ecpView.dispose();
+					holdingList.remove(0).dispose();
 					shell.dispose();
 				}
 			});
 
+			assertTrue(viewCollectable.isCollectable());
 			assertTrue(contextCollectable.isCollectable());
 			assertTrue(collectable.isCollectable());
 		}
