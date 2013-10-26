@@ -21,12 +21,51 @@
       </control>
       <control
             class="org.eclipse.emf.ecp.controls.internal.fx.ECPFXBoolean"
-            id="org.eclipse.emf.ecp.controls.fx.boolean"
-            showLabel="true">
+            id="org.eclipse.emf.ecp.controls.fx.boolean">
          <staticTest
                priority="2"
                singleValue="true"
                supportedClassType="java.lang.Boolean"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.controls.internal.fx.ECPFXText"
+            id="org.eclipse.emf.ecp.controls.fx.number">
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Double"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Integer"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.math.BigInteger"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.math.BigDecimal"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Float"
+               supportedEObject="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="java.lang.Long"
                supportedEObject="org.eclipse.emf.ecore.EObject">
          </staticTest>
       </control>
