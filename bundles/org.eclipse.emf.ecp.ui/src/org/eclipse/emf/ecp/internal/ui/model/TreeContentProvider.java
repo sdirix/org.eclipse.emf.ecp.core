@@ -124,21 +124,18 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			final Display display = control.getDisplay();
 			final ECPProject ecpProject = ECPUtil.getECPProjectManager()
 				.getProject(objects[0]);
-			boolean threadSafe = true;
+			boolean isThreadSafe = true;
 			if (ecpProject != null) {
 				final InternalProvider provider = (InternalProvider) ecpProject.getProvider();
-				threadSafe = provider.isThreadSafe();
+				isThreadSafe = provider.isThreadSafe();
 			}
-			if (display.getSyncThread() != Thread.currentThread() && threadSafe) {
-				display.asyncExec(new Runnable() {
-					public void run() {
-						if (isStructuralChange) {
-							refresh(viewer, objects);
-						} else {
-							update(viewer, objects);
-						}
-					}
-				});
+			if (display.getSyncThread() != Thread.currentThread()) {
+				final Runnable refreshRunnable = createRefreshRunnable(isStructuralChange, viewer, objects);
+				if (isThreadSafe || Boolean.getBoolean("forceDisplayAsync")) {
+					display.asyncExec(refreshRunnable);
+				} else {
+					display.syncExec(refreshRunnable);
+				}
 			} else {
 				if (isStructuralChange) {
 					refresh(viewer, objects);
@@ -147,6 +144,19 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 				}
 			}
 		}
+	}
+
+	private Runnable createRefreshRunnable(final boolean isStructuralChange, final TreeViewer viewer,
+		final Object... objects) {
+		return new Runnable() {
+			public void run() {
+				if (isStructuralChange) {
+					refresh(viewer, objects);
+				} else {
+					update(viewer, objects);
+				}
+			}
+		};
 	}
 
 	protected boolean isSlow(Object parent) {
