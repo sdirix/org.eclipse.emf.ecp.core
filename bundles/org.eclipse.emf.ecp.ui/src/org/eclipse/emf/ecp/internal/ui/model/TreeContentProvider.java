@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.ChildrenListImpl;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -112,7 +113,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		return result;
 	}
 
-	public final void refreshViewer(final boolean sturctural, final Object... objects) {
+	public final void refreshViewer(final boolean isStructuralChange, final Object... objects) {
 		if (objects.length == 0) {
 			return;
 		}
@@ -121,38 +122,31 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		final Control control = viewer.getControl();
 		if (!control.isDisposed()) {
 			final Display display = control.getDisplay();
-			if (display.getSyncThread() != Thread.currentThread()) {
-				final Runnable refreshRunnable = createRefreshRunnable(sturctural, viewer, control, objects);
-				final InternalProvider provider = (InternalProvider) ECPUtil.getECPProjectManager()
-					.getProject(objects[0]).getProvider();
-				if (provider.isThreadSafe()) {
-					display.asyncExec(refreshRunnable);
-				} else {
-					display.syncExec(refreshRunnable);
-				}
+			final ECPProject ecpProject = ECPUtil.getECPProjectManager()
+				.getProject(objects[0]);
+			boolean threadSafe = true;
+			if (ecpProject != null) {
+				final InternalProvider provider = (InternalProvider) ecpProject.getProvider();
+				threadSafe = provider.isThreadSafe();
+			}
+			if (display.getSyncThread() != Thread.currentThread() && threadSafe) {
+				display.asyncExec(new Runnable() {
+					public void run() {
+						if (isStructuralChange) {
+							refresh(viewer, objects);
+						} else {
+							update(viewer, objects);
+						}
+					}
+				});
 			} else {
-				if (sturctural) {
+				if (isStructuralChange) {
 					refresh(viewer, objects);
 				} else {
 					update(viewer, objects);
 				}
 			}
 		}
-	}
-
-	private Runnable createRefreshRunnable(final boolean sturctural, final TreeViewer viewer, final Control control,
-		final Object... objects) {
-		return new Runnable() {
-			public void run() {
-				if (!control.isDisposed()) {
-					if (sturctural) {
-						refresh(viewer, objects);
-					} else {
-						update(viewer, objects);
-					}
-				}
-			}
-		};
 	}
 
 	protected boolean isSlow(Object parent) {
