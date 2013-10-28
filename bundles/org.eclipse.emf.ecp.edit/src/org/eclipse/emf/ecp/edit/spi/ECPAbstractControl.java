@@ -67,7 +67,7 @@ public abstract class ECPAbstractControl implements ECPControl {
 	 * @return the {@link DataBindingContext}
 	 * @since 1.1
 	 */
-	protected final DataBindingContext getDataBindingContext() {
+	public final DataBindingContext getDataBindingContext() {
 		return dataBindingContext;
 	}
 

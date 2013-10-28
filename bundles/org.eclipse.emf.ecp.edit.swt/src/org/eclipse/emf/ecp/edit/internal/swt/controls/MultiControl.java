@@ -161,7 +161,13 @@ public abstract class MultiControl extends SWTControl {
 					public void handleRemove(int index, Object element) {
 						updateIndicesAfterRemove(index);
 						triggerScrollbarUpdate();
-						getDataBindingContext().updateTargets();
+						updateTargets();
+					}
+
+					private void updateTargets() {
+						for (final WidgetWrapper widgetWrapper : widgetWrappers) {
+							widgetWrapper.widget.getDataBindingContext().updateTargets();
+						}
 					}
 
 					@Override
@@ -169,12 +175,12 @@ public abstract class MultiControl extends SWTControl {
 						addControl();
 						sectionComposite.layout();
 						triggerScrollbarUpdate();
-						getDataBindingContext().updateTargets();
+						updateTargets();
 					}
 
 					@Override
 					public void handleMove(int oldIndex, int newIndex, Object element) {
-						getDataBindingContext().updateTargets();
+						updateTargets();
 					}
 
 					@Override
@@ -308,9 +314,11 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	private final class WidgetWrapper {
 
-		private final ECPObservableValue modelValue;
+		private ECPObservableValue modelValue;
 
 		private Composite composite;
+
+		private SWTControl widget;
 
 		public WidgetWrapper(ECPObservableValue modelValue) {
 			this.modelValue = modelValue;
@@ -327,7 +335,7 @@ public abstract class MultiControl extends SWTControl {
 			GridLayoutFactory.fillDefaults().numColumns(4).spacing(2, 0).applyTo(composite);
 			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 
-			final SWTControl widget = getSingleInstance();
+			widget = getSingleInstance();
 			widget.setObservableValue(modelValue);
 			final Composite createControl = widget.createControl(composite);
 
@@ -393,6 +401,7 @@ public abstract class MultiControl extends SWTControl {
 						.execute(
 							new MoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
 								.getModelElement(), getStructuralFeature(), currentIndex, currentIndex - 1));
+
 				}
 			});
 			final Button downB = new Button(composite, SWT.PUSH);
@@ -415,6 +424,7 @@ public abstract class MultiControl extends SWTControl {
 						.execute(
 							new MoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
 								.getModelElement(), getStructuralFeature(), currentIndex, currentIndex + 1));
+
 				}
 			});
 		}
@@ -429,6 +439,9 @@ public abstract class MultiControl extends SWTControl {
 		public void dispose() {
 			composite.dispose();
 			modelValue.dispose();
+			composite = null;
+			modelValue = null;
+			widget = null;
 		}
 	}
 
