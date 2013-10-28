@@ -47,6 +47,7 @@
       <feature id="org.eclipse.emf.ecp.view.rule.feature"/>
       <feature id="org.eclipse.emf.ecp.view.table.feature"/>
       <feature id="org.eclipse.emf.ecp.view.validation.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.model.editor.test.feature"/>
       <feature id="org.eclipse.emf.ecp.view.group.feature"/>
       <feature id="org.eclipse.emf.ecp.view.horizontal.feature"/>
       <feature id="org.eclipse.emf.ecp.view.label.feature"/>

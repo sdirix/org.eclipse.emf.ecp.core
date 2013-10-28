@@ -128,10 +128,15 @@ public final class ViewModelFileExtensionsManager {
 			final String bundleName = file.getContributor().getName();
 			final String path = bundleName + '/' + filePath;
 			uri = URI.createPlatformPluginURI(path, false);
-			if (!converter.exists(uri, null)) {
+			if (converter.exists(uri, null)) {
+				ret.add(uri);
+			} else {
 				uri = URI.createPlatformResourceURI(filePath, false);
+				if (converter.exists(uri, null)) {
+					ret.add(uri);
+				}
 			}
-			ret.add(uri);
+
 		}
 		return ret;
 	}
