@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.view.editor.handler;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -212,11 +212,13 @@ public class SelectAttributesDialog extends Dialog {
 					if (org.eclipse.emf.ecp.view.model.VControl.class.isInstance(eObject)) {
 						final org.eclipse.emf.ecp.view.model.VControl control = (org.eclipse.emf.ecp.view.model.VControl) eObject;
 						final VDomainModelReference domainModelReference = control.getDomainModelReference();
-						final Setting setting = domainModelReference.getIterator().next();
-						final EStructuralFeature feature = setting.getEStructuralFeature();
-
-						if (feature != null && feature.getEContainingClass().equals(eClass)) {
-							result.add(feature);
+						final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
+							.getEStructuralFeatureIterator();
+						while (structuralFeatureIterator.hasNext()) {
+							final EStructuralFeature feature = structuralFeatureIterator.next();
+							if (feature != null && feature.getEContainingClass().equals(eClass)) {
+								result.add(feature);
+							}
 						}
 					}
 				}
