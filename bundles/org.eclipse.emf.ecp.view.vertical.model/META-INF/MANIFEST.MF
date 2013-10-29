@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Vertical View Model
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.vertical.model;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: Eclipse Modeling Project
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.view.vertical.model;x-friends:="org.eclipse.emf.ecp.view.vertical.model.edit,  org.eclipse.emf.ecp.view.vertical.ui,  org.eclipse.emf.ecp.view.vertical.ui.swt,  org.eclipse.emf.ecp.view.vertical.ui.swt.test,  org.eclipse.emf.ecp.view.vertical.ui.test,  org.eclipse.emf.ecp.view.rule.test";version="1.1.0",
