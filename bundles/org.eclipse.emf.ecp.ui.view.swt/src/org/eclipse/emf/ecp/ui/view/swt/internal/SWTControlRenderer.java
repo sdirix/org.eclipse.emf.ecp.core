@@ -31,6 +31,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -97,12 +98,19 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			}
 			control.setEditable(!modelControl.isReadonly());
 			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
+			final Control next = createControls.iterator().next().getControls().iterator().next();
 			if (label != null) {
 				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-					.createRenderingResultRow(label, createControls.iterator().next().getControls().iterator().next()));
+					.createRenderingResultRow(label, next));
 			}
 			else {
 				result = createControls;
+			}
+
+			if (label == null) {
+				node.addRenderingResultDelegator(withSWTControls(control, modelControl, next));
+			} else {
+				node.addRenderingResultDelegator(withSWTControls(control, modelControl, next, label));
 			}
 			return result;
 

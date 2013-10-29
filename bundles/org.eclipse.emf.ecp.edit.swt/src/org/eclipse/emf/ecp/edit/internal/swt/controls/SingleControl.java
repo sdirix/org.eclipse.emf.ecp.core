@@ -15,8 +15,6 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -81,11 +79,11 @@ public abstract class SingleControl extends SWTControl {
 	}
 
 	protected void addControlDecoration(Control control) {
-		controlDecoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
-		final FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-			FieldDecorationRegistry.DEC_ERROR);
-		controlDecoration.setImage(fieldDecoration.getImage());
-		controlDecoration.hide();
+		// controlDecoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+		// final FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
+		// FieldDecorationRegistry.DEC_ERROR);
+		// controlDecoration.setImage(fieldDecoration.getImage());
+		// controlDecoration.hide();
 	}
 
 	/**
