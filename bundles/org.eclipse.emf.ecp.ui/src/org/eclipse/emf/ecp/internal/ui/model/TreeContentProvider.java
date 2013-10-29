@@ -131,10 +131,10 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			}
 			if (display.getSyncThread() != Thread.currentThread()) {
 				final Runnable refreshRunnable = createRefreshRunnable(isStructuralChange, viewer, objects);
-				if (isThreadSafe || Boolean.getBoolean("forceDisplayAsync")) {
-					display.asyncExec(refreshRunnable);
-				} else {
+				if (Boolean.getBoolean("enableDisplaySync") && !isThreadSafe) {
 					display.syncExec(refreshRunnable);
+				} else {
+					display.asyncExec(refreshRunnable);
 				}
 			} else {
 				if (isStructuralChange) {
