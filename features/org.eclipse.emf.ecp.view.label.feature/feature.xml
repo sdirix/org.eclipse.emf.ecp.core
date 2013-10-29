@@ -5,6 +5,7 @@
       version="1.1.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.label.model"
+      image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.1.0">
 
@@ -16,8 +17,8 @@
       %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="%licenseURL">
+      %license
    </license>
 
    <plugin
