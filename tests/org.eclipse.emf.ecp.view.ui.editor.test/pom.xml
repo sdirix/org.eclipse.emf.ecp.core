@@ -29,6 +29,9 @@
 		          	<testFailureIgnore>true</testFailureIgnore>
 					<product>org.eclipse.sdk.ide</product>
 					<application>org.eclipse.ui.ide.workbench</application>
+					<systemPropertyVariables>
+                        <enableDisplaySync>true</enableDisplaySync>
+                    </systemPropertyVariables>
 					<dependencies>
 						<dependency>
 							<type>eclipse-feature</type>
