@@ -7,7 +7,7 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _fytq8HXSEeK2tZkPdpUavQ
-Save-Time: 9/27/13 6:37 PM
+Save-Time: 10/29/13 9:28 AM
 Testcase-Type: ecl
 
 ------=_.description-216f885c-d591-38ce-8ea2-e4f8cb4d6ffa
@@ -22,14 +22,14 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
-get-editor "Tournament Pro" | get-control Any -index 70 | get-property "getChildren().length" | equals 0 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 68 | get-property "getChildren().length" | equals 0 | verify-true
 get-editor "Tournament Pro" | get-button "Add Entry" | click
-get-editor "Tournament Pro" | get-control Any -index 70 | get-property "getChildren().length" | equals 1 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 68 | get-property "getChildren().length" | equals 1 | verify-true
 with [get-editor "Tournament Pro" | get-button "Add Entry"] {
     click
     click
 }
-get-editor "Tournament Pro" | get-control Any -index 70 | get-property "getChildren().length" | equals 3 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 68 | get-property "getChildren().length" | equals 3 | verify-true
 with [get-editor "Tournament Pro"] {
     get-editbox -after [get-label "Price Money"] | set-text "10000.9"
     //was 5000.50
@@ -74,11 +74,11 @@ with [get-editor "Tournament Pro"] {
     get-button -after [get-label "Price Money"] -index 7 | click
     get-button -after [get-label "Price Money"] -index 4 | click
 }
-get-editor "Tournament Pro" | get-control Any -index 70 | get-property "getChildren().length" | equals 1 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 68 | get-property "getChildren().length" | equals 1 | verify-true
 with [get-editor "Tournament Pro"] {
     get-button -after [get-label "Price Money"] -index 1 | click
 }
-get-editor "Tournament Pro" | get-control Any -index 70 | get-property "getChildren().length" | equals 0 | verify-true
+get-editor "Tournament Pro" | get-control Any -index 68 | get-property "getChildren().length" | equals 0 | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "Revert All Operations" | click
 get-window Confirmation | get-button Yes | click
 get-window Revert | get-button OK | click
@@ -101,11 +101,11 @@ with [get-editor "Tournament Pro"] {
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
 get-window Commit | get-button OK | click
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro" | double-click
-get-editor "Tournament Pro" -index 1| get-control Any -index 70 | get-property "getChildren().length" | equals 0 | verify-true
+get-editor "Tournament Pro" -index 1| get-control Any -index 68 | get-property "getChildren().length" | equals 0 | verify-true
 get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update | click
 get-window Update | get-button OK | click
 with [get-editor "Tournament Pro" -index 1] {
-    get-control Any -index 70 | get-property "getChildren().length" | equals 4 | verify-true
+    get-control Any -index 68 | get-property "getChildren().length" | equals 4 | verify-true
     get-editbox -after [get-label "Price Money"] | get-property text | equals "10000" | verify-true
     get-editbox -after [get-label "Price Money"] -index 1 | get-property text | equals "8000" | verify-true
     get-editbox -after [get-label "Price Money"] -index 2 | get-property text | equals "5000" | verify-true
