@@ -45,12 +45,13 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public static VViewFactory init() {
 		try
 		{
-			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE.getEFactory(VViewPackage.eNS_URI);
+			final VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
+				.getEFactory("http://org/eclipse/emf/ecp/view/model");
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -140,7 +141,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public VDiagnostic createDiagnostic()
 	{
-		VDiagnosticImpl diagnostic = new VDiagnosticImpl();
+		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
 		return diagnostic;
 	}
 
@@ -150,7 +151,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VView createView() {
-		VViewImpl view = new VViewImpl();
+		final VViewImpl view = new VViewImpl();
 		return view;
 	}
 
@@ -160,7 +161,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VCategorization createCategorization() {
-		VCategorizationImpl categorization = new VCategorizationImpl();
+		final VCategorizationImpl categorization = new VCategorizationImpl();
 		return categorization;
 	}
 
@@ -170,7 +171,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VCategory createCategory() {
-		VCategoryImpl category = new VCategoryImpl();
+		final VCategoryImpl category = new VCategoryImpl();
 		return category;
 	}
 
@@ -180,7 +181,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VControl createControl() {
-		VControlImpl control = new VControlImpl();
+		final VControlImpl control = new VControlImpl();
 		return control;
 	}
 
@@ -190,7 +191,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VAction createAction() {
-		VActionImpl action = new VActionImpl();
+		final VActionImpl action = new VActionImpl();
 		return action;
 	}
 
@@ -202,10 +203,11 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public LabelAlignment createLabelAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		LabelAlignment result = LabelAlignment.get(initialValue);
-		if (result == null)
+		final LabelAlignment result = LabelAlignment.get(initialValue);
+		if (result == null) {
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
+		}
 		return result;
 	}
 
@@ -228,7 +230,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
 	{
-		VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
 		return featurePathDomainModelReference;
 	}
 

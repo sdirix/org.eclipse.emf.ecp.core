@@ -21,12 +21,7 @@ import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -37,8 +32,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ViewItemProvider
-	extends ElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	extends ElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -106,7 +100,6 @@ public class ViewItemProvider
 		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VViewPackage.Literals.VIEW__CHILDREN);
-			childrenFeatures.add(VViewPackage.Literals.VIEW__CATEGORIZATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -166,8 +159,10 @@ public class ViewItemProvider
 
 		switch (notification.getFeatureID(VView.class))
 		{
-		case VViewPackage.VIEW__CHILDREN:
 		case VViewPackage.VIEW__CATEGORIZATIONS:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+		case VViewPackage.VIEW__CHILDREN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
