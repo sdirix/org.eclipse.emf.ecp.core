@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
 import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
-import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VControl;
@@ -91,6 +91,23 @@ public class OpenEditorTest extends SWTBotTestCase {
 
 		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
 	}
+
+	// @Test
+	// public void testDomainModelAdapters() throws ECPRendererException {
+	// final VView view = createView();
+	// collectable = new GCCollectable(view);
+	// final Player domainObject = createDomainObject();
+	// System.out.println(domainObject.eAdapters().size());
+	// domainCollectable = new GCCollectable(domainObject);
+	// final ECPControlContext context = ViewTestHelper.createECPControlContext(
+	// domainObject, shell, view);
+	// contextCollectable = new GCCollectable(context);
+	// final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
+	// viewCollectable = new GCCollectable(renderedView);
+	// shell.dispose();
+	//
+	// System.out.println(domainObject.eAdapters().size());
+	// }
 
 	private VControl createControl(EStructuralFeature feature) {
 		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE
@@ -168,9 +185,10 @@ public class OpenEditorTest extends SWTBotTestCase {
 						final VView view = createView();
 						collectable = new GCCollectable(view);
 						final Player domainObject = createDomainObject();
+						System.out.println(domainObject.eAdapters().size());
 						domainCollectable = new GCCollectable(domainObject);
-						final ECPControlContext context = ViewTestHelper.createECPControlContext(
-							domainObject, shell, view);
+
+						final ECPControlContext context = new DefaultControlContext(domainObject, view);
 						contextCollectable = new GCCollectable(context);
 						final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
 						viewCollectable = new GCCollectable(renderedView);

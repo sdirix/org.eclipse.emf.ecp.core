@@ -106,6 +106,7 @@ public abstract class SingleControl extends SWTControl {
 	 */
 	@Override
 	public void dispose() {
+		super.dispose();
 		if (validationLabel != null) {
 			validationLabel.dispose();
 		}

@@ -79,6 +79,10 @@ public abstract class ECPAbstractControl implements ECPControl {
 	 */
 	public void dispose() {
 		composedAdapterFactory.dispose();
+		modelElementContext = null;
+		dataBindingContext.dispose();
+		adapterFactoryItemDelegator = null;
+		domainModelReference = null;
 	}
 
 	/**

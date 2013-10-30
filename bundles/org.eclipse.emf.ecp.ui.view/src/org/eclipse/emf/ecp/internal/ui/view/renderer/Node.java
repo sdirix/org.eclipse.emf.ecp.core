@@ -232,6 +232,9 @@ public class Node<T extends VElement> implements ValidationListener, ModelChange
 		children.clear();
 		cleanup();
 		selectedChildNodeListeners.clear();
+		if (actions != null) {
+			actions.clear();
+		}
 	}
 
 	/**

@@ -49,6 +49,7 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 		final List<RenderingResultRow<C>> rowResults = renderer.render(node, adapterFactoryItemDelegator,
 			initData);
 		rendererContext.setRenderedResult(rowResults.get(0).getMainControl());
+
 		composedAdapterFactory.dispose();
 
 		return rendererContext;

@@ -463,4 +463,31 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
 		return getItemPropertyDescriptor(getSetting(getDomainModelReference()));
 	}
+
+	@Override
+	public void dispose() {
+		validationLabel = null;
+		if (modelValue != null) {
+			modelValue.dispose();
+			modelValue = null;
+		}
+		if (binding != null) {
+			binding.dispose();
+			binding = null;
+		}
+		if (controlComposite != null) {
+			controlComposite.dispose();
+			controlComposite = null;
+		}
+		if (parentComposite != null) {
+			parentComposite.dispose();
+			parentComposite = null;
+		}
+		sl = null;
+		if (unsetLabel != null) {
+			unsetLabel.dispose();
+			unsetLabel = null;
+		}
+		super.dispose();
+	}
 }
