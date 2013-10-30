@@ -62,6 +62,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 	private GCCollectable collectable;
 	private GCCollectable contextCollectable;
 	private GCCollectable viewCollectable;
+	private GCCollectable domainCollectable;
 
 	@Before
 	public void init() {
@@ -166,8 +167,10 @@ public class OpenEditorTest extends SWTBotTestCase {
 					try {
 						final VView view = createView();
 						collectable = new GCCollectable(view);
+						final Player domainObject = createDomainObject();
+						domainCollectable = new GCCollectable(domainObject);
 						final ECPControlContext context = ViewTestHelper.createECPControlContext(
-							createDomainObject(), shell, view);
+							domainObject, shell, view);
 						contextCollectable = new GCCollectable(context);
 						final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
 						viewCollectable = new GCCollectable(renderedView);
@@ -198,6 +201,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 			assertTrue(viewCollectable.isCollectable());
 			assertTrue(contextCollectable.isCollectable());
 			assertTrue(collectable.isCollectable());
+			assertTrue(domainCollectable.isCollectable());
 		}
 	}
 
