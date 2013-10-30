@@ -10,7 +10,7 @@
       license-feature-version="1.1.0">
 
    <description>
-      This is the validation feature for view models.
+      %description
    </description>
 
    <copyright url="%copyrightURL">
