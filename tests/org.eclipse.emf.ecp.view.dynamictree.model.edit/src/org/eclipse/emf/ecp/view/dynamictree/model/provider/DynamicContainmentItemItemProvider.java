@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.provider;
 
@@ -15,29 +24,29 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem}
+ * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class DynamicContainmentItemItemProvider
-	extends ElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	extends ElementItemProvider
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public DynamicContainmentItemItemProvider(AdapterFactory adapterFactory) {
+	public DynamicContainmentItemItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -45,11 +54,14 @@ public class DynamicContainmentItemItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
+		if (itemPropertyDescriptors == null)
+		{
 			super.getPropertyDescriptors(object);
 
 			addDomainModelPropertyDescriptor(object);
@@ -61,22 +73,25 @@ public class DynamicContainmentItemItemProvider
 	 * This adds a property descriptor for the Domain Model feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected void addDomainModelPropertyDescriptor(Object object) {
+	protected void addDomainModelPropertyDescriptor(Object object)
+	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_DynamicContainmentItem_domainModel_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentItem_domainModel_feature", "_UI_DynamicContainmentItem_type"),
-				 ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DynamicContainmentItem_domainModel_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentItem_domainModel_feature",
+					"_UI_DynamicContainmentItem_type"),
+				ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -85,11 +100,14 @@ public class DynamicContainmentItemItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	{
+		if (childrenFeatures == null)
+		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE);
@@ -100,10 +118,12 @@ public class DynamicContainmentItemItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child)
+	{
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -114,10 +134,12 @@ public class DynamicContainmentItemItemProvider
 	 * This returns DynamicContainmentItem.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/DynamicContainmentItem"));
 	}
 
@@ -125,11 +147,13 @@ public class DynamicContainmentItemItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		String label = ((DynamicContainmentItem)object).getName();
+	public String getText(Object object)
+	{
+		final String label = ((DynamicContainmentItem) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_DynamicContainmentItem_type") :
 			getString("_UI_DynamicContainmentItem_type") + " " + label;
@@ -140,17 +164,20 @@ public class DynamicContainmentItemItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(DynamicContainmentItem.class)) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
-			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		switch (notification.getFeatureID(DynamicContainmentItem.class))
+		{
+		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
+		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -160,31 +187,35 @@ public class DynamicContainmentItemItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS,
-				 ModelFactory.eINSTANCE.createDynamicContainmentItem()));
+			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS,
+				ModelFactory.eINSTANCE.createDynamicContainmentItem()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
-				 VViewFactory.eINSTANCE.createControl()));
+			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
+				VViewFactory.eINSTANCE.createControl()));
 	}
 
 	/**
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

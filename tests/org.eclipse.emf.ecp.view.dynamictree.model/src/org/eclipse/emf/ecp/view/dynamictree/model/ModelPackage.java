@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model;
 
@@ -7,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
+
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
@@ -14,21 +24,24 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * The <b>Package</b> for the model.
  * It contains accessors for the meta objects to represent
  * <ul>
- *   <li>each class,</li>
- *   <li>each feature of each class,</li>
- *   <li>each enum,</li>
- *   <li>and each data type</li>
+ * <li>each class,</li>
+ * <li>each feature of each class,</li>
+ * <li>each enum,</li>
+ * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory
  * @model kind="package"
  * @generated
  */
-public interface ModelPackage extends EPackage {
+public interface ModelPackage extends EPackage
+{
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	String eNAME = "model";
@@ -37,6 +50,7 @@ public interface ModelPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/dynamictree/model";
@@ -45,6 +59,7 @@ public interface ModelPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.dynamictree.model";
@@ -53,14 +68,17 @@ public interface ModelPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	ModelPackage eINSTANCE = org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl <em>Dynamic Containment Tree</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl
+	 * <em>Dynamic Containment Tree</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDynamicContainmentTree()
 	 * @generated
@@ -71,6 +89,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -80,6 +99,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -89,6 +109,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -98,6 +119,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -107,6 +129,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -116,6 +139,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -125,6 +149,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -134,6 +159,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -143,6 +169,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -152,6 +179,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Child Reference</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -161,6 +189,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Path To Root</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -170,6 +199,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Child Composite</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -179,6 +209,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Items</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -188,15 +219,18 @@ public interface ModelPackage extends EPackage {
 	 * The number of structural features of the '<em>Dynamic Containment Tree</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int DYNAMIC_CONTAINMENT_TREE_FEATURE_COUNT = VViewPackage.CATEGORY_FEATURE_COUNT + 5;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl <em>Dynamic Containment Item</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl
+	 * <em>Dynamic Containment Item</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDynamicContainmentItem()
 	 * @generated
@@ -207,6 +241,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -216,6 +251,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -225,6 +261,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -234,6 +271,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -243,6 +281,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -252,6 +291,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -261,6 +301,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -270,6 +311,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Items</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -279,6 +321,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -288,15 +331,18 @@ public interface ModelPackage extends EPackage {
 	 * The number of structural features of the '<em>Dynamic Containment Item</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl <em>Test Element</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl
+	 * <em>Test Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getTestElement()
 	 * @generated
@@ -307,6 +353,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -316,6 +363,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -325,6 +373,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Parent Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -334,15 +383,18 @@ public interface ModelPackage extends EPackage {
 	 * The number of structural features of the '<em>Test Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int TEST_ELEMENT_FEATURE_COUNT = EcorePackage.EOBJECT_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl <em>Domain Root</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl
+	 * <em>Domain Root</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDomainRoot()
 	 * @generated
@@ -353,6 +405,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Intermediate</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -362,15 +415,18 @@ public interface ModelPackage extends EPackage {
 	 * The number of structural features of the '<em>Domain Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int DOMAIN_ROOT_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainIntermediateImpl <em>Domain Intermediate</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainIntermediateImpl
+	 * <em>Domain Intermediate</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainIntermediateImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDomainIntermediate()
 	 * @generated
@@ -381,6 +437,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Test Element Container</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -390,15 +447,18 @@ public interface ModelPackage extends EPackage {
 	 * The number of structural features of the '<em>Domain Intermediate</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int DOMAIN_INTERMEDIATE_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementContainerImpl <em>Test Element Container</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementContainerImpl
+	 * <em>Test Element Container</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementContainerImpl
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getTestElementContainer()
 	 * @generated
@@ -409,6 +469,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Test Elements</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -418,6 +479,7 @@ public interface ModelPackage extends EPackage {
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -427,16 +489,18 @@ public interface ModelPackage extends EPackage {
 	 * The number of structural features of the '<em>Test Element Container</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int TEST_ELEMENT_CONTAINER_FEATURE_COUNT = 2;
 
-
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree <em>Dynamic Containment Tree</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree
+	 * <em>Dynamic Containment Tree</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Dynamic Containment Tree</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree
 	 * @generated
@@ -444,9 +508,11 @@ public interface ModelPackage extends EPackage {
 	EClass getDynamicContainmentTree();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Domain Model</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel()
 	 * @see #getDynamicContainmentTree()
@@ -455,9 +521,12 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentTree_DomainModel();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference <em>Child Reference</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference
+	 * <em>Child Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Child Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference()
 	 * @see #getDynamicContainmentTree()
@@ -466,9 +535,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentTree_ChildReference();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To Root</em>}'.
+	 * Returns the meta object for the reference list '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference list '<em>Path To Root</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot()
 	 * @see #getDynamicContainmentTree()
@@ -477,9 +548,12 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentTree_PathToRoot();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite</em>}'.
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite
+	 * <em>Child Composite</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference '<em>Child Composite</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite()
 	 * @see #getDynamicContainmentTree()
@@ -488,9 +562,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentTree_ChildComposite();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems <em>Items</em>}'.
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems <em>Items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>Items</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems()
 	 * @see #getDynamicContainmentTree()
@@ -499,9 +575,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentTree_Items();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem <em>Dynamic Containment Item</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem
+	 * <em>Dynamic Containment Item</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Dynamic Containment Item</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem
 	 * @generated
@@ -509,9 +587,11 @@ public interface ModelPackage extends EPackage {
 	EClass getDynamicContainmentItem();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Domain Model</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel()
 	 * @see #getDynamicContainmentItem()
@@ -520,9 +600,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentItem_DomainModel();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems <em>Items</em>}'.
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems <em>Items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>Items</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems()
 	 * @see #getDynamicContainmentItem()
@@ -531,9 +613,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentItem_Items();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}'.
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference '<em>Composite</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite()
 	 * @see #getDynamicContainmentItem()
@@ -542,9 +626,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDynamicContainmentItem_Composite();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement <em>Test Element</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement
+	 * <em>Test Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Test Element</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElement
 	 * @generated
@@ -552,9 +638,11 @@ public interface ModelPackage extends EPackage {
 	EClass getTestElement();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getId
+	 * <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Id</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getId()
 	 * @see #getTestElement()
@@ -563,9 +651,11 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTestElement_Id();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getElements <em>Elements</em>}'.
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getElements <em>Elements</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>Elements</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getElements()
 	 * @see #getTestElement()
@@ -574,9 +664,11 @@ public interface ModelPackage extends EPackage {
 	EReference getTestElement_Elements();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getParentId <em>Parent Id</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getParentId <em>Parent Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Parent Id</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElement#getParentId()
 	 * @see #getTestElement()
@@ -585,9 +677,11 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTestElement_ParentId();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot <em>Domain Root</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot
+	 * <em>Domain Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Domain Root</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot
 	 * @generated
@@ -595,9 +689,11 @@ public interface ModelPackage extends EPackage {
 	EClass getDomainRoot();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot#getIntermediate <em>Intermediate</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot#getIntermediate <em>Intermediate</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Intermediate</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot#getIntermediate()
 	 * @see #getDomainRoot()
@@ -606,9 +702,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDomainRoot_Intermediate();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate <em>Domain Intermediate</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate
+	 * <em>Domain Intermediate</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Domain Intermediate</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate
 	 * @generated
@@ -616,9 +714,12 @@ public interface ModelPackage extends EPackage {
 	EClass getDomainIntermediate();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer
+	 * <em>Test Element Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference '<em>Test Element Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer()
 	 * @see #getDomainIntermediate()
@@ -627,9 +728,11 @@ public interface ModelPackage extends EPackage {
 	EReference getDomainIntermediate_TestElementContainer();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer <em>Test Element Container</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer
+	 * <em>Test Element Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Test Element Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer
 	 * @generated
@@ -637,9 +740,11 @@ public interface ModelPackage extends EPackage {
 	EClass getTestElementContainer();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements <em>Test Elements</em>}'.
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements <em>Test Elements</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>Test Elements</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getTestElements()
 	 * @see #getTestElementContainer()
@@ -648,9 +753,11 @@ public interface ModelPackage extends EPackage {
 	EReference getTestElementContainer_TestElements();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Id</em>'.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer#getId()
 	 * @see #getTestElementContainer()
@@ -662,6 +769,7 @@ public interface ModelPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -671,19 +779,24 @@ public interface ModelPackage extends EPackage {
 	 * <!-- begin-user-doc -->
 	 * Defines literals for the meta objects that represent
 	 * <ul>
-	 *   <li>each class,</li>
-	 *   <li>each feature of each class,</li>
-	 *   <li>each enum,</li>
-	 *   <li>and each data type</li>
+	 * <li>each class,</li>
+	 * <li>each feature of each class,</li>
+	 * <li>each enum,</li>
+	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	interface Literals {
+	interface Literals
+	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl <em>Dynamic Containment Tree</em>}' class.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl
+		 * <em>Dynamic Containment Tree</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDynamicContainmentTree()
 		 * @generated
@@ -694,6 +807,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL = eINSTANCE.getDynamicContainmentTree_DomainModel();
@@ -702,6 +816,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Child Reference</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE = eINSTANCE.getDynamicContainmentTree_ChildReference();
@@ -710,6 +825,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Path To Root</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT = eINSTANCE.getDynamicContainmentTree_PathToRoot();
@@ -718,6 +834,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Child Composite</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE = eINSTANCE.getDynamicContainmentTree_ChildComposite();
@@ -726,14 +843,18 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Items</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_TREE__ITEMS = eINSTANCE.getDynamicContainmentTree_Items();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl <em>Dynamic Containment Item</em>}' class.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl
+		 * <em>Dynamic Containment Item</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDynamicContainmentItem()
 		 * @generated
@@ -744,6 +865,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL = eINSTANCE.getDynamicContainmentItem_DomainModel();
@@ -752,6 +874,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Items</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_ITEM__ITEMS = eINSTANCE.getDynamicContainmentItem_Items();
@@ -760,14 +883,17 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Composite</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = eINSTANCE.getDynamicContainmentItem_Composite();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl <em>Test Element</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl
+		 * <em>Test Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getTestElement()
 		 * @generated
@@ -778,6 +904,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute TEST_ELEMENT__ID = eINSTANCE.getTestElement_Id();
@@ -786,6 +913,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference TEST_ELEMENT__ELEMENTS = eINSTANCE.getTestElement_Elements();
@@ -794,14 +922,17 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Parent Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute TEST_ELEMENT__PARENT_ID = eINSTANCE.getTestElement_ParentId();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl <em>Domain Root</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl
+		 * <em>Domain Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDomainRoot()
 		 * @generated
@@ -812,14 +943,18 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Intermediate</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DOMAIN_ROOT__INTERMEDIATE = eINSTANCE.getDomainRoot_Intermediate();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainIntermediateImpl <em>Domain Intermediate</em>}' class.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainIntermediateImpl <em>Domain Intermediate</em>}'
+		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainIntermediateImpl
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDomainIntermediate()
 		 * @generated
@@ -830,14 +965,18 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Test Element Container</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER = eINSTANCE.getDomainIntermediate_TestElementContainer();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementContainerImpl <em>Test Element Container</em>}' class.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementContainerImpl
+		 * <em>Test Element Container</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementContainerImpl
 		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getTestElementContainer()
 		 * @generated
@@ -848,6 +987,7 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Test Elements</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EReference TEST_ELEMENT_CONTAINER__TEST_ELEMENTS = eINSTANCE.getTestElementContainer_TestElements();
@@ -856,10 +996,11 @@ public interface ModelPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		EAttribute TEST_ELEMENT_CONTAINER__ID = eINSTANCE.getTestElementContainer_Id();
 
 	}
 
-} //ModelPackage
+} // ModelPackage

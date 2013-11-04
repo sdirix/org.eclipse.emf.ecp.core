@@ -1,12 +1,24 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
@@ -18,17 +30,19 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl#getIntermediate <em>Intermediate</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DomainRootImpl#getIntermediate <em>Intermediate</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class DomainRootImpl extends EObjectImpl implements DomainRoot {
+public class DomainRootImpl extends EObjectImpl implements DomainRoot
+{
 	/**
 	 * The cached value of the '{@link #getIntermediate() <em>Intermediate</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getIntermediate()
 	 * @generated
 	 * @ordered
@@ -38,34 +52,43 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	protected DomainRootImpl() {
+	protected DomainRootImpl()
+	{
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
+	protected EClass eStaticClass()
+	{
 		return ModelPackage.Literals.DOMAIN_ROOT;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public DomainIntermediate getIntermediate() {
-		if (intermediate != null && intermediate.eIsProxy()) {
-			InternalEObject oldIntermediate = (InternalEObject)intermediate;
-			intermediate = (DomainIntermediate)eResolveProxy(oldIntermediate);
-			if (intermediate != oldIntermediate) {
+	public DomainIntermediate getIntermediate()
+	{
+		if (intermediate != null && intermediate.eIsProxy())
+		{
+			InternalEObject oldIntermediate = (InternalEObject) intermediate;
+			intermediate = (DomainIntermediate) eResolveProxy(oldIntermediate);
+			if (intermediate != oldIntermediate)
+			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.DOMAIN_ROOT__INTERMEDIATE, oldIntermediate, intermediate));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.DOMAIN_ROOT__INTERMEDIATE,
+						oldIntermediate, intermediate));
 			}
 		}
 		return intermediate;
@@ -74,35 +97,44 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public DomainIntermediate basicGetIntermediate() {
+	public DomainIntermediate basicGetIntermediate()
+	{
 		return intermediate;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public void setIntermediate(DomainIntermediate newIntermediate) {
+	public void setIntermediate(DomainIntermediate newIntermediate)
+	{
 		DomainIntermediate oldIntermediate = intermediate;
 		intermediate = newIntermediate;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DOMAIN_ROOT__INTERMEDIATE, oldIntermediate, intermediate));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DOMAIN_ROOT__INTERMEDIATE,
+				oldIntermediate, intermediate));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
-				if (resolve) return getIntermediate();
-				return basicGetIntermediate();
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
+		switch (featureID)
+		{
+		case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
+			if (resolve)
+				return getIntermediate();
+			return basicGetIntermediate();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -110,14 +142,17 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
-				setIntermediate((DomainIntermediate)newValue);
-				return;
+	public void eSet(int featureID, Object newValue)
+	{
+		switch (featureID)
+		{
+		case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
+			setIntermediate((DomainIntermediate) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -125,14 +160,17 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
-				setIntermediate((DomainIntermediate)null);
-				return;
+	public void eUnset(int featureID)
+	{
+		switch (featureID)
+		{
+		case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
+			setIntermediate((DomainIntermediate) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -140,15 +178,18 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
-				return intermediate != null;
+	public boolean eIsSet(int featureID)
+	{
+		switch (featureID)
+		{
+		case ModelPackage.DOMAIN_ROOT__INTERMEDIATE:
+			return intermediate != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //DomainRootImpl
+} // DomainRootImpl
