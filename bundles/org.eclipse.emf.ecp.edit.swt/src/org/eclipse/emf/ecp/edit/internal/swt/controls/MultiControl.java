@@ -485,7 +485,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	@Override
 	public void dispose() {
-
+		super.dispose();
 		model.removeListChangeListener(changeListener);
 		model.dispose();
 
