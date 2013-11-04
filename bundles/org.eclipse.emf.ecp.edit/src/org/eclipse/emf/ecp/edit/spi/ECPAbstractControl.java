@@ -15,6 +15,8 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -30,7 +32,7 @@ public abstract class ECPAbstractControl implements ECPControl {
 
 	private ECPControlContext modelElementContext;
 	private boolean embedded;
-	private final EMFDataBindingContext dataBindingContext = new EMFDataBindingContext();
+	private EMFDataBindingContext dataBindingContext;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private VDomainModelReference domainModelReference;
@@ -47,6 +49,15 @@ public abstract class ECPAbstractControl implements ECPControl {
 		this.domainModelReference = domainModelReference;
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+
+		postInit();
+	}
+
+	/**
+	 * Override this method to perform actions after the initialization of the control.
+	 */
+	protected void postInit() {
+		// do nothing
 	}
 
 	/**
@@ -68,6 +79,9 @@ public abstract class ECPAbstractControl implements ECPControl {
 	 * @since 1.1
 	 */
 	public final DataBindingContext getDataBindingContext() {
+		if (dataBindingContext == null) {
+			dataBindingContext = new EMFDataBindingContext();
+		}
 		return dataBindingContext;
 	}
 
@@ -120,6 +134,32 @@ public abstract class ECPAbstractControl implements ECPControl {
 	 */
 	protected final VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
+	}
+
+	/**
+	 * Returns the {@link EditingDomain} for the set {@link VDomainModelReference}.
+	 * 
+	 * @return the {@link EditingDomain} for this control
+	 */
+	protected final EditingDomain getEditingDomain() {
+		return getEditingDomain(getDomainModelReference());
+	}
+
+	/**
+	 * Returns the {@link EditingDomain} for the provided {@link VDomainModelReference}.
+	 * 
+	 * @param domainModelReference the provided {@link VDomainModelReference}
+	 * @return the {@link EditingDomain} of this {@link VDomainModelReference}
+	 */
+	protected final EditingDomain getEditingDomain(VDomainModelReference domainModelReference) {
+		EditingDomain editingDomain = null;
+		if (modelElementContext != null) {
+			editingDomain = modelElementContext.getEditingDomain();
+		}
+		if (editingDomain == null) {
+			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(domainModelReference.getIterator().next());
+		}
+		return editingDomain;
 	}
 
 }

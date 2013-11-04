@@ -36,8 +36,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
         eType="#//AbstractCategorization" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ContainedElement" abstract="true"
-      eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainedElement" abstract="true" eSuperTypes="#//Element"/>
   <eClassifiers xsi:type="ecore:EClass" name="Container" abstract="true" eSuperTypes="#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//ContainedElement" containment="true"/>
