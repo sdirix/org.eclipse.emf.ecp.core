@@ -556,18 +556,10 @@
             class="org.eclipse.emf.ecp.ui.commands.SaveProjectHandler"
             commandId="org.eclipse.emf.ecp.ui.workbench.saveProject">
          <enabledWhen>
-            <with
-                  variable="selection">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <test
-                        forcePluginActivation="true"
-                        property="org.eclipse.emf.ecp.core.util.isDirty"
-                        value="true">
-                  </test>
-               </iterate>
-            </with>
+            <test
+                  property="org.eclipse.emf.ecp.ui.e3.workbench.menu.currentProjectHasUnsavedChanges"
+                  value="true">
+            </test>
          </enabledWhen>
       </handler>
       <handler
@@ -672,6 +664,13 @@
             id="org.eclipse.emf.ecp.ui.repository.tester"
             namespace="org.eclipse.emf.ecp.ui.repository"
             properties="canAddRepositories"
+            type="java.lang.Object">
+      </propertyTester>
+      <propertyTester
+            class="org.eclipse.emf.ecp.ui.tester.CurrentProjectHasUnsavedChangesTester"
+            id="org.eclipse.emf.ecp.ui.e3.workbench.menu.currentProjectHasUnsavedChangesTester"
+            namespace="org.eclipse.emf.ecp.ui.e3.workbench.menu"
+            properties="currentProjectHasUnsavedChanges"
             type="java.lang.Object">
       </propertyTester>
    </extension>
