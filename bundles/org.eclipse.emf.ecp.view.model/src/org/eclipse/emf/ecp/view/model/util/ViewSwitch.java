@@ -90,143 +90,118 @@ public class ViewSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case VViewPackage.DIAGNOSTIC: {
-			final VDiagnostic diagnostic = (VDiagnostic) theEObject;
+			VDiagnostic diagnostic = (VDiagnostic) theEObject;
 			T result = caseDiagnostic(diagnostic);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.ATTACHMENT: {
-			final VAttachment attachment = (VAttachment) theEObject;
+			VAttachment attachment = (VAttachment) theEObject;
 			T result = caseAttachment(attachment);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.DOMAIN_MODEL_REFERENCE: {
-			final VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
+			VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
 			T result = caseDomainModelReference(domainModelReference);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			final VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
+			VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
 			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
-			if (result == null) {
+			if (result == null)
 				result = caseDomainModelReference(featurePathDomainModelReference);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.ELEMENT: {
-			final VElement element = (VElement) theEObject;
+			VElement element = (VElement) theEObject;
 			T result = caseElement(element);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.VIEW: {
-			final VView view = (VView) theEObject;
+			VView view = (VView) theEObject;
 			T result = caseView(view);
-			if (result == null) {
+			if (result == null)
 				result = caseElement(view);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTAINED_ELEMENT: {
-			final VContainedElement containedElement = (VContainedElement) theEObject;
+			VContainedElement containedElement = (VContainedElement) theEObject;
 			T result = caseContainedElement(containedElement);
-			if (result == null) {
+			if (result == null)
 				result = caseElement(containedElement);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTAINER: {
-			final VContainer container = (VContainer) theEObject;
+			VContainer container = (VContainer) theEObject;
 			T result = caseContainer(container);
-			if (result == null) {
+			if (result == null)
 				result = caseContainedElement(container);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(container);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTROL: {
-			final VControl control = (VControl) theEObject;
+			VControl control = (VControl) theEObject;
 			T result = caseControl(control);
-			if (result == null) {
+			if (result == null)
 				result = caseContainedElement(control);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(control);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.ABSTRACT_CATEGORIZATION: {
-			final VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
+			VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
 			T result = caseAbstractCategorization(abstractCategorization);
-			if (result == null) {
+			if (result == null)
 				result = caseElement(abstractCategorization);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CATEGORIZATION: {
-			final VCategorization categorization = (VCategorization) theEObject;
+			VCategorization categorization = (VCategorization) theEObject;
 			T result = caseCategorization(categorization);
-			if (result == null) {
+			if (result == null)
 				result = caseAbstractCategorization(categorization);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(categorization);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CATEGORY: {
-			final VCategory category = (VCategory) theEObject;
+			VCategory category = (VCategory) theEObject;
 			T result = caseCategory(category);
-			if (result == null) {
+			if (result == null)
 				result = caseAbstractCategorization(category);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(category);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.ACTION: {
-			final VAction action = (VAction) theEObject;
+			VAction action = (VAction) theEObject;
 			T result = caseAction(action);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		default:

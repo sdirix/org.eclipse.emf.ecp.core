@@ -45,6 +45,8 @@ public final class ViewModelUtil {
 				final boolean resolve = modelReference.resolve(domainModelRoot);
 				if (!resolve) {
 					// log
+					System.out.println("Not resolved: " + modelReference + " on control "
+						+ eObject.eContainer().toString());
 				}
 			}
 		}

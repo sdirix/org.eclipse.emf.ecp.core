@@ -189,14 +189,12 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public static VViewPackage init() {
-		if (isInited) {
+		if (isInited)
 			return (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VViewPackageImpl());
+		VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VViewPackageImpl());
 
 		isInited = true;
 
@@ -592,9 +590,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -665,9 +662,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -676,22 +672,21 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		featurePathDomainModelReferenceEClass.getESuperTypes().add(getDomainModelReference());
-		viewEClass.getESuperTypes().add(getElement());
-		containedElementEClass.getESuperTypes().add(getElement());
-		containerEClass.getESuperTypes().add(getContainedElement());
-		controlEClass.getESuperTypes().add(getContainedElement());
-		abstractCategorizationEClass.getESuperTypes().add(getElement());
-		categorizationEClass.getESuperTypes().add(getAbstractCategorization());
-		categoryEClass.getESuperTypes().add(getAbstractCategorization());
+		featurePathDomainModelReferenceEClass.getESuperTypes().add(this.getDomainModelReference());
+		viewEClass.getESuperTypes().add(this.getElement());
+		containedElementEClass.getESuperTypes().add(this.getElement());
+		containerEClass.getESuperTypes().add(this.getContainedElement());
+		controlEClass.getESuperTypes().add(this.getContainedElement());
+		abstractCategorizationEClass.getESuperTypes().add(this.getElement());
+		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
+		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(diagnosticEClass, VDiagnostic.class, "Diagnostic", !IS_ABSTRACT, !IS_INTERFACE,
@@ -726,10 +721,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getElement_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1, VElement.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getElement_Diagnostic(), getDiagnostic(), null, "diagnostic", null, 0, 1, VElement.class,
+		initEReference(getElement_Diagnostic(), this.getDiagnostic(), null, "diagnostic", null, 0, 1, VElement.class,
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getElement_Attachments(), getAttachment(), null, "attachments", null, 0, -1,
+		initEReference(getElement_Attachments(), this.getAttachment(), null, "attachments", null, 0, -1,
 			VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -737,10 +732,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", null, 1, 1, VView.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getView_Children(), getContainedElement(), null, "children", null, 0, -1, VView.class,
+		initEReference(getView_Children(), this.getContainedElement(), null, "children", null, 0, -1, VView.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getView_Categorizations(), getAbstractCategorization(), null, "categorizations", null, 0,
+		initEReference(getView_Categorizations(), this.getAbstractCategorization(), null, "categorizations", null, 0,
 			-1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -749,33 +744,33 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(containerEClass, VContainer.class, "Container", IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getContainer_Children(), getContainedElement(), null, "children", null, 0, -1,
+		initEReference(getContainer_Children(), this.getContainedElement(), null, "children", null, 0, -1,
 			VContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getControl_LabelAlignment(), getLabelAlignment(), "labelAlignment", "Left", 1, 1,
+		initEAttribute(getControl_LabelAlignment(), this.getLabelAlignment(), "labelAlignment", "Left", 1, 1,
 			VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEReference(getControl_DomainModelReference(), getDomainModelReference(), null, "domainModelReference",
+		initEReference(getControl_DomainModelReference(), this.getDomainModelReference(), null, "domainModelReference",
 			null, 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(abstractCategorizationEClass, VAbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT,
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAbstractCategorization_Actions(), getAction(), null, "actions", null, 0, -1,
+		initEReference(getAbstractCategorization_Actions(), this.getAction(), null, "actions", null, 0, -1,
 			VAbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(categorizationEClass, VCategorization.class, "Categorization", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCategorization_Categorizations(), getAbstractCategorization(), null, "categorizations",
+		initEReference(getCategorization_Categorizations(), this.getAbstractCategorization(), null, "categorizations",
 			null, 0, -1, VCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(categoryEClass, VCategory.class, "Category", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCategory_Composite(), getContainedElement(), null, "composite", null, 0, 1,
+		initEReference(getCategory_Composite(), this.getContainedElement(), null, "composite", null, 0, 1,
 			VCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

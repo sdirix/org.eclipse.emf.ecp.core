@@ -45,13 +45,13 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public static VViewFactory init() {
 		try
 		{
-			final VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
+			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
 				.getEFactory("http://org/eclipse/emf/ecp/view/model");
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
 			}
-		} catch (final Exception exception)
+		} catch (Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -141,7 +141,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public VDiagnostic createDiagnostic()
 	{
-		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
+		VDiagnosticImpl diagnostic = new VDiagnosticImpl();
 		return diagnostic;
 	}
 
@@ -151,7 +151,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VView createView() {
-		final VViewImpl view = new VViewImpl();
+		VViewImpl view = new VViewImpl();
 		return view;
 	}
 
@@ -161,7 +161,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VCategorization createCategorization() {
-		final VCategorizationImpl categorization = new VCategorizationImpl();
+		VCategorizationImpl categorization = new VCategorizationImpl();
 		return categorization;
 	}
 
@@ -171,7 +171,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VCategory createCategory() {
-		final VCategoryImpl category = new VCategoryImpl();
+		VCategoryImpl category = new VCategoryImpl();
 		return category;
 	}
 
@@ -181,7 +181,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VControl createControl() {
-		final VControlImpl control = new VControlImpl();
+		VControlImpl control = new VControlImpl();
 		return control;
 	}
 
@@ -191,7 +191,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public VAction createAction() {
-		final VActionImpl action = new VActionImpl();
+		VActionImpl action = new VActionImpl();
 		return action;
 	}
 
@@ -203,11 +203,10 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public LabelAlignment createLabelAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		final LabelAlignment result = LabelAlignment.get(initialValue);
-		if (result == null) {
+		LabelAlignment result = LabelAlignment.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
 				+ eDataType.getName() + "'");
-		}
 		return result;
 	}
 
@@ -230,7 +229,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
 	{
-		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
 		return featurePathDomainModelReference;
 	}
 
