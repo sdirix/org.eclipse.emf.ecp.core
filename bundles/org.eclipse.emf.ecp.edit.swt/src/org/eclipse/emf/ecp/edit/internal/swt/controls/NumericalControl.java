@@ -135,6 +135,9 @@ public class NumericalControl extends AbstractTextControl {
 
 		@Override
 		public Object convertValue(Object value) {
+			if (value == null) {
+				return "";
+			}
 			final DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
 				getInstanceClass());
 			return format.format(value);
