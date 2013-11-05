@@ -29,10 +29,10 @@ import org.eclipse.emf.ecp.view.context.AbstractViewService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
@@ -246,10 +246,10 @@ public class RuleService extends AbstractViewService {
 			}
 
 			if (hasChanged) {
-				final boolean result = ConditionEvaluator.evaluate(possibleValues, rule.getCondition());
+				final boolean result = rule.getCondition().evaluateChangedValues(possibleValues);
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			} else if (!isDryRun) {
-				final boolean result = ConditionEvaluator.evaluate(rule.getCondition());
+				final boolean result = rule.getCondition().evaluate();
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			}
 		}

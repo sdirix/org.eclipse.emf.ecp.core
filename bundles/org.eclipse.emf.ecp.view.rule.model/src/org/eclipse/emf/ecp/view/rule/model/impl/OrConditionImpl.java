@@ -12,10 +12,12 @@
 package org.eclipse.emf.ecp.view.rule.model.impl;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -167,6 +169,32 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 			return conditions != null && !conditions.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.rule.model.Condition#evaluate()
+	 */
+	public boolean evaluate() {
+		boolean result = false;
+		for (final Condition innerCondition : getConditions()) {
+			result |= innerCondition.evaluate();
+		}
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.rule.model.Condition#evaluateChangedValues(java.util.Map)
+	 */
+	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
+		boolean result = false;
+		for (final Condition innerCondition : getConditions()) {
+			result |= innerCondition.evaluateChangedValues(possibleNewValues);
+		}
+		return result;
 	}
 
 } // OrConditionImpl

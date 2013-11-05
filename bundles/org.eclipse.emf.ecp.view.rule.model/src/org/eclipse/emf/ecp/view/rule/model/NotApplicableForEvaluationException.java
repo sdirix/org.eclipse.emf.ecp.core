@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.rule;
+package org.eclipse.emf.ecp.view.rule.model;
 
 /**
  * Internal exception used in the condition evaluator.
@@ -17,6 +17,6 @@ package org.eclipse.emf.ecp.view.internal.rule;
  * @author emueller
  */
 @SuppressWarnings("serial")
-class NotApplicableForEvaluationException extends Exception {
+public class NotApplicableForEvaluationException extends Exception {
 
 }

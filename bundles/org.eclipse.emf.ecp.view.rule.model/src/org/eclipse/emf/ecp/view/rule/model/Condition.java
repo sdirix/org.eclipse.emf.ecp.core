@@ -11,7 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,4 +27,20 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Condition extends EObject {
+
+	/**
+	 * Evaluates the given condition.
+	 * 
+	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 */
+	boolean evaluate();
+
+	/**
+	 * Evaluates the given condition.
+	 * 
+	 * @param possibleNewValues
+	 *            the new value that should be compared against the expected value of the condition
+	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 */
+	boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues);
 } // Condition

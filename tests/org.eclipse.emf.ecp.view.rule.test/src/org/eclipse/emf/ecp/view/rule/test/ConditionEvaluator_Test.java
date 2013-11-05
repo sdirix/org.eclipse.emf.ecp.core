@@ -26,7 +26,6 @@ import java.util.Locale;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.rule.ConditionEvaluator;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
@@ -153,7 +152,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_IsProfessional(),
 			CORRECT_PLAYER_PROFESSIONAL, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -162,7 +161,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_IsProfessional(),
 			!CORRECT_PLAYER_PROFESSIONAL, player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -172,7 +171,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			null, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -181,7 +180,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -190,7 +189,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME + "BLA", player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -199,7 +198,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(),
 			CORRECT_PLAYER_VICTORIES, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -208,7 +207,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(),
 			CORRECT_PLAYER_VICTORIES + 1, player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -217,7 +216,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Height(),
 			CORRECT_PLAYER_HEIGHT, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -226,7 +225,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Height(),
 			CORRECT_PLAYER_HEIGHT + 1, player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -235,7 +234,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			CORRECT_PLAYER_BIRTH, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -244,7 +243,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			getDate("12.12.2012"), player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -253,7 +252,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			getDate("11.11.2011"), player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -262,7 +261,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
 			CORRECT_PLAYER_GENDER, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -271,7 +270,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
 			Gender.MALE, player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -280,7 +279,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			CORRECT_PLAYER_RATION, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -289,7 +288,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			new BigDecimal(42), player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition));
+		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
@@ -298,7 +297,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			new BigDecimal(1), player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -307,12 +306,12 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			CORRECT_PLAYER_EMAIL1, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition1));
+		assertTrue(leafCondition1.evaluate());
 
 		final LeafCondition leafCondition2 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			CORRECT_PLAYER_EMAIL2, player);
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition2));
+		assertTrue(leafCondition2.evaluate());
 	}
 
 	@Test
@@ -321,7 +320,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			"bla@bla.com", player);
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition));
+		assertFalse(leafCondition.evaluate());
 	}
 
 	@Test
@@ -332,7 +331,7 @@ public class ConditionEvaluator_Test {
 				CORRECT_PLAYER_NAME + i++, league,
 				Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
 
-			assertTrue(ConditionEvaluator.evaluate(leafCondition1));
+			assertTrue(leafCondition1.evaluate());
 		}
 
 	}
@@ -343,7 +342,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME, league, Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
 
-		assertFalse(ConditionEvaluator.evaluate(leafCondition1));
+		assertFalse(leafCondition1.evaluate());
 
 	}
 
@@ -383,7 +382,7 @@ public class ConditionEvaluator_Test {
 			Arrays.asList(BowlingPackage.eINSTANCE.getTournament_Matchups(),
 				BowlingPackage.eINSTANCE.getMatchup_Games()));
 
-		assertTrue(ConditionEvaluator.evaluate(leafCondition1));
+		assertTrue(leafCondition1.evaluate());
 
 	}
 }
