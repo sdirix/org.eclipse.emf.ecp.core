@@ -40,6 +40,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -232,6 +233,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		controlComposite = new Composite(parentComposite, SWT.NONE);
 		controlComposite.setBackground(parentComposite.getBackground());
 
+		// 1 column for control, 1 for default unset button
+		GridLayoutFactory.fillDefaults().numColumns(1).spacing(2, 0)
+			.applyTo(controlComposite);
+
 		unsetLabel = new Label(parentComposite, SWT.NONE);
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
@@ -285,10 +290,11 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			});
 			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset"); //$NON-NLS-1$
 		}
+		if (numControls != 1) {
+			// 1 column for control, 1 for default unset button
+			((GridLayout) controlComposite.getLayout()).numColumns = numControls;
+		}
 
-		// 1 column for control, 1 for default unset button
-		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0)
-			.applyTo(controlComposite);
 		// INFO margin needed for controlDecorator
 		// .extendedMargins(10, 0, 0, 0)
 
