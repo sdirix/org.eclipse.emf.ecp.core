@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.customNodeBuilders">
       <builders
-            class="org.eclipse.emf.ecp.view.dynamictree.model.test.DynamicContainmentTreeNodeBuilder">
+            class="org.eclipse.emf.ecp.view.dynamictree.ui.DynamicContainmentTreeNodeBuilder">
       </builders>
    </extension>
 

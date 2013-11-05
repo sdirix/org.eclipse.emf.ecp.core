@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.dynamictree.model.test;
+package org.eclipse.emf.ecp.view.dynamictree.ui;
 
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
@@ -19,8 +19,21 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 
+/**
+ * Node builder for {@link DynamicContainmentItem}s.
+ * 
+ * @author emueller
+ * 
+ */
 public class DynamicContainmentItemNodeBuilder implements NodeBuilder<DynamicContainmentItem> {
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder#build(org.eclipse.emf.ecp.view.model.VElement,
+	 *      org.eclipse.emf.ecp.edit.spi.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
+	 */
 	public Node<DynamicContainmentItem> build(DynamicContainmentItem renderable,
 		ECPControlContext controlContext,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {

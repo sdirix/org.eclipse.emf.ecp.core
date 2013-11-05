@@ -23,16 +23,28 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestElement" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="validate" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean">
+      <eParameters name="diagnostic" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDiagnosticChain"/>
+      <eParameters name="context">
+        <eGenericType eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EMap">
+          <eTypeArguments/>
+          <eTypeArguments/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="#//TestElement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentId" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DomainRoot">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="intermediate" eType="#//DomainIntermediate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intermediate" eType="#//DomainIntermediate"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DomainIntermediate">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testElementContainer" eType="#//TestElementContainer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="testElementContainer" eType="#//TestElementContainer"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestElementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="testElements" upperBound="-1"

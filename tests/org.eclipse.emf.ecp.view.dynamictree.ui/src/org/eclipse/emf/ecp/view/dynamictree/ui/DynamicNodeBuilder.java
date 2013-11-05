@@ -1,4 +1,15 @@
-package org.eclipse.emf.ecp.view.dynamictree.model.test;
+/**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
+ */
+package org.eclipse.emf.ecp.view.dynamictree.ui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -14,7 +25,6 @@ import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPTreeViewAction;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
@@ -26,8 +36,21 @@ import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.osgi.framework.Bundle;
 
+/**
+ * Node buidler for a {@link DynamicContainmentTree}.
+ * 
+ * @author emueller
+ * 
+ */
 public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilder#build(org.eclipse.emf.ecp.view.model.VElement,
+	 *      org.eclipse.emf.ecp.edit.spi.ECPControlContext, org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator)
+	 */
 	public Node<DynamicContainmentTree> build(DynamicContainmentTree dynamicTree,
 		ECPControlContext controlContext,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
@@ -82,6 +105,14 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 		return node;
 	}
 
+	/**
+	 * Creates the actions for the given node.
+	 * 
+	 * @param node
+	 *            the {@link Node} for which to create the action
+	 * @param actions
+	 *            the {@link VAction}s to be created
+	 */
 	public static void createActions(Node<?> node, VAction... actions) {
 		final List<ECPAction> nodeActions = new ArrayList<ECPAction>();
 		for (final VAction action : actions) {
@@ -94,7 +125,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 						+ " cannot be resolved"); //$NON-NLS-1$
 				}
 				final Class<?> loadClass = bundle.loadClass(action.getClassName());
-				final ECPTreeViewAction treeAction = (ECPTreeViewAction) loadClass.getConstructors()[0].newInstance();
+				final ECPAction treeAction = (ECPAction) loadClass.getConstructors()[0].newInstance();
 				nodeActions.add(treeAction);
 			} catch (final ClassNotFoundException e) {
 				e.printStackTrace();

@@ -17,15 +17,14 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Domain Intermediate</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element
- * Container</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDomainIntermediate()
  * @model
  * @generated
@@ -33,30 +32,26 @@ import org.eclipse.emf.ecore.EObject;
 public interface DomainIntermediate extends EObject
 {
 	/**
-	 * Returns the value of the '<em><b>Test Element Container</b></em>' reference.
+	 * Returns the value of the '<em><b>Test Element Container</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Test Element Container</em>' reference isn't clear, there really should be more of a
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Test Element Container</em>' reference.
+	 * @return the value of the '<em>Test Element Container</em>' containment reference.
 	 * @see #setTestElementContainer(TestElementContainer)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDomainIntermediate_TestElementContainer()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	TestElementContainer getTestElementContainer();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer
-	 * <em>Test Element Container</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @param value the new value of the '<em>Test Element Container</em>' reference.
+	 * @param value the new value of the '<em>Test Element Container</em>' containment reference.
 	 * @see #getTestElementContainer()
 	 * @generated
 	 */

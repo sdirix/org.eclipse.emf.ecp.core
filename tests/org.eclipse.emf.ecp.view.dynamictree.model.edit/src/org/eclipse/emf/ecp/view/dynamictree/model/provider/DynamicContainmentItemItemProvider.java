@@ -60,8 +60,7 @@ public class DynamicContainmentItemItemProvider
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
 	{
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDomainModelPropertyDescriptor(object);
@@ -106,8 +105,7 @@ public class DynamicContainmentItemItemProvider
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
 	{
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE);
@@ -172,8 +170,7 @@ public class DynamicContainmentItemItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(DynamicContainmentItem.class))
-		{
+		switch (notification.getFeatureID(DynamicContainmentItem.class)) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));

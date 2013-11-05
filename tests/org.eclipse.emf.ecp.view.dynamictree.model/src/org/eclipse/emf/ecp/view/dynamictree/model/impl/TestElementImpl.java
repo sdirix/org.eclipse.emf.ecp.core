@@ -12,23 +12,23 @@
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
+import org.eclipse.emf.ecp.view.dynamictree.model.util.ModelValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getId <em>Id</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getElements <em>Elements</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getParentId <em>Parent Id</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  * 
@@ -103,6 +104,28 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	protected String parentId = PARENT_ID_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -144,10 +167,11 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 */
 	public void setId(String newId)
 	{
-		String oldId = id;
+		final String oldId = id;
 		id = newId;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__ID, oldId, id));
+		}
 	}
 
 	/**
@@ -158,8 +182,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 */
 	public EList<TestElement> getElements()
 	{
-		if (elements == null)
-		{
+		if (elements == null) {
 			elements = new EObjectContainmentEList<TestElement>(TestElement.class, this,
 				ModelPackage.TEST_ELEMENT__ELEMENTS);
 		}
@@ -185,11 +208,69 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 */
 	public void setParentId(String newParentId)
 	{
-		String oldParentId = parentId;
+		final String oldParentId = parentId;
 		parentId = newParentId;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__PARENT_ID, oldParentId,
 				parentId));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setName(String newName) {
+		final String oldName = name;
+		name = newName;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__NAME, oldName, name));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * Validates this test element.
+	 * 
+	 * @param diagnostic
+	 *            the diagnostic chain
+	 * @param context
+	 *            the context
+	 * 
+	 * @return {@code true} if this element is valid, {@code false} otherwise
+	 * 
+	 *         <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validate(DiagnosticChain diagnostic, Map<?, ?> context) {
+		if (getName() == null || getName().length() == 0) {
+			if (diagnostic != null) {
+				diagnostic.add
+					(new BasicDiagnostic
+					(Diagnostic.ERROR,
+						ModelValidator.DIAGNOSTIC_SOURCE,
+						ModelValidator.TEST_ELEMENT__VALIDATE,
+						"Invalid name (custom validation rule).",
+						new Object[] { this, ModelPackage.eINSTANCE.getTestElement_Name()
+						}));
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -201,8 +282,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
-		switch (featureID)
-		{
+		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ELEMENTS:
 			return ((InternalEList<?>) getElements()).basicRemove(otherEnd, msgs);
 		}
@@ -218,14 +298,15 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
-		switch (featureID)
-		{
+		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			return getId();
 		case ModelPackage.TEST_ELEMENT__ELEMENTS:
 			return getElements();
 		case ModelPackage.TEST_ELEMENT__PARENT_ID:
 			return getParentId();
+		case ModelPackage.TEST_ELEMENT__NAME:
+			return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -240,8 +321,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	@Override
 	public void eSet(int featureID, Object newValue)
 	{
-		switch (featureID)
-		{
+		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			setId((String) newValue);
 			return;
@@ -251,6 +331,9 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 			return;
 		case ModelPackage.TEST_ELEMENT__PARENT_ID:
 			setParentId((String) newValue);
+			return;
+		case ModelPackage.TEST_ELEMENT__NAME:
+			setName((String) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -265,8 +348,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	@Override
 	public void eUnset(int featureID)
 	{
-		switch (featureID)
-		{
+		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			setId(ID_EDEFAULT);
 			return;
@@ -275,6 +357,9 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 			return;
 		case ModelPackage.TEST_ELEMENT__PARENT_ID:
 			setParentId(PARENT_ID_EDEFAULT);
+			return;
+		case ModelPackage.TEST_ELEMENT__NAME:
+			setName(NAME_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -289,14 +374,15 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	@Override
 	public boolean eIsSet(int featureID)
 	{
-		switch (featureID)
-		{
+		switch (featureID) {
 		case ModelPackage.TEST_ELEMENT__ID:
 			return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 		case ModelPackage.TEST_ELEMENT__ELEMENTS:
 			return elements != null && !elements.isEmpty();
 		case ModelPackage.TEST_ELEMENT__PARENT_ID:
 			return PARENT_ID_EDEFAULT == null ? parentId != null : !PARENT_ID_EDEFAULT.equals(parentId);
+		case ModelPackage.TEST_ELEMENT__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -310,14 +396,17 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
 		result.append(", parentId: ");
 		result.append(parentId);
+		result.append(", name: ");
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

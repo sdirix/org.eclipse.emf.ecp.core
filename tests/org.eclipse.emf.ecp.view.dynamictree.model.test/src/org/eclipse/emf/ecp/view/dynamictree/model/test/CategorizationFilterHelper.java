@@ -23,7 +23,16 @@ import org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl;
 import org.eclipse.emf.ecp.view.model.impl.VControlImpl;
 import org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl;
 
-public class AbstractCategorizationFilterHelper {
+/**
+ * Utility class for filtering nodes.
+ * 
+ * @author emueller
+ * 
+ */
+public final class CategorizationFilterHelper {
+
+	private CategorizationFilterHelper() {
+	}
 
 	@SuppressWarnings("serial")
 	private static Set<Class<?>> filteredClasses = new LinkedHashSet<Class<?>>() {

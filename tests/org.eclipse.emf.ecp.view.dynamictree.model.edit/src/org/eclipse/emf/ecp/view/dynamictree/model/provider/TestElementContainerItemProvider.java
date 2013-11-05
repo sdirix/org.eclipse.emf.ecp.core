@@ -44,10 +44,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 public class TestElementContainerItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource
+	IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -71,8 +68,7 @@ public class TestElementContainerItemProvider
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
 	{
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
@@ -137,8 +133,7 @@ public class TestElementContainerItemProvider
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
 	{
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.TEST_ELEMENT_CONTAINER__TEST_ELEMENTS);
 		}
@@ -202,8 +197,7 @@ public class TestElementContainerItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(TestElementContainer.class))
-		{
+		switch (notification.getFeatureID(TestElementContainer.class)) {
 		case ModelPackage.TEST_ELEMENT_CONTAINER__ID:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

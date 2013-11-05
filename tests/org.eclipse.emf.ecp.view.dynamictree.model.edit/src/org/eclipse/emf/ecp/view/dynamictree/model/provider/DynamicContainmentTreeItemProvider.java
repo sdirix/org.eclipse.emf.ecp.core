@@ -61,8 +61,7 @@ public class DynamicContainmentTreeItemProvider
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
 	{
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDomainModelPropertyDescriptor(object);
@@ -159,8 +158,7 @@ public class DynamicContainmentTreeItemProvider
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
 	{
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__ITEMS);
@@ -225,8 +223,7 @@ public class DynamicContainmentTreeItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(DynamicContainmentTree.class))
-		{
+		switch (notification.getFeatureID(DynamicContainmentTree.class)) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -276,8 +273,7 @@ public class DynamicContainmentTreeItemProvider
 			childFeature == VViewPackage.Literals.CATEGORY__COMPOSITE ||
 				childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE;
 
-		if (qualify)
-		{
+		if (qualify) {
 			return getString("_UI_CreateChild_text2",
 				new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}

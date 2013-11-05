@@ -14,12 +14,16 @@ package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.eclipse.emf.ecp.view.dynamictree.model.*;
+import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
+import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
+import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
+import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
+import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,16 +43,13 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public static ModelFactory init()
 	{
-		try
-		{
-			ModelFactory theModelFactory = (ModelFactory) EPackage.Registry.INSTANCE
+		try {
+			final ModelFactory theModelFactory = (ModelFactory) EPackage.Registry.INSTANCE
 				.getEFactory("http://org/eclipse/emf/ecp/view/dynamictree/model");
-			if (theModelFactory != null)
-			{
+			if (theModelFactory != null) {
 				return theModelFactory;
 			}
-		} catch (Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new ModelFactoryImpl();
@@ -75,8 +76,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	@Override
 	public EObject create(EClass eClass)
 	{
-		switch (eClass.getClassifierID())
-		{
+		switch (eClass.getClassifierID()) {
 		case ModelPackage.DYNAMIC_CONTAINMENT_TREE:
 			return createDynamicContainmentTree();
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM:
@@ -102,7 +102,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public DynamicContainmentTree createDynamicContainmentTree()
 	{
-		DynamicContainmentTreeImpl dynamicContainmentTree = new DynamicContainmentTreeImpl();
+		final DynamicContainmentTreeImpl dynamicContainmentTree = new DynamicContainmentTreeImpl();
 		return dynamicContainmentTree;
 	}
 
@@ -114,7 +114,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public DynamicContainmentItem createDynamicContainmentItem()
 	{
-		DynamicContainmentItemImpl dynamicContainmentItem = new DynamicContainmentItemImpl();
+		final DynamicContainmentItemImpl dynamicContainmentItem = new DynamicContainmentItemImpl();
 		return dynamicContainmentItem;
 	}
 
@@ -126,7 +126,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public TestElement createTestElement()
 	{
-		TestElementImpl testElement = new TestElementImpl();
+		final TestElementImpl testElement = new TestElementImpl();
 		return testElement;
 	}
 
@@ -138,7 +138,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public DomainRoot createDomainRoot()
 	{
-		DomainRootImpl domainRoot = new DomainRootImpl();
+		final DomainRootImpl domainRoot = new DomainRootImpl();
 		return domainRoot;
 	}
 
@@ -150,7 +150,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public DomainIntermediate createDomainIntermediate()
 	{
-		DomainIntermediateImpl domainIntermediate = new DomainIntermediateImpl();
+		final DomainIntermediateImpl domainIntermediate = new DomainIntermediateImpl();
 		return domainIntermediate;
 	}
 
@@ -162,7 +162,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 */
 	public TestElementContainer createTestElementContainer()
 	{
-		TestElementContainerImpl testElementContainer = new TestElementContainerImpl();
+		final TestElementContainerImpl testElementContainer = new TestElementContainerImpl();
 		return testElementContainer;
 	}
 

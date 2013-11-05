@@ -72,7 +72,9 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.vertical.model,
    org.eclipse.emf.ecp.view.vertical.model.edit,
    org.eclipse.emf.ecp.view.vertical.ui,
-   org.eclipse.emf.ecp.view.vertical.ui.swt",
+   org.eclipse.emf.ecp.view.vertical.ui.swt,
+   org.eclipse.emf.ecp.view.dynamictree.ui,
+   org.eclipse.emf.ecp.view.dynamictree.ui.swt",
  org.eclipse.emf.ecp.view.model.impl;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.view.custom.model,
@@ -98,7 +100,8 @@ Export-Package: org.eclipse.emf.ecp.view.model;version="1.1.0";
    org.eclipse.emf.ecp.view.separator.model.edit,
    org.eclipse.emf.ecp.view.table.model.edit,
    org.eclipse.emf.ecp.view.vertical.model.edit,
-   org.eclipse.emf.ecp.view.dynamictree.model.test"
+   org.eclipse.emf.ecp.view.dynamictree.model.test,
+   org.eclipse.emf.ecp.view.dynamictree.ui"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy

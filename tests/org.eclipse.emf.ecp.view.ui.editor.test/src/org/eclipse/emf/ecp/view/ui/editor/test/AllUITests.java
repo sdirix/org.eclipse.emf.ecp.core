@@ -21,7 +21,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	OpenEditorTest.class,
-	ModifyNavigatorTest.class
+	// ModifyNavigatorTest.class,
+	DynamicContainmentTreeSWTBotTest.class
 })
 public class AllUITests {
 

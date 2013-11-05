@@ -14,8 +14,10 @@ package org.eclipse.emf.ecp.view.dynamictree.model.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -48,9 +50,10 @@ public class DynamicContainmentTreeTest {
 
 	private DomainRoot root;
 	private Node<DynamicContainmentTree> node;
+	private DynamicContainmentTree tree;
 
-	private static final String elementContainerId = "111";
-	private static final String elementId = "222";
+	private static final String ELEMENT_CONTAINER_ID = "111";
+	private static final String ELEMENT_ID = "222";
 
 	@Before
 	public void setUp() throws Exception {
@@ -60,32 +63,31 @@ public class DynamicContainmentTreeTest {
 		root.setIntermediate(intermediate);
 
 		final TestElementContainer elementContainer = ModelFactory.eINSTANCE.createTestElementContainer();
-		elementContainer.setId(elementContainerId);
+		elementContainer.setId(ELEMENT_CONTAINER_ID);
 		intermediate.setTestElementContainer(elementContainer);
 
 		final TestElement testElement = ModelFactory.eINSTANCE.createTestElement();
-		testElement.setId(elementId);
-		testElement.setParentId(elementContainerId);
-
+		testElement.setId(ELEMENT_ID);
+		testElement.setParentId(ELEMENT_CONTAINER_ID);
 		elementContainer.getTestElements().add(testElement);
 
-		final DynamicContainmentTree tree = ModelFactory.eINSTANCE.createDynamicContainmentTree();
+		tree = ModelFactory.eINSTANCE.createDynamicContainmentTree();
 		tree.getPathToRoot().add(ModelPackage.eINSTANCE.getDomainRoot_Intermediate());
 		tree.getPathToRoot().add(ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer());
 		tree.setChildReference(ModelPackage.eINSTANCE.getTestElementContainer_TestElements());
 
-		final VControl viewControlChild = VViewFactory.eINSTANCE.createControl();
+		// used for validation
+		final VControl childNameControl = VViewFactory.eINSTANCE.createControl();
+		childNameControl.setDomainModelReference(
+			createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Name()));
+		tree.setChildComposite(childNameControl);
 
-		viewControlChild.setDomainModelReference(
-			createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Id()));
-		tree.setChildComposite(viewControlChild);
-
+		// set up scoping
 		final VControl viewControl = VViewFactory.eINSTANCE.createControl();
 		final VFeaturePathDomainModelReference modelRef = createFeaturePathDomainModelReference(
 			ModelPackage.eINSTANCE.getTestElementContainer_Id(),
 			ModelPackage.eINSTANCE.getDomainRoot_Intermediate(),
 			ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer());
-
 		viewControl.setDomainModelReference(modelRef);
 		tree.setComposite(viewControl);
 
@@ -100,22 +102,16 @@ public class DynamicContainmentTreeTest {
 
 	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(EStructuralFeature feature,
 		EReference... references) {
-		final VFeaturePathDomainModelReference modelReference2 = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		for (final EReference eReference : references) {
-			modelReference2.getDomainModelEReferencePath().add(eReference);
-		}
-		modelReference2.getDomainModelEReferencePath().add(ModelPackage.eINSTANCE.getDomainRoot_Intermediate());
-		modelReference2.getDomainModelEReferencePath().add(
-			ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer());
-		modelReference2.setDomainModelEFeature(ModelPackage.eINSTANCE.getTestElementContainer_Id());
-		return modelReference2;
+		final VFeaturePathDomainModelReference result = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		result.setDomainModelEFeature(feature);
+		result.getDomainModelEReferencePath().addAll(Arrays.asList(references));
+		return result;
 	}
 
 	@Test
 	public void testFilter() {
 
-		final List<Node<?>> filterVisibleNodes = AbstractCategorizationFilterHelper
+		final List<Node<?>> filterVisibleNodes = CategorizationFilterHelper
 			.filterNodes(node);
 
 		assertEquals(1, filterVisibleNodes.size());
@@ -126,25 +122,85 @@ public class DynamicContainmentTreeTest {
 		final String id = "123";
 		addItem(id, node);
 		final List<Node<?>> children = node.getChildren();
-		final Node<?> childNode = children.get(children.size() - 1);
-		final Object labelObject = childNode.getLabelObject();
-		assertTrue(TestElement.class.isInstance(labelObject));
+		final Node<?> lastChild = children.get(children.size() - 1);
+		final Object labelObjectOfLastChild = lastChild.getLabelObject();
+		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
 
-		final TestElement testElement = (TestElement) labelObject;
+		final TestElement testElement = (TestElement) labelObjectOfLastChild;
 
 		assertEquals(id, testElement.getId());
-		assertEquals(elementContainerId, testElement.getParentId());
+		assertEquals(ELEMENT_CONTAINER_ID, testElement.getParentId());
+	}
+
+	@Test
+	public void testValidationErrorInit() {
+		final String id = "123";
+		addItem(id, node);
+		assertEquals("Severity must be error", Diagnostic.ERROR,
+			tree.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationErrorToError() {
+		final String id = "123";
+		addItem(id, node);
+		final List<Node<?>> children = node.getChildren();
+		final Node<?> lastChild = children.get(children.size() - 1);
+		final Object labelObjectOfLastChild = lastChild.getLabelObject();
+		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
+
+		final TestElement testElement = (TestElement) labelObjectOfLastChild;
+		testElement.setName("foo");
+
+		assertEquals("Severity must be error", Diagnostic.ERROR,
+			tree.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationErrorToOkByRemove() {
+		final String id = "123";
+		addItem(id, node);
+		final List<Node<?>> children = node.getChildren();
+		final Node<?> lastChild = children.get(children.size() - 1);
+		final Object labelObjectOfLastChild = lastChild.getLabelObject();
+		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
+
+		final TestElement testElement = (TestElement) labelObjectOfLastChild;
+		final TestElementContainer container = (TestElementContainer) testElement.eContainer();
+
+		container.getTestElements().clear();
+
+		assertEquals("Severity must be ok", Diagnostic.OK,
+			tree.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationErrorToOk() {
+		final String id = "123";
+		addItem(id, node);
+		final List<Node<?>> children = node.getChildren();
+		final Node<?> lastChild = children.get(children.size() - 1);
+		final Object labelObjectOfLastChild = lastChild.getLabelObject();
+		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
+
+		final TestElement testElement = (TestElement) labelObjectOfLastChild;
+		for (final TestElement el : ((TestElementContainer) testElement.eContainer()).getTestElements()) {
+			el.setName("bar");
+		}
+
+		assertEquals("Severity must be ok", Diagnostic.OK,
+			tree.getDiagnostic().getHighestSeverity());
 	}
 
 	@Test
 	public void testAddNodeToTestElement() {
 		final String id = "123456789012";
 		@SuppressWarnings("unchecked")
-		final Node<DynamicContainmentItem> existingPackingItem = (Node<DynamicContainmentItem>) node.getChildren().get(
+		final Node<DynamicContainmentItem> existingItem = (Node<DynamicContainmentItem>) node.getChildren().get(
 			node.getChildren().size() - 1);
-		addItem(id, existingPackingItem);
+		addItem(id, existingItem);
 
-		final List<Node<?>> children = existingPackingItem.getChildren();
+		final List<Node<?>> children = existingItem.getChildren();
 		final Node<?> childNode = children.get(children.size() - 1);
 		final Object labelObject = childNode.getLabelObject();
 		assertTrue(TestElement.class.isInstance(labelObject));
@@ -152,7 +208,7 @@ public class DynamicContainmentTreeTest {
 		final TestElement testElement = (TestElement) labelObject;
 
 		assertEquals(id, testElement.getId());
-		assertEquals(elementId, testElement.getParentId());
+		assertEquals(ELEMENT_ID, testElement.getParentId());
 	}
 
 	public static Node<?> addItem(String id, Node<?> virtualParentNode) {

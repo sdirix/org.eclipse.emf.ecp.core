@@ -26,6 +26,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamictree.ecore#//TestElement/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dynamictree.ecore#//TestElement/elements"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamictree.ecore#//TestElement/parentId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamictree.ecore#//TestElement/name"/>
+      <genOperations ecoreOperation="dynamictree.ecore#//TestElement/validate">
+        <genParameters ecoreParameter="dynamictree.ecore#//TestElement/validate/diagnostic"/>
+        <genParameters ecoreParameter="dynamictree.ecore#//TestElement/validate/context"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="dynamictree.ecore#//DomainRoot">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamictree.ecore#//DomainRoot/intermediate"/>

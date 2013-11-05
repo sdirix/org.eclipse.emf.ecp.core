@@ -36,10 +36,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 public class DomainIntermediateItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource
+	IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -63,8 +60,7 @@ public class DomainIntermediateItemProvider
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
 	{
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addTestElementContainerPropertyDescriptor(object);

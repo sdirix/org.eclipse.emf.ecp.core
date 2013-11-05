@@ -59,12 +59,12 @@ public class TestElementItemProvider
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
 	{
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
 			addParentIdPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -119,6 +119,30 @@ public class TestElementItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TestElement_name_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_TestElement_name_feature", "_UI_TestElement_type"),
+				ModelPackage.Literals.TEST_ELEMENT__NAME,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -130,8 +154,7 @@ public class TestElementItemProvider
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
 	{
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.TEST_ELEMENT__ELEMENTS);
 		}
@@ -176,7 +199,7 @@ public class TestElementItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((TestElement) object).getId();
+		final String label = ((TestElement) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_TestElement_type") :
 			getString("_UI_TestElement_type") + " " + label;
@@ -195,10 +218,10 @@ public class TestElementItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(TestElement.class))
-		{
+		switch (notification.getFeatureID(TestElement.class)) {
 		case ModelPackage.TEST_ELEMENT__ID:
 		case ModelPackage.TEST_ELEMENT__PARENT_ID:
+		case ModelPackage.TEST_ELEMENT__NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case ModelPackage.TEST_ELEMENT__ELEMENTS:

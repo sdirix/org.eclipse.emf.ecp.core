@@ -62,21 +62,17 @@ public class OpenEditorTest extends SWTBotTestCase {
 	private GCCollectable collectable;
 	private GCCollectable contextCollectable;
 	private GCCollectable viewCollectable;
-	private GCCollectable domainCollectable;
 
 	@Before
 	public void init() {
 		display = Display.getDefault();
-
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
-
 			public Shell run() {
 				final Shell shell = new Shell(display);
 				shell.setLayout(new FillLayout());
 				return shell;
 			}
 		});
-
 	}
 
 	private static Player createDomainObject() {
@@ -185,9 +181,6 @@ public class OpenEditorTest extends SWTBotTestCase {
 						final VView view = createView();
 						collectable = new GCCollectable(view);
 						final Player domainObject = createDomainObject();
-						System.out.println(domainObject.eAdapters().size());
-						domainCollectable = new GCCollectable(domainObject);
-
 						final ECPControlContext context = new DefaultControlContext(domainObject, view);
 						contextCollectable = new GCCollectable(context);
 						final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
@@ -219,7 +212,6 @@ public class OpenEditorTest extends SWTBotTestCase {
 			assertTrue(viewCollectable.isCollectable());
 			assertTrue(contextCollectable.isCollectable());
 			assertTrue(collectable.isCollectable());
-			assertTrue(domainCollectable.isCollectable());
 		}
 	}
 

@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.dynamictree.model.test;
+package org.eclipse.emf.ecp.view.dynamictree.ui;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,11 +20,26 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.model.VElement;
 
+/**
+ * Creates a custom node builder for {@link DynamicContainmentTree}s and {@link DynamicContainmentItem}s.
+ * 
+ * @author emueller
+ * 
+ */
 public class DynamicContainmentTreeNodeBuilder implements CustomNodeBuilder {
 
+	/**
+	 * Default constructor.
+	 */
 	public DynamicContainmentTreeNodeBuilder() {
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.view.builders.CustomNodeBuilder#getCustomNodeBuilders()
+	 */
 	public Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> getCustomNodeBuilders() {
 		final Map<Class<? extends VElement>, NodeBuilder<? extends VElement>> builders =
 			new HashMap<Class<? extends VElement>, NodeBuilder<? extends VElement>>();
