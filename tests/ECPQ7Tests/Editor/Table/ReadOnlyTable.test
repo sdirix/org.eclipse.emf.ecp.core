@@ -1,0 +1,59 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_T7Yg8DstEeOHj9Cw0T_k4Q,_fQ0PgDsqEeOHj9Cw0T_k4Q
+Element-Name: ReadOnlyTable
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _oawGcUYVEeO347zZ7X5NJw
+Q7-Runtime-Version: 1.3.7.201309090800
+Save-Time: 11/6/13 2:44 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor View | get-editbox -after [get-label "Name*"]] {
+    set-text TableTest
+}
+with [get-view "Model Explorer" | get-tree] {
+    select "Project/TableTest" | get-menu Control | click
+    select "Project/TableTest"
+}
+get-editor TableTest | get-button "Link Root EClas" | click
+with [get-window "Select an EClass."] {
+    get-tree | select "bowling/Matchup \\[org.eclipse.emf.emfstore.bowling.Matchup\\]"
+    get-button OK | click
+}
+get-view "Model Explorer" | get-tree | select "Project/TableTest/Control"
+with [get-editor Control | get-editbox -after [get-label "Name*"]] {
+    set-text matchupView
+}
+get-view "Model Explorer" | get-tree | select "Project/TableTest/matchupView" 
+    | get-menu "Feature Path Domain Model Reference" | click
+get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+with [get-window "Select a EStructuralFeature"] {
+    get-tree | select "games : Game"
+    get-button OK | click
+}
+get-view "Model Explorer" | get-tree | select "Project/TableTest/matchupView"
+with [get-view "Model Explorer" | get-tree] {
+    select "Project/TableTest/matchupView" | double-click
+    select "TestProject/Tournament Amateur/Matchup" | double-click
+    select "Project/TableTest/matchupView"
+}
+get-editor matchupView | get-button "The Readonly of the Element" | check
+with [get-view "Model Explorer"] {
+    get-tree | select "Project/TableTest"
+   try { get-button "Save Project" | click} -catch{get-button "Save Project" | click}
+}
+
+get-editor Matchup | close
+get-view "Model Explorer" | get-tree | select "TestProject/Tournament Amateur/Matchup" | double-click
+with [get-editor Matchup | get-control Any -after [get-label Games] -index 1] {
+    get-property "getChildren().Control[0].isVisible()" | equals false | verify-true
+    get-property "getChildren().Control[1].isVisible()" | equals false | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
