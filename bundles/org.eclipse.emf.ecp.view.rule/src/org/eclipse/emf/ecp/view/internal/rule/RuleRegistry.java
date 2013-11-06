@@ -73,10 +73,7 @@ public class RuleRegistry<T extends Rule> {
 	 */
 	public void register(VElement renderable, T rule, Condition condition, EObject domainModel) {
 
-		if (condition == null) {
-			mapFeatureToRule(AllEAttributes.get(), noCondition, rule);
-			rulesToRenderables.put(rule, renderable);
-		} else if (condition instanceof LeafCondition) {
+		if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
 			leafCondition.getDomainModelReference().resolve(domainModel);
@@ -94,11 +91,14 @@ public class RuleRegistry<T extends Rule> {
 			for (final Condition cond : orCondition.getConditions()) {
 				register(renderable, rule, cond, domainModel);
 			}
-		} else {
+		} else if (condition instanceof AndCondition) {
 			final AndCondition andCondition = (AndCondition) condition;
 			for (final Condition cond : andCondition.getConditions()) {
 				register(renderable, rule, cond, domainModel);
 			}
+		} else {
+			mapFeatureToRule(AllEAttributes.get(), noCondition, rule);
+			rulesToRenderables.put(rule, renderable);
 		}
 	}
 
