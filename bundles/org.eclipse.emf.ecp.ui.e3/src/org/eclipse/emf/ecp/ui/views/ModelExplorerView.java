@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
 import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.platform.Activator;
+import org.eclipse.emf.ecp.ui.tester.SaveButtonEnablementObserver;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -39,6 +40,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -57,40 +60,46 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	public class DoubleClickListener implements IDoubleClickListener {
 
 		/**
-		 * Opens an EObject using the ActionHelper or opens a closed ECPProject.
-		 * {@inheritDoc}
+		 * Opens an EObject using the ActionHelper or opens a closed ECPProject. {@inheritDoc}
 		 */
 		public void doubleClick(DoubleClickEvent event) {
 			if (event.getSelection() instanceof IStructuredSelection) {
-				IStructuredSelection structuredSelection = (IStructuredSelection) event.getSelection();
-				Object firstElement = structuredSelection.getFirstElement();
-				
+				final IStructuredSelection structuredSelection = (IStructuredSelection) event.getSelection();
+				final Object firstElement = structuredSelection.getFirstElement();
+
 				if (firstElement instanceof ECPProject) {
-					ECPProject project = (ECPProject) firstElement;
+					final ECPProject project = (ECPProject) firstElement;
 					if (!project.isOpen()) {
 						project.open();
 					}
 				}
 				else if (firstElement instanceof Object) {
-					ECPContainer context = ECPUtil.getModelContext(contentProvider, structuredSelection.toArray());
-					ECPHandlerHelper.openModelElement( firstElement, (ECPProject) context);
-				} 
+					final ECPContainer context = ECPUtil
+						.getModelContext(contentProvider, structuredSelection.toArray());
+					ECPHandlerHelper.openModelElement(firstElement, (ECPProject) context);
+				}
 			}
 		}
 	}
 
+	/**
+	 * The id of this view.
+	 */
 	public static final String ID = "org.eclipse.emf.ecp.ui.ModelExplorerView";
 
-	private IPartListener2 linkWithEditorPartListener=new LinkedWithEditorPartListener(this);
-	
-	private boolean linkingActive=true;
-	
+	private final IPartListener2 linkWithEditorPartListener = new LinkedWithEditorPartListener(this);
+
+	private boolean linkingActive = true;
+
 	private ModelContentProvider contentProvider;
 
 	private TreeViewer viewer;
 
 	private Action linkWithEditorAction;
 
+	/**
+	 * Default Constructor.
+	 */
 	public ModelExplorerView() {
 		super(ID);
 	}
@@ -98,42 +107,32 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	@Override
 	protected TreeViewer createViewer(final Composite parent) {
 		viewer = TreeViewerFactory.createModelExplorerViewer(parent, true, createLabelDecorator());
-		contentProvider=(ModelContentProvider)viewer.getContentProvider();
+		contentProvider = (ModelContentProvider) viewer.getContentProvider();
 		viewer.addDoubleClickListener(new DoubleClickListener());
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			
-			public void selectionChanged(SelectionChangedEvent event) {
-				if(linkingActive){
-					Object selected=((IStructuredSelection)event.getSelection()).getFirstElement();
-					if(selected instanceof EObject){
-						for (IEditorReference editorRef : getSite().getPage().getEditorReferences()) {
-							Object editorInput = null;
-							try {
-	
-								editorInput = editorRef.getEditorInput().getAdapter(EObject.class);
-							} catch (PartInitException e) {
-								e.printStackTrace();
-							}
-							if (selected.equals(editorInput)) {
-								getSite().getPage().bringToTop(editorRef.getPart(true));
-								return;
-							}
-						}
-					}
-				}
+		viewer.addSelectionChangedListener(new ModelExplorerViewSelectionListener());
+		viewer.getControl().addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent event) {
 			}
+
+			public void focusLost(FocusEvent event) {
+				ECPUtil.getECPObserverBus().notify(SaveButtonEnablementObserver.class)
+					.notifyChangeButtonState(null, false);
+			}
+
 		});
-		IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
-		if(modelExplorerSettings.length==1){
-			if(modelExplorerSettings[0].getAttribute("viewSorter")!=null){//$NON-NLS-1$
+
+		final IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry()
+			.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
+		if (modelExplorerSettings.length == 1) {
+			if (modelExplorerSettings[0].getAttribute("viewSorter") != null) {//$NON-NLS-1$
 				try {
-					ViewerSorter sorter = (ViewerSorter) modelExplorerSettings[0].createExecutableExtension("viewSorter");
+					final ViewerSorter sorter = (ViewerSorter) modelExplorerSettings[0]
+						.createExecutableExtension("viewSorter");
 					viewer.setSorter(sorter);
-				} catch (CoreException e) {
+				} catch (final CoreException e) {
 					Activator.log(e);
-				} //$NON-NLS-1$
-				
+				}
+
 			}
 		}
 		return viewer;
@@ -141,7 +140,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	@Override
 	protected void fillLocalToolBar(IToolBarManager manager) {
-		if(getDialogSettings().getBoolean("LinkWithEditorSet")){
+		if (getDialogSettings().getBoolean("LinkWithEditorSet")) {
 			linkingActive = getDialogSettings().getBoolean("LinkWithEditor");
 		}
 		if (linkingActive) {
@@ -158,13 +157,13 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 				} else {
 					linkingActive = true;
 					getSite().getPage().addPartListener(linkWithEditorPartListener);
-					IEditorPart editor = getSite().getPage().getActiveEditor();
+					final IEditorPart editor = getSite().getPage().getActiveEditor();
 					if (editor != null) {
 						editorActivated(editor);
 					}
 				}
 
-				getDialogSettings().put("LinkWithEditor", this.isChecked());
+				getDialogSettings().put("LinkWithEditor", isChecked());
 				getDialogSettings().put("LinkWithEditorSet", true);
 			}
 
@@ -172,21 +171,22 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 		linkWithEditorAction.setImageDescriptor(Activator.getImageDescriptor("icons/link_with_editor.gif"));
 		linkWithEditorAction.setToolTipText("Link with editor");
-		linkWithEditorAction.setChecked(getDialogSettings().getBoolean("LinkWithEditorSet")?getDialogSettings().getBoolean("LinkWithEditor"):true);
+		linkWithEditorAction.setChecked(getDialogSettings().getBoolean("LinkWithEditorSet") ? getDialogSettings()
+			.getBoolean("LinkWithEditor") : true);
 		manager.add(linkWithEditorAction);
 	}
 
 	private IDialogSettings getDialogSettings() {
 		return Activator.getDefault().getDialogSettings();
 	}
-	
+
 	@Override
 	protected void fillContextMenu(IMenuManager manager) {
-		Object[] elements = getSelection().toArray();
+		final Object[] elements = getSelection().toArray();
 
-		ECPContainer context = ECPUtil.getModelContext(contentProvider, elements);
+		final ECPContainer context = ECPUtil.getModelContext(contentProvider, elements);
 		if (context != null) {
-			UIProvider provider = UIProviderRegistry.INSTANCE.getUIProvider(context);
+			final UIProvider provider = UIProviderRegistry.INSTANCE.getUIProvider(context);
 			if (provider != null) {
 				provider.fillContextMenu(manager, context, elements);
 			}
@@ -194,14 +194,61 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 		super.fillContextMenu(manager);
 	}
+
 	/** {@inheritDoc} */
 	public void editorActivated(IEditorPart activatedEditor) {
-		if(!linkingActive || !getViewSite().getPage().isPartVisible(this)){
+		if (!linkingActive || !getViewSite().getPage().isPartVisible(this)) {
 			return;
 		}
-		Object input=activatedEditor.getEditorInput().getAdapter(EObject.class);
-		if(input!=null){
-			viewer.setSelection(new StructuredSelection(input),true);
+		final Object input = activatedEditor.getEditorInput().getAdapter(EObject.class);
+		if (input != null) {
+			viewer.setSelection(new StructuredSelection(input), true);
+		}
+	}
+
+	/**
+	 * 
+	 * @author jfaltermeier
+	 * 
+	 */
+	private class ModelExplorerViewSelectionListener implements ISelectionChangedListener {
+
+		public void selectionChanged(SelectionChangedEvent event) {
+			notifyAboutSaveButtonState(event);
+			if (linkingActive) {
+				final Object selected = ((IStructuredSelection) event.getSelection()).getFirstElement();
+				if (selected instanceof EObject) {
+					for (final IEditorReference editorRef : getSite().getPage().getEditorReferences()) {
+						Object editorInput = null;
+						try {
+
+							editorInput = editorRef.getEditorInput().getAdapter(EObject.class);
+						} catch (final PartInitException e) {
+							e.printStackTrace();
+						}
+						if (selected.equals(editorInput)) {
+							getSite().getPage().bringToTop(editorRef.getPart(true));
+							return;
+						}
+					}
+				}
+			}
+		}
+
+		private void notifyAboutSaveButtonState(SelectionChangedEvent event) {
+			final boolean selectedProjectIsDirty;
+
+			final Object selected = ((IStructuredSelection) event.getSelection()).getFirstElement();
+			final ECPProject project = ECPUtil.getECPProjectManager().getProject(selected);
+
+			if (project == null) {
+				selectedProjectIsDirty = false;
+			} else {
+				selectedProjectIsDirty = project.hasDirtyContents();
+			}
+
+			ECPUtil.getECPObserverBus().notify(SaveButtonEnablementObserver.class)
+				.notifyChangeButtonState(project, selectedProjectIsDirty);
 		}
 	}
 }
