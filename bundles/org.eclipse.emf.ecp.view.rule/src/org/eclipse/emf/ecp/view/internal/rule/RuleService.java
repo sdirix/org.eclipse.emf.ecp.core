@@ -209,6 +209,7 @@ public class RuleService extends AbstractViewService {
 			attribute).entrySet()) {
 
 			final Rule rule = ruleAndRenderable.getKey();
+
 			final VElement renderable = ruleAndRenderable.getValue();
 			// whether the value changed at all, if newValue has been provided
 			boolean hasChanged = false;
@@ -245,11 +246,19 @@ public class RuleService extends AbstractViewService {
 
 			}
 
-			if (hasChanged) {
-				final boolean result = rule.getCondition().evaluateChangedValues(possibleValues);
-				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
+			boolean result = false;
+			boolean updateMap = true;
+			if (rule.getCondition() == null) {
+				result = false;
+			} else if (hasChanged) {
+				result = rule.getCondition().evaluateChangedValues(possibleValues);
 			} else if (!isDryRun) {
-				final boolean result = rule.getCondition().evaluate();
+				result = rule.getCondition().evaluate();
+			}
+			else {
+				updateMap = false;
+			}
+			if (updateMap) {
 				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
 			}
 		}
