@@ -452,15 +452,21 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		EStructuralFeature lastFeature = null;
 		while (iterator.hasNext()) {
 			count++;
-			if (count == 2) {
-				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to more then one EStructuralFeature.");
+			// if (count == 2) {
+			// throw new IllegalArgumentException(
+			// "The passed VDomainModelReference resolves to more then one EStructuralFeature.");
+			// }
+			// lastFeature=iterator.next();
+			if (lastFeature == null) {
+				lastFeature = iterator.next();
+			} else {
+				iterator.next();
 			}
-			lastFeature = iterator.next();
 		}
 		if (count == 0) {
 			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no EStructuralFeature.");
 		}
+
 		return lastFeature;
 	}
 

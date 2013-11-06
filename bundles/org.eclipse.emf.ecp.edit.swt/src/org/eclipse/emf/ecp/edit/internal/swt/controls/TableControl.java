@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
@@ -105,6 +106,19 @@ public class TableControl extends SWTControl {
 
 	private final Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
 
+	@Override
+	protected void postInit() {
+		super.postInit();
+		mainSetting = getDomainModelReference().getIterator().next();
+	}
+
+	private EReference getTableReference() {
+		if (mainFeature == null) {
+			mainFeature = (EReference) getDomainModelReference().getEStructuralFeatureIterator().next();
+		}
+		return mainFeature;
+	}
+
 	/**
 	 * 
 	 * @param tableControlConfiguration the {@link TableControlConfiguration} to use when creating the table
@@ -127,7 +141,7 @@ public class TableControl extends SWTControl {
 
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		clazz = ((EReference) getStructuralFeature()).getEReferenceType();
+		clazz = getTableReference().getEReferenceType();
 
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -141,7 +155,7 @@ public class TableControl extends SWTControl {
 
 		final Label label = new Label(titleComposite, SWT.NONE);
 		label.setBackground(parent.getBackground());
-		label.setText(getItemPropertyDescriptor().getDisplayName(null));
+		label.setText(getItemPropertyDescriptor(mainSetting).getDisplayName(null));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		// VALIDATION
@@ -162,7 +176,7 @@ public class TableControl extends SWTControl {
 
 			createAddRowButton(clazz, buttonComposite);
 			createRemoveRowButton(clazz, buttonComposite);
-			if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+			if (!isEmbedded() && getTableReference().isUnsettable()) {
 				unsetButton = new Button(buttonComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
 				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
@@ -304,7 +318,7 @@ public class TableControl extends SWTControl {
 		}
 		tableViewer.setContentProvider(cp);
 		final IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
-			getModelElementContext().getModelElement(), getStructuralFeature());
+			mainSetting.getEObject(), mainSetting.getEStructuralFeature());
 		tableViewer.setInput(list);
 
 		// IMPORTANT:
@@ -372,9 +386,9 @@ public class TableControl extends SWTControl {
 
 			}
 		});
-		final EObject modelElement = getModelElementContext().getModelElement();
-		final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
-		if (containments.size() <= getStructuralFeature().getLowerBound()) {
+
+		final List<?> containments = (List<?>) mainSetting.get(true);
+		if (containments.size() <= getTableReference().getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
 	}
@@ -391,8 +405,6 @@ public class TableControl extends SWTControl {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
-		final EObject modelElement = getModelElementContext().getModelElement();
-
 		new ECPDialogExecutor(dialog) {
 
 			@Override
@@ -403,11 +415,11 @@ public class TableControl extends SWTControl {
 
 				deleteRows(deletionList);
 
-				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
-				if (containments.size() < getStructuralFeature().getUpperBound()) {
+				final List<?> containments = (List<?>) mainSetting.get(true);
+				if (containments.size() < getTableReference().getUpperBound()) {
 					addButton.setEnabled(true);
 				}
-				if (containments.size() <= getStructuralFeature().getLowerBound()) {
+				if (containments.size() <= getTableReference().getLowerBound()) {
 					removeButton.setEnabled(false);
 				}
 			}
@@ -422,9 +434,9 @@ public class TableControl extends SWTControl {
 	 */
 	protected void deleteRows(List<EObject> deletionList) {
 		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
-		final EObject modelElement = getModelElementContext().getModelElement();
+		final EObject modelElement = mainSetting.getEObject();
 		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, getStructuralFeature(), deletionList));
+			RemoveCommand.create(editingDomain, modelElement, getTableReference(), deletionList));
 	}
 
 	/**
@@ -435,16 +447,18 @@ public class TableControl extends SWTControl {
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 */
 	protected void addRow(EClass clazz) {
-		final EObject modelElement = getModelElementContext().getModelElement();
+		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
 		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
 		editingDomain.getCommandStack().execute(
-			AddCommand.create(editingDomain, modelElement, getStructuralFeature(), instance));
+			AddCommand.create(editingDomain, modelElement, getTableReference(), instance));
 
 	}
 
 	private Button addButton;
+	private Setting mainSetting;
+	private EReference mainFeature;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
@@ -460,22 +474,21 @@ public class TableControl extends SWTControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				addRow(clazz);
-				final EObject modelElement = getModelElementContext().getModelElement();
-				final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
-				if (getStructuralFeature().getUpperBound() != -1
-					&& containments.size() >= getStructuralFeature().getUpperBound()) {
+
+				final List<?> containments = (List<?>) mainSetting.get(true);
+				if (getTableReference().getUpperBound() != -1
+					&& containments.size() >= getTableReference().getUpperBound()) {
 					addButton.setEnabled(false);
 				}
-				if (containments.size() > getStructuralFeature().getLowerBound()) {
+				if (containments.size() > getTableReference().getLowerBound()) {
 					removeButton.setEnabled(true);
 				}
 			}
 		});
 
-		final EObject modelElement = getModelElementContext().getModelElement();
-		final List<?> containments = (List<?>) modelElement.eGet(getStructuralFeature());
-		if (getStructuralFeature().getUpperBound() != -1
-			&& containments.size() >= getStructuralFeature().getUpperBound()) {
+		final List<?> containments = (List<?>) mainSetting.get(true);
+		if (getTableReference().getUpperBound() != -1
+			&& containments.size() >= getTableReference().getUpperBound()) {
 			addButton.setEnabled(false);
 		}
 	}

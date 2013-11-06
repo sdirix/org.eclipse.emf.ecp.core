@@ -76,7 +76,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			int currentAttribute = 0;
 
 			public boolean hasNext() {
-				return numElems > 0;
+				return numElems > 0 && ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size() > 0;
 			}
 
 			public Setting next() {
@@ -126,7 +126,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 				if (0 == counter) {
 					result = getDomainModelEFeature();
 				}
-				result = control.getColumns().get(counter - 1).getAttribute();
+				else {
+					result = control.getColumns().get(counter - 1).getAttribute();
+				}
 				counter++;
 				return result;
 			}
