@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -39,13 +39,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.swt.finder.SWTBotTestCase;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.Result;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test case that renders a view, disposes it and checks whether the view
@@ -54,25 +57,62 @@ import org.junit.runner.RunWith;
  * @author emueller
  * 
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
+@RunWith(Parameterized.class)
 public class OpenEditorTest extends SWTBotTestCase {
 
 	private static Shell shell;
-	private Display display;
+	private static Display display;
 	private GCCollectable collectable;
 	private GCCollectable contextCollectable;
 	private GCCollectable viewCollectable;
+	private static GCCollectable domainCollectable;
+
+	private static Wrapper<Player> domainObjectWrapper;
+
+	private static double memBeforeFirstRender = -1;
+	private static double memBeforeRender;
+	private static double memAfterRender;
+
+	public OpenEditorTest(Object o) {
+	}
+
+	@Parameters
+	public static Collection<Object[]> data() {
+		final Object[][] data = new Object[100][1];
+		return Arrays.asList(data);
+	}
+
+	@BeforeClass
+	public static void beforeClass() {
+		display = Display.getDefault();
+		domainObjectWrapper = new Wrapper<Player>(createDomainObject());
+		domainCollectable = new GCCollectable(domainObjectWrapper.getObject());
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		// check if domain object has no adapter left and remove strong coupling from thread
+		assertEquals(0, domainObjectWrapper.removeObject().eAdapters().size());
+
+		final double memoryGrowth = (memAfterRender - memBeforeFirstRender) / memBeforeFirstRender;
+		assertTrue("Memory growth bigger than 15%: " + memoryGrowth, memoryGrowth < 0.15);
+
+		assertTrue(domainCollectable.isCollectable());
+	}
 
 	@Before
 	public void init() {
-		display = Display.getDefault();
+		// display = Display.getDefault();
+
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
+
 			public Shell run() {
 				final Shell shell = new Shell(display);
 				shell.setLayout(new FillLayout());
 				return shell;
 			}
 		});
+
 	}
 
 	private static Player createDomainObject() {
@@ -87,23 +127,6 @@ public class OpenEditorTest extends SWTBotTestCase {
 
 		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
 	}
-
-	// @Test
-	// public void testDomainModelAdapters() throws ECPRendererException {
-	// final VView view = createView();
-	// collectable = new GCCollectable(view);
-	// final Player domainObject = createDomainObject();
-	// System.out.println(domainObject.eAdapters().size());
-	// domainCollectable = new GCCollectable(domainObject);
-	// final ECPControlContext context = ViewTestHelper.createECPControlContext(
-	// domainObject, shell, view);
-	// contextCollectable = new GCCollectable(context);
-	// final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
-	// viewCollectable = new GCCollectable(renderedView);
-	// shell.dispose();
-	//
-	// System.out.println(domainObject.eAdapters().size());
-	// }
 
 	private VControl createControl(EStructuralFeature feature) {
 		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE
@@ -171,40 +194,52 @@ public class OpenEditorTest extends SWTBotTestCase {
 		return view;
 	}
 
+	private double usedMemory() {
+		return 0d + Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+	}
+
 	private class TestRunnable implements Runnable {
 
 		public void run() {
-			final List<ECPSWTView> holdingList = new ArrayList<ECPSWTView>();
-			holdingList.add(UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
-				public ECPSWTView run() {
-					try {
-						final VView view = createView();
-						collectable = new GCCollectable(view);
-						final Player domainObject = createDomainObject();
-						final ECPControlContext context = new DefaultControlContext(domainObject, view);
-						contextCollectable = new GCCollectable(context);
-						final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
-						viewCollectable = new GCCollectable(renderedView);
-						shell.open();
-						return renderedView;
-					} catch (final NoRendererFoundException e) {
-						fail(e.getMessage());
-					} catch (final NoPropertyDescriptorFoundExeption e) {
-						fail(e.getMessage());
-					} catch (final ECPRendererException ex) {
-						fail(ex.getMessage());
+			final Wrapper<ECPSWTView> viewWrapper = new Wrapper<ECPSWTView>(
+				UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
+					public ECPSWTView run() {
+						try {
+
+							if (memBeforeFirstRender == -1) {
+								memBeforeFirstRender = usedMemory();
+							}
+							memBeforeRender = usedMemory();
+
+							final VView view = createView();
+							collectable = new GCCollectable(view);
+
+							final ECPControlContext context = new DefaultControlContext(domainObjectWrapper
+								.getObject(), view);
+							contextCollectable = new GCCollectable(context);
+							final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
+							viewCollectable = new GCCollectable(renderedView);
+							shell.open();
+							return renderedView;
+						} catch (final NoRendererFoundException e) {
+							fail(e.getMessage());
+						} catch (final NoPropertyDescriptorFoundExeption e) {
+							fail(e.getMessage());
+						} catch (final ECPRendererException ex) {
+							fail(ex.getMessage());
+						}
+						return null;
 					}
-					return null;
-				}
-			}));
+				}));
 
 			final SWTBotTree tree = bot.tree();
 			tree.getTreeItem("parent").getNode("foo").getNode("2").select();
 
 			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
+					viewWrapper.removeObject().dispose();
+					memAfterRender = usedMemory();
 					shell.close();
-					holdingList.remove(0).dispose();
 					shell.dispose();
 				}
 			});
@@ -212,6 +247,34 @@ public class OpenEditorTest extends SWTBotTestCase {
 			assertTrue(viewCollectable.isCollectable());
 			assertTrue(contextCollectable.isCollectable());
 			assertTrue(collectable.isCollectable());
+			final double memoryGrowth = (memAfterRender - memBeforeRender) / memBeforeRender;
+			assertTrue("Memory growth bigger than 15%: " + memoryGrowth, memoryGrowth < 0.15);
+		}
+	}
+
+	/**
+	 * Wrapper class for avoiding strong references on objects from this thread which would prevent garbage collection.
+	 * 
+	 * @author jfaltermeier
+	 * 
+	 * @param <T> The type of the object to be wrapped.
+	 */
+	public static class Wrapper<T> {
+
+		private T object;
+
+		public Wrapper(T object) {
+			this.object = object;
+		}
+
+		public T getObject() {
+			return object;
+		}
+
+		public T removeObject() {
+			final T result = object;
+			object = null;
+			return result;
 		}
 	}
 
