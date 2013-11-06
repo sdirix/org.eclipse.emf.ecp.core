@@ -6,7 +6,8 @@ Element-Name: CreateTwoCheckOuts
 Element-Type: context
 Element-Version: 2.0
 Id: __UtTgD-XEeK-yuKsz0Lang
-Save-Time: 8/16/13 11:01 AM
+Q7-Runtime-Version: 1.3.7.201309090800
+Save-Time: 10/22/13 4:13 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -23,6 +24,7 @@ with [get-window "Add new model element"] {
     get-tree | select "bowling/League"
     get-button Finish | click
 }
+try {get-editor} -catch {get-view "Model Explorer" | get-tree | select "TestProject/League" | double-click}
 get-editor League | get-editbox -after [get-label Name] | set-text America
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
 with [get-window "Add new model element"] {
