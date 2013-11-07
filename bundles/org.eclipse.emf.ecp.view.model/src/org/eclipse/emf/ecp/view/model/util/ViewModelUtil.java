@@ -11,11 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.util;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.impl.Activator;
 
 /**
  * This Util class provides common methods used often when working with the view model.
@@ -45,9 +47,8 @@ public final class ViewModelUtil {
 				final VControl control = (VControl) eObject;
 				final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
 				if (!resolve) {
-					// log
-					System.out.println("Not resolved: " + control.getDomainModelReference() + " on control "
-						+ control);
+					Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference()
+						+ " on control " + control);
 				}
 			}
 		}
