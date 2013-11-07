@@ -39,17 +39,22 @@ public final class ViewModelUtil {
 	 * @param domainModelRoot the domain model to use for resolving
 	 */
 	public static void resolveDomainReferences(VElement renderable, EObject domainModelRoot) {
+		checkAndResolve(renderable, domainModelRoot);
 		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
+			checkAndResolve(eObject, domainModelRoot);
 
-			if (VControl.class.isInstance(eObject)) {
-				final VControl control = (VControl) eObject;
-				final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
-				if (!resolve) {
-					Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference()
-						+ " on control " + control);
-				}
+		}
+	}
+
+	private static void checkAndResolve(EObject renderable, EObject domainModelRoot) {
+		if (VControl.class.isInstance(renderable)) {
+			final VControl control = (VControl) renderable;
+			final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
+			if (!resolve) {
+				Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference()
+					+ " on control " + control);
 			}
 		}
 	}
