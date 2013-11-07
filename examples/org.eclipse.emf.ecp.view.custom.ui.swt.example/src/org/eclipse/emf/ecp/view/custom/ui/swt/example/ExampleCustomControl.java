@@ -20,38 +20,14 @@ import org.eclipse.swt.widgets.Label;
 
 public class ExampleCustomControl extends ECPAbstractCustomControlSWT {
 
-//	private static Set<ECPCustomControlFeature> editableFeatures = createEditableFeatures();
-//	private static Set<ECPCustomControlFeature> referencedFeatures = createReferencedFeatures();
 	private static VFeaturePathDomainModelReference nameFeature;
 	private static VFeaturePathDomainModelReference eMailFeature;
 
+	private static Set<VDomainModelReference> references=createReferences();
 	public ExampleCustomControl() {
-		super(createReferences());
+		super(references);
 	}
 
-
-//	private static Set<ECPCustomControlFeature> createFeatures() {
-//		HashSet<ECPCustomControlFeature> ret = new HashSet<ECPCustomControlFeature>();
-//		ret.addAll(referencedFeatures);
-//		ret.addAll(editableFeatures);
-//		return ret;
-//	}
-//
-//	private static Set<ECPCustomControlFeature> createReferencedFeatures() {
-//		return new HashSet<ECPCustomControlFeature>();
-//	}
-//
-//	private static Set<ECPCustomControlFeature> createEditableFeatures() {
-//		HashSet<ECPCustomControlFeature> ret = new HashSet<ECPCustomControlFeature>();
-//		nameFeature = new ECPCustomControlFeature(null,
-//				BowlingPackage.eINSTANCE.getPlayer_Name(), true);
-//		ret.add(nameFeature);
-//		eMailFeature = new ECPCustomControlFeature(null,
-//				BowlingPackage.eINSTANCE.getPlayer_EMails(), true);
-//		ret.add(eMailFeature);
-//
-//		return ret;
-//	}
 	
 	private static Set<VDomainModelReference> createReferences(){
 		Set<VDomainModelReference> result=new LinkedHashSet<VDomainModelReference>();
