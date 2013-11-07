@@ -212,7 +212,7 @@ public class RuleService extends AbstractViewService {
 
 			final VElement renderable = ruleAndRenderable.getValue();
 			// whether the value changed at all, if newValue has been provided
-			boolean hasChanged = false;
+			boolean hasChanged = true;
 
 			if (!ruleType.isInstance(rule)) {
 				continue;
@@ -231,16 +231,16 @@ public class RuleService extends AbstractViewService {
 					final Object newValue = possibleValues.get(setting);
 					if (!feature.isMany()) {
 						if (newValue == null) {
-							hasChanged |= actualValue == null;
+							hasChanged &= actualValue == null;
 						} else {
-							hasChanged |= !newValue.equals(actualValue);
+							hasChanged &= !newValue.equals(actualValue);
 						}
 					}
 					else {
 						// EMF API
 						@SuppressWarnings("unchecked")
 						final List<Object> objects = (List<Object>) actualValue;
-						hasChanged |= !objects.contains(newValue);
+						hasChanged &= !objects.contains(newValue);
 					}
 				}
 
@@ -250,7 +250,7 @@ public class RuleService extends AbstractViewService {
 			boolean updateMap = true;
 			if (rule.getCondition() == null) {
 				result = false;
-			} else if (hasChanged) {
+			} else if (isDryRun && hasChanged) {
 				result = rule.getCondition().evaluateChangedValues(possibleValues);
 			} else if (!isDryRun) {
 				result = rule.getCondition().evaluate();
@@ -273,7 +273,8 @@ public class RuleService extends AbstractViewService {
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, EStructuralFeature attribute) {
-		return evalAffectedRenderables(registry, ruleType, attribute, false, null);
+		final Map<Setting, Object> changedValues = Collections.emptyMap();
+		return evalAffectedRenderables(registry, ruleType, attribute, false, changedValues);
 	}
 
 	private static boolean isDisableRule(Rule rule) {
@@ -363,21 +364,14 @@ public class RuleService extends AbstractViewService {
 	 * 
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
+	 * @param changedAttribute the changed attribute
 	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<VElement, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues) {
+	public Map<VElement, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues,
+		EAttribute changedAttribute) {
 
-		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
-
-		if (feature instanceof EAttribute) {
-
-			final EAttribute attribute = (EAttribute) feature;
-
-			return evalAffectedRenderables(enableRuleRegistry,
-				EnableRule.class, attribute, possibleValues);
-		}
-
-		return Collections.emptyMap();
+		return evalAffectedRenderables(enableRuleRegistry,
+			EnableRule.class, changedAttribute, possibleValues);
 	}
 
 	/**
@@ -386,21 +380,13 @@ public class RuleService extends AbstractViewService {
 	 * 
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
+	 * @param changedAttribute the attribute that was changed
 	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues) {
+	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues, EAttribute changedAttribute) {
 
-		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
-
-		if (feature instanceof EAttribute) {
-
-			final EAttribute attribute = (EAttribute) feature;
-
-			return evalAffectedRenderables(showRuleRegistry,
-				ShowRule.class, attribute, possibleValues);
-		}
-
-		return Collections.emptyMap();
+		return evalAffectedRenderables(showRuleRegistry,
+			ShowRule.class, changedAttribute, possibleValues);
 	}
 
 	private void unset(VElement renderable) {

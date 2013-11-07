@@ -1478,7 +1478,29 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			newPlayer.getEMails());
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
+
+		assertEquals(0, involvedEObjects.size());
+	}
+
+	@Test
+	public void testGetInvolvedEObjetsContainedMultiAttributeEmptySet() {
+		final ShowRule showRule = addShowRule(controlPName, false);
+		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
+			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		showRule.setCondition(leafCondition1);
+		instantiateRuleService();
+
+		player.getEMails().add("foo@bar.com");
+		final Player newPlayer = BowlingFactory.eINSTANCE.createPlayer();
+		newPlayer.getEMails().add("asdf@asdf.com");
+
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1502,7 +1524,8 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			emails);
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1529,7 +1552,8 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			newPlayer.getEMails());
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
 
 		assertEquals(1, involvedEObjects.size());
 	}
@@ -1551,7 +1575,8 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			new ArrayList<String>());
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues, VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
 
 		assertEquals(1, involvedEObjects.size());
 	}
@@ -2150,7 +2175,8 @@ public class RuleServiceTest extends CommonRuleTest {
 		final RuleService ruleService = instantiateRuleService();
 
 		final Map<VElement, Boolean> involvedEObjects = ruleService.getDisabledRenderables(
-			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"));
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"),
+			BowlingPackage.eINSTANCE.getLeague_Name());
 		assertTrue(involvedEObjects.isEmpty());
 	}
 
@@ -2166,7 +2192,8 @@ public class RuleServiceTest extends CommonRuleTest {
 		final RuleService ruleService = instantiateRuleService();
 
 		ruleService.getDisabledRenderables(
-			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"));
+			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"),
+			BowlingPackage.eINSTANCE.getLeague_Name());
 		assertTrue(controlPName.isEnabled());
 	}
 
@@ -2189,10 +2216,10 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League_Wrong"));
+				"League_Wrong"), BowlingPackage.eINSTANCE.getLeague_Name());
 		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League_Wrong"));
+				"League_Wrong"), BowlingPackage.eINSTANCE.getLeague_Name());
 
 		assertEquals(3, hiddenRenderables.size());
 		assertTrue(hiddenRenderables.containsKey(parentColumn));
@@ -2215,10 +2242,10 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League"));
+				"League"), BowlingPackage.eINSTANCE.getLeague_Name());
 		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League"));
+				"League"), BowlingPackage.eINSTANCE.getLeague_Name());
 
 		assertEquals(0, disabledRenderables.size());
 		assertEquals(0, hiddenRenderables.size());
@@ -2239,7 +2266,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", VControl.class);
+			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2258,7 +2285,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VControl.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2277,7 +2304,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VVerticalLayout> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VVerticalLayout.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VVerticalLayout.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2294,7 +2321,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", VControl.class);
+			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2312,7 +2339,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VControl.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2330,7 +2357,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> hiddenOrDisabledControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", VControl.class);
+			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 
 		assertEquals(1, hiddenOrDisabledControls.size());
 	}
@@ -2354,7 +2381,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", VControl.class);
+			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(1, involvedEControls.size());
 	}
 
@@ -2372,7 +2399,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VVerticalLayout> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VVerticalLayout.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VVerticalLayout.class);
 		assertEquals(1, involvedColumns.size());
 	}
 
@@ -2390,7 +2417,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VVerticalLayout> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", VVerticalLayout.class);
+			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VVerticalLayout.class);
 		assertEquals(0, involvedColumns.size());
 	}
 
@@ -2408,7 +2435,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VControl.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2426,7 +2453,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VControl.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2446,7 +2473,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", VControl.class);
+			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}

@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -54,15 +55,16 @@ public class RuleServiceHelper extends AbstractViewService {
 	 *            the class type that has to be matched. Used for filtering the result set
 	 * @return the involved {@link VElement}s that match the given type {@code T}
 	 */
-	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, Class<T> renderableClass) {
+	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, EAttribute attribute,
+		Class<T> renderableClass) {
 
 		final Map<Setting, Object> newValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
 		newValues.put(setting, newValue);
 
 		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
-			.getDisabledRenderables(newValues);
+			.getDisabledRenderables(newValues, attribute);
 		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
-			.getHiddenRenderables(newValues);
+			.getHiddenRenderables(newValues, attribute);
 
 		final Set<T> result = new LinkedHashSet<T>();
 
@@ -106,17 +108,19 @@ public class RuleServiceHelper extends AbstractViewService {
 	 *            a mapping of settings to their would-be new value
 	 * @param renderableClass
 	 *            the class type that has to be matched. Used for filtering the result set
+	 * @param changedAttribute the attribute that was changed
 	 * @return the involved {@link VElement}s that match the given type {@code T}
 	 */
 	public <T extends VElement> Set<T> getInvolvedEObjects(Map<Setting, Object> possibleNewValues,
+		EAttribute changedAttribute,
 		Class<T> renderableClass) {
 
 		final Set<T> result = new LinkedHashSet<T>();
 
 		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
-			.getHiddenRenderables(possibleNewValues);
+			.getHiddenRenderables(possibleNewValues, changedAttribute);
 		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
-			.getHiddenRenderables(possibleNewValues);
+			.getDisabledRenderables(possibleNewValues, changedAttribute);
 		result
 			.addAll(collectFalseValues(renderableClass, disabledRenderables, createDisabledRenderablePredicate()));
 		result.addAll(collectFalseValues(renderableClass, hiddenRenderables, createHiddenRenderablePredicate()));
