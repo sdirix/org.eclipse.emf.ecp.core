@@ -45,12 +45,22 @@
 						</dependency>
 						<dependency>
 							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.emf.ecp.view.dynamictree.model</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
 							<artifactId>org.eclipse.emf.ecp.view.dynamictree.model.edit</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>
                             <type>p2-installable-unit</type>
                             <artifactId>org.eclipse.emf.ecp.view.dynamictree.ui</artifactId>
+                            <version>0.0.0</version>
+                        </dependency>
+                        <dependency>
+                            <type>p2-installable-unit</type>
+                            <artifactId>org.eclipse.emf.ecp.view.dynamictree.ui.swt</artifactId>
                             <version>0.0.0</version>
                         </dependency>
 					</dependencies>
