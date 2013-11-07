@@ -195,7 +195,8 @@ public class ExpectedValueControl extends SingleControl {
 
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { text };
+		// return new Control[] { text };
+		return new Control[0];
 	}
 
 	@Override

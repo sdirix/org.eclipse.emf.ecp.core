@@ -505,20 +505,19 @@ public class TableControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = Activator.getImage(VALIDATION_ERROR_ICON);
-			validationLabel.setImage(image);
-			validationLabel.setToolTipText(diagnostic.getMessage());
-			final EObject object = (EObject) diagnostic.getData().get(0);
-			if (!featureErrorMap.containsKey(object)) {
-				featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
-			}
-			if (diagnostic.getData().size() > 1) {
-				featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
-			}
-			tableViewer.update(object, null);
-			// tableViewer.refresh();
+		final Image image = getValidationIcon(diagnostic.getSeverity());
+		validationLabel.setImage(image);
+		validationLabel.setToolTipText(diagnostic.getMessage());
+		final EObject object = (EObject) diagnostic.getData().get(0);
+		if (!featureErrorMap.containsKey(object)) {
+			featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
 		}
+		if (diagnostic.getData().size() > 1) {
+			featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
+		}
+		tableViewer.update(object, null);
+		// tableViewer.refresh();
+
 	}
 
 	/**
@@ -638,7 +637,8 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { tableViewer.getControl() };
+		// return new Control[] { tableViewer.getControl() };
+		return new Control[0];
 	}
 
 	/**

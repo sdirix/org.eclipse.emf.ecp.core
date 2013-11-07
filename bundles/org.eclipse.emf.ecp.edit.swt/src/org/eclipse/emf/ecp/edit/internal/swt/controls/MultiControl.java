@@ -460,11 +460,9 @@ public abstract class MultiControl extends SWTControl {
 		if (validationLabel == null) {
 			return;
 		}
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = Activator.getImage(VALIDATION_ERROR_ICON);
-			validationLabel.setImage(image);
-			validationLabel.setToolTipText(diagnostic.getMessage());
-		}
+		final Image image = getValidationIcon(diagnostic.getSeverity());
+		validationLabel.setImage(image);
+		validationLabel.setToolTipText(diagnostic.getMessage());
 	}
 
 	/**

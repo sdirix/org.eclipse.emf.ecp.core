@@ -19,6 +19,7 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -111,6 +112,18 @@ public class DateTimeControl extends SingleControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { dateWidget, timeWidget };
+		// return new Control[] { dateWidget, timeWidget };
+		return new Control[0];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
+	 */
+	@Override
+	protected void updateValidationColor(Color color) {
+		dateWidget.setBackground(color);
+		timeWidget.setBackground(color);
 	}
 }

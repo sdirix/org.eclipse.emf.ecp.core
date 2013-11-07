@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -28,11 +29,8 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.IDialogLabelKeys;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseEvent;
@@ -40,6 +38,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -64,6 +63,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 
+	/**
+	 * The label for the validation icon.
+	 */
 	protected Label validationLabel;
 
 	private IObservableValue modelValue;
@@ -103,15 +105,13 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		if (isEmbedded()) {
 			numColumns--;
 		}
-		if (getModelElementContext().isRunningAsWebApplication()) {
-			numColumns++;
-		}
 		// TODO needed .spacing(10, 0) ?
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).applyTo(composite);
 
 		createValidationIcon(composite);
 		createDataControl(composite);
-		createHelpIcon(composite);
+
+		setHelpTooltips();
 
 		// init
 		setEditable(isEditable());
@@ -146,69 +146,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		createContentControl(innerComposite);
 	}
 
-	private void createHelpIcon(final Composite composite) {
-		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null
-			&& getHelpText().length() != 0) {
-			final Label l = new Label(composite, SWT.PUSH);
-			l.setImage(Activator.getImage("icons/help.png")); //$NON-NLS-1$
-			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help"); //$NON-NLS-1$
-			l.setBackground(composite.getBackground());
-			l.addMouseListener(new MouseListener() {
-
-				public void mouseUp(MouseEvent e) {
-					final MessageDialog dialog = new MessageDialog(composite.getShell(), UtilMessages.SWTControl_Help,
-						null, getHelpText(),
-						MessageDialog.INFORMATION, new String[] { JFaceResources
-							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-					new ECPDialogExecutor(dialog) {
-
-						@Override
-						public void handleResult(int codeResult) {
-
-						}
-					}.execute();
-				}
-
-				public void mouseDown(MouseEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				public void mouseDoubleClick(MouseEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-			// Button b = new Button(composite, SWT.PUSH);
-			// b.addSelectionListener(new SelectionAdapter() {
-			//
-			// @Override
-			// public void widgetSelected(SelectionEvent e) {
-			// super.widgetSelected(e);
-			// MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
-			// MessageDialog.INFORMATION, new String[] { JFaceResources
-			// .getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-			// new ECPDialogExecutor(dialog) {
-			//
-			// @Override
-			// public void handleResult(int codeResult) {
-			//
-			// }
-			// }.execute();
-			// }
-			//
-			// });
-			// Control[] tabList = new Control[composite.getTabList().length - 1];
-			// System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
-			// composite.setTabList(tabList);
-		} else {
-			final Control[] controls = getControlsForTooltip();
-			if (controls != null) {
-				for (final Control control : controls) {
-					control.setToolTipText(getHelpText());
-				}
+	private void setHelpTooltips() {
+		final Control[] controls = getControlsForTooltip();
+		if (controls != null) {
+			for (final Control control : controls) {
+				control.setToolTipText(getHelpText());
 			}
-
 		}
 	}
 
@@ -393,6 +336,54 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected String getHelpText() {
 		return getItemPropertyDescriptor().getDescription(null);
+	}
+
+	/**
+	 * Returns the validation icon matching the given severity.
+	 * 
+	 * @param severity the severity of the {@link Diagnostic}
+	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 */
+	protected Image getValidationIcon(int severity) {
+		switch (severity) {
+		case Diagnostic.OK:
+			return null;
+		case Diagnostic.INFO:
+			return null;
+		case Diagnostic.WARNING:
+			return Activator.getImage(VALIDATION_ERROR_ICON);
+		case Diagnostic.ERROR:
+			return Activator.getImage(VALIDATION_ERROR_ICON);
+		case Diagnostic.CANCEL:
+			return Activator.getImage(VALIDATION_ERROR_ICON);
+		default:
+			throw new IllegalArgumentException(
+				"The specified severity value " + severity + " is invalid. See Diagnostic class."); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+
+	/**
+	 * Returns the background color for a control with the given validation severity.
+	 * 
+	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @return the color to be used as a background color
+	 */
+	protected Color getValidationBackgroundColor(int severity) {
+		switch (severity) {
+		case Diagnostic.OK:
+			return getSystemColor(SWT.COLOR_WHITE);
+		case Diagnostic.INFO:
+			return getSystemColor(SWT.COLOR_YELLOW);
+		case Diagnostic.WARNING:
+			return getSystemColor(SWT.COLOR_YELLOW);
+		case Diagnostic.ERROR:
+			return getSystemColor(SWT.COLOR_RED);
+		case Diagnostic.CANCEL:
+			return getSystemColor(SWT.COLOR_DARK_RED);
+		default:
+			throw new IllegalArgumentException(
+				"The specified severity value " + severity + " is invalid. See Diagnostic class."); //$NON-NLS-1$ //$NON-NLS-2$
+		}
 	}
 
 	/**

@@ -12,10 +12,8 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
@@ -47,25 +45,21 @@ public abstract class SingleControl extends SWTControl {
 			return;
 		}
 
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
-			Diagnostic reason = diagnostic;
-			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
-				reason = diagnostic.getChildren().get(0);
-			}
-			if (validationLabel != null) {
-				validationLabel.setImage(image);
-				validationLabel.setToolTipText(reason.getMessage());
-
-			}
-			if (controlDecoration != null) {
-				controlDecoration.setDescriptionText(reason.getMessage());
-				controlDecoration.show();
-			}
-			updateValidationColor(getSystemColor(SWT.COLOR_RED));
-		} else {
-			resetValidation();
+		final Image image = getValidationIcon(diagnostic.getSeverity());
+		Diagnostic reason = diagnostic;
+		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			reason = diagnostic.getChildren().get(0);
 		}
+		if (validationLabel != null) {
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(reason.getMessage());
+
+		}
+		if (controlDecoration != null) {
+			controlDecoration.setDescriptionText(reason.getMessage());
+			controlDecoration.show();
+		}
+		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
 	}
 
 	/**

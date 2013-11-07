@@ -19,6 +19,7 @@ import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -90,7 +91,18 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { combo.getControl() };
+		// return new Control[] { combo.getControl() };
+		return new Control[0];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
+	 */
+	@Override
+	protected void updateValidationColor(Color color) {
+		combo.getControl().setBackground(color);
 	}
 
 }

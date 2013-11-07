@@ -35,6 +35,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -246,6 +247,16 @@ public class LinkControl extends SingleControl {
 		return linkName == null ? "" : linkName; //$NON-NLS-1$
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
+	 */
+	@Override
+	protected void updateValidationColor(Color color) {
+		hyperlink.setBackground(color);
+	}
+
 	private void updateChangeListener(final EObject value) {
 		if (modelElementChangeListener != null) {
 			if (modelElementChangeListener.getTarget().equals(value)) {
@@ -323,6 +334,7 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { hyperlink, imageHyperlink };
+		// return new Control[] { hyperlink, imageHyperlink };
+		return new Control[0];
 	}
 }
