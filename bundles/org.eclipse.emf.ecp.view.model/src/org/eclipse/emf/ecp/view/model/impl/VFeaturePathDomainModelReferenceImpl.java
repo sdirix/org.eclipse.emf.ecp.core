@@ -108,14 +108,15 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		if (domainModelEFeature != null && domainModelEFeature.eIsProxy())
 		{
-			InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
+			final InternalEObject oldDomainModelEFeature = (InternalEObject) domainModelEFeature;
 			domainModelEFeature = (EStructuralFeature) eResolveProxy(oldDomainModelEFeature);
 			if (domainModelEFeature != oldDomainModelEFeature)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
 						oldDomainModelEFeature, domainModelEFeature));
+				}
 			}
 		}
 		return domainModelEFeature;
@@ -140,12 +141,13 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 */
 	public void setDomainModelEFeature(EStructuralFeature newDomainModelEFeature)
 	{
-		EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
+		final EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
 		domainModelEFeature = newDomainModelEFeature;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE, oldDomainModelEFeature,
 				domainModelEFeature));
+		}
 	}
 
 	/**
@@ -176,8 +178,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		switch (featureID)
 		{
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
-			if (resolve)
+			if (resolve) {
 				return getDomainModelEFeature();
+			}
 			return basicGetDomainModelEFeature();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return getDomainModelEReferencePath();
@@ -308,10 +311,10 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		}
 		// FIXME this check is currently needed to ignore resolve tries with a wrong EObject
 		// workaround block start
-		if (lastResolvedEObject != null && currentLeftReferences.isEmpty()
-			&& !currentResolvedEObject.eClass().getEAllStructuralFeatures().contains(getDomainModelEFeature())) {
-			return false;
-		}
+		// if (lastResolvedEObject != null && currentLeftReferences.isEmpty()
+		// && !currentResolvedEObject.eClass().getEAllStructuralFeatures().contains(getDomainModelEFeature())) {
+		// return false;
+		// }
 		// workaround block end
 		lastResolvedEObject = currentResolvedEObject;
 		leftReferences = currentLeftReferences;

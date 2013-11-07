@@ -26,9 +26,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.view.context.internal.Activator;
-import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 
 /**
@@ -290,19 +288,20 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			if (VControl.class.isInstance(notifier)) {
-				final VControl control = (VControl) notifier;
-				control.getDomainModelReference().resolve(domainObject);
-			}
+			// if (VControl.class.isInstance(notifier)) {
+			// final VControl control = (VControl) notifier;
+			// control.getDomainModelReference().resolve(domainObject);
+			// }
+			ViewModelUtil.resolveDomainReferences((VElement) notifier, getDomainModel());
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);
 			}
-			if (VDomainModelReference.class.isInstance(notifier)) {
-				final EObject container = ((EObject) notifier).eContainer();
-				if (VElement.class.isInstance(container)) {
-					ViewModelUtil.resolveDomainReferences((VElement) container, getDomainModel());
-				}
-			}
+			// if (VDomainModelReference.class.isInstance(notifier)) {
+			// final EObject container = ((EObject) notifier).eContainer();
+			// if (VElement.class.isInstance(container)) {
+			// ViewModelUtil.resolveDomainReferences((VElement) container, getDomainModel());
+			// }
+			// }
 		}
 
 		@Override

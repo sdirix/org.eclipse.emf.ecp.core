@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -66,7 +67,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			final Set<Setting> settings = Collections.emptySet();
 			return settings.iterator();
 		}
-		final VTableControl control = (VTableControl) eContainer();
+		final VTableControl control = findTableControl();
 
 		return new Iterator<EStructuralFeature.Setting>() {
 			// 1 for the tablereference + numElements*numColumns
@@ -76,7 +77,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			int currentAttribute = 0;
 
 			public boolean hasNext() {
-				return numElems > 0 && ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size() > 0;
+				return numElems > 0
+					&& ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
+						* control.getColumns().size() + 1 >= numElems;
 			}
 
 			public Setting next() {
@@ -107,13 +110,24 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	}
 
 	/**
+	 * @return
+	 */
+	private VTableControl findTableControl() {
+		EObject parent = eContainer();
+		while (!VTableControl.class.isInstance(parent)) {
+			parent = parent.eContainer();
+		}
+		return (VTableControl) parent;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl#getEStructuralFeatureIterator()
 	 */
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
-		final VTableControl control = (VTableControl) eContainer();
+		final VTableControl control = findTableControl();
 		return new Iterator<EStructuralFeature>() {
 			private int counter = 0;
 

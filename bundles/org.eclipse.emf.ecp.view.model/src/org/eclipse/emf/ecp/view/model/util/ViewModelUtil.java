@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.model.util;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
 
@@ -40,13 +41,13 @@ public final class ViewModelUtil {
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
 
-			if (VDomainModelReference.class.isInstance(eObject)) {
-				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
-				final boolean resolve = modelReference.resolve(domainModelRoot);
+			if (VControl.class.isInstance(eObject)) {
+				final VControl control = (VControl) eObject;
+				final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
 				if (!resolve) {
 					// log
-					System.out.println("Not resolved: " + modelReference + " on control "
-						+ eObject.eContainer().toString());
+					System.out.println("Not resolved: " + control.getDomainModelReference() + " on control "
+						+ control);
 				}
 			}
 		}
