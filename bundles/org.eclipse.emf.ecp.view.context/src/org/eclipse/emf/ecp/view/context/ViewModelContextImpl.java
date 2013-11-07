@@ -292,7 +292,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			// final VControl control = (VControl) notifier;
 			// control.getDomainModelReference().resolve(domainObject);
 			// }
-			ViewModelUtil.resolveDomainReferences((VElement) notifier, getDomainModel());
+			if (VElement.class.isInstance(notifier)) {
+				ViewModelUtil.resolveDomainReferences((VElement) notifier, getDomainModel());
+			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);
 			}
