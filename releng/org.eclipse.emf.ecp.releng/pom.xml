@@ -217,6 +217,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui.swt</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.feature</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
 		
 		<!-- Modules for View Editor Q7 Tests -->
