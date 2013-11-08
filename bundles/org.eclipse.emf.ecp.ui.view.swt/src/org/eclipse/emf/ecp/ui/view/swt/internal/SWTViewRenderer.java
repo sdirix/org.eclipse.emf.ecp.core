@@ -35,10 +35,10 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAda
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
-import org.eclipse.emf.ecp.view.model.impl.VControlImpl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
@@ -91,7 +91,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		{
 			// add(ColumnCompositeImpl.class);
 			// add(ColumnImpl.class);
-			add(VControlImpl.class);
+			add(VContainedElement.class);
 			// add(TableControlImpl.class);
 			// add(GroupImpl.class);
 		}
@@ -216,11 +216,12 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		final List<Node<?>> children = node.getChildren();
 		for (final Node<?> child : children) {
 			if (child.isVisible()) {
-				if (filteredClasses.contains(child.getLabelObject().getClass())) {
-					result.addAll(filterVisibleNodes(treeViewer, child));
-				} else {
-					result.add(child);
+				if (VContainedElement.class.isInstance(child.getLabelObject())) {
+					// result.addAll(filterVisibleNodes(treeViewer, child));
+					continue;
 				}
+				result.add(child);
+
 			}
 		}
 		return result;

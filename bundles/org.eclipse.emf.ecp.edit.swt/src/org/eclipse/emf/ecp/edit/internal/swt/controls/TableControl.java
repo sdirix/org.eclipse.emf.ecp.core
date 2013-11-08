@@ -505,6 +505,9 @@ public class TableControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getData().isEmpty()) {
+			return;
+		}
 		final Image image = getValidationIcon(diagnostic.getSeverity());
 		validationLabel.setImage(image);
 		validationLabel.setToolTipText(diagnostic.getMessage());
