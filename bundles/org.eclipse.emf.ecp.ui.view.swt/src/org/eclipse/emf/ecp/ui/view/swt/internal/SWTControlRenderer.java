@@ -79,15 +79,17 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 				}
 
 				label = new Label(parent, SWT.NONE);
-				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
+				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 				label.setBackground(parent.getBackground());
-				String extra = "";
+				String extra = ""; //$NON-NLS-1$
 				if (setting.getEStructuralFeature().getLowerBound() > 0) {
-					extra = "*";
+					extra = "*"; //$NON-NLS-1$
 				}
-				label.setText(itemPropertyDescriptor.getDisplayName(setting.getEObject())
-					+ extra);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+				final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+				if (labelText != null && labelText.trim().length() != 0) {
+					label.setText(labelText + extra);
+					label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+				}
 
 			}
 
