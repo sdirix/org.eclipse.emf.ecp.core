@@ -12,26 +12,27 @@ import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
+import com.eclipsesource.makeithappen.model.task.TaskPackage;
+
 @SuppressWarnings("restriction")
 public class MyCustomControl extends ECPAbstractCustomControlSWT {
 
 	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-	private static VFeaturePathDomainModelReference nameFeature;
+	private static VFeaturePathDomainModelReference lastNameFeature;
 	private static VFeaturePathDomainModelReference genderFeature;
 	static {
-		nameFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		nameFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
-		features.add(nameFeature);
+		lastNameFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		lastNameFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_LastName());
+		features.add(lastNameFeature);
 
 		genderFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		genderFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Gender());
+		genderFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_Gender());
 		features.add(genderFeature);
 	}
 
@@ -44,11 +45,11 @@ public class MyCustomControl extends ECPAbstractCustomControlSWT {
 		Composite parent=new Composite(composite, SWT.NONE);
 		parent.setLayout(new FillLayout(SWT.VERTICAL));
 		
-		Label playerAttributes=new Label(parent, SWT.NONE);
-		playerAttributes.setText("Player Attributes");
-		playerAttributes.setAlignment(SWT.CENTER);
+		Label userAttributes=new Label(parent, SWT.NONE);
+		userAttributes.setText("User Attributes");
+		userAttributes.setAlignment(SWT.CENTER);
 		
-		createControl(nameFeature, parent);
+		createControl(lastNameFeature, parent);
 		createControl(genderFeature, parent);
 		
 		List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
