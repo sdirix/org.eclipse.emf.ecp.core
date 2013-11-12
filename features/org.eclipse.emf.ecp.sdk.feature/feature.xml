@@ -103,6 +103,14 @@
          id="org.eclipse.emf.ecp.view.table.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.template.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.template.helper.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e3.source"
          download-size="0"
@@ -487,5 +495,29 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.template.controls.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.template.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.template.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.template.service.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

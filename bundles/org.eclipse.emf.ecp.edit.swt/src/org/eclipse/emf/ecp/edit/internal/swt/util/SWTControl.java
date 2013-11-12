@@ -12,9 +12,13 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -26,6 +30,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
@@ -345,22 +353,43 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
 	protected Image getValidationIcon(int severity) {
+		final VTViewTemplate template = getTemplate();
+		String imageUrl = null;
+
 		switch (severity) {
 		case Diagnostic.OK:
-			return null;
+			imageUrl = template.getControlValidationConfiguration().getOkImageURL();
+			break;
 		case Diagnostic.INFO:
-			return null;
+			imageUrl = template.getControlValidationConfiguration().getInfoImageURL();
+			break;
 		case Diagnostic.WARNING:
-			return Activator.getImage(VALIDATION_ERROR_ICON);
+			imageUrl = template.getControlValidationConfiguration()
+				.getWarningImageURL();
+			break;
 		case Diagnostic.ERROR:
-			return Activator.getImage(VALIDATION_ERROR_ICON);
+			imageUrl = template.getControlValidationConfiguration().getErrorImageURL();
+			break;
 		case Diagnostic.CANCEL:
-			return Activator.getImage(VALIDATION_ERROR_ICON);
+			imageUrl = template.getControlValidationConfiguration().getCancelImageURL();
+			break;
 		default:
 			throw new IllegalArgumentException(
 				"The specified severity value " + severity + " is invalid. See Diagnostic class."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+		if (imageUrl == null) {
+			return null;
+		}
+		try {
+			return Activator.getImage(new
+				URL(imageUrl));
+		} catch (final MalformedURLException ex) {
+			return null;
+		}
 	}
+
+	private final Map<String, Color> colorMap = new LinkedHashMap<String, Color>();
+	private VTViewTemplate defaultTemplate;
 
 	/**
 	 * Returns the background color for a control with the given validation severity.
@@ -369,21 +398,71 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @return the color to be used as a background color
 	 */
 	protected Color getValidationBackgroundColor(int severity) {
+		final VTViewTemplate template = getTemplate();
+		String colorHex = null;
+
 		switch (severity) {
 		case Diagnostic.OK:
-			return getSystemColor(SWT.COLOR_WHITE);
+			colorHex = template.getControlValidationConfiguration().getOkColorHEX();
+			break;
 		case Diagnostic.INFO:
-			return getSystemColor(SWT.COLOR_YELLOW);
+			colorHex = template.getControlValidationConfiguration().getInfoColorHEX();
+			break;
 		case Diagnostic.WARNING:
-			return getSystemColor(SWT.COLOR_YELLOW);
+			colorHex = template.getControlValidationConfiguration()
+				.getWarningColorHEX();
+			break;
 		case Diagnostic.ERROR:
-			return getSystemColor(SWT.COLOR_RED);
+			colorHex = template.getControlValidationConfiguration().getErrorColorHEX();
+			break;
 		case Diagnostic.CANCEL:
-			return getSystemColor(SWT.COLOR_DARK_RED);
+			colorHex = template.getControlValidationConfiguration().getCancelColorHEX();
+			break;
 		default:
 			throw new IllegalArgumentException(
 				"The specified severity value " + severity + " is invalid. See Diagnostic class."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+		if (colorHex == null) {
+			return null;
+		}
+		if (!colorMap.containsKey(colorHex)) {
+			colorMap.put(colorHex, getColor(colorHex));
+		}
+		return colorMap.get(colorHex);
+	}
+
+	/**
+	 * @return
+	 */
+	private VTViewTemplate getTemplate() {
+		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		if (vtViewTemplateProvider.getViewTemplate() == null) {
+			if (defaultTemplate == null) {
+				defaultTemplate = VTTemplateFactory.eINSTANCE.createViewTemplate();
+				final VTControlValidationTemplate validationTemplate = VTTemplateFactory.eINSTANCE
+					.createControlValidationTemplate();
+				defaultTemplate.setControlValidationConfiguration(validationTemplate);
+				validationTemplate.setErrorColorHEX("ff0000"); //$NON-NLS-1$
+				validationTemplate.setErrorImageURL(Activator.getDefault().getBundle()
+					.getResource("icons/validation_error.png").toExternalForm()); //$NON-NLS-1$				
+			}
+			return defaultTemplate;
+		}
+		return vtViewTemplateProvider.getViewTemplate();
+	}
+
+	/**
+	 * @param colorHex
+	 * @return
+	 */
+	private Color getColor(String colorHex) {
+		final String redString = colorHex.substring(0, 2);
+		final String greenString = colorHex.substring(2, 4);
+		final String blueString = colorHex.substring(4, 6);
+		final int red = Integer.parseInt(redString, 16);
+		final int green = Integer.parseInt(greenString, 16);
+		final int blue = Integer.parseInt(blueString, 16);
+		return new Color(Display.getDefault(), red, green, blue);
 	}
 
 	/**
@@ -504,6 +583,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		if (unsetLabel != null) {
 			unsetLabel.dispose();
 			unsetLabel = null;
+		}
+		for (final Color color : colorMap.values()) {
+			color.dispose();
 		}
 		super.dispose();
 	}
