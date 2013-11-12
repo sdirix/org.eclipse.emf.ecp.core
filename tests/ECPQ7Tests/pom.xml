@@ -52,7 +52,9 @@
 
               <q7>
                 <version>${q7-runner-version}</version>
-                <licenseFile>${project.basedir}/q7.license</licenseFile>
+                <clientId>jfaltermeier</clientId>
+				<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
+				<organization>EMFClientPlatform</organization>
               </q7>
             </configuration>
           </plugin>
