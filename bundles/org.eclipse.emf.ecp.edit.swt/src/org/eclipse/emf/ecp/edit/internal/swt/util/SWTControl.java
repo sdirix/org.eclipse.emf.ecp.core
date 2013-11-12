@@ -436,7 +436,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	private VTViewTemplate getTemplate() {
 		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
-		if (vtViewTemplateProvider.getViewTemplate() == null) {
+		if (vtViewTemplateProvider == null || vtViewTemplateProvider.getViewTemplate() == null) {
 			if (defaultTemplate == null) {
 				defaultTemplate = VTTemplateFactory.eINSTANCE.createViewTemplate();
 				final VTControlValidationTemplate validationTemplate = VTTemplateFactory.eINSTANCE

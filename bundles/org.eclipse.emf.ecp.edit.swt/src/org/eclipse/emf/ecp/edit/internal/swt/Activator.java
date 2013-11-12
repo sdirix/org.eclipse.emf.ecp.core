@@ -186,7 +186,9 @@ public class Activator extends Plugin {
 			final ServiceReference<VTViewTemplateProvider> viewTemplateReference = plugin.getBundle()
 				.getBundleContext()
 				.getServiceReference(VTViewTemplateProvider.class);
-			viewTemplate = plugin.getBundle().getBundleContext().getService(viewTemplateReference);
+			if (viewTemplateReference != null) {
+				viewTemplate = plugin.getBundle().getBundleContext().getService(viewTemplateReference);
+			}
 		}
 		return viewTemplate;
 	}
