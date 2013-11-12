@@ -41,8 +41,7 @@
           </aut>
 		  
 		  <testOptions>
-	        <execTimeout>30min</execTimeout>
-            <testExecTimeout>5min</testExecTimeout>
+            <testExecTimeout>3600</testExecTimeout>
           </testOptions>
 		  
         </configuration>
