@@ -21,6 +21,8 @@
         eType="#//DynamicContainmentItem" transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseItemIndex" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EIntegerObject"
+        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestElement" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
     <eOperations name="validate" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean">
@@ -50,5 +52,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="testElements" upperBound="-1"
         eType="#//TestElement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicContainmentTreeDomainModelReference"
+      eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathFromRoot" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathFromBase" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

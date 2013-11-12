@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.model.VElement;
  *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems <em>Items</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -105,5 +106,31 @@ public interface DynamicContainmentItem extends VElement
 	 * @generated
 	 */
 	void setComposite(VContainedElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Base Item Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Base Item Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Base Item Index</em>' attribute.
+	 * @see #setBaseItemIndex(Integer)
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentItem_BaseItemIndex()
+	 * @model transient="true"
+	 * @generated
+	 */
+	Integer getBaseItemIndex();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Base Item Index</em>' attribute.
+	 * @see #getBaseItemIndex()
+	 * @generated
+	 */
+	void setBaseItemIndex(Integer value);
 
 } // DynamicContainmentItem

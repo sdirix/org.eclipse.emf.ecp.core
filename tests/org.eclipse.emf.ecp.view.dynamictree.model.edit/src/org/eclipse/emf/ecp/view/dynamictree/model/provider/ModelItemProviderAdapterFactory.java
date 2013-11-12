@@ -226,6 +226,29 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DynamicContainmentTreeDomainModelReferenceItemProvider dynamicContainmentTreeDomainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDynamicContainmentTreeDomainModelReferenceAdapter() {
+		if (dynamicContainmentTreeDomainModelReferenceItemProvider == null) {
+			dynamicContainmentTreeDomainModelReferenceItemProvider = new DynamicContainmentTreeDomainModelReferenceItemProvider(this);
+		}
+
+		return dynamicContainmentTreeDomainModelReferenceItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -339,6 +362,7 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 		if (domainRootItemProvider != null) domainRootItemProvider.dispose();
 		if (domainIntermediateItemProvider != null) domainIntermediateItemProvider.dispose();
 		if (testElementContainerItemProvider != null) testElementContainerItemProvider.dispose();
+		if (dynamicContainmentTreeDomainModelReferenceItemProvider != null) dynamicContainmentTreeDomainModelReferenceItemProvider.dispose();
 	}
 
 }

@@ -296,13 +296,22 @@ public interface ModelPackage extends EPackage
 	int DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Base Item Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX = VViewPackage.ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Dynamic Containment Item</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 3;
+	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl <em>Test Element</em>}' class.
@@ -453,6 +462,43 @@ public interface ModelPackage extends EPackage
 	int TEST_ELEMENT_CONTAINER_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl <em>Dynamic Containment Tree Domain Model Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDynamicContainmentTreeDomainModelReference()
+	 * @generated
+	 */
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Path From Root</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Path From Base</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Dynamic Containment Tree Domain Model Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree <em>Dynamic Containment Tree</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -559,6 +605,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EReference getDynamicContainmentItem_Composite();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Base Item Index</em>'.
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex()
+	 * @see #getDynamicContainmentItem()
+	 * @generated
+	 */
+	EAttribute getDynamicContainmentItem_BaseItemIndex();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.TestElement <em>Test Element</em>}'.
@@ -689,6 +746,38 @@ public interface ModelPackage extends EPackage
 	EAttribute getTestElementContainer_Id();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference <em>Dynamic Containment Tree Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference
+	 * @generated
+	 */
+	EClass getDynamicContainmentTreeDomainModelReference();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromRoot <em>Path From Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Path From Root</em>'.
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromRoot()
+	 * @see #getDynamicContainmentTreeDomainModelReference()
+	 * @generated
+	 */
+	EReference getDynamicContainmentTreeDomainModelReference_PathFromRoot();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromBase <em>Path From Base</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Path From Base</em>'.
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromBase()
+	 * @see #getDynamicContainmentTreeDomainModelReference()
+	 * @generated
+	 */
+	EReference getDynamicContainmentTreeDomainModelReference_PathFromBase();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -796,6 +885,14 @@ public interface ModelPackage extends EPackage
 		EReference DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = eINSTANCE.getDynamicContainmentItem_Composite();
 
 		/**
+		 * The meta object literal for the '<em><b>Base Item Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX = eINSTANCE.getDynamicContainmentItem_BaseItemIndex();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl <em>Test Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -898,6 +995,32 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute TEST_ELEMENT_CONTAINER__ID = eINSTANCE.getTestElementContainer_Id();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl <em>Dynamic Containment Tree Domain Model Reference</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.dynamictree.model.impl.ModelPackageImpl#getDynamicContainmentTreeDomainModelReference()
+		 * @generated
+		 */
+		EClass DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE = eINSTANCE.getDynamicContainmentTreeDomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Path From Root</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT = eINSTANCE.getDynamicContainmentTreeDomainModelReference_PathFromRoot();
+
+		/**
+		 * The meta object literal for the '<em><b>Path From Base</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE = eINSTANCE.getDynamicContainmentTreeDomainModelReference_PathFromBase();
 
 	}
 

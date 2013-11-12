@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
@@ -79,16 +80,20 @@ public class DynamicContainmentTreeTest {
 		// used for validation
 		final VControl childNameControl = VViewFactory.eINSTANCE.createControl();
 		childNameControl.setDomainModelReference(
-			createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Name()));
+			createDynamicContainmentTreeDomainModelReferences(
+				ModelPackage.eINSTANCE.getTestElement_Name(),
+				ModelPackage.eINSTANCE.getTestElementContainer_TestElements(),
+				ModelPackage.eINSTANCE.getDomainRoot_Intermediate(),
+				ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer()));
 		tree.setChildComposite(childNameControl);
 
 		// set up scoping
 		final VControl viewControl = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference modelRef = createFeaturePathDomainModelReference(
+		final VFeaturePathDomainModelReference createFeaturePathDomainModelReference = createFeaturePathDomainModelReference(
 			ModelPackage.eINSTANCE.getTestElementContainer_Id(),
 			ModelPackage.eINSTANCE.getDomainRoot_Intermediate(),
 			ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer());
-		viewControl.setDomainModelReference(modelRef);
+		viewControl.setDomainModelReference(createFeaturePathDomainModelReference);
 		tree.setComposite(viewControl);
 
 		node = NodeBuilders.INSTANCE.build(tree, new DynamicContainmentTreeTestEditContext(
@@ -100,12 +105,27 @@ public class DynamicContainmentTreeTest {
 
 	}
 
-	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(EStructuralFeature feature,
+	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(
+		EStructuralFeature feature,
 		EReference... references) {
 		final VFeaturePathDomainModelReference result = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		result.setDomainModelEFeature(feature);
 		result.getDomainModelEReferencePath().addAll(Arrays.asList(references));
 		return result;
+	}
+
+	private DynamicContainmentTreeDomainModelReference createDynamicContainmentTreeDomainModelReferences(
+		EStructuralFeature base, EStructuralFeature rootFeature, EReference... toRoot) {
+		final DynamicContainmentTreeDomainModelReference reference =
+			ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference();
+		final VFeaturePathDomainModelReference rootRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference baseRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		rootRef.getDomainModelEReferencePath().addAll(Arrays.asList(toRoot));
+		rootRef.setDomainModelEFeature(rootFeature);
+		baseRef.setDomainModelEFeature(base);
+		reference.setPathFromRoot(rootRef);
+		reference.setPathFromBase(baseRef);
+		return reference;
 	}
 
 	@Test

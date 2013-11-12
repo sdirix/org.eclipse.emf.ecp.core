@@ -32,7 +32,6 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
-import org.eclipse.emf.ecp.view.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.osgi.framework.Bundle;
 
@@ -85,7 +84,8 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 			final DynamicContainmentItem item = ModelFactory.eINSTANCE.createDynamicContainmentItem();
 			item.setComposite(EcoreUtil.copy(dynamicTree.getChildComposite()));
 			item.setDomainModel(testElement);
-			ViewModelUtil.resolveDomainReferences(item, testElement);
+			item.setBaseItemIndex(type.getTestElements().indexOf(testElement));
+			// ViewModelUtil.resolveDomainReferences(item, testElement);
 			dynamicTree.getItems().add(item);
 
 			final Node<DynamicContainmentItem> n = NodeBuilders.INSTANCE.build(item,
@@ -95,7 +95,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 			createActions(n, actions);
 
 			addChildren(n, item, adapterFactoryItemDelegator,
-				childContext, actions);
+				childContext, actions, type);
 		}
 
 		if (actions.length > 0) {
@@ -151,7 +151,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 
 	private void addChildren(Node<?> node, DynamicContainmentItem containmentItem,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		ECPControlContext controlContext, VAction[] actions) {
+		ECPControlContext controlContext, VAction[] actions, TestElementContainer container) {
 		@SuppressWarnings("unchecked")
 		final List<TestElement> children = (List<TestElement>) adapterFactoryItemDelegator
 			.getChildren(controlContext.getModelElement());
@@ -161,7 +161,8 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 			final DynamicContainmentItem pi = ModelFactory.eINSTANCE.createDynamicContainmentItem();
 			pi.setComposite(EcoreUtil.copy(containmentItem.getComposite()));
 			pi.setDomainModel(testElement);
-			ViewModelUtil.resolveDomainReferences(pi, testElement);
+			pi.setBaseItemIndex(container.getTestElements().indexOf(testElement));
+			// ViewModelUtil.resolveDomainReferences(pi, testElement);
 
 			final EList<DynamicContainmentItem> uvbPackingItems = containmentItem.getItems();
 
@@ -171,7 +172,7 @@ public class DynamicNodeBuilder implements NodeBuilder<DynamicContainmentTree> {
 			node.addChild(n);
 			n.setLabelObject(testElement);
 			createActions(n, actions);
-			addChildren(n, pi, adapterFactoryItemDelegator, childContext, actions);
+			addChildren(n, pi, adapterFactoryItemDelegator, childContext, actions, container);
 		}
 	}
 

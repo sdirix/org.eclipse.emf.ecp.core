@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
@@ -89,6 +90,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 			return createDomainIntermediate();
 		case ModelPackage.TEST_ELEMENT_CONTAINER:
 			return createTestElementContainer();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE:
+			return createDynamicContainmentTreeDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -164,6 +167,17 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	{
 		final TestElementContainerImpl testElementContainer = new TestElementContainerImpl();
 		return testElementContainer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public DynamicContainmentTreeDomainModelReference createDynamicContainmentTreeDomainModelReference() {
+		final DynamicContainmentTreeDomainModelReferenceImpl dynamicContainmentTreeDomainModelReference = new DynamicContainmentTreeDomainModelReferenceImpl();
+		return dynamicContainmentTreeDomainModelReference;
 	}
 
 	/**

@@ -86,6 +86,15 @@ public interface ModelFactory extends EFactory
 	TestElementContainer createTestElementContainer();
 
 	/**
+	 * Returns a new object of class '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * @generated
+	 */
+	DynamicContainmentTreeDomainModelReference createDynamicContainmentTreeDomainModelReference();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

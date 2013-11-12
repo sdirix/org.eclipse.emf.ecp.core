@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
@@ -117,6 +118,8 @@ public class ModelValidator extends EObjectValidator {
 				return validateDomainIntermediate((DomainIntermediate)value, diagnostics, context);
 			case ModelPackage.TEST_ELEMENT_CONTAINER:
 				return validateTestElementContainer((TestElementContainer)value, diagnostics, context);
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE:
+				return validateDynamicContainmentTreeDomainModelReference((DynamicContainmentTreeDomainModelReference)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -194,6 +197,15 @@ public class ModelValidator extends EObjectValidator {
 	 */
 	public boolean validateTestElementContainer(TestElementContainer testElementContainer, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(testElementContainer, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDynamicContainmentTreeDomainModelReference(DynamicContainmentTreeDomainModelReference dynamicContainmentTreeDomainModelReference, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(dynamicContainmentTreeDomainModelReference, diagnostics, context);
 	}
 
 	/**

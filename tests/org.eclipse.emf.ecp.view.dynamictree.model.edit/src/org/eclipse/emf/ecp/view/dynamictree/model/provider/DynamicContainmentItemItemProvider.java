@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -64,6 +65,7 @@ public class DynamicContainmentItemItemProvider
 			super.getPropertyDescriptors(object);
 
 			addDomainModelPropertyDescriptor(object);
+			addBaseItemIndexPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -89,6 +91,30 @@ public class DynamicContainmentItemItemProvider
 				false,
 				true,
 				null,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Base Item Index feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addBaseItemIndexPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DynamicContainmentItem_baseItemIndex_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentItem_baseItemIndex_feature",
+					"_UI_DynamicContainmentItem_type"),
+				ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				null,
 				null));
 	}
@@ -171,6 +197,9 @@ public class DynamicContainmentItemItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DynamicContainmentItem.class)) {
+		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
 		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));

@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
  *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getDomainModel <em>Domain Model</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getItems <em>Items</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getComposite <em>Composite</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getBaseItemIndex <em>Base Item Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,6 +81,26 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 	 * @ordered
 	 */
 	protected VContainedElement composite;
+
+	/**
+	 * The default value of the '{@link #getBaseItemIndex() <em>Base Item Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBaseItemIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer BASE_ITEM_INDEX_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getBaseItemIndex() <em>Base Item Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBaseItemIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer baseItemIndex = BASE_ITEM_INDEX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -207,6 +228,27 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Integer getBaseItemIndex() {
+		return baseItemIndex;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBaseItemIndex(Integer newBaseItemIndex) {
+		Integer oldBaseItemIndex = baseItemIndex;
+		baseItemIndex = newBaseItemIndex;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX, oldBaseItemIndex, baseItemIndex));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
@@ -235,6 +277,8 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 				return getItems();
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 				return getComposite();
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				return getBaseItemIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -259,6 +303,9 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 				setComposite((VContainedElement)newValue);
 				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				setBaseItemIndex((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -281,6 +328,9 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 				setComposite((VContainedElement)null);
 				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				setBaseItemIndex(BASE_ITEM_INDEX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -300,8 +350,26 @@ public class DynamicContainmentItemImpl extends VElementImpl implements DynamicC
 				return items != null && !items.isEmpty();
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 				return composite != null;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				return BASE_ITEM_INDEX_EDEFAULT == null ? baseItemIndex != null : !BASE_ITEM_INDEX_EDEFAULT.equals(baseItemIndex);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (baseItemIndex: ");
+		result.append(baseItemIndex);
+		result.append(')');
+		return result.toString();
 	}
 
 } // DynamicContainmentItemImpl

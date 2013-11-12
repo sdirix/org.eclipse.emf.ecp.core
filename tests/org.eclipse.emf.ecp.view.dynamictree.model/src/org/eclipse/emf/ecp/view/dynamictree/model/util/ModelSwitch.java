@@ -18,11 +18,13 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
@@ -123,6 +125,13 @@ public class ModelSwitch<T> extends Switch<T>
 			case ModelPackage.TEST_ELEMENT_CONTAINER: {
 				TestElementContainer testElementContainer = (TestElementContainer)theEObject;
 				T result = caseTestElementContainer(testElementContainer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE: {
+				DynamicContainmentTreeDomainModelReference dynamicContainmentTreeDomainModelReference = (DynamicContainmentTreeDomainModelReference)theEObject;
+				T result = caseDynamicContainmentTreeDomainModelReference(dynamicContainmentTreeDomainModelReference);
+				if (result == null) result = caseDomainModelReference(dynamicContainmentTreeDomainModelReference);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -227,6 +236,21 @@ public class ModelSwitch<T> extends Switch<T>
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDynamicContainmentTreeDomainModelReference(DynamicContainmentTreeDomainModelReference object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -271,6 +295,21 @@ public class ModelSwitch<T> extends Switch<T>
 	 */
 	public T caseCategory(VCategory object)
 	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDomainModelReference(VDomainModelReference object) {
 		return null;
 	}
 
