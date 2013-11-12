@@ -173,6 +173,12 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
 		
+		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
+        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
+        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui</module>
+        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui.swt</module>
+        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.feature</module>
+		
 		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
 
 		<!-- Graphiti 
@@ -213,11 +219,7 @@
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
 		
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui.swt</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.feature</module>
+		
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
 		
 		<!-- Modules for View Editor Q7 Tests -->
