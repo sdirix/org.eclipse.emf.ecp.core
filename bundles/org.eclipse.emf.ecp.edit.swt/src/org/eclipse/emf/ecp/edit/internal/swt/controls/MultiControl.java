@@ -44,6 +44,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -457,6 +458,7 @@ public abstract class MultiControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
+		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
 		if (validationLabel == null) {
 			return;
 		}
@@ -466,12 +468,23 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	/**
+	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the
+	 * parameter.
+	 * 
+	 * @param color the color to set, null if the default background color should be set
+	 */
+	protected void updateValidationColor(Color color) {
+
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	/**
 	 * {@inheritDoc}
 	 */
 	public void resetValidation() {
+		updateValidationColor(null);
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
