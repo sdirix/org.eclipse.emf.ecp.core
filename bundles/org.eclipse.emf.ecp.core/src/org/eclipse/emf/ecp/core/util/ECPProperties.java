@@ -13,20 +13,20 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.util;
 
-import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
+
 /**
  * {@link ECPProperties} are used to store key - value - pairs.
  * 
- * It publishes observable events on the {@link ECPObserverBus}.
+ * It publishes observable events on the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
  * Related Observer types: {@link ECPPropertiesObserver}. Use {@link ECPUtil#getECPObserverBus()} to
- * retrieve the ObserverBus and {@link ECPObserverBus#register(ECPObserver)} to register an Observer.
+ * retrieve the ObserverBus and
+ * {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus#register(org.eclipse.emf.ecp.core.util.observer.ECPObserver)
+ * ECPObserverBus#register(ECPObserver)} to register an Observer.
  * 
  * @author Eike Stepper
  * @author Eugen Neufeld

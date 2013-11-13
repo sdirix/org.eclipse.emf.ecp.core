@@ -1,10 +1,21 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
  * 
- * $Id$
- */
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * Johannes Faltermeier
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.validation.test.test.impl;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -26,10 +37,6 @@ import org.eclipse.emf.ecp.validation.test.test.Library;
 import org.eclipse.emf.ecp.validation.test.test.TestPackage;
 import org.eclipse.emf.ecp.validation.test.test.Writer;
 import org.eclipse.emf.ecp.validation.test.test.util.TestValidator;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -210,7 +217,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * @generated
 	 */
 	public void setFirstName(String newFirstName) {
-		String oldFirstName = firstName;
+		final String oldFirstName = firstName;
 		firstName = newFirstName;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__FIRST_NAME, oldFirstName,
@@ -235,7 +242,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * @generated
 	 */
 	public void setLastName(String newLastName) {
-		String oldLastName = lastName;
+		final String oldLastName = lastName;
 		lastName = newLastName;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LAST_NAME, oldLastName, lastName));
@@ -259,7 +266,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * @generated
 	 */
 	public void setEMail(String newEMail) {
-		String oldEMail = eMail;
+		final String oldEMail = eMail;
 		eMail = newEMail;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__EMAIL, oldEMail, eMail));
@@ -283,7 +290,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * @generated
 	 */
 	public void setBirthDate(Date newBirthDate) {
-		Date oldBirthDate = birthDate;
+		final Date oldBirthDate = birthDate;
 		birthDate = newBirthDate;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__BIRTH_DATE, oldBirthDate,
@@ -322,7 +329,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * @generated
 	 */
 	public void setPseudonym(boolean newPseudonym) {
-		boolean oldPseudonym = pseudonym;
+		final boolean oldPseudonym = pseudonym;
 		pseudonym = newPseudonym;
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__PSEUDONYM, oldPseudonym,
@@ -608,7 +615,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 			return super.toString();
 		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (firstName: ");
 		result.append(firstName);
 		result.append(", lastName: ");

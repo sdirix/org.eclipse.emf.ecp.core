@@ -14,6 +14,10 @@
 
 package org.eclipse.emf.ecp.core.util;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -28,10 +32,6 @@ import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
 import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBusImpl;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * This class provides common functionality.

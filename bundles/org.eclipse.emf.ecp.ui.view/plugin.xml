@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="renderer" name="Renderer" schema="schema/renderer.exsd"/>
+   <extension-point id="viewModelProviders" name="View Model Providers" schema="schema/viewModelProviders.exsd"/>
+   <extension-point id="customNodeBuilders" name="Custom Node Builders" schema="schema/customNodeBuilders.exsd"/>
+   <extension-point id="renderingConfiguration" name="Rendering Configuration" schema="schema/renderingConfiguration.exsd"/>
+</plugin>

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.internal.wizards.page.SelectOrCreateRepositoryPage;
 import org.eclipse.emf.ecp.internal.wizards.page.SelectRepositoryPage;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
-
 import org.eclipse.jface.wizard.Wizard;
 
 /**

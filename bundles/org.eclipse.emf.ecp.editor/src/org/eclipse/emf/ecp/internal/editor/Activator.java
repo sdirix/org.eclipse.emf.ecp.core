@@ -13,11 +13,10 @@
 
 package org.eclipse.emf.ecp.internal.editor;
 
-import org.eclipse.emf.ecp.edit.ECPControlFactory;
-
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -78,11 +77,17 @@ public class Activator extends Plugin {
 	 */
 	public static void logException(Exception e) {
 		getDefault().getLog().log(
-			new Status(Status.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 	}
 
 	private ServiceReference<ECPControlFactory> controlFactoryReference;
 
+	/**
+	 * Retrieves the {@link ECPControlFactory} as a service. Callers should call ungetECPControlFactory, once the
+	 * service is not used anymore.
+	 * 
+	 * @return a {@link ECPControlFactory}
+	 */
 	public ECPControlFactory getECPControlFactory() {
 		if (controlFactoryReference == null) {
 			controlFactoryReference = plugin.getBundle().getBundleContext()
@@ -91,6 +96,9 @@ public class Activator extends Plugin {
 		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
 	}
 
+	/**
+	 * Releases the service reference to {@link ECPControlFactory}.
+	 */
 	public void ungetECPControlFactory() {
 		if (controlFactoryReference == null) {
 			return;

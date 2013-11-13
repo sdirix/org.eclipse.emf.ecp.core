@@ -11,16 +11,18 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.spi.core.util.InternalElementRegistry.ResolveListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
+ * @param <OBSERVER>
  */
 public abstract class ElementRegistry<ELEMENT extends ECPElement, OBSERVER extends ECPObserver> extends
 	Registry<ELEMENT, OBSERVER> {
@@ -44,10 +46,10 @@ public abstract class ElementRegistry<ELEMENT extends ECPElement, OBSERVER exten
 			listeners = resolveListeners.toArray(new ResolveListener[resolveListeners.size()]);
 		}
 
-		for (ResolveListener<ELEMENT> listener : listeners) {
+		for (final ResolveListener<ELEMENT> listener : listeners) {
 			try {
 				listener.descriptorChanged(descriptor, resolved);
-			} catch (Exception ex) {
+			} catch (final Exception ex) {
 				Activator.log(ex);
 			}
 		}

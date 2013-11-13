@@ -11,12 +11,12 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
+import java.util.Collection;
+import java.util.Map.Entry;
+
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
-
-import java.util.Collection;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper

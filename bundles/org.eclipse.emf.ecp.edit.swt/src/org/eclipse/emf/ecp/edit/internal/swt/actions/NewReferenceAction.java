@@ -12,25 +12,25 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
- * An Action for adding reference links to a model element. It is mainly used in the {@link MEMultiLinkControl}
+ * An Action for adding reference links to a model element. It is mainly used in the
+ * {@link org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl ReferenceMultiControl}
  * 
  * @author shterev
  * @author Eugen Neufeld
@@ -48,14 +48,14 @@ public class NewReferenceAction extends ECPSWTAction {
 		EStructuralFeature feature) {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		Object obj = null;
-		EReference eReference = (EReference) getFeature();
+		final EReference eReference = (EReference) getFeature();
 		// Only create a temporary object in order to get the correct icon from the label provider
 		// the actual ME is created later on.
 		if (!eReference.getEReferenceType().isAbstract()) {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
+		final IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			modelElementContext.getModelElement());
 		Object labelProviderImageResult = labelProvider.getImage(obj);
 
@@ -73,12 +73,13 @@ public class NewReferenceAction extends ECPSWTAction {
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
 			image = Activator.getImage((URL) labelProviderImageResult);
-		} else {
+		}
+		else {
 			image = Activator.getImage((URL) null);
 		}
 
-		ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
-		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
+		final ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
+		final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
 			OverlayImageDescriptor.LOWER_RIGHT);
 		setImageDescriptor(imageDescriptor);
 
@@ -90,7 +91,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText("Create and link new " + attribute);//$NON-NLS-1$
+		setToolTipText(ActionMessages.NewReferenceAction_CreateAndLinkNew + attribute);
 	}
 
 	/**
@@ -121,7 +122,7 @@ public class NewReferenceAction extends ECPSWTAction {
 	// }
 	// Image image = labelProvider.getImage(obj);
 	//
-	// ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");
+	// ImageDescriptor addOverlay = Activator.getImageDescriptor("icons/add_overlay.png");//$NON-NLS-1$
 	// OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
 	// OverlayImageDescriptor.LOWER_RIGHT);
 	// setImageDescriptor(imageDescriptor);
@@ -129,12 +130,12 @@ public class NewReferenceAction extends ECPSWTAction {
 	// String attribute = descriptor.getDisplayName(eReference);
 	//
 	// // make singular attribute labels
-	// if (attribute.endsWith("ies")) {
-	// attribute = attribute.substring(0, attribute.length() - 3) + "y";
-	// } else if (attribute.endsWith("s")) {
+	// if (attribute.endsWith("ies")) {//$NON-NLS-1$
+	// attribute = attribute.substring(0, attribute.length() - 3) + "y";//$NON-NLS-1$
+	// } else if (attribute.endsWith("s")) {//$NON-NLS-1$
 	// attribute = attribute.substring(0, attribute.length() - 1);
 	// }
-	// setToolTipText("Create and link new " + attribute);
+	// setToolTipText(ActionMessages.NewReferenceAction_CreateAndLinkNew + attribute);
 	//
 	// }
 
@@ -147,7 +148,7 @@ public class NewReferenceAction extends ECPSWTAction {
 
 		// getModelElementContext().getEditingDomain().getCommandStack()
 		// .execute(new NewReferenceCommand(getModelElementContext().getModelElement()));
-		EObject eObject = getModelElementContext().getNewElementFor((EReference) getFeature());
+		final EObject eObject = getModelElementContext().getNewElementFor((EReference) getFeature());
 		if (eObject == null) {
 			return;
 		}

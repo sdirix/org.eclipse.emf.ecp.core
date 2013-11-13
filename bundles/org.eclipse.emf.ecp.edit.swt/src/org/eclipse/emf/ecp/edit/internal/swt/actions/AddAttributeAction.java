@@ -11,13 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * The action to allow adding of attribute values to multi attribute controls.
@@ -38,8 +38,8 @@ public class AddAttributeAction extends ECPSWTAction {
 		EStructuralFeature feature) {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		// TODO remove PlatformUI
-		setImageDescriptor(Activator.getImageDescriptor("icons/add.png"));
-		setToolTipText("Add Entry"); //$NON-NLS-1$
+		setImageDescriptor(Activator.getImageDescriptor("icons/add.png")); //$NON-NLS-1$
+		setToolTipText(ActionMessages.AddAttributeAction_AddEntry);
 	}
 
 	@Override

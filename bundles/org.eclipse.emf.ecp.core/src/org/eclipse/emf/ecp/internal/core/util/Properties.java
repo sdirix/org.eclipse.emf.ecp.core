@@ -11,10 +11,6 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
-
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -23,6 +19,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 
 /**
  * @author Eike Stepper

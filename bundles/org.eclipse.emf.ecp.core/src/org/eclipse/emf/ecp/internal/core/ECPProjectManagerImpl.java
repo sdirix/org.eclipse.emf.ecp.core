@@ -12,8 +12,15 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
-import org.eclipse.net4j.util.AdapterUtil;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -35,16 +42,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
-
-import org.eclipse.core.runtime.IStatus;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import org.eclipse.net4j.util.AdapterUtil;
 
 /**
  * This class manages the available {@link ECPProject ECPProjects}.
@@ -64,13 +62,16 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 */
 	private boolean initializedProjects;
 
+	/**
+	 * Should not be called directly, use service instead.
+	 */
 	public ECPProjectManagerImpl() {
+		if (INSTANCE != null) {
+			throw new IllegalStateException("Manager must not be initialized twice");
+		}
 		INSTANCE = this;
-	}
-
-	protected void startup() {
-		setFolder(new File(Activator.getInstance().getStateLocation().toFile(), "projects"));
-		activate();
+		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
+		setFolder(new File(stateLocation, "projects"));
 	}
 
 	/** {@inheritDoc} */
@@ -88,7 +89,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 			throw new UnsupportedOperationException("The provider " + provider.getLabel()
 				+ " doesn't support the creation of projects without an ECPRepository (aka offline project).");
 		}
-		InternalProject project = new ECPProjectImpl((InternalProvider) provider, name, properties);
+		final InternalProject project = new ECPProjectImpl((InternalProvider) provider, name, properties);
 		return createProject(project);
 	}
 
@@ -98,14 +99,14 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 		if (projectExists(name)) {
 			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists");
 		}
-		InternalProject project = new ECPProjectImpl(repository, name, properties);
+		final InternalProject project = new ECPProjectImpl(repository, name, properties);
 		return createProject(project);
 	}
 
 	/** {@inheritDoc} */
 	public ECPProject createProject(ECPProject project, String name) {
-		InternalProject internalProject = (InternalProject) project;
-		InternalProject newProject = internalProject.clone(name);
+		final InternalProject internalProject = (InternalProject) project;
+		final InternalProject newProject = internalProject.clone(name);
 		return createProject(newProject);
 	}
 
@@ -123,10 +124,10 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	/** {@inheritDoc} */
 	public InternalProject getProject(Object adaptable) {
 		if (adaptable instanceof ECPProjectAware) {
-			ECPProjectAware projectAware = (ECPProjectAware) adaptable;
+			final ECPProjectAware projectAware = (ECPProjectAware) adaptable;
 			return (InternalProject) projectAware.getProject();
 		}
-		InternalProject result = getInternalProject(adaptable);
+		final InternalProject result = getInternalProject(adaptable);
 		if (result != null) {
 			return result;
 		}
@@ -134,9 +135,9 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	private InternalProject getInternalProject(Object object) {
-		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
-			InternalProvider internalProvider = (InternalProvider) ECPUtil.getResolvedElement(provider);
-			ECPContainer modelContext = internalProvider.getModelContext(object);
+		for (final ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
+			final InternalProvider internalProvider = (InternalProvider) ECPUtil.getResolvedElement(provider);
+			final ECPContainer modelContext = internalProvider.getModelContext(object);
 			if (modelContext != null && InternalProject.class.isInstance(modelContext)) {
 				return (InternalProject) modelContext;
 			}
@@ -152,10 +153,10 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/** {@inheritDoc} */
 	public Collection<ECPProject> getProjects() {
-		Collection<InternalProject> projects = getElements();
+		final Collection<InternalProject> projects = getElements();
 		if (!initializedProjects) {
 
-			for (InternalProject project : projects) {
+			for (final InternalProject project : projects) {
 
 				if (!project.getProvider().modelExists(project)) {
 					project.close();
@@ -172,7 +173,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/**
-	 * This is called by projects to notify observers about project changes.
+	 * This is called by projects to notify observers if a project gets openes or closed.
 	 * 
 	 * @param project the project that called this method
 	 * @param opened whether the project is open
@@ -185,7 +186,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 		try {
 			ECPUtil.getECPObserverBus().notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
-		} catch (Exception ex) {
+		} catch (final RuntimeException ex) {
 			Activator.log(ex);
 		}
 	}
@@ -201,9 +202,9 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 */
 	public void notifyObjectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 
-		Collection<Object> affected = ECPUtil.getECPObserverBus().notify(ECPProjectContentChangedObserver.class)
+		final Collection<Object> affected = ECPUtil.getECPObserverBus().notify(ECPProjectContentChangedObserver.class)
 			.objectsChanged(project, objects);
-		Set<Object> toUpdate = new HashSet<Object>(objects);
+		final Set<Object> toUpdate = new HashSet<Object>(objects);
 		if (affected != null) {
 			toUpdate.addAll(affected);
 		}
@@ -214,11 +215,11 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/** {@inheritDoc} */
 	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) {
-		Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
-		Collection<InternalProject> projects = getElements();
+		final Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
+		final Collection<InternalProject> projects = getElements();
 
-		for (ECPRepository repository : addedRepositories) {
-			for (InternalProject project : projects) {
+		for (final ECPRepository repository : addedRepositories) {
+			for (final InternalProject project : projects) {
 				if (!project.isOpen() && project.getRepository().getName().equals(repository.getName())) {
 					project.undispose((InternalRepository) repository);
 				}

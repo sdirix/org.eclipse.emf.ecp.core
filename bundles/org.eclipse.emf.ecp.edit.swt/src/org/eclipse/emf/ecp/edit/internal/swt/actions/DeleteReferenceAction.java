@@ -16,15 +16,14 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
@@ -48,9 +47,8 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		super(modelElementContext, itemPropertyDescriptor, feature);
 		// TODO remove PlatformUI
 
-		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png"));
-		// TODO language
-		setToolTipText("Delete Reference"); //$NON-NLS-1$
+		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png")); //$NON-NLS-1$
+		setToolTipText(ActionMessages.DeleteReferenceAction_DeleteReference);
 	}
 
 	@Override
@@ -92,13 +90,14 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
 		// AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		String modelElementName = adapterFactoryItemDelegator.getText(toBeDeleted);
-		// TODO language
-		question = "Do you really want to delete the model element " + modelElementName + "?";//$NON-NLS-1$ //$NON-NLS-2$
+		question = ActionMessages.DeleteReferenceAction_DeleteModelQuestion + modelElementName
+			+ ActionMessages.DeleteReferenceAction_Questionmark;
 		// } else {
 		// question = "Do you really want to delete these " + toBeDeleted.size() + " model elements?";
 		// }
-		MessageDialog dialog = new MessageDialog(null, "Confirmation", null, question, MessageDialog.QUESTION,//$NON-NLS-1$
-			new String[] { "Yes", "No" }, 0);//$NON-NLS-1$//$NON-NLS-2$
+		MessageDialog dialog = new MessageDialog(null, ActionMessages.DeleteReferenceAction_Confirmation, null,
+			question, MessageDialog.QUESTION, new String[] { ActionMessages.DeleteReferenceAction_Yes,
+				ActionMessages.DeleteReferenceAction_No }, 0);
 
 		boolean confirm = false;
 		if (dialog.open() == Window.OK) {

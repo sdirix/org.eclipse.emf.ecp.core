@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalDescriptor;
 import org.eclipse.emf.ecp.spi.core.util.InternalElementRegistry.ResolveListener;
-
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.SWT;

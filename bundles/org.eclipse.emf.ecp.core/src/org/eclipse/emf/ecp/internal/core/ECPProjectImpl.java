@@ -12,6 +12,23 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -21,7 +38,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.core.ECPRepository;
-import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPElement;
 import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
 import org.eclipse.emf.ecp.core.util.ECPModelContextAdapter;
@@ -36,24 +52,6 @@ import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
 import org.eclipse.emf.edit.domain.EditingDomain;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.Platform;
-
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -120,9 +118,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	public ECPProjectImpl(ObjectInput in) throws IOException {
 		super(in);
 
-		boolean shared = in.readBoolean();
+		final boolean shared = in.readBoolean();
 		if (shared) {
-			String repositoryName = in.readUTF();
+			final String repositoryName = in.readUTF();
 			InternalRepository repository = (InternalRepository) ECPUtil.getECPRepositoryManager().getRepository(
 				repositoryName);
 			if (repository == null) {
@@ -132,7 +130,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			setRepository(repository);
 			provider = repository.getProvider();
 		} else {
-			String providerName = in.readUTF();
+			final String providerName = in.readUTF();
 			provider = (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 			if (provider == null) {
 				throw new IllegalStateException("Provider not found: " + providerName);
@@ -141,19 +139,19 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 		open = in.readBoolean();
 
-		int filteredPackageSize = in.readInt();
+		final int filteredPackageSize = in.readInt();
 		filteredEPackages = new HashSet<EPackage>();
 		for (int i = 0; i < filteredPackageSize; i++) {
-			EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
+			final EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
 			if (ePackage != null) {
 				filteredEPackages.add(ePackage);
 			}
 		}
-		int filteredEClassSize = in.readInt();
+		final int filteredEClassSize = in.readInt();
 		filteredEClasses = new HashSet<EClass>();
 		for (int i = 0; i < filteredEClassSize; i++) {
-			EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
-			EClassifier eClassifier = ePackage.getEClassifier(in.readUTF());
+			final EPackage ePackage = Registry.INSTANCE.getEPackage(in.readUTF());
+			final EClassifier eClassifier = ePackage.getEClassifier(in.readUTF());
 			if (eClassifier instanceof EClass) {
 				filteredEClasses.add((EClass) eClassifier);
 			}
@@ -167,31 +165,31 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * this method sets all known {@link EPackage}s as the filter.
 	 */
 	private void setupFilteredEPackages() {
-		List<ECPFilterProvider> filterProviders = new ArrayList<ECPFilterProvider>();
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+		final List<ECPFilterProvider> filterProviders = new ArrayList<ECPFilterProvider>();
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.core.filters");
-		for (IExtension extension : extensionPoint.getExtensions()) {
-			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+		for (final IExtension extension : extensionPoint.getExtensions()) {
+			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				ECPFilterProvider filterProvider = (ECPFilterProvider) configurationElement
+				final ECPFilterProvider filterProvider = (ECPFilterProvider) configurationElement
 					.createExecutableExtension("class");
 				filterProviders.add(filterProvider);
-			} catch (CoreException ex) {
+			} catch (final CoreException ex) {
 				Activator.log(ex);
 			}
 		}
 
-		Set<EPackage> ePackages = new HashSet<EPackage>();
-		Set<String> filteredNsUris = new HashSet<String>();
-		for (ECPFilterProvider filterProvider : filterProviders) {
+		final Set<EPackage> ePackages = new HashSet<EPackage>();
+		final Set<String> filteredNsUris = new HashSet<String>();
+		for (final ECPFilterProvider filterProvider : filterProviders) {
 			filteredNsUris.addAll(filterProvider.getHiddenPackages());
 		}
 
-		Set<String> relevantURIs = new HashSet<String>(Registry.INSTANCE.keySet());
+		final Set<String> relevantURIs = new HashSet<String>(Registry.INSTANCE.keySet());
 		relevantURIs.removeAll(filteredNsUris);
 
-		for (String nsUri : relevantURIs) {
-			EPackage ePackage = Registry.INSTANCE.getEPackage(nsUri);
+		for (final String nsUri : relevantURIs) {
+			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsUri);
 			ePackages.add(ePackage);
 		}
 
@@ -212,11 +210,11 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		out.writeBoolean(open);
 
 		out.writeInt(filteredEPackages.size());
-		for (EPackage ePackage : filteredEPackages) {
+		for (final EPackage ePackage : filteredEPackages) {
 			out.writeUTF(ePackage.getNsURI());
 		}
 		out.writeInt(filteredEClasses.size());
-		for (EClass eClass : filteredEClasses) {
+		for (final EClass eClass : filteredEClasses) {
 
 			out.writeUTF(eClass.getEPackage().getNsURI());
 			out.writeUTF(eClass.getName());
@@ -316,9 +314,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object getAdapter(Class adapterType) {
-		InternalProvider provider = getProvider();
+		final InternalProvider provider = getProvider();
 		if (provider != null && !provider.isDisposed()) {
-			Object result = provider.getAdapter(this, adapterType);
+			final Object result = provider.getAdapter(this, adapterType);
 			if (result != null) {
 				return result;
 			}
@@ -385,10 +383,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/** {@inheritDoc} */
 	public void notifyProvider(LifecycleEvent event) {
-		InternalProvider provider = getProvider();
+		final InternalProvider provider = getProvider();
 		provider.handleLifecycle(this, event);
 		if (event == LifecycleEvent.INIT) {
-			Notifier root = provider.getRoot(this);
+			final Notifier root = provider.getRoot(this);
 			if (root != null) {
 				root.eAdapters().add(new ECPModelContextAdapter(this));
 			}
@@ -428,11 +426,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		/** {@inheritDoc} */
-		public String getType() {
-			return TYPE;
-		}
-
-		/** {@inheritDoc} */
 		public String getName() {
 			return name;
 		}
@@ -440,11 +433,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		/** {@inheritDoc} */
 		public boolean isDisposed() {
 			return true;
-		}
-
-		/** {@inheritDoc} */
-		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
-			return null;
 		}
 
 		/** {@inheritDoc} */
@@ -460,11 +448,6 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		/** {@inheritDoc} */
 		public int compareTo(ECPElement o) {
 			return 0;
-		}
-
-		/** {@inheritDoc} */
-		public ECPContainer getContext() {
-			return null;
 		}
 
 		/** {@inheritDoc} */
@@ -543,7 +526,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
-		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
 	/** {@inheritDoc} */
@@ -559,7 +542,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
-		ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
 	/** {@inheritDoc} */
@@ -580,17 +563,17 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	/** {@inheritDoc} */
 	public void deleteElements(Collection<Object> objects) {
 		getProvider().delete(this, objects);
-		notifyObjectsChanged((Collection) Collections.singleton(this), true);
+		notifyObjectsChanged(Collections.singleton((Object) this), true);
 	}
 
 	/** {@inheritDoc} */
 	public InternalProject clone(String name) {
 		try {
 			super.clone();
-		} catch (CloneNotSupportedException ex) {
+		} catch (final CloneNotSupportedException ex) {
 			Activator.log(ex);
 		}
-		InternalProject project = new ECPProjectImpl(getProvider(), name, ECPUtil.createProperties());
+		final InternalProject project = new ECPProjectImpl(getProvider(), name, ECPUtil.createProperties());
 		project.setVisibleEClasses(getVisibleEClasses());
 		project.setVisiblePackages(getVisiblePackages());
 		getProvider().cloneProject(this, project);
@@ -603,6 +586,9 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		ECPProjectManagerImpl.INSTANCE.storeElement(this);
 	}
 
+	/**
+	 * You must not call this anymore as properties are save automatically now.
+	 */
 	@Deprecated
 	public void saveProperties() {
 		ECPProjectManagerImpl.INSTANCE.storeElement(this);

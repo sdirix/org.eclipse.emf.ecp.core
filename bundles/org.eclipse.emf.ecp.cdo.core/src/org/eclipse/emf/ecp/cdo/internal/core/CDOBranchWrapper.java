@@ -19,6 +19,8 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 
 /**
+ * Wraps are CDO branch for ECP, so it can be checked out.
+ * 
  * @author Eike Stepper
  */
 public class CDOBranchWrapper implements ECPCheckoutSource {
@@ -26,6 +28,12 @@ public class CDOBranchWrapper implements ECPCheckoutSource {
 
 	private final String branchPath;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param repository the repository
+	 * @param branchPath the branch path
+	 */
 	public CDOBranchWrapper(InternalRepository repository, String branchPath) {
 		this.repository = repository;
 		this.branchPath = branchPath;
@@ -41,10 +49,20 @@ public class CDOBranchWrapper implements ECPCheckoutSource {
 		return repository;
 	}
 
+	/**
+	 * Returns the branch path of the wrapped CDO branch.
+	 * 
+	 * @return String of the path
+	 */
 	public final String getBranchPath() {
 		return branchPath;
 	}
 
+	/**
+	 * Return the name of the wrapped CDO branch.
+	 * 
+	 * @return the name
+	 */
 	public String getName() {
 		int pos = branchPath.lastIndexOf('/');
 		if (pos == -1) {

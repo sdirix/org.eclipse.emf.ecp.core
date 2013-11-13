@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="file" name="View Model File" schema="schema/file.exsd"/>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.viewModelProviders">
+      <viewModelProvider
+            class="org.eclipse.emf.ecp.view.model.provider.xmi.ExtensionXMIViewModelProvider">
+      </viewModelProvider>
+   </extension>
+
+</plugin>

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.core.util.ECPElement;
 
 /**
  * @author Eike Stepper
+ * @since 1.1
  */
 public interface InternalRegistryElement extends ECPElement, ECPDisposable {
 	/**

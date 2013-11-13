@@ -6,7 +6,7 @@ Element-Name: CreateTwoCheckOuts
 Element-Type: context
 Element-Version: 2.0
 Id: __UtTgD-XEeK-yuKsz0Lang
-Save-Time: 4/24/13 3:46 PM
+Save-Time: 8/16/13 11:01 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -56,6 +56,27 @@ get-editor "Tournament Pro" | close
 get-editor "League Europe" | close
 get-editor Matchup | close
 get-editor Game | close
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Jonas" | double-click
+with [get-editor "Player Jonas"] {
+    get-button "Add Entry" | click
+    with [get-editbox -after [get-label "EMails*"]] {
+        set-text jonas
+        key-type "M1+M3+q" "@"
+        set-text "jonas@helming.de"
+    }
+}
+get-view "Model Explorer" | get-tree | select "TestProject/League America/Player Maximilian" | double-click
+with [get-editor "Player Maximilian"] {
+    get-button "Add Entry" | click
+    with [get-editbox -after [get-label "EMails*"]] {
+        set-text maximilina
+        key-type "M1+M3+q" "@"
+        set-text "maximilina@koegel.de"
+    }
+    get-editbox -after [get-label Name] | click-text 1
+    close
+}
+get-editor "Player Jonas" | close
 get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
 with [get-window "Progress Information" | get-window "Authentication required"] {
     get-combo -after [get-label Username] | set-text super

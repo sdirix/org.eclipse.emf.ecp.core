@@ -12,14 +12,13 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
-
 import org.eclipse.jface.viewers.TreeViewer;
-
-import java.util.Collection;
 
 /**
  * Helper class for creating a dialog which allows to select an {@link EClass}.

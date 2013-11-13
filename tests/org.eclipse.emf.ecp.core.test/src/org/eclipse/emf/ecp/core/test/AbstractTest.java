@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.core.test;
 
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -15,19 +27,19 @@ public abstract class AbstractTest {
 	private static ECPProjectManager projectManager;
 	private static ECPProvider provider;
 	private static ECPRepository repository;
+
 	@BeforeClass
 	public static void init() throws ECPProjectWithNameExistsException {
 		provider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
 		repository = ECPUtil.getECPRepositoryManager().addRepository(provider, "repositoryName", "repositoryLabel",
 			"description", getNewProperties());
 		projectManager = ECPUtil.getECPProjectManager();
-		
-		
+
 	}
 
 	@Before
 	public void cleanup() throws ECPProjectWithNameExistsException {
-		for(ECPProject existingProject:projectManager.getProjects()){
+		for (final ECPProject existingProject : projectManager.getProjects()) {
 			existingProject.delete();
 		}
 	}
@@ -45,7 +57,7 @@ public abstract class AbstractTest {
 	}
 
 	public static ECPProperties getNewProperties() {
-		ECPProperties properties = ECPUtil.createProperties();
+		final ECPProperties properties = ECPUtil.createProperties();
 		properties.addProperty(EMFStoreProvider.PROP_REPOSITORY_URL, "localhost");
 		properties.addProperty(EMFStoreProvider.PROP_PORT, "8080");
 		properties.addProperty(EMFStoreProvider.PROP_CERTIFICATE,

@@ -12,21 +12,20 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
+import java.util.Collection;
+import java.util.Collections;
+
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIDeleteRemoteProjectController;
-
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-
-import java.util.Collection;
-import java.util.Collections;
 
 /**
  * This is the EMFStore DeleteOnServer Handler delegating to the EMFStore {@link UIDeleteRemoteProjectController}.

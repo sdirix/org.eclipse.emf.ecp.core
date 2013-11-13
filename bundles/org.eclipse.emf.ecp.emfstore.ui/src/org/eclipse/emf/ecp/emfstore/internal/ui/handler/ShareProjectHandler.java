@@ -12,6 +12,13 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.concurrent.Callable;
+
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.internal.wizards.ShareWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
@@ -22,17 +29,9 @@ import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.emf.emfstore.internal.client.ui.controller.UIShareProjectController;
-
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.concurrent.Callable;
 
 /**
  * This is the EMFStore ShareProject Handler delegating to the EMFStore {@link UIShareProjectController}.

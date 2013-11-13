@@ -14,16 +14,14 @@
 
 package org.eclipse.emf.ecp.spi.ui;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalRegistryElement;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -33,6 +31,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Eike Stepper
+ * @since 1.1
  */
 public interface UIProvider extends InternalRegistryElement, IAdaptable, AdapterProvider {
 	/** The Type of the Element. **/

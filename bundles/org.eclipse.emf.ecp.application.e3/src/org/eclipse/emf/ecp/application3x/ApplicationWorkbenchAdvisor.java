@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.application3x;
 
+import java.net.URL;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
@@ -25,10 +27,7 @@ import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ide.IDEInternalWorkbenchImages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.model.WorkbenchAdapterBuilder;
-
 import org.osgi.framework.Bundle;
-
-import java.net.URL;
 
 /**
  * The {@link ApplicationWorkbenchAdvisor} class.

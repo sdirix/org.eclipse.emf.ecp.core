@@ -12,18 +12,17 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Control;
 
 /**
- * This class defines a SingleControl which is used for displaying {@link EStructuralFeature}s which have maximum 1
+ * This class defines a SingleControl which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
+ * EStructuralFeature}s which have maximum 1
  * value.
  * 
  * @author Eugen Neufeld
@@ -32,36 +31,38 @@ import org.eclipse.swt.graphics.Image;
 public abstract class SingleControl extends SWTControl {
 
 	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+	private ControlDecoration controlDecoration;
 
 	// private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);
-
-	/**
-	 * Constructor for a single control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public SingleControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor, EStructuralFeature feature,
-		ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getData().size() < 2) {
+			return;
+		}
+		if (!diagnostic.getData().get(0).equals(getModelElementContext().getModelElement())
+			|| !diagnostic.getData().get(1).equals(getStructuralFeature())) {
+			return;
+		}
+
 		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
-			validationLabel.setImage(image);
+			final Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
 			Diagnostic reason = diagnostic;
 			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
 				reason = diagnostic.getChildren().get(0);
 			}
-			validationLabel.setToolTipText(reason.getMessage());
-			updateValidationColor(validationLabel.getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+			if (validationLabel != null) {
+				validationLabel.setImage(image);
+				validationLabel.setToolTipText(reason.getMessage());
+
+			}
+			if (controlDecoration != null) {
+				controlDecoration.setDescriptionText(reason.getMessage());
+				controlDecoration.show();
+			}
+			updateValidationColor(getSystemColor(SWT.COLOR_RED));
 		} else {
 			resetValidation();
 		}
@@ -77,6 +78,14 @@ public abstract class SingleControl extends SWTControl {
 
 	}
 
+	protected void addControlDecoration(Control control) {
+		// controlDecoration = new ControlDecoration(control, SWT.TOP | SWT.LEFT);
+		// final FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
+		// FieldDecorationRegistry.DEC_ERROR);
+		// controlDecoration.setImage(fieldDecoration.getImage());
+		// controlDecoration.hide();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -85,14 +94,33 @@ public abstract class SingleControl extends SWTControl {
 			return;
 		}
 		validationLabel.setImage(null);
-		validationLabel.setToolTipText("");
+		validationLabel.setToolTipText(""); //$NON-NLS-1$
 		updateValidationColor(null);
+		if (controlDecoration != null) {
+			controlDecoration.hide();
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void dispose() {
-		validationLabel.dispose();
+		if (validationLabel != null) {
+			validationLabel.dispose();
+		}
+		if (controlDecoration != null) {
+			controlDecoration.dispose();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @deprecated
+	 */
+	@Deprecated
+	public boolean showLabel() {
+		return true;
 	}
 }

@@ -11,9 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core.util.observer;
 
-import org.eclipse.emf.ecp.core.ECPProject;
-
 import java.util.Collection;
+
+import org.eclipse.emf.ecp.core.ECPProject;
 
 /**
  * This Observer is called to notify listeners about changes of objects in a project. The caller can return objects that

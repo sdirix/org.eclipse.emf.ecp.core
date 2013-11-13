@@ -11,13 +11,6 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
-import org.eclipse.net4j.util.io.IOUtil;
-
-import org.eclipse.emf.ecp.core.util.ECPElement;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
-import org.eclipse.emf.ecp.internal.core.Activator;
-import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,8 +25,16 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.emf.ecp.core.util.ECPElement;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
+import org.eclipse.net4j.util.io.IOUtil;
+
 /**
  * @author Eike Stepper
+ * @param <ELEMENT>
+ * @param <OBSERVER>
  */
 public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER extends ECPObserver> extends
 	ElementRegistry<ELEMENT, OBSERVER> {
@@ -73,16 +74,16 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		// TODO Trace properly
 		System.out.println("Loading " + getClass().getSimpleName() + " from " + folder.getAbsolutePath());
 
-		Set<ELEMENT> elements = new HashSet<ELEMENT>();
-		for (File file : folder.listFiles()) {
+		final Set<ELEMENT> elements = new HashSet<ELEMENT>();
+		for (final File file : folder.listFiles()) {
 			try {
 				if (isLoadableElement(file)) {
 					InputStream stream = null;
 
 					try {
 						stream = new FileInputStream(file);
-						ObjectInputStream in = new ObjectInputStream(stream);
-						ELEMENT element = loadElement(in);
+						final ObjectInputStream in = new ObjectInputStream(stream);
+						final ELEMENT element = loadElement(in);
 						// ELEMENT existingElement = getElement(element.getName());
 						// if (existingElement != null)
 						// {
@@ -100,7 +101,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 						IOUtil.close(stream);
 					}
 				}
-			} catch (IOException ex) {
+			} catch (final IOException ex) {
 				Activator.log(ex);
 			}
 		}
@@ -121,16 +122,16 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		}
 
 		if (isActive()) {
-			for (ELEMENT element : InternalUtil.getRemovedElements(oldElements, newElements)) {
+			for (final ELEMENT element : InternalUtil.getRemovedElements(oldElements, newElements)) {
 				try {
-					File file = getFile(element);
+					final File file = getFile(element);
 					file.delete();
-				} catch (Exception ex) {
+				} catch (final Exception ex) {
 					Activator.log(ex);
 				}
 			}
 
-			for (ELEMENT element : InternalUtil.getAddedElements(oldElements, newElements)) {
+			for (final ELEMENT element : InternalUtil.getAddedElements(oldElements, newElements)) {
 				if (element.isStorable()) {
 					storeElement(element);
 				}
@@ -139,8 +140,8 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	}
 
 	public void storeElement(ELEMENT element) {
-		File file = getFile(element);
-		File temp = new File(file.getParentFile(), file.getName() + ".tmp");
+		final File file = getFile(element);
+		final File temp = new File(file.getParentFile(), file.getName() + ".tmp");
 		if (temp.isFile()) {
 			temp.delete();
 		}
@@ -150,7 +151,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		try {
 			try {
 				stream = new FileOutputStream(temp);
-				ObjectOutputStream out = new ObjectOutputStream(stream);
+				final ObjectOutputStream out = new ObjectOutputStream(stream);
 				element.write(out);
 				out.flush();
 			} finally {
@@ -159,7 +160,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 
 			file.delete();
 			temp.renameTo(file);
-		} catch (Exception ex) {
+		} catch (final Exception ex) {
 			temp.delete();
 			Activator.log(ex);
 		}

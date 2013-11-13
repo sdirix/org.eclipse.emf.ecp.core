@@ -12,25 +12,19 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolTip;
 
 /**
  * This abstract class is used as a common superclass for all widgets that use a {@link Text} widget.
@@ -44,21 +38,6 @@ public abstract class AbstractTextControl extends SingleControl {
 	 */
 	private Text text;
 	private boolean doVerify;
-	private ControlDecoration controlDecoration;
-
-	/**
-	 * Constructor for a control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public AbstractTextControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	@Override
 	protected void updateValidationColor(Color color) {
@@ -69,28 +48,26 @@ public abstract class AbstractTextControl extends SingleControl {
 	protected void fillControlComposite(Composite composite) {
 		doVerify = false;
 		createTextWidget(composite);
-		addControlDecoration(composite.getParent());
-	}
-
-	private void addControlDecoration(Composite composite) {
-		controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP, composite);
-		controlDecoration.hide();
-		// TODO language
-		controlDecoration.setDescriptionText("Invalid input");//$NON-NLS-1$
-		controlDecoration.setShowHover(true);
-		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault().getFieldDecoration(
-			FieldDecorationRegistry.DEC_ERROR);
-		controlDecoration.setImage(fieldDecoration.getImage());
+		addControlDecoration(text);
 	}
 
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
 		if (getStructuralFeature().isUnsettable()) {
-			text.setMessage("<unset>");
+			text.setMessage(ControlMessages.AbstractTextControl_Unset);
 		}
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		customizeText(text);
+
+	}
+
+	protected ToolTip createToolTip(int style, String text, String message) {
+		final ToolTip toolTip = new ToolTip(this.text.getShell(), style);
+		toolTip.setText(text);
+		toolTip.setMessage(message);
+		return toolTip;
+
 	}
 
 	/**
@@ -141,8 +118,9 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	@Override
 	public Binding bindValue() {
-		IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
-		Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new TargetToModelUpdateStrategy(),
+		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
+			new TargetToModelUpdateStrategy(),
 			new ModelToTargetUpdateStrategy());
 		return binding;
 	}
@@ -154,7 +132,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	 *            the content of the SWT Text control
 	 */
 	protected void setUnvalidatedString(String string) {
-		boolean oldDoVerify = doVerify;
+		final boolean oldDoVerify = doVerify;
 		doVerify = false;
 		text.setText(string);
 		doVerify = oldDoVerify;
@@ -162,7 +140,6 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	@Override
 	public void dispose() {
-		controlDecoration.dispose();
 		text.dispose();
 		super.dispose();
 	}
@@ -210,7 +187,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 		@Override
 		public Object convert(Object value) {
-			controlDecoration.hide();
+			// controlDecoration.hide();
 			updateValidationColor(null);
 			return convertValue(value);
 		}
@@ -221,14 +198,14 @@ public abstract class AbstractTextControl extends SingleControl {
 
 		@Override
 		public IStatus validateAfterGet(Object value) {
-			IStatus status = super.validateAfterGet(value);
-			if (status.getSeverity() == IStatus.ERROR) {
-				controlDecoration.show();
-				controlDecoration.setDescriptionText(status.getMessage());
-			} else {
-				controlDecoration.hide();
-				controlDecoration.setDescriptionText(null);
-			}
+			final IStatus status = super.validateAfterGet(value);
+			// if (status.getSeverity() == IStatus.ERROR) {
+			// controlDecoration.show();
+			// controlDecoration.setDescriptionText(status.getMessage());
+			// } else {
+			// controlDecoration.hide();
+			// controlDecoration.setDescriptionText(null);
+			// }
 			return status;
 		}
 
@@ -239,23 +216,24 @@ public abstract class AbstractTextControl extends SingleControl {
 		public Object convert(Object value) {
 			try {
 
-				controlDecoration.hide();
+				// controlDecoration.hide();
 				updateValidationColor(null);
-				if ("".equals(value)) {
+				if ("".equals(value)) { //$NON-NLS-1$
 					value = null;
 				}
 				if (value == null && getStructuralFeature().isUnsettable()) {
 					return SetCommand.UNSET_VALUE;
 				}
 
-				Object convertedValue = convertValue(value);
+				final Object convertedValue = convertValue(value);
 
 				return convertedValue;
 
-			} catch (IllegalArgumentException e) {
-				controlDecoration.show();
+			} catch (final IllegalArgumentException e) {
+				// controlDecoration.show();
 				updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
-				controlDecoration.setDescriptionText("Invalid input " + e.getLocalizedMessage());
+				// controlDecoration.setDescriptionText(ControlMessages.AbstractTextControl_InvalidInputSpace
+				// + e.getLocalizedMessage());
 				throw e;
 			}
 		}

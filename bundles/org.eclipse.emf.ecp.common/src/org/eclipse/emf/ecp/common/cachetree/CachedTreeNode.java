@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.common.cachetree;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -27,7 +27,7 @@ public abstract class CachedTreeNode<T> {
 
 	private T ownValue;
 	private T cachedChildrenValue;
-	private Map<Object, T> cache;
+	private final Map<Object, T> cache;
 	private Object parent;
 
 	/**
@@ -37,7 +37,7 @@ public abstract class CachedTreeNode<T> {
 	 */
 	public CachedTreeNode(T initialValue) {
 		this.ownValue = initialValue;
-		cache = new HashMap<Object, T>();
+		cache = new LinkedHashMap<Object, T>();
 	}
 
 	/**
@@ -46,7 +46,7 @@ public abstract class CachedTreeNode<T> {
 	protected abstract void update();
 
 	/**
-	 * Puts a value into the cache.
+	 * Puts a value into the cache and updates its value.
 	 * 
 	 * @param key
 	 *            the (child) object that contains the given value
@@ -54,17 +54,19 @@ public abstract class CachedTreeNode<T> {
 	 *            an additional value that will be considered for the computation of the
 	 *            actual value that results to a {@link #update()} call
 	 */
+	// TODO rename method
 	public void putIntoCache(Object key, T value) {
 		cache.put(key, value);
 		update();
 	}
 
 	/**
-	 * Removes a (child) object from the cache.
+	 * Removes a (child) object from the cache and updates its value.
 	 * 
 	 * @param key
 	 *            the object to be removed
 	 */
+	// TODO rename method
 	public void removeFromCache(Object key) {
 		cache.remove(key);
 		update();

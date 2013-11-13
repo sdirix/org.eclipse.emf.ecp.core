@@ -13,25 +13,25 @@
 
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
- * An Action for adding reference links to a model element. It is mainly used in the {@link MEMultiLinkControl}
+ * An Action for adding reference links to a model element. It is mainly used in the
+ * {@link org.eclipse.emf.ecp.edit.internal.swt.controls.MultiControl MultiControl}
  * 
  * @author shterev
  * @author Eugen Neufeld
@@ -48,13 +48,13 @@ public class AddReferenceAction extends ECPSWTAction {
 	public AddReferenceAction(ECPControlContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
 		EStructuralFeature feature) {
 		super(modelElementContext, itemPropertyDescriptor, feature);
-		EReference eReference = (EReference) feature;
+		final EReference eReference = (EReference) feature;
 		Object obj = null;
 		if (!eReference.getEReferenceType().isAbstract()) {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
+		final IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
 			modelElementContext.getModelElement());
 		Object labelProviderImageResult = labelProvider.getImage(obj);
 		Image image = null;
@@ -71,15 +71,16 @@ public class AddReferenceAction extends ECPSWTAction {
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
 			image = Activator.getImage((URL) labelProviderImageResult);
-		} else {
+		}
+		else {
 			image = Activator.getImage((URL) null);
 		}
 		String overlayString = "icons/link_overlay.png";//$NON-NLS-1$
 		if (eReference.isContainment()) {
 			overlayString = "icons/containment_overlay.png";//$NON-NLS-1$
 		}
-		ImageDescriptor addOverlay = Activator.getImageDescriptor(overlayString);
-		OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
+		final ImageDescriptor addOverlay = Activator.getImageDescriptor(overlayString);
+		final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,
 			OverlayImageDescriptor.LOWER_RIGHT);
 		setImageDescriptor(imageDescriptor);
 
@@ -91,8 +92,7 @@ public class AddReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		// TODO language dependent
-		setToolTipText("Link " + attribute);//$NON-NLS-1$
+		setToolTipText(ActionMessages.AddReferenceAction_Link + attribute);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class AddReferenceAction extends ECPSWTAction {
 	 */
 	@Override
 	public void run() {
-		EObject selectedEObject = getModelElementContext().getExistingElementFor((EReference) getFeature());
+		final EObject selectedEObject = getModelElementContext().getExistingElementFor((EReference) getFeature());
 		if (selectedEObject == null) {
 			return;
 		}

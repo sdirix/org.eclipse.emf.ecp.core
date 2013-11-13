@@ -11,21 +11,22 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.WeakHashMap;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.ChildrenListImpl;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
@@ -37,9 +38,6 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	private final Map<Object, Object> parentsCache = new WeakHashMap<Object, Object>();
 
 	private final Map<Object, InternalChildrenList> slowLists = new HashMap<Object, InternalChildrenList>();
-
-	public TreeContentProvider() {
-	}
 
 	@Override
 	public TreeViewer getViewer() {
@@ -57,7 +55,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			return false;
 		}
 
-		InternalChildrenList childrenList = getChildrenList(parent);
+		final InternalChildrenList childrenList = getChildrenList(parent);
 		synchronized (childrenList) {
 			if (!childrenList.isComplete()) {
 				return true;
@@ -76,19 +74,19 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		Object[] result;
 		boolean complete;
 
-		InternalChildrenList childrenList = getChildrenList(parent);
+		final InternalChildrenList childrenList = getChildrenList(parent);
 		synchronized (childrenList) {
 			result = childrenList.getChildren();
 			complete = childrenList.isComplete();
 		}
 
 		for (int i = 0; i < result.length; i++) {
-			Object child = result[i];
+			final Object child = result[i];
 			parentsCache.put(child, parent);
 		}
 
 		if (!complete) {
-			Object[] withPending = new Object[result.length + 1];
+			final Object[] withPending = new Object[result.length + 1];
 			System.arraycopy(result, 0, withPending, 0, result.length);
 			withPending[result.length] = new SlowElement(parent);
 			result = withPending;
@@ -105,7 +103,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 
 		Object result = parentsCache.get(child);
 		if (result == null && EObject.class.isInstance(child)) {
-			EObject childEObject = (EObject) child;
+			final EObject childEObject = (EObject) child;
 			result = childEObject.eContainer();
 			if (result != null && parentsCache.containsKey(result)) {
 				return result;
@@ -115,7 +113,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		return result;
 	}
 
-	public final void refreshViewer(final boolean sturctural, final Object... objects) {
+	public final void refreshViewer(final boolean isStructuralChange, final Object... objects) {
 		if (objects.length == 0) {
 			return;
 		}
@@ -123,28 +121,42 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		final TreeViewer viewer = getViewer();
 		final Control control = viewer.getControl();
 		if (!control.isDisposed()) {
-			Display display = control.getDisplay();
+			final Display display = control.getDisplay();
+			final ECPProject ecpProject = ECPUtil.getECPProjectManager()
+				.getProject(objects[0]);
+			boolean isThreadSafe = true;
+			if (ecpProject != null) {
+				final InternalProvider provider = (InternalProvider) ecpProject.getProvider();
+				isThreadSafe = provider.isThreadSafe();
+			}
 			if (display.getSyncThread() != Thread.currentThread()) {
-				display.asyncExec(new Runnable() {
-					public void run() {
-						if (!control.isDisposed()) {
-							if (sturctural) {
-								refresh(viewer, objects);
-							} else {
-								update(viewer, objects);
-							}
-
-						}
-					}
-				});
+				final Runnable refreshRunnable = createRefreshRunnable(isStructuralChange, viewer, objects);
+				if (Boolean.getBoolean("enableDisplaySync") && !isThreadSafe) {
+					display.syncExec(refreshRunnable);
+				} else {
+					display.asyncExec(refreshRunnable);
+				}
 			} else {
-				if (sturctural) {
+				if (isStructuralChange) {
 					refresh(viewer, objects);
 				} else {
 					update(viewer, objects);
 				}
 			}
 		}
+	}
+
+	private Runnable createRefreshRunnable(final boolean isStructuralChange, final TreeViewer viewer,
+		final Object... objects) {
+		return new Runnable() {
+			public void run() {
+				if (isStructuralChange) {
+					refresh(viewer, objects);
+				} else {
+					update(viewer, objects);
+				}
+			}
+		};
 	}
 
 	protected boolean isSlow(Object parent) {
@@ -178,9 +190,9 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	protected void fillChildrenDetectError(Object parent, InternalChildrenList childrenList) {
 		try {
 			fillChildren(parent, childrenList);
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			Activator.log(t);
-			ErrorElement errorElement = new ErrorElement(parent, t);
+			final ErrorElement errorElement = new ErrorElement(parent, t);
 			childrenList.addChildWithoutRefresh(errorElement);
 		}
 	}
@@ -189,7 +201,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 
 	public static void refresh(TreeViewer viewer, Object... objects) {
 		if (!viewer.getControl().isDisposed()) {
-			for (Object object : objects) {
+			for (final Object object : objects) {
 				viewer.refresh(object);
 			}
 		}
@@ -197,7 +209,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 
 	public static void update(TreeViewer viewer, Object... objects) {
 		if (!viewer.getControl().isDisposed()) {
-			for (Object object : objects) {
+			for (final Object object : objects) {
 				if (object != null) {
 					viewer.update(object, null);
 				}
@@ -268,7 +280,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 		}
 
 		public void startThread() {
-			Thread thread = new Thread(this, "SlowChildrenList"); //$NON-NLS-1$
+			final Thread thread = new Thread(this, "SlowChildrenList"); //$NON-NLS-1$
 			thread.setDaemon(true);
 			thread.start();
 		}
@@ -307,7 +319,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			final TreeViewer viewer = getViewer();
 			final Control control = viewer.getControl();
 			if (!control.isDisposed()) {
-				Display display = control.getDisplay();
+				final Display display = control.getDisplay();
 
 				// asyncExec() would lead to infinite recursion in setComplete()
 				display.syncExec(new Runnable() {

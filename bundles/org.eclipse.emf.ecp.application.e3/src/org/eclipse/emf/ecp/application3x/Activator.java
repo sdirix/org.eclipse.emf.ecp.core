@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.application3x;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-
 import org.osgi.framework.BundleContext;
 
 /**

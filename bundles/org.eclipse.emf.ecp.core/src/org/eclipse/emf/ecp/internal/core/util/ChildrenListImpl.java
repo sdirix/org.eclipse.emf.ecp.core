@@ -11,10 +11,10 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.core.util;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
-
-import java.util.Collection;
 
 /**
  * @author Eike Stepper

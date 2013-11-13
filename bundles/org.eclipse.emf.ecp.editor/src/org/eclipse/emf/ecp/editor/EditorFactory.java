@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor;
 
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.editor.EditorFactoryImpl;
 
 /**

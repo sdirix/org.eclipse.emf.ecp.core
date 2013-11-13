@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.spi.core.util;
 
 /**
  * @author Eike Stepper
+ * @since 1.1
  */
 public interface AdapterProvider {
 	<T> T getAdapter(Object adaptable, Class<T> adapterType);

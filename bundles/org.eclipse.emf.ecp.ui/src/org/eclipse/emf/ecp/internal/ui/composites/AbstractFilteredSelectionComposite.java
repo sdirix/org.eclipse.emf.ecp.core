@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.internal.ui.composites;
 import org.eclipse.emf.ecp.internal.ui.ECPViewerFilter;
 import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.ui.common.CompositeProvider;
-
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

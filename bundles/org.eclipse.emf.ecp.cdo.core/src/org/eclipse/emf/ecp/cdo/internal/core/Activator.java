@@ -11,23 +11,20 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.core;
 
-import org.eclipse.emf.cdo.server.CDOServerBrowser;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
-
-import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.spi.core.InternalProject;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
+import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.osgi.framework.BundleContext;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -101,8 +98,8 @@ public class Activator extends Plugin {
 		serverBrowser.deactivate();
 		serverBrowser = null;
 
-		if (CDOProvider.INSTANCE != null) {
-			CDOProvider.INSTANCE.dispose();
+		if (CDOProvider.getInstance() != null) {
+			CDOProvider.getInstance().dispose();
 		}
 
 		instance = null;

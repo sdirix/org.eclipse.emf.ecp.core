@@ -11,6 +11,10 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
@@ -28,15 +32,12 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
-
 /**
  * @author Eike Stepper
  * @author Eugen Neufeld
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 1.1
  */
 public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPModelContextProvider,
 	InternalRegistryElement, AdapterProvider {
@@ -100,6 +101,14 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @return true if slow, false otherwise
 	 */
 	boolean isSlow(Object parent);
+
+	/**
+	 * Whether it is safe to modify the {@link EList} of model elements
+	 * ot this provider.
+	 * 
+	 * @return true, if the provider is thread-safe, false otherwise
+	 */
+	boolean isThreadSafe();
 
 	/**
 	 * Fills the elements of a certain parent object, depending on the context into the childrenList.

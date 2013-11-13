@@ -13,6 +13,9 @@
 
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -22,7 +25,6 @@ import org.eclipse.emf.ecp.internal.ui.model.ProvidersLabelProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -40,9 +42,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This {@link AddRepositoryComposite} provides a Composite which allows to create a new Repository.

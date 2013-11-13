@@ -12,21 +12,20 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.explorereditorbridge.internal;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentTouchedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
-import org.eclipse.emf.ecp.edit.ECPContextDisposedListener;
-import org.eclipse.emf.ecp.edit.ECPEditorContext;
+import org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener;
+import org.eclipse.emf.ecp.edit.spi.ECPEditorContext;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-
 import org.eclipse.swt.widgets.Shell;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * An EditorContext depending on an {@link ECPProject}.
@@ -46,7 +45,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 			// TODO Auto-generated method stub
 			if (!newProjects.contains(ecpProject)) {
-				for (ECPContextDisposedListener contextListener : contextListeners) {
+				for (final ECPContextDisposedListener contextListener : contextListeners) {
 					contextListener.contextDisposed();
 				}
 				dispose();
@@ -56,7 +55,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		/** {@inheritDoc} */
 		public void projectChanged(ECPProject project, boolean opened) {
 			if (!opened) {
-				for (ECPContextDisposedListener contextListener : contextListeners) {
+				for (final ECPContextDisposedListener contextListener : contextListeners) {
 					contextListener.contextDisposed();
 				}
 				dispose();
@@ -69,7 +68,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself
 			if (structural && ecpProject.equals(project) && !((InternalProject) project).contains(getModelElement())) {
-				for (ECPContextDisposedListener contextListener : contextListeners) {
+				for (final ECPContextDisposedListener contextListener : contextListeners) {
 					contextListener.contextDisposed();
 				}
 				dispose();
@@ -77,11 +76,11 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 		}
 	}
 
-	private List<ECPContextDisposedListener> contextListeners = new ArrayList<ECPContextDisposedListener>();
+	private final List<ECPContextDisposedListener> contextListeners = new ArrayList<ECPContextDisposedListener>();
 
-	private ECPProjectsChangedObserver projectObserver;
+	private final ECPProjectsChangedObserver projectObserver;
 
-	private ECPProject ecpProject;
+	private final ECPProject ecpProject;
 
 	public EditorContext(EObject modelElement, ECPProject ecpProject, Shell shell) {
 		super(modelElement, ecpProject, shell);
@@ -101,5 +100,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
+		// getViewContext().dispose();
 	}
+
 }

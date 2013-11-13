@@ -11,17 +11,18 @@
 package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.editor.EditorFactory;
 import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -47,6 +48,7 @@ public class MEEditorPage extends FormPage {
 	//
 	private final ECPControlContext modelElementContext;
 
+	// TODO: unused?
 	private IEditorCompositeProvider editorPageContent;
 
 	private ShortLabelProvider shortLabelProvider;
@@ -108,14 +110,16 @@ public class MEEditorPage extends FormPage {
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		;
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 		FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();
 		form.setShowFocusedControl(true);
 		toolkit.decorateFormHeading(form.getForm());
-		Composite body = form.getBody();
+		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
+		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		EClass eClass = modelElementContext.getModelElement().eClass();
+
 		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
 		editorPageContent.createUI(body);
 
@@ -194,7 +198,8 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void setFocus() {
-		editorPageContent.focus();
+		// TODO
+		// editorPageContent.focus();
 	}
 
 	/**

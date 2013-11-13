@@ -315,6 +315,31 @@
             </visibleWhen>
          </command>
          <command
+               commandId="org.eclipse.emf.ecp.ui.e3.importRoot"
+               label="Import Child"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              args="org.eclipse.emf.ecp.ui.e3.importRoot"
+                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                              value="true">
+                        </test>
+                     </and>
+                  </iterate>
+                  <count
+                        value="1">
+                  </count>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="org.eclipse.emf.ecp.ui.workbench.export"
                icon="icons/database_go.png"
                label="Export"
@@ -491,6 +516,10 @@
             id="org.eclipse.emf.ecp.ui.properties.repository"
             name="Repository Properties">
       </command>
+      <command
+            id="org.eclipse.emf.ecp.ui.e3.importRoot"
+            name="Import Child">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -614,6 +643,10 @@
                   value="true">
             </test>
          </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.ecp.ui.commands.ImportRootHandler"
+            commandId="org.eclipse.emf.ecp.ui.e3.importRoot">
       </handler>
    </extension>
    <extension

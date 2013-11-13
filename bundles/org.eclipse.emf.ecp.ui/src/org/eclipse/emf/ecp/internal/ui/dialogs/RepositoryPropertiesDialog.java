@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.internal.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.internal.ui.Messages;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;

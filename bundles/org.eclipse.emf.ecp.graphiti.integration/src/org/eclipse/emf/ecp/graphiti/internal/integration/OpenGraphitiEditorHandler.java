@@ -26,73 +26,77 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-@SuppressWarnings("restriction")
 public class OpenGraphitiEditorHandler extends AbstractHandler {
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = (IStructuredSelection) HandlerUtil
-				.getCurrentSelection(event);
+		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil
+			.getCurrentSelection(event);
 
-		Object selObject = selection.getFirstElement();
-		if (!ECPProject.class.isInstance(selObject))
+		final Object selObject = selection.getFirstElement();
+		if (!ECPProject.class.isInstance(selObject)) {
 			return null;
+		}
 		final InternalProject selectedProject = (InternalProject) selObject;
-		Notifier projectRoot = selectedProject.getProvider().getRoot(
-				selectedProject);
+		final Notifier projectRoot = selectedProject.getProvider().getRoot(
+			selectedProject);
 		if (!EObject.class.isInstance(projectRoot)) {
 			return null;
 		}
 		final EObject selectedEObject = (EObject) projectRoot;
-		TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) selectedProject
-				.getEditingDomain();
+		final TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) selectedProject
+			.getEditingDomain();
 
 		final ResourceSet resourceSet = editingDomain.getResourceSet();
-		URI projectURI = selectedEObject.eResource().getURI();
+		final URI projectURI = selectedEObject.eResource().getURI();
 
 		String fileString = projectURI.toFileString();
 
 		fileString = fileString.substring(0, fileString.length()
-				- projectURI.fileExtension().length() - 1);
+			- projectURI.fileExtension().length() - 1);
 		fileString += "_Diagram." + projectURI.fileExtension();
 
 		// create temporal resource
 		// final Resource resource = resourceSet.createResource(URI..createURI(
 		// "VIRTUAL_URI", false));
 		final URI diagramUri = URI.createFileURI(fileString);
-		File diagramFile=new File(diagramUri.toFileString());
-		boolean loadExisting=false;
-		if (diagramFile.exists())
-			loadExisting=MessageDialog.openQuestion(HandlerUtil.getActiveShell(event), "Regenerate Diagram", "A diagram file already exists. Should the existing file be loaded?");
-		Diagram createDiagram=getDiagram(selectedProject, editingDomain, resourceSet, diagramUri,loadExisting);
-	
-	
-		GraphitiDiagramEditorInput input = new GraphitiDiagramEditorInput(
-				createDiagram, selectedEObject);
+		final File diagramFile = new File(diagramUri.toFileString());
+		boolean loadExisting = false;
+		if (diagramFile.exists()) {
+			loadExisting = MessageDialog.openQuestion(HandlerUtil.getActiveShell(event), "Regenerate Diagram",
+				"A diagram file already exists. Should the existing file be loaded?");
+		}
+		final Diagram createDiagram = getDiagram(selectedProject, editingDomain, resourceSet, diagramUri, loadExisting);
+
+		final GraphitiDiagramEditorInput input = new GraphitiDiagramEditorInput(
+			createDiagram, selectedEObject);
 		try {
 			// Needs IEditorInput (GraphitiDiagramEditorInput) for "openEditor"
-			GenericECPGraphitiDiagramEditor editor = (GenericECPGraphitiDiagramEditor) PlatformUI
-					.getWorkbench()
-					.getActiveWorkbenchWindow()
-					.getActivePage()
-					.openEditor(input,
-							GenericECPGraphitiDiagramEditor.EDITOR_ID, true);
+			final GenericECPGraphitiDiagramEditor editor = (GenericECPGraphitiDiagramEditor) PlatformUI
+				.getWorkbench()
+				.getActiveWorkbenchWindow()
+				.getActivePage()
+				.openEditor(input,
+					GenericECPGraphitiDiagramEditor.EDITOR_ID, true);
 
-			String providerId = GraphitiUi.getExtensionManager()
-					.getDiagramTypeProviderId(createDiagram.getDiagramTypeId());
+			final String providerId = GraphitiUi.getExtensionManager()
+				.getDiagramTypeProviderId(createDiagram.getDiagramTypeId());
 			final IDiagramTypeProvider dtp = GraphitiUi.getExtensionManager()
-					.createDiagramTypeProvider(createDiagram, providerId);
+				.createDiagramTypeProvider(createDiagram, providerId);
 
-			AddContext context = new AddContext();
+			final AddContext context = new AddContext();
 
 			context.setTargetContainer(createDiagram);
-			
-				if(!loadExisting)
-				editor.getDiagramBehavior().executeFeature(
-						new LoadProjectFeature(dtp.getFeatureProvider(),
-								selectedProject), context);
-			
 
-		} catch (PartInitException e) {
+			if (!loadExisting) {
+				editor.getDiagramBehavior().executeFeature(
+					new LoadProjectFeature(dtp.getFeatureProvider(),
+						selectedProject), context);
+			}
+		} catch (final PartInitException e) {
 			System.out.println("Error");
 			e.printStackTrace();
 		}
@@ -100,30 +104,30 @@ public class OpenGraphitiEditorHandler extends AbstractHandler {
 	}
 
 	private Diagram getDiagram(ECPProject selectedProject,
-			TransactionalEditingDomain editingDomain,
-			final ResourceSet resourceSet, final URI diagramUri,boolean loadExisting) {
+		TransactionalEditingDomain editingDomain,
+		final ResourceSet resourceSet, final URI diagramUri, boolean loadExisting) {
 		if (!loadExisting) {
-			String diagramText = selectedProject.getName();
+			final String diagramText = selectedProject.getName();
 
 			final Diagram createDiagram = Graphiti.getPeCreateService()
-					.createDiagram("org.eclipse.emf.ecp.graphiti.diagramType",
-							diagramText, true);
+				.createDiagram("org.eclipse.emf.ecp.graphiti.diagramType",
+					diagramText, true);
 			createDiagram.setName(diagramText);
 
 			// add the diagram to the resource
 
 			editingDomain.getCommandStack().execute(
-					new RecordingCommand(editingDomain) {
+				new RecordingCommand(editingDomain) {
 
-						@Override
-						protected void doExecute() {
-							resourceSet.createResource(diagramUri)
-									.getContents().add(createDiagram);
-						}
-					});
+					@Override
+					protected void doExecute() {
+						resourceSet.createResource(diagramUri)
+							.getContents().add(createDiagram);
+					}
+				});
 			return createDiagram;
 		}
 		return (Diagram) resourceSet.getResource(diagramUri, true)
-				.getContents().get(0);
+			.getContents().get(0);
 	}
 }

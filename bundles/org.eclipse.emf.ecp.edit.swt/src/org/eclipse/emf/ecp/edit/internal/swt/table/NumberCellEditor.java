@@ -11,17 +11,20 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
+
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -31,10 +34,6 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
 
 public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
@@ -56,7 +55,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	public void instantiate(IItemPropertyDescriptor descriptor, ECPControlContext ecpControlContext) {
 		this.descriptor = descriptor;
 		this.ecpControlContext = ecpControlContext;
-		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_numberical");
+		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_numberical"); //$NON-NLS-1$
 		// do nothing
 	}
 
@@ -66,8 +65,8 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	public String getFormatedString(Object value) {
 		if (value == null) {
-			setErrorMessage("Value is null");
-			return "";
+			setErrorMessage(TableMessages.NumberCellEditor_ValueIsNull);
+			return ""; //$NON-NLS-1$
 		}
 
 		DecimalFormat format = NumericalHelper.setupFormat(ecpControlContext.getLocale(), getInstanceClass());
@@ -112,16 +111,16 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 						if (NumericalHelper.isInteger(getInstanceClass())) {
 							boolean maxValue = false;
 							Class<?> instanceClass = getInstanceClass();
-							String formatedValue = "";
+							String formatedValue = ""; //$NON-NLS-1$
 							try {
 								if (Integer.class.isAssignableFrom(instanceClass)
-									|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) {
+									|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 									if (Integer.MAX_VALUE == number.intValue()) {
 										maxValue = true;
 										formatedValue = format.format(Integer.MAX_VALUE);
 									}
 								} else if (Long.class.isAssignableFrom(instanceClass)
-									|| Long.class.getField("TYPE").get(null).equals(instanceClass)) {
+									|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 									if (Long.MAX_VALUE == number.longValue()) {
 										maxValue = true;
 										formatedValue = format.format(Long.MAX_VALUE);
@@ -143,7 +142,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 							}
 						}
 					}
-					String formatedNumber = "";
+					String formatedNumber = ""; //$NON-NLS-1$
 					if (number != null) {
 						formatedNumber = format.format(number);
 					}
@@ -165,15 +164,15 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 			private Object revertToOldValue(final Object value) {
 
-				if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) {
+				if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 					return null;
 				}
 
 				// Object result = getModelValue().getValue();
 				Object result = null;
 
-				MessageDialog messageDialog = new MessageDialog(getText().getShell(), "Invalid Number", null,
-					"The Number you have entered is invalid. The value will be unset.", MessageDialog.ERROR,
+				MessageDialog messageDialog = new MessageDialog(getText().getShell(), TableMessages.NumberCellEditor_InvalidNumber, null,
+					TableMessages.NumberCellEditor_NumberYouEnteredIsInvalid, MessageDialog.ERROR,
 					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 				new ECPDialogExecutor(messageDialog) {
@@ -184,7 +183,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 				}.execute();
 
 				if (result == null) {
-					getText().setText("");
+					getText().setText(""); //$NON-NLS-1$
 				} else {
 					DecimalFormat format = format = NumericalHelper.setupFormat(ecpControlContext.getLocale(),
 						getInstanceClass());
@@ -209,7 +208,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 			@Override
 			public Object convert(Object value) {
 				if (value == null) {
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 				final DecimalFormat format = NumericalHelper.setupFormat(ecpControlContext.getLocale(),
 					getInstanceClass());

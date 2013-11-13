@@ -11,8 +11,9 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui;
 
-import org.eclipse.net4j.util.AdapterUtil;
+import java.util.Collection;
 
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
@@ -23,19 +24,16 @@ import org.eclipse.emf.ecp.internal.core.util.ElementRegistry;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser;
 import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescriptor;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
-
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-
-import java.util.Collection;
 
 /**
  * @author Eike Stepper

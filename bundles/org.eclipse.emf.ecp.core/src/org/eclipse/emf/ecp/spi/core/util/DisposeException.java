@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.spi.core.util;
  * This is an Exception that is thrown during dispose actions.
  * 
  * @author Eugen Neufeld
+ * @since 1.1
  * 
  */
 public class DisposeException extends Exception {

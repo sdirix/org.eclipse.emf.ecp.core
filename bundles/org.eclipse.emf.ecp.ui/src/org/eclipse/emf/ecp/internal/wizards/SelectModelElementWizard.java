@@ -15,13 +15,12 @@ package org.eclipse.emf.ecp.internal.wizards;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
-
+import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -34,13 +33,20 @@ import org.eclipse.swt.widgets.Composite;
  * 
  * @author Eugen Neufeld
  */
-public class SelectModelElementWizard extends ECPWizard<SelectionComposite<TreeViewer>> {
+public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? extends ColumnViewer>> {
 
-	private String pageName;
-	private String description;
-	private String pageTitle;
+	private final String pageName;
+	private final String description;
+	private final String pageTitle;
+	private final Class<?> classtoSelect;
 
 	public SelectModelElementWizard(String windowTitle, String pageName, String pageTitle, String description) {
+		this(windowTitle, pageName, pageTitle, description, EClass.class);
+	}
+
+	public SelectModelElementWizard(String windowTitle, String pageName, String pageTitle, String description,
+		Class<?> classtoSelect) {
+		this.classtoSelect = classtoSelect;
 		setWindowTitle(windowTitle);
 		this.pageName = pageName;
 		this.description = description;
@@ -53,16 +59,17 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<TreeV
 	@Override
 	public void addPages() {
 		super.addPages();
-		WizardPage wp = new WizardPage(pageName) {
+		final WizardPage wp = new WizardPage(pageName) {
 
 			public void createControl(Composite parent) {
-				Composite composite = getCompositeProvider().createUI(parent);
+				final Composite composite = getCompositeProvider().createUI(parent);
 				getCompositeProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
 					public void selectionChanged(SelectionChangedEvent event) {
-						IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
+						final IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
 							.getSelection();
-						if (sel != null && sel.getFirstElement() instanceof EClass) {
+
+						if (sel != null && classtoSelect.isAssignableFrom(sel.getFirstElement().getClass())) {
 							setPageComplete(true);
 						} else {
 							setPageComplete(false);

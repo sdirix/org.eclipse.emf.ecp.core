@@ -11,6 +11,22 @@
  ********************************************************************************/
 package org.eclipse.emf.ecp.spi.ui;
 
+import java.io.IOException;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Field;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -30,14 +46,14 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.ui.common.CompositeStateObserver;
+import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
+import org.eclipse.emf.edit.provider.IChildCreationExtender.Descriptor;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
@@ -50,21 +66,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 /**
  * @author Eike Stepper
  * @author Eugen Neufeld
+ * @since 1.1
  */
 public class DefaultUIProvider extends Element implements UIProvider {
 
@@ -177,7 +182,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	/** {@inheritDoc} **/
 	public String getText(Object element) {
 		if (element instanceof Resource) {
-			Resource resource = (Resource) element;
+			final Resource resource = (Resource) element;
 			return resource.getURI().lastSegment();
 		}
 
@@ -187,7 +192,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	/** {@inheritDoc} **/
 	public Image getImage(Object element) {
 		if (element instanceof ECPProject) {
-			ECPProject project = (ECPProject) element;
+			final ECPProject project = (ECPProject) element;
 			return project.isOpen() ? PROJECT_OPEN : PROJECT_CLOSED;
 		}
 
@@ -202,7 +207,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	// TODO is this the right place for this implementation?
 	public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 		if (elements.length == 1) {
-			Object element = elements[0];
+			final Object element = elements[0];
 			if (context instanceof ECPProject) {
 				fillContextMenuForProject(manager, (ECPProject) context, element);
 			}
@@ -211,11 +216,46 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	private void fillContextMenuForProject(IMenuManager manager, final ECPProject project, Object element) {
 		if (element instanceof Resource) {
-			Resource resource = (Resource) element;
+			final Resource resource = (Resource) element;
 			populateNewRoot(resource, manager);
 		} else if (element instanceof EObject) {
 			final EditingDomain domain = project.getEditingDomain();
-			Collection<?> descriptors = domain.getNewChildDescriptors(element, null);
+			final Collection<?> descriptors = domain.getNewChildDescriptors(element, null);
+			final EObject eObject = (EObject) element;
+			final Set<String> alreadyReadNameSpaces = new LinkedHashSet<String>();
+			alreadyReadNameSpaces.add(eObject.eClass().getEPackage().getNsURI());
+			for (final EClass eClass : eObject.eClass().getEAllSuperTypes()) {
+				final String namespace = eClass.getEPackage().getNsURI();
+				if (alreadyReadNameSpaces.contains(namespace)) {
+					continue;
+				}
+				for (final Descriptor descriptor : EMFEditPlugin.getChildCreationExtenderDescriptorRegistry()
+					.getDescriptors(namespace)) {
+					final IChildCreationExtender createChildCreationExtender = descriptor.createChildCreationExtender();
+					try {
+						final Field declaredField = descriptor.getClass().getDeclaredField("contributor");
+						AccessibleObject.setAccessible(new AccessibleObject[] { declaredField }, true);
+						final String value = (String) declaredField.get(descriptor);
+						if (value.startsWith(eObject.eClass().getEPackage().getNsPrefix())) {
+							continue;
+						}
+					} catch (final NoSuchFieldException ex) {
+						Activator.log(ex);
+						continue;
+					} catch (final IllegalArgumentException ex) {
+						Activator.log(ex);
+						continue;
+					} catch (final IllegalAccessException ex) {
+						Activator.log(ex);
+						continue;
+					}
+					final Collection newChildDescriptors = createChildCreationExtender
+						.getNewChildDescriptors(eObject, domain);
+					descriptors.addAll(newChildDescriptors);
+				}
+				alreadyReadNameSpaces.add(namespace);
+			}
+
 			if (descriptors != null) {
 				fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 			}
@@ -231,7 +271,10 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			return;
 		}
 		final EObject eObject = (EObject) object;
-		for (Object descriptor : descriptors) {
+		for (final Object descriptor : descriptors) {
+			if (!CommandParameter.class.isInstance(descriptor)) {
+				continue;
+			}
 			final CommandParameter cp = (CommandParameter) descriptor;
 			if (cp.getEReference() == null) {
 				continue;
@@ -242,6 +285,18 @@ public class DefaultUIProvider extends Element implements UIProvider {
 				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
+			// TODO: Temporal hack to remove all other elements of the view model for 1.1.M1
+			// final EObject objectToCreate = cp.getEValue();
+			// if (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/model")) {
+			// if (!objectToCreate.eClass().getName().equals("Control")) {
+			// continue;
+			// }
+			// }
+			// if
+			// (objectToCreate.eClass().getEPackage().getNsURI().equals("http://org/eclipse/emf/ecp/view/rule/model")) {
+			// continue;
+			// }
+
 			// TODO needed?
 			// if (!cp.getEReference().isMany() || !cp.getEReference().isContainment()) {
 			// continue;
@@ -251,7 +306,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 				public void run() {
 					super.run();
 
-					EReference reference = ((CommandParameter) descriptor).getEReference();
+					final EReference reference = ((CommandParameter) descriptor).getEReference();
 					if (!reference.isContainment()) {
 						domain.getCommandStack().execute(
 							AddCommand.create(domain, eObject.eContainer(), null, cp.getEValue()));
@@ -287,9 +342,9 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	protected boolean populateNewRoot(Resource resource, IMenuManager manager) {
 		boolean populated = false;
-		EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
-		for (Map.Entry<String, Object> entry : getSortedRegistryEntries(packageRegistry)) {
-			IContributionItem item = populateSubMenu(resource, entry.getKey(), entry.getValue(), packageRegistry);
+		final EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
+		for (final Map.Entry<String, Object> entry : getSortedRegistryEntries(packageRegistry)) {
+			final IContributionItem item = populateSubMenu(resource, entry.getKey(), entry.getValue(), packageRegistry);
 			if (item != null) {
 				manager.add(item);
 				populated = true;
@@ -302,15 +357,15 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	private static IContributionItem populateSubMenu(final Resource resource, String nsURI, Object value,
 		final EPackage.Registry packageRegistry) {
 		if (value instanceof EPackage) {
-			EPackage ePackage = (EPackage) value;
+			final EPackage ePackage = (EPackage) value;
 
-			ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackage.gif");
-			MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
+			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackage.gif");
+			final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 			populateSubMenu(resource, ePackage, submenuManager);
 			return submenuManager;
 		}
 
-		ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackageUnknown.gif");
+		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackageUnknown.gif");
 		final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 		submenuManager.setRemoveAllWhenShown(true);
 		submenuManager.add(new Action("Calculating...") {
@@ -318,8 +373,8 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 		submenuManager.addMenuListener(new IMenuListener() {
 			public void menuAboutToShow(IMenuManager manager) {
-				String nsURI = submenuManager.getMenuText();
-				EPackage ePackage = packageRegistry.getEPackage(nsURI);
+				final String nsURI = submenuManager.getMenuText();
+				final EPackage ePackage = packageRegistry.getEPackage(nsURI);
 
 				if (ePackage != null) {
 					populateSubMenu(resource, ePackage, submenuManager);
@@ -333,10 +388,10 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	private static void populateSubMenu(final Resource resource, EPackage ePackage, final MenuManager submenuManager) {
-		List<EObject> objects = new ArrayList<EObject>();
-		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+		final List<EObject> objects = new ArrayList<EObject>();
+		for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (eClassifier instanceof EClass) {
-				EClass eClass = (EClass) eClassifier;
+				final EClass eClass = (EClass) eClassifier;
 				if (!eClass.isAbstract() && !eClass.isInterface()) {
 					objects.add(EcoreUtil.create(eClass));
 				}
@@ -351,18 +406,18 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			});
 
 			for (final EObject object : objects) {
-				String text = object.eClass().getName();
-				Image image = UIProvider.EMF_LABEL_PROVIDER.getImage(object);
-				ImageDescriptor imageDescriptor = ExtendedImageRegistry.getInstance().getImageDescriptor(image);
+				final String text = object.eClass().getName();
+				final Image image = UIProvider.EMF_LABEL_PROVIDER.getImage(object);
+				final ImageDescriptor imageDescriptor = ExtendedImageRegistry.getInstance().getImageDescriptor(image);
 
-				Action action = new Action(text, imageDescriptor) {
+				final Action action = new Action(text, imageDescriptor) {
 					@Override
 					public void run() {
 						resource.getContents().add(object);
 
 						try {
 							resource.save(null);
-						} catch (IOException ex) {
+						} catch (final IOException ex) {
 							Activator.log(ex);
 						}
 					}
@@ -374,9 +429,9 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	private static Map.Entry<String, Object>[] getSortedRegistryEntries(EPackage.Registry packageRegistry) {
-		Set<Map.Entry<String, Object>> entries = packageRegistry.entrySet();
+		final Set<Map.Entry<String, Object>> entries = packageRegistry.entrySet();
 		@SuppressWarnings("unchecked")
-		Map.Entry<String, Object>[] array = entries.toArray(new Entry[entries.size()]);
+		final Map.Entry<String, Object>[] array = entries.toArray(new Entry[entries.size()]);
 		Arrays.sort(array, new Comparator<Map.Entry<String, Object>>() {
 			public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2) {
 				return o1.getKey().compareTo(o2.getKey());

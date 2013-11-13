@@ -11,10 +11,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.table;
 
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 public class NumberCellEditorTester implements ECPApplicableTester {
@@ -23,9 +27,37 @@ public class NumberCellEditorTester implements ECPApplicableTester {
 	}
 
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
+		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
+		return check(eObject, feature);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 */
+	public int isApplicable(VDomainModelReference domainModelReference) {
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		int count = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			count++;
+			setting = iterator.next();
+		}
+		if (count != 1) {
+			return NOT_APPLICABLE;
+		}
+		return check(setting.getEObject(), setting.getEStructuralFeature());
+	}
+
+	/**
+	 * @param eObject
+	 * @param eStructuralFeature
+	 * @return
+	 */
+	private int check(EObject eObject, EStructuralFeature feature) {
 		if (EAttribute.class.isInstance(feature)) {
-			Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
+			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 			if (Number.class.isAssignableFrom(instanceClass)) {
 				return 1;
 			}

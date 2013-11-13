@@ -14,21 +14,21 @@
 
 package org.eclipse.emf.ecp.core;
 
-import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
-import org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver;
-import org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver;
-
 import java.util.Collection;
+
+import org.eclipse.emf.ecp.core.util.ECPProperties;
 
 /**
  * The ECPRepositoryManager contains all ECPRepositories and manages their lifecycle.
- * It publishes observable events on the {@link ECPObserverBus}.
- * Related Observer types: {@link ECPRepositoriesChangedObserver}, {@link ECPRepositoryContentChangedObserver}.
- * Use {@link ECPUtil#getECPObserverBus()} to retrieve the ObserverBus and {@link ECPObserverBus#register(ECPObserver)}
- * to register an Observer.
+ * It is available as an OSGi service or using {@link org.eclipse.emf.ecp.core.util.ECPUtil} It publishes observable
+ * events on the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus ECPObserverBus}.
+ * Related Observer types: {@link org.eclipse.emf.ecp.core.util.observer.ECPRepositoriesChangedObserver
+ * ECPRepositoriesChangedObserver}, {@link org.eclipse.emf.ecp.core.util.observer.ECPRepositoryContentChangedObserver
+ * ECPRepositoryContentChangedObserver}.
+ * Use {@link org.eclipse.emf.ecp.core.util.ECPUtil#getECPObserverBus() ECPUtil#getECPObserverBus()} to retrieve the
+ * ObserverBus and
+ * {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus#register(org.eclipse.emf.ecp.core.util.observer.ECPObserver)
+ * ECPObserverBus#register(ECPObserver)} to register an Observer.
  * 
  * @author Eike Stepper
  * @author Jonas
@@ -77,17 +77,4 @@ public interface ECPRepositoryManager {
 	ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties);
 
-	// /**
-	// * Add an {@link ECPRepositoryManagerObserver} to be notified.
-	// *
-	// * @param changeObserver the observer to add
-	// */
-	// void addObserver(ECPRepositoryManagerObserver changeObserver);
-	//
-	// /**
-	// * Remove an {@link ECPRepositoryManagerObserver} from the list of the providers to be notified.
-	// *
-	// * @param changeObserver the observer to remove
-	// */
-	// void removeObserver(ECPRepositoryManagerObserver changeObserver);
 }

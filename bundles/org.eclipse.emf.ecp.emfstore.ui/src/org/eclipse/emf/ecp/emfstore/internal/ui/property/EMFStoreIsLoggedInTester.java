@@ -13,14 +13,13 @@
 
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
+import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommandWithResult;
-
-import org.eclipse.core.expressions.PropertyTester;
 
 /**
  * This tests whether a user is loggedIn to a specific repository.

@@ -14,7 +14,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 
 public class LoadProjectFeature extends AbstractAddFeature {
 
-	private ECPProject project;
+	private final ECPProject project;
 	private static final int DEFAULT_OFFSET_X = 20;
 	private static final int DEFAULT_OFFSET_Y = 20;
 
@@ -28,37 +28,39 @@ public class LoadProjectFeature extends AbstractAddFeature {
 	}
 
 	public PictogramElement add(IAddContext context) {
-		Diagram createDiagram = (Diagram) context.getTargetContainer();
+		final Diagram createDiagram = (Diagram) context.getTargetContainer();
 		// Object object=getBusinessObjectForPictogramElement(createDiagram);
 
 		int currentXOffset = DEFAULT_OFFSET_X;
-		for (Object rootObject : project.getContents()) {
+		for (final Object rootObject : project.getContents()) {
 			if (!EObject.class.isInstance(rootObject)) {
 				continue;
 			}
-			int maxWidth = createEObjectAddContext(createDiagram,
-					(EObject) rootObject, currentXOffset, 0);
-			int nextXOffset = ContainerSizes.eObjectWidth + DEFAULT_OFFSET_X;
-			if (maxWidth > nextXOffset)
+			final int maxWidth = createEObjectAddContext(createDiagram,
+				(EObject) rootObject, currentXOffset, 0);
+			final int nextXOffset = ContainerSizes.eObjectWidth + DEFAULT_OFFSET_X;
+			if (maxWidth > nextXOffset) {
 				currentXOffset += maxWidth + DEFAULT_OFFSET_X;
-			else
+			} else {
 				currentXOffset += nextXOffset;
+			}
 		}
-
-		for (Object rootObject : project.getContents()) {
-			if (!EObject.class.isInstance(rootObject))
+		for (final Object rootObject : project.getContents()) {
+			if (!EObject.class.isInstance(rootObject)) {
 				continue;
-			EObject eObject = (EObject) rootObject;
-			for (EObject crossReference : eObject.eCrossReferences()) {
-				ContainerShape shapeFrom = (ContainerShape) getFeatureProvider()
-						.getPictogramElementForBusinessObject(eObject);
-				ContainerShape shapeTo = (ContainerShape) getFeatureProvider()
-						.getPictogramElementForBusinessObject(crossReference);
-				if(shapeFrom==null||shapeTo==null)
+			}
+			final EObject eObject = (EObject) rootObject;
+			for (final EObject crossReference : eObject.eCrossReferences()) {
+				final ContainerShape shapeFrom = (ContainerShape) getFeatureProvider()
+					.getPictogramElementForBusinessObject(eObject);
+				final ContainerShape shapeTo = (ContainerShape) getFeatureProvider()
+					.getPictogramElementForBusinessObject(crossReference);
+				if (shapeFrom == null || shapeTo == null) {
 					continue;
-				AddConnectionContext referenceConnection = new AddConnectionContext(
-						shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
-								.get(0));
+				}
+				final AddConnectionContext referenceConnection = new AddConnectionContext(
+					shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
+						.get(0));
 				getFeatureProvider().addIfPossible(referenceConnection);
 			}
 			createCrossReferences(eObject.eContents());
@@ -68,10 +70,10 @@ public class LoadProjectFeature extends AbstractAddFeature {
 	}
 
 	private ContainerShape getContainerShape(EObject eObject) {
-		PictogramElement[] fromShapes = getFeatureProvider()
-				.getAllPictogramElementsForBusinessObject(eObject);
+		final PictogramElement[] fromShapes = getFeatureProvider()
+			.getAllPictogramElementsForBusinessObject(eObject);
 		ContainerShape shapeFrom = null;
-		for (int i = 0; i < fromShapes.length; i ++) {
+		for (int i = 0; i < fromShapes.length; i++) {
 			if (fromShapes[i].getLink().getBusinessObjects().get(0) == eObject) {
 				shapeFrom = (ContainerShape) fromShapes[i];
 				break;
@@ -81,14 +83,14 @@ public class LoadProjectFeature extends AbstractAddFeature {
 	}
 
 	private void createCrossReferences(EList<EObject> elements) {
-		for (EObject eObject : elements) {
-			for (EObject crossReference : eObject.eCrossReferences()) {
+		for (final EObject eObject : elements) {
+			for (final EObject crossReference : eObject.eCrossReferences()) {
 
-				ContainerShape shapeFrom = getContainerShape(eObject);
-				ContainerShape shapeTo = getContainerShape(crossReference);
-				AddConnectionContext referenceConnection = new AddConnectionContext(
-						shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
-								.get(0));
+				final ContainerShape shapeFrom = getContainerShape(eObject);
+				final ContainerShape shapeTo = getContainerShape(crossReference);
+				final AddConnectionContext referenceConnection = new AddConnectionContext(
+					shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
+						.get(0));
 				getFeatureProvider().addIfPossible(referenceConnection);
 			}
 			createCrossReferences(eObject.eContents());
@@ -96,36 +98,37 @@ public class LoadProjectFeature extends AbstractAddFeature {
 	}
 
 	private int createEObjectAddContext(Diagram createDiagram,
-			EObject rootObject, int widthOffset, int heightOffset) {
-		AddContext addContext = new AddContext();
+		EObject rootObject, int widthOffset, int heightOffset) {
+		final AddContext addContext = new AddContext();
 		addContext.setNewObject(rootObject);
 		addContext.setTargetContainer(createDiagram);
 		int currentXOffset = widthOffset;
 		addContext.setLocation(currentXOffset, DEFAULT_OFFSET_Y + heightOffset);
 		getFeatureProvider().addIfPossible(addContext);
 		int maxWidth = rootObject.eContents().size()
-				* (DEFAULT_OFFSET_X + ContainerSizes.eObjectWidth);
+			* (DEFAULT_OFFSET_X + ContainerSizes.eObjectWidth);
 		if (maxWidth == 0) {
 			maxWidth = ContainerSizes.eObjectWidth;
 		}
-		
-		for (EObject eObejct : rootObject.eContents()) {
-			int thisMaxWidth = createEObjectAddContext(createDiagram, eObejct,
-					currentXOffset, DEFAULT_OFFSET_Y + heightOffset
-							+ ContainerSizes.eObjectHeight);
-			int nextXOffset = ContainerSizes.eObjectWidth + DEFAULT_OFFSET_X;
+
+		for (final EObject eObejct : rootObject.eContents()) {
+			final int thisMaxWidth = createEObjectAddContext(createDiagram, eObejct,
+				currentXOffset, DEFAULT_OFFSET_Y + heightOffset
+					+ ContainerSizes.eObjectHeight);
+			final int nextXOffset = ContainerSizes.eObjectWidth + DEFAULT_OFFSET_X;
 			if (thisMaxWidth > nextXOffset) {
 				maxWidth = thisMaxWidth;
 				currentXOffset += maxWidth + DEFAULT_OFFSET_X;
-			} else
+			} else {
 				currentXOffset += nextXOffset;
+			}
 
-			ContainerShape shapeFrom = getContainerShape(rootObject);
-			ContainerShape shapeTo = getContainerShape(eObejct);
+			final ContainerShape shapeFrom = getContainerShape(rootObject);
+			final ContainerShape shapeTo = getContainerShape(eObejct);
 			if (shapeTo != null) {
-				AddConnectionContext containmentConnection = new AddConnectionContext(
-						shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
-								.get(0));
+				final AddConnectionContext containmentConnection = new AddConnectionContext(
+					shapeFrom.getAnchors().get(0), shapeTo.getAnchors()
+						.get(0));
 				containmentConnection.setNewObject(eObejct.eContainmentFeature());
 				getFeatureProvider().addIfPossible(containmentConnection);
 			}

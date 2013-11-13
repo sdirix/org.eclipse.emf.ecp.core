@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui;
 
+import java.util.ArrayList;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
@@ -23,8 +26,6 @@ import org.eclipse.emf.emfstore.client.exceptions.ESCertificateException;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -41,8 +42,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import java.util.ArrayList;
 
 /**
  * This class provides EMFStore specific UI.

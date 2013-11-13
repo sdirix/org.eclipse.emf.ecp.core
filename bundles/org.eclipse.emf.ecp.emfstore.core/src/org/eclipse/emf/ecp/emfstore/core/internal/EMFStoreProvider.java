@@ -12,6 +12,18 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -53,19 +65,6 @@ import org.eclipse.emf.emfstore.internal.common.model.impl.ProjectImpl;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
-
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.IPreferencesService;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * This is the EMFStore Provider for ECP.
@@ -123,7 +122,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public EditingDomain createEditingDomain(final InternalProject project) {
 
-		EditingDomain domain = ((ESWorkspaceImpl) ESWorkspaceProvider.INSTANCE.getWorkspace()).toInternalAPI()
+		final EditingDomain domain = ((ESWorkspaceImpl) ESWorkspaceProvider.INSTANCE.getWorkspace()).toInternalAPI()
 			.getEditingDomain();
 
 		return domain;
@@ -133,19 +132,20 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
-			ESLocalProject projectSpace = getProjectSpace((InternalProject) parent);
+			final ESLocalProject projectSpace = getProjectSpace((InternalProject) parent);
 			if (projectSpace != null) {
 				childrenList.addChildren(projectSpace.getModelElements());
 			}
 		} else if (parent instanceof InternalRepository) {
-			ESServer serverInfo = getServerInfo((InternalRepository) parent);
+			final ESServer serverInfo = getServerInfo((InternalRepository) parent);
 			if (serverInfo.getLastUsersession() != null && serverInfo.getLastUsersession().isLoggedIn()) {
 				try {
-					List<ESRemoteProject> projectInfos = serverInfo.getRemoteProjects(serverInfo.getLastUsersession());
-					for (ESRemoteProject projectInfo : projectInfos) {
+					final List<ESRemoteProject> projectInfos = serverInfo.getRemoteProjects(serverInfo
+						.getLastUsersession());
+					for (final ESRemoteProject projectInfo : projectInfos) {
 						childrenList.addChild(new EMFStoreProjectWrapper((InternalRepository) parent, projectInfo));
 					}
-				} catch (ESException e) {
+				} catch (final ESException e) {
 					Activator.log(e);
 				}
 
@@ -183,8 +183,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 		default:
 			break;
 		}
-		String providerClass = getClass().getSimpleName();
-		String contextClass = context.getClass().getSimpleName();
+		final String providerClass = getClass().getSimpleName();
+		final String contextClass = context.getClass().getSimpleName();
 		Activator.log(IStatus.INFO, providerClass + " received " + event + " for " + contextClass + " " + context);
 	}
 
@@ -195,14 +195,14 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handleRemove(ECPContainer context) {
 		if (context instanceof InternalProject) {
-			InternalProject project = (InternalProject) context;
-			ESLocalProject ps = (ESLocalProject) project.getProviderSpecificData();
+			final InternalProject project = (InternalProject) context;
+			final ESLocalProject ps = (ESLocalProject) project.getProviderSpecificData();
 			if (ps != null) {
 				try {
 					ps.delete(new NullProgressMonitor());
-				} catch (ESException ex) {
+				} catch (final ESException ex) {
 					Activator.log(ex);
-				} catch (IOException ex) {
+				} catch (final IOException ex) {
 					Activator.log(ex);
 				}
 				project.setProviderSpecificData(null);
@@ -217,7 +217,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handleCreate(final ECPContainer context) {
 		if (context instanceof InternalRepository) {
-			ESServer serverInfo = getServerInfo((InternalRepository) context);
+			final ESServer serverInfo = getServerInfo((InternalRepository) context);
 			// TODO autologin?
 			// if (serverInfo.getLastUsersession() != null && !serverInfo.getLastUsersession().isLoggedIn()) {
 			// try {
@@ -239,7 +239,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handelDispose(ECPContainer context) {
 		if (context instanceof InternalProject) {
-			ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
+			final ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
 
 			if (projectSpace != null) {
 				((ESLocalProjectImpl) projectSpace).toInternalAPI().getProject().eAdapters().remove(adapter);
@@ -250,7 +250,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	private boolean isAutosave() {
-		IPreferencesService service = Platform.getPreferencesService();
+		final IPreferencesService service = Platform.getPreferencesService();
 		return service.getBoolean("org.eclipse.emf.ecp", "AUTOSAVE", false, null);
 
 	}
@@ -260,11 +260,11 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	private void handleInit(final ECPContainer context) {
 		if (context instanceof InternalProject) {
-			ESLocalProject localProject = getProjectSpace((InternalProject) context, true);
+			final ESLocalProject localProject = getProjectSpace((InternalProject) context, true);
 			if (localProject == null) {
 				return;
 			}
-			ProjectSpace projectSpace = ((ESLocalProjectImpl) localProject).toInternalAPI();
+			final ProjectSpace projectSpace = ((ESLocalProjectImpl) localProject).toInternalAPI();
 
 			if (isAutosave()) {
 				// TODO EMFStore how to listen to operations?
@@ -284,8 +284,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 				// 2
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement instanceof ProjectImpl) {
-						ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
-						ECPProject ecpProject = getProject(projectSpace.toAPI());
+						final ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
+						final ECPProject ecpProject = getProject(projectSpace.toAPI());
 
 						((InternalProject) context).notifyObjectsChanged(
 							(Collection) Collections.singleton(ecpProject), true);
@@ -324,9 +324,9 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	@Override
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
-		Collection<EObject> result = new HashSet<EObject>();
+		final Collection<EObject> result = new HashSet<EObject>();
 		// TODO EMFStore does it work with ESLocalProject?
-		ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
+		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
 		ItemPropertyDescriptor.collectReachableObjectsOfType(new HashSet<EObject>(), result, projectSpace.getProject(),
 			eReference.getEType());
 		return result.iterator();
@@ -362,7 +362,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			@Override
 			protected void doRun() {
-				for (Object object : objects) {
+				for (final Object object : objects) {
 					if (EObject.class.isInstance(object)) {
 						projectSpace.getProject().deleteModelElement((EObject) object);
 					}
@@ -375,8 +375,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		// TODO EMFStore how to clone local project?
-		ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).toInternalAPI();
-		ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).toInternalAPI();
+		final ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).toInternalAPI();
+		final ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).toInternalAPI();
 		target.setProject(EcoreUtil.copy(toClone.getProject()));
 	}
 
@@ -397,7 +397,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 		if (!EObject.class.isInstance(object)) {
 			return false;
 		}
-		ESLocalProject projectSpace = getProjectSpace(project);
+		final ESLocalProject projectSpace = getProjectSpace(project);
 		return projectSpace.contains((EObject) object);
 	}
 
@@ -412,15 +412,15 @@ public final class EMFStoreProvider extends DefaultProvider {
 		}
 
 		if (element instanceof EObject) {
-			EObject eObject = (EObject) element;
+			final EObject eObject = (EObject) element;
 			ProjectSpace ps = null;
 			try {
 				ps = ESWorkspaceProviderImpl.getProjectSpace(eObject);
-			} catch (IllegalArgumentException iae) {
+			} catch (final IllegalArgumentException iae) {
 				return null;
 			}
 			if (ps != null) {
-				ECPContainer context = getModelContextFromAdapter(ps.getProject());
+				final ECPContainer context = getModelContextFromAdapter(ps.getProject());
 				if (context != null) {
 					return context;
 				}
@@ -429,8 +429,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 		}
 
 		if (element instanceof Resource) {
-			Resource resource = (Resource) element;
-			ECPContainer context = getModelContextFromAdapter(resource);
+			final Resource resource = (Resource) element;
+			final ECPContainer context = getModelContextFromAdapter(resource);
 			if (context != null) {
 				return context;
 			}
@@ -439,8 +439,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 		}
 
 		if (element instanceof ResourceSet) {
-			ResourceSet resourceSet = (ResourceSet) element;
-			ECPContainer context = getModelContextFromAdapter(resourceSet);
+			final ResourceSet resourceSet = (ResourceSet) element;
+			final ECPContainer context = getModelContextFromAdapter(resourceSet);
 			if (context != null) {
 				return context;
 			}
@@ -468,9 +468,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (projectSpace == null) {
 			boolean found = false;
-			List<ESLocalProject> localProjects = ESWorkspaceProvider.INSTANCE.getWorkspace().getLocalProjects();
-			for (ESLocalProject localProject : localProjects) {
-				String projectSpaceID = internalProject.getProperties().getValue(EMFStoreProvider.PROP_PROJECTSPACEID);
+			final List<ESLocalProject> localProjects = ESWorkspaceProvider.INSTANCE.getWorkspace().getLocalProjects();
+			for (final ESLocalProject localProject : localProjects) {
+				final String projectSpaceID = internalProject.getProperties().getValue(
+					EMFStoreProvider.PROP_PROJECTSPACEID);
 				if (localProject.getLocalProjectId().getId().equals(projectSpaceID)) {
 					found = true;
 					projectSpace = localProject;
@@ -504,10 +505,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (serverInfo == null) {
 
-			ESWorkspace workspace = ESWorkspaceProvider.INSTANCE.getWorkspace();
+			final ESWorkspace workspace = ESWorkspaceProvider.INSTANCE.getWorkspace();
 			boolean foundExisting = false;
 
-			for (ESServer info : workspace.getServers()) {
+			for (final ESServer info : workspace.getServers()) {
 				if (internalRepository.getProperties().hasProperties()
 					&& isSameServerInfo(info,
 						internalRepository.getProperties().getValue(EMFStoreProvider.PROP_REPOSITORY_URL),
@@ -539,8 +540,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * @return the {@link ECPProject} corresponding to this ProjectSpace or null if none found
 	 */
 	public ECPProject getProject(ESLocalProject projectSpace) {
-		for (InternalProject project : getOpenProjects()) {
-			ESLocalProject localProjectSpace = (ESLocalProject) project.getProviderSpecificData();
+		for (final InternalProject project : getOpenProjects()) {
+			final ESLocalProject localProjectSpace = (ESLocalProject) project.getProviderSpecificData();
 			if (localProjectSpace.equals(projectSpace)) {
 				return project;
 			}
@@ -556,7 +557,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 */
 	public ECPRepository getRepository(ServerInfo serverInfo) {
 		if (serverInfo != null) {
-			for (ECPRepository internalRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
+			for (final ECPRepository internalRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 				if (internalRepository.getProvider().equals(this)) {
 					if (serverInfo.equals(((InternalRepository) internalRepository).getProviderSpecificData())) {
 						return internalRepository;
@@ -565,6 +566,15 @@ public final class EMFStoreProvider extends DefaultProvider {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
+	 */
+	public boolean isThreadSafe() {
+		return false;
 	}
 
 }

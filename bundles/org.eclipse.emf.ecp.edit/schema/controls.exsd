@@ -69,18 +69,22 @@ Controls are used to render features of an EObejct in the editor or some other v
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The class implementing the control. This must extend org.eclipse.emf.ecp.edit.ECPAbstractControl.
+                  The class implementing the control.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.ECPControl"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.spi.ECPControl"/>
                </appinfo>
             </annotation>
          </attribute>
          <attribute name="showLabel" type="boolean" use="default" value="true">
             <annotation>
                <documentation>
-                  If a label naming the attribut should be displayd. The default is true.
+                  If a label naming the attribut should be displayd. The default is true. 
+This is deprecated, please use the possibilities provided by the view model.
                </documentation>
+               <appinfo>
+                  <meta.attribute deprecated="true"/>
+               </appinfo>
             </annotation>
          </attribute>
       </complexType>

@@ -11,6 +11,13 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notifier;
@@ -36,16 +43,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
-import org.eclipse.core.runtime.Platform;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 /**
  * @author Eike Stepper
+ * @since 1.1
  */
 public abstract class DefaultProvider extends Element implements InternalProvider {
 	private final Disposable disposable = new Disposable(this) {
@@ -53,13 +53,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		protected void doDispose() {
 			uiProvider = null;
 
-			for (ECPRepository repository : ECPUtil.getECPRepositoryManager().getRepositories()) {
+			for (final ECPRepository repository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 				if (repository.getProvider().getName().equals(getName())) {
 					handleLifecycle(repository, LifecycleEvent.DISPOSE);
 				}
 			}
 
-			for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
+			for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
 				if (project.getProvider().getName().equals(getName())) {
 					handleLifecycle(project, LifecycleEvent.DISPOSE);
 				}
@@ -129,8 +129,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	/** {@inheritDoc} */
 	public final Set<InternalProject> getOpenProjects() {
-		Set<InternalProject> result = new LinkedHashSet<InternalProject>();
-		for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
+		final Set<InternalProject> result = new LinkedHashSet<InternalProject>();
+		for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
 			if (project.isOpen()) {
 				if (project.getProvider().equals(this)) {
 					result.add((InternalProject) project);
@@ -200,8 +200,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	/** {@inheritDoc} */
 	public EditingDomain createEditingDomain(InternalProject project) {
-		CommandStack commandStack = createCommandStack(project);
-		EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
+		final CommandStack commandStack = createCommandStack(project);
+		final EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
 			commandStack);
 		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
 		return editingDomain;
@@ -239,8 +239,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 
 		if (element instanceof EObject) {
-			EObject eObject = (EObject) element;
-			ECPContainer context = getModelContextFromAdapter(eObject);
+			final EObject eObject = (EObject) element;
+			final ECPContainer context = getModelContextFromAdapter(eObject);
 			if (context != null) {
 				return context;
 			}
@@ -249,8 +249,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 
 		if (element instanceof Resource) {
-			Resource resource = (Resource) element;
-			ECPContainer context = getModelContextFromAdapter(resource);
+			final Resource resource = (Resource) element;
+			final ECPContainer context = getModelContextFromAdapter(resource);
 			if (context != null) {
 				return context;
 			}
@@ -259,8 +259,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 
 		if (element instanceof ResourceSet) {
-			ResourceSet resourceSet = (ResourceSet) element;
-			ECPContainer context = getModelContextFromAdapter(resourceSet);
+			final ResourceSet resourceSet = (ResourceSet) element;
+			final ECPContainer context = getModelContextFromAdapter(resourceSet);
 			if (context != null) {
 				return context;
 			}
@@ -277,7 +277,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @return the {@link ECPContainer} registered as an Adapter on this {@link Notifier} or null
 	 */
 	protected final ECPContainer getModelContextFromAdapter(Notifier notifier) {
-		ECPModelContextAdapter adapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(notifier.eAdapters(),
+		final ECPModelContextAdapter adapter = (ECPModelContextAdapter) EcoreUtil.getAdapter(notifier.eAdapters(),
 			ECPModelContextAdapter.class);
 		if (adapter != null) {
 			return adapter.getContext();
@@ -294,12 +294,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 			childrenList.addChildren(ECPUtil.getECPRepositoryManager().getRepositories());
 		} else {
 			// Get the adapter from the factory.
-			ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider) EMF_ADAPTER_FACTORY.adapt(
-				parent, ITreeItemContentProvider.class);
+			final ITreeItemContentProvider treeItemContentProvider = (ITreeItemContentProvider) EMF_ADAPTER_FACTORY
+				.adapt(
+					parent, ITreeItemContentProvider.class);
 
 			// Either delegate the call or return nothing.
 			if (treeItemContentProvider != null) {
-				Collection<?> children = treeItemContentProvider.getChildren(parent);
+				final Collection<?> children = treeItemContentProvider.getChildren(parent);
 				childrenList.addChildren(children);
 			}
 		}
@@ -307,8 +308,8 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	/** {@inheritDoc} */
 	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
-		String providerClass = getClass().getSimpleName();
-		String contextClass = context.getClass().getSimpleName();
+		final String providerClass = getClass().getSimpleName();
+		final String contextClass = context.getClass().getSimpleName();
 		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context);
 	}
 

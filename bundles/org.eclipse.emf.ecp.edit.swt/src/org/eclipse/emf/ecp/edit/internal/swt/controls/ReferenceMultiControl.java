@@ -14,11 +14,10 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.NewReferenceAction;
-import org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -28,23 +27,10 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  */
 public class ReferenceMultiControl extends MultiControl {
-	/**
-	 * Constructor for a multi reference control.
-	 * 
-	 * @param showLabel whether to show a label
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param embedded whether this control is embedded in another control
-	 */
-	public ReferenceMultiControl(boolean showLabel, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature, ECPControlContext modelElementContext, boolean embedded) {
-		super(showLabel, itemPropertyDescriptor, feature, modelElementContext, embedded);
-	}
 
 	@Override
 	protected ECPSWTAction[] instantiateActions() {
-		ECPSWTAction[] actions = new ECPSWTAction[2];
+		final ECPSWTAction[] actions = new ECPSWTAction[2];
 		actions[0] = new AddReferenceAction(getModelElementContext(), getItemPropertyDescriptor(),
 			getStructuralFeature());
 		actions[1] = new NewReferenceAction(getModelElementContext(), getItemPropertyDescriptor(),
@@ -55,7 +41,8 @@ public class ReferenceMultiControl extends MultiControl {
 	@Override
 	protected int getTesterPriority(ECPStaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
 		EObject eObject) {
-		return ReferenceMultiControlTester.getTesterPriority(tester, itemPropertyDescriptor, eObject);
+		return ReferenceMultiControlTester.getTesterPriority(tester,
+			(EStructuralFeature) itemPropertyDescriptor.getFeature(eObject), eObject);
 	}
 
 	/*
@@ -64,7 +51,7 @@ public class ReferenceMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return "Not set. Click to set!";
+		return ControlMessages.ReferenceMultiControl_NotSetClickToSet;
 	}
 
 	/*
@@ -73,6 +60,6 @@ public class ReferenceMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset";
+		return ControlMessages.ReferenceMultiControl_Unset;
 	}
 }

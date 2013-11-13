@@ -11,26 +11,24 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.ECPControlContext;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.util.ECPApplicableTester;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
-
-import org.osgi.framework.Bundle;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
+import org.osgi.framework.Bundle;
 
 public final class CellEditorFactory {
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.swt.cellEditor"; //$NON-NLS-1$
@@ -69,9 +67,8 @@ public final class CellEditorFactory {
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			// TODO externalize strings
-			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-				+ " cannot be resolved"); //$NON-NLS-1$
+			throw new ClassNotFoundException(clazz + UtilMessages.CellEditorFactory_CannotBeLoadedBecauseBundle + bundleName
+				+ UtilMessages.CellEditorFactory_CannotBeResolved);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 

@@ -16,18 +16,15 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
-
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.DefaultPropertySource;
-import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
-
 import org.eclipse.emf.ecp.cdo.internal.core.CDOBranchWrapper;
 import org.eclipse.emf.ecp.cdo.internal.core.CDOProvider;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
-
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.DefaultPropertySource;
+import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -42,9 +39,15 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
 /**
+ * Provides UI for the CDO Provider for ECP.
+ * 
  * @author Eike Stepper
  */
 public class CDOUIProvider extends DefaultUIProvider {
+
+	/**
+	 * Default Constructor.
+	 */
 	public CDOUIProvider() {
 		super(CDOProvider.NAME);
 	}
@@ -80,7 +83,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		if (adapterType == IPropertySourceProvider.class && adaptable instanceof InternalProject) {
-			final CDOWorkspace workspace = CDOProvider.INSTANCE.getAdapter(adaptable, CDOWorkspace.class);
+			final CDOWorkspace workspace = CDOProvider.getInstance().getAdapter(adaptable, CDOWorkspace.class);
 			if (workspace != null) {
 				return (T) new IPropertySourceProvider() {
 					public IPropertySource getPropertySource(Object object) {
