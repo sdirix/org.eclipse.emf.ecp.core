@@ -48,6 +48,11 @@
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.emf.ecp.view.categorization.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
@@ -64,11 +69,6 @@
 						<dependency>
 							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.view.table.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.categorization.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>
