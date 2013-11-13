@@ -81,6 +81,7 @@
             <version>${q7-maven-version}</version>
             <extensions>true</extensions>
             <configuration>
+			
               <metadata>
                 <public>true</public>
                 <projectName>EMF Client Platform</projectName>
@@ -100,6 +101,9 @@
               
               <q7client>
                 <version>${q7-client-version}</version>
+				<clientId>jfaltermeier</clientId>
+		    	<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
+		    	<organization>EMFClientPlatform</organization>
               </q7client>
 
               <q7server>cloud.xored.com</q7server>
