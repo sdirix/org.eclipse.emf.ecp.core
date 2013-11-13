@@ -13,9 +13,11 @@ package org.eclipse.emf.ecp.ui.view.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
@@ -69,8 +71,12 @@ public class ViewTest {
 	public void testViewWithChildrenAndCategories() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference createVFeaturePathDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		createVFeaturePathDomainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
+		control.setDomainModelReference(createVFeaturePathDomainModelReference);
 		view.getChildren().add(control);
-		final Node<VElement> node = build(view);
+		final Node<VElement> node = ViewTestHelper.build(view, null);
 		assertEquals(2, countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
