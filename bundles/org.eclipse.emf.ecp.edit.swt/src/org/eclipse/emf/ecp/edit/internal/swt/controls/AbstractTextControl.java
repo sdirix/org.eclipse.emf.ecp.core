@@ -189,7 +189,7 @@ public abstract class AbstractTextControl extends SingleControl {
 		@Override
 		public Object convert(Object value) {
 			// controlDecoration.hide();
-			updateValidationColor(null);
+			// updateValidationColor(null);
 			return convertValue(value);
 		}
 
@@ -218,7 +218,7 @@ public abstract class AbstractTextControl extends SingleControl {
 			try {
 
 				// controlDecoration.hide();
-				updateValidationColor(null);
+				// updateValidationColor(null);
 				if ("".equals(value)) { //$NON-NLS-1$
 					value = null;
 				}
@@ -232,7 +232,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 			} catch (final IllegalArgumentException e) {
 				// controlDecoration.show();
-				updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				// updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				// controlDecoration.setDescriptionText(ControlMessages.AbstractTextControl_InvalidInputSpace
 				// + e.getLocalizedMessage());
 				throw e;
