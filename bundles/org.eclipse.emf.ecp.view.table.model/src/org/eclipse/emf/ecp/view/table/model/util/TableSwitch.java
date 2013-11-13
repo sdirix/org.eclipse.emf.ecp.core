@@ -95,7 +95,7 @@ public class TableSwitch<T> extends Switch<T> {
 			if (result == null)
 				result = caseControl(tableControl);
 			if (result == null)
-				result = caseContainableElement(tableControl);
+				result = caseContainedElement(tableControl);
 			if (result == null)
 				result = caseElement(tableControl);
 			if (result == null)
@@ -194,18 +194,18 @@ public class TableSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainableElement(VContainedElement object)
+	public T caseContainedElement(VContainedElement object)
 	{
 		return null;
 	}

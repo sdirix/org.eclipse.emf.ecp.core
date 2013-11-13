@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.group.model.util.GroupAdapterFactory;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -356,23 +355,6 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 				newChildDescriptors.add
 					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
-						VGroupFactory.eINSTANCE.createGroup()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseCategory(VCategory object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VGroupFactory.eINSTANCE.createGroup()));
 
 				return null;

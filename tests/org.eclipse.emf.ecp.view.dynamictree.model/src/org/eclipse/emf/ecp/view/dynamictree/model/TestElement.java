@@ -12,9 +12,9 @@
 package org.eclipse.emf.ecp.view.dynamictree.model;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

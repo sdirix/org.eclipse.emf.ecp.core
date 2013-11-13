@@ -19,9 +19,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -31,7 +30,6 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-
 import org.eclipse.emf.ecp.view.dynamictree.model.util.ModelValidator;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 
@@ -140,7 +138,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		isInited = true;
 
 		// Initialize simple dependencies
-		VViewPackage.eINSTANCE.eClass();
+		VCategorizationPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theModelPackage.createPackageContents();
@@ -510,15 +508,16 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage)EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		VCategorizationPackage theCategorizationPackage = (VCategorizationPackage)EPackage.Registry.INSTANCE.getEPackage(VCategorizationPackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage)EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		dynamicContainmentTreeEClass.getESuperTypes().add(theViewPackage.getCategory());
+		dynamicContainmentTreeEClass.getESuperTypes().add(theCategorizationPackage.getCategory());
 		dynamicContainmentItemEClass.getESuperTypes().add(theViewPackage.getElement());
 		testElementEClass.getESuperTypes().add(theEcorePackage.getEObject());
 		dynamicContainmentTreeDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getDomainModelReference());

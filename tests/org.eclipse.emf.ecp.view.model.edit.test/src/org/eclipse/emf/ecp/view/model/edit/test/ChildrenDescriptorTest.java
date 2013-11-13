@@ -30,22 +30,12 @@ public class ChildrenDescriptorTest {
 	 * If a model elements is moved out, the respective test can be removed here
 	 */
 	private static final int RENDERABLE_CHILD_COUNT = 0;
-	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
-	// renderable + action
-	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
+	// control
 	private static final int NUMBER_OF_COMPOSITES = 1;
-	// categorization + category
-	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
-	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
-		+ NUMBER_OF_CATEGORIZATIONS;
-	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
-	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT
-		+ NUMBER_OF_CATEGORIZATIONS;
 
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
+	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
+
 	private static final int CONTROL_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
-
-	private static final int ACTION_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
 		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
@@ -54,26 +44,6 @@ public class ChildrenDescriptorTest {
 	public void testViewChildDescriptors() {
 		final int size = getChildrenSize(VViewPackage.eINSTANCE.getView());
 		assertEquals(VIEW_CHILD_COUNT, size);
-	}
-
-	/**
-	 * Class is abstract, Exception expected
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testAbstractCategorizationChildDescriptors() {
-		getChildrenSize(VViewPackage.eINSTANCE.getAbstractCategorization());
-	}
-
-	@Test
-	public void testCategorizationChildDescriptors() {
-		final int size = getChildrenSize(VViewPackage.eINSTANCE.getCategorization());
-		assertEquals(CATEGORIZATION_CHILD_COUNT, size);
-	}
-
-	@Test
-	public void testCategoryChildDescriptors() {
-		final int size = getChildrenSize(VViewPackage.eINSTANCE.getCategory());
-		assertEquals(CATEGORY_CHILD_COUNT, size);
 	}
 
 	/**
@@ -104,12 +74,6 @@ public class ChildrenDescriptorTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testRenderableDescriptors() {
 		getChildrenSize(VViewPackage.eINSTANCE.getElement());
-	}
-
-	@Test
-	public void testActionDescriptors() {
-		final int size = getChildrenSize(VViewPackage.eINSTANCE.getAction());
-		assertEquals(ACTION_CHILD_COUNT, size);
 	}
 
 	/**

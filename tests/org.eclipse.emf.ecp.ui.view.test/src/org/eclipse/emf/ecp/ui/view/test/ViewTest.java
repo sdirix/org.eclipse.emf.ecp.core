@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.ui.view.test;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
@@ -38,19 +37,6 @@ public class ViewTest {
 		final Node<VElement> node = build(view);
 		assertEquals(1, countNodes(node));
 		assertEquals("Unknown Node has been instanciated", 0, node.getChildren().size());
-	}
-
-	@Test
-	public void testViewWithCategories() {
-		final VView view = VViewFactory.eINSTANCE.createView();
-		final VCategory category = VViewFactory.eINSTANCE.createCategory();
-		view.getCategorizations().add(category);
-		final Node<VElement> node = build(view);
-		assertEquals(2, countNodes(node));
-		assertEquals(view, node.getRenderable());
-		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
-		final Node<?> childNode = node.getChildren().get(0);
-		assertEquals(category, childNode.getRenderable());
 	}
 
 	/**
@@ -83,15 +69,13 @@ public class ViewTest {
 	public void testViewWithChildrenAndCategories() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
-		final VCategory category = VViewFactory.eINSTANCE.createCategory();
-		view.getCategorizations().add(category);
 		view.getChildren().add(control);
 		final Node<VElement> node = build(view);
 		assertEquals(2, countNodes(node));
 		assertEquals(view, node.getRenderable());
 		assertEquals("Incorrect number of nodes have been instanciated", 1, node.getChildren().size());
 		final Node<?> childNode = node.getChildren().get(0);
-		assertEquals(category, childNode.getRenderable());
+		assertEquals(control, childNode.getRenderable());
 	}
 
 	/**

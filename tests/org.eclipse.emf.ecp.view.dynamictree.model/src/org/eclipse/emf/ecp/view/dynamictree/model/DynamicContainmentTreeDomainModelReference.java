@@ -17,17 +17,15 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Dynamic Containment Tree Domain Model Reference</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromRoot <em>
- * Path From Root</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromBase <em>
- * Path From Base</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromRoot <em>Path From Root</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromBase <em>Path From Base</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTreeDomainModelReference()
  * @model
  * @generated
@@ -41,7 +39,6 @@ public interface DynamicContainmentTreeDomainModelReference extends VDomainModel
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Path From Root</em>' containment reference.
 	 * @see #setPathFromRoot(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTreeDomainModelReference_PathFromRoot()
@@ -51,12 +48,9 @@ public interface DynamicContainmentTreeDomainModelReference extends VDomainModel
 	VDomainModelReference getPathFromRoot();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromRoot
-	 * <em>Path From Root</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromRoot <em>Path From Root</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param value the new value of the '<em>Path From Root</em>' containment reference.
 	 * @see #getPathFromRoot()
 	 * @generated
@@ -71,7 +65,6 @@ public interface DynamicContainmentTreeDomainModelReference extends VDomainModel
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Path From Base</em>' containment reference.
 	 * @see #setPathFromBase(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTreeDomainModelReference_PathFromBase()
@@ -81,12 +74,9 @@ public interface DynamicContainmentTreeDomainModelReference extends VDomainModel
 	VDomainModelReference getPathFromBase();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromBase
-	 * <em>Path From Base</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference#getPathFromBase <em>Path From Base</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param value the new value of the '<em>Path From Base</em>' containment reference.
 	 * @see #getPathFromBase()
 	 * @generated

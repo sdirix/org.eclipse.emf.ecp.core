@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -357,23 +356,6 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 				newChildDescriptors.add
 					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
-						VVerticalFactory.eINSTANCE.createVerticalLayout()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseCategory(VCategory object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VVerticalFactory.eINSTANCE.createVerticalLayout()));
 
 				return null;

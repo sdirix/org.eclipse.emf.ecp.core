@@ -111,6 +111,10 @@
          id="org.eclipse.emf.ecp.view.template.helper.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.categorization.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e3.source"
          download-size="0"
@@ -516,6 +520,30 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.template.service.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.categorization.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.categorization.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.categorization.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.categorization.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

@@ -100,9 +100,9 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
-			public Adapter caseContainableElement(VContainedElement object)
+			public Adapter caseContainedElement(VContainedElement object)
 			{
-				return createContainableElementAdapter();
+				return createContainedElementAdapter();
 			}
 
 			@Override
@@ -166,7 +166,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VContainedElement
-	 * <em>Containable Element</em>}'.
+	 * <em>Contained Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -176,7 +176,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainableElementAdapter()
+	public Adapter createContainedElementAdapter()
 	{
 		return null;
 	}

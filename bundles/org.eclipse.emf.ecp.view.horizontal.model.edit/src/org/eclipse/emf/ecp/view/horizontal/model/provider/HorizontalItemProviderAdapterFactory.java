@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.horizontal.model.util.HorizontalAdapterFactory;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -357,23 +356,6 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 				newChildDescriptors.add
 					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
-						VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseCategory(VCategory object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 
 				return null;

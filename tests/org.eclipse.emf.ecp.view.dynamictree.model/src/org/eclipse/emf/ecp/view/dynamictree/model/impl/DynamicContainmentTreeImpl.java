@@ -15,27 +15,19 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-
 import org.eclipse.emf.ecp.view.model.VContainedElement;
-
-import org.eclipse.emf.ecp.view.model.impl.VCategoryImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -54,7 +46,7 @@ import org.eclipse.emf.ecp.view.model.impl.VCategoryImpl;
  *
  * @generated
  */
-public class DynamicContainmentTreeImpl extends VCategoryImpl implements DynamicContainmentTree
+public class DynamicContainmentTreeImpl extends org.eclipse.emf.ecp.view.categorization.model.impl.VCategoryImpl implements DynamicContainmentTree
 {
 	/**
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.

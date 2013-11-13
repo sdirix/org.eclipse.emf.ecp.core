@@ -91,7 +91,7 @@ public class GroupSwitch<T> extends Switch<T> {
 			if (result == null)
 				result = caseContainer(group);
 			if (result == null)
-				result = caseContainableElement(group);
+				result = caseContainedElement(group);
 			if (result == null)
 				result = caseElement(group);
 			if (result == null)
@@ -138,18 +138,18 @@ public class GroupSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Containable Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainableElement(VContainedElement object)
+	public T caseContainedElement(VContainedElement object)
 	{
 		return null;
 	}

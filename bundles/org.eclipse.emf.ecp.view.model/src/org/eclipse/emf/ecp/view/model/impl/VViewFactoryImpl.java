@@ -18,9 +18,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.model.LabelAlignment;
-import org.eclipse.emf.ecp.view.model.VAction;
-import org.eclipse.emf.ecp.view.model.VCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
@@ -45,8 +42,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public static VViewFactory init() {
 		try
 		{
-			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
-				.getEFactory("http://org/eclipse/emf/ecp/view/model");
+			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE.getEFactory(VViewPackage.eNS_URI);
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
@@ -86,12 +82,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 			return createView();
 		case VViewPackage.CONTROL:
 			return createControl();
-		case VViewPackage.CATEGORIZATION:
-			return createCategorization();
-		case VViewPackage.CATEGORY:
-			return createCategory();
-		case VViewPackage.ACTION:
-			return createAction();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -160,39 +150,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
-	public VCategorization createCategorization() {
-		VCategorizationImpl categorization = new VCategorizationImpl();
-		return categorization;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public VCategory createCategory() {
-		VCategoryImpl category = new VCategoryImpl();
-		return category;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public VControl createControl() {
 		VControlImpl control = new VControlImpl();
 		return control;
-	}
-
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public VAction createAction() {
-		VActionImpl action = new VActionImpl();
-		return action;
 	}
 
 	/**

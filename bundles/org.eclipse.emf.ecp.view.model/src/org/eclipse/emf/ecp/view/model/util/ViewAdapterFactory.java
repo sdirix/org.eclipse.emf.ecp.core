@@ -15,11 +15,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VControl;
@@ -146,30 +142,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseAbstractCategorization(VAbstractCategorization object)
-		{
-			return createAbstractCategorizationAdapter();
-		}
-
-		@Override
-		public Adapter caseCategorization(VCategorization object)
-		{
-			return createCategorizationAdapter();
-		}
-
-		@Override
-		public Adapter caseCategory(VCategory object)
-		{
-			return createCategoryAdapter();
-		}
-
-		@Override
-		public Adapter caseAction(VAction object)
-		{
-			return createActionAdapter();
-		}
-
-		@Override
 		public Adapter defaultCase(EObject object)
 		{
 			return createEObjectAdapter();
@@ -255,53 +227,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization
-	 * <em>Abstract Categorization</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization
-	 * @generated
-	 */
-	public Adapter createAbstractCategorizationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VCategorization
-	 * <em>Categorization</em>}'.
-	 * <!-- begin-user-doc --> This default
-	 * implementation returns null so that we can easily ignore cases; it's
-	 * useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VCategorization
-	 * @generated
-	 */
-	public Adapter createCategorizationAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VCategory <em>Category</em>}
-	 * '. <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VCategory
-	 * @generated
-	 */
-	public Adapter createCategoryAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VControl <em>Control</em>}'.
 	 * <!--
 	 * begin-user-doc --> This default implementation returns null so that we
@@ -330,21 +255,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 */
 	public Adapter createContainerAdapter()
 	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.model.VAction <em>Action</em>}'.
-	 * <!--
-	 * begin-user-doc --> This default implementation returns null so that we
-	 * can easily ignore cases; it's useful to ignore a case when inheritance
-	 * will catch all the cases anyway. <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VAction
-	 * @generated
-	 */
-	public Adapter createActionAdapter() {
 		return null;
 	}
 

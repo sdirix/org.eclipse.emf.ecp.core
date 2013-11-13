@@ -82,6 +82,16 @@ public interface VHorizontalPackage extends EPackage
 	int HORIZONTAL_LAYOUT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int HORIZONTAL_LAYOUT__NAME = VViewPackage.CONTAINER__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -130,16 +140,6 @@ public interface VHorizontalPackage extends EPackage
 	 * @ordered
 	 */
 	int HORIZONTAL_LAYOUT__ATTACHMENTS = VViewPackage.CONTAINER__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int HORIZONTAL_LAYOUT__NAME = VViewPackage.CONTAINER__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.

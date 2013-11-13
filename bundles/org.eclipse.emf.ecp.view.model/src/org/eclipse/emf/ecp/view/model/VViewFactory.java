@@ -53,26 +53,6 @@ public interface VViewFactory extends EFactory {
 	VView createView();
 
 	/**
-	 * Returns a new object of class '<em>Categorization</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Categorization</em>'.
-	 * @generated
-	 */
-	VCategorization createCategorization();
-
-	/**
-	 * Returns a new object of class '<em>Category</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Category</em>'.
-	 * @generated
-	 */
-	VCategory createCategory();
-
-	/**
 	 * Returns a new object of class '<em>Control</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -81,16 +61,6 @@ public interface VViewFactory extends EFactory {
 	 * @generated
 	 */
 	VControl createControl();
-
-	/**
-	 * Returns a new object of class '<em>Action</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Action</em>'.
-	 * @generated
-	 */
-	VAction createAction();
 
 	/**
 	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.

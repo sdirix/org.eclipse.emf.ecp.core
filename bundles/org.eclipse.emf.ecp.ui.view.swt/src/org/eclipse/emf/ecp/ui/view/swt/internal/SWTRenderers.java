@@ -29,8 +29,6 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.VCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
@@ -52,9 +50,9 @@ public final class SWTRenderers implements SWTRenderer<VElement> {
 		// put(Group.class, SWTGroupRenderer.INSTANCE);
 		// put(TableControl.class, SWTTableControlRenderer.INSTANCE);
 		renderers.put(VControl.class, SWTControlRenderer.INSTANCE);
-		renderers.put(VCategorization.class, SWTCategorizationRenderer.INSTANCE);
+		// renderers.put(VCategorization.class, SWTCategorizationRenderer.INSTANCE);
+		// renderers.put(VCategory.class, SWTCategoryRenderer.INSTANCE);
 		renderers.put(VView.class, SWTViewRenderer.INSTANCE);
-		renderers.put(VCategory.class, SWTCategoryRenderer.INSTANCE);
 
 		for (final CustomSWTRenderer customRenderer : getCustomRenderers()) {
 			for (final Map.Entry<Class<? extends VElement>, SWTRenderer<?>> renderEntry : customRenderer

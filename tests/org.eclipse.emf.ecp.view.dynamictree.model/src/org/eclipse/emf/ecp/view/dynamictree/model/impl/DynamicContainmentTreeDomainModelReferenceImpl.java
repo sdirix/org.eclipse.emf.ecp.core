@@ -35,15 +35,11 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromRoot
- * <em>Path From Root</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromBase
- * <em>Path From Base</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromRoot <em>Path From Root</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeDomainModelReferenceImpl#getPathFromBase <em>Path From Base</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl implements
@@ -52,7 +48,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * The cached value of the '{@link #getPathFromRoot() <em>Path From Root</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getPathFromRoot()
 	 * @generated
 	 * @ordered
@@ -63,7 +58,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * The cached value of the '{@link #getPathFromBase() <em>Path From Base</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getPathFromBase()
 	 * @generated
 	 * @ordered
@@ -73,7 +67,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected DynamicContainmentTreeDomainModelReferenceImpl() {
@@ -83,7 +76,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -94,7 +86,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VDomainModelReference getPathFromRoot() {
@@ -104,21 +95,14 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetPathFromRoot(VDomainModelReference newPathFromRoot, NotificationChain msgs) {
-		final VDomainModelReference oldPathFromRoot = pathFromRoot;
+		VDomainModelReference oldPathFromRoot = pathFromRoot;
 		pathFromRoot = newPathFromRoot;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, oldPathFromRoot,
-				newPathFromRoot);
-			if (msgs == null) {
-				msgs = notification;
-			} else {
-				msgs.add(notification);
-			}
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, oldPathFromRoot, newPathFromRoot);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -126,36 +110,25 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setPathFromRoot(VDomainModelReference newPathFromRoot) {
 		if (newPathFromRoot != pathFromRoot) {
 			NotificationChain msgs = null;
-			if (pathFromRoot != null) {
-				msgs = ((InternalEObject) pathFromRoot).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, null, msgs);
-			}
-			if (newPathFromRoot != null) {
-				msgs = ((InternalEObject) newPathFromRoot).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, null, msgs);
-			}
+			if (pathFromRoot != null)
+				msgs = ((InternalEObject)pathFromRoot).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, null, msgs);
+			if (newPathFromRoot != null)
+				msgs = ((InternalEObject)newPathFromRoot).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, null, msgs);
 			msgs = basicSetPathFromRoot(newPathFromRoot, msgs);
-			if (msgs != null) {
-				msgs.dispatch();
-			}
+			if (msgs != null) msgs.dispatch();
 		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, newPathFromRoot,
-				newPathFromRoot));
-		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, newPathFromRoot, newPathFromRoot));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VDomainModelReference getPathFromBase() {
@@ -165,21 +138,14 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetPathFromBase(VDomainModelReference newPathFromBase, NotificationChain msgs) {
-		final VDomainModelReference oldPathFromBase = pathFromBase;
+		VDomainModelReference oldPathFromBase = pathFromBase;
 		pathFromBase = newPathFromBase;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, oldPathFromBase,
-				newPathFromBase);
-			if (msgs == null) {
-				msgs = notification;
-			} else {
-				msgs.add(notification);
-			}
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, oldPathFromBase, newPathFromBase);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -187,45 +153,34 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setPathFromBase(VDomainModelReference newPathFromBase) {
 		if (newPathFromBase != pathFromBase) {
 			NotificationChain msgs = null;
-			if (pathFromBase != null) {
-				msgs = ((InternalEObject) pathFromBase).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, null, msgs);
-			}
-			if (newPathFromBase != null) {
-				msgs = ((InternalEObject) newPathFromBase).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, null, msgs);
-			}
+			if (pathFromBase != null)
+				msgs = ((InternalEObject)pathFromBase).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, null, msgs);
+			if (newPathFromBase != null)
+				msgs = ((InternalEObject)newPathFromBase).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, null, msgs);
 			msgs = basicSetPathFromBase(newPathFromBase, msgs);
-			if (msgs != null) {
-				msgs.dispatch();
-			}
+			if (msgs != null) msgs.dispatch();
 		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, newPathFromBase,
-				newPathFromBase));
-		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, newPathFromBase, newPathFromBase));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
-			return basicSetPathFromRoot(null, msgs);
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
-			return basicSetPathFromBase(null, msgs);
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
+				return basicSetPathFromRoot(null, msgs);
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
+				return basicSetPathFromBase(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -233,16 +188,15 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
-			return getPathFromRoot();
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
-			return getPathFromBase();
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
+				return getPathFromRoot();
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
+				return getPathFromBase();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -250,18 +204,17 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
-			setPathFromRoot((VDomainModelReference) newValue);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
-			setPathFromBase((VDomainModelReference) newValue);
-			return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
+				setPathFromRoot((VDomainModelReference)newValue);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
+				setPathFromBase((VDomainModelReference)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -269,18 +222,17 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
-			setPathFromRoot((VDomainModelReference) null);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
-			setPathFromBase((VDomainModelReference) null);
-			return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
+				setPathFromRoot((VDomainModelReference)null);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
+				setPathFromBase((VDomainModelReference)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -288,16 +240,15 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
-			return pathFromRoot != null;
-		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
-			return pathFromBase != null;
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT:
+				return pathFromRoot != null;
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE:
+				return pathFromBase != null;
 		}
 		return super.eIsSet(featureID);
 	}

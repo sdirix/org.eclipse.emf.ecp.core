@@ -22,8 +22,6 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainMo
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
 
@@ -277,8 +275,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAbstractCategorization(VAbstractCategorization object)
-	{
+	public T caseAbstractCategorization(org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization object) {
 		return null;
 	}
 
@@ -293,8 +290,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategory(VCategory object)
-	{
+	public T caseCategory(org.eclipse.emf.ecp.view.categorization.model.VCategory object) {
 		return null;
 	}
 

@@ -12,11 +12,8 @@
 package org.eclipse.emf.ecp.view.dynamictree.model;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 
 /**
@@ -39,7 +36,7 @@ import org.eclipse.emf.ecp.view.model.VContainedElement;
  * @model
  * @generated
  */
-public interface DynamicContainmentTree extends VCategory
+public interface DynamicContainmentTree extends org.eclipse.emf.ecp.view.categorization.model.VCategory
 {
 	/**
 	 * Returns the value of the '<em><b>Domain Model</b></em>' reference.

@@ -114,30 +114,6 @@ public interface VViewPackage extends EPackage {
 	int DIAGNOSTIC_FEATURE_COUNT = 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl
-	 * <em>Abstract Categorization</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAbstractCategorization()
-	 * @generated
-	 */
-	int ABSTRACT_CATEGORIZATION = 9;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VCategorizationImpl
-	 * <em>Categorization</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VCategorizationImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getCategorization()
-	 * @generated
-	 */
-	int CATEGORIZATION = 10;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VViewImpl <em>View</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,17 +125,6 @@ public interface VViewPackage extends EPackage {
 	int VIEW = 5;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VCategoryImpl <em>Category</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VCategoryImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getCategory()
-	 * @generated
-	 */
-	int CATEGORY = 11;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VControlImpl <em>Control</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -169,17 +134,6 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	int CONTROL = 8;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VActionImpl <em>Action</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VActionImpl
-	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAction()
-	 * @generated
-	 */
-	int ACTION = 12;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VAttachmentImpl <em>Attachment</em>}'
@@ -418,16 +372,6 @@ public interface VViewPackage extends EPackage {
 	int VIEW__CHILDREN = ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int VIEW__CATEGORIZATIONS = ELEMENT_FEATURE_COUNT + 2;
-
-	/**
 	 * The number of structural features of the '<em>View</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -435,7 +379,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
+	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl
@@ -701,296 +645,6 @@ public interface VViewPackage extends EPackage {
 	int CONTROL_FEATURE_COUNT = CONTAINED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__NAME = ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__VISIBLE = ELEMENT__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__ENABLED = ELEMENT__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__READONLY = ELEMENT__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__DIAGNOSTIC = ELEMENT__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__ACTIONS = ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Abstract Categorization</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__NAME = ABSTRACT_CATEGORIZATION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__VISIBLE = ABSTRACT_CATEGORIZATION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__ENABLED = ABSTRACT_CATEGORIZATION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__DIAGNOSTIC = ABSTRACT_CATEGORIZATION__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__ACTIONS = ABSTRACT_CATEGORIZATION__ACTIONS;
-
-	/**
-	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__CATEGORIZATIONS = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Categorization</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__VISIBLE = ABSTRACT_CATEGORIZATION__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__ENABLED = ABSTRACT_CATEGORIZATION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__READONLY = ABSTRACT_CATEGORIZATION__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__DIAGNOSTIC = ABSTRACT_CATEGORIZATION__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__ACTIONS = ABSTRACT_CATEGORIZATION__ACTIONS;
-
-	/**
-	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__COMPOSITE = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Category</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION__BUNDLE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION__CLASS_NAME = 1;
-
-	/**
-	 * The number of structural features of the '<em>Action</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ACTION_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.model.LabelAlignment <em>Label Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -999,7 +653,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
 	 */
-	int LABEL_ALIGNMENT = 13;
+	int LABEL_ALIGNMENT = 9;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VElement <em>Element</em>}'.
@@ -1152,19 +806,6 @@ public interface VViewPackage extends EPackage {
 	EReference getView_Children();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.VView#getCategorizations <em>Categorizations</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Categorizations</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VView#getCategorizations()
-	 * @see #getView()
-	 * @generated
-	 */
-	EReference getView_Categorizations();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VContainedElement
 	 * <em>Contained Element</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1175,80 +816,6 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getContainedElement();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization
-	 * <em>Abstract Categorization</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Abstract Categorization</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization
-	 * @generated
-	 */
-	EClass getAbstractCategorization();
-
-	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.VAbstractCategorization#getActions <em>Actions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Actions</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization#getActions()
-	 * @see #getAbstractCategorization()
-	 * @generated
-	 */
-	EReference getAbstractCategorization_Actions();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VCategorization <em>Categorization</em>}
-	 * '.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Categorization</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VCategorization
-	 * @generated
-	 */
-	EClass getCategorization();
-
-	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.model.VCategorization#getCategorizations <em>Categorizations</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference list '<em>Categorizations</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VCategorization#getCategorizations()
-	 * @see #getCategorization()
-	 * @generated
-	 */
-	EReference getCategorization_Categorizations();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VCategory <em>Category</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Category</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VCategory
-	 * @generated
-	 */
-	EClass getCategory();
-
-	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.model.VCategory#getComposite <em>Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the containment reference '<em>Composite</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VCategory#getComposite()
-	 * @see #getCategory()
-	 * @generated
-	 */
-	EReference getCategory_Composite();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VControl <em>Control</em>}'.
@@ -1310,43 +877,6 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getControl_LabelAlignment();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.model.VAction <em>Action</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for class '<em>Action</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VAction
-	 * @generated
-	 */
-	EClass getAction();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.VAction#getBundle
-	 * <em>Bundle</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Bundle</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VAction#getBundle()
-	 * @see #getAction()
-	 * @generated
-	 */
-	EAttribute getAction_Bundle();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.model.VAction#getClassName
-	 * <em>Class Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the attribute '<em>Class Name</em>'.
-	 * @see org.eclipse.emf.ecp.view.model.VAction#getClassName()
-	 * @see #getAction()
-	 * @generated
-	 */
-	EAttribute getAction_ClassName();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.model.LabelAlignment <em>Label Alignment</em>}
@@ -1564,15 +1094,6 @@ public interface VViewPackage extends EPackage {
 		EReference VIEW__CHILDREN = eINSTANCE.getView_Children();
 
 		/**
-		 * The meta object literal for the '<em><b>Categorizations</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference VIEW__CATEGORIZATIONS = eINSTANCE.getView_Categorizations();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl
 		 * <em>Contained Element</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1583,69 +1104,6 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONTAINED_ELEMENT = eINSTANCE.getContainedElement();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl
-		 * <em>Abstract Categorization</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.VAbstractCategorizationImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAbstractCategorization()
-		 * @generated
-		 */
-		EClass ABSTRACT_CATEGORIZATION = eINSTANCE.getAbstractCategorization();
-
-		/**
-		 * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference ABSTRACT_CATEGORIZATION__ACTIONS = eINSTANCE.getAbstractCategorization_Actions();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VCategorizationImpl
-		 * <em>Categorization</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.VCategorizationImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getCategorization()
-		 * @generated
-		 */
-		EClass CATEGORIZATION = eINSTANCE.getCategorization();
-
-		/**
-		 * The meta object literal for the '<em><b>Categorizations</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference CATEGORIZATION__CATEGORIZATIONS = eINSTANCE.getCategorization_Categorizations();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VCategoryImpl <em>Category</em>}'
-		 * class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.VCategoryImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getCategory()
-		 * @generated
-		 */
-		EClass CATEGORY = eINSTANCE.getCategory();
-
-		/**
-		 * The meta object literal for the '<em><b>Composite</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference CATEGORY__COMPOSITE = eINSTANCE.getCategory_Composite();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VControlImpl <em>Control</em>}'
@@ -1697,36 +1155,6 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CONTROL__LABEL_ALIGNMENT = eINSTANCE.getControl_LabelAlignment();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.impl.VActionImpl <em>Action</em>}'
-		 * class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @see org.eclipse.emf.ecp.view.model.impl.VActionImpl
-		 * @see org.eclipse.emf.ecp.view.model.impl.VViewPackageImpl#getAction()
-		 * @generated
-		 */
-		EClass ACTION = eINSTANCE.getAction();
-
-		/**
-		 * The meta object literal for the '<em><b>Bundle</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute ACTION__BUNDLE = eINSTANCE.getAction_Bundle();
-
-		/**
-		 * The meta object literal for the '<em><b>Class Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EAttribute ACTION__CLASS_NAME = eINSTANCE.getAction_ClassName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.model.LabelAlignment
