@@ -107,6 +107,12 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.ide.feature</module>
 
+	<!-- Categorization Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		
 		<!-- Custom Control Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
@@ -210,6 +216,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
 		
+		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>

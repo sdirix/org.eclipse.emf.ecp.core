@@ -52,6 +52,7 @@
       <feature id="org.eclipse.emf.ecp.view.horizontal.feature"/>
       <feature id="org.eclipse.emf.ecp.view.label.feature"/>
       <feature id="org.eclipse.emf.ecp.view.vertical.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.categorization.feature"/>
    </features>
 
    <configurations>
