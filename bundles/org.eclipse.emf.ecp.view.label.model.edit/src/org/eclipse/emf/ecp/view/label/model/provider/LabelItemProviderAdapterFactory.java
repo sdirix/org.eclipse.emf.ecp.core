@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.label.model.util.LabelAdapterFactory;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -356,23 +355,6 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 				newChildDescriptors.add
 					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
-						VLabelFactory.eINSTANCE.createLabel()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseCategory(VCategory object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CATEGORY__COMPOSITE,
 						VLabelFactory.eINSTANCE.createLabel()));
 
 				return null;

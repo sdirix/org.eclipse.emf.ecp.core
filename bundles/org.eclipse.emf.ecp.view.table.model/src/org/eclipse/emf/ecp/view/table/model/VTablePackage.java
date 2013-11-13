@@ -84,6 +84,16 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__NAME = VViewPackage.CONTROL__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -132,16 +142,6 @@ public interface VTablePackage extends EPackage
 	 * @ordered
 	 */
 	int TABLE_CONTROL__ATTACHMENTS = VViewPackage.CONTROL__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__NAME = VViewPackage.CONTROL__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.

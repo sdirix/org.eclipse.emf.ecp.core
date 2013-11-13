@@ -37,13 +37,13 @@ import org.eclipse.emf.ecp.view.dynamictree.model.util.ModelValidator;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getId <em>Id</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getElements <em>Elements</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getParentId <em>Parent Id</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getParentId <em>Parent Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TestElementImpl extends EObjectImpl implements TestElement
@@ -52,7 +52,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -63,7 +62,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -74,7 +72,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getElements()
 	 * @generated
 	 * @ordered
@@ -85,7 +82,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The default value of the '{@link #getParentId() <em>Parent Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getParentId()
 	 * @generated
 	 * @ordered
@@ -96,7 +92,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The cached value of the '{@link #getParentId() <em>Parent Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getParentId()
 	 * @generated
 	 * @ordered
@@ -107,7 +102,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -118,7 +112,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -128,7 +121,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected TestElementImpl()
@@ -139,7 +131,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -151,7 +142,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getId()
@@ -162,29 +152,25 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setId(String newId)
 	{
-		final String oldId = id;
+		String oldId = id;
 		id = newId;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__ID, oldId, id));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<TestElement> getElements()
 	{
 		if (elements == null) {
-			elements = new EObjectContainmentEList<TestElement>(TestElement.class, this,
-				ModelPackage.TEST_ELEMENT__ELEMENTS);
+			elements = new EObjectContainmentEList<TestElement>(TestElement.class, this, ModelPackage.TEST_ELEMENT__ELEMENTS);
 		}
 		return elements;
 	}
@@ -192,7 +178,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getParentId()
@@ -203,23 +188,19 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setParentId(String newParentId)
 	{
-		final String oldParentId = parentId;
+		String oldParentId = parentId;
 		parentId = newParentId;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__PARENT_ID, oldParentId,
-				parentId));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__PARENT_ID, oldParentId, parentId));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getName() {
@@ -229,15 +210,13 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setName(String newName) {
-		final String oldName = name;
+		String oldName = name;
 		name = newName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TEST_ELEMENT__NAME, oldName, name));
-		}
 	}
 
 	/**
@@ -276,15 +255,14 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID) {
-		case ModelPackage.TEST_ELEMENT__ELEMENTS:
-			return ((InternalEList<?>) getElements()).basicRemove(otherEnd, msgs);
+			case ModelPackage.TEST_ELEMENT__ELEMENTS:
+				return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -292,21 +270,20 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID) {
-		case ModelPackage.TEST_ELEMENT__ID:
-			return getId();
-		case ModelPackage.TEST_ELEMENT__ELEMENTS:
-			return getElements();
-		case ModelPackage.TEST_ELEMENT__PARENT_ID:
-			return getParentId();
-		case ModelPackage.TEST_ELEMENT__NAME:
-			return getName();
+			case ModelPackage.TEST_ELEMENT__ID:
+				return getId();
+			case ModelPackage.TEST_ELEMENT__ELEMENTS:
+				return getElements();
+			case ModelPackage.TEST_ELEMENT__PARENT_ID:
+				return getParentId();
+			case ModelPackage.TEST_ELEMENT__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -314,7 +291,6 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -322,19 +298,19 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	public void eSet(int featureID, Object newValue)
 	{
 		switch (featureID) {
-		case ModelPackage.TEST_ELEMENT__ID:
-			setId((String) newValue);
-			return;
-		case ModelPackage.TEST_ELEMENT__ELEMENTS:
-			getElements().clear();
-			getElements().addAll((Collection<? extends TestElement>) newValue);
-			return;
-		case ModelPackage.TEST_ELEMENT__PARENT_ID:
-			setParentId((String) newValue);
-			return;
-		case ModelPackage.TEST_ELEMENT__NAME:
-			setName((String) newValue);
-			return;
+			case ModelPackage.TEST_ELEMENT__ID:
+				setId((String)newValue);
+				return;
+			case ModelPackage.TEST_ELEMENT__ELEMENTS:
+				getElements().clear();
+				getElements().addAll((Collection<? extends TestElement>)newValue);
+				return;
+			case ModelPackage.TEST_ELEMENT__PARENT_ID:
+				setParentId((String)newValue);
+				return;
+			case ModelPackage.TEST_ELEMENT__NAME:
+				setName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -342,25 +318,24 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID)
 	{
 		switch (featureID) {
-		case ModelPackage.TEST_ELEMENT__ID:
-			setId(ID_EDEFAULT);
-			return;
-		case ModelPackage.TEST_ELEMENT__ELEMENTS:
-			getElements().clear();
-			return;
-		case ModelPackage.TEST_ELEMENT__PARENT_ID:
-			setParentId(PARENT_ID_EDEFAULT);
-			return;
-		case ModelPackage.TEST_ELEMENT__NAME:
-			setName(NAME_EDEFAULT);
-			return;
+			case ModelPackage.TEST_ELEMENT__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case ModelPackage.TEST_ELEMENT__ELEMENTS:
+				getElements().clear();
+				return;
+			case ModelPackage.TEST_ELEMENT__PARENT_ID:
+				setParentId(PARENT_ID_EDEFAULT);
+				return;
+			case ModelPackage.TEST_ELEMENT__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -368,21 +343,20 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID)
 	{
 		switch (featureID) {
-		case ModelPackage.TEST_ELEMENT__ID:
-			return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-		case ModelPackage.TEST_ELEMENT__ELEMENTS:
-			return elements != null && !elements.isEmpty();
-		case ModelPackage.TEST_ELEMENT__PARENT_ID:
-			return PARENT_ID_EDEFAULT == null ? parentId != null : !PARENT_ID_EDEFAULT.equals(parentId);
-		case ModelPackage.TEST_ELEMENT__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ModelPackage.TEST_ELEMENT__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case ModelPackage.TEST_ELEMENT__ELEMENTS:
+				return elements != null && !elements.isEmpty();
+			case ModelPackage.TEST_ELEMENT__PARENT_ID:
+				return PARENT_ID_EDEFAULT == null ? parentId != null : !PARENT_ID_EDEFAULT.equals(parentId);
+			case ModelPackage.TEST_ELEMENT__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -390,17 +364,14 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
 		result.append(", parentId: ");

@@ -14,11 +14,7 @@ package org.eclipse.emf.ecp.view.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.model.VAction;
 import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VContainer;
 import org.eclipse.emf.ecp.view.model.VControl;
@@ -166,44 +162,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case VViewPackage.ABSTRACT_CATEGORIZATION: {
-			VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
-			T result = caseAbstractCategorization(abstractCategorization);
-			if (result == null)
-				result = caseElement(abstractCategorization);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.CATEGORIZATION: {
-			VCategorization categorization = (VCategorization) theEObject;
-			T result = caseCategorization(categorization);
-			if (result == null)
-				result = caseAbstractCategorization(categorization);
-			if (result == null)
-				result = caseElement(categorization);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.CATEGORY: {
-			VCategory category = (VCategory) theEObject;
-			T result = caseCategory(category);
-			if (result == null)
-				result = caseAbstractCategorization(category);
-			if (result == null)
-				result = caseElement(category);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case VViewPackage.ACTION: {
-			VAction action = (VAction) theEObject;
-			T result = caseAction(action);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -277,54 +235,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of ' <em>Abstract Categorization</em>'. <!--
-	 * begin-user-doc --> This
-	 * implementation returns null; returning a non-null result will terminate
-	 * the switch. <!-- end-user-doc -->
-	 * 
-	 * @param object
-	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of ' <em>Abstract Categorization</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAbstractCategorization(VAbstractCategorization object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Categorization</em>'.
-	 * <!-- begin-user-doc
-	 * --> This implementation
-	 * returns null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Categorization</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCategorization(VCategorization object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Category</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Category</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCategory(VCategory object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * <!-- begin-user-doc --> This
 	 * implementation returns
@@ -354,22 +264,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 */
 	public T caseContainer(VContainer object)
 	{
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Action</em>'.
-	 * <!-- begin-user-doc --> This
-	 * implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Action</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAction(VAction object) {
 		return null;
 	}
 

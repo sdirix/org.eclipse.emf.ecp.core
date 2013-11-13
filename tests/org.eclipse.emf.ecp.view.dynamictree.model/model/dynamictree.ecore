@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/dynamictree/model"
     nsPrefix="org.eclipse.emf.ecp.view.dynamictree.model">
-  <eClassifiers xsi:type="ecore:EClass" name="DynamicContainmentTree" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Category">
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicContainmentTree" eSuperTypes="../../org.eclipse.emf.ecp.view.categorization.model/model/categorization.ecore#//Category">
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModel" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="childReference" lowerBound="1"

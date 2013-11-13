@@ -23,17 +23,20 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.dynamictree.model.test.DynamicContainmentTreeTestEditContext;
-import org.eclipse.emf.ecp.view.model.VCategorization;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -64,8 +67,19 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
 		// used for validation
 		final VControl childNameControl = VViewFactory.eINSTANCE.createControl();
-		childNameControl.setDomainModelReference(
-			createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Name()));
+
+		final DynamicContainmentTreeDomainModelReference reference =
+			ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference();
+		final VFeaturePathDomainModelReference rootRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+
+		rootRef.getDomainModelEReferencePath().addAll(tree.getPathToRoot());
+		rootRef.setDomainModelEFeature(ModelPackage.eINSTANCE.getTestElementContainer_TestElements());
+
+		reference.setPathFromRoot(rootRef);
+		reference.setPathFromBase(createFeaturePathDomainModelReference(ModelPackage.eINSTANCE.getTestElement_Name()));
+
+		childNameControl.setDomainModelReference(reference
+			);
 		tree.setChildComposite(childNameControl);
 
 		final VControl viewControl = VViewFactory.eINSTANCE.createControl();
@@ -79,10 +93,12 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(ModelPackage.eINSTANCE.getDomainRoot());
 
-		final VCategorization categorization = VViewFactory.eINSTANCE.createCategorization();
+		final VCategorization categorization = VCategorizationFactory.eINSTANCE.createCategorization();
 		categorization.setName("quux");
 		categorization.getCategorizations().add(tree);
-		view.getCategorizations().add(categorization);
+		final VCategorizationElement element = VCategorizationFactory.eINSTANCE.createCategorizationElement();
+		element.getCategorizations().add(categorization);
+		view.getChildren().add(element);
 		return view;
 	}
 
@@ -209,7 +225,7 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 	@Override
 	public void logic() {
 
-		final Node<?> childNodenode2 = getViewNode().getChildren().get(0);
+		final Node<?> childNodenode2 = getViewNode().getChildren().get(0).getChildren().get(0);
 		node = (Node<DynamicContainmentTree>) childNodenode2.getChildren().get(0);
 
 		final String id = "123";
@@ -230,14 +246,14 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 			public void run() {
 				// causes UI update
 				testElement.setName(TEST_ELEMENT_NAME_2);
+				bot.tree().getAllItems()[0].getItems()[0].expand();
+				bot.tree().getAllItems()[0].getItems()[0].getItems()[0].select();
+				assertEquals("foo", bot.text().getText());
+
+				bot.tree().getAllItems()[0].getItems()[0].getItems()[1].select();
+				assertEquals("bar", bot.text().getText());
 			}
 		});
 
-		bot.tree().getAllItems()[0].getItems()[0].expand();
-		bot.tree().getAllItems()[0].getItems()[0].getItems()[0].select();
-		assertEquals("foo", bot.text().getText());
-
-		bot.tree().getAllItems()[0].getItems()[0].getItems()[1].select();
-		assertEquals("bar", bot.text().getText());
 	}
 }

@@ -106,7 +106,6 @@ public class ViewItemProvider
 		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VViewPackage.Literals.VIEW__CHILDREN);
-			childrenFeatures.add(VViewPackage.Literals.VIEW__CATEGORIZATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -167,7 +166,6 @@ public class ViewItemProvider
 		switch (notification.getFeatureID(VView.class))
 		{
 		case VViewPackage.VIEW__CHILDREN:
-		case VViewPackage.VIEW__CATEGORIZATIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -190,16 +188,6 @@ public class ViewItemProvider
 			(createChildParameter
 			(VViewPackage.Literals.VIEW__CHILDREN,
 				VViewFactory.eINSTANCE.createControl()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.VIEW__CATEGORIZATIONS,
-				VViewFactory.eINSTANCE.createCategorization()));
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.VIEW__CATEGORIZATIONS,
-				VViewFactory.eINSTANCE.createCategory()));
 	}
 
 }

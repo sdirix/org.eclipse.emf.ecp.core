@@ -81,6 +81,16 @@ public interface VGroupPackage extends EPackage
 	int GROUP = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__NAME = VViewPackage.CONTAINER__NAME;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -129,16 +139,6 @@ public interface VGroupPackage extends EPackage
 	 * @ordered
 	 */
 	int GROUP__ATTACHMENTS = VViewPackage.CONTAINER__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__NAME = VViewPackage.CONTAINER__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.

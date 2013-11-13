@@ -155,59 +155,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.VCategorization}
-	 * instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected CategorizationItemProvider categorizationItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VCategorization}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createCategorizationAdapter() {
-		if (categorizationItemProvider == null)
-		{
-			categorizationItemProvider = new CategorizationItemProvider(this);
-		}
-
-		return categorizationItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.VCategory} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected CategoryItemProvider categoryItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VCategory}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createCategoryAdapter() {
-		if (categoryItemProvider == null)
-		{
-			categoryItemProvider = new CategoryItemProvider(this);
-		}
-
-		return categoryItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.VControl} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -231,32 +178,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		}
 
 		return controlItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.model.VAction} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected ActionItemProvider actionItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.model.VAction}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createActionAdapter() {
-		if (actionItemProvider == null)
-		{
-			actionItemProvider = new ActionItemProvider(this);
-		}
-
-		return actionItemProvider;
 	}
 
 	/**
@@ -436,12 +357,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			viewItemProvider.dispose();
 		if (controlItemProvider != null)
 			controlItemProvider.dispose();
-		if (categorizationItemProvider != null)
-			categorizationItemProvider.dispose();
-		if (categoryItemProvider != null)
-			categoryItemProvider.dispose();
-		if (actionItemProvider != null)
-			actionItemProvider.dispose();
 	}
 
 }

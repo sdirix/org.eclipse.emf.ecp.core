@@ -23,8 +23,10 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
 import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
-import org.eclipse.emf.ecp.view.model.VCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
+import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
@@ -138,22 +140,25 @@ public class OpenEditorTest extends SWTBotTestCase {
 		return control;
 	}
 
-	private VCategorization createCategorizations(
+	private VCategorizationElement createCategorizations(
 		org.eclipse.emf.ecp.view.model.VContainedElement composite1,
 		org.eclipse.emf.ecp.view.model.VContainedElement composite2,
 		org.eclipse.emf.ecp.view.model.VContainedElement composite3,
 		org.eclipse.emf.ecp.view.model.VContainedElement composite4) {
 
-		final VCategorization parentCategorization = VViewFactory.eINSTANCE
+		final VCategorizationElement categorizationElement = VCategorizationFactory.eINSTANCE
+			.createCategorizationElement();
+
+		final VCategorization parentCategorization = VCategorizationFactory.eINSTANCE
 			.createCategorization();
-		final VCategorization fooCategorization = VViewFactory.eINSTANCE
+		final VCategorization fooCategorization = VCategorizationFactory.eINSTANCE
 			.createCategorization();
-		final VCategorization barCategorization = VViewFactory.eINSTANCE
+		final VCategorization barCategorization = VCategorizationFactory.eINSTANCE
 			.createCategorization();
-		final VCategory category1 = VViewFactory.eINSTANCE.createCategory();
-		final VCategory category2 = VViewFactory.eINSTANCE.createCategory();
-		final VCategory category3 = VViewFactory.eINSTANCE.createCategory();
-		final VCategory category4 = VViewFactory.eINSTANCE.createCategory();
+		final VCategory category1 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VCategory category2 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VCategory category3 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VCategory category4 = VCategorizationFactory.eINSTANCE.createCategory();
 		parentCategorization.setName("parent");
 		fooCategorization.setName("foo");
 		barCategorization.setName("bar");
@@ -171,7 +176,8 @@ public class OpenEditorTest extends SWTBotTestCase {
 		barCategorization.getCategorizations().add(category4);
 		parentCategorization.getCategorizations().add(fooCategorization);
 		parentCategorization.getCategorizations().add(barCategorization);
-		return parentCategorization;
+		categorizationElement.getCategorizations().add(parentCategorization);
+		return categorizationElement;
 	}
 
 	private VView createView() {
@@ -187,7 +193,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 		final VControl victoriesControl = createControl(BowlingPackage.eINSTANCE
 			.getPlayer_NumberOfVictories());
 
-		view.getCategorizations().add(
+		view.getChildren().add(
 			createCategorizations(nameControl, genderControl, heightControl,
 				victoriesControl));
 

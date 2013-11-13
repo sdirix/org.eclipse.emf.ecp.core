@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
@@ -39,23 +40,24 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
-	// label, separator, table, vertical, horizontal, group, groupedgrid
-	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 7;
+	// label, separator, table, vertical, horizontal, group, groupedgrid, categorizationElement
+	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 8;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
 	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
+	// TODO: Should be not -3, span and rules are missing
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
-		+ NUMBER_OF_CATEGORIZATIONS;
+		+ NUMBER_OF_CATEGORIZATIONS - 3;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
-	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT
-		+ NUMBER_OF_CATEGORIZATIONS;
+	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
 	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 1;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
-
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT;
+	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table, group
+	// are missing
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 10;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
 	// TODO: Should be not -4, span and rules are missing, VPredefinedDR missing
@@ -65,15 +67,16 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT - 3;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	// TODO: Should be not -9, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table
+	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table,
+	// categorizationelement
 	// are missing
-	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 9;
+	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 10;
 	private static final int ACTION_CHILD_COUNT = 0;
 	// TODO: Should be not -2, rules are missing
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1 - 2;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
-	// TODO: Should be not -6, labels, group, vertical, horizontal, separator ,table are missing
-	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 6;
+	// TODO: Should be not -7, labels, group, vertical, horizontal, separator ,table,categorizationelement are missing
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 7;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
 	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
@@ -114,7 +117,7 @@ public class ChildrenDescriptorExtensionTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testAbstractCategorizationChildDescriptors() {
-		getChildrenSize(VViewPackage.eINSTANCE.getAbstractCategorization());
+		getChildrenSize(VCategorizationPackage.eINSTANCE.getAbstractCategorization());
 	}
 
 	/**
@@ -165,13 +168,13 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testCategorizationChildDescriptors() {
-		final int size = getChildrenSize(VViewPackage.eINSTANCE.getCategorization());
+		final int size = getChildrenSize(VCategorizationPackage.eINSTANCE.getCategorization());
 		assertEquals(CATEGORIZATION_CHILD_COUNT, size);
 	}
 
 	@Test
 	public void testCategoryChildDescriptors() {
-		final int size = getChildrenSize(VViewPackage.eINSTANCE.getCategory());
+		final int size = getChildrenSize(VCategorizationPackage.eINSTANCE.getCategory());
 		assertEquals(CATEGORY_CHILD_COUNT, size);
 	}
 
@@ -231,7 +234,7 @@ public class ChildrenDescriptorExtensionTest {
 
 	@Test
 	public void testActionDescriptors() {
-		final int size = getChildrenSize(VViewPackage.eINSTANCE.getAction());
+		final int size = getChildrenSize(VCategorizationPackage.eINSTANCE.getAction());
 		assertEquals(ACTION_CHILD_COUNT, size);
 	}
 
