@@ -532,8 +532,12 @@ public class TableControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void setEditable(boolean isEditable) {
-		addButton.setVisible(isEditable);
-		removeButton.setVisible(isEditable);
+		if (addButton != null) {
+			addButton.setVisible(isEditable);
+		}
+		if (removeButton != null) {
+			removeButton.setVisible(isEditable);
+		}
 		editable = isEditable;
 	}
 
