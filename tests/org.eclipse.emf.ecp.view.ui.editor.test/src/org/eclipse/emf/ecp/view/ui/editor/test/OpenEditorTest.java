@@ -86,7 +86,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 				if (shell != null && !shell.isDisposed()) {
 					shell.dispose();
 				}
-				if (shell == null) {
+				if (shell != null) {
 					shell.close();
 				}
 			}
