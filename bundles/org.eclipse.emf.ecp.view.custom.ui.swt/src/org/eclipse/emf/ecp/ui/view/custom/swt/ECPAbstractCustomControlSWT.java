@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
@@ -31,9 +32,11 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -92,9 +95,8 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
-		validationLabel.setImage(getImage(VALIDATION_ERROR_IMAGE));
-		validationLabel.setVisible(false);
-		// GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
+		validationLabel.setImage(null);
+		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 	}
 
 	/**
@@ -188,35 +190,62 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	public final void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getSeverity() == Diagnostic.ERROR
-			|| diagnostic.getSeverity() == Diagnostic.WARNING) {
-
-			Diagnostic reason = diagnostic;
-			if (diagnostic.getChildren() != null
-				&& diagnostic.getChildren().size() != 0) {
-				reason = diagnostic.getChildren().get(0);
-			}
-			if (validationLabel != null) {
-				// validationLabel.setImage(image);
-				validationLabel.setVisible(true);
-				validationLabel.setToolTipText(reason.getMessage());
-			}
-			final List<?> data = diagnostic.getData();
-
-			handleCreatedControls(diagnostic);
-
-			handleContentValidation(diagnostic.getSeverity(),
-				(EStructuralFeature) (data.size() > 1 && EStructuralFeature.class.isInstance(data.get(1)) ? data.get(1)
-					: null));
-		} else {
-			resetValidation();
+		Diagnostic reason = diagnostic;
+		if (diagnostic.getChildren() != null
+			&& diagnostic.getChildren().size() != 0) {
+			reason = diagnostic.getChildren().get(0);
 		}
+		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
+		if (validationLabel != null) {
+			validationLabel.setImage(getValidationIcon(diagnostic.getSeverity()));
+			validationLabel.setToolTipText(reason.getMessage());
+		}
+		final List<?> data = diagnostic.getData();
+
+		handleCreatedControls(diagnostic);
+
+		handleContentValidation(diagnostic.getSeverity(),
+			(EStructuralFeature) (data.size() > 1 && EStructuralFeature.class.isInstance(data.get(1)) ? data.get(1)
+				: null));
+	}
+
+	/**
+	 * Returns the validation icon matching the given severity.
+	 * 
+	 * @param severity the severity of the {@link Diagnostic}
+	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 */
+	protected Image getValidationIcon(int severity) {
+		return SWTValidationHelper.INSTANCE.getValidationIcon(severity);
+	}
+
+	/**
+	 * Returns the background color for a control with the given validation severity.
+	 * 
+	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @return the color to be used as a background color
+	 */
+	protected Color getValidationBackgroundColor(int severity) {
+		return SWTValidationHelper.INSTANCE.getValidationBackgroundColor(severity);
+	}
+
+	/**
+	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the
+	 * parameter.
+	 * 
+	 * @param color the color to set, null if the default background color should be set
+	 */
+	protected void updateValidationColor(Color color) {
+
 	}
 
 	/**
 	 * @param diagnostic
 	 */
 	private void handleCreatedControls(Diagnostic diagnostic) {
+		if (diagnostic.getData() == null) {
+			return;
+		}
 		if (diagnostic.getData().size() < 2) {
 			return;
 		}
@@ -247,8 +276,10 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	public final void resetValidation() {
 		resetControlValidation();
-		if (validationLabel != null) {
-			validationLabel.setVisible(false);
+		updateValidationColor(null);
+		if (validationLabel != null && !validationLabel.isDisposed()) {
+			validationLabel.setImage(null);
+			validationLabel.setToolTipText(""); //$NON-NLS-1$
 		}
 		resetContentValidation();
 	}
@@ -271,13 +302,13 @@ public abstract class ECPAbstractCustomControlSWT extends
 	private Image getImage(int imageType) {
 		switch (imageType) {
 		case VALIDATION_ERROR_IMAGE:
-			return Activator.getImage("icons/validation_error.png");
+			return Activator.getImage("icons/validation_error.png"); //$NON-NLS-1$
 		case HELP_IMAGE:
-			return Activator.getImage("icons/help.png");
+			return Activator.getImage("icons/help.png"); //$NON-NLS-1$
 		case ADD_IMAGE:
-			return Activator.getImage("icons/add.png");
+			return Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		case DELETE_IMAGE:
-			return Activator.getImage("icons/delete.png");
+			return Activator.getImage("icons/delete.png"); //$NON-NLS-1$
 		default:
 			return null;
 		}
