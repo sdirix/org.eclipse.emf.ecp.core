@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.emf.ecp.view.rule.feature"
       label="View Model Rule Feature"
-      version="1.1.0.qualifier"
+      version="1.1.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.rule"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.1.0">
+      license-feature-version="1.1.1.qualifier">
 
    <description>
       %description
