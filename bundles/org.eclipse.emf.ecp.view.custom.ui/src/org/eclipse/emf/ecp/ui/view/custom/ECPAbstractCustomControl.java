@@ -29,7 +29,6 @@ import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
@@ -54,7 +53,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	/**
 	 * This map manages the mapping between an {@link EStructuralFeature} and a corresponding {@link ECPControl}.
 	 */
-	private final Map<EStructuralFeature, ECPControl> controlMap = new LinkedHashMap<EStructuralFeature, ECPControl>();
+	private final Map<EStructuralFeature, ECPAbstractControl> controlMap = new LinkedHashMap<EStructuralFeature, ECPAbstractControl>();
 
 	private final Map<VDomainModelReference, Adapter> adapterMap = new LinkedHashMap<VDomainModelReference, Adapter>();
 
@@ -80,7 +79,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @param eStructuralFeature the {@link EStructuralFeature} to get the control for
 	 * @return the {@link ECPControl} or null if none is used inside this {@link ECPCustomControl}
 	 */
-	protected final ECPControl getRetrievedControl(EStructuralFeature eStructuralFeature) {
+	protected final ECPAbstractControl getRetrievedControl(EStructuralFeature eStructuralFeature) {
 		return controlMap.get(eStructuralFeature);
 	}
 
@@ -88,12 +87,12 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * Reset all validation errors on all {@link ECPControl ECPControls} used in this {@link ECPCustomControl}.
 	 */
 	protected final void resetControlValidation() {
-		final Set<EStructuralFeature> keySet = controlMap.keySet();
-
-		for (final EStructuralFeature eStructuralFeature : keySet) {
-			final ECPControl ecpControl = controlMap.get(eStructuralFeature);
-			ecpControl.resetValidation();
-		}
+		// final Set<EStructuralFeature> keySet = controlMap.keySet();
+		//
+		// for (final EStructuralFeature eStructuralFeature : keySet) {
+		// final ECPAbstractControl ecpControl = controlMap.get(eStructuralFeature);
+		// ecpControl.resetValidation();
+		// }
 	}
 
 	// private void initFeatures() {
@@ -120,7 +119,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 		UpdateValueStrategy modelToTarget) {
 		final Setting setting = getSetting(modelFeature);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
-			getModelElementContext().getEditingDomain(),
+			getEditingDomain(),
 			setting.getEObject(), setting.getEStructuralFeature());
 		return getDataBindingContext().bindValue(targetValue, modelValue, targetToModel,
 			modelToTarget);
@@ -268,6 +267,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public final boolean showLabel() {
 		return false;
@@ -312,7 +312,8 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @return the {@link ECPControl} that is fitting the most for the {@link ECPCustomControlFeature}. Can also be
 	 *         null.
 	 */
-	protected final <T extends ECPControl> T getControl(Class<T> clazz, VDomainModelReference domainModelReference) {
+	protected final <T extends ECPAbstractControl> T getControl(Class<T> clazz,
+		VDomainModelReference domainModelReference) {
 		final T createControl = controlFactory.createControl(clazz, getItemPropertyDescriptor(domainModelReference),
 			getModelElementContext());
 		final Iterator<Setting> iterator = domainModelReference.getIterator();

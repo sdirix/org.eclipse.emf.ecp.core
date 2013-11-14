@@ -18,11 +18,9 @@ import java.util.List;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -41,14 +39,6 @@ public abstract class AbstractSWTRenderer<R extends VElement> implements SWTRend
 
 	protected org.eclipse.swt.widgets.Composite getParentFromInitData(Object[] initData) {
 		return (Composite) initData[0];
-	}
-
-	public RenderingResultDelegator withSWT(Control control) {
-		return new SWTRenderingResultDelegator(control);
-	}
-
-	public RenderingResultDelegator withSWTControls(ECPControl swtControl, VElement model, Control... controls) {
-		return new SWTRenderingResultDelegatorWithControl(controls, swtControl, model);
 	}
 
 	public abstract List<RenderingResultRow<Control>> render(R vElement,

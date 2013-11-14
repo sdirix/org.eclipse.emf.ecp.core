@@ -138,7 +138,7 @@ public class NumericalControl extends AbstractTextControl {
 			if (value == null) {
 				return "";
 			}
-			final DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
+			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 				getInstanceClass());
 			return format.format(value);
 		}
@@ -156,7 +156,7 @@ public class NumericalControl extends AbstractTextControl {
 
 		NumericalTargetToModelUpdateStrategy() {
 			super();
-			format = NumericalHelper.setupFormat(getModelElementContext().getLocale(), getInstanceClass());
+			format = NumericalHelper.setupFormat(getLocale(), getInstanceClass());
 
 		}
 

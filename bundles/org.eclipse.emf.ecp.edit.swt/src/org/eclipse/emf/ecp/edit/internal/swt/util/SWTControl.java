@@ -21,11 +21,9 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
@@ -120,7 +118,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 		// write initial values to model (if they differ from the default value of the model-element)
 		if (!getStructuralFeature().isUnsettable()
-			&& !getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
+			&& !getSetting(getDomainModelReference()).isSet()) {
 			if (binding != null) {
 				binding.updateTargetToModel();
 			}
@@ -242,7 +240,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		// .extendedMargins(10, 0, 0, 0)
 
 		if (!getStructuralFeature().isUnsettable()
-			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
+			|| getSetting(getDomainModelReference()).isSet()) {
 			sl.topControl = controlComposite;
 		} else {
 			sl.topControl = unsetLabel;
@@ -383,24 +381,6 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			return Display.getDefault().getSystemColor(color);
 		}
 		return parentComposite.getShell().getDisplay().getSystemColor(color);
-	}
-
-	private Setting getSetting(VDomainModelReference domainModelReference) {
-		final Iterator<Setting> iterator = domainModelReference.getIterator();
-		int count = 0;
-		Setting lastSetting = null;
-		while (iterator.hasNext()) {
-			count++;
-			if (count == 2) {
-				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to more then one setting.");
-			}
-			lastSetting = iterator.next();
-		}
-		if (count == 0) {
-			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no setting.");
-		}
-		return lastSetting;
 	}
 
 	/**

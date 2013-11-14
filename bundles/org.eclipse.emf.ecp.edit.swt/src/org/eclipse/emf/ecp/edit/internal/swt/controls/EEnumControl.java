@@ -38,7 +38,7 @@ public class EEnumControl extends SingleControl {
 	@Override
 	protected void fillControlComposite(Composite composite) {
 		final IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
-			getModelElementContext().getModelElement());
+			getSetting(getDomainModelReference()).getEObject());
 
 		combo = new ComboViewer(composite);
 		combo.setContentProvider(new ArrayContentProvider());
@@ -57,6 +57,7 @@ public class EEnumControl extends SingleControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		combo.getControl().setEnabled(isEditable);
 	}

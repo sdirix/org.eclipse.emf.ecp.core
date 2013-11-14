@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
@@ -245,7 +245,7 @@ public abstract class MultiControl extends SWTControl {
 			//
 			// return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
 			// getStructuralFeature(), getModelElementContext(), true);
-			final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
+			final Constructor<? extends ECPAbstractControl> widgetConstructor = controlDescription.getControlClass()
 				.getConstructor();
 
 			final SWTControl control = (SWTControl) widgetConstructor.newInstance();
@@ -457,6 +457,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
 		if (validationLabel == null) {
@@ -483,6 +484,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void resetValidation() {
 		updateValidationColor(null);
 		if (validationLabel == null || validationLabel.isDisposed()) {
@@ -515,6 +517,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		for (final ECPSWTAction action : actions) {
 			action.setEnabled(isEditable);
@@ -531,6 +534,7 @@ public abstract class MultiControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return true;

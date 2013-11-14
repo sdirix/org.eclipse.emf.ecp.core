@@ -433,7 +433,7 @@ public class TableControl extends SWTControl {
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 */
 	protected void deleteRows(List<EObject> deletionList) {
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getEditingDomain();
 		final EObject modelElement = mainSetting.getEObject();
 		editingDomain.getCommandStack().execute(
 			RemoveCommand.create(editingDomain, modelElement, getTableReference(), deletionList));
@@ -450,7 +450,7 @@ public class TableControl extends SWTControl {
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getEditingDomain();
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, getTableReference(), instance));
 
@@ -506,6 +506,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getData().isEmpty()) {
 			return;
@@ -528,6 +529,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void resetValidation() {
 		featureErrorMap.clear();
 		// tableViewer.refresh();
@@ -541,6 +543,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		if (addButton != null) {
 			addButton.setVisible(isEditable);
@@ -655,6 +658,7 @@ public class TableControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return false;
@@ -757,7 +761,7 @@ public class TableControl extends SWTControl {
 		}
 
 		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-			return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
+			return EMFEditObservables.observeValue(getEditingDomain(),
 				(EObject) element, cellFeature);
 		}
 
