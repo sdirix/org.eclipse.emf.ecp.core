@@ -13,10 +13,12 @@ package org.eclipse.emf.ecp.view.categorization.model.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
@@ -33,6 +35,8 @@ import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationElementImpl#getCategorizations <em>
  * Categorizations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationElementImpl#getCurrentSelection <em>
+ * Current Selection</em>}</li>
  * </ul>
  * </p>
  * 
@@ -50,6 +54,17 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * @ordered
 	 */
 	protected EList<VAbstractCategorization> categorizations;
+
+	/**
+	 * The cached value of the '{@link #getCurrentSelection() <em>Current Selection</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getCurrentSelection()
+	 * @generated
+	 * @ordered
+	 */
+	protected VAbstractCategorization currentSelection;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -96,6 +111,55 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	public VAbstractCategorization getCurrentSelection()
+	{
+		if (currentSelection != null && currentSelection.eIsProxy())
+		{
+			InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
+			currentSelection = (VAbstractCategorization) eResolveProxy(oldCurrentSelection);
+			if (currentSelection != oldCurrentSelection)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+						VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection,
+						currentSelection));
+			}
+		}
+		return currentSelection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VAbstractCategorization basicGetCurrentSelection()
+	{
+		return currentSelection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setCurrentSelection(VAbstractCategorization newCurrentSelection)
+	{
+		VAbstractCategorization oldCurrentSelection = currentSelection;
+		currentSelection = newCurrentSelection;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection, currentSelection));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
@@ -120,6 +184,10 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		{
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return getCategorizations();
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
+			if (resolve)
+				return getCurrentSelection();
+			return basicGetCurrentSelection();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -140,6 +208,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 			getCategorizations().clear();
 			getCategorizations().addAll((Collection<? extends VAbstractCategorization>) newValue);
 			return;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
+			setCurrentSelection((VAbstractCategorization) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -158,6 +229,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			getCategorizations().clear();
 			return;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
+			setCurrentSelection((VAbstractCategorization) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -175,6 +249,8 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		{
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return categorizations != null && !categorizations.isEmpty();
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
+			return currentSelection != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.internal.ui.view.renderer;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.w3c.dom.Node;
 
 /**
  * Common interface for renderers.
@@ -26,7 +26,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
  * @param <C>
  *            the actual type of the control being rendered
  * @param <R>
- *            a subtype of {@link VContainedElement} specifying the view model type to be rendered
+ *            a subtype of {@link VElement} specifying the view model type to be rendered
  * @param <C>
  */
 public interface ControlRenderer<R extends VElement, C> {
@@ -46,7 +46,7 @@ public interface ControlRenderer<R extends VElement, C> {
 	 * @return
 	 */
 	// TODO: JAVADOC
-	List<RenderingResultRow<C>> render(Node<R> node,
+	List<RenderingResultRow<C>> render(R vElement,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;

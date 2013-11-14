@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -21,7 +20,6 @@ public abstract class ECPTreeViewAction implements ECPAction {
 
 	private TreeViewer treeViewer;
 	private TreeSelection treeSelection;
-	private EObject root;
 	private TreeEditor treeEditor;
 
 	public ECPTreeViewAction() {
@@ -30,11 +28,10 @@ public abstract class ECPTreeViewAction implements ECPAction {
 	}
 
 	public void init(TreeViewer treeViewer,
-		TreeSelection treeSelection, TreeEditor treeEditor, EObject root) {
+		TreeSelection treeSelection, TreeEditor treeEditor) {
 		this.treeViewer = treeViewer;
 		this.treeSelection = treeSelection;
 		this.treeEditor = treeEditor;
-		this.root = root;
 	}
 
 	protected TreeViewer getTreeViewer() {
@@ -47,10 +44,6 @@ public abstract class ECPTreeViewAction implements ECPAction {
 
 	protected TreeEditor getTreeEditor() {
 		return treeEditor;
-	}
-
-	protected EObject getRootEObject() {
-		return root;
 	}
 
 }

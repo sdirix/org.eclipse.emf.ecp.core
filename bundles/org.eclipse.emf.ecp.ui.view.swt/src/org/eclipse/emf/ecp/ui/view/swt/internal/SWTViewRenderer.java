@@ -17,9 +17,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
@@ -38,40 +37,21 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#render(org.eclipse.emf.ecp.view.model.VElement,
 	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(final Node<VView> viewNode,
+	public List<RenderingResultRow<Control>> render(final VView vView,
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 
-		return renderChildren(parent, viewNode, adapterFactoryItemDelegator);
-
-	}
-
-	/**
-	 * Render children.
-	 * 
-	 * @param parent the parent
-	 * @param node the node
-	 * @param adapterFactoryItemDelegator the adapter factory item delegator
-	 * @return the composite
-	 * @throws NoRendererFoundException the no renderer found exception
-	 */
-	private List<RenderingResultRow<Control>> renderChildren(Composite parent, Node<VView> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator)
-		throws NoRendererFoundException {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
-
 		columnComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
-		node.addRenderingResultDelegator(withSWT(columnComposite));
-
-		for (final Node<? extends VElement> child : node.getChildren()) {
+		for (final VContainedElement child : vView.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {
@@ -90,6 +70,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		}
 
 		return createResult(columnComposite);
+
 	}
 
 }

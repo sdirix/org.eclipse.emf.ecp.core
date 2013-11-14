@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
-import org.eclipse.emf.ecp.internal.ui.view.RendererContext;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.swt.widgets.Composite;
@@ -24,17 +23,14 @@ import org.eclipse.swt.widgets.Control;
 public class ECPSWTViewImpl implements ECPSWTView {
 
 	private final Composite composite;
-	private final RendererContext<?> rendererContext;
 	private final ViewModelContext viewContext;
 
 	/**
 	 * @param composite the composite containing the view
-	 * @param rendererContext the rendererContext of the view
 	 * @param viewContext the view context of the view
 	 */
-	public ECPSWTViewImpl(Composite composite, RendererContext<?> rendererContext, ViewModelContext viewContext) {
+	public ECPSWTViewImpl(Composite composite, ViewModelContext viewContext) {
 		this.composite = composite;
-		this.rendererContext = rendererContext;
 		this.viewContext = viewContext;
 	}
 
@@ -53,7 +49,6 @@ public class ECPSWTViewImpl implements ECPSWTView {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTView#dispose()
 	 */
 	public void dispose() {
-		rendererContext.dispose();
 		viewContext.dispose();
 
 	}

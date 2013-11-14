@@ -24,5 +24,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="CategorizationElement" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
         eType="#//AbstractCategorization" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="currentSelection" eType="#//AbstractCategorization"
+        transient="true"/>
   </eClassifiers>
 </ecore:EPackage>

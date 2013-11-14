@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.VElement;
@@ -52,27 +51,10 @@ public abstract class AbstractSWTRenderer<R extends VElement> implements SWTRend
 		return new SWTRenderingResultDelegatorWithControl(controls, swtControl, model);
 	}
 
-	public List<RenderingResultRow<Control>> render(Node<R> node,
+	public abstract List<RenderingResultRow<Control>> render(R vElement,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final List<RenderingResultRow<Control>> renderingRows = renderSWT(node, adapterFactoryItemDelegator,
-			initData);
-
-		// if (!node.isVisible()) {
-		// node.show(false);
-		// }
-		//
-		// if (!node.isEnabled()) {
-		// node.enable(false);
-		// }
-
-		return renderingRows;
-	}
-
-	protected abstract List<RenderingResultRow<Control>> renderSWT(Node<R> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 
 	/**
 	 * @param resultRows

@@ -270,6 +270,17 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	public EReference getCategorizationElement_CurrentSelection()
+	{
+		return (EReference) categorizationElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public VCategorizationFactory getCategorizationFactory()
 	{
 		return (VCategorizationFactory) getEFactoryInstance();
@@ -313,6 +324,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 
 		categorizationElementEClass = createEClass(CATEGORIZATION_ELEMENT);
 		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CATEGORIZATIONS);
+		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CURRENT_SELECTION);
 	}
 
 	/**
@@ -385,6 +397,9 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		initEReference(getCategorizationElement_Categorizations(), this.getAbstractCategorization(), null,
 			"categorizations", null, 0, -1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCategorizationElement_CurrentSelection(), this.getAbstractCategorization(), null,
+			"currentSelection", null, 0, 1, VCategorizationElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.Messages;
@@ -40,7 +39,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	public static final SWTCategorizationRenderer INSTANCE = new SWTCategorizationRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<VCategorization> node,
+	public List<RenderingResultRow<Control>> render(VCategorization categorization,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -52,9 +51,6 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 
 		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(1, false));
 
-		node.addRenderingResultDelegator(withSWT(categoryComposite));
-
-		final VCategorization categorization = VCategorization.class.cast(node.getRenderable());
 		final Label headingLbl = new Label(categoryComposite, SWT.NONE);
 		headingLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title");
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);

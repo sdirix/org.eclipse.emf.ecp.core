@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
-import org.eclipse.emf.ecp.internal.ui.view.RendererContext;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -29,7 +28,7 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 	public ModelRendererImpl() {
 	}
 
-	public <R extends VElement> RendererContext<C> render(Node<R> node,
+	public <R extends VElement> List<RenderingResultRow<C>> render(R vElement,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
@@ -44,15 +43,12 @@ public class ModelRendererImpl<C> implements ModelRenderer<C> {
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 
-		final RendererContext<C> rendererContext = new RendererContext<C>(node, node.getControlContext());
-
-		final List<RenderingResultRow<C>> rowResults = renderer.render(node, adapterFactoryItemDelegator,
+		final List<RenderingResultRow<C>> rowResults = renderer.render(vElement, adapterFactoryItemDelegator,
 			initData);
-		rendererContext.setRenderedResult(rowResults.get(0).getMainControl());
 
 		composedAdapterFactory.dispose();
 
-		return rendererContext;
+		return rowResults;
 	}
 
 	private <R extends VElement> ControlRenderer<R, C> getControlRenderer() {

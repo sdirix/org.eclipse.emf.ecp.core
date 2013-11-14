@@ -494,6 +494,16 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION_ELEMENT__CATEGORIZATIONS = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Current Selection</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION_ELEMENT__CURRENT_SELECTION = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -501,7 +511,7 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZATION_ELEMENT_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+	int CATEGORIZATION_ELEMENT_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization
@@ -644,6 +654,20 @@ public interface VCategorizationPackage extends EPackage
 	EReference getCategorizationElement_Categorizations();
 
 	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement#getCurrentSelection
+	 * <em>Current Selection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference '<em>Current Selection</em>'.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement#getCurrentSelection()
+	 * @see #getCategorizationElement()
+	 * @generated
+	 */
+	EReference getCategorizationElement_CurrentSelection();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -784,6 +808,15 @@ public interface VCategorizationPackage extends EPackage
 		 * @generated
 		 */
 		EReference CATEGORIZATION_ELEMENT__CATEGORIZATIONS = eINSTANCE.getCategorizationElement_Categorizations();
+
+		/**
+		 * The meta object literal for the '<em><b>Current Selection</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference CATEGORIZATION_ELEMENT__CURRENT_SELECTION = eINSTANCE.getCategorizationElement_CurrentSelection();
 
 	}
 

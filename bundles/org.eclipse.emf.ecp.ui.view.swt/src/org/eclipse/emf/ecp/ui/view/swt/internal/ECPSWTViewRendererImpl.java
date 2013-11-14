@@ -11,13 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.RendererContext;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Jonas
@@ -68,22 +69,6 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 		return new DefaultControlContext(domainObject, view);
 	}
 
-	// /**
-	// * Renders a view with a model element context.
-	// * For internal use only.
-	// *
-	// * @param parent the parent swt composite
-	// * @param modelElementContext the model element context
-	// * @return a {@link ECPSWTView}
-	// * @throws ECPRendererException if there is an exception during rendering
-	// */
-	// public static ECPSWTView render(Composite parent, ECPControlContext modelElementContext)
-	// throws ECPRendererException {
-	// // final View view = getView(modelElementContext.getModelElement());
-	// final View view = (View) modelElementContext.getViewContext().getViewModel();
-	// return render(parent, modelElementContext, view);
-	// }
-
 	private static VView getView(EObject domainObject) {
 		final VView view = ViewProviderHelper.getView(domainObject);
 		return view;
@@ -91,18 +76,19 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 
 	public static ECPSWTView render(Composite parent, ECPControlContext modelElementContext, final VView view)
 		throws ECPRendererException {
-		final ModelRenderer<?> renderer = ModelRenderer.INSTANCE.getRenderer();
+		final ModelRenderer<Control> renderer = ModelRenderer.INSTANCE.getRenderer();
 
-		Node<?> node = null;
-		RendererContext<?> rendererContext;
-		node = NodeBuilders.INSTANCE.build(view, modelElementContext);
 		final ViewModelContext viewContext = new ViewModelContextImpl(view, modelElementContext.getModelElement());
-		viewContext.registerViewChangeListener(node);
-		rendererContext = renderer.render(node, parent);
-		final Composite composite = (Composite) rendererContext.getControl();
+
+		final List<RenderingResultRow<Control>> render = renderer.render(view, parent);
+
+		// a view returns always a composite and always only one row with one control
+		final Composite composite = (Composite) render.get(0).getControls().iterator().next();
+
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		composite.setLayoutData(gridData);
-		final ECPSWTView swtView = new ECPSWTViewImpl(composite, rendererContext, viewContext);
+
+		final ECPSWTView swtView = new ECPSWTViewImpl(composite, viewContext);
 		return swtView;
 	}
 
