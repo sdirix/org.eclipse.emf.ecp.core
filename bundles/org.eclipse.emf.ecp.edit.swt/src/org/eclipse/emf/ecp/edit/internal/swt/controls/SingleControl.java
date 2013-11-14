@@ -84,12 +84,12 @@ public abstract class SingleControl extends SWTControl {
 	 * {@inheritDoc}
 	 */
 	public void resetValidation() {
+		updateValidationColor(null);
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
 		validationLabel.setImage(null);
 		validationLabel.setToolTipText(""); //$NON-NLS-1$
-		updateValidationColor(null);
 		if (controlDecoration != null) {
 			controlDecoration.hide();
 		}

@@ -489,6 +489,7 @@ public abstract class MultiControl extends SWTControl {
 			return;
 		}
 		validationLabel.setImage(null);
+		validationLabel.setToolTipText(""); //$NON-NLS-1$
 	}
 
 	/**
