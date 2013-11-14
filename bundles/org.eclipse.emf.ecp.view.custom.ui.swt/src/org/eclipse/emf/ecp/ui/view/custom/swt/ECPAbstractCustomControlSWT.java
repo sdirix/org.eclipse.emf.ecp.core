@@ -32,7 +32,6 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -95,8 +94,8 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final void createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
-		validationLabel.setImage(null);
-		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
+		validationLabel.setImage(getImage(VALIDATION_ERROR_IMAGE));
+		validationLabel.setVisible(false);
 	}
 
 	/**
@@ -190,6 +189,10 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	public final void handleValidation(Diagnostic diagnostic) {
+		if (diagnostic.getSeverity() == Diagnostic.OK) {
+			resetValidation();
+			return;
+		}
 		Diagnostic reason = diagnostic;
 		if (diagnostic.getChildren() != null
 			&& diagnostic.getChildren().size() != 0) {
@@ -199,6 +202,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 		if (validationLabel != null) {
 			validationLabel.setImage(getValidationIcon(diagnostic.getSeverity()));
 			validationLabel.setToolTipText(reason.getMessage());
+			validationLabel.setVisible(true);
 		}
 		final List<?> data = diagnostic.getData();
 
@@ -280,6 +284,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 		if (validationLabel != null && !validationLabel.isDisposed()) {
 			validationLabel.setImage(null);
 			validationLabel.setToolTipText(""); //$NON-NLS-1$
+			validationLabel.setVisible(false);
 		}
 		resetContentValidation();
 	}
