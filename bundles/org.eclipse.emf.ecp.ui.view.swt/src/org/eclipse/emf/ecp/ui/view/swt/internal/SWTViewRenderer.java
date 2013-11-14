@@ -133,9 +133,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			return resultRows;
 		} else {
 			final Composite composite = createComposite(parent);
+			treeViewer = new TreeViewer(composite);
 			final ScrolledComposite editorComposite = createdEditorPane(composite);
-			treeViewer = createTreeViewer(composite, adapterFactoryItemDelegator, viewNode,
+			setupTreeViewer(treeViewer, adapterFactoryItemDelegator, viewNode,
 				editorComposite);
+
 			adapter.setTreeViewer(treeViewer);
 
 			viewNode.addRenderingResultDelegator(withSWT(composite));
@@ -246,18 +248,16 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	}
 
 	/**
-	 * Creates the tree viewer.
+	 * Configures the passed tree viewer.
 	 * 
-	 * @param composite the composite
+	 * @param treeViewer the {@link TreeViewer} to configure
 	 * @param adapterFactoryItemDelegator the adapter factory item delegator
 	 * @param viewNode the view node
 	 * @param editorComposite the composite of the editor
-	 * @return the tree viewer
 	 */
-	protected TreeViewer createTreeViewer(final Composite composite,
+	protected void setupTreeViewer(final TreeViewer treeViewer,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<VView> viewNode,
 		final ScrolledComposite editorComposite) {
-		final TreeViewer treeViewer = new TreeViewer(composite);
 
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
@@ -328,7 +328,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 					lastSelection = (Node<?>) selection;
 					final Composite childComposite = createComposite(editorComposite);
 
-					childComposite.setBackground(composite.getBackground());
+					childComposite.setBackground(editorComposite.getBackground());
 					editorComposite.setContent(childComposite);
 
 					// TODO: REVIEW
@@ -360,8 +360,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		});
 
 		addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), viewNode.getRenderable(), editors);
-
-		return treeViewer;
 
 	}
 
