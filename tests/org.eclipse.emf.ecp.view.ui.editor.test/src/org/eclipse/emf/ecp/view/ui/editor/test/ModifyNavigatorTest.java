@@ -73,6 +73,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 		UIThreadRunnable.syncExec(new VoidResult() {
 			public void run() {
 				shell.dispose();
+				shell.close();
 			}
 		});
 		final ECPProject project = ECPUtil.getECPProjectManager().getProject(PROJECTNAME);
