@@ -15,9 +15,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -36,20 +36,17 @@ public class SWTLabelRenderer extends AbstractSWTRenderer<org.eclipse.emf.ecp.vi
 	public static final SWTLabelRenderer INSTANCE = new SWTLabelRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<org.eclipse.emf.ecp.view.label.model.VLabel> node,
+	public List<RenderingResultRow<Control>> render(VLabel separator,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
-		final org.eclipse.emf.ecp.view.label.model.VLabel separator = node.getRenderable();
 		final Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
-		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_" + separator.getStyle());
+		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_" + separator.getStyle()); //$NON-NLS-1$
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(2, 1).applyTo(label);
-
-		node.addRenderingResultDelegator(withSWT(label));
 
 		return createResult(label);
 	}

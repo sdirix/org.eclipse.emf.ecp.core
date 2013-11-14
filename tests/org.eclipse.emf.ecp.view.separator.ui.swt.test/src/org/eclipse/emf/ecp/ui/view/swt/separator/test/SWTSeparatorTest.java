@@ -19,10 +19,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
@@ -63,21 +61,15 @@ public class SWTSeparatorTest {
 		final Display display = Display.getDefault();
 		final Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout());
-		// shell.setLayout(new GridLayout());
-		// Composite parent = new Composite(shell, SWT.NONE);
-		// parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		// parent.setLayout(new GridLayout());
 
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(view, shell);
 
 		// test SWTRenderer
-		final Node<VView> node = NodeBuilders.INSTANCE.build(view, context);
-		final Node<?> sepNode = node.getChildren().get(0);
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, sepNode,
+		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, separator,
 			adapterFactoryItemDelegator);
 
 		final Control renderedControl = shell.getChildren()[0];

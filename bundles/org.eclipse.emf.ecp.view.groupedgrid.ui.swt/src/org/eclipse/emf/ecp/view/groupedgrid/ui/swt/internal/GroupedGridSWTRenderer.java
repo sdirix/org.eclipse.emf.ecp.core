@@ -19,13 +19,11 @@ import org.eclipse.emf.ecp.edit.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.view.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -47,7 +45,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 	public static final GroupedGridSWTRenderer INSTANCE = new GroupedGridSWTRenderer();
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<VGroupedGrid> node,
+	public List<RenderingResultRow<Control>> render(VGroupedGrid node,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -56,17 +54,14 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 
-		node.addRenderingResultDelegator(withSWT(columnComposite));
-
-		final int maxNumColumns = calculateColumns(node.getRenderable());
+		final int maxNumColumns = calculateColumns(node);
 
 		GridLayoutFactory.fillDefaults().numColumns(maxNumColumns).equalWidth(true)
 			.applyTo(columnComposite);
 
-		final List<Node<?>> children = node.getChildren();
-		int currentControl = 0;
+		final int currentControl = 0;
 
-		for (final VGroup group : node.getRenderable().getGroups()) {
+		for (final VGroup group : node.getGroups()) {
 			// Label
 			final Composite labelComposite = new Composite(columnComposite, SWT.NONE);
 			labelComposite.setBackground(parent.getBackground());
@@ -85,11 +80,10 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 			for (final VRow row : group.getRows()) {
 				int spanned = 0;
 				for (final org.eclipse.emf.ecp.view.model.VContainedElement child : row.getChildren()) {
-					final Node<? extends VElement> childNode = children.get(currentControl++);
 
 					final int hSpan = getHSpanOfComposite(child);
 					final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(columnComposite,
-						childNode, adapterFactoryItemDelegator);
+						child, adapterFactoryItemDelegator);
 
 					// TOOD; when does this case apply?
 					if (resultRows == null) {
@@ -103,10 +97,8 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 					GridDataFactory.createFrom((GridData) childRender.getLayoutData()).indent(10, 0)
 						.applyTo(childRender);
 					spanned += hSpan;
-					if (childNode.isLeaf()
-						&& org.eclipse.emf.ecp.view.model.VControl.class.isInstance(childNode.getRenderable())) {
-						final org.eclipse.emf.ecp.view.model.VControl control = (org.eclipse.emf.ecp.view.model.VControl) childNode
-							.getRenderable();
+					if (org.eclipse.emf.ecp.view.model.VControl.class.isInstance(child)) {
+						final org.eclipse.emf.ecp.view.model.VControl control = (org.eclipse.emf.ecp.view.model.VControl) child;
 						if (control.getLabelAlignment() == LabelAlignment.LEFT) {
 							spanned++;
 						}

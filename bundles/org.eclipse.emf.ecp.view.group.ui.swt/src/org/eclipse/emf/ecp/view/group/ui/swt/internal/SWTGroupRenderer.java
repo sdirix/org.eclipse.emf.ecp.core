@@ -15,12 +15,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -35,26 +34,24 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 	 * Singleton instance of the SWT Group renderer.
 	 */
 	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
-	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group";
+	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<VGroup> node,
+	public List<RenderingResultRow<Control>> render(VGroup vGroup,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
-		final VGroup modelGroup = node.getRenderable();
+
 		final org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
 		group.setData(CUSTOM_VARIANT, CONTROL_GROUP);
-		if (modelGroup.getName() != null) {
-			group.setText(modelGroup.getName());
+		if (vGroup.getName() != null) {
+			group.setText(vGroup.getName());
 		}
 		group.setBackground(parent.getBackground());
 		group.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
-		node.addRenderingResultDelegator(withSWT(group));
-
-		for (final Node<? extends VElement> child : node.getChildren()) {
+		for (final VContainedElement child : vGroup.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {

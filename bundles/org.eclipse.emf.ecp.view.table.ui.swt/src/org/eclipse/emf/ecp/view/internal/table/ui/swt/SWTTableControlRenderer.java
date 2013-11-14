@@ -19,11 +19,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
@@ -56,14 +54,12 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<VTableControl> node,
+	public List<RenderingResultRow<Control>> render(VTableControl vTableControl,
 		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
 		Object... initData)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		final VTableControl modelTableControl = node.getRenderable();
-		final ECPControlContext subContext = node.getControlContext();
-		final Iterator<Setting> settings = modelTableControl.getDomainModelReference().getIterator();
+		final Iterator<Setting> settings = vTableControl.getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
 			return null;
 		}
@@ -84,16 +80,16 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 		}
 
 		final TableControlConfiguration tcc = new TableControlConfiguration();
-		tcc.setAddRemoveDisabled(modelTableControl.isAddRemoveDisabled());
+		tcc.setAddRemoveDisabled(vTableControl.isAddRemoveDisabled());
 
-		for (final VTableColumn column : modelTableControl.getColumns()) {
+		for (final VTableColumn column : vTableControl.getColumns()) {
 			tcc.getColumns().add(
 				new TableColumnConfiguration(column.isReadOnly(), column.getAttribute()));
 		}
 
 		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl();
 		control.setTableControlConfiguration(tcc);
-		control.init(subContext, modelTableControl.getDomainModelReference());
+		control.init(null, vTableControl.getDomainModelReference());
 
 		final Composite parent = getParentFromInitData(initData);
 		Label label = null;
@@ -107,22 +103,15 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 				extra = "*";
 			}
 
-			label.setText(itemPropertyDescriptor.getDisplayName(subContext.getModelElement())
+			label.setText(itemPropertyDescriptor.getDisplayName(null)
 				+ extra);
-			label.setToolTipText(itemPropertyDescriptor.getDescription(subContext
-				.getModelElement()));
+			label.setToolTipText(itemPropertyDescriptor.getDescription(null));
 		}
 
 		final Composite controlComposite = control.createControl(parent);
 		controlComposite.setBackground(parent.getBackground());
 
-		control.setEditable(!modelTableControl.isReadonly());
-
-		if (label == null) {
-			node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite));
-		} else {
-			node.addRenderingResultDelegator(withSWTControls(control, modelTableControl, controlComposite, label));
-		}
+		control.setEditable(!vTableControl.isReadonly());
 
 		if (label == null) {
 			return createResult(controlComposite);

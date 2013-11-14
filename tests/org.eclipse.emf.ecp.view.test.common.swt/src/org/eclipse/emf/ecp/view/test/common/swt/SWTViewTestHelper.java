@@ -16,10 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
 import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
@@ -54,17 +52,14 @@ public final class SWTViewTestHelper {
 		NoPropertyDescriptorFoundExeption {
 		final ECPControlContext context = ViewTestHelper.createECPControlContext(
 			input, shell, renderable);
-		final Node<VElement> node = NodeBuilders.INSTANCE.build(renderable, context);
-		if (node == null) {
-			return null;
-		}
+
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		final ViewModelContextImpl viewContext = new ViewModelContextImpl(renderable, input);
-		viewContext.registerViewChangeListener(node);
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, node,
+
+		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, renderable,
 			adapterFactoryItemDelegator);
 		// TODO return resultRows
 		if (resultRows == null) {
