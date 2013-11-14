@@ -43,6 +43,7 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.results.Result;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +77,20 @@ public class OpenEditorTest extends SWTBotTestCase {
 			}
 		});
 
+	}
+
+	@After
+	public void cleanup() {
+		UIThreadRunnable.syncExec(new VoidResult() {
+			public void run() {
+				if (shell != null && !shell.isDisposed()) {
+					shell.dispose();
+				}
+				if (shell == null) {
+					shell.close();
+				}
+			}
+		});
 	}
 
 	private static Player createDomainObject() {
@@ -184,11 +199,10 @@ public class OpenEditorTest extends SWTBotTestCase {
 				}
 			}));
 
-			final SWTBotTree tree = bot.tree();
-			tree.getTreeItem("parent").getNode("foo").getNode("2").select();
-
 			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
+					final SWTBotTree tree = bot.tree();
+					tree.getTreeItem("parent").getNode("foo").getNode("2").select();
 					shell.close();
 					holdingList.remove(0).dispose();
 					shell.dispose();
