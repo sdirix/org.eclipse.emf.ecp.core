@@ -26,10 +26,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>
@@ -57,6 +55,7 @@
       <feature id="org.eclipse.emf.ecp.view.template.feature"/>
       <feature id="org.eclipse.emf.ecp.view.categorization.feature"/>
       <feature id="org.eclipse.emf.ecp.view.template.helper.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.model.editor.feature"/>
    </features>
 
    <configurations>
