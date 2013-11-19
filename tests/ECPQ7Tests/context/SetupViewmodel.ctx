@@ -7,7 +7,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: _fQ0PgDsqEeOHj9Cw0T_k4Q
 Q7-Runtime-Version: 1.3.9.201310250528
-Save-Time: 11/8/13 5:05 PM
+Save-Time: 11/19/13 1:44 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -41,7 +41,7 @@ with [get-window "Create Project"] {
     get-button -after [get-label "Root Class:"] | click
     with [get-window "Choose Root Class"] {
         get-editbox -after [get-label Search] | set-text view
-       get-tree | try {select [get-item model -index 0 | get-item View]} -catch {try {select [get-item model -index 1 | get-item View]} -catch {select [get-item model -index 2 | get-item View]}}
+       get-tree | try {select [get-item model -index 0 | get-item View]} -catch {try {select [get-item model -index 1 | get-item View]} -catch {try {select [get-item model -index 2 | get-item View]} -catch {select [get-item model -index 3 | get-item View]}}}
         get-button Finish | click
     }
     get-editbox -after [get-label "Root Class:"] | click-text 1
