@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -341,7 +340,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	/**
 	 * Returns the validation icon matching the given severity.
 	 * 
-	 * @param severity the severity of the {@link Diagnostic}
+	 * @param severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
 	protected Image getValidationIcon(int severity) {
@@ -351,7 +350,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	/**
 	 * Returns the background color for a control with the given validation severity.
 	 * 
-	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the color to be used as a background color
 	 */
 	protected Color getValidationBackgroundColor(int severity) {
