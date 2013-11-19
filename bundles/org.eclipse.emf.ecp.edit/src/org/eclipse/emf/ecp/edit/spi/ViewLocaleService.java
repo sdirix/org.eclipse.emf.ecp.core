@@ -7,16 +7,27 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar Mueller - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view.renderer;
+package org.eclipse.emf.ecp.edit.spi;
 
-public class ModelRendererFactoryImpl implements ModelRendererFactory {
+import java.util.Locale;
 
-	public <C> ModelRenderer<C> getRenderer() {
-		// FIXME: shortcut
-		final ModelRenderer<C> renderer = new ModelRendererImpl<C>();
-		return renderer;
-	}
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 
+/**
+ * A view service providing the locale.
+ * 
+ * @author Eugen Neufeld
+ * @since 1.2
+ * 
+ */
+public interface ViewLocaleService extends ViewModelContext {
+
+	/**
+	 * The current locale of the view.
+	 * 
+	 * @return the current locale
+	 */
+	Locale getLocale();
 }

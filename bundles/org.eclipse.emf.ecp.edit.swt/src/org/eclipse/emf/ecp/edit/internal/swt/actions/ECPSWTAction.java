@@ -11,52 +11,47 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.Action;
 
 /**
  * An abstract action used by ecp.
+ * 
  * @author Eugen Neufeld
  * 
  */
-public abstract class ECPSWTAction extends Action{
-	private ECPControlContext modelElementContext;
-	private EStructuralFeature feature;
-	private IItemPropertyDescriptor itemPropertyDescriptor;
+public abstract class ECPSWTAction extends Action {
+	private final EditingDomain editingDomain;
+	private final Setting setting;
 
 	/**
 	 * The constructor of all ecp actions.
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
+	 * 
+	 * @param editingDomain the {@link EditingDomain} to use
+	 * @param setting the {@link Setting} to use
 	 */
-	public ECPSWTAction(ECPControlContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature) {
-		this.modelElementContext = modelElementContext;
-		this.feature = feature;
-		this.itemPropertyDescriptor = itemPropertyDescriptor;
+	public ECPSWTAction(EditingDomain editingDomain, Setting setting) {
+		this.editingDomain = editingDomain;
+		this.setting = setting;
+
 	}
+
 	/**
-	 * The set {@link ECPControlContext}.
-	 * @return the {@link ECPControlContext}
+	 * The set {@link Setting}.
+	 * 
+	 * @return the {@link Setting}
 	 */
-	protected ECPControlContext getModelElementContext() {
-		return modelElementContext;
+	protected Setting getSetting() {
+		return setting;
 	}
+
 	/**
-	 * The set {@link EStructuralFeature}.
-	 * @return the {@link EStructuralFeature}
+	 * The set {@link EditingDomain}.
+	 * 
+	 * @return the {@link EditingDomain}
 	 */
-	protected EStructuralFeature getFeature() {
-		return feature;
-	}
-	/**
-	 * The set {@link IItemPropertyDescriptor}.
-	 * @return the {@link IItemPropertyDescriptor}
-	 */
-	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
-		return itemPropertyDescriptor;
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
 	}
 }

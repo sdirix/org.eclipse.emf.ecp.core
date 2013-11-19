@@ -17,8 +17,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -35,12 +35,17 @@ public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 	 */
 	public static final SWTSeparatorRenderer INSTANCE = new SWTSeparatorRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<Control>> render(VSeparator separator,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData) throws NoRendererFoundException,
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VSeparator separator,
+		ViewModelContext viewContext)
+		throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
 		final Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator"); //$NON-NLS-1$

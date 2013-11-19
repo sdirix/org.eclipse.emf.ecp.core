@@ -15,12 +15,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -31,23 +31,20 @@ import org.eclipse.swt.widgets.Control;
 public class SWTDynamicContainmentItemRenderer extends AbstractSWTRenderer<DynamicContainmentItem> {
 
 	/**
-	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
-	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderSWT(Node<DynamicContainmentItem> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... objects)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
-		final Node<?> child = node.getChildren().get(0);
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent,
+		DynamicContainmentItem dynamicContainmentItem,
+		ViewModelContext viewModelContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		List<RenderingResultRow<Control>> childControl;
 		try {
-			childControl = SWTRenderers.INSTANCE.render(getParentFromInitData(objects), child,
-				adapterFactoryItemDelegator);
+			childControl = SWTRendererFactory.INSTANCE.render(parent, dynamicContainmentItem.getComposite(),
+				viewModelContext);
 		} catch (final NoPropertyDescriptorFoundExeption e) {
 			return null;
 		}

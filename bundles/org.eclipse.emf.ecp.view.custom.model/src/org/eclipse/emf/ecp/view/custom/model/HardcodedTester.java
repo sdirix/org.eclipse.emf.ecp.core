@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.custom.model;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -39,8 +40,20 @@ public abstract class HardcodedTester implements ECPApplicableTester {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	public int isApplicable(EObject eObject, EStructuralFeature eStructuralFeature) {
+		return NOT_APPLICABLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 * @deprecated
+	 */
+	@Deprecated
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		if (!VHardcodedDomainModelReference.class.isInstance(domainModelReference)) {
 			return NOT_APPLICABLE;

@@ -18,10 +18,10 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -38,15 +38,16 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<Control>> render(VHorizontalLayout vHorizontalLayout,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, Object... initData)
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VHorizontalLayout vHorizontalLayout,
+		ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
-		// TODO Add check whether label is shown
-		// Label l=new Label(getParent(), SWT.NONE);
-		// l.setText(modelColumnComposite.getName());
-		final Composite parent = getParentFromInitData(initData);
 
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
@@ -66,7 +67,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 			List<RenderingResultRow<Control>> resultRows;
 
 			try {
-				resultRows = SWTRenderers.INSTANCE.render(column, child, adapterFactoryItemDelegator);
+				resultRows = SWTRendererFactory.INSTANCE.render(column, child, viewContext);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

@@ -2,10 +2,11 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers">
-      <renderers
-            class="org.eclipse.emf.ecp.view.vertical.ui.swt.internal.VerticalSWTRenderer">
-      </renderers>
+         point="org.eclipse.emf.ecp.ui.view.swt.renderers">
+      <renderer
+            element="org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout"
+            renderer="org.eclipse.emf.ecp.view.vertical.ui.swt.internal.VerticalLayoutSWTRenderer">
+      </renderer>
    </extension>
 
 </plugin>

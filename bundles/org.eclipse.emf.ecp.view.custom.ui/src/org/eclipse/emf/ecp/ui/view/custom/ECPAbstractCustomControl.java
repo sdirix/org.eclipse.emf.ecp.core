@@ -33,7 +33,9 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
+import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -87,12 +89,12 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * Reset all validation errors on all {@link ECPControl ECPControls} used in this {@link ECPCustomControl}.
 	 */
 	protected final void resetControlValidation() {
-		// final Set<EStructuralFeature> keySet = controlMap.keySet();
-		//
-		// for (final EStructuralFeature eStructuralFeature : keySet) {
-		// final ECPAbstractControl ecpControl = controlMap.get(eStructuralFeature);
-		// ecpControl.resetValidation();
-		// }
+		final Set<EStructuralFeature> keySet = controlMap.keySet();
+
+		for (final EStructuralFeature eStructuralFeature : keySet) {
+			final ECPAbstractControl ecpControl = controlMap.get(eStructuralFeature);
+			ecpControl.resetValidation();
+		}
 	}
 
 	// private void initFeatures() {
@@ -117,9 +119,9 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	protected Binding bindTargetToModel(VDomainModelReference modelFeature, IObservableValue targetValue,
 		UpdateValueStrategy targetToModel,
 		UpdateValueStrategy modelToTarget) {
-		final Setting setting = getSetting(modelFeature);
+		final Setting setting = getFirstSetting(modelFeature);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
-			getEditingDomain(),
+			getEditingDomain(setting),
 			setting.getEObject(), setting.getEStructuralFeature());
 		return getDataBindingContext().bindValue(targetValue, modelValue, targetToModel,
 			modelToTarget);
@@ -132,9 +134,9 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @return the {@link IObservableList}
 	 */
 	protected IObservableList getObservableList(VDomainModelReference domainModelReference) {
-		final Setting setting = getSetting(domainModelReference);
+		final Setting setting = getFirstSetting(domainModelReference);
 		return EMFEditObservables.observeList(
-			getModelElementContext().getEditingDomain(),
+			getEditingDomain(setting),
 			setting.getEObject(), setting.getEStructuralFeature());
 	}
 
@@ -152,7 +154,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 		// throw new UnsupportedOperationException(
 		// "Set value is not supported on ECPCustomControlFeatures that are not editable.");
 		// }
-		final Setting setting = getSetting(modelReference);
+		final Setting setting = getFirstSetting(modelReference);
 		setting.set(newValue);
 	}
 
@@ -172,7 +174,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 		if (adapterMap.containsKey(modelReference)) {
 			// FIXME handling if an listener already exists
 		}
-		final Setting setting = getSetting(modelReference);
+		final Setting setting = getFirstSetting(modelReference);
 		final Adapter newAdapter = new AdapterImpl() {
 
 			@Override
@@ -200,7 +202,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @return the value
 	 */
 	protected Object getValue(VDomainModelReference modelReference) {
-		final Setting setting = getSetting(modelReference);
+		final Setting setting = getFirstSetting(modelReference);
 		return setting.get(false);
 	}
 
@@ -208,7 +210,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @param modelFeature the {@link VDomainModelReference} to get the Setting for
 	 * @return the setting or throws an {@link IllegalStateException} if too many or too few elements are found.
 	 */
-	private Setting getSetting(VDomainModelReference modelFeature) {
+	private Setting getFirstSetting(VDomainModelReference modelFeature) {
 		final Iterator<Setting> iterator = modelFeature.getIterator();
 		int numElments = 0;
 		Setting setting = null;
@@ -238,7 +240,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @since 1.1
 	 */
 	protected final IItemPropertyDescriptor getItemPropertyDescriptor(VDomainModelReference domainModelReference) {
-		return getItemPropertyDescriptor(getSetting(domainModelReference));
+		return getItemPropertyDescriptor(getFirstSetting(domainModelReference));
 	}
 
 	/**
@@ -281,7 +283,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 		Activator.ungetECPControlFactory();
 
 		for (final VDomainModelReference domainModelReference : adapterMap.keySet()) {
-			final Setting setting = getSetting(domainModelReference);
+			final Setting setting = getFirstSetting(domainModelReference);
 			setting.getEObject().eAdapters().remove(adapterMap.get(domainModelReference));
 		}
 		disposeCustomControl();
@@ -314,8 +316,11 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 */
 	protected final <T extends ECPAbstractControl> T getControl(Class<T> clazz,
 		VDomainModelReference domainModelReference) {
-		final T createControl = controlFactory.createControl(clazz, getItemPropertyDescriptor(domainModelReference),
-			getModelElementContext());
+		final T createControl = controlFactory.createControl(clazz, domainModelReference);
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		vControl.setDomainModelReference(domainModelReference);
+		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
+		createControl.init(getViewModelContext(), vControl);
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		final boolean hasNext = iterator.hasNext();
 		if (hasNext) {

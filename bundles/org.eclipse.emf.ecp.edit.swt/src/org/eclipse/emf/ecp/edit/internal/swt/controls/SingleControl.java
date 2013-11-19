@@ -28,20 +28,24 @@ import org.eclipse.swt.widgets.Control;
  */
 public abstract class SingleControl extends SWTControl {
 
-	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+	//	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private ControlDecoration controlDecoration;
 
 	// private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() < 2) {
 			return;
 		}
-		if (!diagnostic.getData().get(0).equals(getModelElementContext().getModelElement())
-			|| !diagnostic.getData().get(1).equals(getStructuralFeature())) {
+		if (!diagnostic.getData().get(0).equals(getFirstSetting().getEObject())
+			|| !diagnostic.getData().get(1).equals(getFirstStructuralFeature())) {
 			return;
 		}
 
@@ -82,7 +86,11 @@ public abstract class SingleControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void resetValidation() {
 		updateValidationColor(null);
 		if (validationLabel == null || validationLabel.isDisposed()) {
@@ -114,6 +122,7 @@ public abstract class SingleControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return true;

@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.internal.table.ui.swt;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
@@ -24,9 +23,9 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -42,40 +41,20 @@ import org.eclipse.swt.widgets.Label;
 // APITODO
 @SuppressWarnings("restriction")
 public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> {
-	/**
-	 * Singleton instance of the swt table control renderer.
-	 */
-	public static final SWTTableControlRenderer INSTANCE = new SWTTableControlRenderer();
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
-	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> render(VTableControl vTableControl,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData)
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VTableControl vTableControl,
+		ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Iterator<Setting> settings = vTableControl.getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
-			return null;
-		}
-		final Setting setting = settings.next();
-		if (setting.getEStructuralFeature() == null) {
-			return null;
-		}
-		final EClass dataClass = setting.getEStructuralFeature().getEContainingClass();
-
-		if (dataClass == null) {
-			return null;
-		}
-
-		final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
-			.getPropertyDescriptor(setting.getEObject(), setting.getEStructuralFeature());
-		if (itemPropertyDescriptor == null) {
 			return null;
 		}
 
@@ -89,16 +68,20 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 
 		final org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl control = new org.eclipse.emf.ecp.edit.internal.swt.controls.TableControl();
 		control.setTableControlConfiguration(tcc);
-		control.init(null, vTableControl.getDomainModelReference());
+		control.init(viewContext, vTableControl);
 
-		final Composite parent = getParentFromInitData(initData);
 		Label label = null;
 		if (control.showLabel()) {
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
 			label.setBackground(parent.getBackground());
 			String extra = "";
+			final Setting setting = control.getFirstSetting();
+			final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
 
+			if (itemPropertyDescriptor == null) {
+				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
+			}
 			if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
 				extra = "*";
 			}

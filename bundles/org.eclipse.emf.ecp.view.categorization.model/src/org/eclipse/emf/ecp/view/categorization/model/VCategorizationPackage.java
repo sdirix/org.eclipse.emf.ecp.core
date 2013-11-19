@@ -86,86 +86,6 @@ public interface VCategorizationPackage extends EPackage
 	int ABSTRACT_CATEGORIZATION = 0;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__NAME = VViewPackage.ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__VISIBLE = VViewPackage.ELEMENT__VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__ENABLED = VViewPackage.ELEMENT__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__READONLY = VViewPackage.ELEMENT__READONLY;
-
-	/**
-	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__DIAGNOSTIC = VViewPackage.ELEMENT__DIAGNOSTIC;
-
-	/**
-	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = VViewPackage.ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__ACTIONS = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Abstract Categorization</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationImpl
 	 * <em>Categorization</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -176,6 +96,244 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 */
 	int CATEGORIZATION = 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategoryImpl
+	 * <em>Category</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategoryImpl
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getCategory()
+	 * @generated
+	 */
+	int CATEGORY = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VActionImpl
+	 * <em>Action</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VActionImpl
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getAction()
+	 * @generated
+	 */
+	int ACTION = 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationElementImpl
+	 * <em>Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationElementImpl
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getCategorizationElement()
+	 * @generated
+	 */
+	int CATEGORIZATION_ELEMENT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl
+	 * <em>Categorizable Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl
+	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getCategorizableElement()
+	 * @generated
+	 */
+	int CATEGORIZABLE_ELEMENT = 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__NAME = VViewPackage.ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__VISIBLE = VViewPackage.ELEMENT__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__ENABLED = VViewPackage.ELEMENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__READONLY = VViewPackage.ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__DIAGNOSTIC = VViewPackage.ELEMENT__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__ATTACHMENTS = VViewPackage.ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__CHILDREN = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__LABEL = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Categorizable Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__NAME = CATEGORIZABLE_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__VISIBLE = CATEGORIZABLE_ELEMENT__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__ENABLED = CATEGORIZABLE_ELEMENT__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__READONLY = CATEGORIZABLE_ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__DIAGNOSTIC = CATEGORIZABLE_ELEMENT__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = CATEGORIZABLE_ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__CHILDREN = CATEGORIZABLE_ELEMENT__CHILDREN;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__LABEL = CATEGORIZABLE_ELEMENT__LABEL;
+
+	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__ACTIONS = CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Abstract Categorization</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION_FEATURE_COUNT = CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -238,6 +396,26 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__CHILDREN = ABSTRACT_CATEGORIZATION__CHILDREN;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__LABEL = ABSTRACT_CATEGORIZATION__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -266,18 +444,6 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int CATEGORIZATION_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategoryImpl
-	 * <em>Category</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategoryImpl
-	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getCategory()
-	 * @generated
-	 */
-	int CATEGORY = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -340,6 +506,26 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__CHILDREN = ABSTRACT_CATEGORIZATION__CHILDREN;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__LABEL = ABSTRACT_CATEGORIZATION__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -370,18 +556,6 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORY_FEATURE_COUNT = ABSTRACT_CATEGORIZATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VActionImpl
-	 * <em>Action</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VActionImpl
-	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getAction()
-	 * @generated
-	 */
-	int ACTION = 3;
-
-	/**
 	 * The feature id for the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -410,18 +584,6 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int ACTION_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationElementImpl
-	 * <em>Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationElementImpl
-	 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getCategorizationElement()
-	 * @generated
-	 */
-	int CATEGORIZATION_ELEMENT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -668,6 +830,44 @@ public interface VCategorizationPackage extends EPackage
 	EReference getCategorizationElement_CurrentSelection();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement
+	 * <em>Categorizable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Categorizable Element</em>'.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement
+	 * @generated
+	 */
+	EClass getCategorizableElement();
+
+	/**
+	 * Returns the meta object for the reference list '
+	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren <em>Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference list '<em>Children</em>'.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren()
+	 * @see #getCategorizableElement()
+	 * @generated
+	 */
+	EReference getCategorizableElement_Children();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel()
+	 * @see #getCategorizableElement()
+	 * @generated
+	 */
+	EAttribute getCategorizableElement_Label();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -817,6 +1017,37 @@ public interface VCategorizationPackage extends EPackage
 		 * @generated
 		 */
 		EReference CATEGORIZATION_ELEMENT__CURRENT_SELECTION = eINSTANCE.getCategorizationElement_CurrentSelection();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl
+		 * <em>Categorizable Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl
+		 * @see org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizationPackageImpl#getCategorizableElement()
+		 * @generated
+		 */
+		EClass CATEGORIZABLE_ELEMENT = eINSTANCE.getCategorizableElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference CATEGORIZABLE_ELEMENT__CHILDREN = eINSTANCE.getCategorizableElement_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CATEGORIZABLE_ELEMENT__LABEL = eINSTANCE.getCategorizableElement_Label();
 
 	}
 

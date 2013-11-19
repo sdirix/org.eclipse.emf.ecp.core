@@ -15,19 +15,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.w3c.dom.Node;
 
 /**
  * @author Jonas
@@ -55,16 +50,6 @@ public class GroupTest {
 		return ViewTestHelper.build(view, eClass);
 	}
 
-	/**
-	 * @return a View with one Group in it
-	 */
-	public static VView createViewWithOneGroup() {
-		final VView view = VViewFactory.eINSTANCE.createView();
-		final VGroup group = createGroup();
-		view.getChildren().add(group);
-		return view;
-	}
-
 	@Test
 	public void testTwoGroupsinView() {
 		// setup model
@@ -81,18 +66,6 @@ public class GroupTest {
 		assertEquals(group, childNode.getRenderable());
 		final Node<?> childNode2 = node.getChildren().get(1);
 		assertEquals(group2, childNode2.getRenderable());
-	}
-
-	/**
-	 * @return A view with two groups as children
-	 */
-	public static VView createViewWithTwoGroups() {
-		final VView view = VViewFactory.eINSTANCE.createView();
-		final VGroup group = createGroup();
-		view.getChildren().add(group);
-		final VGroup group2 = createGroup();
-		view.getChildren().add(group2);
-		return view;
 	}
 
 	@Test
@@ -142,47 +115,6 @@ public class GroupTest {
 		assertEquals(c21, sub2ChildNode1.getRenderable());
 		final Node<?> sub2ChildNode2 = childNode2.getChildren().get(1);
 		assertEquals(c22, sub2ChildNode2.getRenderable());
-	}
-
-	/**
-	 * @return A View with two groups, one is the subgroup of the first one
-	 */
-	public static VView createViewWithTwoHierachicalGroups() {
-		final VView view = VViewFactory.eINSTANCE.createView();
-		final VGroup group = createGroup();
-		view.getChildren().add(group);
-		final VGroup subGroup = createGroup();
-		group.getChildren().add(subGroup);
-		return view;
-	}
-
-	public static VView createViewWithTwoGroupsWithTwoControls() {
-		final VView view = VViewFactory.eINSTANCE.createView();
-		final VGroup group1 = createGroup();
-		view.getChildren().add(group1);
-		group1.getChildren().add(createControl());
-		group1.getChildren().add(createControl());
-		final VGroup group2 = createGroup();
-		view.getChildren().add(group2);
-		group2.getChildren().add(createControl());
-		group2.getChildren().add(createControl());
-		return view;
-	}
-
-	/**
-	 * @return
-	 */
-	private static VGroup createGroup() {
-		return VGroupFactory.eINSTANCE.createGroup();
-	}
-
-	private static VControl createControl() {
-		final VControl control = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		modelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
-		control.setDomainModelReference(modelReference);
-		return control;
 	}
 
 }

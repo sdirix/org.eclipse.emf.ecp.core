@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view;
+package org.eclipse.emf.ecp.view.categorization.model;
 
 /**
  * This interface defines an ECPAction. Concrete implementations of this class can be added as actions to the view model items. 

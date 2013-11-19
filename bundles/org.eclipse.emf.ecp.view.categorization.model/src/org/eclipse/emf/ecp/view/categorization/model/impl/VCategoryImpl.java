@@ -13,9 +13,12 @@ package org.eclipse.emf.ecp.view.categorization.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList.UnmodifiableEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
@@ -88,16 +91,17 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 */
 	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs)
 	{
-		VContainedElement oldComposite = composite;
+		final VContainedElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORY__COMPOSITE, oldComposite, newComposite);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -113,19 +117,23 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 		if (newComposite != composite)
 		{
 			NotificationChain msgs = null;
-			if (composite != null)
+			if (composite != null) {
 				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
-			if (newComposite != null)
+			}
+			if (newComposite != null) {
 				msgs = ((InternalEObject) newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
+			}
 			msgs = basicSetComposite(newComposite, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.CATEGORY__COMPOSITE,
 				newComposite, newComposite));
+		}
 	}
 
 	/**
@@ -213,6 +221,15 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 			return composite != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren()
+	 */
+	public EList<VCategorizableElement> getChildren() {
+		return new UnmodifiableEList<VCategorizableElement>(0, null);
 	}
 
 } // VCategoryImpl

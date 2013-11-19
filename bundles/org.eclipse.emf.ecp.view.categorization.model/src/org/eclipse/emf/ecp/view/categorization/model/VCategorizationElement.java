@@ -62,12 +62,12 @@ public interface VCategorizationElement extends VContainedElement
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Current Selection</em>' reference.
-	 * @see #setCurrentSelection(VAbstractCategorization)
+	 * @see #setCurrentSelection(VCategorizableElement)
 	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage#getCategorizationElement_CurrentSelection()
 	 * @model transient="true"
 	 * @generated
 	 */
-	VAbstractCategorization getCurrentSelection();
+	VCategorizableElement getCurrentSelection();
 
 	/**
 	 * Sets the value of the '
@@ -80,6 +80,6 @@ public interface VCategorizationElement extends VContainedElement
 	 * @see #getCurrentSelection()
 	 * @generated
 	 */
-	void setCurrentSelection(VAbstractCategorization value);
+	void setCurrentSelection(VCategorizableElement value);
 
 } // VCategorizationElement

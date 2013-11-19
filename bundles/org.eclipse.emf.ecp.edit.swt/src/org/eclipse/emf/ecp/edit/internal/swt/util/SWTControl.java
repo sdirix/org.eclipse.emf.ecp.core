@@ -13,18 +13,18 @@
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -81,7 +81,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor();
+		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getFirstSetting());
 		if (itemPropertyDescriptor == null) {
 			return null;
 		}
@@ -117,12 +117,15 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		binding = bindValue();
 
 		// write initial values to model (if they differ from the default value of the model-element)
-		if (!getStructuralFeature().isUnsettable()
-			&& !getSetting(getDomainModelReference()).isSet()) {
+		if (!getFirstStructuralFeature().isUnsettable()
+			&& !getFirstSetting().isSet()) {
 			if (binding != null) {
 				binding.updateTargetToModel();
 			}
 		}
+
+		// TODO remove asap
+		backwardCompatibleHandleValidation();
 
 		return composite;
 	}
@@ -191,9 +194,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				if (binding != null) {
 					binding.updateTargetToModel();
 				} else {
-					final Object currentUnsetValue = getModelElementContext().getModelElement().eGet(
-						getStructuralFeature());
-					getModelElementContext().getModelElement().eSet(getStructuralFeature(), currentUnsetValue);
+					// TODO editingdomain is missing
+					final Setting firstSetting = getFirstSetting();
+					final Object currentUnsetValue = firstSetting.get(true);
+					firstSetting.set(currentUnsetValue);
 				}
 			}
 
@@ -208,7 +212,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		int numControls = 1;
 		fillControlComposite(controlComposite);
 
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+		if (!isEmbedded() && getFirstStructuralFeature().isUnsettable()) {
 			Button unsetButton = getCustomUnsetButton();
 			if (unsetButton == null) {
 				numControls++;
@@ -219,12 +223,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			unsetButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					getModelElementContext()
-						.getEditingDomain()
-						.getCommandStack()
+					final Setting firstSetting = getFirstSetting();
+					final EditingDomain editingDomain = getEditingDomain(firstSetting);
+					editingDomain.getCommandStack()
 						.execute(
-							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
+							new SetCommand(editingDomain, firstSetting.getEObject(), firstSetting
+								.getEStructuralFeature(), SetCommand.UNSET_VALUE));
 
 					showUnsetLabel();
 				}
@@ -239,8 +243,8 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		// INFO margin needed for controlDecorator
 		// .extendedMargins(10, 0, 0, 0)
 
-		if (!getStructuralFeature().isUnsettable()
-			|| getSetting(getDomainModelReference()).isSet()) {
+		if (!getFirstStructuralFeature().isUnsettable()
+			|| getFirstSetting().isSet()) {
 			sl.topControl = controlComposite;
 		} else {
 			sl.topControl = unsetLabel;
@@ -284,8 +288,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		if (modelValue != null) {
 			return modelValue;
 		}
-		modelValue = EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
-			getModelElementContext().getModelElement(), getStructuralFeature());
+		final Setting setting = getFirstSetting();
+		modelValue = EMFEditObservables.observeValue(getEditingDomain(setting),
+			setting.getEObject(), setting.getEStructuralFeature());
 		return modelValue;
 	}
 
@@ -333,7 +338,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @return The help text
 	 */
 	protected String getHelpText() {
-		return getItemPropertyDescriptor().getDescription(null);
+		return getItemPropertyDescriptor(getFirstSetting()).getDescription(null);
 	}
 
 	/**
@@ -384,53 +389,14 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	}
 
 	/**
-	 * Return the {@link EStructuralFeature} of this control.
-	 * 
-	 * @return the {@link EStructuralFeature}
-	 */
-	@Deprecated
-	protected EStructuralFeature getStructuralFeature() {
-		final Iterator<EStructuralFeature> iterator = getDomainModelReference().getEStructuralFeatureIterator();
-		int count = 0;
-		EStructuralFeature lastFeature = null;
-		while (iterator.hasNext()) {
-			count++;
-			// if (count == 2) {
-			// throw new IllegalArgumentException(
-			// "The passed VDomainModelReference resolves to more then one EStructuralFeature.");
-			// }
-			// lastFeature=iterator.next();
-			if (lastFeature == null) {
-				lastFeature = iterator.next();
-			} else {
-				iterator.next();
-			}
-		}
-		if (count == 0) {
-			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no EStructuralFeature.");
-		}
-
-		return lastFeature;
-	}
-
-	/**
 	 * Whether this control should be editable.
 	 * 
 	 * @return true if the {@link IItemPropertyDescriptor#canSetProperty(Object)} returns true, false otherwise
 	 */
 	@Deprecated
 	protected boolean isEditable() {
-		return getItemPropertyDescriptor().canSetProperty(getSetting(getDomainModelReference()).getEObject());
-	}
-
-	/**
-	 * Convenience Method for retrieving an {@link IItemPropertyDescriptor}.
-	 * 
-	 * @return the {@link IItemPropertyDescriptor}
-	 */
-	@Deprecated
-	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
-		return getItemPropertyDescriptor(getSetting(getDomainModelReference()));
+		final Setting firstSetting = getFirstSetting();
+		return getItemPropertyDescriptor(firstSetting).canSetProperty(firstSetting.getEObject());
 	}
 
 	@Override

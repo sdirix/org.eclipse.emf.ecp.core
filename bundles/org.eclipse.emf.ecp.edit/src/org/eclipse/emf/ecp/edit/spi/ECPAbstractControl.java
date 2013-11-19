@@ -15,12 +15,19 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.internal.edit.Activator;
+import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -36,47 +43,79 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  */
 public abstract class ECPAbstractControl {
 
-	// private ECPControlContext modelElementContext;
 	private boolean embedded;
 	private EMFDataBindingContext dataBindingContext;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
-	// private VDomainModelReference domainModelReference;
 	private ViewModelContext viewModelContext;
 	private VControl control;
+	private Setting firstSetting;
+	private EStructuralFeature firstFeature;
+	private ModelChangeListener viewChangeListener;
 
 	/**
 	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
 	 * 
-	 * @param controlContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
-	 * @param domainModelReference the {@link VDomainModelReference} of this control
-	 * @since 1.1
-	 * @deprecated
+	 * @param viewModelContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
+	 * @param control the {@link VDomainModelReference} of this control
+	 * @since 1.2
 	 */
-	@Deprecated
-	public final void init(ECPControlContext controlContext, VDomainModelReference domainModelReference) {
-		modelElementContext = controlContext;
-		this.domainModelReference = domainModelReference;
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
-
-		postInit();
-	}
-
-	public final void init(ViewModelContext viewModelContext, VControl control) {
+	public final void init(ViewModelContext viewModelContext, final VControl control) {
 		this.viewModelContext = viewModelContext;
 		this.control = control;
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		postInit();
+		viewChangeListener = new ModelChangeListener() {
+
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void notifyChange(ModelChangeNotification notification) {
+				if (notification.getNotifier() != ECPAbstractControl.this.control) {
+					return;
+				}
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
+					.getElement_Diagnostic()) {
+					applyValidation(control.getDiagnostic());
+
+					// TODO remove asap
+					backwardCompatibleHandleValidation();
+				}
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
+					enabledmentChanged(control.isEnabled());
+				}
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		viewModelContext.registerViewChangeListener(viewChangeListener);
 	}
 
 	/**
-	 * Override this method to perform actions after the initialization of the control.
+	 * Notifies a control, that its enablement state has changed.
+	 * 
+	 * @param enabled the new enablement value
+	 * @since 1.2
 	 */
-	protected void postInit() {
-		// do nothing
+	protected void enabledmentChanged(boolean enabled) {
+		setEditable(enabled);
+	}
+
+	/**
+	 * Override this method in order to handle validation.
+	 * 
+	 * @param diagnostic the current {@link VDiagnostic}
+	 * @since 1.2
+	 */
+	protected void applyValidation(VDiagnostic diagnostic) {
+		// default case do nothing
 	}
 
 	/**
@@ -84,36 +123,85 @@ public abstract class ECPAbstractControl {
 	 * 
 	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
-	 * @since 1.1
+	 * @since 1.2
 	 */
-	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
+	public final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
 		return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
 			setting.getEStructuralFeature());
 	}
 
 	/**
-	 * Returns a setting based on the provided domainModelReference.
+	 * Return the {@link VControl}.
 	 * 
-	 * @param domainModelReference
-	 * @return
+	 * @return the {@link VControl} of this control
+	 * @since 1.2
 	 */
+	protected final VControl getControl() {
+		return control;
+	}
 
-	protected Setting getSetting(VDomainModelReference domainModelReference) {
-		final Iterator<Setting> iterator = domainModelReference.getIterator();
-		int count = 0;
-		Setting lastSetting = null;
-		while (iterator.hasNext()) {
-			count++;
-			if (count == 2) {
-				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to more then one setting.");
+	/**
+	 * Return the {@link ViewModelContext}.
+	 * 
+	 * @return the {@link ViewModelContext} of this control
+	 * @since 1.2
+	 */
+	protected final ViewModelContext getViewModelContext() {
+		return viewModelContext;
+	}
+
+	/**
+	 * Returns the first setting for this control.
+	 * 
+	 * @return the first Setting or throws an {@link IllegalArgumentException} if no settings can be found
+	 * @since 1.2
+	 */
+	public final Setting getFirstSetting() {
+		if (firstSetting == null) {
+			final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
+			int count = 0;
+			firstSetting = null;
+			while (iterator.hasNext()) {
+				count++;
+				final Setting setting = iterator.next();
+				if (firstSetting == null) {
+					firstSetting = setting;
+				}
 			}
-			lastSetting = iterator.next();
+			if (count == 0) {
+				Activator.logException(new IllegalArgumentException(
+					"The passed VDomainModelReference resolves to no setting."));
+			}
 		}
-		if (count == 0) {
-			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no setting.");
+		return firstSetting;
+	}
+
+	/**
+	 * Return the {@link EStructuralFeature} of this control.
+	 * 
+	 * @return the {@link EStructuralFeature}
+	 * @since 1.2
+	 */
+	public final EStructuralFeature getFirstStructuralFeature() {
+		if (firstFeature == null) {
+			final Iterator<EStructuralFeature> iterator = control.getDomainModelReference()
+				.getEStructuralFeatureIterator();
+			int count = 0;
+			firstFeature = null;
+			while (iterator.hasNext()) {
+				count++;
+				if (firstFeature == null) {
+					firstFeature = iterator.next();
+				} else {
+					iterator.next();
+				}
+			}
+			if (count == 0) {
+				throw new IllegalArgumentException(
+					"The passed VDomainModelReference resolves to no EStructuralFeature.");
+			}
 		}
-		return lastSetting;
+		return firstFeature;
 	}
 
 	/**
@@ -137,12 +225,12 @@ public abstract class ECPAbstractControl {
 	 */
 	public void dispose() {
 		composedAdapterFactory.dispose();
-		modelElementContext = null;
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
+		viewModelContext.unregisterViewChangeListener(viewChangeListener);
 		adapterFactoryItemDelegator = null;
-		domainModelReference = null;
+		viewChangeListener = null;
 	}
 
 	/**
@@ -165,49 +253,26 @@ public abstract class ECPAbstractControl {
 	}
 
 	/**
-	 * Returns the {@link ECPControlContext} to use.
+	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
 	 * 
-	 * @return the {@link ECPControlContext}
+	 * @param setting the provided {@link Setting}
+	 * @return the {@link EditingDomain} of this {@link Setting}
+	 * @since 1.2
 	 */
-	protected final ECPControlContext getModelElementContext() {
-		return modelElementContext;
+	protected final EditingDomain getEditingDomain(Setting setting) {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(setting.getEObject());
 	}
 
 	/**
-	 * Returns the {@link VDomainModelReference} set for this control.
+	 * This method allows to get a service from the view model context.
 	 * 
-	 * @return the domainModelReference the {@link VDomainModelReference} of this control
+	 * @param serviceClass the type of the service to get
+	 * @return the service instance
+	 * @param <T> the type of the service
+	 * @since 1.2
 	 */
-	protected final VDomainModelReference getDomainModelReference() {
-		return domainModelReference;
-	}
-
-	/**
-	 * Returns the {@link EditingDomain} for the set {@link VDomainModelReference}.
-	 * 
-	 * @return the {@link EditingDomain} for this control
-	 * @since 1.1
-	 */
-	protected final EditingDomain getEditingDomain() {
-		return getEditingDomain(getDomainModelReference());
-	}
-
-	/**
-	 * Returns the {@link EditingDomain} for the provided {@link VDomainModelReference}.
-	 * 
-	 * @param domainModelReference the provided {@link VDomainModelReference}
-	 * @return the {@link EditingDomain} of this {@link VDomainModelReference}
-	 * @since 1.1
-	 */
-	protected final EditingDomain getEditingDomain(VDomainModelReference domainModelReference) {
-		EditingDomain editingDomain = null;
-		if (modelElementContext != null) {
-			editingDomain = modelElementContext.getEditingDomain();
-		}
-		if (editingDomain == null) {
-			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(domainModelReference.getIterator().next());
-		}
-		return editingDomain;
+	protected final <T> T getService(Class<T> serviceClass) {
+		return viewModelContext.getService(serviceClass);
 	}
 
 	// TODO need view model service
@@ -215,37 +280,115 @@ public abstract class ECPAbstractControl {
 	 * Returns the current Locale.
 	 * 
 	 * @return the current {@link Locale}
+	 * @since 1.2
 	 */
 	protected final Locale getLocale() {
 		return Locale.getDefault();
 	}
 
 	/**
+	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
+	 * 
+	 * @param controlContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
+	 * @param domainModelReference the {@link VDomainModelReference} of this control
+	 * @since 1.1
+	 * @deprecated
+	 */
+	@Deprecated
+	public final void init(ECPControlContext controlContext, VDomainModelReference domainModelReference) {
+		init(controlContext.getViewContext(), (VControl) domainModelReference.eContainer());
+	}
+
+	/**
+	 * Returns the {@link ECPControlContext} to use.
+	 * 
+	 * @return the {@link ECPControlContext}
+	 * @deprecated
+	 */
+	@Deprecated
+	protected final ECPControlContext getModelElementContext() {
+		throw new UnsupportedOperationException("DO NOT USE THIS METHOD!!");
+	}
+
+	/**
+	 * Returns the {@link VDomainModelReference} set for this control.
+	 * 
+	 * @return the domainModelReference the {@link VDomainModelReference} of this control
+	 */
+	@Deprecated
+	protected final VDomainModelReference getDomainModelReference() {
+		return control.getDomainModelReference();
+	}
+
+	/**
+	 * Returns the {@link EditingDomain} for the set {@link VDomainModelReference}.
+	 * 
+	 * @return the {@link EditingDomain} for this control
+	 * @since 1.2
+	 * @deprecated
+	 */
+	@Deprecated
+	protected final EditingDomain getEditingDomain() {
+		return getEditingDomain(getFirstSetting());
+	}
+
+	/**
+	 * Helper method to keep the old validation.
+	 * 
+	 * @since 1.2
+	 */
+	protected final void backwardCompatibleHandleValidation() {
+		resetValidation();
+		for (final Object object : control.getDiagnostic().getDiagnostics()) {
+			handleValidation((Diagnostic) object);
+		}
+	}
+
+	/**
 	 * Handle live validation.
 	 * 
 	 * @param diagnostic of type Diagnostic
+	 * @deprecated
+	 * @since 1.2
 	 * **/
-	protected abstract void handleValidation(Diagnostic diagnostic);
+	@Deprecated
+	public void handleValidation(Diagnostic diagnostic) {
+		// do nothing
+	}
 
 	/**
 	 * Reset the validation status 'ok'.
-	 * **/
-	protected abstract void resetValidation();
+	 * 
+	 * @deprecated
+	 * @since 1.2
+	 */
+	@Deprecated
+	public void resetValidation() {
+		// do nothing
+	}
 
 	/**
 	 * Whether a label should be shown for this control.
 	 * 
 	 * @return true if a label should be created, false otherwise
 	 * @deprecated use the labelAlignment of the control model element
+	 * @since 1.2
 	 */
 	@Deprecated
-	public abstract boolean showLabel();
+	public boolean showLabel() {
+		return true;
+	}
 
 	/**
 	 * Sets the state of the widget to be either editable or not.
 	 * 
 	 * @param isEditable whether to set the widget editable
+	 * @since 1.2
+	 * @deprecated
 	 */
-	protected abstract void setEditable(boolean isEditable);
+	@Deprecated
+	public void setEditable(boolean isEditable) {
+		// do nothing
+	}
 
 }

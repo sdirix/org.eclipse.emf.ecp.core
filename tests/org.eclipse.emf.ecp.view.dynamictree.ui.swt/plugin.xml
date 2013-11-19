@@ -2,10 +2,15 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers">
-      <renderers
-            class="org.eclipse.emf.ecp.view.dynamictree.ui.swt.DynamicContainmentItemSWTRenderer">
-      </renderers>
+         point="org.eclipse.emf.ecp.ui.view.swt.renderers">
+      <renderer
+            element="org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree"
+            renderer="org.eclipse.emf.ecp.view.dynamictree.ui.swt.SWTDynamicContainmentTreeRenderer">
+      </renderer>
+      <renderer
+            element="org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem"
+            renderer="org.eclipse.emf.ecp.view.dynamictree.ui.swt.SWTDynamicContainmentItemRenderer">
+      </renderer>
    </extension>
 
 </plugin>

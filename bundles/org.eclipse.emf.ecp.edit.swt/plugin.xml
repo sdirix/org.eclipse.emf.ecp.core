@@ -50,26 +50,6 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl"
-            id="org.eclipse.emf.ecp.control.swt.reference"
-            showLabel="true"
-            >
-         <staticTest
-               priority="1"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EObject">
-         </staticTest>
-      </control>
-      <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl"
-            id="org.eclipse.emf.ecp.control.swt.multiReference"
-            showLabel="true"
-            >
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControlTester">
-         </dynamicTest>
-      </control>
-      <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.AttributeMultiControl"
             id="org.eclipse.emf.ecp.control.swt.multiAttribute"
             showLabel="true"
@@ -158,11 +138,6 @@
             class="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditor"
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.dateTime"
             tester="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditorTester">
-      </cellEditor>
-      <cellEditor
-            class="org.eclipse.emf.ecp.edit.internal.swt.table.LinkCellEditor"
-            id="org.eclipse.emf.ecp.edit.swt.cellEditor.link"
-            tester="org.eclipse.emf.ecp.edit.internal.swt.table.LinkCellEditorTester">
       </cellEditor>
    </extension>
 

@@ -17,10 +17,10 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -36,12 +36,16 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
 	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<Control>> render(VGroup vGroup,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData)
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VGroup vGroup,
+		ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
 
 		final org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
 		group.setData(CUSTOM_VARIANT, CONTROL_GROUP);
@@ -55,7 +59,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {
-				resultRows = SWTRenderers.INSTANCE.render(group, child, adapterFactoryItemDelegator);
+				resultRows = SWTRendererFactory.INSTANCE.render(group, child, viewContext);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

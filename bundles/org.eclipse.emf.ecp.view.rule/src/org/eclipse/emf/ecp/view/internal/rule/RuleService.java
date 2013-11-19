@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.context.AbstractViewService;
+import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
@@ -44,7 +44,7 @@ import org.eclipse.emf.ecp.view.rule.model.ShowRule;
  * 
  * @author emueller
  */
-public class RuleService extends AbstractViewService {
+public class RuleService implements ViewModelService {
 
 	private ViewModelContext context;
 	private ModelChangeListener domainChangeListener;
@@ -65,9 +65,8 @@ public class RuleService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
-	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 		final VElement view = context.getViewModel();
@@ -416,7 +415,6 @@ public class RuleService extends AbstractViewService {
 	/**
 	 * Dispose.
 	 */
-	@Override
 	public void dispose() {
 		// dispose stuff
 		context.unregisterDomainChangeListener(domainChangeListener);
@@ -447,9 +445,8 @@ public class RuleService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
 	 */
-	@Override
 	public int getPriority() {
 		return 1;
 	}

@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 
 /**
  * A common super interface for all CellEditors contributed to ECP.
@@ -31,7 +31,7 @@ public interface ECPCellEditor {
 
 	IValueProperty getValueProperty();
 
-	void instantiate(IItemPropertyDescriptor descriptor, ECPControlContext ecpControlContext);
+	void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext);
 
 	int getStyle();
 

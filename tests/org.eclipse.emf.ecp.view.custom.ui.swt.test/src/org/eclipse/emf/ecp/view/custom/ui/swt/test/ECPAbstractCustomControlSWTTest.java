@@ -43,7 +43,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
-import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
@@ -328,8 +328,9 @@ public class ECPAbstractCustomControlSWTTest {
 			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub");
 		controlModel.setDomainModelReference(domainModelReference);
-		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
-			SWTViewTestHelper.createShell()), null);
+		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
+		// SWTViewTestHelper.createShell()), null);
+		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
 		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 
 		for (final VDomainModelReference modelReference : allFeatures) {
@@ -541,8 +542,9 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl = new ECPAbstractCustomControlSWTStub(true);
 
 		Diagnostic validate = new Diagnostician().validate(domainObject);
-		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
-			SWTViewTestHelper.createShell()), null);
+		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
+		// SWTViewTestHelper.createShell()), null);
+		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
 		customControl.createControls(testComposite);
 		customControl.handleValidation(validate.getChildren().get(0));
 		// Check Label, Check Image
@@ -600,8 +602,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testInit() {
-		customControl.init(ViewTestHelper.createECPControlContext(domainObject,
-			SWTViewTestHelper.createShell()), null);
+		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
 	}
 
 	/**

@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.categorization.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +29,7 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * @model abstract="true"
  * @generated
  */
-public interface VAbstractCategorization extends VElement
+public interface VAbstractCategorization extends VCategorizableElement
 {
 	/**
 	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.

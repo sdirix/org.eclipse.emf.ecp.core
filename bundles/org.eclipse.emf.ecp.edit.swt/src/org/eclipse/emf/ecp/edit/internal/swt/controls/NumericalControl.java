@@ -113,7 +113,7 @@ public class NumericalControl extends AbstractTextControl {
 	}
 
 	private Class<?> getInstanceClass() {
-		return getStructuralFeature().getEType().getInstanceClass();
+		return getFirstStructuralFeature().getEType().getInstanceClass();
 	}
 
 	private String getFormatText() {
@@ -229,7 +229,7 @@ public class NumericalControl extends AbstractTextControl {
 
 		private Object revertToOldValue(final Object value) {
 
-			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
+			if (getFirstStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 				return null;
 			}
 
@@ -253,7 +253,7 @@ public class NumericalControl extends AbstractTextControl {
 				getDataBindingContext().updateTargets();
 			}
 
-			if (getStructuralFeature().isUnsettable() && result == null) {
+			if (getFirstStructuralFeature().isUnsettable() && result == null) {
 				showUnsetLabel();
 				return SetCommand.UNSET_VALUE;
 			}

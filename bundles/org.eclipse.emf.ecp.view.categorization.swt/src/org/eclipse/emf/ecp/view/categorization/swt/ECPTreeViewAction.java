@@ -9,9 +9,9 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.categorization.swt;
 
-import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
+import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.custom.TreeEditor;

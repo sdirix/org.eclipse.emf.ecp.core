@@ -13,30 +13,35 @@ package org.eclipse.emf.ecp.view.categorization.model.provider;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
+
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
+
+import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization}
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement}
  * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
-public class AbstractCategorizationItemProvider
-	extends CategorizableElementItemProvider
+public class CategorizableElementItemProvider
+	extends ElementItemProvider
 	implements
 	IEditingDomainItemProvider,
 	IStructuredItemContentProvider,
@@ -51,7 +56,7 @@ public class AbstractCategorizationItemProvider
 	 * 
 	 * @generated
 	 */
-	public AbstractCategorizationItemProvider(AdapterFactory adapterFactory)
+	public CategorizableElementItemProvider(AdapterFactory adapterFactory)
 	{
 		super(adapterFactory);
 	}
@@ -70,43 +75,60 @@ public class AbstractCategorizationItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
+			addChildrenPropertyDescriptor(object);
+			addLabelPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This adds a property descriptor for the Children feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	protected void addChildrenPropertyDescriptor(Object object)
 	{
-		if (childrenFeatures == null)
-		{
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(VCategorizationPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS);
-		}
-		return childrenFeatures;
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_CategorizableElement_children_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_children_feature",
+					"_UI_CategorizableElement_type"),
+				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__CHILDREN,
+				false,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
+	 * This adds a property descriptor for the Label feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
+	protected void addLabelPropertyDescriptor(Object object)
 	{
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_CategorizableElement_label_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_label_feature",
+					"_UI_CategorizableElement_type"),
+				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL,
+				false,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -119,10 +141,10 @@ public class AbstractCategorizationItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VAbstractCategorization) object).getName();
+		String label = ((VCategorizableElement) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AbstractCategorization_type") :
-			getString("_UI_AbstractCategorization_type") + " " + label;
+			getString("_UI_CategorizableElement_type") :
+			getString("_UI_CategorizableElement_type") + " " + label;
 	}
 
 	/**
@@ -138,10 +160,10 @@ public class AbstractCategorizationItemProvider
 	{
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VAbstractCategorization.class))
+		switch (notification.getFeatureID(VCategorizableElement.class))
 		{
-		case VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -159,11 +181,6 @@ public class AbstractCategorizationItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
 	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.ABSTRACT_CATEGORIZATION__ACTIONS,
-				VCategorizationFactory.eINSTANCE.createAction()));
 	}
 
 }

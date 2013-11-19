@@ -16,13 +16,11 @@ import java.util.Collection;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
@@ -65,7 +63,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 	private static Shell shell;
 	private static Display display;
 	private GCCollectable collectable;
-	private GCCollectable contextCollectable;
+	// private GCCollectable contextCollectable;
 	private GCCollectable viewCollectable;
 	private static GCCollectable domainCollectable;
 
@@ -220,10 +218,12 @@ public class OpenEditorTest extends SWTBotTestCase {
 							final VView view = createView();
 							collectable = new GCCollectable(view);
 
-							final ECPControlContext context = new DefaultControlContext(domainObjectWrapper
-								.getObject(), view);
-							contextCollectable = new GCCollectable(context);
-							final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
+							// final ECPControlContext context = new DefaultControlContext(domainObjectWrapper
+							// .getObject(), view);
+							// contextCollectable = new GCCollectable(context);
+							final ECPSWTView renderedView = ECPSWTViewRenderer.INSTANCE.render(shell,
+								domainObjectWrapper
+									.getObject(), view);
 							viewCollectable = new GCCollectable(renderedView);
 							shell.open();
 							return renderedView;
@@ -238,11 +238,10 @@ public class OpenEditorTest extends SWTBotTestCase {
 					}
 				}));
 
-			final SWTBotTree tree = bot.tree();
-			tree.getTreeItem("parent").getNode("foo").getNode("2").select();
-
 			UIThreadRunnable.syncExec(new VoidResult() {
 				public void run() {
+					final SWTBotTree tree = bot.tree();
+					tree.getTreeItem("parent").getNode("foo").getNode("2").select();
 					viewWrapper.removeObject().dispose();
 					memAfterRender = usedMemory();
 					shell.close();
@@ -251,7 +250,7 @@ public class OpenEditorTest extends SWTBotTestCase {
 			});
 
 			assertTrue(viewCollectable.isCollectable());
-			assertTrue(contextCollectable.isCollectable());
+			// assertTrue(contextCollectable.isCollectable());
 			assertTrue(collectable.isCollectable());
 			final double memoryGrowth = (memAfterRender - memBeforeRender) / memBeforeRender;
 			assertTrue("Memory growth bigger than 15%: " + memoryGrowth, memoryGrowth < 0.15);

@@ -14,7 +14,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
         eType="#//DynamicContainmentItem" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DynamicContainmentItem" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element">
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicContainmentItem" eSuperTypes="../../org.eclipse.emf.ecp.view.categorization.model/model/categorization.ecore#//CategorizableElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModel" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"

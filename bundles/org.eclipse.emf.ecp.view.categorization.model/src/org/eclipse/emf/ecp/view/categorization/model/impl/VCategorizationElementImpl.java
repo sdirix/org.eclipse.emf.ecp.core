@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
@@ -64,7 +65,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected VAbstractCategorization currentSelection;
+	protected VCategorizableElement currentSelection;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -111,12 +112,12 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
-	public VAbstractCategorization getCurrentSelection()
+	public VCategorizableElement getCurrentSelection()
 	{
 		if (currentSelection != null && currentSelection.eIsProxy())
 		{
 			InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
-			currentSelection = (VAbstractCategorization) eResolveProxy(oldCurrentSelection);
+			currentSelection = (VCategorizableElement) eResolveProxy(oldCurrentSelection);
 			if (currentSelection != oldCurrentSelection)
 			{
 				if (eNotificationRequired())
@@ -134,7 +135,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
-	public VAbstractCategorization basicGetCurrentSelection()
+	public VCategorizableElement basicGetCurrentSelection()
 	{
 		return currentSelection;
 	}
@@ -145,9 +146,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
-	public void setCurrentSelection(VAbstractCategorization newCurrentSelection)
+	public void setCurrentSelection(VCategorizableElement newCurrentSelection)
 	{
-		VAbstractCategorization oldCurrentSelection = currentSelection;
+		VCategorizableElement oldCurrentSelection = currentSelection;
 		currentSelection = newCurrentSelection;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
@@ -209,7 +210,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 			getCategorizations().addAll((Collection<? extends VAbstractCategorization>) newValue);
 			return;
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
-			setCurrentSelection((VAbstractCategorization) newValue);
+			setCurrentSelection((VCategorizableElement) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -230,7 +231,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 			getCategorizations().clear();
 			return;
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
-			setCurrentSelection((VAbstractCategorization) null);
+			setCurrentSelection((VCategorizableElement) null);
 			return;
 		}
 		super.eUnset(featureID);

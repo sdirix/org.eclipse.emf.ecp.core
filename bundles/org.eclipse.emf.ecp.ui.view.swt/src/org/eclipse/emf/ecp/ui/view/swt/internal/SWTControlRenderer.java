@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -45,10 +45,15 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	 */
 	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<org.eclipse.swt.widgets.Control>> render(VControl vControl,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData)
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VControl vControl,
+		ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
@@ -62,14 +67,14 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			vControl.getDomainModelReference());
 
 		if (control != null) {
-			control.init(null, vControl.getDomainModelReference());
-			final Composite parent = getParentFromInitData(initData);
+			control.init(viewContext, vControl);
 			Label label = null;
-			if (control.showLabel() && vControl.getLabelAlignment() == LabelAlignment.LEFT) {
-				final Setting setting = vControl.getDomainModelReference().getIterator().next();
-				final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator
-					.getPropertyDescriptor(setting.getEObject(),
-						setting.getEStructuralFeature());
+			labelRender: if (vControl.getLabelAlignment() == LabelAlignment.LEFT) {
+				final Setting setting = control.getFirstSetting();
+				if (setting == null) {
+					break labelRender;
+				}
+				final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
 
 				if (itemPropertyDescriptor == null) {
 					throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
@@ -96,6 +101,10 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 				return null;
 			}
 			control.setEditable(!vControl.isReadonly());
+			if (!vControl.isReadonly()) {
+				control.setEditable(vControl.isEnabled());
+			}
+
 			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
 			final Control next = createControls.iterator().next().getControls().iterator().next();
 			if (label != null) {

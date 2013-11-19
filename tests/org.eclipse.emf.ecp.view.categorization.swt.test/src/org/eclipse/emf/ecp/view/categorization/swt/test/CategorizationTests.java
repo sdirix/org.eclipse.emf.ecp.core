@@ -3,7 +3,6 @@ package org.eclipse.emf.ecp.view.categorization.swt.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -55,9 +54,9 @@ public class CategorizationTests {
 	}
 
 	private Control render() throws ECPRendererException {
-		Shell shell = new Shell();
+		final Shell shell = new Shell();
 
-		ECPSWTView render = ECPSWTViewRenderer.INSTANCE.render(shell, player, view);
+		final ECPSWTView render = ECPSWTViewRenderer.INSTANCE.render(shell, player, view);
 		return render.getSWTControl();
 	}
 
@@ -75,7 +74,7 @@ public class CategorizationTests {
 	private static void assertTreeAndTreeItems(Composite composite, VAbstractCategorization... categorizations) {
 		assertTrue(composite.getChildren().length == 2);
 		assertTrue(Tree.class.isInstance(composite.getChildren()[0]));
-		Tree tree = (Tree) composite.getChildren()[0];
+		final Tree tree = (Tree) composite.getChildren()[0];
 		assertEquals(categorizations.length, tree.getItems().length);
 		for (int i = 0; i < categorizations.length; i++) {
 			checkTreeItem(tree.getItem(i), categorizations[i]);
@@ -83,9 +82,9 @@ public class CategorizationTests {
 	}
 
 	private static void checkTreeItem(TreeItem treeItem, VAbstractCategorization abstractCategorization) {
-		assertEquals(abstractCategorization, ((Node) treeItem.getData()).getRenderable());
+		assertEquals(abstractCategorization, treeItem.getData());
 		if (VCategorization.class.isInstance(abstractCategorization)) {
-			VCategorization categorization = (VCategorization) abstractCategorization;
+			final VCategorization categorization = (VCategorization) abstractCategorization;
 			assertEquals(categorization.getCategorizations().size(), treeItem.getItems().length);
 			for (int i = 0; i < categorization.getCategorizations().size(); i++) {
 				checkTreeItem(treeItem.getItem(i), categorization.getCategorizations().get(i));
@@ -105,7 +104,7 @@ public class CategorizationTests {
 
 	private void assertCategorizationSubEditor(Composite composite, String text) {
 		assertTrue(ScrolledComposite.class.isInstance(composite.getChildren()[1]));
-		ScrolledComposite scrolledComposite = (ScrolledComposite) composite.getChildren()[1];
+		final ScrolledComposite scrolledComposite = (ScrolledComposite) composite.getChildren()[1];
 		Control content = scrolledComposite.getContent();
 		assertTrue(Composite.class.isInstance(content));
 		content = ((Composite) content).getChildren()[0];
@@ -121,21 +120,21 @@ public class CategorizationTests {
 
 	@Test
 	public void testOnlyOneCategory() throws ECPRendererException {
-		VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
-		VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
+		final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
 		controlPlayerName.setDomainModelReference(ModelReferenceHelper
 			.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name()));
 		vCategory1.setComposite(controlPlayerName);
 		element.getCategorizations().add(vCategory1);
 
-		Control render = render();
+		final Control render = render();
 
 		assertTrue(Composite.class.isInstance(render));
 		Composite composite = (Composite) render;
-		//extra assert due to extra composite
-		assertTrue(composite.getChildren().length==1);
-		composite=(Composite) composite.getChildren()[0];
-		
+		// extra assert due to extra composite
+		assertTrue(composite.getChildren().length == 1);
+		composite = (Composite) composite.getChildren()[0];
+
 		assertTrue(composite.getChildren().length == 2);
 		assertLabelAndTextControl(composite, "Name");
 
@@ -143,32 +142,31 @@ public class CategorizationTests {
 
 	@Test
 	public void testOnlyCategories() throws ECPRendererException {
-		VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
-		VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
+		final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
 		controlPlayerName.setDomainModelReference(ModelReferenceHelper
 			.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name()));
 		vCategory1.setComposite(controlPlayerName);
 		element.getCategorizations().add(vCategory1);
 
-		VCategory vCategory2 = VCategorizationFactory.eINSTANCE.createCategory();
-		VControl controlPlayerHeight = VViewFactory.eINSTANCE.createControl();
+		final VCategory vCategory2 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VControl controlPlayerHeight = VViewFactory.eINSTANCE.createControl();
 		controlPlayerHeight.setDomainModelReference(ModelReferenceHelper
 			.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Height()));
 		vCategory2.setComposite(controlPlayerHeight);
 		element.getCategorizations().add(vCategory2);
 
-		Control render = render();
+		final Control render = render();
 		assertTrue(Composite.class.isInstance(render));
 		Composite composite = (Composite) render;
-		//extra assert due to extra composite
-		assertTrue(composite.getChildren().length==1);
-		composite=(Composite) composite.getChildren()[0];
-		
-		
+		// extra assert due to extra composite
+		assertTrue(composite.getChildren().length == 1);
+		composite = (Composite) composite.getChildren()[0];
+
 		assertTreeAndTreeItems(composite, vCategory1, vCategory2);
 
 		assertTrue(ScrolledComposite.class.isInstance(composite.getChildren()[1]));
-		ScrolledComposite scrolledComposite = (ScrolledComposite) composite.getChildren()[1];
+		final ScrolledComposite scrolledComposite = (ScrolledComposite) composite.getChildren()[1];
 		Control content = scrolledComposite.getContent();
 		assertTrue(Composite.class.isInstance(content));
 		content = ((Composite) content).getChildren()[0];
@@ -177,18 +175,18 @@ public class CategorizationTests {
 
 	@Test
 	public void testCategorizationWithoutCategory() throws ECPRendererException {
-		VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
 		vCategorization.setName("test");
 		element.getCategorizations().add(vCategorization);
-		Control render = render();
+		final Control render = render();
 
 		assertTrue(Composite.class.isInstance(render));
 		Composite composite = (Composite) render;
-		
-		//extra assert due to extra composite
-		assertTrue(composite.getChildren().length==1);
-		composite=(Composite) composite.getChildren()[0];
-		
+
+		// extra assert due to extra composite
+		assertTrue(composite.getChildren().length == 1);
+		composite = (Composite) composite.getChildren()[0];
+
 		assertTreeAndTreeItems(composite, vCategorization);
 
 		assertCategorizationSubEditor(composite, "test");
@@ -197,26 +195,26 @@ public class CategorizationTests {
 
 	@Test
 	public void testCategorizationWithCategory() throws ECPRendererException {
-		VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
 		vCategorization.setName("test");
 		element.getCategorizations().add(vCategorization);
-		VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
-		VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
+		final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
 		controlPlayerName.setDomainModelReference(ModelReferenceHelper
 			.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name()));
 		vCategory1.setComposite(controlPlayerName);
 
 		vCategorization.getCategorizations().add(vCategory1);
 
-		Control render = render();
+		final Control render = render();
 
 		// asserts
 		assertTrue(Composite.class.isInstance(render));
 		Composite composite = (Composite) render;
-		//extra assert due to extra composite
-		assertTrue(composite.getChildren().length==1);
-		composite=(Composite) composite.getChildren()[0];
-		
+		// extra assert due to extra composite
+		assertTrue(composite.getChildren().length == 1);
+		composite = (Composite) composite.getChildren()[0];
+
 		assertTreeAndTreeItems(composite, vCategorization);
 
 		assertCategorizationSubEditor(composite, "test");
@@ -225,33 +223,33 @@ public class CategorizationTests {
 
 	@Test
 	public void testCategorizationWithCategories() throws ECPRendererException {
-		VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
 		vCategorization.setName("test");
 		element.getCategorizations().add(vCategorization);
-		VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
-		VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
+		final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
 		controlPlayerName.setDomainModelReference(ModelReferenceHelper
 			.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name()));
 		vCategory1.setComposite(controlPlayerName);
 
 		vCategorization.getCategorizations().add(vCategory1);
 
-		VCategory vCategory2 = VCategorizationFactory.eINSTANCE.createCategory();
-		VControl controlPlayerHeight = VViewFactory.eINSTANCE.createControl();
+		final VCategory vCategory2 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VControl controlPlayerHeight = VViewFactory.eINSTANCE.createControl();
 		controlPlayerHeight.setDomainModelReference(ModelReferenceHelper
 			.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Height()));
 		vCategory2.setComposite(controlPlayerHeight);
 		vCategorization.getCategorizations().add(vCategory2);
 
-		Control render = render();
+		final Control render = render();
 
 		// asserts
 		assertTrue(Composite.class.isInstance(render));
 		Composite composite = (Composite) render;
-		//extra assert due to extra composite
-		assertTrue(composite.getChildren().length==1);
-		composite=(Composite) composite.getChildren()[0];
-		
+		// extra assert due to extra composite
+		assertTrue(composite.getChildren().length == 1);
+		composite = (Composite) composite.getChildren()[0];
+
 		assertTreeAndTreeItems(composite, vCategorization);
 
 		assertCategorizationSubEditor(composite, "test");
@@ -260,27 +258,27 @@ public class CategorizationTests {
 
 	@Test
 	public void testCategorizationsAndCategories() throws ECPRendererException {
-		VCategorization[] categorizations = new VCategorization[5];
+		final VCategorization[] categorizations = new VCategorization[5];
 		for (int i = 0; i < 5; i++) {
-			VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
+			final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
 			vCategorization.setName("test" + i);
 			element.getCategorizations().add(vCategorization);
 			categorizations[i] = vCategorization;
 			for (int j = 0; j < 5; j++) {
-				VCategorization vCategorization2 = VCategorizationFactory.eINSTANCE.createCategorization();
-				vCategorization2.setName("test" + i+"_"+j);
+				final VCategorization vCategorization2 = VCategorizationFactory.eINSTANCE.createCategorization();
+				vCategorization2.setName("test" + i + "_" + j);
 				vCategorization.getCategorizations().add(vCategorization2);
-				
-				VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
-				VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
+
+				final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
+				final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
 				controlPlayerName.setDomainModelReference(ModelReferenceHelper
 					.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name()));
 				vCategory1.setComposite(controlPlayerName);
 
 				vCategorization2.getCategorizations().add(vCategory1);
 
-				VCategory vCategory2 = VCategorizationFactory.eINSTANCE.createCategory();
-				VControl controlPlayerHeight = VViewFactory.eINSTANCE.createControl();
+				final VCategory vCategory2 = VCategorizationFactory.eINSTANCE.createCategory();
+				final VControl controlPlayerHeight = VViewFactory.eINSTANCE.createControl();
 				controlPlayerHeight.setDomainModelReference(ModelReferenceHelper
 					.createDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Height()));
 				vCategory2.setComposite(controlPlayerHeight);
@@ -289,15 +287,15 @@ public class CategorizationTests {
 			}
 		}
 
-		Control render = render();
+		final Control render = render();
 
 		// asserts
 		assertTrue(Composite.class.isInstance(render));
 		Composite composite = (Composite) render;
-		//extra assert due to extra composite
-		assertTrue(composite.getChildren().length==1);
-		composite=(Composite) composite.getChildren()[0];
-		
+		// extra assert due to extra composite
+		assertTrue(composite.getChildren().length == 1);
+		composite = (Composite) composite.getChildren()[0];
+
 		assertTreeAndTreeItems(composite, categorizations);
 
 		assertCategorizationSubEditor(composite, categorizations[0].getName());

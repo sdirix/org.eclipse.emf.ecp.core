@@ -18,9 +18,9 @@ import java.util.List;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -37,15 +37,13 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#render(org.eclipse.emf.ecp.view.model.VElement,
-	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> render(final VView vView,
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, final VView vView,
+		final ViewModelContext viewContext)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
@@ -55,8 +53,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {
-				resultRows = SWTRenderers.INSTANCE.render(
-					columnComposite, child, adapterFactoryItemDelegator);
+				resultRows = SWTRendererFactory.INSTANCE.render(columnComposite, child, viewContext);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
@@ -68,7 +65,6 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 
 			setLayoutDataForResultRows(resultRows);
 		}
-
 		return createResult(columnComposite);
 
 	}

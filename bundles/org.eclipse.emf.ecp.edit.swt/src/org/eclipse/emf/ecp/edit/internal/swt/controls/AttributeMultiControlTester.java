@@ -36,12 +36,23 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  */
 public class AttributeMultiControlTester implements ECPApplicableTester {
 
-	/** {@inheritDoc} **/
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @deprecated
+	 **/
+	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		return check((EStructuralFeature) itemPropertyDescriptor.getFeature(eObject), eObject);
+		return isApplicable(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
 	}
 
-	public int check(EStructuralFeature feature, EObject eObject) {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EStructuralFeature)
+	 */
+	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		int bestPriority = NOT_APPLICABLE;
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
@@ -69,7 +80,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	 * Calculates the priority of the attribute tester.
 	 * 
 	 * @param tester the tester to get the priority for
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
+	 * @param feature the {@link EStructuralFeature}
 	 * @param eObject the {@link EObject}
 	 * @return the priority
 	 */
@@ -117,8 +128,11 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.edit.util.VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 * @deprecated
+	 * 
 	 */
+	@Deprecated
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;
@@ -130,7 +144,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 		if (count != 1) {
 			return NOT_APPLICABLE;
 		}
-		return check(setting.getEStructuralFeature(), setting.getEObject());
+		return isApplicable(setting.getEObject(), setting.getEStructuralFeature());
 	}
 
 }

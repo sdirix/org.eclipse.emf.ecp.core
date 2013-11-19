@@ -18,30 +18,24 @@ package org.eclipse.emf.ecp.view.context;
  * 
  * @author Eugen Neufeld
  */
-public abstract class AbstractViewService {
-
-	/**
-	 * Constructor for a new view service.
-	 */
-	public AbstractViewService() {
-	}
+public interface ViewModelService {
 
 	/**
 	 * Instantiate the view service.
 	 * 
 	 * @param context the {@link ViewModelContext}
 	 */
-	public abstract void instantiate(ViewModelContext context);
+	void instantiate(ViewModelContext context);
 
 	/**
 	 * Dispose.
 	 */
-	public abstract void dispose();
+	void dispose();
 
 	/**
 	 * Returns the priority for this view service.
 	 * 
 	 * @return the priority
 	 */
-	public abstract int getPriority();
+	int getPriority();
 }

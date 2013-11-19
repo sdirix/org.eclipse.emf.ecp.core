@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.ECPAction;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
+import org.eclipse.emf.ecp.view.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
@@ -49,18 +47,18 @@ import org.eclipse.swtbot.swt.finder.results.VoidResult;
 
 public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
-	private Node<DynamicContainmentTree> node;
+	// private Node<DynamicContainmentTree> node;
 
 	private static final String ELEMENT_CONTAINER_ID = "111";
 	private static final String ELEMENT_ID = "222";
 	private static final String TEST_ELEMENT_NAME = "foo";
 	private static final String TEST_ELEMENT_NAME_2 = "bar";
+	private DynamicContainmentTree tree;
 
 	@Override
 	public VView createView() {
 
-		// set up scoping
-		final DynamicContainmentTree tree = ModelFactory.eINSTANCE.createDynamicContainmentTree();
+		tree = ModelFactory.eINSTANCE.createDynamicContainmentTree();
 		tree.getPathToRoot().add(ModelPackage.eINSTANCE.getDomainRoot_Intermediate());
 		tree.getPathToRoot().add(ModelPackage.eINSTANCE.getDomainIntermediate_TestElementContainer());
 		tree.setChildReference(ModelPackage.eINSTANCE.getTestElementContainer_TestElements());
@@ -110,22 +108,22 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		return result;
 	}
 
-	public static Node<?> addItem(String id, Node<?> virtualParentNode) {
+	public static DynamicContainmentItem addItem(String id, VElement viewModelParent, EObject virtualParent) {
 
-		EObject virtualParent = (EObject) virtualParentNode.getLabelObject();
+		// EObject virtualParent = (EObject) virtualParentNode.getLabelObject();
+
 		final TestElement newValue = ModelFactory.eINSTANCE.createTestElement();
 		newValue.setParentId((String) virtualParent.eGet(virtualParent
 			.eClass().getEStructuralFeature("id")));
 		newValue.setId(id);
-
+		((TestElementContainer) virtualParent).getTestElements().add(newValue);
 		VElement renderable = null;
 		DynamicContainmentTree tree = null;
-		List<ECPAction> actions = null;
+		List<VAction> actions = null;
 
 		if (!TestElementContainer.class.isInstance(virtualParent)) {
 			virtualParent = virtualParent.eContainer();
-			final DynamicContainmentItem item = (DynamicContainmentItem) virtualParentNode
-				.getRenderable();
+			final DynamicContainmentItem item = (DynamicContainmentItem) viewModelParent;
 
 			EObject parent = item.eContainer();
 			while (!DynamicContainmentTree.class.isInstance(parent)) {
@@ -133,35 +131,34 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 			}
 			tree = (DynamicContainmentTree) parent;
 		}
-		actions = virtualParentNode.getActions();
 
 		if (tree == null) {
-			tree = (DynamicContainmentTree) virtualParentNode.getRenderable();
+			tree = (DynamicContainmentTree) viewModelParent;
 		}
+		actions = tree.getActions();
 		renderable = tree.getChildComposite();
 
-		final ECPControlContext childContext = virtualParentNode.getControlContext()
-			.createSubContext(newValue);
+		// final ECPControlContext childContext = virtualParentNode.getControlContext()
+		// .createSubContext(newValue);
 		final DynamicContainmentItem pi = ModelFactory.eINSTANCE.createDynamicContainmentItem();
 		pi.setComposite((VContainedElement) EcoreUtil.copy(renderable));
 		pi.setDomainModel(newValue);
-		resolveDomainReferences(pi, newValue);
-		if (DynamicContainmentItem.class.isInstance(virtualParentNode.getRenderable())) {
-			final DynamicContainmentItem parent = (DynamicContainmentItem) virtualParentNode
-				.getRenderable();
+		pi.setBaseItemIndex(((TestElementContainer) virtualParent).getTestElements().indexOf(newValue));
+		// resolveDomainReferences(pi, newValue);
+		if (DynamicContainmentItem.class.isInstance(viewModelParent)) {
+			final DynamicContainmentItem parent = (DynamicContainmentItem) viewModelParent;
 			parent.getItems().add(pi);
 		} else {
 			tree.getItems().add(pi);
 		}
-		final Node<?> n = NodeBuilders.INSTANCE.build(pi, childContext);
+		// final Node<?> n = NodeBuilders.INSTANCE.build(pi, childContext);
 
-		virtualParentNode.addChild(n);
-		n.setLabelObject(newValue);
-		n.setActions(actions);
+		// virtualParentNode.addChild(n);
+		// n.setLabelObject(newValue);
+		// n.setActions(actions);
 
-		((TestElementContainer) virtualParent).getTestElements().add(newValue);
-
-		return n;
+		// return n;
+		return pi;
 	}
 
 	private static void resolveDomainReferences(VElement renderable,
@@ -225,18 +222,18 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 	@Override
 	public void logic() {
 
-		final Node<?> childNodenode2 = getViewNode().getChildren().get(0).getChildren().get(0);
-		node = (Node<DynamicContainmentTree>) childNodenode2.getChildren().get(0);
+		// final Node<?> childNodenode2 = getViewNode().getChildren().get(0).getChildren().get(0);
+		// node = (Node<DynamicContainmentTree>) childNodenode2.getChildren().get(0);
 
 		final String id = "123";
 		UIThreadRunnable.syncExec(new VoidResult() {
 			public void run() {
-				addItem(id, node);
+				addItem(id, tree, tree.getDomainModel());
 			}
 		});
-		final List<Node<?>> children = node.getChildren();
-		final Node<?> lastChild = children.get(children.size() - 1);
-		final Object labelObjectOfLastChild = lastChild.getLabelObject();
+		// final List<Node<?>> children = node.getChildren();
+		// final Node<?> lastChild = children.get(children.size() - 1);
+		final Object labelObjectOfLastChild = tree.getItems().get(tree.getItems().size() - 1).getDomainModel();
 		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
 
 		final TestElement testElement = (TestElement) labelObjectOfLastChild;

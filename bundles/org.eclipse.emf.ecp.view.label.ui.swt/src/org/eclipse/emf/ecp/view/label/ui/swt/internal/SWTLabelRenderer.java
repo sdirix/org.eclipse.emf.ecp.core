@@ -17,8 +17,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -26,21 +26,26 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * Renders an {@link org.eclipse.emf.ecp.view.label.model.VLabel Label} to a SWT {@link Label}.
+ * Renders an {@link VLabel} to a SWT {@link Label}.
  * 
  */
-public class SWTLabelRenderer extends AbstractSWTRenderer<org.eclipse.emf.ecp.view.label.model.VLabel> {
+public class SWTLabelRenderer extends AbstractSWTRenderer<VLabel> {
 	/**
 	 * Singleton instance for use by other renderers.
 	 */
 	public static final SWTLabelRenderer INSTANCE = new SWTLabelRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<Control>> render(VLabel separator,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData) throws NoRendererFoundException,
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VLabel separator,
+		ViewModelContext viewContext)
+		throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
 		final Label label = new Label(parent, SWT.NONE);
 		label.setText(separator.getName());
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_" + separator.getStyle()); //$NON-NLS-1$

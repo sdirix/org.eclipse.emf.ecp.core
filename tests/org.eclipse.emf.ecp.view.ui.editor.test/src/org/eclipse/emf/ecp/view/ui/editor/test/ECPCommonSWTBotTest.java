@@ -17,18 +17,12 @@ import java.util.List;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.RendererContext;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewImpl;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -53,7 +47,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	private static Shell shell;
 	private Display display;
 
-	private Node<VView> viewNode;
+	private VView view;
 
 	@Override
 	@Before
@@ -84,8 +78,8 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 		return new DefaultControlContext(domainObject, view);
 	}
 
-	public Node<VView> getViewNode() {
-		return viewNode;
+	public VView getViewNode() {
+		return view;
 	}
 
 	private class TestRunnable implements Runnable {
@@ -96,27 +90,25 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 				holdingList.add(UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
 					public ECPSWTView run() {
 						try {
-							final VView view = createView();
+							view = createView();
 							final EObject domainObject = createDomainObject();
-							final ECPControlContext context = createContext(domainObject, view);
 
-							final ModelRenderer<?> renderer = ModelRenderer.INSTANCE.getRenderer();
+							// final ViewModelContext viewContext = new ViewModelContextImpl(view, domainObject);
 
-							viewNode = NodeBuilders.INSTANCE.build(view, context);
-							final ViewModelContext viewContext = new ViewModelContextImpl(view, context
-								.getModelElement());
-							viewContext.registerViewChangeListener(getViewNode());
-							final RendererContext<?> rendererContext = renderer.render(getViewNode(), shell);
-							final Composite composite = (Composite) rendererContext.getControl();
+							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+							final Composite composite = (Composite) swtView.getSWTControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 							composite.setLayoutData(gridData);
-							final ECPSWTViewImpl swtView = new ECPSWTViewImpl(composite, rendererContext, viewContext);
+							// final ECPSWTViewImpl swtView = new ECPSWTViewImpl(composite, rendererContext,
+							// viewContext);
 							shell.open();
 							return swtView;
 						} catch (final NoRendererFoundException e) {
 							fail(e.getMessage());
 						} catch (final NoPropertyDescriptorFoundExeption e) {
 							fail(e.getMessage());
+						} catch (final ECPRendererException ex) {
+							fail(ex.getMessage());
 						}
 						return null;
 					}

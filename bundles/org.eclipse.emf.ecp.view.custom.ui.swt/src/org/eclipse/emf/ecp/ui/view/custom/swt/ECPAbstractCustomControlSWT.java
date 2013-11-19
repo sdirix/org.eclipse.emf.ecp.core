@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
@@ -169,6 +169,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		// Do nothing
 
@@ -189,6 +190,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
+	@Override
 	public final void handleValidation(Diagnostic diagnostic) {
 		Diagnostic reason = diagnostic;
 		if (diagnostic.getChildren() != null
@@ -253,7 +255,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 			return;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) diagnostic.getData().get(1);
-		final ECPControl ecpControl = getRetrievedControl(feature);
+		final ECPAbstractControl ecpControl = getRetrievedControl(feature);
 		if (ecpControl == null) {
 			return;
 		}
@@ -274,6 +276,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#resetValidation()
 	 */
+	@Override
 	public final void resetValidation() {
 		resetControlValidation();
 		updateValidationColor(null);
@@ -323,7 +326,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	protected final Composite createControl(VDomainModelReference domainModelReference, Composite parent) {
 		final SWTControl control = getControl(SWTControl.class, domainModelReference);
-		control.init(getModelElementContext(), domainModelReference);
+
 		return control.createControl(parent);
 	}
 

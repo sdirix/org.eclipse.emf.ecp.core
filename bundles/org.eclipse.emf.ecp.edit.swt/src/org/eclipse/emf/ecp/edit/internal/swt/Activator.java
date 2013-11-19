@@ -124,6 +124,7 @@ public class Activator extends Plugin {
 	 */
 	public static Image getImage(URL url) {
 		if (!getDefault().imageRegistry.containsKey(url == null ? "NULL" : url.toExternalForm())) { //$NON-NLS-1$
+
 			final ImageDescriptor createFromURL = ImageDescriptor.createFromURL(url);
 			final ImageData imageData = createFromURL.getImageData();
 			getDefault().imageRegistry.put(url == null ? "NULL" : url.toExternalForm(), new ImageDescriptorToImage( //$NON-NLS-1$

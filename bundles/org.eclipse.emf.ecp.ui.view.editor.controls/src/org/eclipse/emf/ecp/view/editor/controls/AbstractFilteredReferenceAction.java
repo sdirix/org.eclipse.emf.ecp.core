@@ -14,22 +14,31 @@ package org.eclipse.emf.ecp.view.editor.controls;
 import java.net.URL;
 
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class AbstractFilteredReferenceAction extends Action {
-	protected Shell shell;
+public abstract class AbstractFilteredReferenceAction extends ECPSWTAction {
+	private final Shell shell;
 
-	public AbstractFilteredReferenceAction(EReference eReference,
+	protected Shell getShell() {
+		return shell;
+	}
+
+	public AbstractFilteredReferenceAction(EditingDomain editingDomain, Setting setting,
 		IItemPropertyDescriptor descriptor, Shell shell) {
+		super(editingDomain, setting);
 		this.shell = shell;
+
+		final EReference eReference = (EReference) setting.getEStructuralFeature();
 		Object obj = null;
 		if (!eReference.getEReferenceType().isAbstract()) {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
@@ -43,9 +52,9 @@ public abstract class AbstractFilteredReferenceAction extends Action {
 		}
 
 		final Image image = Activator.getImage(obj == null ? null : (URL) labelProviderImageResult);
-		String overlayString = "icons/link_overlay.png";
+		String overlayString = "icons/link_overlay.png"; //$NON-NLS-1$
 		if (eReference.isContainment()) {
-			overlayString = "icons/containment_overlay.png";
+			overlayString = "icons/containment_overlay.png"; //$NON-NLS-1$
 		}
 		final ImageDescriptor addOverlay = Activator.getImageDescriptor(overlayString);
 		final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, addOverlay,

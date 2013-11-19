@@ -112,7 +112,7 @@ public interface ViewModelContext {
 	<T> boolean hasService(Class<T> serviceType);
 
 	/**
-	 * Retrieve an {@link AbstractViewService} of type {@code serviceType}.
+	 * Retrieve an {@link ViewModelService} of type {@code serviceType}.
 	 * 
 	 * @param <T>
 	 *            the type of the desired service

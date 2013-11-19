@@ -2,10 +2,10 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.emf.ecp.ui.view.customNodeBuilders">
-      <builders
-            class="org.eclipse.emf.ecp.view.dynamictree.ui.DynamicContainmentTreeNodeBuilder">
-      </builders>
+         point="org.eclipse.emf.ecp.view.context.viewServices">
+      <viewService
+            class="org.eclipse.emf.ecp.view.dynamictree.ui.DynamicTreeModelService">
+      </viewService>
    </extension>
 
 </plugin>

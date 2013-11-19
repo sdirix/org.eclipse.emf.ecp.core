@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
+import org.eclipse.emf.ecp.view.categorization.model.provider.CategoryItemProvider;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
@@ -40,7 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class DynamicContainmentTreeItemProvider
-	extends org.eclipse.emf.ecp.view.categorization.model.provider.CategoryItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+	extends CategoryItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.

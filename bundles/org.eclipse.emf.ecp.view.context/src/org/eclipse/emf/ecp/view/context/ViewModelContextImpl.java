@@ -55,10 +55,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private EContentAdapter viewModelContentAdapter;
 
 	/** The view services. */
-	private final SortedSet<AbstractViewService> viewServices = new TreeSet<AbstractViewService>(
-		new Comparator<AbstractViewService>() {
+	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
+		new Comparator<ViewModelService>() {
 
-			public int compare(AbstractViewService arg0, AbstractViewService arg1) {
+			public int compare(ViewModelService arg0, ViewModelService arg1) {
 				return arg0.getPriority() - arg1.getPriority();
 			}
 		});
@@ -87,6 +87,22 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
+	 * Instantiates a new view model context impl.
+	 * 
+	 * @param view the view
+	 * @param domainObject the domain object
+	 */
+	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelService... modelServices) {
+		this.view = view;
+		this.domainObject = domainObject;
+
+		for (final ViewModelService vms : modelServices) {
+			viewServices.add(vms);
+		}
+		instantiate();
+	}
+
+	/**
 	 * Instantiate.
 	 */
 	private void instantiate() {
@@ -104,7 +120,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		readAbstractViewServices();
 
-		for (final AbstractViewService viewService : viewServices) {
+		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);
 		}
 	}
@@ -122,7 +138,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			"org.eclipse.emf.ecp.view.context.viewServices");
 		for (final IConfigurationElement e : controls) {
 			try {
-				final AbstractViewService viewService = (AbstractViewService) e.createExecutableExtension("class");
+				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class");
 				viewServices.add(viewService);
 			} catch (final CoreException e1) {
 				Activator.log(e1);
@@ -165,7 +181,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewModelChangeListener.clear();
 		domainModelChangeListener.clear();
 
-		for (final AbstractViewService viewService : viewServices) {
+		for (final ViewModelService viewService : viewServices) {
 			viewService.dispose();
 		}
 		viewServices.clear();
@@ -195,9 +211,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-		if (isDisposed) {
-			throw new IllegalStateException("The ViewModelContext was already disposed.");
-		}
+		// if (isDisposed) {
+		// throw new IllegalStateException("The ViewModelContext was already disposed.");
+		// }
 		viewModelChangeListener.remove(modelChangeListener);
 	}
 
@@ -222,9 +238,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-		if (isDisposed) {
-			throw new IllegalStateException("The ViewModelContext was already disposed.");
-		}
+		// if (isDisposed) {
+		// throw new IllegalStateException("The ViewModelContext was already disposed.");
+		// }
 		domainModelChangeListener.remove(modelChangeListener);
 	}
 
@@ -234,7 +250,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#hasService(java.lang.Class)
 	 */
 	public <T> boolean hasService(Class<T> serviceType) {
-		for (final AbstractViewService service : viewServices) {
+		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
 				return true;
 			}
@@ -249,13 +265,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
-		for (final AbstractViewService service : viewServices) {
+		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
 				return (T) service;
 			}
 		}
-
-		throw new RuntimeException("No view service of type " + serviceType.getCanonicalName() + " found");
+		Activator.log(new IllegalArgumentException("No view service of type " + serviceType.getCanonicalName()
+			+ " found"));
+		return null;
 	}
 
 	/**

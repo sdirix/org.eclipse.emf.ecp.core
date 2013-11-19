@@ -28,7 +28,8 @@ public class StringControl extends AbstractTextControl {
 	@Override
 	protected GridData getTextWidgetLayoutData() {
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		if (getItemPropertyDescriptor().isMultiLine(getModelElementContext().getModelElement())) {
+
+		if (getItemPropertyDescriptor(getFirstSetting()).isMultiLine(null)) {
 			gridData.heightHint = 200;
 		}
 		return gridData;
@@ -39,7 +40,7 @@ public class StringControl extends AbstractTextControl {
 	protected int getTextWidgetStyle() {
 		int textStyle = SWT.BORDER;
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		if (getItemPropertyDescriptor().isMultiLine(getModelElementContext().getModelElement())) {
+		if (getItemPropertyDescriptor(getFirstSetting()).isMultiLine(null)) {
 			textStyle = textStyle | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL;
 			gridData.heightHint = 200;
 		} else {
@@ -78,6 +79,6 @@ public class StringControl extends AbstractTextControl {
 	@Override
 	protected void customizeText(Text text) {
 		super.customizeText(text);
-		text.setMessage(getItemPropertyDescriptor().getDisplayName(null));
+		text.setMessage(getItemPropertyDescriptor(getFirstSetting()).getDisplayName(null));
 	}
 }
