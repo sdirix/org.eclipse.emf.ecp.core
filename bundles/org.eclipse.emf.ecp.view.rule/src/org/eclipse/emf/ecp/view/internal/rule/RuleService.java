@@ -258,8 +258,24 @@ public class RuleService extends AbstractViewService {
 			else {
 				updateMap = false;
 			}
+			final boolean isOposite = isDisableRule(rule) || isHideRule(rule);
+			if (result && !isOposite || isOposite && !result) {
+				if (ShowRule.class.isInstance(rule)) {
+					if (isOposite && result != renderable.isVisible()) {
+						continue;
+					} else if (!isOposite && result == renderable.isVisible()) {
+						continue;
+					}
+				} else if (EnableRule.class.isInstance(rule)) {
+					if (isOposite && result != renderable.isEnabled()) {
+						continue;
+					} else if (!isOposite && result == renderable.isEnabled()) {
+						continue;
+					}
+				}
+			}
 			if (updateMap) {
-				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
+				updateStateMap(map, renderable, isOposite, result);
 			}
 		}
 
