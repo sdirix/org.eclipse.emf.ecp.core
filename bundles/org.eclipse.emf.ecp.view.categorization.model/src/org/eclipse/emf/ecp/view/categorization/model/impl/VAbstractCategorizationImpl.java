@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.categorization.model.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,6 +62,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	protected VAbstractCategorizationImpl()
 	{
 		super();
+		addLocalDependencyToLabelAdapter(VViewPackage.Literals.ELEMENT__NAME);
 	}
 
 	/**
