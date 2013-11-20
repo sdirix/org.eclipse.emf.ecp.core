@@ -33,8 +33,8 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	// TODO this lot could be put into a subclass and put in a list to allow for
 	// multiple navigated dependencies
-	private EStructuralFeature dependantFeature = null;
-	private EStructuralFeature navigationFeature = null;
+	private EStructuralFeature dependantFeature;
+	private EStructuralFeature navigationFeature;
 
 	private final AdapterImpl dependantAdapter = new AdapterImpl() {
 

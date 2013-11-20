@@ -29,6 +29,8 @@ import org.eclipse.emf.ecp.view.model.VContainedElement;
  * @model
  * @generated
  */
+// TODO API
+@SuppressWarnings("restriction")
 public interface VCategory extends VAbstractCategorization
 {
 	/**

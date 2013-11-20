@@ -25,6 +25,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+/**
+ * Renderer for {@link VCategory VCategories}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 // TODO: api
 @SuppressWarnings("restriction")
 public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {

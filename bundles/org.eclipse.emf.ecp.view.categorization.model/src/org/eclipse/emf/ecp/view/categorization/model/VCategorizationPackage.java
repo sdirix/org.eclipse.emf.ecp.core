@@ -33,6 +33,8 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
+// TODO API
+@SuppressWarnings("restriction")
 public interface VCategorizationPackage extends EPackage
 {
 	/**

@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.categorization.model;
 
 import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.model.VElement;
 
@@ -32,6 +33,8 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * @model abstract="true"
  * @generated
  */
+// TODO API
+@SuppressWarnings("restriction")
 public interface VCategorizableElement extends VElement
 {
 
