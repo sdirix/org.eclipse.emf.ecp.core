@@ -16,32 +16,56 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.custom.TreeEditor;
 
+/**
+ * This {@link ECPAction} implementation is specific for a TreeViewer. The action will be initialized with the
+ * {@link TreeViewer}, the current {@link TreeEditor} and the current {@link TreeSelection}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public abstract class ECPTreeViewAction implements ECPAction {
 
 	private TreeViewer treeViewer;
 	private TreeSelection treeSelection;
 	private TreeEditor treeEditor;
 
-	public ECPTreeViewAction() {
-		super();
-
-	}
-
-	public void init(TreeViewer treeViewer,
+	/**
+	 * Initialize the tree action.
+	 * 
+	 * @param treeViewer the {@link TreeViewer} showing this action
+	 * @param treeSelection the current {@link TreeSelection}
+	 * @param treeEditor the current {@link TreeEditor}
+	 */
+	public final void init(TreeViewer treeViewer,
 		TreeSelection treeSelection, TreeEditor treeEditor) {
 		this.treeViewer = treeViewer;
 		this.treeSelection = treeSelection;
 		this.treeEditor = treeEditor;
 	}
 
+	/**
+	 * The {@link TreeViewer} showing this action.
+	 * 
+	 * @return the {@link TreeViewer}
+	 */
 	protected TreeViewer getTreeViewer() {
 		return treeViewer;
 	}
 
+	/**
+	 * Current {@link TreeSelection}.
+	 * 
+	 * @return the {@link TreeSelection}
+	 */
 	protected TreeSelection getTreeSelection() {
 		return treeSelection;
 	}
 
+	/**
+	 * Current {@link TreeEditor}.
+	 * 
+	 * @return the {@link TreeEditor}
+	 */
 	protected TreeEditor getTreeEditor() {
 		return treeEditor;
 	}

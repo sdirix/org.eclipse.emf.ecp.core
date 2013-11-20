@@ -12,11 +12,16 @@
 package org.eclipse.emf.ecp.view.categorization.model;
 
 /**
- * This interface defines an ECPAction. Concrete implementations of this class can be added as actions to the view model items. 
+ * This interface defines an ECPAction. Concrete implementations of this class can be added as actions to the view model
+ * items.
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public interface ECPAction {
 
-    void execute();
+	/**
+	 * Method which is called when the action is started.
+	 */
+	void execute();
 }

@@ -18,11 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
@@ -37,7 +35,6 @@ import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -495,41 +492,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			final Image resultImage = imageDescriptor.createImage();
 
 			return resultImage;
-		}
-
-	}
-
-	/**
-	 * Adapter implementation that refreshes a tree viewer if a diagnostic on a categorization changes.
-	 * 
-	 * @author jfaltermeier
-	 * 
-	 */
-	private class RefreshTreeViewerAdapter extends EContentAdapter {
-
-		private TreeViewer treeViewer;
-
-		public void setTreeViewer(TreeViewer treeViewer) {
-			this.treeViewer = treeViewer;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-		 */
-		@Override
-		public void notifyChanged(Notification msg) {
-			super.notifyChanged(msg);
-			if (treeViewer == null) {
-				return;
-			}
-			if (VAbstractCategorization.class.isInstance(msg.getNotifier())
-				&& VViewPackage.eINSTANCE.getElement_Diagnostic().equals(msg.getFeature())) {
-				if (msg.getEventType() == Notification.SET) {
-					treeViewer.refresh();
-				}
-			}
 		}
 
 	}
