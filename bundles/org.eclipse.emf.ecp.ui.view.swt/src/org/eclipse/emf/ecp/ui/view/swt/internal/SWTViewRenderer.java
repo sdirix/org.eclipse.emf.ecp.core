@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import java.util.List;
 
+import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
@@ -22,6 +24,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -66,8 +70,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		throws NoRendererFoundException {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
-
-		columnComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
+		// Gridlayout does not have an overflow as other Layouts might have.
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
 
 		node.addRenderingResultDelegator(withSWT(columnComposite));
 
@@ -90,6 +94,22 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		}
 
 		return createResult(columnComposite);
+	}
+
+	@Override
+	protected void setLayoutDataForResultRows(final List<RenderingResultRow<Control>> resultRows) {
+		for (final RenderingResultRow<Control> row : resultRows) {
+			if (SingleColumnRow.class.isInstance(row)) {
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+					.applyTo(((SingleColumnRow) row).getControl());
+			}
+			else if (DoubleColumnRow.class.isInstance(row)) {
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).grab(false, false)
+					.applyTo(((DoubleColumnRow) row).getLeftControl());
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false)
+					.applyTo(((DoubleColumnRow) row).getRightControl());
+			}
+		}
 	}
 
 }

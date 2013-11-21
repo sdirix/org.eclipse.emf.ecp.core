@@ -85,7 +85,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	/** The warning descriptor. */
 	private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png");
 
-
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -99,7 +98,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Composite parent = getParentFromInitData(initData);
 		final VCategorizationElement view = viewNode.getRenderable();
-		final TreeViewer treeViewer;
 
 		final RefreshTreeViewerAdapter adapter = new RefreshTreeViewerAdapter();
 		view.eAdapters().add(adapter);
@@ -119,7 +117,7 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			return resultRows;
 		} else {
 			final Composite composite = createComposite(parent);
-			treeViewer = new TreeViewer(composite);
+			final TreeViewer treeViewer = new TreeViewer(composite);
 			final ScrolledComposite editorComposite = createdEditorPane(composite);
 			setupTreeViewer(treeViewer, adapterFactoryItemDelegator, viewNode,
 				editorComposite);
