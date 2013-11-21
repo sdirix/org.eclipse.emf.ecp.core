@@ -220,29 +220,7 @@ public class RuleService extends AbstractViewService {
 
 			if (isDryRun) {
 
-				for (final Setting setting : possibleValues.keySet()) {
-					final EObject parent = setting.getEObject();
-					final EStructuralFeature feature = setting.getEStructuralFeature();
-					final EClass attributeClass = feature.getEContainingClass();
-					if (!attributeClass.isInstance(parent)) {
-						continue;
-					}
-					final Object actualValue = parent.eGet(feature);
-					final Object newValue = possibleValues.get(setting);
-					if (!feature.isMany()) {
-						if (newValue == null) {
-							hasChanged &= actualValue == null;
-						} else {
-							hasChanged &= !newValue.equals(actualValue);
-						}
-					}
-					else {
-						// EMF API
-						@SuppressWarnings("unchecked")
-						final List<Object> objects = (List<Object>) actualValue;
-						hasChanged &= !objects.contains(newValue);
-					}
-				}
+				hasChanged = checkDryRun(possibleValues);
 
 			}
 
@@ -259,27 +237,60 @@ public class RuleService extends AbstractViewService {
 				updateMap = false;
 			}
 			final boolean isOposite = isDisableRule(rule) || isHideRule(rule);
-			if (result && !isOposite || isOposite && !result) {
-				if (ShowRule.class.isInstance(rule)) {
-					if (isOposite && result != renderable.isVisible()) {
-						continue;
-					} else if (!isOposite && result == renderable.isVisible()) {
-						continue;
-					}
-				} else if (EnableRule.class.isInstance(rule)) {
-					if (isOposite && result != renderable.isEnabled()) {
-						continue;
-					} else if (!isOposite && result == renderable.isEnabled()) {
-						continue;
-					}
-				}
-			}
+			updateMap &= propagateChanges(result, isOposite, rule, renderable);
 			if (updateMap) {
 				updateStateMap(map, renderable, isOposite, result);
 			}
 		}
 
 		return map;
+	}
+
+	private static boolean propagateChanges(boolean result, boolean isOposite, Rule rule, VElement renderable) {
+		if (result && !isOposite || isOposite && !result) {
+			if (ShowRule.class.isInstance(rule)) {
+				if (isOposite && result != renderable.isVisible()) {
+					return false;
+				} else if (!isOposite && result == renderable.isVisible()) {
+					return false;
+				}
+			} else if (EnableRule.class.isInstance(rule)) {
+				if (isOposite && result != renderable.isEnabled()) {
+					return false;
+				} else if (!isOposite && result == renderable.isEnabled()) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private static boolean checkDryRun(Map<Setting, Object> possibleValues) {
+		boolean hasChanged = true;
+		for (final Setting setting : possibleValues.keySet()) {
+			final EObject parent = setting.getEObject();
+			final EStructuralFeature feature = setting.getEStructuralFeature();
+			final EClass attributeClass = feature.getEContainingClass();
+			if (!attributeClass.isInstance(parent)) {
+				continue;
+			}
+			final Object actualValue = parent.eGet(feature);
+			final Object newValue = possibleValues.get(setting);
+			if (!feature.isMany()) {
+				if (newValue == null) {
+					hasChanged &= actualValue == null;
+				} else {
+					hasChanged &= !newValue.equals(actualValue);
+				}
+			}
+			else {
+				// EMF API
+				@SuppressWarnings("unchecked")
+				final List<Object> objects = (List<Object>) actualValue;
+				hasChanged &= !objects.contains(newValue);
+			}
+		}
+		return hasChanged;
 	}
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
