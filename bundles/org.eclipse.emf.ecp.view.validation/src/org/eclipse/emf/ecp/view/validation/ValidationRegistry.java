@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
- * Edgar Mueller - added remove methods to avoid leaks
+ * Edgar Mueller - added remove methods to avoid leaks, removed subprocessors
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation;
 
@@ -20,10 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -33,7 +30,6 @@ import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
-import org.osgi.framework.Bundle;
 
 /**
  * This registry maps eObjects in a domain model to their corresponding renderables.
@@ -49,7 +45,6 @@ public class ValidationRegistry {
 	 * are part of the same hierarchy the child will have a lower index than the parent.
 	 */
 	private final Map<EObject, Set<VControl>> domainObjectToAffectedControls;
-	private final Map<Class<VElement>, ECPValidationSubProcessor> subProcessors;
 	private final Set<VElement> processedRenderables = new LinkedHashSet<VElement>();
 	private Map<VElement, Set<EObject>> controlToDomainMapping;
 
@@ -59,44 +54,10 @@ public class ValidationRegistry {
 	public ValidationRegistry() {
 		controlToDomainMapping = new LinkedHashMap<VElement, Set<EObject>>();
 		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<VControl>>();
-		subProcessors = new LinkedHashMap<Class<VElement>, ECPValidationSubProcessor>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
 			return;
 		}
-		final IConfigurationElement[] config = extensionRegistry.getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.view.validation.validationSubProcessor");
-		try {
-			for (final IConfigurationElement e : config) {
-				final ECPValidationSubProcessor o = (ECPValidationSubProcessor) e.createExecutableExtension("class");
-				// TODO move into subprocessor or use helper
-				final String associatedRenderable = e.getAttribute("associatedRenderable");
-
-				final Class<VElement> supportedClassType = loadClass(e.getContributor().getName(),
-					associatedRenderable);
-
-				subProcessors.put(supportedClassType, o);
-			}
-		} catch (final CoreException ex) {
-			Activator.logException(ex);
-		} catch (final InvalidRegistryObjectException ex) {
-			Activator.logException(ex);
-		} catch (final ClassNotFoundException ex) {
-			Activator.logException(ex);
-		}
-
-	}
-
-	@SuppressWarnings("unchecked")
-	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
-		final Bundle bundle = Platform.getBundle(bundleName);
-		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + "cannot be loaded"
-				+ bundleName
-				+ "cannot be resolved");
-		}
-		return (Class<T>) bundle.loadClass(clazz);
-
 	}
 
 	/**
@@ -118,13 +79,14 @@ public class ValidationRegistry {
 	 * Furthermore this method adds a default {@link org.eclipse.emf.ecp.view.model.VDiagnostic VDiagnostic} to each
 	 * {@link VElement} if it was not set before.
 	 * 3 cases are differentiated:
-	 * - there is a subprocessor for the {@link VElement}.
-	 * - the {@link VElement} is a {@link AbstractControl}.
-	 * - the renderable is searched for containment {@link VElement Renderables}, which are then passed recursively
+	 * <ul>
+	 * <li>the {@link VElement} is a {@link VControl}</li>
+	 * <li>the renderable is searched for containment {@link VElement VElement}s, which are then passed recursively</li>
+	 * </ul>
 	 * 
 	 * @param domainModel the {@link EObject} representing the root Domain Element
 	 * @param renderable the {@link VElement} to check
-	 * @return a Map of EObject to {@link AbstractControl AbstractControls}
+	 * @return a Map of EObject to {@link VControl VControls}
 	 */
 	public Map<EObject, Set<VControl>> getDomainToControlMapping(EObject domainModel, VElement renderable) {
 		processedRenderables.add(renderable);
@@ -132,12 +94,7 @@ public class ValidationRegistry {
 			renderable.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		}
 		final Map<EObject, Set<VControl>> result = new LinkedHashMap<EObject, Set<VControl>>();
-		final Class<?> renderableClass = renderable.getClass().getInterfaces()[0];
-		if (subProcessors.containsKey(renderableClass)) {
-			fillMap(subProcessors.get(renderableClass).processRenderable(
-				domainModel, renderable, this), result);
-		}
-		else if (VControl.class.isInstance(renderable)) {
+		if (VControl.class.isInstance(renderable)) {
 			final VControl control = (VControl) renderable;
 			final VDomainModelReference domainModelReference = control.getDomainModelReference();
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
@@ -149,13 +106,12 @@ public class ValidationRegistry {
 				}
 				result.get(referencedDomainModel).add(control);
 			}
-
-		}
-		else {
+		} else {
 			for (final EObject eObject : renderable.eContents()) {
-				if (VElement.class.isInstance(eObject)) {
-					fillMap(getDomainToControlMapping(domainModel, (VElement) eObject), result);
+				if (!VElement.class.isInstance(eObject)) {
+					continue;
 				}
+				fillMap(getDomainToControlMapping(domainModel, (VElement) eObject), result);
 			}
 		}
 
@@ -265,6 +221,17 @@ public class ValidationRegistry {
 	 */
 	public Set<VControl> getRenderablesForEObject(EObject model) {
 		if (!domainObjectToAffectedControls.containsKey(model)) {
+
+			final EObject parent = model.eContainer();
+
+			if (parent != null && domainObjectToAffectedControls.containsKey(parent)) {
+				final Set<VControl> set = domainObjectToAffectedControls.get(parent);
+				for (final VControl vControl : set) {
+					register(model, vControl);
+				}
+				return set;
+			}
+
 			return Collections.emptySet();
 		}
 		return domainObjectToAffectedControls.get(model);
