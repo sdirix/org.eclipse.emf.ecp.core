@@ -31,6 +31,13 @@
                supportedFeature="eMails">
          </staticTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub3"
+            id="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub3">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub3Tester">
+         </dynamicTest>
+      </control>
    </extension>
 
 </plugin>
