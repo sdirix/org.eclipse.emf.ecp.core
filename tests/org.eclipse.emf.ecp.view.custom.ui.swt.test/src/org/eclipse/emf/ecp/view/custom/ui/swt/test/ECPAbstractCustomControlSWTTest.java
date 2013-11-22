@@ -96,6 +96,7 @@ public class ECPAbstractCustomControlSWTTest {
 		private int lastValidationSeverity;
 		private EStructuralFeature lastValidationFeature;
 		private boolean disposed;
+		private Label label;
 		private Composite textControl;
 		private final boolean withControl;
 		private boolean validationReseted;
@@ -118,7 +119,7 @@ public class ECPAbstractCustomControlSWTTest {
 		public List<RenderingResultRow<Control>> createControl(Composite composite) {
 			final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
 
-			final Label label = new Label(composite, SWT.NONE);
+			label = new Label(composite, SWT.NONE);
 			label.setText(LABELTEXT);
 			setRendered(true);
 
@@ -291,6 +292,10 @@ public class ECPAbstractCustomControlSWTTest {
 		 */
 		public Composite getTextControl() {
 			return textControl;
+		}
+
+		public Label getLabel() {
+			return label;
 		}
 
 		/**
@@ -843,5 +848,15 @@ public class ECPAbstractCustomControlSWTTest {
 		controlModel.setDomainModelReference(domainModelReference);
 		final Control control = SWTViewTestHelper.render(controlModel, SWTViewTestHelper.createShell());
 		assertFalse(control.getEnabled());
+	}
+
+	@Test
+	public void testSetEditable() {
+		customControl.createControls(testComposite);
+		assertTrue(customControl.getLabel().isEnabled());
+		customControl.setEditable(false);
+		assertFalse(customControl.getLabel().isEnabled());
+		customControl.setEditable(true);
+		assertTrue(customControl.getLabel().isEnabled());
 	}
 }

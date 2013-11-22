@@ -173,11 +173,11 @@ public abstract class ECPAbstractCustomControlSWT extends
 
 		for (final RenderingResultRow<Control> row : renderingResult) {
 			if (SingleColumnRow.class.isInstance(row)) {
-				((SingleColumnRow) row).getControl().setEnabled(false);
+				((SingleColumnRow) row).getControl().setEnabled(isEditable);
 			}
 			else if (DoubleColumnRow.class.isInstance(row)) {
-				((DoubleColumnRow) row).getLeftControl().setEnabled(false);
-				((DoubleColumnRow) row).getRightControl().setEnabled(false);
+				((DoubleColumnRow) row).getLeftControl().setEnabled(isEditable);
+				((DoubleColumnRow) row).getRightControl().setEnabled(isEditable);
 
 			}
 		}
