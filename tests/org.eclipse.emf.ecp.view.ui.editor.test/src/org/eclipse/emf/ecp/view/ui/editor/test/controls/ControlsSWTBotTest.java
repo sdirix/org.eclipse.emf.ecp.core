@@ -116,7 +116,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 	@AfterClass
 	public static void afterClass() {
 		final double diff = Math.abs((memBefore - memAfter) / memBefore);
-		assertTrue(diff < 0.01);
+		assertTrue(diff < 0.05);
 	}
 
 	/**

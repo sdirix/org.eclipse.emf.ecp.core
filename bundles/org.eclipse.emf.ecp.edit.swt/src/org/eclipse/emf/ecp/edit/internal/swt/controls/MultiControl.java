@@ -440,6 +440,7 @@ public abstract class MultiControl extends SWTControl {
 		public void dispose() {
 			composite.dispose();
 			modelValue.dispose();
+			widget.dispose();
 			composite = null;
 			modelValue = null;
 			widget = null;
@@ -449,6 +450,7 @@ public abstract class MultiControl extends SWTControl {
 	private void updateIndicesAfterRemove(int indexRemoved) {
 		final WidgetWrapper wrapper = widgetWrappers.remove(widgetWrappers.size() - 1);
 		wrapper.composite.dispose();
+		wrapper.widget.dispose();
 	}
 
 	/**
