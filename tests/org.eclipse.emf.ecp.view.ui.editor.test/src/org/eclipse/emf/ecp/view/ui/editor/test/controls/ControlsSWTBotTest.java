@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Locale.Category;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -208,7 +207,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 			public void run() {
 				final SWTBotText text = bot.textWithLabel("Height");
 				text.setFocus();
-				final Locale locale = Locale.getDefault(Category.FORMAT);
+				final Locale locale = Locale.getDefault();
 				final NumberFormat formatter = NumberFormat.getInstance(locale);
 				text.setText(formatter.format(1.7d));
 				bot.label("Height").setFocus();
@@ -269,7 +268,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 			public void run() {
 				final SWTBotText text = bot.textWithLabel("Win Loss Ratio");
 				text.setFocus();
-				final Locale locale = Locale.getDefault(Category.FORMAT);
+				final Locale locale = Locale.getDefault();
 				final NumberFormat formatter = NumberFormat.getInstance(locale);
 				text.setText(formatter.format(new BigDecimal(0.9)));
 				bot.label("Win Loss Ratio").setFocus();
