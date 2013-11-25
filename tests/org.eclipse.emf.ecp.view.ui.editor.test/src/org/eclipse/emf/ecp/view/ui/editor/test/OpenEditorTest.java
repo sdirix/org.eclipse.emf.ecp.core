@@ -7,22 +7,17 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar Mueller - initial API and implementation
+ * jfaltermeier - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
@@ -35,19 +30,8 @@ import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swtbot.swt.finder.SWTBotTestCase;
-import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
-import org.eclipse.swtbot.swt.finder.results.Result;
-import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -57,77 +41,141 @@ import org.junit.runners.Parameterized.Parameters;
  * is garbage collectable.
  * 
  * @author emueller
+ * @author jfaltermeier
  * 
  */
 @RunWith(Parameterized.class)
-public class OpenEditorTest extends SWTBotTestCase {
+public class OpenEditorTest extends ECPCommonSWTBotTest {
 
-	private static Shell shell;
-	private static Display display;
-	private GCCollectable collectable;
-	private GCCollectable contextCollectable;
+	private static double memBefore;
+	private static double memAfter;
+	private static EObject domainObject;
+
+	private final boolean isDomainCollectable;
+
 	private GCCollectable viewCollectable;
-	private static GCCollectable domainCollectable;
+	private GCCollectable contextCollectable;
+	private GCCollectable domainCollectable;
 
-	private static Wrapper<Player> domainObjectWrapper;
-
-	private static double memBeforeFirstRender = -1;
-	private static double memBeforeRender;
-	private static double memAfterRender;
-
-	public OpenEditorTest(Object o) {
+	public OpenEditorTest(boolean isDomainCollectable) {
+		this.isDomainCollectable = isDomainCollectable;
 	}
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		final Object[][] data = new Object[100][1];
-		return Arrays.asList(data);
-	}
-
-	@BeforeClass
-	public static void beforeClass() {
-		display = Display.getDefault();
-		domainObjectWrapper = new Wrapper<Player>(createDomainObject());
-		domainCollectable = new GCCollectable(domainObjectWrapper.getObject());
+		final List<Object[]> data = new ArrayList<Object[]>();
+		for (int i = 0; i < 99; i++) {
+			data.add(new Boolean[] { false });
+		}
+		data.add(new Boolean[] { true });
+		return data;
 	}
 
 	@AfterClass
 	public static void afterClass() {
-		// check if domain object has no adapter left and remove strong coupling from thread
-		assertEquals(0, domainObjectWrapper.removeObject().eAdapters().size());
-
-		final double memoryGrowth = (memAfterRender - memBeforeFirstRender) / memBeforeFirstRender;
-		assertTrue("Memory growth bigger than 15%: " + memoryGrowth, memoryGrowth < 0.15);
-
-		assertTrue(domainCollectable.isCollectable());
+		final double diff = Math.abs((memBefore - memAfter) / memBefore);
+		assertTrue(diff < 0.05);
 	}
 
-	@Before
-	public void init() {
-		// display = Display.getDefault();
-
-		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
-
-			public Shell run() {
-				final Shell shell = new Shell(display);
-				shell.setLayout(new FillLayout());
-				return shell;
-			}
-		});
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#logic()
+	 */
+	@Override
+	public void logic() {
+		final SWTBotTree tree = bot.tree();
+		tree.getTreeItem("parent").getNode("foo").getNode("2").select();
 	}
 
-	private static Player createDomainObject() {
-		final Player player = BowlingFactory.eINSTANCE.createPlayer();
-		player.setName("Test");
+	@Override
+	public void assertions(double before, double after) {
+		OpenEditorTest.memBefore += before;
+		OpenEditorTest.memAfter += after;
+
+		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+			+ getViewNode().getControlContext().getModelElement().eAdapters().size()
+			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getViewNode()
+			.getControlContext().getModelElement().eAdapters().size() < 5);
+
+		assertTrue(getSWTViewCollectable().isCollectable());
+		setSWTViewCollectable(null);
+		setViewNode(null);
+		assertTrue(contextCollectable.isCollectable());
+		assertTrue(viewCollectable.isCollectable());
+		if (isDomainCollectable) {
+			assertTrue(domainCollectable.isCollectable());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createContext(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecp.view.model.VView)
+	 */
+	@Override
+	public ECPControlContext createContext(EObject domainObject, VView view) {
+		final ECPControlContext context = super.createContext(domainObject, view);
+		contextCollectable = new GCCollectable(context);
+		return context;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createDomainObject()
+	 */
+	@Override
+	public EObject createDomainObject() {
+		Player player = (Player) domainObject;
+
+		if (isDomainCollectable) {
+			// remove reference to domain object, since gc will be tested
+			domainObject = null;
+		}
+
+		if (player == null) {
+			player = BowlingFactory.eINSTANCE.createPlayer();
+			player.setName("Test");
+			memBefore = 0d;
+			memAfter = 0d;
+		}
+
+		if (!isDomainCollectable) {
+			domainObject = player;
+		}
+
+		domainCollectable = new GCCollectable(player);
 		return player;
 	}
 
-	@Test
-	public void testViewWithControls() throws ECPRendererException,
-		InterruptedException {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createView()
+	 */
+	@Override
+	public VView createView() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
 
-		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
+		final VControl nameControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_Name());
+		final VControl genderControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_Gender());
+		final VControl heightControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_Height());
+		final VControl victoriesControl = createControl(BowlingPackage.eINSTANCE
+			.getPlayer_NumberOfVictories());
+
+		view.getChildren().add(
+			createCategorizations(nameControl, genderControl, heightControl,
+				victoriesControl));
+
+		viewCollectable = new GCCollectable(view);
+
+		return view;
 	}
 
 	private VControl createControl(EStructuralFeature feature) {
@@ -178,110 +226,6 @@ public class OpenEditorTest extends SWTBotTestCase {
 		parentCategorization.getCategorizations().add(barCategorization);
 		categorizationElement.getCategorizations().add(parentCategorization);
 		return categorizationElement;
-	}
-
-	private VView createView() {
-		final VView view = VViewFactory.eINSTANCE.createView();
-		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
-
-		final VControl nameControl = createControl(BowlingPackage.eINSTANCE
-			.getPlayer_Name());
-		final VControl genderControl = createControl(BowlingPackage.eINSTANCE
-			.getPlayer_Gender());
-		final VControl heightControl = createControl(BowlingPackage.eINSTANCE
-			.getPlayer_Height());
-		final VControl victoriesControl = createControl(BowlingPackage.eINSTANCE
-			.getPlayer_NumberOfVictories());
-
-		view.getChildren().add(
-			createCategorizations(nameControl, genderControl, heightControl,
-				victoriesControl));
-
-		return view;
-	}
-
-	private double usedMemory() {
-		return 0d + Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-	}
-
-	private class TestRunnable implements Runnable {
-
-		public void run() {
-			final Wrapper<ECPSWTView> viewWrapper = new Wrapper<ECPSWTView>(
-				UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
-					public ECPSWTView run() {
-						try {
-
-							if (memBeforeFirstRender == -1) {
-								memBeforeFirstRender = usedMemory();
-							}
-							memBeforeRender = usedMemory();
-
-							final VView view = createView();
-							collectable = new GCCollectable(view);
-
-							final ECPControlContext context = new DefaultControlContext(domainObjectWrapper
-								.getObject(), view);
-							contextCollectable = new GCCollectable(context);
-							final ECPSWTView renderedView = ECPSWTViewRendererImpl.render(shell, context, view);
-							viewCollectable = new GCCollectable(renderedView);
-							shell.open();
-							return renderedView;
-						} catch (final NoRendererFoundException e) {
-							fail(e.getMessage());
-						} catch (final NoPropertyDescriptorFoundExeption e) {
-							fail(e.getMessage());
-						} catch (final ECPRendererException ex) {
-							fail(ex.getMessage());
-						}
-						return null;
-					}
-				}));
-
-			final SWTBotTree tree = bot.tree();
-			tree.getTreeItem("parent").getNode("foo").getNode("2").select();
-
-			UIThreadRunnable.syncExec(new VoidResult() {
-				public void run() {
-					viewWrapper.removeObject().dispose();
-					memAfterRender = usedMemory();
-					shell.close();
-					shell.dispose();
-				}
-			});
-
-			assertTrue(viewCollectable.isCollectable());
-			assertTrue(contextCollectable.isCollectable());
-			assertTrue(collectable.isCollectable());
-			final double memoryGrowth = (memAfterRender - memBeforeRender) / memBeforeRender;
-			assertTrue("Memory growth bigger than 15%: " + memoryGrowth, memoryGrowth < 0.15);
-		}
-	}
-
-	/**
-	 * Wrapper class for avoiding strong references on objects from this thread which would prevent garbage collection.
-	 * 
-	 * @author jfaltermeier
-	 * 
-	 * @param <T> The type of the object to be wrapped.
-	 */
-	public static class Wrapper<T> {
-
-		private T object;
-
-		public Wrapper(T object) {
-			this.object = object;
-		}
-
-		public T getObject() {
-			return object;
-		}
-
-		public T removeObject() {
-			final T result = object;
-			object = null;
-			return result;
-		}
 	}
 
 }
