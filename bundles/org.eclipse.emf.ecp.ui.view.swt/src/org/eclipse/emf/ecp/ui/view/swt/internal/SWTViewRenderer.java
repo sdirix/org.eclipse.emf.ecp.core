@@ -100,7 +100,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	protected void setLayoutDataForResultRows(final List<RenderingResultRow<Control>> resultRows) {
 		for (final RenderingResultRow<Control> row : resultRows) {
 			if (SingleColumnRow.class.isInstance(row)) {
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).span(2, 1)
 					.applyTo(((SingleColumnRow) row).getControl());
 			}
 			else if (DoubleColumnRow.class.isInstance(row)) {
