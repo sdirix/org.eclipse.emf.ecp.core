@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
+import org.eclipse.emf.ecp.view.ui.editor.test.controls.ControlsSWTBotTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -22,7 +23,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	OpenEditorTest.class,
 	// ModifyNavigatorTest.class,
-	DynamicContainmentTreeSWTBotTest.class
+	DynamicContainmentTreeSWTBotTest.class,
+	ControlsSWTBotTest.class
 })
 public class AllUITests {
 

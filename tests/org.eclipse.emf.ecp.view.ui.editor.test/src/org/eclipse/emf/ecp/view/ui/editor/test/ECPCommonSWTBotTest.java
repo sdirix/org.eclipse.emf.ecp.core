@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewImpl;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -54,6 +55,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	private Display display;
 
 	private Node<VView> viewNode;
+	private GCCollectable swtViewCollectable;
 
 	@Override
 	@Before
@@ -80,6 +82,12 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 
 	public abstract void logic();
 
+	/**
+	 * Can be overridden to add assertions at end of execution.
+	 */
+	public void assertions(double memBefore, double memAfter) {
+	}
+
 	public ECPControlContext createContext(EObject domainObject, VView view) {
 		return new DefaultControlContext(domainObject, view);
 	}
@@ -88,29 +96,44 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 		return viewNode;
 	}
 
+	public void setViewNode(Node<VView> node) {
+		viewNode = node;
+	}
+
+	public GCCollectable getSWTViewCollectable() {
+		return swtViewCollectable;
+	}
+
+	public void setSWTViewCollectable(GCCollectable gcc) {
+		swtViewCollectable = gcc;
+	}
+
 	private class TestRunnable implements Runnable {
+
+		private double memBefore;
+		private double memAfter;
 
 		public void run() {
 			final List<ECPSWTView> holdingList = new ArrayList<ECPSWTView>();
 			try {
 				holdingList.add(UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
+
 					public ECPSWTView run() {
 						try {
-							final VView view = createView();
 							final EObject domainObject = createDomainObject();
-							final ECPControlContext context = createContext(domainObject, view);
-
+							final VView view = createView();
 							final ModelRenderer<?> renderer = ModelRenderer.INSTANCE.getRenderer();
-
+							final ViewModelContext viewContext = new ViewModelContextImpl(view, domainObject);
+							final ECPControlContext context = createContext(domainObject, view);
 							viewNode = NodeBuilders.INSTANCE.build(view, context);
-							final ViewModelContext viewContext = new ViewModelContextImpl(view, context
-								.getModelElement());
 							viewContext.registerViewChangeListener(getViewNode());
 							final RendererContext<?> rendererContext = renderer.render(getViewNode(), shell);
+							memBefore = usedMemory();
 							final Composite composite = (Composite) rendererContext.getControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 							composite.setLayoutData(gridData);
 							final ECPSWTViewImpl swtView = new ECPSWTViewImpl(composite, rendererContext, viewContext);
+							swtViewCollectable = new GCCollectable(swtView);
 							shell.open();
 							return swtView;
 						} catch (final NoRendererFoundException e) {
@@ -121,7 +144,6 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 						return null;
 					}
 				}));
-
 				logic();
 			} finally {
 				UIThreadRunnable.syncExec(new VoidResult() {
@@ -131,10 +153,18 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 							holdingList.remove(0).dispose();
 						}
 						shell.dispose();
+						memAfter = usedMemory();
 					}
 				});
+				assertions(memBefore, memAfter);
 			}
 		}
+
+	}
+
+	public double usedMemory() {
+		Runtime.getRuntime().gc();
+		return 0d + Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 	}
 
 }
