@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.custom.model.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
@@ -119,6 +120,15 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getHardcodedDomainModelReference_DomainModelReferences() {
+		return (EReference)hardcodedDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public VCustomFactory getCustomFactory() {
 		return (VCustomFactory)getEFactoryInstance();
 	}
@@ -144,6 +154,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		// Create classes and their features
 		hardcodedDomainModelReferenceEClass = createEClass(HARDCODED_DOMAIN_MODEL_REFERENCE);
 		createEAttribute(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
+		createEReference(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
 	}
 
 	/**
@@ -182,6 +193,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(hardcodedDomainModelReferenceEClass, VHardcodedDomainModelReference.class, "HardcodedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getHardcodedDomainModelReference_ControlId(), ecorePackage.getEString(), "controlId", null, 1, 1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getHardcodedDomainModelReference_DomainModelReferences(), theViewPackage.getDomainModelReference(), null, "domainModelReferences", null, 0, -1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

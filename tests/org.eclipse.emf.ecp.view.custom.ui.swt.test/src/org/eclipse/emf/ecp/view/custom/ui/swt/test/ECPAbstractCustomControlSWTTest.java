@@ -106,7 +106,7 @@ public class ECPAbstractCustomControlSWTTest {
 		}
 
 		public ECPAbstractCustomControlSWTStub(boolean withControl) {
-			super(createFeatures());
+			super();
 			this.withControl = withControl;
 		}
 
@@ -317,6 +317,15 @@ public class ECPAbstractCustomControlSWTTest {
 		 */
 		public void setValidationReseted(boolean validationReseted) {
 			this.validationReseted = validationReseted;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+		 */
+		public Set<VDomainModelReference> getNeededDomainModelReferences() {
+			return createFeatures();
 		}
 
 	}

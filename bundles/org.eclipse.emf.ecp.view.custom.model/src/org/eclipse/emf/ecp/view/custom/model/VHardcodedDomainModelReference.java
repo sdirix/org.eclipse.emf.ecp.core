@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.model;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 
 /**
@@ -22,6 +23,7 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,5 +57,21 @@ public interface VHardcodedDomainModelReference extends VDomainModelReference {
 	 * @generated
 	 */
 	void setControlId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Domain Model References</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Domain Model References</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Domain Model References</em>' containment reference list.
+	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#getHardcodedDomainModelReference_DomainModelReferences()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<VDomainModelReference> getDomainModelReferences();
 
 } // VHardcodedDomainModelReference

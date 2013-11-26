@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.custom.model;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
@@ -84,13 +85,22 @@ public interface VCustomPackage extends EPackage {
 	int HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Hardcoded Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
@@ -112,6 +122,17 @@ public interface VCustomPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getHardcodedDomainModelReference_ControlId();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Domain Model References</em>'.
+	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences()
+	 * @see #getHardcodedDomainModelReference()
+	 * @generated
+	 */
+	EReference getHardcodedDomainModelReference_DomainModelReferences();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -152,6 +173,14 @@ public interface VCustomPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = eINSTANCE.getHardcodedDomainModelReference_ControlId();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model References</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = eINSTANCE.getHardcodedDomainModelReference_DomainModelReferences();
 
 	}
 

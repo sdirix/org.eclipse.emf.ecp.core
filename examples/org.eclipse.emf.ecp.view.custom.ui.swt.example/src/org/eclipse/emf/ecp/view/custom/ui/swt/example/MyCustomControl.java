@@ -23,21 +23,26 @@ import com.eclipsesource.makeithappen.model.task.TaskPackage;
 @SuppressWarnings("restriction")
 public class MyCustomControl extends ECPAbstractCustomControlSWT {
 
-	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-	private static VFeaturePathDomainModelReference lastNameFeature;
-	private static VFeaturePathDomainModelReference genderFeature;
-	static {
-		lastNameFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		lastNameFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_LastName());
-		features.add(lastNameFeature);
+	private Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
+	private VFeaturePathDomainModelReference lastNameFeature;
+	private VFeaturePathDomainModelReference genderFeature;
 
-		genderFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		genderFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_Gender());
-		features.add(genderFeature);
-	}
 
+	
 	public MyCustomControl() {
-		super(features);
+		super();
+	}
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		if(features.isEmpty()){
+			lastNameFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+			lastNameFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_LastName());
+			features.add(lastNameFeature);
+
+			genderFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+			genderFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_Gender());
+			features.add(genderFeature);
+		}
+		return features;
 	}
 
 	@Override
@@ -74,5 +79,7 @@ public class MyCustomControl extends ECPAbstractCustomControlSWT {
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }

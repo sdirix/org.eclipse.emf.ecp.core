@@ -43,32 +43,41 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT {
 	private static VFeaturePathDomainModelReference playersReference;
 	private static VFeaturePathDomainModelReference nameReference;
 	private static VFeaturePathDomainModelReference dateReference;
-	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-	static {
-		playersReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		playersReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
-
-		nameReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		nameReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
-		nameReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
-
-		dateReference = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		dateReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth());
-		dateReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
-
-		features.add(playersReference);
-		features.add(nameReference);
-		features.add(dateReference);
-	}
+	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	public static final String CHANGE_NOTICED = "CHANGE!";
 
 	private Label label;
 
 	public CustomControlStub3() {
-		super(features);
+		super();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 */
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		if (features.isEmpty()) {
+			playersReference = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
+			playersReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+
+			nameReference = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
+			nameReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+			nameReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
+
+			dateReference = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+			dateReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth());
+			dateReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
+
+			features.add(playersReference);
+			features.add(nameReference);
+			features.add(dateReference);
+		}
+		return features;
 	}
 
 	/**

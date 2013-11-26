@@ -23,13 +23,11 @@ public class ExampleCustomControl extends ECPAbstractCustomControlSWT {
 	private static VFeaturePathDomainModelReference nameFeature;
 	private static VFeaturePathDomainModelReference eMailFeature;
 
-	private static Set<VDomainModelReference> references=createReferences();
 	public ExampleCustomControl() {
-		super(references);
+		super();
 	}
 
-	
-	private static Set<VDomainModelReference> createReferences(){
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		Set<VDomainModelReference> result=new LinkedHashSet<VDomainModelReference>();
 		nameFeature=VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		nameFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
@@ -80,5 +78,8 @@ public class ExampleCustomControl extends ECPAbstractCustomControlSWT {
 		// TODO Auto-generated method stub
 
 	}
+
+
+	
 
 }

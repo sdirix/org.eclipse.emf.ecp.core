@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.ui.view.custom;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
@@ -47,8 +48,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 public abstract class ECPAbstractCustomControl extends ECPAbstractControl implements ECPHardcodedReferences {
 
 	private final CustomControlHelper helper = new CustomControlHelper();
-
-	private final Set<VDomainModelReference> features;
 
 	private final ECPControlFactory controlFactory;
 	/**
@@ -65,13 +64,14 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 * @param features the features which can be used in this {@link ECPAbstractCustomControl}. If the Set is null, an
 	 *            empty set is used instead.
 	 */
-	public ECPAbstractCustomControl(Set<VDomainModelReference> features) {
+	public ECPAbstractCustomControl() {
 		super();
-		if (features == null) {
-			features = new LinkedHashSet<VDomainModelReference>();
-		}
-		this.features = features;
 		controlFactory = Activator.getECPControlFactory();
+	}
+
+	protected final List<VDomainModelReference> getResolvedDomainModelReferences() {
+		final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) getDomainModelReference();
+		return hardcodedDomainModelReference.getDomainModelReferences();
 	}
 
 	/**
@@ -240,13 +240,6 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	 */
 	protected final IItemPropertyDescriptor getItemPropertyDescriptor(VDomainModelReference domainModelReference) {
 		return getItemPropertyDescriptor(getSetting(domainModelReference));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Set<VDomainModelReference> getNeededDomainModelReferences() {
-		return features;
 	}
 
 	private String getHelp(VDomainModelReference domainModelReference) {

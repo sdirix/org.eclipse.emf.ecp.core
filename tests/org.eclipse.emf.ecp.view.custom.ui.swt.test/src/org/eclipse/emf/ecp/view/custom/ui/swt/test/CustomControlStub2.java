@@ -39,17 +39,27 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT {
 	private static Label label;
 	private static Composite parent;
 
-	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-	static {
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
-		features.add(domainModelReference);
-	}
+	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	public CustomControlStub2() {
-		super(features);
+		super();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 */
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		if (features.isEmpty()) {
+			final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
+			domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+			domainModelReference.getDomainModelEReferencePath().add(
+				BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+			features.add(domainModelReference);
+		}
+		return features;
 	}
 
 	/**

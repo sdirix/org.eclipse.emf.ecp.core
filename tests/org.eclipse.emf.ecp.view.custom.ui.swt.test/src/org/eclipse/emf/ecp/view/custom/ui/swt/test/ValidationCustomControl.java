@@ -34,21 +34,13 @@ import org.eclipse.swt.widgets.Control;
  */
 public class ValidationCustomControl extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 
-	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-
-	static {
-
-		final VFeaturePathDomainModelReference feature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		feature.setDomainModelEFeature(
-			BowlingPackage.eINSTANCE.getPlayer_EMails());
-		features.add(feature);
-	}
+	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	/**
 	 * @param features
 	 */
 	public ValidationCustomControl() {
-		super(features);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -99,6 +91,19 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	protected void disposeCustomControl() {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 */
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		final VFeaturePathDomainModelReference feature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		feature.setDomainModelEFeature(
+			BowlingPackage.eINSTANCE.getPlayer_EMails());
+		features.add(feature);
+		return features;
 	}
 
 }

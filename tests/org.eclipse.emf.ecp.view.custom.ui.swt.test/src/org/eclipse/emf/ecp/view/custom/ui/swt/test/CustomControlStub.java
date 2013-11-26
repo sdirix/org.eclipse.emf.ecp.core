@@ -12,12 +12,15 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -34,7 +37,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	private static Composite parent;
 
 	public CustomControlStub() {
-		super(null);
+		super();
 	}
 
 	/**
@@ -115,6 +118,16 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	 */
 	public static void setParent(Composite parent) {
 		CustomControlStub.parent = parent;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 */
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		// TODO Auto-generated method stub
+		return Collections.emptySet();
 	}
 
 }

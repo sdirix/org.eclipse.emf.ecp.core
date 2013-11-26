@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.ui.view.custom.swt;
 
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -68,16 +67,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * Constant for a help image.
 	 */
 	public static final int HELP_IMAGE = 3;
-
-	/**
-	 * Extend this class for an SWT implementation of the {@link ECPAbstractCustomControl}.
-	 * 
-	 * @param features the features which will be used in this Control.
-	 */
-	public ECPAbstractCustomControlSWT(
-		Set<VDomainModelReference> features) {
-		super(features);
-	}
 
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
 	private Label validationLabel;
