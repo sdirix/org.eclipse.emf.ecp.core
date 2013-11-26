@@ -15,18 +15,22 @@ package org.eclipse.emf.ecp.ui.view.swt.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
@@ -38,41 +42,110 @@ import org.eclipse.swt.widgets.Layout;
  * 
  * @param <R> the actual type of the {@link VElement} to be drawn
  */
-public abstract class AbstractSWTRenderer<R extends VElement> implements SWTRenderer<R> {
+public abstract class AbstractSWTRenderer<R extends VElement> {
 
-	protected org.eclipse.swt.widgets.Composite getParentFromInitData(Object[] initData) {
-		return (Composite) initData[0];
-	}
+	/**
+	 * Variant constant for indicating RAP controls.
+	 */
+	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 
-	public RenderingResultDelegator withSWT(Control control) {
-		return new SWTRenderingResultDelegator(control);
-	}
-
-	public RenderingResultDelegator withSWTControls(ECPControl swtControl, VElement model, Control... controls) {
-		return new SWTRenderingResultDelegatorWithControl(controls, swtControl, model);
-	}
-
-	public List<RenderingResultRow<Control>> render(Node<R> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData)
+	/**
+	 * Renders the passed {@link VElement}.
+	 * 
+	 * @param parent the {@link Composite} to render on
+	 * @param vElement the {@link VElement} to render
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @return a list of {@link RenderingResultRow}
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	public final List<RenderingResultRow<Control>> render(Composite parent, final R vElement,
+		final ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final List<RenderingResultRow<Control>> renderingRows = renderSWT(node, adapterFactoryItemDelegator,
-			initData);
+		final List<RenderingResultRow<Control>> result = renderModel(parent, vElement, viewContext);
+		if (result == null) {
+			return null;
+		}
+		final ModelChangeListener listener = new ModelChangeListener() {
 
-		// if (!node.isVisible()) {
-		// node.show(false);
-		// }
-		//
-		// if (!node.isEnabled()) {
-		// node.enable(false);
-		// }
+			public void notifyRemove(Notifier notifier) {
+				// TODO Auto-generated method stub
 
-		return renderingRows;
+			}
+
+			public void notifyChange(ModelChangeNotification notification) {
+				if (notification.getNotifier() != vElement) {
+					return;
+				}
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
+					applyEnable(vElement, result);
+				}
+			}
+
+			public void notifyAdd(Notifier notifier) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+		viewContext.registerViewChangeListener(listener);
+		parent.addDisposeListener(new DisposeListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			public void widgetDisposed(DisposeEvent e) {
+				viewContext.unregisterViewChangeListener(listener);
+			}
+		});
+		applyEnable(vElement, result);
+		applyVisible(vElement, result);
+		applyReadOnly(vElement, result);
+
+		return result;
 	}
 
-	protected abstract List<RenderingResultRow<Control>> renderSWT(Node<R> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
+	private static void applyReadOnly(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
+		for (final RenderingResultRow<Control> row : resultRows) {
+			for (final Control control : row.getControls()) {
+				control.setEnabled(!vElement.isReadonly());
+			}
+		}
+	}
+
+	private static void applyEnable(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
+		for (final RenderingResultRow<Control> row : resultRows) {
+			for (final Control control : row.getControls()) {
+				control.setEnabled(vElement.isEnabled());
+			}
+		}
+	}
+
+	private static void applyVisible(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
+		for (final RenderingResultRow<Control> row : resultRows) {
+			for (final Control control : row.getControls()) {
+				final Object layoutData = control.getLayoutData();
+				if (GridData.class.isInstance(layoutData)) {
+					final GridData gridData = (GridData) layoutData;
+					if (gridData != null) {
+						gridData.exclude = false;
+					}
+				}
+				control.setVisible(vElement.isVisible());
+			}
+		}
+	}
+
+	/**
+	 * Renders the passed {@link VElement}.
+	 * 
+	 * @param parent the {@link Composite} to render on
+	 * @param vElement the {@link VElement} to render
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @return a list of {@link RenderingResultRow}
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	protected abstract List<RenderingResultRow<Control>> renderModel(Composite parent, R vElement,
+		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 
 	/**
 	 * @param resultRows
@@ -106,4 +179,5 @@ public abstract class AbstractSWTRenderer<R extends VElement> implements SWTRend
 	protected LayoutHelper<Layout> getLayoutHelper() {
 		return SWTRenderingHelper.INSTANCE.getLayoutHelper();
 	}
+
 }

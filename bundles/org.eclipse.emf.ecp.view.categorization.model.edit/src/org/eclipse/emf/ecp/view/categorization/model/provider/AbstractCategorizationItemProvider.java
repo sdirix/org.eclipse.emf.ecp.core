@@ -13,14 +13,12 @@ package org.eclipse.emf.ecp.view.categorization.model.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
-import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -38,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class AbstractCategorizationItemProvider
-	extends ElementItemProvider
+	extends CategorizableElementItemProvider
 	implements
 	IEditingDomainItemProvider,
 	IStructuredItemContentProvider,

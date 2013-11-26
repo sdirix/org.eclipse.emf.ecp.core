@@ -17,7 +17,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
@@ -47,9 +51,15 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class OpenEditorTest extends ECPCommonSWTBotTest {
 
-	private static double memBefore;
+private static double memBefore;
 	private static double memAfter;
 	private static EObject domainObject;
+	private static Shell shell;
+	private static Display display;
+	private GCCollectable collectable;
+	// private GCCollectable contextCollectable;
+	private GCCollectable viewCollectable;
+	private static GCCollectable domainCollectable;
 
 	private final boolean isDomainCollectable;
 

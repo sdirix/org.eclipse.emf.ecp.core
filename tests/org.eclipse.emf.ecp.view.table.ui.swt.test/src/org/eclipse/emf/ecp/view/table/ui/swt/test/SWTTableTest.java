@@ -28,8 +28,9 @@ import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
-import org.eclipse.emf.ecp.view.table.ui.test.TableControlHandle;
-import org.eclipse.emf.ecp.view.table.ui.test.TableControlTest;
+import org.eclipse.emf.ecp.view.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.swt.widgets.Composite;
@@ -60,9 +61,9 @@ public class SWTTableTest {
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
-		final TableControlHandle handle = TableControlTest.createUninitializedTableWithoutColumns();
+		final TableControlHandle handle = createUninitializedTableWithoutColumns();
 		final VDomainModelReference domainModelReference = handle.getTableControl().getDomainModelReference();
-		domainModelReference.resolve(domainElement);
+		//
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertNull(render);
 
@@ -75,7 +76,7 @@ public class SWTTableTest {
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		domainElement = createEClass;
-		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
@@ -93,7 +94,7 @@ public class SWTTableTest {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
 		domainElement = view;
-		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
@@ -115,7 +116,7 @@ public class SWTTableTest {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
-		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
@@ -132,7 +133,7 @@ public class SWTTableTest {
 	@Test
 	public void testTableWithoutColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		// setup model
-		final TableControlHandle handle = TableControlTest.createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
@@ -146,7 +147,7 @@ public class SWTTableTest {
 	@Test
 	public void testTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		// setup model
-		final TableControlHandle handle = TableControlTest.createTableWithTwoTableColumns();
+		final TableControlHandle handle = createTableWithTwoTableColumns();
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 
@@ -164,6 +165,48 @@ public class SWTTableTest {
 		composite = (Composite) composite.getChildren()[0];
 		composite = (Composite) composite.getChildren()[0];
 		return composite.getChildren()[0];
+	}
+
+	private static TableControlHandle createTableWithTwoTableColumns() {
+		final TableControlHandle tableControlHandle = createInitializedTableWithoutTableColumns();
+		final VTableColumn tableColumn1 = createTableColumn();
+		tableColumn1.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
+		tableControlHandle.addFirstTableColumn(tableColumn1);
+		final VTableColumn tableColumn2 = createTableColumn();
+		tableColumn2.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
+		tableControlHandle.addSecondTableColumn(tableColumn2);
+		return tableControlHandle;
+	}
+
+	/**
+	 * @return
+	 */
+	private static VTableColumn createTableColumn() {
+		return VTableFactory.eINSTANCE.createTableColumn();
+	}
+
+	public static TableControlHandle createInitializedTableWithoutTableColumns() {
+		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
+		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
+
+		return tableControlHandle;
+	}
+
+	public static TableControlHandle createUninitializedTableWithoutColumns() {
+		final VTableControl tableControl = createTableControl();
+		return new TableControlHandle(tableControl);
+	}
+
+	/**
+	 * @return
+	 */
+	private static VTableControl createTableControl() {
+		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
+		tc.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
+		return tc;
 	}
 
 }

@@ -7,23 +7,139 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Jonas - initial API and implementation
- ******************************************************************************/
+ * Jonas
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.view.vertical.ui.swt.test;
 
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
-import org.eclipse.emf.ecp.view.vertical.ui.test.AbstractVerticalTest;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-/**
- * @author Jonas
- * 
- */
-public class SWTVerticalTest extends AbstractSWTVerticalTest {
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
+import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-	@BeforeClass
-	public static void classInit() {
-		AbstractVerticalTest.setVerticalClass(VVerticalPackage.eINSTANCE.getVerticalLayout());
+@SuppressWarnings("restriction")
+@RunWith(DatabindingClassRunner.class)
+public class SWTVerticalTest {
+
+	private Shell shell;
+	private EObject domainElement;
+
+	@Before
+	public void init() {
+		shell = SWTViewTestHelper.createShell();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
+		eClass.setInstanceClassName("Test");
+		domainElement = eClass;
 	}
 
+	@Test
+	public void testVerticalWithoutChildren() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		// setup model
+		final HierarchyViewModelHandle handle = createVerticalWithoutChildren();
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		final Composite composite = (Composite) render;
+		assertEquals(0, composite.getChildren().length);
+	}
+
+	@Test
+	public void testVerticalWithTwoControlsAsChildren() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		// setup model
+		final HierarchyViewModelHandle handle = createVerticalWithTwoControlsAsChildren();
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		final Composite composite = (Composite) render;
+		assertEquals(4, composite.getChildren().length);
+		assertEquals(2, SWTViewTestHelper.getNumberofColumns(composite));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(composite.getChildren()[1]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(composite.getChildren()[3]));
+	}
+
+	@Test
+	public void testVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		// setup model
+		final HierarchyViewModelHandle handle =
+			createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		final Composite composite = (Composite) render;
+		assertEquals(2, composite.getChildren().length);
+		final Composite firstVertical = (Composite) composite.getChildren()[0];
+		final Composite secondVertical = (Composite) composite.getChildren()[1];
+
+		assertEquals(2, SWTViewTestHelper.getHorizontalSpan(firstVertical));
+		assertEquals(2, SWTViewTestHelper.getHorizontalSpan(secondVertical));
+
+		assertEquals(4, firstVertical.getChildren().length);
+		assertEquals(4, secondVertical.getChildren().length);
+		assertEquals(2, SWTViewTestHelper.getNumberofColumns(firstVertical));
+		assertEquals(2, SWTViewTestHelper.getNumberofColumns(secondVertical));
+
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[1]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[1]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[3]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[3]));
+	}
+
+	private static HierarchyViewModelHandle createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() {
+		final HierarchyViewModelHandle verticalHandle = createVerticalWithoutChildren();
+		verticalHandle.addFirstChildToRoot(createVertical());
+		verticalHandle.addSecondChildToRoot(createVertical());
+		verticalHandle.addFirstChildToFirstChild(createControl());
+		verticalHandle.addSecondChildToFirstChild(createControl());
+		verticalHandle.addFirstChildToSecondChild(createControl());
+		verticalHandle.addSecondChildToSecondChild(createControl());
+		return verticalHandle;
+	}
+
+	private static HierarchyViewModelHandle createVerticalWithTwoControlsAsChildren() {
+		final HierarchyViewModelHandle verticalHandle = createVerticalWithoutChildren();
+		final VControl control1 = createControl();
+		verticalHandle.addFirstChildToRoot(control1);
+		final VControl control2 = createControl();
+		verticalHandle.addSecondChildToRoot(control2);
+		return verticalHandle;
+	}
+
+	private static VControl createControl() {
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName());
+		control.setDomainModelReference(domainModelReference);
+		return control;
+	}
+
+	private static HierarchyViewModelHandle createVerticalWithoutChildren() {
+		final VElement vertical = createVertical();
+		return new HierarchyViewModelHandle(vertical);
+	}
+
+	private static VVerticalLayout createVertical() {
+		return VVerticalFactory.eINSTANCE.createVerticalLayout();
+	}
 }

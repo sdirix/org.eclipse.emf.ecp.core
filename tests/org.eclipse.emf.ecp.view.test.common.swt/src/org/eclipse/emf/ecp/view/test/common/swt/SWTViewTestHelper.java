@@ -15,19 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
-import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -52,25 +46,14 @@ public final class SWTViewTestHelper {
 
 	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final ECPControlContext context = ViewTestHelper.createECPControlContext(
-			input, shell, renderable);
-		final Node<VElement> node = NodeBuilders.INSTANCE.build(renderable, context);
-		if (node == null) {
-			return null;
-		}
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
 		final ViewModelContextImpl viewContext = new ViewModelContextImpl(renderable, input);
-		viewContext.registerViewChangeListener(node);
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, node,
-			adapterFactoryItemDelegator);
+
+		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell, renderable,
+			viewContext);
 		// TODO return resultRows
 		if (resultRows == null) {
 			return null;
 		}
-		composedAdapterFactory.dispose();
 
 		return resultRows.get(0).getMainControl();
 

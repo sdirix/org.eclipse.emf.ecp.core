@@ -16,21 +16,14 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.RendererContext;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.ModelRenderer;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewImpl;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -54,8 +47,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	private static Shell shell;
 	private Display display;
 
-	private Node<VView> viewNode;
-	private GCCollectable swtViewCollectable;
+	private VView view;
 
 	@Override
 	@Before
@@ -88,25 +80,25 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	public void assertions(double memBefore, double memAfter) {
 	}
 
-	public ECPControlContext createContext(EObject domainObject, VView view) {
-		return new DefaultControlContext(domainObject, view);
+	// public ECPControlContext createContext(EObject domainObject, VView view) {
+	// return new DefaultControlContext(domainObject, view);
+	// }
+
+	public VView getViewNode() {
+		return view;
 	}
 
-	public Node<VView> getViewNode() {
-		return viewNode;
+	public void setViewNode(VView node) {
+		view = node;
 	}
 
-	public void setViewNode(Node<VView> node) {
-		viewNode = node;
-	}
+	// public GCCollectable getSWTViewCollectable() {
+	// return swtViewCollectable;
+	// }
 
-	public GCCollectable getSWTViewCollectable() {
-		return swtViewCollectable;
-	}
-
-	public void setSWTViewCollectable(GCCollectable gcc) {
-		swtViewCollectable = gcc;
-	}
+	// public void setSWTViewCollectable(GCCollectable gcc) {
+	// swtViewCollectable = gcc;
+	// }
 
 	private class TestRunnable implements Runnable {
 
@@ -122,24 +114,23 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 						try {
 							final EObject domainObject = createDomainObject();
 							final VView view = createView();
-							final ModelRenderer<?> renderer = ModelRenderer.INSTANCE.getRenderer();
-							final ViewModelContext viewContext = new ViewModelContextImpl(view, domainObject);
-							final ECPControlContext context = createContext(domainObject, view);
-							viewNode = NodeBuilders.INSTANCE.build(view, context);
-							viewContext.registerViewChangeListener(getViewNode());
-							final RendererContext<?> rendererContext = renderer.render(getViewNode(), shell);
+
 							memBefore = usedMemory();
-							final Composite composite = (Composite) rendererContext.getControl();
+							final ViewModelContext viewContext = new ViewModelContextImpl(view, domainObject);
+
+							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+							final Composite composite = (Composite) swtView.getSWTControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 							composite.setLayoutData(gridData);
-							final ECPSWTViewImpl swtView = new ECPSWTViewImpl(composite, rendererContext, viewContext);
-							swtViewCollectable = new GCCollectable(swtView);
+
 							shell.open();
 							return swtView;
 						} catch (final NoRendererFoundException e) {
 							fail(e.getMessage());
 						} catch (final NoPropertyDescriptorFoundExeption e) {
 							fail(e.getMessage());
+						} catch (final ECPRendererException ex) {
+							fail(ex.getMessage());
 						}
 						return null;
 					}

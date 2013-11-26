@@ -40,7 +40,8 @@ public interface ECPControlFactory {
 	 * @return the created {@link ECPControl} or null if nothing fitting could be created
 	 */
 	@Deprecated
-	<T extends ECPControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
+	<T extends ECPAbstractControl> T createControl(Class<T> controlTypeClass,
+		IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context);
 
 	/**
@@ -56,7 +57,7 @@ public interface ECPControlFactory {
 	 */
 
 	@Deprecated
-	<T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
+	<T extends ECPAbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId);
 
 	/**

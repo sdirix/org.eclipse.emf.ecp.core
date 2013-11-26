@@ -116,13 +116,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPControl.java" type="org.eclipse.emf.ecp.edit.spi.ECPControl">
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControl"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPControlContext.java" type="org.eclipse.emf.ecp.edit.spi.ECPControlContext">
         <filter comment="Package was not incorrectly marked as SPI" id="643842064">
             <message_arguments>

@@ -20,10 +20,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
@@ -37,7 +37,7 @@ public final class CellEditorFactory {
 	private static final String ID = "id";//$NON-NLS-1$
 	private static final String TESTER = "tester";//$NON-NLS-1$
 
-	private Set<CellDescriptor> descriptors = new HashSet<CellEditorFactory.CellDescriptor>();
+	private final Set<CellDescriptor> descriptors = new HashSet<CellEditorFactory.CellDescriptor>();
 
 	public static final CellEditorFactory INSTANCE = new CellEditorFactory();
 
@@ -46,18 +46,18 @@ public final class CellEditorFactory {
 	}
 
 	private void parseExtensionPoint() {
-		IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			CONTROL_EXTENSION);
-		for (IConfigurationElement e : controls) {
+		for (final IConfigurationElement e : controls) {
 			try {
-				String id = e.getAttribute(ID);
-				String clazz = e.getAttribute(CLASS_ATTRIBUTE);
-				Class<? extends CellEditor> resolvedClass = loadClass(e.getContributor().getName(), clazz);
-				ECPApplicableTester tester = (ECPApplicableTester) e.createExecutableExtension(TESTER);
+				final String id = e.getAttribute(ID);
+				final String clazz = e.getAttribute(CLASS_ATTRIBUTE);
+				final Class<? extends CellEditor> resolvedClass = loadClass(e.getContributor().getName(), clazz);
+				final ECPApplicableTester tester = (ECPApplicableTester) e.createExecutableExtension(TESTER);
 				descriptors.add(new CellDescriptor(id, resolvedClass, tester));
-			} catch (ClassNotFoundException e1) {
+			} catch (final ClassNotFoundException e1) {
 				Activator.logException(e1);
-			} catch (CoreException e1) {
+			} catch (final CoreException e1) {
 				Activator.logException(e1);
 			}
 		}
@@ -65,21 +65,22 @@ public final class CellEditorFactory {
 
 	@SuppressWarnings("unchecked")
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
-		Bundle bundle = Platform.getBundle(bundleName);
+		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + UtilMessages.CellEditorFactory_CannotBeLoadedBecauseBundle + bundleName
+			throw new ClassNotFoundException(clazz + UtilMessages.CellEditorFactory_CannotBeLoadedBecauseBundle
+				+ bundleName
 				+ UtilMessages.CellEditorFactory_CannotBeResolved);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
 	}
 
-	public CellEditor getCellEditor(IItemPropertyDescriptor propertyDescriptor, EObject eObject, Table table,
-		ECPControlContext ecpControlContext) {
+	public CellEditor getCellEditor(EStructuralFeature eStructuralFeature, EObject eObject, Table table,
+		ViewModelContext viewModelContext) {
 		int bestPriority = -1;
 		CellDescriptor bestCandidate = null;
-		for (CellDescriptor descriptor : descriptors) {
-			int priority = descriptor.getTester().isApplicable(propertyDescriptor, eObject);
+		for (final CellDescriptor descriptor : descriptors) {
+			final int priority = descriptor.getTester().isApplicable(eObject, eStructuralFeature);
 			if (priority > bestPriority) {
 				bestCandidate = descriptor;
 				bestPriority = priority;
@@ -88,24 +89,25 @@ public final class CellEditorFactory {
 		CellEditor result = null;
 		if (bestCandidate != null) {
 			try {
-				Constructor<? extends CellEditor> constructor = bestCandidate.getCellEditorClass().getConstructor(
-					Composite.class);
+				final Constructor<? extends CellEditor> constructor = bestCandidate.getCellEditorClass()
+					.getConstructor(
+						Composite.class);
 				result = constructor.newInstance(table);
-				ECPCellEditor ecpCellEditor = (ECPCellEditor) result;
-				ecpCellEditor.instantiate(propertyDescriptor, ecpControlContext);
-			} catch (SecurityException e) {
+				final ECPCellEditor ecpCellEditor = (ECPCellEditor) result;
+				ecpCellEditor.instantiate(eStructuralFeature, viewModelContext);
+			} catch (final SecurityException e) {
 				Activator.logException(e);
-			} catch (NoSuchMethodException e) {
+			} catch (final NoSuchMethodException e) {
 				Activator.logException(e);
-			} catch (IllegalArgumentException e) {
+			} catch (final IllegalArgumentException e) {
 				Activator.logException(e);
-			} catch (InstantiationException e) {
+			} catch (final InstantiationException e) {
 				Activator.logException(e);
-			} catch (IllegalAccessException e) {
+			} catch (final IllegalAccessException e) {
 				Activator.logException(e);
-			} catch (InvocationTargetException e) {
+			} catch (final InvocationTargetException e) {
 				Activator.logException(e);
-			} catch (ClassCastException e) {
+			} catch (final ClassCastException e) {
 				Activator.logException(e);
 			}
 		}

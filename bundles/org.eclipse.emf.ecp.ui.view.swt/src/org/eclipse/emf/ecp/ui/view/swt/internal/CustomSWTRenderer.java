@@ -24,10 +24,10 @@ import org.eclipse.emf.ecp.view.model.VElement;
 public interface CustomSWTRenderer {
 
 	/**
-	 * Returns a map containing a mapping that specifies which {@link SWTRenderer} should
+	 * Returns a map containing a mapping that specifies which {@link AbstractSWTRenderer} should
 	 * be used for a certain {@link VElement}.
 	 * 
-	 * @return a map associating {@link VElement}s with {@link SWTRenderer}s
+	 * @return a map associating {@link VElement}s with {@link AbstractSWTRenderer AbstractSWTRenderers}
 	 */
-	Map<Class<? extends VElement>, SWTRenderer<?>> getCustomRenderers();
+	Map<Class<VElement>, AbstractSWTRenderer<VElement>> getCustomRenderers();
 }

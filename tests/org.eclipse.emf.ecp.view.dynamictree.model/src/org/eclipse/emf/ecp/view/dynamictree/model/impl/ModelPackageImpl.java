@@ -518,7 +518,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 
 		// Add supertypes to classes
 		dynamicContainmentTreeEClass.getESuperTypes().add(theCategorizationPackage.getCategory());
-		dynamicContainmentItemEClass.getESuperTypes().add(theViewPackage.getElement());
+		dynamicContainmentItemEClass.getESuperTypes().add(theCategorizationPackage.getCategorizableElement());
 		testElementEClass.getESuperTypes().add(theEcorePackage.getEObject());
 		dynamicContainmentTreeDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getDomainModelReference());
 

@@ -15,13 +15,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -35,30 +34,32 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 	 * Singleton instance of the SWT Group renderer.
 	 */
 	public static final SWTGroupRenderer INSTANCE = new SWTGroupRenderer();
-	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group";
+	private static final Object CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<VGroup> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData)
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VGroup vGroup,
+		ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
-		final VGroup modelGroup = node.getRenderable();
+
 		final org.eclipse.swt.widgets.Group group = new org.eclipse.swt.widgets.Group(parent, SWT.TITLE);
 		group.setData(CUSTOM_VARIANT, CONTROL_GROUP);
-		if (modelGroup.getName() != null) {
-			group.setText(modelGroup.getName());
+		if (vGroup.getName() != null) {
+			group.setText(vGroup.getName());
 		}
 		group.setBackground(parent.getBackground());
 		group.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
-		node.addRenderingResultDelegator(withSWT(group));
-
-		for (final Node<? extends VElement> child : node.getChildren()) {
+		for (final VContainedElement child : vGroup.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {
-				resultRows = SWTRenderers.INSTANCE.render(group, child, adapterFactoryItemDelegator);
+				resultRows = SWTRendererFactory.INSTANCE.render(group, child, viewContext);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

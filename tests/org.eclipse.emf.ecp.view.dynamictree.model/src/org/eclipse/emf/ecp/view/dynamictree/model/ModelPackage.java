@@ -133,6 +133,24 @@ public interface ModelPackage extends EPackage
 	int DYNAMIC_CONTAINMENT_TREE__ATTACHMENTS = VCategorizationPackage.CATEGORY__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE__CHILDREN = VCategorizationPackage.CATEGORY__CHILDREN;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_TREE__LABEL = VCategorizationPackage.CATEGORY__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -221,7 +239,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__NAME = VViewPackage.ELEMENT__NAME;
+	int DYNAMIC_CONTAINMENT_ITEM__NAME = VCategorizationPackage.CATEGORIZABLE_ELEMENT__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -230,7 +248,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__VISIBLE = VViewPackage.ELEMENT__VISIBLE;
+	int DYNAMIC_CONTAINMENT_ITEM__VISIBLE = VCategorizationPackage.CATEGORIZABLE_ELEMENT__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -239,7 +257,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__ENABLED = VViewPackage.ELEMENT__ENABLED;
+	int DYNAMIC_CONTAINMENT_ITEM__ENABLED = VCategorizationPackage.CATEGORIZABLE_ELEMENT__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -248,7 +266,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__READONLY = VViewPackage.ELEMENT__READONLY;
+	int DYNAMIC_CONTAINMENT_ITEM__READONLY = VCategorizationPackage.CATEGORIZABLE_ELEMENT__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -257,7 +275,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__DIAGNOSTIC = VViewPackage.ELEMENT__DIAGNOSTIC;
+	int DYNAMIC_CONTAINMENT_ITEM__DIAGNOSTIC = VCategorizationPackage.CATEGORIZABLE_ELEMENT__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -266,7 +284,25 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__ATTACHMENTS = VViewPackage.ELEMENT__ATTACHMENTS;
+	int DYNAMIC_CONTAINMENT_ITEM__ATTACHMENTS = VCategorizationPackage.CATEGORIZABLE_ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_ITEM__CHILDREN = VCategorizationPackage.CATEGORIZABLE_ELEMENT__CHILDREN;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DYNAMIC_CONTAINMENT_ITEM__LABEL = VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model</b></em>' reference.
@@ -275,7 +311,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
+	int DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL = VCategorizationPackage.CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Items</b></em>' containment reference list.
@@ -284,7 +320,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__ITEMS = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
+	int DYNAMIC_CONTAINMENT_ITEM__ITEMS = VCategorizationPackage.CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
@@ -293,7 +329,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
+	int DYNAMIC_CONTAINMENT_ITEM__COMPOSITE = VCategorizationPackage.CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Base Item Index</b></em>' attribute.
@@ -302,7 +338,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX = VViewPackage.ELEMENT_FEATURE_COUNT + 3;
+	int DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX = VCategorizationPackage.CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Dynamic Containment Item</em>' class.
@@ -311,7 +347,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 4;
+	int DYNAMIC_CONTAINMENT_ITEM_FEATURE_COUNT = VCategorizationPackage.CATEGORIZABLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.TestElementImpl <em>Test Element</em>}' class.

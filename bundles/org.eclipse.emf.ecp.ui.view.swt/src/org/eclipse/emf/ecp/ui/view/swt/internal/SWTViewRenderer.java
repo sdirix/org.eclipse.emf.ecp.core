@@ -19,9 +19,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -42,45 +42,24 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
-	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(final Node<VView> viewNode,
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, final VView vView,
+		final ViewModelContext viewContext)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
-
-		return renderChildren(parent, viewNode, adapterFactoryItemDelegator);
-
-	}
-
-	/**
-	 * Render children.
-	 * 
-	 * @param parent the parent
-	 * @param node the node
-	 * @param adapterFactoryItemDelegator the adapter factory item delegator
-	 * @return the composite
-	 * @throws NoRendererFoundException the no renderer found exception
-	 */
-	private List<RenderingResultRow<Control>> renderChildren(Composite parent, Node<VView> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator)
-		throws NoRendererFoundException {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 		// Gridlayout does not have an overflow as other Layouts might have.
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
 
-		node.addRenderingResultDelegator(withSWT(columnComposite));
-
-		for (final Node<? extends VElement> child : node.getChildren()) {
+		for (final VContainedElement child : vView.getChildren()) {
 
 			List<RenderingResultRow<Control>> resultRows;
 			try {
-				resultRows = SWTRenderers.INSTANCE.render(
-					columnComposite, child, adapterFactoryItemDelegator);
+				resultRows = SWTRendererFactory.INSTANCE.render(columnComposite, child, viewContext);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
@@ -92,8 +71,8 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 
 			setLayoutDataForResultRows(resultRows);
 		}
-
 		return createResult(columnComposite);
+
 	}
 
 	@Override

@@ -15,6 +15,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
+import org.eclipse.emf.ecp.view.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.dynamictree.model.*;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -119,11 +123,15 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 				return createElementAdapter();
 			}
 			@Override
-			public Adapter caseAbstractCategorization(org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization object) {
+			public Adapter caseCategorizableElement(VCategorizableElement object) {
+				return createCategorizableElementAdapter();
+			}
+			@Override
+			public Adapter caseAbstractCategorization(VAbstractCategorization object) {
 				return createAbstractCategorizationAdapter();
 			}
 			@Override
-			public Adapter caseCategory(org.eclipse.emf.ecp.view.categorization.model.VCategory object) {
+			public Adapter caseCategory(VCategory object) {
 				return createCategoryAdapter();
 			}
 			@Override
@@ -266,6 +274,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 */
 	public Adapter createElementAdapter()
 	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement
+	 * @generated
+	 */
+	public Adapter createCategorizableElementAdapter() {
 		return null;
 	}
 

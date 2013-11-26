@@ -24,6 +24,8 @@ import org.eclipse.emf.ecp.view.model.VContainedElement;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement#getCategorizations <em>
  * Categorizations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement#getCurrentSelection <em>Current
+ * Selection</em>}</li>
  * </ul>
  * </p>
  * 
@@ -31,6 +33,8 @@ import org.eclipse.emf.ecp.view.model.VContainedElement;
  * @model
  * @generated
  */
+// TODO API
+@SuppressWarnings("restriction")
 public interface VCategorizationElement extends VContainedElement
 {
 	/**
@@ -49,5 +53,35 @@ public interface VCategorizationElement extends VContainedElement
 	 * @generated
 	 */
 	EList<VAbstractCategorization> getCategorizations();
+
+	/**
+	 * Returns the value of the '<em><b>Current Selection</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Current Selection</em>' reference isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Current Selection</em>' reference.
+	 * @see #setCurrentSelection(VCategorizableElement)
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage#getCategorizationElement_CurrentSelection()
+	 * @model transient="true"
+	 * @generated
+	 */
+	VCategorizableElement getCurrentSelection();
+
+	/**
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement#getCurrentSelection
+	 * <em>Current Selection</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Current Selection</em>' reference.
+	 * @see #getCurrentSelection()
+	 * @generated
+	 */
+	void setCurrentSelection(VCategorizableElement value);
 
 } // VCategorizationElement

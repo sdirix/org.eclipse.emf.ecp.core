@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
@@ -73,6 +74,14 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * @generated
 	 */
 	private EClass categorizationElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass categorizableElementEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -270,6 +279,50 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	public EReference getCategorizationElement_CurrentSelection()
+	{
+		return (EReference) categorizationElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getCategorizableElement()
+	{
+		return categorizableElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getCategorizableElement_Children()
+	{
+		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getCategorizableElement_Label()
+	{
+		return (EAttribute) categorizableElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public VCategorizationFactory getCategorizationFactory()
 	{
 		return (VCategorizationFactory) getEFactoryInstance();
@@ -313,6 +366,11 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 
 		categorizationElementEClass = createEClass(CATEGORIZATION_ELEMENT);
 		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CATEGORIZATIONS);
+		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CURRENT_SELECTION);
+
+		categorizableElementEClass = createEClass(CATEGORIZABLE_ELEMENT);
+		createEReference(categorizableElementEClass, CATEGORIZABLE_ELEMENT__CHILDREN);
+		createEAttribute(categorizableElementEClass, CATEGORIZABLE_ELEMENT__LABEL);
 	}
 
 	/**
@@ -350,10 +408,11 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		abstractCategorizationEClass.getESuperTypes().add(theViewPackage.getElement());
+		abstractCategorizationEClass.getESuperTypes().add(this.getCategorizableElement());
 		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categorizationElementEClass.getESuperTypes().add(theViewPackage.getContainedElement());
+		categorizableElementEClass.getESuperTypes().add(theViewPackage.getElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(abstractCategorizationEClass, VAbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT,
@@ -385,6 +444,18 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		initEReference(getCategorizationElement_Categorizations(), this.getAbstractCategorization(), null,
 			"categorizations", null, 0, -1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCategorizationElement_CurrentSelection(), this.getCategorizableElement(), null,
+			"currentSelection", null, 0, 1, VCategorizationElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(categorizableElementEClass, VCategorizableElement.class, "CategorizableElement", IS_ABSTRACT,
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategorizableElement_Children(), this.getCategorizableElement(), null, "children", null, 0,
+			-1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCategorizableElement_Label(), ecorePackage.getEString(), "label", null, 1, 1,
+			VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

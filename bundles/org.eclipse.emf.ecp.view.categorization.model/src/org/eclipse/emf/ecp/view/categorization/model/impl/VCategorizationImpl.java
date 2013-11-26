@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 
@@ -59,6 +60,7 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	protected VCategorizationImpl()
 	{
 		super();
+		addLocalDependencyToChildrenAdapter(VCategorizationPackage.Literals.CATEGORIZATION__CATEGORIZATIONS);
 	}
 
 	/**
@@ -176,6 +178,15 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 			return categorizations != null && !categorizations.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren()
+	 */
+	public EList<VCategorizableElement> getChildren() {
+		return (EList) getCategorizations();
 	}
 
 } // VCategorizationImpl

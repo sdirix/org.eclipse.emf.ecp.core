@@ -54,7 +54,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
-		if (getStructuralFeature().isUnsettable()) {
+		if (getFirstStructuralFeature().isUnsettable()) {
 			text.setMessage(ControlMessages.AbstractTextControl_Unset);
 		}
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
@@ -113,6 +113,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		text.setEditable(isEditable);
 	}
@@ -222,7 +223,7 @@ public abstract class AbstractTextControl extends SingleControl {
 				if ("".equals(value)) { //$NON-NLS-1$
 					value = null;
 				}
-				if (value == null && getStructuralFeature().isUnsettable()) {
+				if (value == null && getFirstStructuralFeature().isUnsettable()) {
 					return SetCommand.UNSET_VALUE;
 				}
 

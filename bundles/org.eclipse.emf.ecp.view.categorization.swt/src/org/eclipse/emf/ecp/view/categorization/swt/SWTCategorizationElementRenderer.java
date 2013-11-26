@@ -16,45 +16,36 @@ package org.eclipse.emf.ecp.view.categorization.swt;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultDelegatorAdapter;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPTreeViewAction;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VContainedElement;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TreeEditor;
@@ -81,55 +72,54 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	public static final SWTCategorizationElementRenderer INSTANCE = new SWTCategorizationElementRenderer();
 
 	/** The error descriptor. */
-	// private static ImageDescriptor errorDescriptor = Activator.getImageDescriptor("icons/error_decorate.png");
+
+	private static ImageDescriptor errorDescriptor = Activator.getImageDescriptor("icons/error_decorate.png"); //$NON-NLS-1$
 
 	/** The warning descriptor. */
-	// private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png");
+	private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png"); //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderSWT(org.eclipse.emf.ecp.internal.ui.view.renderer.Node,
-	 *      org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator, java.lang.Object[])
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(final Node<VCategorizationElement> viewNode,
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator,
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent,
+		final VCategorizationElement vCategorizationElement,
+		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Composite parent = getParentFromInitData(initData);
-		final VCategorizationElement view = viewNode.getRenderable();
+		final TreeViewer treeViewer;
 
-		final RefreshTreeViewerAdapter adapter = new RefreshTreeViewerAdapter();
-		view.eAdapters().add(adapter);
-		parent.addDisposeListener(new DisposeListener() {
-
-			public void widgetDisposed(DisposeEvent event) {
-				view.eAdapters().remove(adapter);
-			}
-		});
-		final EList<VAbstractCategorization> categorizations = view.getCategorizations();
+		// final RefreshTreeViewerAdapter adapter = new RefreshTreeViewerAdapter();
+		// vCategorizationElement.eAdapters().add(adapter);
+		// parent.addDisposeListener(new DisposeListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// public void widgetDisposed(DisposeEvent event) {
+		// vCategorizationElement.eAdapters().remove(adapter);
+		// }
+		// });
+		final EList<VAbstractCategorization> categorizations = vCategorizationElement.getCategorizations();
 
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof VCategory) {
-			final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(parent, viewNode
-				.getChildren().get(0),
-				adapterFactoryItemDelegator);
-			viewNode.addRenderingResultDelegator(withSWT(resultRows.get(0).getMainControl()));
+			final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(parent,
+				vCategorizationElement.getCategorizations().get(0), viewContext);
+
 			return resultRows;
-		} else {
-			final Composite composite = createComposite(parent);
-			final TreeViewer treeViewer = new TreeViewer(composite);
-			final ScrolledComposite editorComposite = createdEditorPane(composite);
-			setupTreeViewer(treeViewer, adapterFactoryItemDelegator, viewNode,
-				editorComposite);
-			adapter.setTreeViewer(treeViewer);
 
-			viewNode.addRenderingResultDelegator(withSWT(composite));
-
-			initTreeViewer(treeViewer, viewNode);
-
-			return createResult(composite);
 		}
+		final Composite composite = createComposite(parent);
+		treeViewer = new TreeViewer(composite);
+		final ScrolledComposite editorComposite = createdEditorPane(composite);
+		setupTreeViewer(treeViewer, vCategorizationElement,
+			editorComposite, viewContext);
+		// adapter.setTreeViewer(treeViewer);
+
+		initTreeViewer(treeViewer, vCategorizationElement);
+
+		return createResult(composite);
+
 	}
 
 	/**
@@ -147,29 +137,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(editorComposite);
 
 		return editorComposite;
-	}
-
-	/**
-	 * Filter visible nodes.
-	 * 
-	 * @param treeViewer the tree viewer
-	 * @param node the node
-	 * @return the list< node<? extends renderable>>
-	 */
-	protected List<Node<? extends VElement>> filterVisibleNodes(TreeViewer treeViewer, Node<? extends VElement> node) {
-		final List<Node<?>> result = new ArrayList<Node<?>>();
-		final List<Node<?>> children = node.getChildren();
-		for (final Node<?> child : children) {
-			if (child.isVisible()) {
-				if (VContainedElement.class.isInstance(child.getLabelObject())) {
-					// result.addAll(filterVisibleNodes(treeViewer, child));
-					continue;
-				}
-				result.add(child);
-
-			}
-		}
-		return result;
 	}
 
 	/**
@@ -201,111 +168,131 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * @param editorComposite the composite of the editor
 	 */
 	protected void setupTreeViewer(final TreeViewer treeViewer,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator, final Node<VCategorizationElement> viewNode,
-		final ScrolledComposite editorComposite) {
+		final VCategorizationElement vCategorizationElement,
+		final ScrolledComposite editorComposite, final ViewModelContext viewModelContext) {
 
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
 
 		final List<TreeEditor> editors = new ArrayList<TreeEditor>();
 
-		treeViewer.setContentProvider(new ITreeContentProvider() {
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
-			}
+		final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
+			adapterFactory) {
 
-			public void dispose() {
-				// TODO Auto-generated method stub
-			}
-
-			public boolean hasChildren(Object element) {
-				final Object[] children = getChildren(element);
-
-				if (children == null) {
-					return false;
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getChildren(java.lang.Object)
+			 */
+			@Override
+			public Object[] getChildren(Object object) {
+				if (VCategorizationElement.class.isInstance(object)) {
+					return ((VCategorizationElement) object).getCategorizations().toArray();
 				}
-
-				return children.length > 0;
-			}
-
-			public Object getParent(Object element) {
-				// TODO Auto-generated method stub
+				if (VCategorizableElement.class.isInstance(object)) {
+					return ((VCategorizableElement) object).getChildren().toArray();
+				}
 				return null;
 			}
 
-			public Object[] getElements(Object inputElement) {
-				return getChildren(inputElement);
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#hasChildren(java.lang.Object)
+			 */
+			@Override
+			public boolean hasChildren(Object object) {
+				if (VCategorizableElement.class.isInstance(object)) {
+					return !((VCategorizableElement) object).getChildren().isEmpty();
+				}
+				return false;
 			}
 
-			public Object[] getChildren(Object parentElement) {
-				final Node<?> node = (Node<?>) parentElement;
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getElements(java.lang.Object)
+			 */
+			@Override
+			public Object[] getElements(Object object) {
+				// TODO Auto-generated method stub
+				return getChildren(object);
+			}
 
-				final List<Node<?>> visisbleNodes = filterVisibleNodes(treeViewer, node);
+		};
 
-				return visisbleNodes.toArray();
+		final TreeTableLabelProvider treeTableLabelProvider = new TreeTableLabelProvider(
+			adapterFactory);
+		treeViewer.getTree().addDisposeListener(new DisposeListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			public void widgetDisposed(DisposeEvent event) {
+				contentProvider.dispose();
+				treeTableLabelProvider.dispose();
+				adapterFactory.dispose();
 			}
 		});
 
-		treeViewer.setLabelProvider(new TreeTableLabelProvider(adapterFactoryItemDelegator.getAdapterFactory()));
+		treeViewer.setContentProvider(contentProvider);
+		treeViewer.setLabelProvider(treeTableLabelProvider);
 
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			private Node<?> lastSelection;
+
+			private Composite childComposite;
 
 			public void selectionChanged(SelectionChangedEvent event) {
 
-				final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-				final AdapterFactoryItemDelegator newAdapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-					composedAdapterFactory);
+				final TreeSelection treeSelection = (TreeSelection) event.getSelection();
+				final Object selection = treeSelection.getFirstElement();
+				addButtons(treeViewer, treeSelection, editors);
 
-				try {
-					final TreeSelection treeSelection = (TreeSelection) event.getSelection();
-					final Object selection = treeSelection.getFirstElement();
-					addButtons(treeViewer, treeSelection, viewNode.getControlContext().getModelElement(), editors);
-
-					if (selection == null) {
-						return;
-					}
-					if (lastSelection != null) {
-						lastSelection.cleanup();
-					}
-					lastSelection = (Node<?>) selection;
-					final Composite childComposite = createComposite(editorComposite);
-
-					childComposite.setBackground(editorComposite.getBackground());
-					editorComposite.setContent(childComposite);
-
-					// TODO: REVIEW
-					if (Node.class.isInstance(selection)) {
-						final Node<?> node = (Node<?>) selection;
-						try {
-							final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(
-								childComposite, node,
-								newAdapterFactoryItemDelegator);
-							GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-								.applyTo(resultRows.get(0).getMainControl());
-							viewNode.fireSelectedChildNodeChanged(node);
-						} catch (final NoRendererFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (final NoPropertyDescriptorFoundExeption e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						childComposite.layout();
-						final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-						editorComposite.setMinSize(point);
-					}
-				} finally {
-					composedAdapterFactory.dispose();
+				if (selection == null) {
+					return;
 				}
+				if (childComposite != null) {
+					childComposite.dispose();
+					childComposite = null;
+				}
+				childComposite = createComposite(editorComposite);
+
+				childComposite.setBackground(editorComposite.getBackground());
+				editorComposite.setContent(childComposite);
+
+				final VElement node = (VElement) selection;
+				try {
+					final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(
+						childComposite, node, viewModelContext);
+					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+						.applyTo(resultRows.get(0).getMainControl());
+					vCategorizationElement.setCurrentSelection((VCategorizableElement) node);
+				} catch (final NoRendererFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (final NoPropertyDescriptorFoundExeption e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				childComposite.layout();
+				final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				editorComposite.setMinSize(point);
+				// }
+
 			}
 		});
 
-		addTreeEditor(treeViewer, viewNode.getControlContext().getModelElement(), viewNode.getRenderable(), editors);
+		addTreeEditor(treeViewer, vCategorizationElement, editors);
 
+		// if (adapterFactory instanceof IChangeNotifier)
+		// {
+		// IChangeNotifier changeNotifier = (IChangeNotifier)adapterFactory;
+		// changeNotifier.fireNotifyChanged(new ViewerNotification(notification,
+		// proxy, false, true));
+		// }
 	}
 
 	/**
@@ -314,17 +301,11 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * @param treeViewer the tree viewer
 	 * @param viewNode the view node
 	 */
-	protected void initTreeViewer(final TreeViewer treeViewer, Node<VCategorizationElement> viewNode) {
-		viewNode.addRenderingResultDelegator(new RenderingResultDelegatorAdapter() {
-			@Override
-			public void validationChanged(Map<EObject, Set<Diagnostic>> affectedObjects) {
-				treeViewer.refresh();
-			}
-		});
+	protected void initTreeViewer(final TreeViewer treeViewer, VCategorizationElement vCategorizationElement) {
 
-		treeViewer.setInput(viewNode);
+		treeViewer.setInput(vCategorizationElement);
 		treeViewer.expandAll();
-		treeViewer.setSelection(new StructuredSelection(viewNode.getChildren().get(0)));
+		treeViewer.setSelection(new StructuredSelection(vCategorizationElement.getCategorizations().get(0)));
 	}
 
 	/**
@@ -346,11 +327,10 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * Adds the tree editor.
 	 * 
 	 * @param treeViewer the tree viewer
-	 * @param modelElement the model element
 	 * @param view the view
 	 * @param editors the list of tree editors
 	 */
-	protected void addTreeEditor(final TreeViewer treeViewer, final EObject modelElement, VCategorizationElement view,
+	protected void addTreeEditor(final TreeViewer treeViewer, VCategorizationElement view,
 		final List<TreeEditor> editors) {
 		// The text column
 		final Tree tree = treeViewer.getTree();
@@ -387,6 +367,8 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 
 		tree.addTreeListener(new TreeListener() {
 
+			private static final long serialVersionUID = -576684848162963651L;
+
 			public void treeExpanded(TreeEvent e) {
 			}
 
@@ -418,7 +400,7 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * @param modelElement the model element
 	 * @param editors the list of tree editors
 	 */
-	protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection, EObject modelElement,
+	protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection,
 		List<TreeEditor> editors) {
 
 		cleanUpTreeEditors(editors);
@@ -433,14 +415,14 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			return;
 		}
 
-		final Node<?> object = (Node<?>) treeSelection.getFirstElement();
-		if (object.getActions() == null) {
+		final VCategorizableElement object = (VCategorizableElement) treeSelection.getFirstElement();
+		if (object.getECPActions() == null) {
 			return;
 		}
-		for (int i = 0; i < object.getActions().size(); i++) {
-			final ECPTreeViewAction action = (ECPTreeViewAction) object.getActions().get(i);
+		for (int i = 0; i < object.getECPActions().size(); i++) {
+			final ECPTreeViewAction action = (ECPTreeViewAction) object.getECPActions().get(i);
 			final TreeEditor editor = editors.get(i);
-			action.init(treeViewer, treeSelection, editor, modelElement);
+			action.init(treeViewer, treeSelection, editor);
 			action.execute();
 		}
 	}
@@ -462,6 +444,21 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		/**
 		 * {@inheritDoc}
 		 * 
+		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnText(java.lang.Object,
+		 *      int)
+		 */
+		@Override
+		public String getColumnText(Object object, int columnIndex) {
+
+			if (columnIndex == 0 && VCategorizableElement.class.isInstance(object)) {
+				return ((VCategorizableElement) object).getLabel();
+			}
+			return super.getColumnText(object, columnIndex);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
 		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnImage(java.lang.Object,
 		 *      int)
 		 */
@@ -472,15 +469,12 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 				return null;
 			}
 
-			Image image = super.getColumnImage(object, columnIndex);
+			final Image image = super.getColumnImage(object, columnIndex);
 
-			if (!Node.class.isInstance(object)) {
-				return image;
-			}
+			final VElement categorization = (VElement) object;
 
-			final Node<?> node = (Node<?>) object;
-			image = super.getImage(node.getLabelObject());
 			ImageDescriptor overlay = null;
+
 			// switch (node.getSeverity()) {
 			// case Diagnostic.ERROR:
 			// overlay = errorDescriptor;
@@ -491,7 +485,8 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			// default:
 			// break;
 			// }
-			overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(node.getSeverity());
+			overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(categorization.getDiagnostic().getHighestSeverity());
+
 
 			if (overlay == null) {
 				return image;
@@ -501,59 +496,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			final Image resultImage = imageDescriptor.createImage();
 
 			return resultImage;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnText(java.lang.Object,
-		 *      int)
-		 */
-		@Override
-		public String getColumnText(Object object, int columnIndex) {
-
-			if (columnIndex != 0) {
-				return "";
-			}
-
-			final Node<?> node = (Node<?>) object;
-
-			return super.getText(node.getLabelObject());
-		}
-
-	}
-
-	/**
-	 * Adapter implementation that refreshes a tree viewer if a diagnostic on a categorization changes.
-	 * 
-	 * @author jfaltermeier
-	 * 
-	 */
-	private class RefreshTreeViewerAdapter extends EContentAdapter {
-
-		private TreeViewer treeViewer;
-
-		public void setTreeViewer(TreeViewer treeViewer) {
-			this.treeViewer = treeViewer;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-		 */
-		@Override
-		public void notifyChanged(Notification msg) {
-			super.notifyChanged(msg);
-			if (treeViewer == null) {
-				return;
-			}
-			if (VAbstractCategorization.class.isInstance(msg.getNotifier())
-				&& VViewPackage.eINSTANCE.getElement_Diagnostic().equals(msg.getFeature())) {
-				if (msg.getEventType() == Notification.SET) {
-					treeViewer.refresh();
-				}
-			}
 		}
 
 	}

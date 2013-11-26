@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
@@ -137,7 +136,8 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	 * {@inheritDoc}
 	 */
 	@Deprecated
-	public <T extends ECPControl> T createControl(Class<T> controlType, IItemPropertyDescriptor itemPropertyDescriptor,
+	public <T extends ECPAbstractControl> T createControl(Class<T> controlType,
+		IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context) {
 
 		final ECPControlDescription controlDescription = getControlCandidate(controlType, itemPropertyDescriptor,
@@ -156,7 +156,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	 * @deprecated
 	 */
 	@Deprecated
-	public <T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
+	public <T extends ECPAbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
 		ECPControlContext context, String controlId) {
 
 		ECPControlDescription controlDescription = null;
@@ -221,9 +221,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription) {
+	private static <T> T getControlInstance(ECPControlDescription controlDescription) {
 		try {
-			final Constructor<? extends ECPControl> controlConstructor = controlDescription.getControlClass()
+			final Constructor<?> controlConstructor = controlDescription.getControlClass()
 				.getConstructor();
 			return (T) controlConstructor.newInstance();
 		} catch (final IllegalArgumentException ex) {

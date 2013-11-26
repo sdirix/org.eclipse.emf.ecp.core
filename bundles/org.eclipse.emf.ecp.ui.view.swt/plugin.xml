@@ -2,10 +2,17 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="customSWTRenderers" name="%extension-point.name" schema="schema/customSWTRenderers.exsd"/>
+   <extension-point id="renderers" name="ECP View SWT Renderer" schema="schema/renderers.exsd"/>
    <extension
-         point="org.eclipse.emf.ecp.ui.view.renderer">
+         point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
-            class="org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers"></renderer>
+            element="org.eclipse.emf.ecp.view.model.VView"
+            renderer="org.eclipse.emf.ecp.ui.view.swt.internal.SWTViewRenderer">
+      </renderer>
+      <renderer
+            element="org.eclipse.emf.ecp.view.model.VControl"
+            renderer="org.eclipse.emf.ecp.ui.view.swt.internal.SWTControlRenderer">
+      </renderer>
    </extension>
 
 </plugin>

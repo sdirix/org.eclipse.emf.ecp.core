@@ -32,13 +32,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/enabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
-      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/attachments"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/children"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/categorizations"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//ContainedElement"/>
     <genClasses image="false" ecoreClass="view.ecore#//Container">
@@ -47,20 +46,6 @@
     <genClasses ecoreClass="view.ecore#//Control">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//AbstractCategorization">
-      <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"
-          ecoreFeature="ecore:EReference view.ecore#//AbstractCategorization/actions"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Categorization">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Categorization/categorizations"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Category">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Category/composite"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Action">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/bundle"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/className"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

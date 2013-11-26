@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -37,8 +38,8 @@ public class EEnumControl extends SingleControl {
 
 	@Override
 	protected void fillControlComposite(Composite composite) {
-		final IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
-			getModelElementContext().getModelElement());
+		final Setting firstSetting = getFirstSetting();
+		final IItemLabelProvider labelProvider = getItemPropertyDescriptor(firstSetting).getLabelProvider(null);
 
 		combo = new ComboViewer(composite);
 		combo.setContentProvider(new ArrayContentProvider());
@@ -50,13 +51,14 @@ public class EEnumControl extends SingleControl {
 			}
 
 		});
-		combo.setInput(getStructuralFeature().getEType().getInstanceClass().getEnumConstants());
+		combo.setInput(firstSetting.getEStructuralFeature().getEType().getInstanceClass().getEnumConstants());
 		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		combo.getControl().setEnabled(isEditable);
 	}

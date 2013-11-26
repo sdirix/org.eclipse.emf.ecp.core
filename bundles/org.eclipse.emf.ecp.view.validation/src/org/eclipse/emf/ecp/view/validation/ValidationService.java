@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.context.AbstractViewService;
+import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
@@ -44,7 +44,7 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * @author jfaltermeier
  * @author emueller
  */
-public class ValidationService extends AbstractViewService {
+public class ValidationService implements ViewModelService {
 
 	private ViewModelContext context;
 	private VElement renderable;
@@ -227,9 +227,8 @@ public class ValidationService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
-	@Override
 	public void instantiate(final ViewModelContext context) {
 		this.context = context;
 
@@ -326,9 +325,8 @@ public class ValidationService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#dispose()
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
 	 */
-	@Override
 	public void dispose() {
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
@@ -337,9 +335,8 @@ public class ValidationService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
 	 */
-	@Override
 	public int getPriority() {
 		return 3;
 	}

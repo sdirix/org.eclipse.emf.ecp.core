@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
@@ -121,6 +122,12 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 			public Adapter caseCategorizationElement(VCategorizationElement object)
 			{
 				return createCategorizationElementAdapter();
+			}
+
+			@Override
+			public Adapter caseCategorizableElement(VCategorizableElement object)
+			{
+				return createCategorizableElementAdapter();
 			}
 
 			@Override
@@ -238,6 +245,23 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createCategorizationElementAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement
+	 * @generated
+	 */
+	public Adapter createCategorizableElementAdapter()
 	{
 		return null;
 	}

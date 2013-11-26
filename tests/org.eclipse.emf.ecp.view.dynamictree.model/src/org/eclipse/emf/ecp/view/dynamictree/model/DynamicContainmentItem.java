@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.dynamictree.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VElement;
 
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * @model
  * @generated
  */
-public interface DynamicContainmentItem extends VElement
+public interface DynamicContainmentItem extends VCategorizableElement
 {
 	/**
 	 * Returns the value of the '<em><b>Domain Model</b></em>' reference.

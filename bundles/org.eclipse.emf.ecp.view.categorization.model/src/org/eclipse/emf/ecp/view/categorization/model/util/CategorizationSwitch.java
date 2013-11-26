@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
@@ -96,6 +97,8 @@ public class CategorizationSwitch<T> extends Switch<T>
 			VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
 			T result = caseAbstractCategorization(abstractCategorization);
 			if (result == null)
+				result = caseCategorizableElement(abstractCategorization);
+			if (result == null)
 				result = caseElement(abstractCategorization);
 			if (result == null)
 				result = defaultCase(theEObject);
@@ -107,6 +110,8 @@ public class CategorizationSwitch<T> extends Switch<T>
 			if (result == null)
 				result = caseAbstractCategorization(categorization);
 			if (result == null)
+				result = caseCategorizableElement(categorization);
+			if (result == null)
 				result = caseElement(categorization);
 			if (result == null)
 				result = defaultCase(theEObject);
@@ -117,6 +122,8 @@ public class CategorizationSwitch<T> extends Switch<T>
 			T result = caseCategory(category);
 			if (result == null)
 				result = caseAbstractCategorization(category);
+			if (result == null)
+				result = caseCategorizableElement(category);
 			if (result == null)
 				result = caseElement(category);
 			if (result == null)
@@ -137,6 +144,15 @@ public class CategorizationSwitch<T> extends Switch<T>
 				result = caseContainedElement(categorizationElement);
 			if (result == null)
 				result = caseElement(categorizationElement);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT: {
+			VCategorizableElement categorizableElement = (VCategorizableElement) theEObject;
+			T result = caseCategorizableElement(categorizableElement);
+			if (result == null)
+				result = caseElement(categorizableElement);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -227,6 +243,23 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseCategorizationElement(VCategorizationElement object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Categorizable Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Categorizable Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCategorizableElement(VCategorizableElement object)
 	{
 		return null;
 	}

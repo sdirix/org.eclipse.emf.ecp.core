@@ -16,38 +16,43 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-// TODO: do we need to set a custom variant?
+/**
+ * Renderer for {@link VCategory VCategories}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+// TODO: api
+@SuppressWarnings("restriction")
 public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {
-	public static final SWTCategoryRenderer INSTANCE = new SWTCategoryRenderer();
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
 	@Override
-	public List<RenderingResultRow<Control>> renderSWT(Node<VCategory> node,
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator,
-		Object... initData) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VCategory vCategory,
+		ViewModelContext viewContext)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
-		final Composite parent = getParentFromInitData(initData);
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 
 		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
 
-		node.addRenderingResultDelegator(withSWT(categoryComposite));
-
-		final Node<? extends VElement> childNode = node.getChildren().get(0);
-
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(categoryComposite, childNode,
-			adapterFactoryItemDelegator);
+		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(categoryComposite,
+			vCategory.getComposite(), viewContext);
 
 		setLayoutDataForResultRows(resultRows);
 

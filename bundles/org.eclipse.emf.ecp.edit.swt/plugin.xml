@@ -50,26 +50,6 @@
          </staticTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl"
-            id="org.eclipse.emf.ecp.control.swt.reference"
-            showLabel="true"
-            >
-         <staticTest
-               priority="1"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EObject">
-         </staticTest>
-      </control>
-      <control
-            class="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControl"
-            id="org.eclipse.emf.ecp.control.swt.multiReference"
-            showLabel="true"
-            >
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.edit.internal.swt.controls.ReferenceMultiControlTester">
-         </dynamicTest>
-      </control>
-      <control
             class="org.eclipse.emf.ecp.edit.internal.swt.controls.AttributeMultiControl"
             id="org.eclipse.emf.ecp.control.swt.multiAttribute"
             showLabel="true"
@@ -141,6 +121,24 @@
                supportedClassType="java.lang.Long">
          </staticTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl"
+            id="org.eclipse.emf.ecp.control.swt.reference"
+            >
+         <staticTest
+               priority="1"
+               singleValue="true"
+               supportedClassType="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMultiControl"
+            id="org.eclipse.emf.ecp.control.swt.multiReference"
+            >
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMultiControlTester">
+         </dynamicTest>
+      </control>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.edit.swt.cellEditor">
@@ -160,9 +158,9 @@
             tester="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditorTester">
       </cellEditor>
       <cellEditor
-            class="org.eclipse.emf.ecp.edit.internal.swt.table.LinkCellEditor"
+            class="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkCellEditor"
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.link"
-            tester="org.eclipse.emf.ecp.edit.internal.swt.table.LinkCellEditorTester">
+            tester="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkCellEditorTester">
       </cellEditor>
    </extension>
 

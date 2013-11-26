@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.context.AbstractViewService;
+import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.model.VElement;
 
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * @author emueller
  * 
  */
-public class RuleServiceHelper extends AbstractViewService {
+public class RuleServiceHelper implements ViewModelService {
 
 	/**
 	 * A predicate that is used to determine the set of {@link VElement}s
@@ -166,9 +166,8 @@ public class RuleServiceHelper extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
-	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 	}
@@ -176,9 +175,8 @@ public class RuleServiceHelper extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#dispose()
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
 	 */
-	@Override
 	public void dispose() {
 
 	}
@@ -186,9 +184,8 @@ public class RuleServiceHelper extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
 	 */
-	@Override
 	public int getPriority() {
 		return 2;
 	}

@@ -42,12 +42,20 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
 	 *      org.eclipse.emf.ecore.EObject)
+	 * @deprecated
 	 */
+	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
-		return check(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
+		return isApplicable(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
 	}
 
-	private int check(EObject eObject, EStructuralFeature feature) {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EStructuralFeature)
+	 */
+	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		if (!VFeaturePathDomainModelReference.class.isInstance(eObject)) {
 			return NOT_APPLICABLE;
 		}
@@ -76,7 +84,7 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 		if (count != 1) {
 			return NOT_APPLICABLE;
 		}
-		return check(setting.getEObject(), setting.getEStructuralFeature());
+		return isApplicable(setting.getEObject(), setting.getEStructuralFeature());
 	}
 
 }

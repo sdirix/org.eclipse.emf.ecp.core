@@ -16,8 +16,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.editor.EditorFactory;
-import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
+import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
@@ -48,16 +55,10 @@ public class MEEditorPage extends FormPage {
 	//
 	private final ECPControlContext modelElementContext;
 
-	// TODO: unused?
-	private IEditorCompositeProvider editorPageContent;
-
 	private ShortLabelProvider shortLabelProvider;
 
 	private ComposedAdapterFactory composedAdapterFactory;
-
-	// private ISourceProvider sourceProvider;
-
-	// private IEvaluationService service;
+	private ECPSWTView ecpView;
 
 	/**
 	 * Default constructor.
@@ -111,17 +112,23 @@ public class MEEditorPage extends FormPage {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-		FormToolkit toolkit = getEditor().getToolkit();
+		final FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();
 		form.setShowFocusedControl(true);
 		toolkit.decorateFormHeading(form.getForm());
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		EClass eClass = modelElementContext.getModelElement().eClass();
+		final EClass eClass = modelElementContext.getModelElement().eClass();
 
-		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
-		editorPageContent.createUI(body);
+		final EObject domainObject = modelElementContext.getModelElement();
+		final VView view = ViewProviderHelper.getView(domainObject);
+		final ViewModelContext vmc = new ViewModelContextImpl(view, domainObject, new ECPReferenceServiceImpl());
+		try {
+			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
+		} catch (final ECPRendererException ex) {
+			Activator.logException(ex);
+		}
 
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
 		createToolbar();
@@ -141,13 +148,13 @@ public class MEEditorPage extends FormPage {
 		name += " [" + modelElementContext.getModelElement().eClass().getName() + "]";
 		try {
 			form.setText(name);
-		} catch (SWTException e) {
+		} catch (final SWTException e) {
 			// Catch in case editor is closed directly after change
 		}
 	}
 
 	private void createToolbar() {
-		IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
+		final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
 		// sourceProvider = new AbstractSourceProvider() {
 		// public void dispose() {
 		// }
@@ -175,7 +182,9 @@ public class MEEditorPage extends FormPage {
 
 			@Override
 			public void run() {
-				new ECPCommand(modelElementContext.getModelElement(), modelElementContext.getEditingDomain()) {
+				final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElementContext
+					.getModelElement());
+				new ECPCommand(modelElementContext.getModelElement(), editingDomain) {
 
 					@Override
 					protected void doRun() {
@@ -207,7 +216,7 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void dispose() {
-		editorPageContent.dispose();
+		ecpView.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		form.dispose();

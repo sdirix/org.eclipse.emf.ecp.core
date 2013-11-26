@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.categorization.model.impl;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -19,10 +20,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
-import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
+import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +40,7 @@ import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
  * 
  * @generated
  */
-public abstract class VAbstractCategorizationImpl extends VElementImpl implements VAbstractCategorization
+public abstract class VAbstractCategorizationImpl extends VCategorizableElementImpl implements VAbstractCategorization
 {
 	/**
 	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
@@ -60,6 +62,7 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 	protected VAbstractCategorizationImpl()
 	{
 		super();
+		addLocalDependencyToLabelAdapter(VViewPackage.Literals.ELEMENT__NAME);
 	}
 
 	/**
@@ -177,6 +180,35 @@ public abstract class VAbstractCategorizationImpl extends VElementImpl implement
 			return actions != null && !actions.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel()
+	 */
+	public String getLabel() {
+		return getName();
+	}
+
+	private List<ECPAction> ecpActions;
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getECPActions()
+	 */
+	public List<ECPAction> getECPActions() {
+		return ecpActions;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#setECPActions(java.util.List)
+	 */
+	public void setECPActions(List<ECPAction> actions) {
+		ecpActions = actions;
 	}
 
 } // VAbstractCategorizationImpl

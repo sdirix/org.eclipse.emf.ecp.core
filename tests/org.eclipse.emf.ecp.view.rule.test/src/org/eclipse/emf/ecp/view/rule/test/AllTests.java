@@ -18,7 +18,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 	RuleServiceGCTest.class,
-	RuleTest.class,
 	RuleServiceTest.class,
 	ConditionEvaluator_Test.class })
 public class AllTests {

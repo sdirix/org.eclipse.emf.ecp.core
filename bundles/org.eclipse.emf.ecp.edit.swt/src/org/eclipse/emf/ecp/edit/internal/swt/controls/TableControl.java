@@ -106,17 +106,8 @@ public class TableControl extends SWTControl {
 
 	private final Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
 
-	@Override
-	protected void postInit() {
-		super.postInit();
-		mainSetting = getDomainModelReference().getIterator().next();
-	}
-
 	private EReference getTableReference() {
-		if (mainFeature == null) {
-			mainFeature = (EReference) getDomainModelReference().getEStructuralFeatureIterator().next();
-		}
-		return mainFeature;
+		return (EReference) getFirstStructuralFeature();
 	}
 
 	/**
@@ -134,7 +125,7 @@ public class TableControl extends SWTControl {
 
 	@Override
 	public Composite createControl(final Composite parent) {
-
+		mainSetting = getFirstSetting();
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
@@ -246,7 +237,6 @@ public class TableControl extends SWTControl {
 				readOnlyColumn.put(tcc.getColumnAttribute(), tcc.isReadOnly());
 			}
 		}
-
 		for (final EStructuralFeature feature : structuralFeatures) {
 			final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 				tempInstance, feature);
@@ -255,8 +245,8 @@ public class TableControl extends SWTControl {
 				continue;
 			}
 
-			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
-				tempInstance, tableViewer.getTable(), getModelElementContext());
+			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(feature,
+				tempInstance, tableViewer.getTable(), getViewModelContext());
 			// create a new column
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
 
@@ -317,7 +307,7 @@ public class TableControl extends SWTControl {
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
+		final IObservableList list = EMFEditObservables.observeList(getEditingDomain(mainSetting),
 			mainSetting.getEObject(), mainSetting.getEStructuralFeature());
 		tableViewer.setInput(list);
 
@@ -433,7 +423,7 @@ public class TableControl extends SWTControl {
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 */
 	protected void deleteRows(List<EObject> deletionList) {
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getEditingDomain(mainSetting);
 		final EObject modelElement = mainSetting.getEObject();
 		editingDomain.getCommandStack().execute(
 			RemoveCommand.create(editingDomain, modelElement, getTableReference(), deletionList));
@@ -450,7 +440,7 @@ public class TableControl extends SWTControl {
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getEditingDomain(mainSetting);
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, getTableReference(), instance));
 
@@ -506,6 +496,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getData().isEmpty()) {
 			return;
@@ -528,6 +519,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void resetValidation() {
 		featureErrorMap.clear();
 		// tableViewer.refresh();
@@ -541,6 +533,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		if (addButton != null) {
 			addButton.setVisible(isEditable);
@@ -655,6 +648,7 @@ public class TableControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return false;
@@ -757,7 +751,7 @@ public class TableControl extends SWTControl {
 		}
 
 		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-			return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
+			return EMFEditObservables.observeValue(getEditingDomain(),
 				(EObject) element, cellFeature);
 		}
 
