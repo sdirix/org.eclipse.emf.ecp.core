@@ -149,6 +149,16 @@ public class Activator extends Plugin {
 
 	}
 
+	/**
+	 * Loads an {@link ImageData} based on the provided {@link URL}.
+	 * 
+	 * @param url the {@link URL} to the {@link ImageData}
+	 * @return the {@link ImageData}
+	 */
+	public static ImageData getImageData(URL url) {
+		return ImageDescriptor.createFromURL(url).getImageData();
+	}
+
 	private ServiceReference<ECPControlFactory> controlFactoryReference;
 
 	/**

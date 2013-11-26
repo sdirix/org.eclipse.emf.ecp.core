@@ -283,6 +283,10 @@ public abstract class ECPAbstractControl {
 	 * @since 1.2
 	 */
 	protected final Locale getLocale() {
+		final ViewLocaleService service = viewModelContext.getService(ViewLocaleService.class);
+		if (service != null) {
+			return service.getLocale();
+		}
 		return Locale.getDefault();
 	}
 
@@ -307,7 +311,7 @@ public abstract class ECPAbstractControl {
 	 */
 	@Deprecated
 	protected final ECPControlContext getModelElementContext() {
-		throw new UnsupportedOperationException("DO NOT USE THIS METHOD!!");
+		throw new UnsupportedOperationException("DO NOT USE THIS METHOD!! Use the ViewModelContext and the VControl.");
 	}
 
 	/**
@@ -315,7 +319,6 @@ public abstract class ECPAbstractControl {
 	 * 
 	 * @return the domainModelReference the {@link VDomainModelReference} of this control
 	 */
-	@Deprecated
 	protected final VDomainModelReference getDomainModelReference() {
 		return control.getDomainModelReference();
 	}

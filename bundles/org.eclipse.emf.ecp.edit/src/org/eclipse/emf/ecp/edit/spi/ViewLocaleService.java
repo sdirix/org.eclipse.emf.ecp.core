@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Locale;
 
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.context.ViewModelService;
 
 /**
  * A view service providing the locale.
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.context.ViewModelContext;
  * @since 1.2
  * 
  */
-public interface ViewLocaleService extends ViewModelContext {
+public interface ViewLocaleService extends ViewModelService {
 
 	/**
 	 * The current locale of the view.

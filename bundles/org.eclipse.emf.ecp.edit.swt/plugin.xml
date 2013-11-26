@@ -121,6 +121,24 @@
                supportedClassType="java.lang.Long">
          </staticTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl"
+            id="org.eclipse.emf.ecp.control.swt.reference"
+            >
+         <staticTest
+               priority="1"
+               singleValue="true"
+               supportedClassType="org.eclipse.emf.ecore.EObject">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMultiControl"
+            id="org.eclipse.emf.ecp.control.swt.multiReference"
+            >
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMultiControlTester">
+         </dynamicTest>
+      </control>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.edit.swt.cellEditor">
@@ -138,6 +156,11 @@
             class="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditor"
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.dateTime"
             tester="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditorTester">
+      </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.link"
+            tester="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkCellEditorTester">
       </cellEditor>
    </extension>
 
