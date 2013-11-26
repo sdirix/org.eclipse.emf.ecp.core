@@ -156,7 +156,7 @@ public abstract class MultiControl extends SWTControl {
 				final ListDiff diff = event.diff;
 				diff.accept(new ListDiffVisitor() {
 
-					int widthBeforeChange = -1; // initial negative value
+					private int widthBeforeChange = -1; // initial negative value
 
 					@Override
 					public void handleRemove(int index, Object element) {
@@ -186,7 +186,7 @@ public abstract class MultiControl extends SWTControl {
 
 					@Override
 					public void handleReplace(int index, Object oldElement, Object newElement) {
-						// do nothing
+						widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
 					}
 
 					private void triggerScrollbarUpdate() {
