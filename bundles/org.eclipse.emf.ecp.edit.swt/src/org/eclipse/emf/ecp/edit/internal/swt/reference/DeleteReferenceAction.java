@@ -15,11 +15,9 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -42,9 +40,10 @@ public class DeleteReferenceAction extends ECPSWTAction {
 	/**
 	 * The constructor for a delete reference action.
 	 * 
-	 * @param modelElementContext the {@link ECPControlContext} to use
+	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param itemPropertyDescriptor teh {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
+	 * @param setting the {@link Setting} to use
+	 * @param referenceService the {@link ReferenceService} to use
 	 */
 	public DeleteReferenceAction(EditingDomain editingDomain, Setting setting,
 		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {

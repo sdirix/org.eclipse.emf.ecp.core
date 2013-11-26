@@ -96,7 +96,7 @@ public class NumericalControl extends AbstractTextControl {
 			value.addValueChangeListener(new IValueChangeListener() {
 				public void handleValueChange(ValueChangeEvent event) {
 					final Object newValue = event.diff.getNewValue();
-					final DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
+					final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 						getInstanceClass());
 					try {
 						final Number number = format.parse((String) newValue);

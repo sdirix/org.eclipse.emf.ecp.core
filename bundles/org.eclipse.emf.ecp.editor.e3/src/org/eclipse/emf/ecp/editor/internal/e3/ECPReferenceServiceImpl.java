@@ -64,8 +64,8 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
 	 */
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		ecpProject = null;
+		context = null;
 	}
 
 	/**

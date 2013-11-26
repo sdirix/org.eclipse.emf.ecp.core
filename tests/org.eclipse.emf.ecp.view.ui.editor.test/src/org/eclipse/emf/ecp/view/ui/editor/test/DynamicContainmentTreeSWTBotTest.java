@@ -19,12 +19,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -34,7 +32,6 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.dynamictree.model.test.DynamicContainmentTreeTestEditContext;
 import org.eclipse.emf.ecp.view.model.VContainedElement;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -199,18 +196,6 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		testElement.setParentId(ELEMENT_CONTAINER_ID);
 		elementContainer.getTestElements().add(testElement);
 		return root;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createContext(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.model.VView)
-	 */
-	@Override
-	public ECPControlContext createContext(EObject domainObject, VView view) {
-		return new DynamicContainmentTreeTestEditContext(
-			domainObject, new ViewModelContextImpl(view, domainObject));
 	}
 
 	/**

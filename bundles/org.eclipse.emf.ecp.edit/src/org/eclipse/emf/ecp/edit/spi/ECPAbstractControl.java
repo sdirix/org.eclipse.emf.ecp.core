@@ -56,8 +56,8 @@ public abstract class ECPAbstractControl {
 	/**
 	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
 	 * 
-	 * @param viewModelContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
-	 * @param control the {@link VDomainModelReference} of this control
+	 * @param viewModelContext the {@link ViewModelContext} to use by this {@link ECPAbstractControl}.
+	 * @param control the {@link VControl} of this control
 	 * @since 1.2
 	 */
 	public final void init(ViewModelContext viewModelContext, final VControl control) {

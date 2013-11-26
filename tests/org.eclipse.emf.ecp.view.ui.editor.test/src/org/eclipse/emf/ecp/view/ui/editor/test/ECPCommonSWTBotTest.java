@@ -16,13 +16,11 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.DefaultControlContext;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -74,9 +72,9 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 
 	public abstract void logic();
 
-	public ECPControlContext createContext(EObject domainObject, VView view) {
-		return new DefaultControlContext(domainObject, view);
-	}
+	// public ECPControlContext createContext(EObject domainObject, VView view) {
+	// return new DefaultControlContext(domainObject, view);
+	// }
 
 	public VView getViewNode() {
 		return view;

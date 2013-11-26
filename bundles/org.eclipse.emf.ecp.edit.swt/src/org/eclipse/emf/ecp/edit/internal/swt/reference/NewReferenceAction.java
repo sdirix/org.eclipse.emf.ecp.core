@@ -18,12 +18,10 @@ import java.net.URL;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
@@ -46,9 +44,10 @@ public class NewReferenceAction extends ECPSWTAction {
 	/**
 	 * The constructor for a new reference action.
 	 * 
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param feature the {@link EStructuralFeature} to use
+	 * @param editingDomain the {@link EditingDomain} to use
+	 * @param itemPropertyDescriptor teh {@link IItemPropertyDescriptor} to use
+	 * @param setting the {@link Setting} to use
+	 * @param referenceService the {@link ReferenceService} to use
 	 */
 	public NewReferenceAction(EditingDomain editingDomain, Setting setting,
 		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {

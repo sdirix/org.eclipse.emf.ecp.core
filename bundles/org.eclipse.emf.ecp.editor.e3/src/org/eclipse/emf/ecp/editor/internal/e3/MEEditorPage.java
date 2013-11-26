@@ -23,6 +23,8 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
@@ -180,7 +182,9 @@ public class MEEditorPage extends FormPage {
 
 			@Override
 			public void run() {
-				new ECPCommand(modelElementContext.getModelElement(), modelElementContext.getEditingDomain()) {
+				final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElementContext
+					.getModelElement());
+				new ECPCommand(modelElementContext.getModelElement(), editingDomain) {
 
 					@Override
 					protected void doRun() {

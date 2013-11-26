@@ -27,7 +27,7 @@ public abstract class AbstractMEEditorPage {
 	 * Create a page for the editor.
 	 * 
 	 * @param editor the editor to add the page to
-	 * @param modelElementContext the {@link EditorModelelementContext}
+	 * @param modelElementContext the {@link ECPControlContext}
 	 * @return the {@link FormPage}
 	 */
 	public abstract FormPage createPage(FormEditor editor, ECPControlContext modelElementContext);
