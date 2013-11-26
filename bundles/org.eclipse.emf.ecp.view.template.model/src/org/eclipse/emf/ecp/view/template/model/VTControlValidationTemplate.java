@@ -23,22 +23,32 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkColorHEX <em>Ok Color HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkImageURL <em>Ok Image URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL <em>Ok Overlay URL
+ * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX <em>Info Color HEX
  * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL <em>Info Image URL
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL <em>Info Overlay URL
  * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX <em>Warning Color
  * HEX</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL <em>Warning Image
  * URL</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL <em>Warning
+ * Overlay URL</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX <em>Error Color HEX
  * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL <em>Error Image URL
  * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL <em>Error Overlay
+ * URL</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX <em>Cancel Color HEX
  * </em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL <em>Cancel Image URL
  * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL <em>Cancel Overlay
+ * URL</em>}</li>
  * </ul>
  * </p>
  * 
@@ -107,6 +117,36 @@ public interface VTControlValidationTemplate extends EObject
 	void setOkImageURL(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Ok Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Ok Overlay URL</em>' attribute isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Ok Overlay URL</em>' attribute.
+	 * @see #setOkOverlayURL(String)
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_OkOverlayURL()
+	 * @model
+	 * @generated
+	 */
+	String getOkOverlayURL();
+
+	/**
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL
+	 * <em>Ok Overlay URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Ok Overlay URL</em>' attribute.
+	 * @see #getOkOverlayURL()
+	 * @generated
+	 */
+	void setOkOverlayURL(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Info Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -165,6 +205,36 @@ public interface VTControlValidationTemplate extends EObject
 	 * @generated
 	 */
 	void setInfoImageURL(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Info Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Info Overlay URL</em>' attribute isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Info Overlay URL</em>' attribute.
+	 * @see #setInfoOverlayURL(String)
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_InfoOverlayURL()
+	 * @model
+	 * @generated
+	 */
+	String getInfoOverlayURL();
+
+	/**
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL
+	 * <em>Info Overlay URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Info Overlay URL</em>' attribute.
+	 * @see #getInfoOverlayURL()
+	 * @generated
+	 */
+	void setInfoOverlayURL(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Warning Color HEX</b></em>' attribute.
@@ -227,6 +297,36 @@ public interface VTControlValidationTemplate extends EObject
 	void setWarningImageURL(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Warning Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Warning Overlay URL</em>' attribute isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Warning Overlay URL</em>' attribute.
+	 * @see #setWarningOverlayURL(String)
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_WarningOverlayURL()
+	 * @model
+	 * @generated
+	 */
+	String getWarningOverlayURL();
+
+	/**
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL
+	 * <em>Warning Overlay URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Warning Overlay URL</em>' attribute.
+	 * @see #getWarningOverlayURL()
+	 * @generated
+	 */
+	void setWarningOverlayURL(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Error Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -287,6 +387,36 @@ public interface VTControlValidationTemplate extends EObject
 	void setErrorImageURL(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Error Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Error Overlay URL</em>' attribute isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Error Overlay URL</em>' attribute.
+	 * @see #setErrorOverlayURL(String)
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_ErrorOverlayURL()
+	 * @model
+	 * @generated
+	 */
+	String getErrorOverlayURL();
+
+	/**
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL
+	 * <em>Error Overlay URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Error Overlay URL</em>' attribute.
+	 * @see #getErrorOverlayURL()
+	 * @generated
+	 */
+	void setErrorOverlayURL(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Cancel Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -345,5 +475,35 @@ public interface VTControlValidationTemplate extends EObject
 	 * @generated
 	 */
 	void setCancelImageURL(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Cancel Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Cancel Overlay URL</em>' attribute isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Cancel Overlay URL</em>' attribute.
+	 * @see #setCancelOverlayURL(String)
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_CancelOverlayURL()
+	 * @model
+	 * @generated
+	 */
+	String getCancelOverlayURL();
+
+	/**
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL
+	 * <em>Cancel Overlay URL</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Cancel Overlay URL</em>' attribute.
+	 * @see #getCancelOverlayURL()
+	 * @generated
+	 */
+	void setCancelOverlayURL(String value);
 
 } // VTControlValidationTemplate

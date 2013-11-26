@@ -172,7 +172,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_InfoColorHEX()
+	public EAttribute getControlValidationTemplate_OkOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(2);
 	}
@@ -183,7 +183,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_InfoImageURL()
+	public EAttribute getControlValidationTemplate_InfoColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(3);
 	}
@@ -194,7 +194,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_WarningColorHEX()
+	public EAttribute getControlValidationTemplate_InfoImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(4);
 	}
@@ -205,7 +205,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_WarningImageURL()
+	public EAttribute getControlValidationTemplate_InfoOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(5);
 	}
@@ -216,7 +216,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_ErrorColorHEX()
+	public EAttribute getControlValidationTemplate_WarningColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(6);
 	}
@@ -227,7 +227,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_ErrorImageURL()
+	public EAttribute getControlValidationTemplate_WarningImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(7);
 	}
@@ -238,7 +238,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_CancelColorHEX()
+	public EAttribute getControlValidationTemplate_WarningOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(8);
 	}
@@ -249,9 +249,64 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * 
 	 * @generated
 	 */
-	public EAttribute getControlValidationTemplate_CancelImageURL()
+	public EAttribute getControlValidationTemplate_ErrorColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getControlValidationTemplate_ErrorImageURL()
+	{
+		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getControlValidationTemplate_ErrorOverlayURL()
+	{
+		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getControlValidationTemplate_CancelColorHEX()
+	{
+		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getControlValidationTemplate_CancelImageURL()
+	{
+		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getControlValidationTemplate_CancelOverlayURL()
+	{
+		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -294,14 +349,19 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		controlValidationTemplateEClass = createEClass(CONTROL_VALIDATION_TEMPLATE);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL);
+		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL);
+		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL);
+		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL);
+		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL);
+		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL);
 	}
 
 	/**
@@ -352,28 +412,43 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		initEAttribute(getControlValidationTemplate_OkImageURL(), ecorePackage.getEString(), "okImageURL", null, 0, 1,
 			VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControlValidationTemplate_OkOverlayURL(), ecorePackage.getEString(), "okOverlayURL", null, 0,
+			1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_InfoColorHEX(), ecorePackage.getEString(), "infoColorHEX", null, 0,
 			1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_InfoImageURL(), ecorePackage.getEString(), "infoImageURL", null, 0,
 			1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
 			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControlValidationTemplate_InfoOverlayURL(), ecorePackage.getEString(), "infoOverlayURL",
+			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_WarningColorHEX(), ecorePackage.getEString(), "warningColorHEX",
 			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_WarningImageURL(), ecorePackage.getEString(), "warningImageURL",
 			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControlValidationTemplate_WarningOverlayURL(), ecorePackage.getEString(),
+			"warningOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_ErrorColorHEX(), ecorePackage.getEString(), "errorColorHEX", null,
 			0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_ErrorImageURL(), ecorePackage.getEString(), "errorImageURL", null,
 			0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControlValidationTemplate_ErrorOverlayURL(), ecorePackage.getEString(), "errorOverlayURL",
+			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_CancelColorHEX(), ecorePackage.getEString(), "cancelColorHEX",
 			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getControlValidationTemplate_CancelImageURL(), ecorePackage.getEString(), "cancelImageURL",
+			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getControlValidationTemplate_CancelOverlayURL(), ecorePackage.getEString(), "cancelOverlayURL",
 			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
 			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

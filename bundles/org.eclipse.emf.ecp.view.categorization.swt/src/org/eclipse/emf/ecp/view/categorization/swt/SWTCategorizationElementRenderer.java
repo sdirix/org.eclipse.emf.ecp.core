@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
@@ -80,10 +81,10 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	public static final SWTCategorizationElementRenderer INSTANCE = new SWTCategorizationElementRenderer();
 
 	/** The error descriptor. */
-	private static ImageDescriptor errorDescriptor = Activator.getImageDescriptor("icons/error_decorate.png");
+	// private static ImageDescriptor errorDescriptor = Activator.getImageDescriptor("icons/error_decorate.png");
 
 	/** The warning descriptor. */
-	private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png");
+	// private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png");
 
 	/**
 	 * {@inheritDoc}
@@ -480,17 +481,17 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			final Node<?> node = (Node<?>) object;
 			image = super.getImage(node.getLabelObject());
 			ImageDescriptor overlay = null;
-			switch (node.getSeverity()) {
-
-			case Diagnostic.ERROR:
-				overlay = errorDescriptor;
-				break;
-			case Diagnostic.WARNING:
-				overlay = warningDescriptor;
-				break;
-			default:
-				break;
-			}
+			// switch (node.getSeverity()) {
+			// case Diagnostic.ERROR:
+			// overlay = errorDescriptor;
+			// break;
+			// case Diagnostic.WARNING:
+			// overlay = warningDescriptor;
+			// break;
+			// default:
+			// break;
+			// }
+			overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(node.getSeverity());
 
 			if (overlay == null) {
 				return image;

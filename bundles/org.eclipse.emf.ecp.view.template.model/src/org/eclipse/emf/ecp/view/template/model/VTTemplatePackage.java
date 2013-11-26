@@ -146,6 +146,16 @@ public interface VTTemplatePackage extends EPackage
 	int CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL = 1;
 
 	/**
+	 * The feature id for the '<em><b>Ok Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL = 2;
+
+	/**
 	 * The feature id for the '<em><b>Info Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -153,7 +163,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX = 2;
+	int CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX = 3;
 
 	/**
 	 * The feature id for the '<em><b>Info Image URL</b></em>' attribute.
@@ -163,7 +173,17 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL = 3;
+	int CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL = 4;
+
+	/**
+	 * The feature id for the '<em><b>Info Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL = 5;
 
 	/**
 	 * The feature id for the '<em><b>Warning Color HEX</b></em>' attribute.
@@ -173,7 +193,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX = 4;
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX = 6;
 
 	/**
 	 * The feature id for the '<em><b>Warning Image URL</b></em>' attribute.
@@ -183,7 +203,17 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL = 5;
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL = 7;
+
+	/**
+	 * The feature id for the '<em><b>Warning Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL = 8;
 
 	/**
 	 * The feature id for the '<em><b>Error Color HEX</b></em>' attribute.
@@ -193,7 +223,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX = 6;
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX = 9;
 
 	/**
 	 * The feature id for the '<em><b>Error Image URL</b></em>' attribute.
@@ -203,7 +233,17 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL = 7;
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL = 10;
+
+	/**
+	 * The feature id for the '<em><b>Error Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL = 11;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Color HEX</b></em>' attribute.
@@ -213,7 +253,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX = 8;
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX = 12;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Image URL</b></em>' attribute.
@@ -223,7 +263,17 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL = 9;
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL = 13;
+
+	/**
+	 * The feature id for the '<em><b>Cancel Overlay URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL = 14;
 
 	/**
 	 * The number of structural features of the '<em>Control Validation Template</em>' class.
@@ -233,7 +283,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE_FEATURE_COUNT = 10;
+	int CONTROL_VALIDATION_TEMPLATE_FEATURE_COUNT = 15;
 
 	/**
 	 * The number of operations of the '<em>Control Validation Template</em>' class.
@@ -311,6 +361,20 @@ public interface VTTemplatePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL
+	 * <em>Ok Overlay URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Ok Overlay URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_OkOverlayURL();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX
 	 * <em>Info Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
@@ -336,6 +400,20 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getControlValidationTemplate_InfoImageURL();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL
+	 * <em>Info Overlay URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Info Overlay URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_InfoOverlayURL();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -367,6 +445,20 @@ public interface VTTemplatePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL
+	 * <em>Warning Overlay URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Warning Overlay URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_WarningOverlayURL();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX
 	 * <em>Error Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
@@ -395,6 +487,20 @@ public interface VTTemplatePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL
+	 * <em>Error Overlay URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Error Overlay URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_ErrorOverlayURL();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX
 	 * <em>Cancel Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
@@ -420,6 +526,20 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getControlValidationTemplate_CancelImageURL();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL
+	 * <em>Cancel Overlay URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Cancel Overlay URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_CancelOverlayURL();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -502,6 +622,15 @@ public interface VTTemplatePackage extends EPackage
 		EAttribute CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL = eINSTANCE.getControlValidationTemplate_OkImageURL();
 
 		/**
+		 * The meta object literal for the '<em><b>Ok Overlay URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL = eINSTANCE.getControlValidationTemplate_OkOverlayURL();
+
+		/**
 		 * The meta object literal for the '<em><b>Info Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -518,6 +647,16 @@ public interface VTTemplatePackage extends EPackage
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL = eINSTANCE.getControlValidationTemplate_InfoImageURL();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Overlay URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL = eINSTANCE
+			.getControlValidationTemplate_InfoOverlayURL();
 
 		/**
 		 * The meta object literal for the '<em><b>Warning Color HEX</b></em>' attribute feature.
@@ -540,6 +679,16 @@ public interface VTTemplatePackage extends EPackage
 			.getControlValidationTemplate_WarningImageURL();
 
 		/**
+		 * The meta object literal for the '<em><b>Warning Overlay URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL = eINSTANCE
+			.getControlValidationTemplate_WarningOverlayURL();
+
+		/**
 		 * The meta object literal for the '<em><b>Error Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -560,6 +709,16 @@ public interface VTTemplatePackage extends EPackage
 			.getControlValidationTemplate_ErrorImageURL();
 
 		/**
+		 * The meta object literal for the '<em><b>Error Overlay URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL = eINSTANCE
+			.getControlValidationTemplate_ErrorOverlayURL();
+
+		/**
 		 * The meta object literal for the '<em><b>Cancel Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -578,6 +737,16 @@ public interface VTTemplatePackage extends EPackage
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL = eINSTANCE
 			.getControlValidationTemplate_CancelImageURL();
+
+		/**
+		 * The meta object literal for the '<em><b>Cancel Overlay URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL = eINSTANCE
+			.getControlValidationTemplate_CancelOverlayURL();
 
 	}
 

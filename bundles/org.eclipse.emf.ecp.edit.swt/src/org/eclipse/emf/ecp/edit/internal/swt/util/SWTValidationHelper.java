@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -129,6 +130,47 @@ public final class SWTValidationHelper {
 		}
 	}
 
+	/**
+	 * Returns the validation overlay icon matching the given severity.
+	 * 
+	 * @param severity the severity of the {@link Diagnostic}
+	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 */
+	public ImageDescriptor getValidationOverlayDescriptor(int severity) {
+		final VTViewTemplate template = getTemplate();
+		String imageUrl = null;
+
+		switch (severity) {
+		case Diagnostic.OK:
+			imageUrl = template.getControlValidationConfiguration().getOkOverlayURL();
+			break;
+		case Diagnostic.INFO:
+			imageUrl = template.getControlValidationConfiguration().getInfoOverlayURL();
+			break;
+		case Diagnostic.WARNING:
+			imageUrl = template.getControlValidationConfiguration().getWarningOverlayURL();
+			break;
+		case Diagnostic.ERROR:
+			imageUrl = template.getControlValidationConfiguration().getErrorOverlayURL();
+			break;
+		case Diagnostic.CANCEL:
+			imageUrl = template.getControlValidationConfiguration().getCancelOverlayURL();
+			break;
+		default:
+			throw new IllegalArgumentException(
+				"The specified severity value " + severity + " is invalid. See Diagnostic class."); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		if (imageUrl == null) {
+			return null;
+		}
+		try {
+			return ImageDescriptor.createFromURL(new
+				URL(imageUrl));
+		} catch (final MalformedURLException ex) {
+			return null;
+		}
+	}
+
 	private VTViewTemplate getTemplate() {
 		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
 		if (vtViewTemplateProvider == null || vtViewTemplateProvider.getViewTemplate() == null) {
@@ -140,7 +182,13 @@ public final class SWTValidationHelper {
 				validationTemplate.setErrorColorHEX("ff0000"); //$NON-NLS-1$
 				validationTemplate.setWarningColorHEX("FFD800");//$NON-NLS-1$
 				validationTemplate.setErrorImageURL(Activator.getDefault().getBundle()
-					.getResource("icons/validation_error.png").toExternalForm()); //$NON-NLS-1$				
+					.getResource("icons/validation_error.png").toExternalForm()); //$NON-NLS-1$
+				validationTemplate.setErrorOverlayURL(Activator.getDefault().getBundle()
+					.getResource("icons/error_decorate.png").toExternalForm()); //$NON-NLS-1$
+				validationTemplate.setWarningOverlayURL(Activator.getDefault().getBundle()
+					.getResource("icons/warning_decorate.png").toExternalForm()); //$NON-NLS-1$
+				validationTemplate.setInfoOverlayURL(Activator.getDefault().getBundle()
+					.getResource("icons/info_decorate.gif").toExternalForm()); //$NON-NLS-1$
 			}
 			return defaultTemplate;
 		}
