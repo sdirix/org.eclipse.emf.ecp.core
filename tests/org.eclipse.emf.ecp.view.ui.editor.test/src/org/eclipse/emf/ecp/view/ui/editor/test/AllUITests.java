@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
 import org.eclipse.emf.ecp.view.ui.editor.test.controls.ControlsSWTBotTest;
+import org.eclipse.emf.ecp.view.ui.editor.test.controls.TableControlSWTBotTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -24,7 +25,8 @@ import org.junit.runners.Suite;
 	OpenEditorTest.class,
 	// ModifyNavigatorTest.class,
 	DynamicContainmentTreeSWTBotTest.class,
-	ControlsSWTBotTest.class
+	ControlsSWTBotTest.class,
+	TableControlSWTBotTest.class
 })
 public class AllUITests {
 

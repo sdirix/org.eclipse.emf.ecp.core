@@ -58,6 +58,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
+ * Configurable SWTBotTest displaying and entering data in ECP Controls.
+ * 
  * @author jfaltermeier
  * 
  */
