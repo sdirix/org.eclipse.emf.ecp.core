@@ -172,13 +172,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.editor.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.editor.e3.source"
          download-size="0"
          install-size="0"
@@ -305,13 +298,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.groupedgrid.ui.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.view.groupedgrid.ui.swt.source"
          download-size="0"
          install-size="0"
@@ -327,13 +313,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.label.model.edit.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.label.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -410,13 +389,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.separator.ui.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.view.separator.ui.swt.source"
          download-size="0"
          install-size="0"
@@ -438,13 +410,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.group.ui.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.view.group.ui.swt.source"
          download-size="0"
          install-size="0"
@@ -460,13 +425,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.table.model.edit.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.table.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -543,7 +501,41 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.categorization.ui.source"
+         id="org.eclipse.emf.ecp.view.horizontal.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.horizontal.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.horizontal.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.vertical.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.vertical.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.vertical.ui.swt.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
