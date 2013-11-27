@@ -20,8 +20,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -57,14 +60,19 @@ public class CustomControlTwoRowWithViewerTest {
 		player.setName("Hans");
 		player.setDateOfBirth(new Date());
 		league.getPlayers().add(player);
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final VHardcodedDomainModelReference hardcodedDomainModelRef = VCustomFactory.eINSTANCE
+			.createHardcodedDomainModelReference();
+		hardcodedDomainModelRef.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub3");
+		control.setDomainModelReference(hardcodedDomainModelRef);
+
 		customControl = new CustomControlStub3();
-		customControl.init(ViewTestHelper.createECPControlContext(league,
-			SWTViewTestHelper.createShell()), null);
+		customControl.init(new ViewModelContextImpl(control, league), control);
 		parent = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 
-		for (final VDomainModelReference modelReference : customControl.getNeededDomainModelReferences()) {
-			modelReference.resolve(league);
-		}
+		// for (final VDomainModelReference modelReference : customControl.getNeededDomainModelReferences()) {
+		// modelReference.resolve(league);
+		// }
 
 		final List<RenderingResultRow<Control>> rows = customControl.createControls(parent);
 		final DoubleColumnRow doubleRow = (DoubleColumnRow) rows.get(0);
@@ -107,14 +115,14 @@ public class CustomControlTwoRowWithViewerTest {
 
 	@Test
 	public void testChangeListener() {
-		league.getPlayers().remove(0);
+		league.getPlayers().add(BowlingFactory.eINSTANCE.createPlayer());
 		assertEquals(CustomControlStub3.CHANGE_NOTICED, label.getText());
 	}
 
 	@Test
 	public void testChangeListenerDispose() {
-		assertEquals(4, league.eAdapters().size());
-		customControl.dispose();
 		assertEquals(3, league.eAdapters().size());
+		customControl.dispose();
+		assertEquals(2, league.eAdapters().size());
 	}
 }

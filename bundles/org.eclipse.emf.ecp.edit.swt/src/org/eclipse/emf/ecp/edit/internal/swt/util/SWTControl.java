@@ -30,6 +30,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -84,6 +86,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		if (itemPropertyDescriptor == null) {
 			return null;
 		}
+		parent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				dispose();
+			}
+		});
 		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
 			createControl(parent)));
 	}

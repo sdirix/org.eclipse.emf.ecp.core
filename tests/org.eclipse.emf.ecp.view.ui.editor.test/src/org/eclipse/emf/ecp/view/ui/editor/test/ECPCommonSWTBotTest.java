@@ -21,9 +21,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -46,8 +45,8 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 
 	private static Shell shell;
 	private Display display;
-
-	private VView view;
+	private GCCollectable swtViewCollectable;
+	private ECPSWTView swtView;
 
 	@Override
 	@Before
@@ -74,31 +73,28 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 
 	public abstract void logic();
 
+	public GCCollectable getSWTViewCollectable() {
+		return swtViewCollectable;
+	}
+
+	public void unsetSWTViewCollectable() {
+		swtViewCollectable = null;
+	}
+
 	/**
 	 * Can be overridden to add assertions at end of execution.
 	 */
 	public void assertions(double memBefore, double memAfter) {
 	}
 
-	// public ECPControlContext createContext(EObject domainObject, VView view) {
-	// return new DefaultControlContext(domainObject, view);
-	// }
-
-	public VView getViewNode() {
-		return view;
+	public EObject getDomainObject() {
+		return swtView.getViewModelContext().getDomainModel();
 	}
 
-	public void setViewNode(VView node) {
-		view = node;
+	public void disposeSWTView() {
+		swtView.dispose();
+		swtView = null;
 	}
-
-	// public GCCollectable getSWTViewCollectable() {
-	// return swtViewCollectable;
-	// }
-
-	// public void setSWTViewCollectable(GCCollectable gcc) {
-	// swtViewCollectable = gcc;
-	// }
 
 	private class TestRunnable implements Runnable {
 
@@ -116,9 +112,9 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 							final VView view = createView();
 
 							memBefore = usedMemory();
-							final ViewModelContext viewContext = new ViewModelContextImpl(view, domainObject);
 
-							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+							swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+							swtViewCollectable = new GCCollectable(swtView);
 							final Composite composite = (Composite) swtView.getSWTControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 							composite.setLayoutData(gridData);
@@ -141,7 +137,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 					public void run() {
 						shell.close();
 						if (holdingList.size() > 0) {
-							holdingList.remove(0).dispose();
+							holdingList.clear();
 						}
 						shell.dispose();
 						memAfter = usedMemory();

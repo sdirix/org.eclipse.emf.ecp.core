@@ -87,8 +87,11 @@ public class GCCollectable {
 			retry++;
 		}
 		runMe = false;
-		
 		return result;
+	}
+	
+	public Object getObject(){
+		return phantomRef.get();
 	}
 
 }

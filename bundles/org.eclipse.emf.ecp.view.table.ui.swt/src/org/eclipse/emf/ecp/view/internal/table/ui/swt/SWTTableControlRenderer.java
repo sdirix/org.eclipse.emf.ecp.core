@@ -91,15 +91,15 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 			label.setToolTipText(itemPropertyDescriptor.getDescription(null));
 		}
 
-		final Composite controlComposite = control.createControl(parent);
-		controlComposite.setBackground(parent.getBackground());
+		final List<RenderingResultRow<Control>> createControls = control.createControls(parent);
+		// controlComposite.setBackground(parent.getBackground());
 
 		control.setEditable(!vTableControl.isReadonly());
 
-		if (label == null) {
-			return createResult(controlComposite);
-		}
 		Activator.getDefault().ungetECPControlFactory();
-		return createResult(label, controlComposite);
+		if (label == null) {
+			return createControls;
+		}
+		return createResult(label, createControls.iterator().next().getControls().iterator().next());
 	}
 }

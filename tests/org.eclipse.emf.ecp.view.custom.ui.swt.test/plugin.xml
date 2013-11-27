@@ -38,6 +38,14 @@
                testClass="org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub3Tester">
          </dynamicTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.view.custom.ui.swt.test.ECPAbstractCustomControlSWTStub"
+            id="org.eclipse.emf.ecp.view.custom.ui.swt.test.control.stub"
+            showLabel="true">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.custom.ui.swt.test.ECPCustomControlStubTester">
+         </dynamicTest>
+      </control>
    </extension>
 
 </plugin>

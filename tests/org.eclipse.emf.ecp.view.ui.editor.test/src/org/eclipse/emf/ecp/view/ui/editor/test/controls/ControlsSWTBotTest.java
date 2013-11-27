@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
@@ -74,7 +73,6 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 	private final Boolean[] configuration;
 
 	private GCCollectable viewCollectable;
-	private GCCollectable contextCollectable;
 	private GCCollectable domainCollectable;
 
 	public ControlsSWTBotTest(boolean isDomainCollectable, Boolean[] b) {
@@ -118,20 +116,6 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 	public static void afterClass() {
 		final double diff = Math.abs((memBefore - memAfter) / memBefore);
 		assertTrue(diff < 0.05);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createContext(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.model.VView)
-	 */
-	@Override
-	public ECPControlContext createContext(EObject domainObject, VView view) {
-		// new ViewModelContextImpl(view, domainObject);
-		final ECPControlContext context = super.createContext(domainObject, view);
-		contextCollectable = new GCCollectable(context);
-		return context;
 	}
 
 	/**
@@ -340,14 +324,14 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 		ControlsSWTBotTest.memAfter += after;
 
 		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getViewNode().getControlContext().getModelElement().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getViewNode()
-			.getControlContext().getModelElement().eAdapters().size() < 5);
+			+ getDomainObject().eAdapters().size()
+			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
+			.eAdapters().size() < 5);
+
+		disposeSWTView();
 
 		assertTrue(getSWTViewCollectable().isCollectable());
-		setSWTViewCollectable(null);
-		setViewNode(null);
-		assertTrue(contextCollectable.isCollectable());
+		unsetSWTViewCollectable();
 		assertTrue(viewCollectable.isCollectable());
 		if (isDomainCollectable) {
 			assertTrue(domainCollectable.isCollectable());

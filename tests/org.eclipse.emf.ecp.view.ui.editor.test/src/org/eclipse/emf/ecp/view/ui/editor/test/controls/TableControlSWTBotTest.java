@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
@@ -69,8 +68,8 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 	private final boolean isDomainCollectable;
 
 	private GCCollectable viewCollectable;
-	private GCCollectable contextCollectable;
 	private GCCollectable domainCollectable;
+	private ComposedAdapterFactory adapterFactory;
 
 	public TableControlSWTBotTest(boolean isDomainCollectable) {
 		this.isDomainCollectable = isDomainCollectable;
@@ -150,35 +149,22 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 		TableControlSWTBotTest.memAfter += after;
 
 		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getViewNode().getControlContext().getModelElement().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getViewNode()
-			.getControlContext().getModelElement().eAdapters().size() < 5);
+			+ getDomainObject().eAdapters().size()
+			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
+			.eAdapters().size() < 5);
 		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ ((League) getViewNode().getControlContext().getModelElement()).getPlayers().get(0).eAdapters().size()
+			+ ((League) getDomainObject()).getPlayers().get(0).eAdapters().size()
 			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
-			((League) getViewNode().getControlContext().getModelElement()).getPlayers().get(0).eAdapters().size() < 5);
+			((League) getDomainObject()).getPlayers().get(0).eAdapters().size() < 5);
 
+		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());
-		setSWTViewCollectable(null);
-		setViewNode(null);
-		assertTrue(contextCollectable.isCollectable());
+		unsetSWTViewCollectable();
 		assertTrue(viewCollectable.isCollectable());
+
 		if (isDomainCollectable) {
 			assertTrue(domainCollectable.isCollectable());
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createContext(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.model.VView)
-	 */
-	@Override
-	public ECPControlContext createContext(EObject domainObject, VView view) {
-		final ECPControlContext context = super.createContext(domainObject, view);
-		contextCollectable = new GCCollectable(context);
-		return context;
 	}
 
 	/**
@@ -246,7 +232,7 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 	}
 
 	private void addEditingDomain(ResourceSet resourceSet) {
-		AdapterFactory adapterFactory = new ComposedAdapterFactory(
+		adapterFactory = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] { adapterFactory,
 			new ReflectiveItemProviderAdapterFactory() });

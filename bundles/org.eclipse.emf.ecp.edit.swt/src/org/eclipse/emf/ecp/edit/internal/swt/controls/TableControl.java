@@ -491,6 +491,10 @@ public class TableControl extends SWTControl {
 		super.dispose();
 		composedAdapterFactory.dispose();
 		featureErrorMap.clear();
+		mainFeature = null;
+		mainSetting = null;
+		adapterFactoryItemDelegator = null;
+		composedAdapterFactory = null;
 	}
 
 	/**

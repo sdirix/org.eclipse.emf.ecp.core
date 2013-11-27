@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -29,4 +30,11 @@ public interface ECPSWTView {
 	 */
 	void dispose();
 
+	/**
+	 * Returns the {@link ViewModelContext} which was used to create the current view.
+	 * 
+	 * @return the {@link ViewModelContext}
+	 * @since 1.2
+	 */
+	ViewModelContext getViewModelContext();
 }

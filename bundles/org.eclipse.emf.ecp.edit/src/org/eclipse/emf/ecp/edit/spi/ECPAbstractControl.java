@@ -225,12 +225,19 @@ public abstract class ECPAbstractControl {
 	 */
 	public void dispose() {
 		composedAdapterFactory.dispose();
+		composedAdapterFactory = null;
+		adapterFactoryItemDelegator = null;
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
 		viewModelContext.unregisterViewChangeListener(viewChangeListener);
-		adapterFactoryItemDelegator = null;
+		viewModelContext = null;
+
 		viewChangeListener = null;
+
+		control = null;
+		firstFeature = null;
+		firstSetting = null;
 	}
 
 	/**

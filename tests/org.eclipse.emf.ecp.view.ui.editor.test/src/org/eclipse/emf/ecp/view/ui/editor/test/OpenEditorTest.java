@@ -17,11 +17,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
@@ -51,20 +46,13 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class OpenEditorTest extends ECPCommonSWTBotTest {
 
-private static double memBefore;
+	private static double memBefore;
 	private static double memAfter;
 	private static EObject domainObject;
-	private static Shell shell;
-	private static Display display;
-	private GCCollectable collectable;
-	// private GCCollectable contextCollectable;
-	private GCCollectable viewCollectable;
-	private static GCCollectable domainCollectable;
 
 	private final boolean isDomainCollectable;
 
 	private GCCollectable viewCollectable;
-	private GCCollectable contextCollectable;
 	private GCCollectable domainCollectable;
 
 	public OpenEditorTest(boolean isDomainCollectable) {
@@ -104,31 +92,17 @@ private static double memBefore;
 		OpenEditorTest.memAfter += after;
 
 		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getViewNode().getControlContext().getModelElement().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getViewNode()
-			.getControlContext().getModelElement().eAdapters().size() < 5);
-
+			+ getDomainObject().eAdapters().size()
+			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
+			.eAdapters().size() < 5);
+		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());
-		setSWTViewCollectable(null);
-		setViewNode(null);
-		assertTrue(contextCollectable.isCollectable());
+		unsetSWTViewCollectable();
 		assertTrue(viewCollectable.isCollectable());
 		if (isDomainCollectable) {
+
 			assertTrue(domainCollectable.isCollectable());
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createContext(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.model.VView)
-	 */
-	@Override
-	public ECPControlContext createContext(EObject domainObject, VView view) {
-		final ECPControlContext context = super.createContext(domainObject, view);
-		contextCollectable = new GCCollectable(context);
-		return context;
 	}
 
 	/**

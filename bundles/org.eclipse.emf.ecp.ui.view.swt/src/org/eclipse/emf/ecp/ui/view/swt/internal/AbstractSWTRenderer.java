@@ -77,7 +77,8 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 				if (notification.getNotifier() != vElement) {
 					return;
 				}
-				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
+					&& !vElement.isReadonly()) {
 					applyEnable(vElement, result);
 				}
 			}
@@ -96,9 +97,11 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 				viewContext.unregisterViewChangeListener(listener);
 			}
 		});
-		applyEnable(vElement, result);
 		applyVisible(vElement, result);
 		applyReadOnly(vElement, result);
+		if (!vElement.isReadonly()) {
+			applyEnable(vElement, result);
+		}
 
 		return result;
 	}

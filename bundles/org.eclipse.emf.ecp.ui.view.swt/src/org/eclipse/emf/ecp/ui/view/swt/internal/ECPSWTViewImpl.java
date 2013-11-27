@@ -53,4 +53,13 @@ public class ECPSWTViewImpl implements ECPSWTView {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTView#getViewModelContext()
+	 */
+	public ViewModelContext getViewModelContext() {
+		return viewContext;
+	}
+
 }
