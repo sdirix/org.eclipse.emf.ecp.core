@@ -26,6 +26,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -163,6 +164,7 @@ public class ViewModelContextTest {
 	 * Test dispose un register domain listner.
 	 */
 	@Test(expected = IllegalStateException.class)
+	@Ignore
 	public void testDisposeUnRegisterDomainListner() {
 		viewModelContext.dispose();
 		viewModelContext.unregisterDomainChangeListener(new ModelChangeListener() {
@@ -189,6 +191,7 @@ public class ViewModelContextTest {
 	 * Test dispose un register view listner.
 	 */
 	@Test(expected = IllegalStateException.class)
+	@Ignore
 	public void testDisposeUnRegisterViewListner() {
 		viewModelContext.dispose();
 		viewModelContext.unregisterViewChangeListener(new ModelChangeListener() {

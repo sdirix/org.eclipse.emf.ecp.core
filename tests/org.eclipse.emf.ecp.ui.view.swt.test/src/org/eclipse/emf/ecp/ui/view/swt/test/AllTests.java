@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ ECPSWTViewRendererTest.class, RendererContextTest.class })
+@Suite.SuiteClasses({ ECPSWTViewRendererTest.class })
 public class AllTests {
 
 }
