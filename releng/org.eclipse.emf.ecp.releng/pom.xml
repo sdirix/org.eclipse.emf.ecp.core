@@ -51,7 +51,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.common</module>
 		<module>../../bundles/org.eclipse.emf.ecp.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.editor</module>
 		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
 
@@ -110,7 +109,6 @@
 	<!-- Categorization Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		
@@ -124,28 +122,24 @@
 		<!-- Separator Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.separator.feature</module>
 		
 		<!-- GroupedGrid Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		
 		<!-- Label Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.label.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.label.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		
 		<!-- Group Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
 		
@@ -162,14 +156,12 @@
 		<!-- Vertical Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.vertical.feature</module>
 		
 		<!-- Horizontal Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
 
@@ -177,7 +169,6 @@
 		<!-- Table Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
 		
@@ -219,22 +210,17 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
 		
-		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
