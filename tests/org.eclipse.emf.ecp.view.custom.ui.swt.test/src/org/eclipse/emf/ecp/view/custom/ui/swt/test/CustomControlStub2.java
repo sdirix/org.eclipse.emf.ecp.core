@@ -74,8 +74,11 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT {
 		setParent(composite);
 		setLabel(new Label(composite, SWT.NONE));
 
+		final Composite createControl = createControl(
+			getResolvedDomainModelReference(BowlingPackage.eINSTANCE.getMerchandise_Name()), composite);
+
 		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-			.createRenderingResultRow(label));
+			.createRenderingResultRow(label, createControl));
 
 		return result;
 	}

@@ -40,9 +40,9 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public class CustomControlStub3 extends ECPAbstractCustomControlSWT {
-	private static VFeaturePathDomainModelReference playersReference;
-	private static VFeaturePathDomainModelReference nameReference;
-	private static VFeaturePathDomainModelReference dateReference;
+	// private VFeaturePathDomainModelReference playersReference;
+	// private VFeaturePathDomainModelReference nameReference;
+	// private VFeaturePathDomainModelReference dateReference;
 	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	public static final String CHANGE_NOTICED = "CHANGE!";
@@ -60,16 +60,17 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT {
 	 */
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		if (features.isEmpty()) {
-			playersReference = VViewFactory.eINSTANCE
+			final VFeaturePathDomainModelReference playersReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			playersReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 
-			nameReference = VViewFactory.eINSTANCE
+			final VFeaturePathDomainModelReference nameReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			nameReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 			nameReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 
-			dateReference = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+			final VFeaturePathDomainModelReference dateReference = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
 			dateReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth());
 			dateReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 
@@ -102,9 +103,11 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT {
 		final IValueProperty[] valueProperties = EMFProperties.values(BowlingPackage.Literals.PLAYER__NAME,
 			BowlingPackage.Literals.PLAYER__DATE_OF_BIRTH);
 
-		createViewerBinding(playersReference, tableViewer, valueProperties);
+		createViewerBinding(getResolvedDomainModelReference(BowlingPackage.eINSTANCE.getLeague_Players()), tableViewer,
+			valueProperties);
 
-		registerChangeListener(playersReference, new LeagueChangeListener());
+		registerChangeListener(getResolvedDomainModelReference(BowlingPackage.eINSTANCE.getLeague_Players()),
+			new LeagueChangeListener());
 
 		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 			.createRenderingResultRow(label, tableParent));

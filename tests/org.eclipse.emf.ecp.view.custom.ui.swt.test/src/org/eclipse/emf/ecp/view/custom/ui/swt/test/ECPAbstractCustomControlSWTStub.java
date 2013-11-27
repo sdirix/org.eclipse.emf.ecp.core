@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -75,14 +76,13 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 				.createRenderingResultRow(label));
 			return result;
 		}
-		for (final VFeaturePathDomainModelReference controlFeature : ECPAbstractCustomControlSWTTest.editableFeaturess) {
-			if (controlFeature.getDomainModelEFeature() == VCustomPackage.eINSTANCE
-				.getHardcodedDomainModelReference_ControlId()) {
-				setTextControl(createControl(controlFeature, composite));
-				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-					.createRenderingResultRow(label, getTextControl()));
-			}
-		}
+		final VFeaturePathDomainModelReference controlFeature = (VFeaturePathDomainModelReference) getResolvedDomainModelReference(VCustomPackage.eINSTANCE
+			.getHardcodedDomainModelReference_ControlId());
+
+		setTextControl(createControl(controlFeature, composite));
+		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+			.createRenderingResultRow(label, getTextControl()));
+
 		return result;
 	}
 
@@ -272,7 +272,11 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
-		return ECPAbstractCustomControlSWTTest.createFeatures();
+		return Collections.emptySet();
+	}
+
+	public List<VDomainModelReference> getResolvedReferences() {
+		return getResolvedDomainModelReferences();
 	}
 
 }

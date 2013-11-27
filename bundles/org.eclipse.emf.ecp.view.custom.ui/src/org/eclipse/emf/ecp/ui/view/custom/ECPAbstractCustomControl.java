@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
@@ -73,6 +74,20 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	protected final List<VDomainModelReference> getResolvedDomainModelReferences() {
 		final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) getDomainModelReference();
 		return hardcodedDomainModelReference.getDomainModelReferences();
+	}
+
+	protected final VDomainModelReference getResolvedDomainModelReference(EStructuralFeature feature) {
+		final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) getDomainModelReference();
+		for (final VDomainModelReference domainModelReference : hardcodedDomainModelReference
+			.getDomainModelReferences()) {
+			if (VFeaturePathDomainModelReference.class.isInstance(domainModelReference)) {
+				final VFeaturePathDomainModelReference ref = (VFeaturePathDomainModelReference) domainModelReference;
+				if (ref.getDomainModelEFeature() == feature) {
+					return ref;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -244,14 +259,14 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	}
 
 	private String getHelp(VDomainModelReference domainModelReference) {
-		if (!getNeededDomainModelReferences().contains(domainModelReference)) {
+		if (!getResolvedDomainModelReferences().contains(domainModelReference)) {
 			throw new IllegalArgumentException("The feature must have been registered before!");
 		}
 		return getItemPropertyDescriptor(domainModelReference).getDescription(null);
 	}
 
 	private String getLabel(VDomainModelReference domainModelReference) {
-		if (!getNeededDomainModelReferences().contains(domainModelReference)) {
+		if (!getResolvedDomainModelReferences().contains(domainModelReference)) {
 			throw new IllegalArgumentException("The feature must have been registered before!");
 		}
 		return getItemPropertyDescriptor(domainModelReference).getDisplayName(null);

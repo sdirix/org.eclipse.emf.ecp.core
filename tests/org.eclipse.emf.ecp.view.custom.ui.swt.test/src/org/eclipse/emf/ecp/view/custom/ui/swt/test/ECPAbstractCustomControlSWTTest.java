@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -72,9 +73,9 @@ import org.junit.runner.RunWith;
 public class ECPAbstractCustomControlSWTTest {
 
 	static final String LABELTEXT = "Some Text";
-	private static Set<VDomainModelReference> allFeatures;
-	private static Set<VFeaturePathDomainModelReference> referencedFeatures;
-	static Set<VFeaturePathDomainModelReference> editableFeaturess;
+	private Set<VDomainModelReference> allFeatures;
+	private Set<VFeaturePathDomainModelReference> referencedFeatures;
+	private Set<VFeaturePathDomainModelReference> editableFeaturess;
 	private ECPAbstractCustomControlSWTStub customControl;
 	private Composite testComposite;
 	private VHardcodedDomainModelReference domainObject;
@@ -90,18 +91,19 @@ public class ECPAbstractCustomControlSWTTest {
 		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
 			.createHardcodedDomainModelReference();
 		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.control.stub");
+		domainModelReference.getDomainModelReferences().addAll(createFeatures());
 		controlModel.setDomainModelReference(domainModelReference);
 		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 		// SWTViewTestHelper.createShell()), null);
 		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
 		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 
-		for (final VDomainModelReference modelReference : allFeatures) {
-			modelReference.resolve(domainObject);
-		}
+		// for (final VDomainModelReference modelReference : allFeatures) {
+		// modelReference.resolve(domainObject);
+		// }
 	}
 
-	public static Set<VDomainModelReference> createFeatures() {
+	public Set<VDomainModelReference> createFeatures() {
 
 		allFeatures = new LinkedHashSet<VDomainModelReference>();
 		allFeatures.addAll(createEditableFeatures());
@@ -113,7 +115,7 @@ public class ECPAbstractCustomControlSWTTest {
 	/**
 	 * @return a test set of {@link ECPCustomControlFeature}
 	 */
-	public static Set<VFeaturePathDomainModelReference> createReferencedFeatures() {
+	public Set<VFeaturePathDomainModelReference> createReferencedFeatures() {
 		if (referencedFeatures == null) {
 			referencedFeatures = new LinkedHashSet<VFeaturePathDomainModelReference>();
 			final EList<EStructuralFeature> eAllStructuralFeatures = VCustomPackage.eINSTANCE
@@ -134,7 +136,7 @@ public class ECPAbstractCustomControlSWTTest {
 	/**
 	 * @return a test set of {@link ECPCustomControlFeature}
 	 */
-	public static Set<VFeaturePathDomainModelReference> createEditableFeatures() {
+	public Set<VFeaturePathDomainModelReference> createEditableFeatures() {
 		if (editableFeaturess == null) {
 			editableFeaturess = new LinkedHashSet<VFeaturePathDomainModelReference>();
 			final EList<EStructuralFeature> eAllStructuralFeatures = VCustomPackage.eINSTANCE
@@ -452,7 +454,7 @@ public class ECPAbstractCustomControlSWTTest {
 			stubHelper.getImage(-1));
 	}
 
-	private VDomainModelReference getFeature(Set<VDomainModelReference> features,
+	private VDomainModelReference getFeature(Collection<VDomainModelReference> features,
 		EStructuralFeature structuralFeature, boolean isEditable) {
 		final Iterator<VDomainModelReference> iterator = features.iterator();
 
@@ -469,7 +471,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testCustomControlGetHelp() {
-		final VDomainModelReference feature = getFeature(allFeatures,
+		final VDomainModelReference feature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId(), true);
 		final String help = customControl.getStubHelper().getHelp(feature);
 		final ComposedAdapterFactory caf = new ComposedAdapterFactory(
@@ -495,7 +497,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testCustomControlGetLabel() {
-		final VDomainModelReference feature = getFeature(allFeatures,
+		final VDomainModelReference feature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId(), true);
 		final String label = customControl.getStubHelper().getLabel(feature);
 		final ComposedAdapterFactory caf = new ComposedAdapterFactory(
@@ -524,7 +526,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testCustomControlFeatureSet() {
-		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
+		final VDomainModelReference bundleFeature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId(), true);
 		customControl.setValue(bundleFeature, "test");
 		assertEquals(domainObject.eGet(VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId()), "test");
@@ -551,7 +553,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testCustomControlFeatureGet() {
 
-		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
+		final VDomainModelReference bundleFeature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId(), true);
 		assertEquals(domainObject.eGet(VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId()),
 			customControl.getValue(bundleFeature));
@@ -564,7 +566,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testCustomControlFeatureListener() {
 
-		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
+		final VDomainModelReference bundleFeature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId(), true);
 
 		final List<Integer> result = new ArrayList<Integer>();
@@ -581,7 +583,7 @@ public class ECPAbstractCustomControlSWTTest {
 	@Test
 	public void testBindTargetToModel() {
 
-		final VDomainModelReference bundleFeature = getFeature(customControl.getNeededDomainModelReferences(),
+		final VDomainModelReference bundleFeature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getHardcodedDomainModelReference_ControlId(), true);
 
 		customControl.createControls(testComposite);

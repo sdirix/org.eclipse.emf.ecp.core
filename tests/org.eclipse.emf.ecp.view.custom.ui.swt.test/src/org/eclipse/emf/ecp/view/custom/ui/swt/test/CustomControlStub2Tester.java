@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -32,6 +33,11 @@ public class CustomControlStub2Tester implements ECPApplicableTester {
 	}
 
 	public int isApplicable(VDomainModelReference domainModelReference) {
+		if (VHardcodedDomainModelReference.class.isInstance(domainModelReference)
+			&& "org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2"
+				.equals(((VHardcodedDomainModelReference) domainModelReference).getControlId())) {
+			return 3;
+		}
 		if (!VFeaturePathDomainModelReference.class.isInstance(domainModelReference)) {
 			return NOT_APPLICABLE;
 		}

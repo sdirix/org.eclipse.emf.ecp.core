@@ -17,7 +17,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ SWTCustomControlTest.class, ECPAbstractCustomControlSWTTest.class, CustomControlValidationTest.class,
-	CustomControlTwoRowWithViewerTest.class })
+	CustomControlTwoRowWithViewerTest.class, CustomControlMultiUserTest.class })
 public class AllTests {
 
 }
