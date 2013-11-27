@@ -109,7 +109,7 @@ public class ControlRootEClassControl extends LinkControl {
 						"This is not an EClass.");
 				}
 			});
-			dialog.setInput(Registry.INSTANCE);
+			dialog.setInput(getInput());
 			dialog.setMessage("Select an EClass.");
 			dialog.setTitle("Select an EClass.");
 			dialog.setComparator(new ViewerComparator());
@@ -183,6 +183,13 @@ public class ControlRootEClassControl extends LinkControl {
 			};
 		}
 
+	}
+
+	/**
+	 * @return
+	 */
+	protected Object getInput() {
+		return Registry.INSTANCE;
 	}
 
 }
