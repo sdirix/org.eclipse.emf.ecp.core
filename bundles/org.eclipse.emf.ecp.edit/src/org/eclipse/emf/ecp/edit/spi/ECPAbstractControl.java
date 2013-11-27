@@ -348,8 +348,12 @@ public abstract class ECPAbstractControl {
 	 * @since 1.2
 	 */
 	protected final void backwardCompatibleHandleValidation() {
+		final VDiagnostic diagnostic = control.getDiagnostic();
+		if (diagnostic == null) {
+			return;
+		}
 		resetValidation();
-		for (final Object object : control.getDiagnostic().getDiagnostics()) {
+		for (final Object object : diagnostic.getDiagnostics()) {
 			handleValidation((Diagnostic) object);
 		}
 	}
