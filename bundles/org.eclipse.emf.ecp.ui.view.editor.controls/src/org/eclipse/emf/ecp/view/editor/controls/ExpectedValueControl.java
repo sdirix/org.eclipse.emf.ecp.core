@@ -87,7 +87,7 @@ public class ExpectedValueControl extends SingleControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				final LeafCondition condition = (LeafCondition) getModelElementContext().getModelElement();
+				final LeafCondition condition = (LeafCondition) getFirstSetting().getEObject();
 				final EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
 					.getDomainModelReference()).getDomainModelEFeature();
 				if (structuralFeature == null) {
@@ -176,6 +176,7 @@ public class ExpectedValueControl extends SingleControl {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		// text.setEditable(isEditable);
 	}
