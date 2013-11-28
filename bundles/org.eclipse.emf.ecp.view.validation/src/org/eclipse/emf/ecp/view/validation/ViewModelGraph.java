@@ -13,7 +13,9 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
@@ -27,8 +29,7 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * of
  * the view model (and in that sense conforms to the containment tree of the Renderable).
  * The actually computed values of the nodes are based on domain objects, which are also represented as
- * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link VElement}
- * s,
+ * {@link ViewModelGraphNode}s, together with a feature, but in contrast to the nodes containing the {@link VElement} s,
  * never
  * have any children.
  * Nodes containing domain objects also can have multiple parent.
@@ -96,6 +97,24 @@ public abstract class ViewModelGraph<T> {
 	 */
 	public T getValue(VElement renderable) {
 		return viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures()).getValue();
+	}
+
+	public Set<T> getAllValues(EObject domainObject) {
+		final Set<T> result = new LinkedHashSet<T>();
+		final Set<ViewModelGraphNode<T>> allNodes = domainModelSettings.getAllNodes(domainObject);
+		for (final ViewModelGraphNode<T> viewModelGraphNode : allNodes) {
+			result.add(viewModelGraphNode.getValue());
+		}
+		return result;
+	}
+
+	public Map<EStructuralFeature, T> getValuePerFeature(EObject domainObject) {
+		final Map<EStructuralFeature, T> result = new LinkedHashMap<EStructuralFeature, T>();
+		final Set<ViewModelGraphNode<T>> allNodes = domainModelSettings.getAllNodes(domainObject);
+		for (final ViewModelGraphNode<T> viewModelGraphNode : allNodes) {
+			result.put(viewModelGraphNode.getSetting().getEStructuralFeature(), viewModelGraphNode.getValue());
+		}
+		return result;
 	}
 
 	/**

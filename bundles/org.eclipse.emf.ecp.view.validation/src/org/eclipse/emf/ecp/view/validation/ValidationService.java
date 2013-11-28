@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.context.ViewModelService;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -332,6 +334,14 @@ public class ValidationService implements ViewModelService {
 		context.unregisterViewChangeListener(viewChangeListener);
 	}
 
+	public Set<VDiagnostic> getAllDiagnostics(EObject domainObject) {
+		return viewValidationGraph.getAllValues(domainObject);
+	}
+
+	public Map<EStructuralFeature, VDiagnostic> getDiagnosticPerFeature(EObject domainObject) {
+		return viewValidationGraph.getValuePerFeature(domainObject);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -340,5 +350,4 @@ public class ValidationService implements ViewModelService {
 	public int getPriority() {
 		return 3;
 	}
-
 }

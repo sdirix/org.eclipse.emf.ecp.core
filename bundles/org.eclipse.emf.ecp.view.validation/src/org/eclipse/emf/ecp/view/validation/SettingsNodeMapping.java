@@ -13,7 +13,9 @@ package org.eclipse.emf.ecp.view.validation;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -64,6 +66,21 @@ public class SettingsNodeMapping<T> {
 		}
 
 		return node;
+	}
+
+	public Set<ViewModelGraphNode<T>> getAllNodes(EObject eObject) {
+
+		final Set<ViewModelGraphNode<T>> result = new LinkedHashSet<ViewModelGraphNode<T>>();
+		final EList<EStructuralFeature> eAllStructuralFeatures = eObject.eClass().getEAllStructuralFeatures();
+		for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
+			final UniqueSetting setting = UniqueSetting.createSetting(eObject, eStructuralFeature);
+			final ViewModelGraphNode<T> viewModelGraphNode = settings.get(setting);
+			if (viewModelGraphNode != null) {
+				result.add(viewModelGraphNode);
+			}
+		}
+
+		return result;
 	}
 
 	/**
