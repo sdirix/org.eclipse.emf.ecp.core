@@ -58,7 +58,8 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		headingLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title"); //$NON-NLS-1$
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
 		whatToDoLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message"); //$NON-NLS-1$
-		headingLbl.setText(vCategorization.getName());
+		final String headingText = vCategorization.getName();
+		headingLbl.setText(headingText == null ? "" : headingText);
 		whatToDoLbl.setText(Messages.Categorization_Selection);
 
 		return createResult(categoryComposite);

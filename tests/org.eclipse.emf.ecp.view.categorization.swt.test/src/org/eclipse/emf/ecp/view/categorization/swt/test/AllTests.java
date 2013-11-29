@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({CategorizationTests.class})
+@SuiteClasses({ CategorizationTests.class, CategorizationTreeRefreshTest.class })
 public class AllTests {
 
 }

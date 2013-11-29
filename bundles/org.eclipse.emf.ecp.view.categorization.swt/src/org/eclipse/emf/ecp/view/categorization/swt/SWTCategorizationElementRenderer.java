@@ -537,16 +537,9 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 
 			ImageDescriptor overlay = null;
 
-			// switch (node.getSeverity()) {
-			// case Diagnostic.ERROR:
-			// overlay = errorDescriptor;
-			// break;
-			// case Diagnostic.WARNING:
-			// overlay = warningDescriptor;
-			// break;
-			// default:
-			// break;
-			// }
+			if (categorization.getDiagnostic() == null) {
+				return image;
+			}
 			overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(categorization.getDiagnostic()
 				.getHighestSeverity());
 
