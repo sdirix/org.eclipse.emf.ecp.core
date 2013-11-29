@@ -141,7 +141,7 @@ public class UnsetService implements ViewModelService {
 	}
 
 	private void addControlToMap(VControl control) {
-		final Setting lastSetting = getLastSetting(control);
+		final Setting lastSetting = getSetting(control);
 		if (lastSetting == null) {
 			return;
 		}
@@ -173,7 +173,7 @@ public class UnsetService implements ViewModelService {
 	}
 
 	private void removeControlFromMapAndUnsetIfNeeded(VControl control) {
-		final Setting lastSetting = getLastSetting(control);
+		final Setting lastSetting = getSetting(control);
 		final EObject eObject = lastSetting.getEObject();
 		final EStructuralFeature eStructuralFeature = lastSetting
 			.getEStructuralFeature();
@@ -247,15 +247,18 @@ public class UnsetService implements ViewModelService {
 		}
 	}
 
-	private Setting getLastSetting(VControl control) {
+	private Setting getSetting(VControl control) {
 		final VDomainModelReference domainModelReference = control
 			.getDomainModelReference();
 		final Iterator<Setting> settings = domainModelReference.getIterator();
-		Setting lastSetting = null;
+		Setting firstSetting = null;
 		while (settings.hasNext()) {
-			lastSetting = settings.next();
+			final Setting setting = settings.next();
+			if (firstSetting == null) {
+				firstSetting = setting;
+			}
 		}
-		return lastSetting;
+		return firstSetting;
 	}
 
 	/**
