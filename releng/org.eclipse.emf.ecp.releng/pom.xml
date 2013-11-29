@@ -152,6 +152,10 @@
 		<!-- View Validation Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
 		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
+		
+		<!-- View Unset Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.unset</module>
+		<module>../../features/org.eclipse.emf.ecp.view.unset.feature</module>
 
 		<!-- Vertical Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model</module>
@@ -217,6 +221,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.unset.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>

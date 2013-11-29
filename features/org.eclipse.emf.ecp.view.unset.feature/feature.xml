@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.view.unset.feature"
+      label="View Model Unset Service Feature"
+      version="1.1.1.qualifier"
+      provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emf.ecp.view.unset"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.1.1.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.unset"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

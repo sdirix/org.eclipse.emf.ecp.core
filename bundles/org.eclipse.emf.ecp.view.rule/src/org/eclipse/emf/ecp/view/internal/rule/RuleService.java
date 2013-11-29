@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +24,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -52,7 +49,6 @@ public class RuleService implements ViewModelService {
 
 	private final RuleRegistry<EnableRule> enableRuleRegistry;
 	private final RuleRegistry<ShowRule> showRuleRegistry;
-	private boolean isUnset;
 
 	/**
 	 * Instantiates the rule service.
@@ -73,7 +69,7 @@ public class RuleService implements ViewModelService {
 		domainChangeListener = new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
-				if (isAttributeNotification(notification) && !isUnset) {
+				if (isAttributeNotification(notification)) {
 					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
 					evalShow(attribute);
 					evalEnable(attribute);
@@ -332,11 +328,7 @@ public class RuleService implements ViewModelService {
 		for (final Map.Entry<VElement, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
 			final VElement renderable = e.getKey();
-			final boolean isCurrentlyVisible = renderable.isVisible();
 			renderable.setVisible(isVisible);
-			if (isCurrentlyVisible && !isVisible) {
-				unset(renderable);
-			}
 		}
 	}
 
@@ -413,30 +405,6 @@ public class RuleService implements ViewModelService {
 
 		return evalAffectedRenderables(showRuleRegistry,
 			ShowRule.class, changedAttribute, possibleValues);
-	}
-
-	private void unset(VElement renderable) {
-
-		if (renderable instanceof VControl) {
-			final VControl control = (VControl) renderable;
-			final VDomainModelReference domainModelReference = control.getDomainModelReference();
-			final Iterator<Setting> settings = domainModelReference.getIterator();
-			while (settings.hasNext()) {
-				final Setting setting = settings.next();
-				final EObject parent = setting.getEObject();
-				final EStructuralFeature targetFeature = setting.getEStructuralFeature();
-				if (targetFeature == null) {
-					continue;
-				}
-				final Class<?> containerClass = targetFeature.getContainerClass();
-
-				isUnset = true;
-				if (containerClass.isInstance(parent)) {
-					parent.eUnset(targetFeature);
-				}
-				isUnset = false;
-			}
-		}
 	}
 
 	/**
