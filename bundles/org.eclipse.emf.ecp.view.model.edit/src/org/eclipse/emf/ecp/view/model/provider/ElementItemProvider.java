@@ -221,7 +221,7 @@ public class ElementItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VElement) object).getName();
+		final String label = ((VElement) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Element_type") :
 			getString("_UI_Element_type") + " " + label;
@@ -233,7 +233,7 @@ public class ElementItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void notifyChanged(Notification notification)
@@ -249,6 +249,8 @@ public class ElementItemProvider
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		case VViewPackage.ELEMENT__ATTACHMENTS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;

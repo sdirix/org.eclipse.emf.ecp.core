@@ -186,6 +186,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	 * 
 	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject()
 	 */
+	@Override
 	public EObject getLabelObject() {
 		return this;
 	}
