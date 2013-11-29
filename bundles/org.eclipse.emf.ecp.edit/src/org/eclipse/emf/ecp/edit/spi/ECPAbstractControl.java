@@ -96,6 +96,16 @@ public abstract class ECPAbstractControl {
 		};
 
 		viewModelContext.registerViewChangeListener(viewChangeListener);
+
+		postInit();
+	}
+
+	/**
+	 * Overwrite this method to implement control specific operations which must be executed after the init but before
+	 * the rendering.
+	 */
+	protected void postInit() {
+		// do nothing
 	}
 
 	/**
@@ -125,7 +135,7 @@ public abstract class ECPAbstractControl {
 	 * @return the {@link IItemPropertyDescriptor}
 	 * @since 1.2
 	 */
-	public final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
+	public IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
 		return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
 			setting.getEStructuralFeature());
 	}
@@ -169,7 +179,7 @@ public abstract class ECPAbstractControl {
 				}
 			}
 			if (count == 0) {
-				Activator.logException(new IllegalArgumentException(
+				Activator.logException(new IllegalArgumentException(control.getName() + " : " +
 					"The passed VDomainModelReference resolves to no setting."));
 			}
 		}
