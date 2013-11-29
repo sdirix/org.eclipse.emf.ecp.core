@@ -29,5 +29,5 @@ public interface CustomSWTRenderer {
 	 * 
 	 * @return a map associating {@link VElement}s with {@link AbstractSWTRenderer AbstractSWTRenderers}
 	 */
-	Map<Class<VElement>, AbstractSWTRenderer<VElement>> getCustomRenderers();
+	Map<Class<? extends VElement>, AbstractSWTRenderer<? extends VElement>> getCustomRenderers();
 }

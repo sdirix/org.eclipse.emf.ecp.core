@@ -11,7 +11,9 @@
  */
 package org.eclipse.emf.ecp.view.categorization.model.impl;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.categorization.model.DerivedAttributeAdapter;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
@@ -27,7 +29,8 @@ import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl#getChildren <em>Children
  * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl#getLabel <em>Label</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl#getLabelObject <em>Label
+ * Object</em>}</li>
  * </ul>
  * </p>
  * 
@@ -35,16 +38,6 @@ import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
  */
 public abstract class VCategorizableElementImpl extends VElementImpl implements VCategorizableElement
 {
-	/**
-	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getLabel()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String LABEL_EDEFAULT = null;
 	private final DerivedAttributeAdapter childrenAdapter;
 	private final DerivedAttributeAdapter labelAdapter;
 
@@ -52,12 +45,13 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	protected VCategorizableElementImpl()
 	{
 		super();
-		labelAdapter = new DerivedAttributeAdapter(this, VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL);
+		labelAdapter = new DerivedAttributeAdapter(this,
+			VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL_OBJECT);
 		childrenAdapter = new DerivedAttributeAdapter(this,
 			VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__CHILDREN);
 	}
@@ -80,6 +74,35 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	 * 
 	 * @generated
 	 */
+	public EList<VCategorizableElement> getChildren()
+	{
+		// TODO: implement this method to return the 'Children' reference list
+		// Ensure that you remove @generated or mark it @generated NOT
+		// The list is expected to implement org.eclipse.emf.ecore.util.InternalEList and
+		// org.eclipse.emf.ecore.EStructuralFeature.Setting
+		// so it's likely that an appropriate subclass of org.eclipse.emf.ecore.util.EcoreEList should be used.
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EObject getLabelObject()
+	{
+		// TODO: implement this method to return the 'Label Object' reference
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
@@ -87,8 +110,8 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 		{
 		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__CHILDREN:
 			return getChildren();
-		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL:
-			return getLabel();
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL_OBJECT:
+			return getLabelObject();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -106,8 +129,8 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 		{
 		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__CHILDREN:
 			return !getChildren().isEmpty();
-		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL:
-			return LABEL_EDEFAULT == null ? getLabel() != null : !LABEL_EDEFAULT.equals(getLabel());
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL_OBJECT:
+			return getLabelObject() != null;
 		}
 		return super.eIsSet(featureID);
 	}

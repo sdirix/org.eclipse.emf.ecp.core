@@ -47,7 +47,7 @@ public final class SWTRendererFactory {
 	 */
 	public static final SWTRendererFactory INSTANCE = new SWTRendererFactory();
 	private static final String RENDER_EXTENSION = "org.eclipse.emf.ecp.ui.view.swt.renderers"; //$NON-NLS-1$
-	private final Map<Class<VElement>, AbstractSWTRenderer<VElement>> rendererMapping = new LinkedHashMap<Class<VElement>, AbstractSWTRenderer<VElement>>();
+	private final Map<Class<? extends VElement>, AbstractSWTRenderer<VElement>> rendererMapping = new LinkedHashMap<Class<? extends VElement>, AbstractSWTRenderer<VElement>>();
 
 	private SWTRendererFactory() {
 		readRenderer();
@@ -102,9 +102,10 @@ public final class SWTRendererFactory {
 			try {
 				final CustomSWTRenderer renderer = (CustomSWTRenderer) configurationElement
 					.createExecutableExtension("class"); //$NON-NLS-1$
-				for (final Entry<Class<VElement>, AbstractSWTRenderer<VElement>> entry : renderer.getCustomRenderers()
+				for (final Entry<Class<? extends VElement>, AbstractSWTRenderer<? extends VElement>> entry : renderer
+					.getCustomRenderers()
 					.entrySet()) {
-					rendererMapping.put(entry.getKey(), entry.getValue());
+					rendererMapping.put(entry.getKey(), (AbstractSWTRenderer<VElement>) entry.getValue());
 				}
 			} catch (final CoreException ex) {
 				Activator.log(ex);

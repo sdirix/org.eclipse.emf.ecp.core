@@ -28,5 +28,9 @@
       <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
           ecoreFeature="ecore:EReference categorization.ecore#//CategorizationElement/currentSelection"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="categorization.ecore#//CategorizableElement">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference categorization.ecore#//CategorizableElement/children"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference categorization.ecore#//CategorizableElement/labelObject"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -13,15 +13,11 @@ package org.eclipse.emf.ecp.view.categorization.model.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
-
 import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,7 +25,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -76,7 +71,7 @@ public class CategorizableElementItemProvider
 			super.getPropertyDescriptors(object);
 
 			addChildrenPropertyDescriptor(object);
-			addLabelPropertyDescriptor(object);
+			addLabelObjectPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -107,26 +102,26 @@ public class CategorizableElementItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
+	 * This adds a property descriptor for the Label Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object)
+	protected void addLabelObjectPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_CategorizableElement_label_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_label_feature",
+				getString("_UI_CategorizableElement_labelObject_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature",
 					"_UI_CategorizableElement_type"),
-				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL,
+				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL_OBJECT,
 				false,
 				false,
 				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
 				null,
 				null));
 	}
@@ -162,7 +157,7 @@ public class CategorizableElementItemProvider
 
 		switch (notification.getFeatureID(VCategorizableElement.class))
 		{
-		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL:
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL_OBJECT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

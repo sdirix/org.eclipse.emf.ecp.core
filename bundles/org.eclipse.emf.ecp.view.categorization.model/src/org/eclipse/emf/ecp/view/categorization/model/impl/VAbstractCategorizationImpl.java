@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -62,7 +62,6 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	protected VAbstractCategorizationImpl()
 	{
 		super();
-		addLocalDependencyToLabelAdapter(VViewPackage.Literals.ELEMENT__NAME);
 	}
 
 	/**
@@ -185,10 +184,10 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel()
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject()
 	 */
-	public String getLabel() {
-		return getName();
+	public EObject getLabelObject() {
+		return this;
 	}
 
 	private List<ECPAction> ecpActions;

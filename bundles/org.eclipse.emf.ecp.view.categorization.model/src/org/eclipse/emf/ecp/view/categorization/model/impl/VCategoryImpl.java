@@ -91,17 +91,16 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 */
 	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs)
 	{
-		final VContainedElement oldComposite = composite;
+		VContainedElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired())
 		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORY__COMPOSITE, oldComposite, newComposite);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -117,23 +116,19 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 		if (newComposite != composite)
 		{
 			NotificationChain msgs = null;
-			if (composite != null) {
+			if (composite != null)
 				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
-			}
-			if (newComposite != null) {
+			if (newComposite != null)
 				msgs = ((InternalEObject) newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
-			}
 			msgs = basicSetComposite(newComposite, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.CATEGORY__COMPOSITE,
 				newComposite, newComposite));
-		}
 	}
 
 	/**

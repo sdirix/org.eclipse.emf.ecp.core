@@ -14,12 +14,14 @@ package org.eclipse.emf.ecp.view.categorization.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 
 /**
  * @author Eugen Neufeld
@@ -36,13 +38,13 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 	private EStructuralFeature dependantFeature;
 	private EStructuralFeature navigationFeature;
 
-	private final AdapterImpl dependantAdapter = new AdapterImpl() {
+	private final Adapter dependantAdapter = new EContentAdapter() {
 
 		@Override
 		public void notifyChanged(Notification msg) {
 
 			if (msg.getEventType() == Notification.SET
-				&& msg.getFeature().equals(dependantFeature)) {
+				&& (msg.getFeature().equals(dependantFeature) || dependantFeature == null)) {
 				notifyDerivedAttributeChange();
 			}
 		}

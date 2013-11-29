@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VAction;
@@ -312,9 +313,9 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
-	public EAttribute getCategorizableElement_Label()
+	public EReference getCategorizableElement_LabelObject()
 	{
-		return (EAttribute) categorizableElementEClass.getEStructuralFeatures().get(1);
+		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -370,7 +371,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 
 		categorizableElementEClass = createEClass(CATEGORIZABLE_ELEMENT);
 		createEReference(categorizableElementEClass, CATEGORIZABLE_ELEMENT__CHILDREN);
-		createEAttribute(categorizableElementEClass, CATEGORIZABLE_ELEMENT__LABEL);
+		createEReference(categorizableElementEClass, CATEGORIZABLE_ELEMENT__LABEL_OBJECT);
 	}
 
 	/**
@@ -402,6 +403,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 
 		// Obtain other dependent packages
 		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -453,9 +455,9 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		initEReference(getCategorizableElement_Children(), this.getCategorizableElement(), null, "children", null, 0,
 			-1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE,
 			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCategorizableElement_Label(), ecorePackage.getEString(), "label", null, 1, 1,
-			VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			IS_DERIVED, IS_ORDERED);
+		initEReference(getCategorizableElement_LabelObject(), theEcorePackage.getEObject(), null, "labelObject", null,
+			0, 1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

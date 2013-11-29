@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.categorization.model;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.VElement;
 
 /**
@@ -25,7 +26,7 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren <em>Children</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel <em>Label</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject <em>Label Object</em>}</li>
  * </ul>
  * </p>
  * 
@@ -56,20 +57,20 @@ public interface VCategorizableElement extends VElement
 	EList<VCategorizableElement> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * Returns the value of the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Label</em>' attribute isn't clear, there really should be more of a description
+	 * If the meaning of the '<em>Label Object</em>' reference isn't clear, there really should be more of a description
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the value of the '<em>Label</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage#getCategorizableElement_Label()
-	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
+	 * @return the value of the '<em>Label Object</em>' reference.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage#getCategorizableElement_LabelObject()
+	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
 	 * @generated
 	 */
-	String getLabel();
+	EObject getLabelObject();
 
 	List<ECPAction> getECPActions();
 

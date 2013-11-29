@@ -218,14 +218,14 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZABLE_ELEMENT__CHILDREN = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT__LABEL = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
+	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Categorizable Element</em>' class.
@@ -308,14 +308,14 @@ public interface VCategorizationPackage extends EPackage
 	int ABSTRACT_CATEGORIZATION__CHILDREN = CATEGORIZABLE_ELEMENT__CHILDREN;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_CATEGORIZATION__LABEL = CATEGORIZABLE_ELEMENT__LABEL;
+	int ABSTRACT_CATEGORIZATION__LABEL_OBJECT = CATEGORIZABLE_ELEMENT__LABEL_OBJECT;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -408,14 +408,14 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION__CHILDREN = ABSTRACT_CATEGORIZATION__CHILDREN;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZATION__LABEL = ABSTRACT_CATEGORIZATION__LABEL;
+	int CATEGORIZATION__LABEL_OBJECT = ABSTRACT_CATEGORIZATION__LABEL_OBJECT;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -518,14 +518,14 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORY__CHILDREN = ABSTRACT_CATEGORIZATION__CHILDREN;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__LABEL = ABSTRACT_CATEGORIZATION__LABEL;
+	int CATEGORY__LABEL_OBJECT = ABSTRACT_CATEGORIZATION__LABEL_OBJECT;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -857,17 +857,18 @@ public interface VCategorizationPackage extends EPackage
 	EReference getCategorizableElement_Children();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel <em>Label</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject <em>Label Object</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return the meta object for the attribute '<em>Label</em>'.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabel()
+	 * @return the meta object for the reference '<em>Label Object</em>'.
+	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject()
 	 * @see #getCategorizableElement()
 	 * @generated
 	 */
-	EAttribute getCategorizableElement_Label();
+	EReference getCategorizableElement_LabelObject();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1043,13 +1044,13 @@ public interface VCategorizationPackage extends EPackage
 		EReference CATEGORIZABLE_ELEMENT__CHILDREN = eINSTANCE.getCategorizableElement_Children();
 
 		/**
-		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Label Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
-		EAttribute CATEGORIZABLE_ELEMENT__LABEL = eINSTANCE.getCategorizableElement_Label();
+		EReference CATEGORIZABLE_ELEMENT__LABEL_OBJECT = eINSTANCE.getCategorizableElement_LabelObject();
 
 	}
 

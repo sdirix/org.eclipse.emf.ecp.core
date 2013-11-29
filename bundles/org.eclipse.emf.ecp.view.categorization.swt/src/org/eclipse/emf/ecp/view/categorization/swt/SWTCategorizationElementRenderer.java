@@ -18,7 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
@@ -195,7 +194,7 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 				if (VCategorizableElement.class.isInstance(object)) {
 					return ((VCategorizableElement) object).getChildren().toArray();
 				}
-				return null;
+				return getChildren(object);
 			}
 
 			/**
@@ -450,10 +449,11 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		@Override
 		public String getColumnText(Object object, int columnIndex) {
 
+			String text = super.getColumnText(object, columnIndex);
 			if (columnIndex == 0 && VCategorizableElement.class.isInstance(object)) {
-				return ((VCategorizableElement) object).getLabel();
+				text = super.getColumnText(((VCategorizableElement) object).getLabelObject(), columnIndex);
 			}
-			return super.getColumnText(object, columnIndex);
+			return text;
 		}
 
 		/**
@@ -468,8 +468,11 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			if (columnIndex != 0) {
 				return null;
 			}
-
-			final Image image = super.getColumnImage(object, columnIndex);
+			Image image = null;
+			image = super.getColumnImage(object, columnIndex);
+			if (VCategorizableElement.class.isInstance(object)) {
+				image = super.getColumnImage(((VCategorizableElement) object).getLabelObject(), columnIndex);
+			}
 
 			final VElement categorization = (VElement) object;
 
@@ -485,8 +488,8 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			// default:
 			// break;
 			// }
-			overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(categorization.getDiagnostic().getHighestSeverity());
-
+			overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(categorization.getDiagnostic()
+				.getHighestSeverity());
 
 			if (overlay == null) {
 				return image;

@@ -60,7 +60,6 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	protected VCategorizationImpl()
 	{
 		super();
-		addLocalDependencyToChildrenAdapter(VCategorizationPackage.Literals.CATEGORIZATION__CATEGORIZATIONS);
 	}
 
 	/**
