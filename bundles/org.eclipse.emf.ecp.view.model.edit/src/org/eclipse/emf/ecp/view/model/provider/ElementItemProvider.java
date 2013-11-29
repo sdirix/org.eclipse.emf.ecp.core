@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
@@ -243,13 +244,17 @@ public class ElementItemProvider
 		switch (notification.getFeatureID(VElement.class))
 		{
 		case VViewPackage.ELEMENT__NAME:
-		case VViewPackage.ELEMENT__VISIBLE:
 		case VViewPackage.ELEMENT__ENABLED:
 		case VViewPackage.ELEMENT__READONLY:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+
+		case VViewPackage.ELEMENT__VISIBLE:
+			// notify parent as else no update on tree will happen
+			fireNotifyChanged(new ViewerNotification(notification, ((EObject) notification.getNotifier()).eContainer(),
+				true, false));
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		case VViewPackage.ELEMENT__ATTACHMENTS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));

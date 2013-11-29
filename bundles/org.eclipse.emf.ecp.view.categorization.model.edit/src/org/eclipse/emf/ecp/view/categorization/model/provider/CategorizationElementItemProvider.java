@@ -16,7 +16,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
@@ -183,6 +186,17 @@ public class CategorizationElementItemProvider
 			(createChildParameter
 			(VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__CATEGORIZATIONS,
 				VCategorizationFactory.eINSTANCE.createCategory()));
+	}
+
+	@Override
+	public Collection<?> getChildren(Object object) {
+		final EList<VAbstractCategorization> children = ((VCategorizationElement) object)
+			.getCategorizations();
+
+		for (final VCategorizableElement element : children) {
+			adapterFactory.adapt(element, IStructuredItemContentProvider.class);
+		}
+		return children;
 	}
 
 }

@@ -188,13 +188,14 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			 */
 			@Override
 			public Object[] getChildren(Object object) {
-				if (VCategorizationElement.class.isInstance(object)) {
-					return ((VCategorizationElement) object).getCategorizations().toArray();
+				final Object[] elements = super.getChildren(object);
+				final List<Object> result = new ArrayList<Object>();
+				for (final Object obj : elements) {
+					if (VCategorizableElement.class.isInstance(obj) && ((VCategorizableElement) obj).isVisible()) {
+						result.add(obj);
+					}
 				}
-				if (VCategorizableElement.class.isInstance(object)) {
-					return ((VCategorizableElement) object).getChildren().toArray();
-				}
-				return getChildren(object);
+				return result.toArray();
 			}
 
 			/**
@@ -204,12 +205,70 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			 */
 			@Override
 			public boolean hasChildren(Object object) {
-				if (VCategorizableElement.class.isInstance(object)) {
-					return !((VCategorizableElement) object).getChildren().isEmpty();
+				boolean hasChildren = super.hasChildren(object);
+				if (hasChildren) {
+					hasChildren = getChildren(object).length != 0;
 				}
-				return false;
+				return hasChildren;
 			}
 
+			// /**
+			// * {@inheritDoc}
+			// *
+			// * @see
+			// org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getChildren(java.lang.Object)
+			// */
+			// @Override
+			// public Object[] getChildren(Object object) {
+			// // super.getChildren(object);
+			// // if (VCategorizationElement.class.isInstance(object)) {
+			// // final EList<VAbstractCategorization> children = ((VCategorizationElement) object)
+			// // .getCategorizations();
+			// // final List<VAbstractCategorization> result = new ArrayList<VAbstractCategorization>();
+			// // for (final VAbstractCategorization element : children) {
+			// // if (element.isVisible()) {
+			// // result.add(element);
+			// // }
+			// // }
+			// // return result.toArray();
+			// // }
+			// // if (VCategorizableElement.class.isInstance(object)) {
+			// // final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
+			// // final List<VCategorizableElement> result = new ArrayList<VCategorizableElement>();
+			// // for (final VCategorizableElement element : children) {
+			// // if (element.isVisible()) {
+			// // result.add(element);
+			// // }
+			// // }
+			// // return result.toArray();
+			// // }
+			// return super.getChildren(object);
+			// }
+			//
+			// /**
+			// * {@inheritDoc}
+			// *
+			// * @see
+			// org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#hasChildren(java.lang.Object)
+			// */
+			// @Override
+			// public boolean hasChildren(Object object) {
+			// if (VCategorizableElement.class.isInstance(object)) {
+			// final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
+			// if (children.isEmpty()) {
+			// return false;
+			// }
+			//
+			// for (final VCategorizableElement element : children) {
+			// if (element.isVisible()) {
+			// return true;
+			// }
+			// }
+			// return false;
+			// }
+			// return false;
+			// }
+			//
 			/**
 			 * {@inheritDoc}
 			 * 

@@ -13,8 +13,10 @@ package org.eclipse.emf.ecp.view.categorization.model.provider;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
@@ -136,7 +138,7 @@ public class CategorizableElementItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VCategorizableElement) object).getName();
+		final String label = ((VCategorizableElement) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_CategorizableElement_type") :
 			getString("_UI_CategorizableElement_type") + " " + label;
@@ -176,6 +178,22 @@ public class CategorizableElementItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
 	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	@Override
+	public Collection<?> getChildren(Object object) {
+		final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
+		for (final VCategorizableElement element : children) {
+			adapterFactory.adapt(element, IStructuredItemContentProvider.class);
+		}
+		return children;
+	}
+
+	@Override
+	protected boolean hasChildren(Object object, boolean optimized) {
+
+		final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
+		return !children.isEmpty();
 	}
 
 }
