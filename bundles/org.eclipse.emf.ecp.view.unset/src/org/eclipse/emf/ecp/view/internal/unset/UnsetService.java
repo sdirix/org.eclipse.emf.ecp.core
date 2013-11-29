@@ -174,6 +174,9 @@ public class UnsetService implements ViewModelService {
 
 	private void removeControlFromMapAndUnsetIfNeeded(VControl control) {
 		final Setting lastSetting = getSetting(control);
+		if (lastSetting == null) {
+			return;
+		}
 		final EObject eObject = lastSetting.getEObject();
 		final EStructuralFeature eStructuralFeature = lastSetting
 			.getEStructuralFeature();
