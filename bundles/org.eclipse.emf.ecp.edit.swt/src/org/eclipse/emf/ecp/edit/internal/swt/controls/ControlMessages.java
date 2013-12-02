@@ -56,6 +56,7 @@ public class ControlMessages extends NLS {
 	public static String TableControl_NotSetClickToSet;
 	public static String TableControl_RemoveSelected;
 	public static String TableControl_Unset;
+	public static String TableControl_ValidationStatusColumn;
 
 	public static String XmlDateControlText_InvalidNumber;
 	public static String XmlDateControlText_NoDateSetClickToSetDate;

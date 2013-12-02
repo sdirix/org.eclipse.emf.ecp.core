@@ -103,9 +103,10 @@ import org.eclipse.swt.widgets.TableColumn;
 @SuppressWarnings("serial")
 public class TableControl extends SWTControl {
 
-	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns";
+	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
-	private static final String ICON_VALIDATION_ERROR = "icons/validation_error.png";
+	private static final String ICON_VALIDATION_ERROR = "icons/validation_error.png"; //$NON-NLS-1$
+	private static final String ICON_ADD = "icons/add.png";
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -224,16 +225,14 @@ public class TableControl extends SWTControl {
 		return tableViewer;
 	}
 
-	private void createFixedColumn(TableViewer tableViewer) {
+	private void createFixedValidationStatusColumn(TableViewer tableViewer) {
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
-			.setText("Validation Status") // TODO
+			.setText(ControlMessages.TableControl_ValidationStatusColumn)
 			.setWidth(80)
 			.build(tableViewer);
 
 		column.setLabelProvider(new CellLabelProvider() {
-
-			final Image icon = Activator.getImage(ICON_VALIDATION_ERROR);
 
 			@Override
 			public void update(ViewerCell cell) {
@@ -251,7 +250,7 @@ public class TableControl extends SWTControl {
 					cell.setImage(null);
 					return;
 				default:
-					cell.setImage(icon);
+					cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
 				}
 			}
 
@@ -265,7 +264,7 @@ public class TableControl extends SWTControl {
 						continue;
 					}
 					if (tooltip.length() > 0) {
-						tooltip.append("\n");
+						tooltip.append("\n"); //$NON-NLS-1$
 					}
 					tooltip.append(vDiagnostic.getMessage());
 				}
@@ -273,7 +272,6 @@ public class TableControl extends SWTControl {
 				return tooltip.toString();
 			}
 		});
-
 	}
 
 	private EObject getInstanceOf(EClass clazz) {
@@ -298,7 +296,7 @@ public class TableControl extends SWTControl {
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;
 		final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig();
-		createFixedColumn(tableViewer);
+		createFixedValidationStatusColumn(tableViewer);
 
 		for (final EStructuralFeature feature : structuralFeatures) {
 			final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
@@ -507,11 +505,10 @@ public class TableControl extends SWTControl {
 
 	private Button addButton;
 	private Setting mainSetting;
-	private EReference mainFeature;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
-		final Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
+		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
 		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
@@ -549,7 +546,6 @@ public class TableControl extends SWTControl {
 	public void dispose() {
 		super.dispose();
 		composedAdapterFactory.dispose();
-		mainFeature = null;
 		mainSetting = null;
 		adapterFactoryItemDelegator = null;
 		composedAdapterFactory = null;
@@ -568,8 +564,6 @@ public class TableControl extends SWTControl {
 		validationLabel.setToolTipText(diagnostic.getMessage());
 		final EObject object = (EObject) diagnostic.getData().get(0);
 		tableViewer.update(object, null);
-		// tableViewer.refresh();
-
 	}
 
 	/**
@@ -669,14 +663,27 @@ public class TableControl extends SWTControl {
 		}
 	}
 
+	/**
+	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
+	 * order to correctly
+	 * 
+	 * @author emueller
+	 * 
+	 */
 	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
 
 		private final EStructuralFeature feature;
 		private final CellEditor cellEditor;
-		private int background;
 
 		/**
+		 * Constructor.
+		 * 
+		 * @param feature
+		 *            the {@link EStructuralFeature} the cell is bound to
+		 * @param cellEditor
+		 *            the {@link CellEditor} instance
 		 * @param attributeMap
+		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap) {
 			super(attributeMap);
@@ -693,7 +700,6 @@ public class TableControl extends SWTControl {
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
 			final VDiagnostic diagnostic = getDiagnosticForFeature(domainObject, feature);
-			System.out.println(diagnostic.getMessage());
 			return diagnostic.getMessage();
 		}
 
@@ -791,7 +797,7 @@ public class TableControl extends SWTControl {
 		return diagnosticPerFeature.get(feature);
 	}
 
-	public Set<VDiagnostic> getAllDiagnostics(EObject domainObject) {
+	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject) {
 		final Set<VDiagnostic> allDiagnostics = getViewModelContext().getService(ValidationService.class)
 			.getAllDiagnostics(
 				domainObject);
