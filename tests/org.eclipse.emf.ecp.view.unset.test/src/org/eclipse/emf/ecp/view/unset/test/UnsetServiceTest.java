@@ -33,6 +33,10 @@ import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.VViewFactory;
 import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -1291,6 +1295,52 @@ public class UnsetServiceTest {
 		assertFalse(merchandise.eIsSet(merchandiseNameFeature));
 		assertEquals(fanNameFeature.getDefaultValue(), fan.getName());
 		assertFalse(fan.eIsSet(fanNameFeature));
+	}
+
+	/**
+	 * Test if exception occurs when control has no setting.
+	 */
+	@Test
+	public void testControlWithoutSetting() {
+		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		final VControl control = addControlToView(domainModelReference);
+		assertFalse(control.getDomainModelReference().getIterator().hasNext());
+		unsetService();
+	}
+
+	@Test
+	public void testTable() {
+		final Merchandise merc = BowlingFactory.eINSTANCE.createMerchandise();
+		merc.setName("Foo");
+		fan.getFanMerchandise().add(merc);
+
+		final VTableControl table = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
+		table.setDomainModelReference(tableDomainModelReference);
+
+		final VTableColumn nameCol = VTableFactory.eINSTANCE.createTableColumn();
+		nameCol.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		final VTableColumn priceCol = VTableFactory.eINSTANCE.createTableColumn();
+		priceCol.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Price());
+		table.getColumns().add(nameCol);
+		table.getColumns().add(priceCol);
+
+		view.getChildren().add(table);
+
+		unsetService();
+		assertEquals(1, fan.getFanMerchandise().size());
+		assertEquals(merc, fan.getFanMerchandise().get(0));
+		assertTrue(fan.eIsSet(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
+
+		table.setVisible(false);
+
+		assertEquals(0, fan.getFanMerchandise().size());
+		assertFalse(fan.eIsSet(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
+		assertEquals("Foo", merc.getName());
 	}
 
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
