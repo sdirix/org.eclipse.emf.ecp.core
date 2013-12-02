@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -160,11 +161,24 @@ public class RuleService implements ViewModelService {
 		return null;
 	}
 
-	private static void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
-		boolean isOpposite, boolean evalResult) {
+	private static <T extends Rule> void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
+		boolean isOpposite, boolean evalResult, Class<T> ruleType) {
 
 		if (!stateMap.containsKey(renderable)) {
-			stateMap.put(renderable, isOpposite ? !evalResult : evalResult);
+			boolean didUpdate = false;
+			final Rule rule = getRule(renderable);
+			if (rule != null && ruleApplies(rule, ruleType)) {
+				final Condition condition = rule.getCondition();
+				if (condition != null && canOverrideParent(evalResult, isOpposite)) {
+					final boolean evaluate = condition.evaluate();
+					stateMap.put(renderable, isOpposite(rule) ? !evaluate : evaluate);
+					didUpdate = true;
+				}
+			}
+			// use result of parent
+			if (!didUpdate) {
+				stateMap.put(renderable, isOpposite ? !evalResult : evalResult);
+			}
 		} else {
 			final Boolean currentState = stateMap.get(renderable).booleanValue();
 			if (currentState) {
@@ -174,9 +188,21 @@ public class RuleService implements ViewModelService {
 
 		for (final EObject childContent : renderable.eContents()) {
 			if (childContent instanceof VElement) {
-				updateStateMap(stateMap, (VElement) childContent, isOpposite, evalResult);
+				updateStateMap(stateMap, (VElement) childContent, isOpposite, evalResult, ruleType);
 			}
 		}
+	}
+
+	private static boolean canOverrideParent(boolean evalResult, boolean isOpposite) {
+		return evalResult && !isOpposite || !evalResult && isOpposite;
+	}
+
+	private static <T extends Rule> boolean ruleApplies(Rule rule, Class<T> ruleType) {
+		return Arrays.asList(rule.getClass().getInterfaces()).contains(ruleType);
+	}
+
+	private static boolean isOpposite(Rule rule) {
+		return isHideRule(rule) || isDisableRule(rule);
 	}
 
 	private static <T extends Rule> boolean hasRule(Class<T> ruleType, EObject eObject) {
@@ -234,7 +260,7 @@ public class RuleService implements ViewModelService {
 			final boolean isOposite = isDisableRule(rule) || isHideRule(rule);
 			updateMap &= propagateChanges(result, isOposite, rule, renderable);
 			if (updateMap) {
-				updateStateMap(map, renderable, isOposite, result);
+				updateStateMap(map, renderable, isOposite, result, ruleType);
 			}
 		}
 
