@@ -265,7 +265,8 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	public boolean resolve(EObject eObject) {
 		// load control
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
-		final ECPHardcodedReferences customControl = controlFactory.createControl(getControlId());
+		final ECPHardcodedReferences customControl = (ECPHardcodedReferences) controlFactory
+			.createControl(getControlId());
 		Activator.getDefault().ungetECPControlFactory();
 		if (customControl == null) {
 			return false;
