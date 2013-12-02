@@ -15,8 +15,12 @@ import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * @author Jonas
+ * This is the result of a Rendering call.
+ * It contains the created SWT Control and the {@link ViewModelContext}.
  * 
+ * @author Jonas
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPSWTView {
 
