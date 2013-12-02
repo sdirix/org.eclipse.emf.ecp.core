@@ -10,30 +10,36 @@
  * Eugen Neufeld - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit.spi;
+package org.eclipse.emf.ecp.editor.e3;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener;
 
 /**
- * Context for a modelelement.
+ * This Context adds methods that are specifically needed by an editor.
  * 
- * @author helming
  * @author Eugen Neufeld
+ * 
  */
-public interface ECPControlContext {
+public interface ECPEditorContext {
 
 	/**
-	 * Returns the {@link EObject} of this {@link ECPControlContext}.
-	 * 
-	 * @return the {@link EObject} of this context
+	 * Called if the context is not used anymore. Use for cleanup.
 	 */
-	EObject getModelElement();
+	void dispose();
 
 	/**
-	 * Returns the view context associated with the context.
+	 * Adds a {@link ECPContextDisposedListener}.
 	 * 
-	 * @return the view context
+	 * @param ecpContextDisposedListener
+	 *            the {@link ECPContextDisposedListener}
 	 */
-	ViewModelContext getViewContext();
+	void addECPContextDisposeListener(ECPContextDisposedListener ecpContextDisposedListener);
+
+	/**
+	 * The domain {@link EObject}.
+	 * 
+	 * @return the {@link EObject}
+	 */
+	EObject getDomainObject();
 }

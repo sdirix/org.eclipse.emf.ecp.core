@@ -21,9 +21,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener;
-import org.eclipse.emf.ecp.edit.spi.ECPEditorContext;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.editor.e3.AbstractMEEditorPage;
+import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
 import org.eclipse.emf.ecp.editor.e3.MEEditorInput;
 import org.eclipse.emf.ecp.editor.e3.StatusMessageProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -126,10 +126,10 @@ public class MEEditor extends SharedHeaderFormEditor {
 			try {
 				if (editorInput.getProblemFeature() != null) {
 					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
-						modelElementContext.getModelElement(), editorInput.getProblemFeature());
+						modelElementContext.getDomainObject(), editorInput.getProblemFeature());
 				} else {
 					mePage = new MEEditorPage(this, editorID, editorDesc, modelElementContext,
-						modelElementContext.getModelElement());
+						modelElementContext.getDomainObject());
 				}
 
 				addPage(mePage);
@@ -200,8 +200,8 @@ public class MEEditor extends SharedHeaderFormEditor {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 			shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-			setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
-			setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+			setPartName(shortLabelProvider.getText(modelElementContext.getDomainObject()));
+			setTitleImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));
 
 			modelElementContextListener = new ECPContextDisposedListener() {
 
@@ -211,14 +211,14 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 			};
 			modelElementContext.addECPContextDisposeListener(modelElementContextListener);
-			modelElementChangeListener = new ECPModelElementChangeListener(modelElementContext.getModelElement()) {
+			modelElementChangeListener = new ECPModelElementChangeListener(modelElementContext.getDomainObject()) {
 
 				@Override
 				public void onChange(Notification notification) {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
 							updateIcon();
-							setPartName(shortLabelProvider.getText(modelElementContext.getModelElement()));
+							setPartName(shortLabelProvider.getText(modelElementContext.getDomainObject()));
 							if (mePage != null) {
 								mePage.updateSectionTitle();
 								// mePage.updateLiveValidation();
@@ -259,7 +259,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 			try {
 				final StatusMessageProvider statusMessageProvider = (StatusMessageProvider) e
 					.createExecutableExtension("class");
-				final int newpriority = statusMessageProvider.canRender(modelElementContext.getModelElement());
+				final int newpriority = statusMessageProvider.canRender(modelElementContext.getDomainObject());
 				if (newpriority > priority) {
 					priority = newpriority;
 					this.statusMessageProvider = statusMessageProvider;
@@ -273,7 +273,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	private void updateStatusMessage() {
 		if (statusMessageProvider != null) {
 			getEditorSite().getActionBars().getStatusLineManager()
-				.setMessage(statusMessageProvider.getMessage(modelElementContext.getModelElement()));
+				.setMessage(statusMessageProvider.getMessage(modelElementContext.getDomainObject()));
 		}
 	}
 
@@ -318,12 +318,12 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private void updateIcon() {
 
-		setTitleImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+		setTitleImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));
 		// TODO AS: Debug why sometimes the page is null - not disposed Adapter?
 		if (mePage != null) {
 			try {
 				mePage.getManagedForm().getForm()
-					.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+					.setImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));
 			} catch (final SWTException e) {
 				// Catch in case Editor is directly closed after change.
 			}

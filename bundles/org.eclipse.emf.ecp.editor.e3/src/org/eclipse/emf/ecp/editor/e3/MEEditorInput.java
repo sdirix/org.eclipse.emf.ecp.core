@@ -15,8 +15,6 @@ package org.eclipse.emf.ecp.editor.e3;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.edit.spi.ECPEditorContext;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
@@ -94,8 +92,8 @@ public class MEEditorInput implements IEditorInput {
 	public boolean equals(Object obj) {
 		if (obj instanceof MEEditorInput) {
 			final MEEditorInput other = (MEEditorInput) obj;
-			final boolean ret = modelElementContext.getModelElement().equals(
-				other.modelElementContext.getModelElement());
+			final boolean ret = modelElementContext.getDomainObject().equals(
+				other.modelElementContext.getDomainObject());
 			return ret;
 		}
 		return false;
@@ -115,7 +113,7 @@ public class MEEditorInput implements IEditorInput {
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 
 		if (clazz.equals(EObject.class)) {
-			return modelElementContext.getModelElement();
+			return modelElementContext.getDomainObject();
 		}
 		return null;
 	}
@@ -149,7 +147,7 @@ public class MEEditorInput implements IEditorInput {
 	 * {@inheritDoc}
 	 */
 	public String getName() {
-		return modelElementContext.getModelElement().eClass().getName();
+		return modelElementContext.getDomainObject().eClass().getName();
 	}
 
 	/**

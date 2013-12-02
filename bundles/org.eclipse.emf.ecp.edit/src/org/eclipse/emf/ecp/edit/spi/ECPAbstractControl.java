@@ -103,6 +103,8 @@ public abstract class ECPAbstractControl {
 	/**
 	 * Overwrite this method to implement control specific operations which must be executed after the init but before
 	 * the rendering.
+	 * 
+	 * @since 1.2
 	 */
 	protected void postInit() {
 		// do nothing
@@ -305,30 +307,6 @@ public abstract class ECPAbstractControl {
 			return service.getLocale();
 		}
 		return Locale.getDefault();
-	}
-
-	/**
-	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
-	 * 
-	 * @param controlContext the {@link ECPControlContext} to use by this {@link ECPAbstractControl}.
-	 * @param domainModelReference the {@link VDomainModelReference} of this control
-	 * @since 1.1
-	 * @deprecated
-	 */
-	@Deprecated
-	public final void init(ECPControlContext controlContext, VDomainModelReference domainModelReference) {
-		init(controlContext.getViewContext(), (VControl) domainModelReference.eContainer());
-	}
-
-	/**
-	 * Returns the {@link ECPControlContext} to use.
-	 * 
-	 * @return the {@link ECPControlContext}
-	 * @deprecated
-	 */
-	@Deprecated
-	protected final ECPControlContext getModelElementContext() {
-		throw new UnsupportedOperationException("DO NOT USE THIS METHOD!! Use the ViewModelContext and the VControl.");
 	}
 
 	/**

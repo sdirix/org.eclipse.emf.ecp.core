@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
+import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
 import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -53,7 +53,7 @@ public class MEEditorPage extends FormPage {
 	//
 	private ScrolledForm form;
 	//
-	private final ECPControlContext modelElementContext;
+	private final ECPEditorContext modelElementContext;
 
 	private ShortLabelProvider shortLabelProvider;
 
@@ -74,7 +74,7 @@ public class MEEditorPage extends FormPage {
 	 * @param modelElementContext
 	 *            the {@link ModelElementContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, ECPControlContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement) {
 		super(editor, id, title);
 		this.modelElementContext = modelElementContext;
@@ -97,7 +97,7 @@ public class MEEditorPage extends FormPage {
 	 * @param modelElementContext
 	 *            the {@link ModelElementContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, ECPControlContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
 		this(editor, id, title, modelElementContext, modelElement);
 	}
@@ -119,9 +119,9 @@ public class MEEditorPage extends FormPage {
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		final EClass eClass = modelElementContext.getModelElement().eClass();
+		final EClass eClass = modelElementContext.getDomainObject().eClass();
 
-		final EObject domainObject = modelElementContext.getModelElement();
+		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject);
 		final ViewModelContext vmc = new ViewModelContextImpl(view, domainObject, new ECPReferenceServiceImpl());
 		try {
@@ -130,7 +130,7 @@ public class MEEditorPage extends FormPage {
 			Activator.logException(ex);
 		}
 
-		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+		form.setImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
@@ -143,9 +143,9 @@ public class MEEditorPage extends FormPage {
 	public void updateSectionTitle() {
 		// Layout form
 
-		String name = shortLabelProvider.getText(modelElementContext.getModelElement());
+		String name = shortLabelProvider.getText(modelElementContext.getDomainObject());
 
-		name += " [" + modelElementContext.getModelElement().eClass().getName() + "]";
+		name += " [" + modelElementContext.getDomainObject().eClass().getName() + "]";
 		try {
 			form.setText(name);
 		} catch (final SWTException e) {
@@ -183,12 +183,12 @@ public class MEEditorPage extends FormPage {
 			@Override
 			public void run() {
 				final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElementContext
-					.getModelElement());
-				new ECPCommand(modelElementContext.getModelElement(), editingDomain) {
+					.getDomainObject());
+				new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
 
 					@Override
 					protected void doRun() {
-						EcoreUtil.delete(modelElementContext.getModelElement(), true);
+						EcoreUtil.delete(modelElementContext.getDomainObject(), true);
 					}
 
 				}.run(true);

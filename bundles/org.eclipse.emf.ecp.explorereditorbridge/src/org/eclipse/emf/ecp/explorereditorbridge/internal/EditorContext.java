@@ -23,9 +23,8 @@ import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentTouchedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectsChangedObserver;
 import org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener;
-import org.eclipse.emf.ecp.edit.spi.ECPEditorContext;
+import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * An EditorContext depending on an {@link ECPProject}.
@@ -33,7 +32,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author Eugen Neufeld
  * 
  */
-public class EditorContext extends ECPControlContextImpl implements ECPEditorContext {
+public class EditorContext implements ECPEditorContext {
 
 	/**
 	 * @author Jonas
@@ -67,7 +66,7 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
 			// then we notify about deletion and dispose ourself
-			if (structural && ecpProject.equals(project) && !((InternalProject) project).contains(getModelElement())) {
+			if (structural && ecpProject.equals(project) && !((InternalProject) project).contains(getDomainObject())) {
 				for (final ECPContextDisposedListener contextListener : contextListeners) {
 					contextListener.contextDisposed();
 				}
@@ -82,8 +81,10 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 
 	private final ECPProject ecpProject;
 
-	public EditorContext(EObject modelElement, ECPProject ecpProject, Shell shell) {
-		super(modelElement, ecpProject, shell);
+	private final EObject modelElement;
+
+	public EditorContext(EObject modelElement, ECPProject ecpProject) {
+		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;
 		projectObserver = new IECPProjectsChangedUIObserverImplementation();
 		ECPUtil.getECPObserverBus().register(projectObserver);
@@ -100,7 +101,15 @@ public class EditorContext extends ECPControlContextImpl implements ECPEditorCon
 	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
-		// getViewContext().dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.editor.e3.ECPEditorContext#getDomainObject()
+	 */
+	public EObject getDomainObject() {
+		return modelElement;
 	}
 
 }

@@ -29,36 +29,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ECPControlFactory {
-	/**
-	 * Creates an {@link ECPAbstractControl} from the provided {@link IItemPropertyDescriptor} and the
-	 * {@link ECPControlContext}.
-	 * 
-	 * @param <T> the type of the control to create
-	 * @param controlTypeClass the class of the control to create
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param context the {@link ECPControlContext}
-	 * @return the created {@link ECPControl} or null if nothing fitting could be created
-	 */
-	@Deprecated
-	<T extends ECPAbstractControl> T createControl(Class<T> controlTypeClass,
-		IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context);
-
-	/**
-	 * Creates an {@link ECPAbstractControl} based on a provided id.
-	 * 
-	 * @param <T> the type of the control to create
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param context the {@link ECPControlContext}
-	 * @param controlId the id of the control to create
-	 * @return the created {@link ECPControl} or null if id is unknown
-	 * 
-	 * @deprecated
-	 */
-
-	@Deprecated
-	<T extends ECPAbstractControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context, String controlId);
 
 	/**
 	 * Creates an {@link ECPAbstractControl} based on a {@link Class} and the {@link VDomainModelReference}.
