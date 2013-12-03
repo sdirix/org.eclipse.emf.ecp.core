@@ -23,40 +23,36 @@ import com.eclipsesource.makeithappen.model.task.TaskPackage;
 @SuppressWarnings("restriction")
 public class MyCustomControl extends ECPAbstractCustomControlSWT {
 
-	private Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-	private VFeaturePathDomainModelReference lastNameFeature;
-	private VFeaturePathDomainModelReference genderFeature;
-
-
-	
 	public MyCustomControl() {
 		super();
 	}
-	public Set<VDomainModelReference> getNeededDomainModelReferences() {
-		if(features.isEmpty()){
-			lastNameFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-			lastNameFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_LastName());
-			features.add(lastNameFeature);
 
-			genderFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-			genderFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_Gender());
-			features.add(genderFeature);
-		}
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
+		VFeaturePathDomainModelReference lastNameFeature = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		lastNameFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_LastName());
+		features.add(lastNameFeature);
+
+		VFeaturePathDomainModelReference genderFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		genderFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_Gender());
+		features.add(genderFeature);
+
 		return features;
 	}
 
 	@Override
 	protected List<RenderingResultRow<Control>> createControl(Composite composite) {
-		Composite parent=new Composite(composite, SWT.NONE);
+		Composite parent = new Composite(composite, SWT.NONE);
 		parent.setLayout(new FillLayout(SWT.VERTICAL));
-		
-		Label userAttributes=new Label(parent, SWT.NONE);
+
+		Label userAttributes = new Label(parent, SWT.NONE);
 		userAttributes.setText("User Attributes");
 		userAttributes.setAlignment(SWT.CENTER);
-		
-		createControl(lastNameFeature, parent);
-		createControl(genderFeature, parent);
-		
+
+		createControl(getResolvedDomainModelReference(TaskPackage.eINSTANCE.getUser_LastName()), parent);
+		createControl(getResolvedDomainModelReference(TaskPackage.eINSTANCE.getUser_Gender()), parent);
+
 		List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
 		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(parent));
 		return result;
@@ -79,7 +75,5 @@ public class MyCustomControl extends ECPAbstractCustomControlSWT {
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 }
