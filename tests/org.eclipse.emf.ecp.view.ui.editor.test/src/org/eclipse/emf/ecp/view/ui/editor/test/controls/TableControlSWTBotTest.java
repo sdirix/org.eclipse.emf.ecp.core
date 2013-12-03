@@ -104,37 +104,37 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 
 		final SWTBotTable table = bot.table();
 
-		table.click(0, 0);
+		table.click(0, 1);
 		SWTBotText text = bot.text();
 		text.setFocus();
 		text.setText("Maxl Morlock");
 
-		table.click(0, 1);
+		table.click(0, 2);
 		final SWTBotDateTime dateTime = bot.dateTime();
 		dateTime.setFocus();
 		dateTime.setDate(new Date());
 
-		table.click(0, 2);
+		table.click(0, 3);
 		text = bot.text();
 		text.setFocus();
 		text.setText("false");
 
-		table.click(0, 3);
+		table.click(0, 4);
 		text = bot.text();
 		text.setFocus();
 		text.setText("maxl@foo.bar");
 
-		table.click(1, 0);
+		table.click(1, 1);
 		text = bot.text();
 		text.setFocus();
 		text.setText("Hans Kalb");
 
-		table.click(2, 0);
+		table.click(2, 1);
 		text = bot.text();
 		text.setFocus();
 		text.setText("Heiner Stuhlfauth");
 
-		table.click(2, 0);
+		table.click(2, 1);
 		final SWTBotButton deleteButton = bot.button(1);
 		deleteButton.click();
 
