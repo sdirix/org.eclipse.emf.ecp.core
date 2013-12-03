@@ -89,7 +89,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -105,7 +104,6 @@ public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
-	private static final String ICON_VALIDATION_ERROR = "icons/validation_error.png"; //$NON-NLS-1$
 	private static final String ICON_ADD = "icons/add.png";
 
 	private TableViewer tableViewer;
@@ -245,13 +243,15 @@ public class TableControl extends SWTControl {
 					}
 				}
 
-				switch (mostSevere) {
-				case Diagnostic.OK:
-					cell.setImage(null);
-					return;
-				default:
-					cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
-				}
+				cell.setImage(getValidationIcon(mostSevere));
+
+				// switch (mostSevere) {
+				// case Diagnostic.OK:
+				// cell.setImage(null);
+				// return;
+				// default:
+				// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
+				// }
 			}
 
 			@Override
@@ -744,14 +744,15 @@ public class TableControl extends SWTControl {
 				return null;
 			}
 
-			switch (vDiagnostic.getHighestSeverity()) {
-			case Diagnostic.ERROR:
-				return Display.getDefault().getSystemColor(SWT.COLOR_RED);
-			case Diagnostic.WARNING:
-				return Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
-			default:
-				return null;
-			}
+			return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
+			// switch (vDiagnostic.getHighestSeverity()) {
+			// case Diagnostic.ERROR:
+			// return Display.getDefault().getSystemColor(SWT.COLOR_RED);
+			// case Diagnostic.WARNING:
+			// return Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
+			// default:
+			// return null;
+			// }
 		}
 	}
 
