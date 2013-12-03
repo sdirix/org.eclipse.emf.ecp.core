@@ -291,11 +291,13 @@ public class TableControl extends SWTControl {
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 		final EObject tempInstance = getInstanceOf(clazz);
-		final List<EStructuralFeature> structuralFeatures = clazz.getEAllStructuralFeatures();
 		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;
-		final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig();
+		final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig(clazz);
+		final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
+		structuralFeatures.addAll(readOnlyConfig.keySet());
+
 		createFixedValidationStatusColumn(tableViewer);
 
 		for (final EStructuralFeature feature : structuralFeatures) {
@@ -364,17 +366,18 @@ public class TableControl extends SWTControl {
 		return false;
 	}
 
-	private Map<EStructuralFeature, Boolean> createReadOnlyConfig() {
-		final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
+	private Map<EStructuralFeature, Boolean> createReadOnlyConfig(EClass clazz) {
 		final Map<EStructuralFeature, Boolean> readOnlyConfig = new LinkedHashMap<EStructuralFeature, Boolean>();
 		if (tableControlConfiguration != null) {
 			for (final TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
-				structuralFeatures.add(tcc.getColumnAttribute());
 				readOnlyConfig.put(tcc.getColumnAttribute(), tcc.isReadOnly());
 			}
-			return readOnlyConfig;
+		} else {
+			for (final EStructuralFeature feature : clazz.getEStructuralFeatures()) {
+				readOnlyConfig.put(feature, Boolean.FALSE);
+			}
 		}
-		return null;
+		return readOnlyConfig;
 	}
 
 	private int noStyle() {
