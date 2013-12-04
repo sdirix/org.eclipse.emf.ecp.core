@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
@@ -72,35 +71,9 @@ public class CategorizableElementItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
-			addChildrenPropertyDescriptor(object);
 			addLabelObjectPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Children feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addChildrenPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CategorizableElement_children_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_children_feature",
-					"_UI_CategorizableElement_type"),
-				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__CHILDREN,
-				false,
-				false,
-				false,
-				null,
-				null,
-				null));
 	}
 
 	/**
@@ -178,22 +151,6 @@ public class CategorizableElementItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
 	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	@Override
-	public Collection<?> getChildren(Object object) {
-		final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
-		for (final VCategorizableElement element : children) {
-			adapterFactory.adapt(element, IStructuredItemContentProvider.class);
-		}
-		return children;
-	}
-
-	@Override
-	protected boolean hasChildren(Object object, boolean optimized) {
-
-		final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
-		return !children.isEmpty();
 	}
 
 }

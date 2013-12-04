@@ -208,16 +208,6 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZABLE_ELEMENT__ATTACHMENTS = VViewPackage.ELEMENT__ATTACHMENTS;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZABLE_ELEMENT__CHILDREN = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -225,7 +215,7 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
+	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Categorizable Element</em>' class.
@@ -235,7 +225,7 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
+	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -296,16 +286,6 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = CATEGORIZABLE_ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_CATEGORIZATION__CHILDREN = CATEGORIZABLE_ELEMENT__CHILDREN;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
@@ -396,16 +376,6 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int CATEGORIZATION__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORIZATION__CHILDREN = ABSTRACT_CATEGORIZATION__CHILDREN;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
@@ -506,16 +476,6 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 * @ordered
-	 */
-	int CATEGORY__CHILDREN = ABSTRACT_CATEGORIZATION__CHILDREN;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
@@ -844,19 +804,6 @@ public interface VCategorizationPackage extends EPackage
 	EClass getCategorizableElement();
 
 	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren <em>Children</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the meta object for the reference list '<em>Children</em>'.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren()
-	 * @see #getCategorizableElement()
-	 * @generated
-	 */
-	EReference getCategorizableElement_Children();
-
-	/**
 	 * Returns the meta object for the reference '
 	 * {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject <em>Label Object</em>}
 	 * '.
@@ -1033,15 +980,6 @@ public interface VCategorizationPackage extends EPackage
 		 * @generated
 		 */
 		EClass CATEGORIZABLE_ELEMENT = eINSTANCE.getCategorizableElement();
-
-		/**
-		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * 
-		 * @generated
-		 */
-		EReference CATEGORIZABLE_ELEMENT__CHILDREN = eINSTANCE.getCategorizableElement_Children();
 
 		/**
 		 * The meta object literal for the '<em><b>Label Object</b></em>' reference feature.

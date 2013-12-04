@@ -29,9 +29,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CategorizableElement" abstract="true"
       eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//CategorizableElement" changeable="false" volatile="true" transient="true"
-        derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="labelObject" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
   </eClassifiers>

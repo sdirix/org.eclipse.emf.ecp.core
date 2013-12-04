@@ -302,20 +302,9 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
-	public EReference getCategorizableElement_Children()
-	{
-		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
 	public EReference getCategorizableElement_LabelObject()
 	{
-		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(1);
+		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -370,7 +359,6 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CURRENT_SELECTION);
 
 		categorizableElementEClass = createEClass(CATEGORIZABLE_ELEMENT);
-		createEReference(categorizableElementEClass, CATEGORIZABLE_ELEMENT__CHILDREN);
 		createEReference(categorizableElementEClass, CATEGORIZABLE_ELEMENT__LABEL_OBJECT);
 	}
 
@@ -452,9 +440,6 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 
 		initEClass(categorizableElementEClass, VCategorizableElement.class, "CategorizableElement", IS_ABSTRACT,
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCategorizableElement_Children(), this.getCategorizableElement(), null, "children", null, 0,
-			-1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getCategorizableElement_LabelObject(), theEcorePackage.getEObject(), null, "labelObject", null,
 			0, 1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);

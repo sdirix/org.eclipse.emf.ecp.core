@@ -12,8 +12,6 @@
 package org.eclipse.emf.ecp.view.categorization.model;
 
 import java.util.List;
-
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.VElement;
 
@@ -25,7 +23,6 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getChildren <em>Children</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject <em>Label Object</em>}</li>
  * </ul>
  * </p>
@@ -38,23 +35,6 @@ import org.eclipse.emf.ecp.view.model.VElement;
 @SuppressWarnings("restriction")
 public interface VCategorizableElement extends VElement
 {
-
-	/**
-	 * Returns the value of the '<em><b>Children</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Children</em>' reference list isn't clear, there really should be more of a
-	 * description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Children</em>' reference list.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage#getCategorizableElement_Children()
-	 * @model transient="true" changeable="false" volatile="true" derived="true"
-	 * @generated
-	 */
-	EList<VCategorizableElement> getChildren();
 
 	/**
 	 * Returns the value of the '<em><b>Label Object</b></em>' reference.
