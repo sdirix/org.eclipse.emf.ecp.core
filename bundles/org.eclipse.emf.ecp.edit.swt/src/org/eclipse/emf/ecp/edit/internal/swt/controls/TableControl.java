@@ -509,6 +509,8 @@ public class TableControl extends SWTControl {
 	private Button addButton;
 	private Setting mainSetting;
 
+	private boolean isDisposing = false;
+
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
@@ -547,11 +549,13 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	public void dispose() {
+		isDisposing = true;
 		super.dispose();
 		composedAdapterFactory.dispose();
 		mainSetting = null;
 		adapterFactoryItemDelegator = null;
 		composedAdapterFactory = null;
+		isDisposing = false;
 	}
 
 	/**
@@ -738,6 +742,9 @@ public class TableControl extends SWTControl {
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
 		public Color getBackground(Object element) {
+			if (isDisposing) {
+				return null;
+			}
 			final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
 
 			if (vDiagnostic == null) {
