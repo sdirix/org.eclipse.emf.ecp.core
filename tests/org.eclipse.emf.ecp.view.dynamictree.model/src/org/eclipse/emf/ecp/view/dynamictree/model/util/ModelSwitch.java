@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.dynamictree.model.*;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;

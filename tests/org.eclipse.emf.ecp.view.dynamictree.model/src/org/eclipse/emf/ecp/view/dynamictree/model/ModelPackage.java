@@ -133,15 +133,6 @@ public interface ModelPackage extends EPackage
 	int DYNAMIC_CONTAINMENT_TREE__ATTACHMENTS = VCategorizationPackage.CATEGORY__ATTACHMENTS;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DYNAMIC_CONTAINMENT_TREE__CHILDREN = VCategorizationPackage.CATEGORY__CHILDREN;
-
-	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -285,15 +276,6 @@ public interface ModelPackage extends EPackage
 	 * @ordered
 	 */
 	int DYNAMIC_CONTAINMENT_ITEM__ATTACHMENTS = VCategorizationPackage.CATEGORIZABLE_ELEMENT__ATTACHMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DYNAMIC_CONTAINMENT_ITEM__CHILDREN = VCategorizationPackage.CATEGORIZABLE_ELEMENT__CHILDREN;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
