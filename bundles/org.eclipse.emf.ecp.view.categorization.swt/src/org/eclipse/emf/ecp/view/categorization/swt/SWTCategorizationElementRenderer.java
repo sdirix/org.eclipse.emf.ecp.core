@@ -45,6 +45,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TreeEditor;
@@ -169,7 +171,13 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	protected void setupTreeViewer(final TreeViewer treeViewer,
 		final VCategorizationElement vCategorizationElement,
 		final ScrolledComposite editorComposite, final ViewModelContext viewModelContext) {
+		treeViewer.addFilter(new ViewerFilter() {
 
+			@Override
+			public boolean select(Viewer viewer, Object parentElement, Object element) {
+				return VCategorizableElement.class.isInstance(element) && ((VCategorizableElement) element).isVisible();
+			}
+		});
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
 
@@ -184,101 +192,34 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			/**
 			 * {@inheritDoc}
 			 * 
-			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getChildren(java.lang.Object)
-			 */
-			@Override
-			public Object[] getChildren(Object object) {
-				final Object[] elements = super.getChildren(object);
-				final List<Object> result = new ArrayList<Object>();
-				for (final Object obj : elements) {
-					if (VCategorizableElement.class.isInstance(obj) && ((VCategorizableElement) obj).isVisible()) {
-						result.add(obj);
-					}
-				}
-				return result.toArray();
-			}
-
-			/**
-			 * {@inheritDoc}
-			 * 
 			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#hasChildren(java.lang.Object)
 			 */
 			@Override
 			public boolean hasChildren(Object object) {
-				boolean hasChildren = super.hasChildren(object);
-				if (hasChildren) {
-					hasChildren = getChildren(object).length != 0;
-				}
-				return hasChildren;
-			}
 
-			// /**
-			// * {@inheritDoc}
-			// *
-			// * @see
-			// org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getChildren(java.lang.Object)
-			// */
-			// @Override
-			// public Object[] getChildren(Object object) {
-			// // super.getChildren(object);
-			// // if (VCategorizationElement.class.isInstance(object)) {
-			// // final EList<VAbstractCategorization> children = ((VCategorizationElement) object)
-			// // .getCategorizations();
-			// // final List<VAbstractCategorization> result = new ArrayList<VAbstractCategorization>();
-			// // for (final VAbstractCategorization element : children) {
-			// // if (element.isVisible()) {
-			// // result.add(element);
-			// // }
-			// // }
-			// // return result.toArray();
-			// // }
-			// // if (VCategorizableElement.class.isInstance(object)) {
-			// // final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
-			// // final List<VCategorizableElement> result = new ArrayList<VCategorizableElement>();
-			// // for (final VCategorizableElement element : children) {
-			// // if (element.isVisible()) {
-			// // result.add(element);
-			// // }
-			// // }
-			// // return result.toArray();
-			// // }
-			// return super.getChildren(object);
-			// }
-			//
-			// /**
-			// * {@inheritDoc}
-			// *
-			// * @see
-			// org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#hasChildren(java.lang.Object)
-			// */
-			// @Override
-			// public boolean hasChildren(Object object) {
-			// if (VCategorizableElement.class.isInstance(object)) {
-			// final EList<VCategorizableElement> children = ((VCategorizableElement) object).getChildren();
-			// if (children.isEmpty()) {
-			// return false;
-			// }
-			//
-			// for (final VCategorizableElement element : children) {
-			// if (element.isVisible()) {
-			// return true;
-			// }
-			// }
-			// return false;
-			// }
-			// return false;
-			// }
-			//
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getElements(java.lang.Object)
-			 */
-			@Override
-			public Object[] getElements(Object object) {
-				// TODO Auto-generated method stub
-				return getChildren(object);
+				final boolean hasChildren = super.hasChildren(object);
+				if (hasChildren) {
+					for (final Object o : getChildren(object)) {
+						for (final ViewerFilter viewerFilter : treeViewer.getFilters()) {
+							if (viewerFilter.select(treeViewer, object, o)) {
+								return true;
+							}
+						}
+					}
+				}
+				return false;
 			}
+			//
+			// /**
+			// * {@inheritDoc}
+			// *
+			// * @see
+			// org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getElements(java.lang.Object)
+			// */
+			// @Override
+			// public Object[] getElements(Object object) {
+			// return getChildren(object);
+			// }
 
 		};
 

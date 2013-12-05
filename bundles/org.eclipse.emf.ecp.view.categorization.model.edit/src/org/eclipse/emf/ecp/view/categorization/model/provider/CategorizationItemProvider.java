@@ -183,4 +183,13 @@ public class CategorizationItemProvider
 				VCategorizationFactory.eINSTANCE.createCategory()));
 	}
 
+	@Override
+	public Collection<?> getChildren(Object object) {
+		final Collection<?> children = super.getChildren(object);
+		for (final Object element : children) {
+			adapterFactory.adapt(element, IStructuredItemContentProvider.class);
+		}
+		return children;
+	}
+
 }
