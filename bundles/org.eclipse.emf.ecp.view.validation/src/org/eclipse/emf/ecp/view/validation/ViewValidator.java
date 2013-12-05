@@ -95,7 +95,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 				final Iterator<Setting> settings = modelReference.getIterator();
 				while (settings.hasNext()) {
 					final Setting setting = settings.next();
-					if (setting.getEStructuralFeature().getEContainingClass().equals(eObject.eClass())) {
+					if (setting.getEStructuralFeature().getEContainingClass().isInstance(eObject)) {
 						update(control, eObject, setting.getEStructuralFeature(), getDefaultValue());
 					}
 				}
