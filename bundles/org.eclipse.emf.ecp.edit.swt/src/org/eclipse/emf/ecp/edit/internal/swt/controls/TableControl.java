@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -803,12 +804,18 @@ public class TableControl extends SWTControl {
 	}
 
 	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
+		if (getControl().isReadonly()) {
+			return null;
+		}
 		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
 			getViewModelContext().getService(ValidationService.class).getDiagnosticPerFeature(domainObject);
 		return diagnosticPerFeature.get(feature);
 	}
 
 	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject) {
+		if (getControl().isReadonly()) {
+			return Collections.emptySet();
+		}
 		final Set<VDiagnostic> allDiagnostics = getViewModelContext().getService(ValidationService.class)
 			.getAllDiagnostics(
 				domainObject);
