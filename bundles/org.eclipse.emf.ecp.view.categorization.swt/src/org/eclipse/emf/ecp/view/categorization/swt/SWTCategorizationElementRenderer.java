@@ -209,17 +209,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 				}
 				return false;
 			}
-			//
-			// /**
-			// * {@inheritDoc}
-			// *
-			// * @see
-			// org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#getElements(java.lang.Object)
-			// */
-			// @Override
-			// public Object[] getElements(Object object) {
-			// return getChildren(object);
-			// }
 
 		};
 
