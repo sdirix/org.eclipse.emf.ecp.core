@@ -94,13 +94,22 @@ public interface VCustomPackage extends EPackage {
 	int HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Control Checked</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Hardcoded Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
@@ -133,6 +142,17 @@ public interface VCustomPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getHardcodedDomainModelReference_DomainModelReferences();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Control Checked</em>'.
+	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked()
+	 * @see #getHardcodedDomainModelReference()
+	 * @generated
+	 */
+	EAttribute getHardcodedDomainModelReference_ControlChecked();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -181,6 +201,14 @@ public interface VCustomPackage extends EPackage {
 		 * @generated
 		 */
 		EReference HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = eINSTANCE.getHardcodedDomainModelReference_DomainModelReferences();
+
+		/**
+		 * The meta object literal for the '<em><b>Control Checked</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = eINSTANCE.getHardcodedDomainModelReference_ControlChecked();
 
 	}
 

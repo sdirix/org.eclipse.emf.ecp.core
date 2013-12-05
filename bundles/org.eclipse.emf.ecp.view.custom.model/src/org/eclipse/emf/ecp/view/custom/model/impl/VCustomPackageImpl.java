@@ -129,6 +129,15 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getHardcodedDomainModelReference_ControlChecked() {
+		return (EAttribute)hardcodedDomainModelReferenceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public VCustomFactory getCustomFactory() {
 		return (VCustomFactory)getEFactoryInstance();
 	}
@@ -155,6 +164,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		hardcodedDomainModelReferenceEClass = createEClass(HARDCODED_DOMAIN_MODEL_REFERENCE);
 		createEAttribute(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
 		createEReference(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
+		createEAttribute(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED);
 	}
 
 	/**
@@ -194,6 +204,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		initEClass(hardcodedDomainModelReferenceEClass, VHardcodedDomainModelReference.class, "HardcodedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getHardcodedDomainModelReference_ControlId(), ecorePackage.getEString(), "controlId", null, 1, 1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getHardcodedDomainModelReference_DomainModelReferences(), theViewPackage.getDomainModelReference(), null, "domainModelReferences", null, 0, -1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getHardcodedDomainModelReference_ControlChecked(), ecorePackage.getEBoolean(), "controlChecked", "false", 1, 1, VHardcodedDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

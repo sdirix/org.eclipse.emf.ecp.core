@@ -9,9 +9,10 @@
   <foreignModel>custom.ecore</foreignModel>
   <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.custom" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="custom.ecore#/">
-    <genClasses ecoreClass="custom.ecore#//CustomControl">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/bundle"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/className"/>
+    <genClasses ecoreClass="custom.ecore#//HardcodedDomainModelReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//HardcodedDomainModelReference/controlId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference custom.ecore#//HardcodedDomainModelReference/domainModelReferences"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//HardcodedDomainModelReference/controlChecked"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

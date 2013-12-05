@@ -8,5 +8,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReferences"
         upperBound="-1" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="controlChecked" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" transient="true"
+        defaultValueLiteral="false"/>
   </eClassifiers>
 </ecore:EPackage>

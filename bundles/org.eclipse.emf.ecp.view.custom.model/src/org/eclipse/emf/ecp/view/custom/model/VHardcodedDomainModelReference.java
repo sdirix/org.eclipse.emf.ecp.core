@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.model.VDomainModelReference;
  * <ul>
  *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}</li>
  *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,32 @@ public interface VHardcodedDomainModelReference extends VDomainModelReference {
 	 * @generated
 	 */
 	EList<VDomainModelReference> getDomainModelReferences();
+
+	/**
+	 * Returns the value of the '<em><b>Control Checked</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Control Checked</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Control Checked</em>' attribute.
+	 * @see #setControlChecked(boolean)
+	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#getHardcodedDomainModelReference_ControlChecked()
+	 * @model default="false" required="true" transient="true"
+	 * @generated
+	 */
+	boolean isControlChecked();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Control Checked</em>' attribute.
+	 * @see #isControlChecked()
+	 * @generated
+	 */
+	void setControlChecked(boolean value);
 
 } // VHardcodedDomainModelReference

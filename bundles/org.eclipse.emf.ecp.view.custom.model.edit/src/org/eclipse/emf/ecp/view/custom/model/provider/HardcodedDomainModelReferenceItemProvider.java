@@ -160,6 +160,7 @@ public class HardcodedDomainModelReferenceItemProvider
 
 		switch (notification.getFeatureID(VHardcodedDomainModelReference.class)) {
 			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
