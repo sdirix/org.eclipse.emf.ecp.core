@@ -92,8 +92,13 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				dispose();
 			}
 		});
-		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
-			createControl(parent)));
+		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
+			.getResultRowFactory().createRenderingResultRow(
+				createControl(parent)));
+		// TODO remove asap
+		backwardCompatibleHandleValidation();
+		return list;
+
 	}
 
 	/**
@@ -130,9 +135,6 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				binding.updateTargetToModel();
 			}
 		}
-
-		// TODO remove asap
-		backwardCompatibleHandleValidation();
 
 		return composite;
 	}
