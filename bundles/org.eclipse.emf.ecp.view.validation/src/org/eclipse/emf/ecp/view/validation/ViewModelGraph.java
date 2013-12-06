@@ -99,6 +99,12 @@ public abstract class ViewModelGraph<T> {
 		return viewModelSettings.getNode(renderable, SettingsNodeMapping.allFeatures()).getValue();
 	}
 
+	/**
+	 * Returns all values set for the provided domainObject.
+	 * 
+	 * @param domainObject the {@link EObject} to search the values for
+	 * @return the set of all values currently associated with the provided {@link EObject}
+	 */
 	public Set<T> getAllValues(EObject domainObject) {
 		final Set<T> result = new LinkedHashSet<T>();
 		final Set<ViewModelGraphNode<T>> allNodes = domainModelSettings.getAllNodes(domainObject);
@@ -108,6 +114,14 @@ public abstract class ViewModelGraph<T> {
 		return result;
 	}
 
+	/**
+	 * Returns a Map containing all {@link EStructuralFeature EStructuralFeatures} and the corresponding value for the
+	 * provided domainObject.
+	 * 
+	 * @param domainObject the {@link EObject} to search the map for
+	 * @return a mapping between all {@link EStructuralFeature EStructuralFeatures} and its associated value, currently
+	 *         associated with the provided {@link EObject}
+	 */
 	public Map<EStructuralFeature, T> getValuePerFeature(EObject domainObject) {
 		final Map<EStructuralFeature, T> result = new LinkedHashMap<EStructuralFeature, T>();
 		final Set<ViewModelGraphNode<T>> allNodes = domainModelSettings.getAllNodes(domainObject);

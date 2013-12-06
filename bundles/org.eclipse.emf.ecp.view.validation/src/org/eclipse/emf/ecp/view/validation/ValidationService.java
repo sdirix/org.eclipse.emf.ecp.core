@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -29,10 +33,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.model.VControl;
 import org.eclipse.emf.ecp.view.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.model.VDomainModelReference;
@@ -58,6 +62,8 @@ public class ValidationService implements ViewModelService {
 	private ValidationRegistry validationRegistry;
 
 	private final List<ViewValidationListener> validationListener;
+
+	private final Set<ValidationProvider> validationProviders = new LinkedHashSet<ValidationProvider>();
 
 	/**
 	 * Default constructor.
@@ -183,6 +189,10 @@ public class ValidationService implements ViewModelService {
 			if (viewValidationGraph == null) {
 				return; // ignore notifications during initialization
 			}
+			if (ValidationNotification.class.isInstance(notification.getRawNotification())) {
+				viewValidationGraph.validate(getAllEObjects(notification.getNotifier()));
+				return;
+			}
 			final Notification rawNotification = notification.getRawNotification();
 			switch (rawNotification.getEventType()) {
 			case Notification.ADD:
@@ -237,14 +247,16 @@ public class ValidationService implements ViewModelService {
 		renderable = context.getViewModel();
 
 		if (renderable == null) {
-			throw new IllegalStateException("View model must not be null");
+			throw new IllegalStateException("View model must not be null"); //$NON-NLS-1$
 		}
 
 		final EObject domainModel = context.getDomainModel();
 
 		if (domainModel == null) {
-			throw new IllegalStateException("Domain model must not be null");
+			throw new IllegalStateException("Domain model must not be null"); //$NON-NLS-1$
 		}
+
+		readValidationProvider();
 
 		domainChangeListener = new DomainModelChangeListener(domainModel);
 		viewChangeListener = new ViewModelChangeListener(domainModel);
@@ -259,10 +271,30 @@ public class ValidationService implements ViewModelService {
 		notifyListeners();
 	}
 
+	/**
+	 * 
+	 */
+	private void readValidationProvider() {
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] controls = extensionRegistry
+			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.validation.validationProvider"); //$NON-NLS-1$
+		for (final IConfigurationElement e : controls) {
+			try {
+				final ValidationProvider validationProvider = (ValidationProvider) e.createExecutableExtension("class"); //$NON-NLS-1$
+				validationProviders.add(validationProvider);
+			} catch (final CoreException e1) {
+				Activator.logException(e1);
+			}
+		}
+	}
+
 	private void init(VElement view, EObject domainModel) {
 		validationRegistry = new ValidationRegistry();
 		validationRegistry.register(domainModel, view);
-		viewValidationGraph = new ViewValidator(view, domainModel, validationRegistry);
+		viewValidationGraph = new ViewValidator(view, domainModel, validationRegistry, validationProviders);
 	}
 
 	/**
@@ -334,10 +366,24 @@ public class ValidationService implements ViewModelService {
 		context.unregisterViewChangeListener(viewChangeListener);
 	}
 
+	/**
+	 * Returns all values set for the provided domainObject.
+	 * 
+	 * @param domainObject the {@link EObject} to search the values for
+	 * @return the set of all values currently associated with the provided {@link EObject}
+	 */
 	public Set<VDiagnostic> getAllDiagnostics(EObject domainObject) {
 		return viewValidationGraph.getAllValues(domainObject);
 	}
 
+	/**
+	 * Returns a Map containing all {@link EStructuralFeature EStructuralFeatures} and the corresponding value for the
+	 * provided domainObject.
+	 * 
+	 * @param domainObject the {@link EObject} to search the map for
+	 * @return a mapping between all {@link EStructuralFeature EStructuralFeatures} and its associated value, currently
+	 *         associated with the provided {@link EObject}
+	 */
 	public Map<EStructuralFeature, VDiagnostic> getDiagnosticPerFeature(EObject domainObject) {
 		return viewValidationGraph.getValuePerFeature(domainObject);
 	}
@@ -349,5 +395,25 @@ public class ValidationService implements ViewModelService {
 	 */
 	public int getPriority() {
 		return 3;
+	}
+
+	/**
+	 * Adds a validation provider to the list of known validation providers.
+	 * 
+	 * @param validationProvider the {@link ValidationProvider} to add
+	 */
+	public void addValidationProvider(ValidationProvider validationProvider) {
+		validationProviders.add(validationProvider);
+		viewValidationGraph.validate(getAllEObjects(context.getDomainModel()));
+	}
+
+	/**
+	 * Removes a validation provider from the list of known validation providers.
+	 * 
+	 * @param validationProvider the {@link ValidationProvider} to remove
+	 */
+	public void removeValidationProvider(ValidationProvider validationProvider) {
+		validationProviders.remove(validationProvider);
+		viewValidationGraph.validate(getAllEObjects(context.getDomainModel()));
 	}
 }

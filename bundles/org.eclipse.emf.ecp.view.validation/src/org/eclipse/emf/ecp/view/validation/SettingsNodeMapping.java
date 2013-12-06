@@ -68,6 +68,13 @@ public class SettingsNodeMapping<T> {
 		return node;
 	}
 
+	/**
+	 * Returns a set of all {@link ViewModelGraphNode ViewModelGraphNodes} which are registered with one of the EObject
+	 * features.
+	 * 
+	 * @param eObject the {@link EObject} to find all GraphNodes for
+	 * @return the set of all {@link ViewModelGraphNode ViewModelGraphNodes} for the provided {@link EObject}
+	 */
 	public Set<ViewModelGraphNode<T>> getAllNodes(EObject eObject) {
 
 		final Set<ViewModelGraphNode<T>> result = new LinkedHashSet<ViewModelGraphNode<T>>();

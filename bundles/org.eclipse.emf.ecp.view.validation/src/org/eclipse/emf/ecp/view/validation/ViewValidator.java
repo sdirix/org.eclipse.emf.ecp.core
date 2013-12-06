@@ -16,10 +16,15 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -41,7 +46,13 @@ import org.eclipse.emf.ecp.view.model.VViewFactory;
  */
 public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 
+	private final Queue<EObject> validationQueue = new LinkedList<EObject>();
+
 	private final ValidationRegistry validationRegistry;
+
+	private boolean validationRunning;
+
+	private final Set<ValidationProvider> validationProviders;
 
 	/**
 	 * Default constructor.
@@ -52,8 +63,10 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	 *            the domain model
 	 * @param validationRegistry
 	 *            the validation registry for the view validation
+	 * @param validationProviders the set of additional {@link ValidationProvider ValidationProviders}
 	 */
-	public ViewValidator(VElement viewModel, EObject domainModel, ValidationRegistry validationRegistry) {
+	public ViewValidator(VElement viewModel, EObject domainModel, ValidationRegistry validationRegistry,
+		Set<ValidationProvider> validationProviders) {
 		super(viewModel, domainModel, new Comparator<VDiagnostic>() {
 			public int compare(VDiagnostic vDiagnostic1, VDiagnostic vDiagnostic2) {
 				if (vDiagnostic1.getHighestSeverity() > vDiagnostic2.getHighestSeverity()) {
@@ -65,6 +78,7 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 			}
 		});
 		this.validationRegistry = validationRegistry;
+		this.validationProviders = validationProviders;
 
 		// readPropagators();
 	}
@@ -87,6 +101,28 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 	 * @param eObject the eObject to validate
 	 */
 	public void validate(EObject eObject) {
+		if (validationRunning) {
+			validationQueue.offer(eObject);
+		} else {
+			validationRunning = true;
+			validateAndNotifyControls(eObject);
+
+			EObject toValidate = validationQueue.poll();
+			while (toValidate != null) {
+				validateAndNotifyControls(toValidate);
+				toValidate = validationQueue.poll();
+			}
+
+			validationRunning = false;
+		}
+
+	}
+
+	/**
+	 * @param eObject
+	 */
+	private void validateAndNotifyControls(EObject eObject) {
+
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
@@ -194,6 +230,24 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 
 		validator.validate(object, diagnostics, context);
 
+		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
+		for (final Diagnostic child : diagnostics.getChildren()) {
+			if (DiagnosticChain.class.isInstance(child)) {
+				diagnosticMap.put((EStructuralFeature) child.getData().get(1), (DiagnosticChain) child);
+			}
+		}
+
+		for (final ValidationProvider validationProvider : validationProviders) {
+			final List<Diagnostic> additionValidation = validationProvider.validate(object);
+			for (final Diagnostic additionDiagnostic : additionValidation) {
+				if (diagnosticMap.containsKey(additionDiagnostic.getData().get(1))) {
+					diagnosticMap.get(additionDiagnostic.getData().get(1)).add(additionDiagnostic);
+				} else {
+					diagnostics.add(additionDiagnostic);
+				}
+
+			}
+		}
 		return diagnostics;
 	}
 
