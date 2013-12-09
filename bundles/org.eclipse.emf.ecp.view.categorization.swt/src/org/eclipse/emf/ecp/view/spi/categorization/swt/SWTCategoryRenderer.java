@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.categorization.swt;
+package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
 import java.util.List;
 
@@ -31,8 +31,6 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-// TODO: api
-@SuppressWarnings("restriction")
 public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {
 
 	/**

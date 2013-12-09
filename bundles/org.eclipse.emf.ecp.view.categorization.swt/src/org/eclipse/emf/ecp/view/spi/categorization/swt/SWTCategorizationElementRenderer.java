@@ -11,7 +11,7 @@
  * Eugen Neufeld - Refactoring
  * Johannes Falterimeier - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.categorization.swt;
+package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,22 +62,13 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SWTViewRenderer.
  */
-@SuppressWarnings("restriction")
 public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCategorizationElement> {
 
 	/** The Constant INSTANCE. */
 	public static final SWTCategorizationElementRenderer INSTANCE = new SWTCategorizationElementRenderer();
-
-	/** The error descriptor. */
-
-	private static ImageDescriptor errorDescriptor = Activator.getImageDescriptor("icons/error_decorate.png"); //$NON-NLS-1$
-
-	/** The warning descriptor. */
-	private static ImageDescriptor warningDescriptor = Activator.getImageDescriptor("icons/warning_decorate.png"); //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}

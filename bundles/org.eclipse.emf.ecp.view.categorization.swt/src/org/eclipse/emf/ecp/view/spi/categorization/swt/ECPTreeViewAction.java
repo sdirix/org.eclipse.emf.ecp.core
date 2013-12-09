@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.categorization.swt;
+package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
 import org.eclipse.emf.ecp.view.spi.categorization.model.ECPAction;
 import org.eclipse.jface.viewers.TreeSelection;

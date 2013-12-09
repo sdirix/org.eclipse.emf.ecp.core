@@ -49,7 +49,6 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * 
  */
-@SuppressWarnings("restriction")
 public class CategorizationTreeContentRefreshTest {
 
 	private static final String EXPECTED_NAME = "test";

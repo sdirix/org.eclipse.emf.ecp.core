@@ -33,7 +33,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class CategorizationTests {
 

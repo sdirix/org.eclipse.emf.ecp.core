@@ -9,13 +9,9 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.categorization.swt;
-
-import java.io.File;
-import java.net.MalformedURLException;
+package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -62,18 +58,6 @@ public class Activator extends Plugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
-	}
-
-	public static ImageDescriptor getImageDescriptor(String path) {
-		if (getDefault() == null) {
-			try {
-				return ImageDescriptor.createFromURL(new File(path).toURI().toURL());
-			} catch (final MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return ImageDescriptor.createFromURL(getDefault().getBundle().getResource(path));
 	}
 
 }

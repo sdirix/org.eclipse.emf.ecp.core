@@ -50,7 +50,6 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * 
  */
-@SuppressWarnings("restriction")
 public class CategorizationTreeRefreshTest {
 
 	private static Image idCategorization;
