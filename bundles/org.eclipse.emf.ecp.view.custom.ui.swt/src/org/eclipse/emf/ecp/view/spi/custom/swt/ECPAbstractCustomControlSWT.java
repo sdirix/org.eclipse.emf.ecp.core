@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.custom.swt;
+package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
-import org.eclipse.emf.ecp.view.custom.ui.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -47,8 +47,6 @@ import org.eclipse.swt.widgets.Shell;
  * @author Eugen Neufeld
  * 
  */
-// Missing SPI or API definitions
-@SuppressWarnings("restriction")
 public abstract class ECPAbstractCustomControlSWT extends
 	ECPAbstractCustomControl implements ECPControlSWT {
 	/**

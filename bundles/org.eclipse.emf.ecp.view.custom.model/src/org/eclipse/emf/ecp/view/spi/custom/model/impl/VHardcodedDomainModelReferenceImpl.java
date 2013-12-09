@@ -41,15 +41,12 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#getControlId <em>Control Id
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#getDomainModelReferences
- * <em>Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#isControlChecked <em>Control
- * Checked</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#getControlId <em>Control Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#getDomainModelReferences <em>Domain Model References</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#isControlChecked <em>Control Checked</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements VHardcodedDomainModelReference {
@@ -60,7 +57,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * The default value of the '{@link #getControlId() <em>Control Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getControlId()
 	 * @generated
 	 * @ordered
@@ -71,7 +67,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * The cached value of the '{@link #getControlId() <em>Control Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getControlId()
 	 * @generated
 	 * @ordered
@@ -79,11 +74,9 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	protected String controlId = CONTROL_ID_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getDomainModelReferences() <em>Domain Model References</em>}' containment
-	 * reference list.
+	 * The cached value of the '{@link #getDomainModelReferences() <em>Domain Model References</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getDomainModelReferences()
 	 * @generated
 	 * @ordered
@@ -94,7 +87,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * The default value of the '{@link #isControlChecked() <em>Control Checked</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #isControlChecked()
 	 * @generated
 	 * @ordered
@@ -105,7 +97,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * The cached value of the '{@link #isControlChecked() <em>Control Checked</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #isControlChecked()
 	 * @generated
 	 * @ordered
@@ -115,7 +106,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected VHardcodedDomainModelReferenceImpl() {
@@ -125,7 +115,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -136,7 +125,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getControlId() {
@@ -146,28 +134,23 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setControlId(String newControlId) {
-		final String oldControlId = controlId;
+		String oldControlId = controlId;
 		controlId = newControlId;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID, oldControlId, controlId));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID, oldControlId, controlId));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<VDomainModelReference> getDomainModelReferences() {
 		if (domainModelReferences == null) {
-			domainModelReferences = new EObjectContainmentEList<VDomainModelReference>(VDomainModelReference.class,
-				this, VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
+			domainModelReferences = new EObjectContainmentEList<VDomainModelReference>(VDomainModelReference.class, this, VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
 		}
 		return domainModelReferences;
 	}
@@ -175,7 +158,6 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public boolean isControlChecked() {
@@ -185,29 +167,25 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setControlChecked(boolean newControlChecked) {
-		final boolean oldControlChecked = controlChecked;
+		boolean oldControlChecked = controlChecked;
 		controlChecked = newControlChecked;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED, oldControlChecked, controlChecked));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED, oldControlChecked, controlChecked));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
-			return ((InternalEList<?>) getDomainModelReferences()).basicRemove(otherEnd, msgs);
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
+				return ((InternalEList<?>)getDomainModelReferences()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -215,18 +193,17 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			return getControlId();
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
-			return getDomainModelReferences();
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
-			return isControlChecked();
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				return getControlId();
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
+				return getDomainModelReferences();
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
+				return isControlChecked();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -234,23 +211,22 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			setControlId((String) newValue);
-			return;
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
-			getDomainModelReferences().clear();
-			getDomainModelReferences().addAll((Collection<? extends VDomainModelReference>) newValue);
-			return;
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
-			setControlChecked((Boolean) newValue);
-			return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				setControlId((String)newValue);
+				return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
+				getDomainModelReferences().clear();
+				getDomainModelReferences().addAll((Collection<? extends VDomainModelReference>)newValue);
+				return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
+				setControlChecked((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -258,21 +234,20 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			setControlId(CONTROL_ID_EDEFAULT);
-			return;
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
-			getDomainModelReferences().clear();
-			return;
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
-			setControlChecked(CONTROL_CHECKED_EDEFAULT);
-			return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				setControlId(CONTROL_ID_EDEFAULT);
+				return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
+				getDomainModelReferences().clear();
+				return;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
+				setControlChecked(CONTROL_CHECKED_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -280,18 +255,17 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
-			return CONTROL_ID_EDEFAULT == null ? controlId != null : !CONTROL_ID_EDEFAULT.equals(controlId);
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
-			return domainModelReferences != null && !domainModelReferences.isEmpty();
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
-			return controlChecked != CONTROL_CHECKED_EDEFAULT;
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID:
+				return CONTROL_ID_EDEFAULT == null ? controlId != null : !CONTROL_ID_EDEFAULT.equals(controlId);
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
+				return domainModelReferences != null && !domainModelReferences.isEmpty();
+			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED:
+				return controlChecked != CONTROL_CHECKED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -299,16 +273,13 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (controlId: ");
 		result.append(controlId);
 		result.append(", controlChecked: ");

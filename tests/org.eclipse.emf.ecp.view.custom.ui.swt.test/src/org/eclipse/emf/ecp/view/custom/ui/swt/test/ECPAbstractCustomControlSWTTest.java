@@ -38,13 +38,13 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -157,7 +157,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
 	 * .
 	 */
 	@Test
@@ -182,7 +182,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createValidationLabel(org.eclipse.swt.widgets.Composite)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createValidationLabel(org.eclipse.swt.widgets.Composite)}
 	 * .
 	 */
 	@Test
@@ -202,7 +202,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
 	 * .
 	 */
 	@Test
@@ -213,7 +213,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
 	 * .
 	 */
 	@Test
@@ -231,7 +231,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
 	 * .
 	 */
 	@Test
@@ -299,7 +299,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
 	 * .
 	 */
 	@Test
@@ -336,7 +336,7 @@ public class ECPAbstractCustomControlSWTTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int, org.eclipse.emf.ecore.EStructuralFeature)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int, org.eclipse.emf.ecore.EStructuralFeature)}
 	 * .
 	 */
 	@Test
@@ -351,7 +351,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#resetValidation()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#resetValidation()}.
 	 */
 	@Test
 	public void testResetValidation() {

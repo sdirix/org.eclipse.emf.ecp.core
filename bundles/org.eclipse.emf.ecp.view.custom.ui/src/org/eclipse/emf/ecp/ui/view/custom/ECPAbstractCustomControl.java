@@ -62,9 +62,6 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	/**
 	 * Constructor for instantiating the {@link ECPAbstractCustomControl}. The constructor maps the features and sets
 	 * the ECPControlFactory.
-	 * 
-	 * @param features the features which can be used in this {@link ECPAbstractCustomControl}. If the Set is null, an
-	 *            empty set is used instead.
 	 */
 	public ECPAbstractCustomControl() {
 		super();

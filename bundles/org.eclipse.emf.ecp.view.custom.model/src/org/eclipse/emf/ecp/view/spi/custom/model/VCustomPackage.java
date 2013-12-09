@@ -39,7 +39,7 @@ public interface VCustomPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "custom";
 
 	/**
 	 * The package namespace URI.

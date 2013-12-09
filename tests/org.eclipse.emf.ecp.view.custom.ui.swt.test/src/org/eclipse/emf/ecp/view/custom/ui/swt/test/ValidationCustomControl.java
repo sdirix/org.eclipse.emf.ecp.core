@@ -19,8 +19,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
+import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -47,7 +47,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	public List<RenderingResultRow<Control>> createControl(Composite composite) {
@@ -62,7 +62,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
 	 */
 	@Override
 	protected void resetContentValidation() {
