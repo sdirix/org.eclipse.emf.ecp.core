@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model;
+package org.eclipse.emf.ecp.view.spi.horizontal.model;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory
+ * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory
  * @model kind="package"
  * @generated
  */
@@ -40,7 +40,7 @@ public interface VHorizontalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "horizontal";
 
 	/**
 	 * The package namespace URI.
@@ -67,16 +67,16 @@ public interface VHorizontalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	VHorizontalPackage eINSTANCE = org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalPackageImpl.init();
+	VHorizontalPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl
 	 * <em>Layout</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-	 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
+	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl
+	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
 	 * @generated
 	 */
 	int HORIZONTAL_LAYOUT = 0;
@@ -162,13 +162,13 @@ public interface VHorizontalPackage extends EPackage
 	int HORIZONTAL_LAYOUT_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout
 	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Layout</em>'.
-	 * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
+	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout
 	 * @generated
 	 */
 	EClass getHorizontalLayout();
@@ -199,13 +199,13 @@ public interface VHorizontalPackage extends EPackage
 	interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-		 * <em>Layout</em>}' class.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl <em>Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalLayoutImpl
-		 * @see org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
+		 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl
+		 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
 		 * @generated
 		 */
 		EClass HORIZONTAL_LAYOUT = eINSTANCE.getHorizontalLayout();

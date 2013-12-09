@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model.provider;
+package org.eclipse.emf.ecp.view.spi.horizontal.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +20,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
-import org.eclipse.emf.ecp.view.horizontal.model.util.HorizontalAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.util.HorizontalAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -112,7 +112,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 
 	/**
 	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout} instances.
+	 * {@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -121,7 +121,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	protected HorizontalLayoutItemProvider horizontalLayoutItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

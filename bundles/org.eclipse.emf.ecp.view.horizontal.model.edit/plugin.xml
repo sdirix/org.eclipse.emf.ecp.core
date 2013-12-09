@@ -19,7 +19,7 @@
       <!-- @generated horizontal -->
       <factory
             uri="http://org/eclipse/emf/ecp/view/horizontal/model"
-            class="org.eclipse.emf.ecp.view.horizontal.model.provider.HorizontalItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.horizontal.model.provider.HorizontalItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -32,7 +32,7 @@
       <!-- @generated horizontal -->
       <extender
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.horizontal.model.provider.HorizontalItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.horizontal.model.provider.HorizontalItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
 </plugin>

@@ -9,11 +9,11 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model.impl;
+package org.eclipse.emf.ecp.view.spi.horizontal.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
 
 /**

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model;
+package org.eclipse.emf.ecp.view.spi.horizontal.model;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage
+ * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
  */
 public interface VHorizontalFactory extends EFactory
@@ -31,7 +31,7 @@ public interface VHorizontalFactory extends EFactory
 	 * 
 	 * @generated
 	 */
-	VHorizontalFactory eINSTANCE = org.eclipse.emf.ecp.view.horizontal.model.impl.VHorizontalFactoryImpl.init();
+	VHorizontalFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Layout</em>'.

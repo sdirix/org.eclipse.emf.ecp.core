@@ -9,16 +9,16 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model.impl;
+package org.eclipse.emf.ecp.view.spi.horizontal.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
 
 /**
  * <!-- begin-user-doc -->

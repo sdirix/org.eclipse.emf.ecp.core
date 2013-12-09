@@ -9,15 +9,15 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model.provider;
+package org.eclipse.emf.ecp.view.spi.horizontal.model.provider;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalFactory;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainerItemProvider;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -28,7 +28,8 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout}
+ * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 

@@ -9,14 +9,14 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.horizontal.model.util;
+package org.eclipse.emf.ecp.view.spi.horizontal.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
-import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage
+ * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
  */
 public class HorizontalAdapterFactory extends AdapterFactoryImpl
@@ -137,15 +137,15 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
-	 * <em>Layout</em>}'.
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout
+	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout
 	 * @generated
 	 */
 	public Adapter createHorizontalLayoutAdapter()
@@ -154,7 +154,8 @@ public class HorizontalAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
