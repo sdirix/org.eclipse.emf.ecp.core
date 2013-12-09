@@ -26,10 +26,10 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -37,7 +37,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTVerticalTest {
 

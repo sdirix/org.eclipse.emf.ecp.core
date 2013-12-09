@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model.provider;
+package org.eclipse.emf.ecp.view.spi.vertical.model.provider;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,8 +18,8 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainerItemProvider;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -28,7 +28,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 

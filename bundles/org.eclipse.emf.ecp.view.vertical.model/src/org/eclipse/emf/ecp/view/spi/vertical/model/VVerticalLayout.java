@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model;
+package org.eclipse.emf.ecp.view.spi.vertical.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage#getVerticalLayout()
+ * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage#getVerticalLayout()
  * @model
  * @generated
  */

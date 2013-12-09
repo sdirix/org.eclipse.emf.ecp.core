@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model;
+package org.eclipse.emf.ecp.view.spi.vertical.model;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory
+ * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory
  * @model kind="package"
  * @generated
  */
@@ -40,7 +40,7 @@ public interface VVerticalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "vertical";
 
 	/**
 	 * The package namespace URI.
@@ -67,16 +67,16 @@ public interface VVerticalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	VVerticalPackage eINSTANCE = org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalPackageImpl.init();
+	VVerticalPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalLayoutImpl
 	 * <em>Layout</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
-	 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalPackageImpl#getVerticalLayout()
+	 * @see org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalLayoutImpl
+	 * @see org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalPackageImpl#getVerticalLayout()
 	 * @generated
 	 */
 	int VERTICAL_LAYOUT = 0;
@@ -162,13 +162,13 @@ public interface VVerticalPackage extends EPackage
 	int VERTICAL_LAYOUT_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout
 	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Layout</em>'.
-	 * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
+	 * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout
 	 * @generated
 	 */
 	EClass getVerticalLayout();
@@ -199,13 +199,13 @@ public interface VVerticalPackage extends EPackage
 	interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalLayoutImpl
 		 * <em>Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalLayoutImpl
-		 * @see org.eclipse.emf.ecp.view.vertical.model.impl.VVerticalPackageImpl#getVerticalLayout()
+		 * @see org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalLayoutImpl
+		 * @see org.eclipse.emf.ecp.view.spi.vertical.model.impl.VVerticalPackageImpl#getVerticalLayout()
 		 * @generated
 		 */
 		EClass VERTICAL_LAYOUT = eINSTANCE.getVerticalLayout();

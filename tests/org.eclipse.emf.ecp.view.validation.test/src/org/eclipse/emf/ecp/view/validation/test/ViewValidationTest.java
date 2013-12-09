@@ -29,6 +29,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.validation.ValidationService;
 import org.eclipse.emf.ecp.view.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
@@ -38,8 +40,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -9,15 +9,15 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model.impl;
+package org.eclipse.emf.ecp.view.spi.vertical.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +46,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

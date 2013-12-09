@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model.provider;
+package org.eclipse.emf.ecp.view.spi.vertical.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
-import org.eclipse.emf.ecp.view.vertical.model.util.VerticalAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
+import org.eclipse.emf.ecp.view.spi.vertical.model.util.VerticalAdapterFactory;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
@@ -111,8 +111,8 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout}
-	 * instances.
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -121,7 +121,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	protected VerticalLayoutItemProvider verticalLayoutItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

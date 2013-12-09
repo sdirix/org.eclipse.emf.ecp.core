@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model.util;
+package org.eclipse.emf.ecp.view.spi.vertical.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage
+ * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
  */
 public class VerticalSwitch<T> extends Switch<T>

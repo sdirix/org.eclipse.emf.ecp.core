@@ -6,8 +6,11 @@
     complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>vertical.ecore</foreignModel>
-  <genPackages prefix="Vertical" basePackage="org.eclipse.emf.ecp.view.vertical" disposableProviderFactory="true"
-      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="vertical.ecore#/">
+  <genPackages prefix="Vertical" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
+      interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
+      utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="vertical.ecore#/">
     <genClasses ecoreClass="vertical.ecore#//VerticalLayout"/>
   </genPackages>
 </genmodel:GenModel>

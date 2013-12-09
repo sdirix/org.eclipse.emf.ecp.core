@@ -21,6 +21,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
@@ -28,8 +30,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.junit.Ignore;
 import org.junit.Test;
 

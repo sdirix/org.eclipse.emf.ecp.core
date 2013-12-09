@@ -19,7 +19,7 @@
       <!-- @generated vertical -->
       <factory
             uri="http://org/eclipse/emf/ecp/view/vertical/model"
-            class="org.eclipse.emf.ecp.view.vertical.model.provider.VerticalItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.vertical.model.provider.VerticalItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -32,7 +32,7 @@
       <!-- @generated vertical -->
       <extender
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.vertical.model.provider.VerticalItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.vertical.model.provider.VerticalItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
 </plugin>

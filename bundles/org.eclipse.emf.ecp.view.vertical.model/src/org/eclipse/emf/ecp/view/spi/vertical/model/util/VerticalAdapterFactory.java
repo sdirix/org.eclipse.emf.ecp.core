@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.vertical.model.util;
+package org.eclipse.emf.ecp.view.spi.vertical.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage
+ * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
  */
 public class VerticalAdapterFactory extends AdapterFactoryImpl
@@ -137,7 +137,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout
 	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -145,7 +145,7 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout
+	 * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout
 	 * @generated
 	 */
 	public Adapter createVerticalLayoutAdapter()
@@ -154,7 +154,8 @@ public class VerticalAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
