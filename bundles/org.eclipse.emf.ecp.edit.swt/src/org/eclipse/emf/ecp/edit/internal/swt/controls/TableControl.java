@@ -298,8 +298,9 @@ public class TableControl extends SWTControl {
 		final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig(clazz);
 		final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
 		structuralFeatures.addAll(readOnlyConfig.keySet());
-
-		createFixedValidationStatusColumn(tableViewer);
+		if (getControl().isReadonly()) {
+			createFixedValidationStatusColumn(tableViewer);
+		}
 
 		for (final EStructuralFeature feature : structuralFeatures) {
 			final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
