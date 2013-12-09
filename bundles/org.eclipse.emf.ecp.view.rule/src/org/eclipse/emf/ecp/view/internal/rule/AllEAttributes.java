@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.impl.EAttributeImpl;
 
 /**
  * Custom attribute used by the {@link RuleRegistry} to capture the fact
- * that a {@link org.eclipse.emf.ecp.view.rule.model.Rule} may not have condition.
+ * that a {@link org.eclipse.emf.ecp.view.spi.rule.model.Rule} may not have condition.
  * 
  * @author emueller
  * 
