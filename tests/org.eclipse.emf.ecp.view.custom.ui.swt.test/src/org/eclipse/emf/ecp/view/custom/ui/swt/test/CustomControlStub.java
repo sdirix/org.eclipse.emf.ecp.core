@@ -123,7 +123,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		// TODO Auto-generated method stub

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model.provider;
+package org.eclipse.emf.ecp.view.spi.custom.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +20,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.util.CustomAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.spi.custom.model.util.CustomAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
@@ -100,7 +100,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -108,7 +108,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	protected HardcodedDomainModelReferenceItemProvider hardcodedDomainModelReferenceItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

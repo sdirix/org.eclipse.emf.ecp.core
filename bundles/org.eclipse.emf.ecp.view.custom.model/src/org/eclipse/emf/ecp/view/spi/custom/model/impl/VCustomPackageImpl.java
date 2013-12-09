@@ -9,16 +9,16 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model.impl;
+package org.eclipse.emf.ecp.view.spi.custom.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -44,7 +44,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

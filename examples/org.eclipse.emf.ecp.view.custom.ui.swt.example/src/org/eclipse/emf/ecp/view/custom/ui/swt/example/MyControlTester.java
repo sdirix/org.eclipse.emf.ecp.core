@@ -1,6 +1,6 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.example;
 
-import org.eclipse.emf.ecp.view.custom.model.HardcodedTester;
+import org.eclipse.emf.ecp.view.spi.custom.model.HardcodedTester;
 
 public class MyControlTester extends HardcodedTester {
 

@@ -11,7 +11,7 @@
       <!-- @generated custom -->
       <package
             uri="http://org/eclipse/emf/ecp/view/custom/model"
-            class="org.eclipse.emf.ecp.view.custom.model.VCustomPackage"
+            class="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"
             genModel="model/custom.genmodel"/>
    </extension>
 

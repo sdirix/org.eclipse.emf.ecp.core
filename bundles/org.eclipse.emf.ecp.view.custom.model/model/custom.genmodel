@@ -7,8 +7,11 @@
     editPluginID="org.eclipse.emf.ecp.view.custom.model.edit" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
   <foreignModel>custom.ecore</foreignModel>
-  <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.custom" disposableProviderFactory="true"
-      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="custom.ecore#/">
+  <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
+      interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
+      utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="custom.ecore#/">
     <genClasses ecoreClass="custom.ecore#//HardcodedDomainModelReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//HardcodedDomainModelReference/controlId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference custom.ecore#//HardcodedDomainModelReference/domainModelReferences"/>

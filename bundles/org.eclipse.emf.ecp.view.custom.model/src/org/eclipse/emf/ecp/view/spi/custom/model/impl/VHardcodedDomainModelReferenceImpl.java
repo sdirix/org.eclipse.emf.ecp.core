@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model.impl;
+package org.eclipse.emf.ecp.view.spi.custom.model.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,9 +29,9 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
-import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
@@ -41,11 +41,11 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl#getControlId <em>Control Id
+ * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#getControlId <em>Control Id
  * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl#getDomainModelReferences
+ * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#getDomainModelReferences
  * <em>Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl#isControlChecked <em>Control
+ * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl#isControlChecked <em>Control
  * Checked</em>}</li>
  * </ul>
  * </p>

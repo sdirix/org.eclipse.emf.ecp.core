@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model;
+package org.eclipse.emf.ecp.view.spi.custom.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.custom.model.VCustomFactory
+ * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory
  * @model kind="package"
  * @generated
  */
@@ -63,14 +63,14 @@ public interface VCustomPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	VCustomPackage eINSTANCE = org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl.init();
+	VCustomPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl
-	 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 	 * @generated
 	 */
 	int HARDCODED_DOMAIN_MODEL_REFERENCE = 0;
@@ -112,43 +112,43 @@ public interface VCustomPackage extends EPackage {
 	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Hardcoded Domain Model Reference</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference
 	 * @generated
 	 */
 	EClass getHardcodedDomainModelReference();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Control Id</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId()
 	 * @see #getHardcodedDomainModelReference()
 	 * @generated
 	 */
 	EAttribute getHardcodedDomainModelReference_ControlId();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Domain Model References</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getDomainModelReferences()
 	 * @see #getHardcodedDomainModelReference()
 	 * @generated
 	 */
 	EReference getHardcodedDomainModelReference_DomainModelReferences();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Control Checked</em>'.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked()
 	 * @see #getHardcodedDomainModelReference()
 	 * @generated
 	 */
@@ -177,11 +177,11 @@ public interface VCustomPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VHardcodedDomainModelReferenceImpl
-		 * @see org.eclipse.emf.ecp.view.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
+		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 		 * @generated
 		 */
 		EClass HARDCODED_DOMAIN_MODEL_REFERENCE = eINSTANCE.getHardcodedDomainModelReference();

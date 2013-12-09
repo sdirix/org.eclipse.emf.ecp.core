@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model;
+package org.eclipse.emf.ecp.view.spi.custom.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -22,13 +22,13 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#getHardcodedDomainModelReference()
+ * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getHardcodedDomainModelReference()
  * @model
  * @generated
  */
@@ -43,14 +43,14 @@ public interface VHardcodedDomainModelReference extends VDomainModelReference {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Control Id</em>' attribute.
 	 * @see #setControlId(String)
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#getHardcodedDomainModelReference_ControlId()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getHardcodedDomainModelReference_ControlId()
 	 * @model required="true"
 	 * @generated
 	 */
 	String getControlId();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Control Id</em>' attribute.
@@ -69,7 +69,7 @@ public interface VHardcodedDomainModelReference extends VDomainModelReference {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Domain Model References</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#getHardcodedDomainModelReference_DomainModelReferences()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getHardcodedDomainModelReference_DomainModelReferences()
 	 * @model containment="true"
 	 * @generated
 	 */
@@ -86,14 +86,14 @@ public interface VHardcodedDomainModelReference extends VDomainModelReference {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Control Checked</em>' attribute.
 	 * @see #setControlChecked(boolean)
-	 * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage#getHardcodedDomainModelReference_ControlChecked()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getHardcodedDomainModelReference_ControlChecked()
 	 * @model default="false" required="true" transient="true"
 	 * @generated
 	 */
 	boolean isControlChecked();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Control Checked</em>' attribute.

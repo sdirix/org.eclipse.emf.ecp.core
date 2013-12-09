@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.model;
+package org.eclipse.emf.ecp.view.spi.custom.model;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.custom.model.VCustomPackage
+ * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage
  * @generated
  */
 public interface VCustomFactory extends EFactory {
@@ -28,7 +28,7 @@ public interface VCustomFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	VCustomFactory eINSTANCE = org.eclipse.emf.ecp.view.custom.model.impl.VCustomFactoryImpl.init();
+	VCustomFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Hardcoded Domain Model Reference</em>'.

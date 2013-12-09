@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
-import org.eclipse.emf.ecp.view.custom.model.HardcodedTester;
+import org.eclipse.emf.ecp.view.spi.custom.model.HardcodedTester;
 
 /**
  * @author Eugen Neufeld
@@ -29,7 +29,7 @@ public class ECPCustomControlStubTester extends HardcodedTester {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.custom.model.HardcodedTester#getId()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.HardcodedTester#getId()
 	 */
 	@Override
 	protected String getId() {

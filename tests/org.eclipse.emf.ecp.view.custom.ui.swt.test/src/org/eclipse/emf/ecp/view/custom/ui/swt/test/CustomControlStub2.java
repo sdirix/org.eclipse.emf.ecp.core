@@ -48,7 +48,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		if (features.isEmpty()) {
