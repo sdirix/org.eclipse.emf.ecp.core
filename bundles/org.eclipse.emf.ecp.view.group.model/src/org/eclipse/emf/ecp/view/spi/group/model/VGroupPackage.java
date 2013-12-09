@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model;
+package org.eclipse.emf.ecp.view.spi.group.model;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.group.model.VGroupFactory
+ * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory
  * @model kind="package"
  * @generated
  */
@@ -40,7 +40,7 @@ public interface VGroupPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "group";
 
 	/**
 	 * The package namespace URI.
@@ -67,15 +67,16 @@ public interface VGroupPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	VGroupPackage eINSTANCE = org.eclipse.emf.ecp.view.group.model.impl.VGroupPackageImpl.init();
+	VGroupPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.group.model.impl.VGroupImpl <em>Group</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl <em>Group</em>}'
+	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.group.model.impl.VGroupImpl
-	 * @see org.eclipse.emf.ecp.view.group.model.impl.VGroupPackageImpl#getGroup()
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroup()
 	 * @generated
 	 */
 	int GROUP = 0;
@@ -161,12 +162,12 @@ public interface VGroupPackage extends EPackage
 	int GROUP_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.group.model.VGroup <em>Group</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Group</em>'.
-	 * @see org.eclipse.emf.ecp.view.group.model.VGroup
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup
 	 * @generated
 	 */
 	EClass getGroup();
@@ -197,13 +198,13 @@ public interface VGroupPackage extends EPackage
 	interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.group.model.impl.VGroupImpl <em>Group</em>}'
-		 * class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
+		 * <em>Group</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.group.model.impl.VGroupImpl
-		 * @see org.eclipse.emf.ecp.view.group.model.impl.VGroupPackageImpl#getGroup()
+		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
+		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroup()
 		 * @generated
 		 */
 		EClass GROUP = eINSTANCE.getGroup();

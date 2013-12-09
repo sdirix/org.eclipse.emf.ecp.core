@@ -20,8 +20,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -109,7 +109,7 @@ public class SWTGroupTest {
 
 		// setup model
 		final VView view = createViewWithOneGroup();
-		final org.eclipse.emf.ecp.view.group.model.VGroup group = (org.eclipse.emf.ecp.view.group.model.VGroup) view
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren()
 			.get(0);
 		group.setName(GROUP_NAME);
@@ -136,12 +136,12 @@ public class SWTGroupTest {
 
 		// setup model
 		final VView view = createViewWithTwoGroups();
-		final org.eclipse.emf.ecp.view.group.model.VGroup group = (org.eclipse.emf.ecp.view.group.model.VGroup) view
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren()
 			.get(0);
 		group.setName(GROUP_NAME);
 
-		final org.eclipse.emf.ecp.view.group.model.VGroup group2 = (org.eclipse.emf.ecp.view.group.model.VGroup) view
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group2 = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren()
 			.get(1);
 		group2.setName(GROUP_NAME2);
@@ -176,10 +176,10 @@ public class SWTGroupTest {
 	public void testTwoGroupsHierachicalinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final VView view = createViewWithTwoHierachicalGroups();
-		final org.eclipse.emf.ecp.view.group.model.VGroup group = (org.eclipse.emf.ecp.view.group.model.VGroup) view
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren()
 			.get(0);
-		final org.eclipse.emf.ecp.view.group.model.VGroup subGroup = (org.eclipse.emf.ecp.view.group.model.VGroup) group
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup subGroup = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) group
 			.getChildren().get(0);
 		group.setName(GROUP_NAME);
 
@@ -214,10 +214,10 @@ public class SWTGroupTest {
 	@Test
 	public void testTwoGroupsWithTwoControlsInView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final VView view = createViewWithTwoGroupsWithTwoControls();
-		final org.eclipse.emf.ecp.view.group.model.VGroup group1 = (org.eclipse.emf.ecp.view.group.model.VGroup) view
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group1 = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren()
 			.get(0);
-		final org.eclipse.emf.ecp.view.group.model.VGroup group2 = (org.eclipse.emf.ecp.view.group.model.VGroup) view
+		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group2 = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren().get(1);
 		group1.setName(GROUP_NAME);
 

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model.provider;
+package org.eclipse.emf.ecp.view.spi.group.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +20,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
-import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
-import org.eclipse.emf.ecp.view.group.model.util.GroupAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
+import org.eclipse.emf.ecp.view.spi.group.model.util.GroupAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -111,7 +111,8 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.group.model.VGroup} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup}
+	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -120,7 +121,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	protected GroupItemProvider groupItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.group.model.VGroup}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

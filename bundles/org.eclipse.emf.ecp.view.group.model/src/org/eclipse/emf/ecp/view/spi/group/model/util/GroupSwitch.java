@@ -9,13 +9,13 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model.util;
+package org.eclipse.emf.ecp.view.spi.group.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.group.model.VGroupPackage
+ * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage
  * @generated
  */
 public class GroupSwitch<T> extends Switch<T> {

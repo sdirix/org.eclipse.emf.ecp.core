@@ -9,16 +9,17 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model.impl;
+package org.eclipse.emf.ecp.view.spi.group.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
-import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
+import org.eclipse.emf.ecp.view.spi.group.model.*;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 
 /**
  * <!-- begin-user-doc -->

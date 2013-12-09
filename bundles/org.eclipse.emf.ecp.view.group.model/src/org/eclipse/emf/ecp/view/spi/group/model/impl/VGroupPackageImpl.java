@@ -9,14 +9,14 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model.impl;
+package org.eclipse.emf.ecp.view.spi.group.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.group.model.VGroup;
-import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
-import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -46,7 +46,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.group.model.VGroupPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

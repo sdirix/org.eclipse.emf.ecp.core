@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model;
+package org.eclipse.emf.ecp.view.spi.group.model;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.group.model.VGroupPackage
+ * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage
  * @generated
  */
 public interface VGroupFactory extends EFactory
@@ -31,7 +31,7 @@ public interface VGroupFactory extends EFactory
 	 * 
 	 * @generated
 	 */
-	VGroupFactory eINSTANCE = org.eclipse.emf.ecp.view.group.model.impl.VGroupFactoryImpl.init();
+	VGroupFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Group</em>'.

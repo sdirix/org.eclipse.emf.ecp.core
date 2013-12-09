@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.group.model;
+package org.eclipse.emf.ecp.view.spi.group.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.group.model.VGroupPackage#getGroup()
+ * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroup()
  * @model
  * @generated
  */

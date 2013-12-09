@@ -11,7 +11,7 @@
       <!-- @generated group -->
       <package
             uri="http://org/eclipse/emf/ecp/view/group/model"
-            class="org.eclipse.emf.ecp.view.group.model.VGroupPackage"
+            class="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"
             genModel="model/group.genmodel"/>
    </extension>
 

@@ -4,8 +4,8 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
-            element="org.eclipse.emf.ecp.view.group.model.VGroup"
-            renderer="org.eclipse.emf.ecp.view.group.ui.swt.internal.SWTGroupRenderer">
+            element="org.eclipse.emf.ecp.view.spi.group.model.VGroup"
+            renderer="org.eclipse.emf.ecp.view.spi.group.swt.internal.SWTGroupRenderer">
       </renderer>
    </extension>
 
