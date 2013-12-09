@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.dynamictree.model;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**

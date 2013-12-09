@@ -15,10 +15,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
-import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.dynamictree.model.*;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -270,13 +270,13 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement
 	 * @generated
 	 */
 	public Adapter createCategorizableElementAdapter() {
@@ -284,13 +284,13 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization <em>Abstract Categorization</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization <em>Abstract Categorization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
 	 * @generated
 	 */
 	public Adapter createAbstractCategorizationAdapter()
@@ -299,13 +299,13 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.categorization.model.VCategory <em>Category</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory <em>Category</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategory
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
 	 * @generated
 	 */
 	public Adapter createCategoryAdapter()

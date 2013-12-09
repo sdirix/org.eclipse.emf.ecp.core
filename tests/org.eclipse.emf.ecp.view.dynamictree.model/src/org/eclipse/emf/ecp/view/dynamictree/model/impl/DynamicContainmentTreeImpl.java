@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.view.categorization.model.impl.VCategoryImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
+import org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategoryImpl;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
@@ -456,7 +456,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject()
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject()
 	 */
 	@Override
 	public EObject getLabelObject() {

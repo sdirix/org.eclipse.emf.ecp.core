@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -31,6 +30,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.dynamictree.model.util.ModelValidator;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**

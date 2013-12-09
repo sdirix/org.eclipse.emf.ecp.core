@@ -19,13 +19,13 @@ import java.math.BigDecimal;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
-import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;

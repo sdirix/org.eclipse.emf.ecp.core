@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.categorization.swt;
 
-import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
+import org.eclipse.emf.ecp.view.spi.categorization.model.ECPAction;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.custom.TreeEditor;

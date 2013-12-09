@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
-import org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
+import org.eclipse.emf.ecp.view.spi.categorization.model.ECPAction;
+import org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizableElementImpl;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
@@ -421,7 +421,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getLabelObject()
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject()
 	 */
 	@Override
 	public EObject getLabelObject() {
@@ -433,7 +433,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#getECPActions()
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getECPActions()
 	 */
 	public List<ECPAction> getECPActions() {
 		return ecpActions;
@@ -442,7 +442,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement#setECPActions(java.util.List)
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#setECPActions(java.util.List)
 	 */
 	public void setECPActions(List<ECPAction> actions) {
 		ecpActions = actions;

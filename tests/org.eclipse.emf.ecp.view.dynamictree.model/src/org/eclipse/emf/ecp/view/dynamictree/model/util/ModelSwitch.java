@@ -14,10 +14,10 @@ package org.eclipse.emf.ecp.view.dynamictree.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
-import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.dynamictree.model.*;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 

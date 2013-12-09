@@ -19,7 +19,7 @@
       <!-- @generated categorization -->
       <factory
             uri="http://org/eclipse/emf/ecp/view/categorization/model"
-            class="org.eclipse.emf.ecp.view.categorization.model.provider.CategorizationItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -32,7 +32,7 @@
       <!-- @generated categorization -->
       <extender
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.categorization.model.provider.CategorizationItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
 </plugin>

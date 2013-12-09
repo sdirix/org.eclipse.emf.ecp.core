@@ -19,7 +19,7 @@
       <!-- @generated categorization -->
       <package
             uri="http://org/eclipse/emf/ecp/view/categorization/model"
-            class="org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage"
+            class="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"
             genModel="model/categorization.genmodel"/>
    </extension>
 
